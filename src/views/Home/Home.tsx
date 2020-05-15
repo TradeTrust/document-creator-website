@@ -3,11 +3,12 @@ import { NavigationBar } from "../../components/NavigationBar";
 import { Counter } from "../../components/Counter";
 import logo from "./logo.svg";
 import "./Home.css";
+import { Container } from "../../components/Container";
 
 export const Home: React.FunctionComponent = () => (
   <div>
     <NavigationBar />
-    <header className="flex flex-col items-center justify-center text-lg text-white min-h-screen bg-purple-700">
+    <Container>
       <img src={logo} className="h-40 spin" alt="logo" />
       <Counter />
       <a
@@ -19,6 +20,6 @@ export const Home: React.FunctionComponent = () => (
       >
         Learn React
       </a>
-    </header>
+    </Container>
   </div>
 );
