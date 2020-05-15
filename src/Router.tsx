@@ -1,9 +1,9 @@
-import React from "react";
+import React, { ReactElement } from "react";
 import { BrowserRouter, Switch, Route } from "react-router-dom";
-import { Home } from "./views/Home";
 import { Help } from "./views/Help";
+import { Home } from "./views/Home";
 
-export const Router = () => {
+export const Router = (): ReactElement => {
   return (
     <BrowserRouter>
       <Switch>
