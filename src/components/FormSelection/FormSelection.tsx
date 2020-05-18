@@ -1,10 +1,24 @@
 import React, { FunctionComponent } from "react";
 import { Redirect } from "react-router";
 import { useConfigContext } from "../../common/context/config";
+import { Config } from "../../types";
 import { Container } from "../Container";
 import { NavigationBar } from "../NavigationBar";
 
-export const FormSelection: FunctionComponent = () => {
+interface FormSelection {
+  config: Config;
+}
+
+export const FormSelection: FunctionComponent<FormSelection> = ({ config }) => {
+  return (
+    <Container>
+      <h1>Successfully decrypted wallet</h1>
+      <div>Wallet Address: {config.wallet.address}</div>
+    </Container>
+  );
+};
+
+export const FormSelectionContainer: FunctionComponent = () => {
   const { config, setConfig } = useConfigContext();
   const logout = (): void => setConfig(undefined);
   if (!config) {
@@ -13,10 +27,7 @@ export const FormSelection: FunctionComponent = () => {
   return (
     <>
       <NavigationBar logout={logout} />
-      <Container>
-        <h1>Successfully decrypted wallet</h1>
-        <div>Wallet Address: {config.wallet.address}</div>
-      </Container>
+      <FormSelection config={config} />
     </>
   );
 };

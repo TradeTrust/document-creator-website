@@ -11,7 +11,7 @@ export const usePersistedConfigFile = (): {
   const [configFileFromStorage, setConfigFileInStorage] = useConfigFile<ConfigFile | {}>({});
   const configFile =
     Object.keys(configFileFromStorage).length === 0 ? undefined : (configFileFromStorage as ConfigFile);
-  const setConfigFile = (config?: ConfigFile) => {
+  const setConfigFile = (config?: ConfigFile): void => {
     setConfigFileInStorage(config ? config : {});
   };
   return { configFile, setConfigFile };

@@ -1,4 +1,5 @@
 import React from "react";
+import { MemoryRouter } from "react-router-dom";
 import { NavigationBar } from "./NavigationBar";
 
 export default {
@@ -9,9 +10,18 @@ export default {
   },
 };
 
-export const NavigationBarStory = () => (
-  <div>
-    <h1 className="storybook-title">NavigationBar</h1>
+export const Default = () => (
+  <MemoryRouter>
     <NavigationBar />
-  </div>
+  </MemoryRouter>
+);
+
+export const WithLogout = () => (
+  <MemoryRouter>
+    <NavigationBar
+      logout={() => {
+        alert("logging out");
+      }}
+    />
+  </MemoryRouter>
 );

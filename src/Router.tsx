@@ -1,6 +1,6 @@
 import React, { ReactElement } from "react";
 import { BrowserRouter, Switch, Route } from "react-router-dom";
-import { FormSelection } from "./components/FormSelection";
+import { FormSelectionContainer } from "./components/FormSelection";
 import { Home } from "./components/Home";
 
 export const Router = (): ReactElement => {
@@ -11,7 +11,7 @@ export const Router = (): ReactElement => {
           <Home />
         </Route>
         <Route path="/forms">
-          <FormSelection />
+          <FormSelectionContainer />
         </Route>
       </Switch>
     </BrowserRouter>
