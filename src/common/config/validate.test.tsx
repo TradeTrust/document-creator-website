@@ -1,6 +1,6 @@
-import { assertConfigFile } from "./validate";
+/* eslint-disable  @typescript-eslint/no-explicit-any */
 import sample from "./sample.json";
-import { Wallet } from "ethers";
+import { assertConfigFile } from "./validate";
 
 describe("configFileSchema", () => {
   it("validates against sample wallet file", () => {
@@ -13,10 +13,4 @@ describe("configFileSchema", () => {
     expect(() => assertConfigFile({ ...sample, wallet: undefined } as any)).toThrow(/missing/);
     expect(() => assertConfigFile({ ...sample, wallet: "" } as any)).toThrow(/not allowed to be empty/);
   });
-});
-
-it("works", async () => {
-  const wallet = Wallet.createRandom();
-  const enc = await wallet.encrypt("password");
-  console.log(JSON.stringify(enc));
 });

@@ -1,8 +1,6 @@
-import { Wallet } from "ethers";
+import { ConfigFile } from "../../types";
+import { decryptWallet } from "./decrypt";
 import sample from "./sample.json";
-import { ConfigFile } from "../../../types";
-
-const decryptWallet = (wallet: ConfigFile["wallet"], password: string) => Wallet.fromEncryptedJson(wallet, password);
 
 const configFile = sample as ConfigFile;
 

@@ -1,12 +1,12 @@
-import React from "react";
-import { Container } from "../Container";
-import { useConfigContext } from "../common/context/config";
+import React, { FunctionComponent } from "react";
 import { Redirect } from "react-router";
+import { useConfigContext } from "../../common/context/config";
+import { Container } from "../Container";
 import { NavigationBar } from "../NavigationBar";
 
-export const FormSelection = () => {
+export const FormSelection: FunctionComponent = () => {
   const { config, setConfig } = useConfigContext();
-  const logout = () => setConfig(undefined);
+  const logout = (): void => setConfig(undefined);
   if (!config) {
     return <Redirect to="/" />;
   }

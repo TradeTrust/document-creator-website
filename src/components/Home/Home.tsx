@@ -1,85 +1,30 @@
-import React, { useState, FunctionComponent } from "react";
-import { Container } from "../Container";
-import { ConfigDropZone } from "../Dropzone/ConfigDropzone";
-import { useConfigContext } from "../common/context/config";
-import { assertConfigFile } from "../common/config/validate";
-import { decryptWallet } from "../common/config/decrypt";
-import { ConfigFile } from "../../types";
-import { NavigationBar } from "../NavigationBar";
-
-import createPersistedState from "use-persisted-state";
+import React, { useState } from "react";
 import { Redirect } from "react-router-dom";
-const useConfigFile = createPersistedState("CONFIG_FILE");
-
-export const DropZoneView = ({ onConfigFile }: { onConfigFile: (config: ConfigFile) => void }) => {
-  return (
-    <>
-      <div className="py-3">
-        <h1>Upload Configuration File</h1>
-      </div>
-      <ConfigDropZone onConfig={onConfigFile} />
-    </>
-  );
-};
-
-interface DecryptionView {
-  isDecrypting: boolean;
-  onDecryptConfigFile: (password: string) => void;
-  onResetConfigFile: () => void;
-}
-
-export const DecryptionView: FunctionComponent<DecryptionView> = ({
-  isDecrypting,
-  onDecryptConfigFile,
-  onResetConfigFile,
-}) => {
-  const [password, setPassword] = useState("");
-  const onLogin = () => {
-    onDecryptConfigFile(password);
-  };
-
-  return (
-    <>
-      <div className="py-3">
-        <h1>Login</h1>
-      </div>
-      <input
-        className="w-full"
-        type="password"
-        value={password}
-        onChange={(evt) => setPassword(evt.target.value)}
-        disabled={isDecrypting}
-      ></input>
-      <div>
-        <button onClick={onLogin} disabled={isDecrypting}>
-          Login
-        </button>
-      </div>
-      <div>
-        <button onClick={onResetConfigFile}>Use another account</button>
-      </div>
-    </>
-  );
-};
+import { decryptWallet } from "../../common/config/decrypt";
+import { assertConfigFile } from "../../common/config/validate";
+import { useConfigContext } from "../../common/context/config";
+import { usePersistedConfigFile } from "../../common/hook/usePersistedConfigFile";
+import { ConfigFile } from "../../types";
+import { Container } from "../Container";
+import { NavigationBar } from "../NavigationBar";
+import { ConfigFileDropZone } from "./ConfigFileDropZone";
+import { WalletDecryption } from "./WalletDecryption";
 
 export const Home: React.FunctionComponent = () => {
   const { config, setConfig } = useConfigContext();
   const [isDecrypting, setIsDecrypting] = useState(false);
+  const { configFile, setConfigFile } = usePersistedConfigFile();
 
-  // Using empty object to initialize config file due to bug with deserializing "undefined"
-  const [configFileFromStorage, setConfigFile] = useConfigFile<ConfigFile | {}>({});
-  const configFile =
-    Object.keys(configFileFromStorage).length === 0 ? undefined : (configFileFromStorage as ConfigFile);
-
-  const onConfigFile = async (configFileFromDropZone: ConfigFile) => {
+  const onConfigFile = async (configFileFromDropZone: ConfigFile): Promise<void> => {
     assertConfigFile(configFileFromDropZone);
     setConfigFile(configFileFromDropZone);
   };
-  const onResetConfigFile = () => {
+
+  const onResetConfigFile = (): void => {
     setConfigFile({});
   };
 
-  const onDecryptConfigFile = async (password: string) => {
+  const onDecryptConfigFile = async (password: string): Promise<void> => {
     if (!configFile) return;
     try {
       setIsDecrypting(true);
@@ -93,6 +38,7 @@ export const Home: React.FunctionComponent = () => {
     }
   };
 
+  // If wallet has been decrypted, redirect to forms
   if (config) return <Redirect to="/forms" />;
 
   return (
@@ -100,13 +46,13 @@ export const Home: React.FunctionComponent = () => {
       <NavigationBar />
       <Container>
         {configFile ? (
-          <DecryptionView
+          <WalletDecryption
             isDecrypting={isDecrypting}
             onDecryptConfigFile={onDecryptConfigFile}
             onResetConfigFile={onResetConfigFile}
           />
         ) : (
-          <DropZoneView onConfigFile={onConfigFile} />
+          <ConfigFileDropZone onConfigFile={onConfigFile} />
         )}
       </Container>
     </>

@@ -1,5 +1,5 @@
 import React, { useState, useContext, createContext, FunctionComponent } from "react";
-import { Config } from "../../../../types";
+import { Config } from "../../../types";
 
 interface ConfigContext {
   config?: Config;
@@ -8,10 +8,10 @@ interface ConfigContext {
 
 export const ConfigContext = createContext<ConfigContext>({
   config: undefined,
-  setConfig: () => {},
+  setConfig: () => {}, // eslint-disable-line @typescript-eslint/no-empty-function
 });
 
-export const useConfigContext = () => useContext<ConfigContext>(ConfigContext);
+export const useConfigContext = (): ConfigContext => useContext<ConfigContext>(ConfigContext);
 
 export const ConfigContextProvider: FunctionComponent = ({ children }) => {
   const [config, setConfig] = useState<Config>();
