@@ -4,10 +4,13 @@ import ReactDOM from "react-dom";
 // eslint-disable-next-line import/no-unresolved
 import "./index.css";
 import { App } from "./App";
+import { ConfigContextProvider } from "./common/context/config";
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <ConfigContextProvider>
+      <App />
+    </ConfigContextProvider>
   </React.StrictMode>,
   document.getElementById("root")
 );
