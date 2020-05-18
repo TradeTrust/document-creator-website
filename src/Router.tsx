@@ -1,7 +1,7 @@
 import React, { ReactElement } from "react";
 import { BrowserRouter, Switch, Route } from "react-router-dom";
-import { Help } from "./views/Help";
-import { Home } from "./views/Home";
+import { FormSelection } from "./components/FormSelection";
+import { Home } from "./components/Home";
 
 export const Router = (): ReactElement => {
   return (
@@ -10,8 +10,8 @@ export const Router = (): ReactElement => {
         <Route exact path="/">
           <Home />
         </Route>
-        <Route path="/help">
-          <Help />
+        <Route path="/forms">
+          <FormSelection />
         </Route>
       </Switch>
     </BrowserRouter>
