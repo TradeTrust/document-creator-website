@@ -21,7 +21,7 @@ export const Home: React.FunctionComponent = () => {
   };
 
   const onResetConfigFile = (): void => {
-    setConfigFile({});
+    setConfigFile();
   };
 
   const onDecryptConfigFile = async (password: string): Promise<void> => {

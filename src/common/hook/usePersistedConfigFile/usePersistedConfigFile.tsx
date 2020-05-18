@@ -8,8 +8,11 @@ export const usePersistedConfigFile = (): {
   setConfigFile: (configFile?: ConfigFile) => void;
 } => {
   // Using empty object to initialize config file due to bug with deserializing "undefined"
-  const [configFileFromStorage, setConfigFile] = useConfigFile<ConfigFile | {}>({});
+  const [configFileFromStorage, setConfigFileInStorage] = useConfigFile<ConfigFile | {}>({});
   const configFile =
     Object.keys(configFileFromStorage).length === 0 ? undefined : (configFileFromStorage as ConfigFile);
+  const setConfigFile = (config?: ConfigFile) => {
+    setConfigFileInStorage(config ? config : {});
+  };
   return { configFile, setConfigFile };
 };
