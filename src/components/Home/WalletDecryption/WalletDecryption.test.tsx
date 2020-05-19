@@ -15,8 +15,8 @@ describe("walletDecryption", () => {
         onResetConfigFile={() => {}}
       />
     );
-    fireEvent.change(screen.getByRole("password-field"), { target: { value: "foobar" } });
-    fireEvent.click(screen.getByRole("login-button"));
+    fireEvent.change(screen.getByTestId("password-field"), { target: { value: "foobar" } });
+    fireEvent.click(screen.getByTestId("login-button"));
     expect(onDecryptConfigFile).toHaveBeenCalledWith("foobar");
   });
 
@@ -31,7 +31,7 @@ describe("walletDecryption", () => {
         onDecryptConfigFile={() => {}}
       />
     );
-    fireEvent.click(screen.getByRole("reset-button"));
+    fireEvent.click(screen.getByTestId("reset-button"));
     // eslint-disable-next-line jest/prefer-called-with
     expect(onResetConfigFile).toHaveBeenCalled();
   });
@@ -47,10 +47,10 @@ describe("walletDecryption", () => {
         onResetConfigFile={() => {}}
       />
     );
-    fireEvent.click(screen.getByRole("login-button"));
-    fireEvent.change(screen.getByRole("password-field"), { target: { value: "foobar" } });
+    fireEvent.click(screen.getByTestId("login-button"));
+    fireEvent.change(screen.getByTestId("password-field"), { target: { value: "foobar" } });
     expect(onDecryptConfigFile).not.toHaveBeenCalled();
-    expect(screen.getByRole("password-field")).not.toHaveTextContent("foobar");
+    expect(screen.getByTestId("password-field")).not.toHaveTextContent("foobar");
   });
 
   it("should display error message if any", () => {
