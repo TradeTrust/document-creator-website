@@ -2,7 +2,7 @@ import { render, screen } from "@testing-library/react";
 import React from "react";
 import { Container } from "./Container";
 
-describe("Container", () => {
+describe("container", () => {
   it("should display the children", () => {
     expect.assertions(1);
     render(

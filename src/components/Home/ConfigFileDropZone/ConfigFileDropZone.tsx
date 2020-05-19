@@ -24,7 +24,7 @@ export const DropZone: FunctionComponent<DropZone> = ({ onConfigFile }) => {
 
   return (
     <div {...getRootProps()}>
-      <input {...getInputProps()} />
+      <input data-testid="config-file-drop-zone" {...getInputProps()} />
       <div
         className={`text-center w-100 border-dashed border-2 border-gray-600 p-3 ${
           isDragActive ? "bg-gray-400" : "bg-white"

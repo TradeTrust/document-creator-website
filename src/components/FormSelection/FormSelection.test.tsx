@@ -2,7 +2,7 @@ import { render, screen } from "@testing-library/react";
 import React from "react";
 import { FormSelection } from "./FormSelection";
 
-describe("FormSelection", () => {
+describe("formSelection", () => {
   it("should display the wallet address", () => {
     expect.assertions(1);
     render(<FormSelection config={{ wallet: { address: "0xabc...123" } } as any} />);
