@@ -1,0 +1,32 @@
+i.glyphicon { display: none; }
+.btn-add::after { content: 'Add'; }
+.array-item-move-up::after { content: 'Move Up'; }
+.array-item-move-down::after { content: 'Move Down'; }
+.array-item-remove::after { content: 'Remove'; }
+
+.array-item {
+  margin-bottom: 10px;
+  margin-right: 30px;
+}
+
+.array-item-remove {
+  flex: 0.8 !important;
+}
+
+.item-pd-0, .item-pd-0 > fieldset {
+  padding-right: 0;
+  padding-left: 0;
+}
+
+.array-item-add {
+  margin-left: 85px;
+}
+
+.array-item-list {
+  margin: 0 !important;
+}
+
+.help-block {
+    font-size: 13px;
+    margin: 8px 0;
+}
