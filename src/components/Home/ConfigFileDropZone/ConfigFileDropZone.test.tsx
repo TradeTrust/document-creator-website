@@ -18,6 +18,12 @@ const createFileTransferEvent = (files: File[]) => {
 };
 
 describe("configFileDropZone", () => {
+  it("should have the right text", () => {
+    render(<ConfigFileDropZone onConfigFile={() => {}} />);
+    expect(screen.queryByText(/Upload Configuration File/)).not.toBeNull();
+    expect(screen.queryByText(/drop file here/)).not.toBeNull();
+  });
+
   it("should allow onConfigFile to be called with dropped JSON file", async () => {
     const onConfigFile = jest.fn();
     render(<ConfigFileDropZone onConfigFile={onConfigFile} />);
