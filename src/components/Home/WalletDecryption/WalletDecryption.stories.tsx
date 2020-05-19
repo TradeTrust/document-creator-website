@@ -11,12 +11,33 @@ export default {
 
 export const Default = () => (
   <Container>
-    <WalletDecryption isDecrypting={false} onDecryptConfigFile={alert} onResetConfigFile={() => alert("Reset")} />
+    <WalletDecryption
+      isDecrypting={false}
+      isIncorrectPassword={false}
+      onDecryptConfigFile={alert}
+      onResetConfigFile={() => alert("Reset")}
+    />
   </Container>
 );
 
 export const Decrypting = () => (
   <Container>
-    <WalletDecryption isDecrypting={true} onDecryptConfigFile={alert} onResetConfigFile={() => alert("Reset")} />
+    <WalletDecryption
+      isDecrypting={true}
+      isIncorrectPassword={false}
+      onDecryptConfigFile={alert}
+      onResetConfigFile={() => alert("Reset")}
+    />
+  </Container>
+);
+
+export const Error = () => (
+  <Container>
+    <WalletDecryption
+      isDecrypting={false}
+      onDecryptConfigFile={alert}
+      onResetConfigFile={() => alert("Reset")}
+      isIncorrectPassword={true}
+    />
   </Container>
 );

@@ -14,3 +14,12 @@ export const Default = () => (
     <ConfigFileDropZone onConfigFile={(configFile) => console.log(JSON.stringify(configFile, null, 2))} />
   </Container>
 );
+
+export const WithError = () => (
+  <Container>
+    <ConfigFileDropZone
+      errorMessage="Config file is malformed"
+      onConfigFile={(configFile) => console.log(JSON.stringify(configFile, null, 2))}
+    />
+  </Container>
+);

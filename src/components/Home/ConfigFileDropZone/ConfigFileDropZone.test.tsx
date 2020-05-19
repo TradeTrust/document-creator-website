@@ -1,7 +1,9 @@
+/* eslint-disable @typescript-eslint/no-explicit-any, @typescript-eslint/no-empty-function */
 import { render, screen, fireEvent, act, wait } from "@testing-library/react";
 import React from "react";
 import { ConfigFileDropZone } from "./ConfigFileDropZone";
 
+// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
 const createFileTransferEvent = (files: File[]) => {
   return {
     dataTransfer: {

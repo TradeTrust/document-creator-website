@@ -1,59 +1,15 @@
-import React, { useState, FunctionComponent } from "react";
+import React, { FunctionComponent } from "react";
 import { Redirect } from "react-router-dom";
-import { decryptWallet } from "../../common/config/decrypt";
-import { assertConfigFile } from "../../common/config/validate";
 import { useConfigContext } from "../../common/context/config";
 import { usePersistedConfigFile } from "../../common/hook/usePersistedConfigFile";
-import { ConfigFile } from "../../types";
 import { Container } from "../Container";
 import { NavigationBar } from "../NavigationBar";
-import { ConfigFileDropZone } from "./ConfigFileDropZone";
-import { WalletDecryption } from "./WalletDecryption";
+import { ConfigFileDropZoneContainer } from "./ConfigFileDropZone";
+import { WalletDecryptionContainer } from "./WalletDecryption";
 
-export const Home: FunctionComponent = () => {
-  const { setConfig } = useConfigContext();
-  const [isDecrypting, setIsDecrypting] = useState(false);
-  const { configFile, setConfigFile } = usePersistedConfigFile();
-
-  const onConfigFile = async (configFileFromDropZone: ConfigFile): Promise<void> => {
-    assertConfigFile(configFileFromDropZone);
-    setConfigFile(configFileFromDropZone);
-  };
-
-  const onResetConfigFile = (): void => {
-    setConfigFile();
-  };
-
-  const onDecryptConfigFile = async (password: string): Promise<void> => {
-    if (!configFile) return;
-    try {
-      setIsDecrypting(true);
-      const wallet = await decryptWallet(configFile.wallet, password);
-      setIsDecrypting(false);
-      setConfig({
-        wallet,
-      });
-    } catch (e) {
-      setIsDecrypting(false);
-    }
-  };
-  return (
-    <Container>
-      {configFile ? (
-        <WalletDecryption
-          isDecrypting={isDecrypting}
-          onDecryptConfigFile={onDecryptConfigFile}
-          onResetConfigFile={onResetConfigFile}
-        />
-      ) : (
-        <ConfigFileDropZone onConfigFile={onConfigFile} />
-      )}
-    </Container>
-  );
-};
-
-export const HomeContainer = () => {
+export const HomeContainer: FunctionComponent = () => {
   const { config } = useConfigContext();
+  const { configFile } = usePersistedConfigFile();
 
   // If wallet has been decrypted, redirect to forms
   if (config) return <Redirect to="/forms" />;
@@ -61,7 +17,7 @@ export const HomeContainer = () => {
   return (
     <>
       <NavigationBar />
-      <Home />
+      <Container>{configFile ? <WalletDecryptionContainer /> : <ConfigFileDropZoneContainer />}</Container>
     </>
   );
 };
