@@ -13,7 +13,7 @@ export const FormSelection: FunctionComponent<FormSelection> = ({ config }) => {
   return (
     <Container>
       <h1>Successfully decrypted wallet</h1>
-      <div>Wallet Address: {config.wallet.address}</div>
+      <div data-testid="wallet-info">Wallet Address: {config.wallet.address}</div>
     </Container>
   );
 };
