@@ -32,7 +32,7 @@ export const WalletDecryption: FunctionComponent<WalletDecryption> = ({
         </div>
       )}
       <input
-        role="password-field"
+        data-testid="password-field"
         className="w-full"
         type="password"
         value={password}
@@ -40,12 +40,12 @@ export const WalletDecryption: FunctionComponent<WalletDecryption> = ({
         disabled={isDecrypting}
       />
       <div>
-        <button role="login-button" onClick={onLogin} disabled={isDecrypting}>
+        <button data-testid="login-button" onClick={onLogin} disabled={isDecrypting}>
           Login
         </button>
       </div>
       <div>
-        <button role="reset-button" onClick={onResetConfigFile}>
+        <button data-testid="reset-button" onClick={onResetConfigFile}>
           Use another config file
         </button>
       </div>
