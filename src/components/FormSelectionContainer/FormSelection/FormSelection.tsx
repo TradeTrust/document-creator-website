@@ -3,6 +3,7 @@ import React from "react";
 import { Config, Form } from "../../../types";
 import { Button } from "../../../UI/Button";
 import { Title } from "../../../UI/Title";
+import { Wrapper } from "../../../UI/Wrapper";
 import { Container } from "../../Container";
 
 interface FormSelection {
@@ -18,7 +19,7 @@ export const FormSelection = styled(({ className, config }) => {
   return (
     <Container>
       <div className={className}>
-        <div className="wrapper">
+        <Wrapper>
           <Title>Choose Document Type to Issue</Title>
           <div className="buttonWrapper">
             {config.forms.map((form: Form, i: number) => {
@@ -35,19 +36,11 @@ export const FormSelection = styled(({ className, config }) => {
           </div>
           <div className="or-word">or</div>
           <Button onClick={() => selectedForm("Basic Template")}>Use a Basic Template</Button>
-        </div>
+        </Wrapper>
       </div>
     </Container>
   );
 })`
-  .wrapper {
-    display: flex;
-    flex-direction: column;
-    width: 600px;
-    margin: auto;
-    padding-top: 32px;
-  }
-
   .buttonWrapper {
     display: flex;
     width: 100%;

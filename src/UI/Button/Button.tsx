@@ -1,4 +1,5 @@
 import styled from "@emotion/styled";
+import { darken, lighten, rgba } from "polished";
 import React from "react";
 import { vars } from "../../styles";
 
@@ -48,4 +49,62 @@ export const Button = styled(StandardButton)`
   :last-child {
     margin-right: 0;
   }
+`;
+
+interface BaseStyleButtonProps {
+  bgColor: string;
+  textColor: string;
+}
+
+// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
+const baseStyleButton = ({ bgColor, textColor }: BaseStyleButtonProps) => {
+  // ${mixin.fontSourcesansproBold()}
+  // ${mixin.fontSize(18)};
+  return `
+    font-size: 18px;
+    transition: background-color 0.3s ${vars.easeOutCubic}, color 0.3s ${
+    vars.easeOutCubic
+  }, box-shadow 0.3s ${vars.easeOutCubic};
+    display: inline-block;
+    vertical-align: middle;
+    outline: none;
+    border: 0;
+    padding: 6px 12px;
+    letter-spacing: 0.01rem;
+    min-height: 40px;
+    cursor: pointer;
+    border-radius: ${vars.buttonRadius};
+    box-shadow: 0 2px 8px ${rgba(vars.black, 0.15)};
+    background-color: ${bgColor};
+    color: ${textColor};
+
+    &:hover {
+      background-color: ${darken(0.2, bgColor)};
+    }
+
+    &[disabled] {
+      pointer-events: none;
+      box-shadow: none;
+      background-color: ${lighten(0.25, bgColor)};
+      color: ${lighten(0.25, textColor)};
+    }
+
+    p {
+      margin-top: 0;
+      margin-bottom: 0;
+    }
+
+    svg {
+      display: block;
+      width: 100%;
+      max-width: 24px;
+    }
+  `;
+};
+
+export const ButtonSolidWhiteOrange = styled(StandardButton)`
+  ${baseStyleButton({
+    bgColor: vars.white,
+    textColor: vars.orange,
+  })}
 `;
