@@ -1,14 +1,18 @@
+import resolveConfig from "tailwindcss/resolveConfig";
+import tailwindConfig from "../../tailwind.js";
+const fullConfig = resolveConfig(tailwindConfig);
+
 export const fontRobotoRegular = (): string => {
   return `
-    font-family: "Roboto", Helvetica, Arial, sans-serif;
-    font-weight: 400;
+    font-family: ${fullConfig.theme.fontFamily.body.join(", ")};
+    font-weight: ${fullConfig.theme.fontWeight.regular};
   `;
 };
 
 export const fontRobotoBold = (): string => {
   return `
-    font-family: "Roboto", Helvetica, Arial, sans-serif;
-    font-weight: 700;
+    font-family: ${fullConfig.theme.fontFamily.body.join(", ")};
+    font-weight: ${fullConfig.theme.fontWeight.bold};
   `;
 };
 
