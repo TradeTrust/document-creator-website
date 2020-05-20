@@ -7,6 +7,7 @@ interface ButtonProps {
   key?: number;
   onClick?: (event: React.MouseEvent<HTMLButtonElement>) => void;
   className?: string;
+  dataTestid?: string;
 }
 
 // eslint-disable-next-line @typescript-eslint/explicit-function-return-type

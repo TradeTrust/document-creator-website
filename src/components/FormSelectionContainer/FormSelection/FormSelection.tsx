@@ -10,8 +10,6 @@ interface FormSelection {
 }
 
 export const FormSelection = styled(({ className, config }) => {
-  console.log("config", config);
-
   // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
   const selectedForm = (form: string) => {
     console.log(form);
@@ -22,11 +20,14 @@ export const FormSelection = styled(({ className, config }) => {
       <div className={className}>
         <div className="wrapper">
           <Title>Choose Document Type to Issue</Title>
-          {/* <div>Wallet Address: {config.wallet.address}</div> */}
           <div className="buttonWrapper">
             {config.forms.map((form: Form, i: number) => {
               return (
-                <Button key={i} onClick={() => selectedForm(form.name)}>
+                <Button
+                  data-testid={`${form.type}-button`}
+                  key={i}
+                  onClick={() => selectedForm(form.name)}
+                >
                   {form.name}
                 </Button>
               );
