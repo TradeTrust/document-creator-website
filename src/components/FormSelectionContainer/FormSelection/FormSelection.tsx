@@ -11,6 +11,7 @@ interface FormSelection {
 export const FormSelection = styled(({ className, config }) => {
   console.log("config", config);
 
+  // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
   const selectedForm = (form: string) => {
     console.log(form);
   };
