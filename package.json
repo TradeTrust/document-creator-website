@@ -120,14 +120,6 @@
       "array-callback-return": "warn",
       "import/no-default-export": "error",
       "import/no-unresolved": 2,
-      "import/order": [
-        "error",
-        {
-          "alphabetize": {
-            "order": "asc"
-          }
-        }
-      ],
       "jest/no-hooks": 0,
       "no-unused-vars": [
         "error",
@@ -193,7 +185,7 @@
     ]
   },
   "prettier": {
-    "printWidth": 120
+    "printWidth": 100
   },
   "browserslist": {
     "production": [
