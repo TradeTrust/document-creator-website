@@ -8,6 +8,7 @@ import { ButtonSolidWhiteOrange } from "../../../UI/Button";
 import { Title } from "../../../UI/Title";
 import { Wrapper } from "../../../UI/Wrapper";
 import { ErrorAlert } from "../../Alert";
+import { ProgressBar } from "../../ProgressBar";
 
 interface ConfigFileDropZone {
   errorMessage?: string;
@@ -33,6 +34,7 @@ export const ConfigFileDropZone: FunctionComponent<ConfigFileDropZone> = styled(
     return (
       <div className={className}>
         <Wrapper>
+          <ProgressBar step={1} />
           <Title>Upload Configuration File</Title>
           {errorMessage && (
             <div className="my-2">

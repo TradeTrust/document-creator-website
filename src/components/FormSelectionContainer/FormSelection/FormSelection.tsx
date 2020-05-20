@@ -5,6 +5,7 @@ import { Button } from "../../../UI/Button";
 import { Title } from "../../../UI/Title";
 import { Wrapper } from "../../../UI/Wrapper";
 import { Container } from "../../Container";
+import { ProgressBar } from "../../ProgressBar";
 
 interface FormSelection {
   config: Config;
@@ -20,6 +21,7 @@ export const FormSelection = styled(({ className, config }) => {
     <Container>
       <div className={className}>
         <Wrapper>
+          <ProgressBar step={2} />
           <Title>Choose Document Type to Issue</Title>
           <div className="buttonWrapper">
             {config.forms.map((form: Form, i: number) => {
