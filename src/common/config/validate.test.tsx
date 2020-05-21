@@ -11,6 +11,8 @@ describe("configFileSchema", () => {
   it("throws when wallet is malformed", () => {
     expect.assertions(2);
     expect(() => assertConfigFile({ ...sample, wallet: undefined } as any)).toThrow(/missing/);
-    expect(() => assertConfigFile({ ...sample, wallet: "" } as any)).toThrow(/not allowed to be empty/);
+    expect(() => assertConfigFile({ ...sample, wallet: "" } as any)).toThrow(
+      /not allowed to be empty/
+    );
   });
 });
