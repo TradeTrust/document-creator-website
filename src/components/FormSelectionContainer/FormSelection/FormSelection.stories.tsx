@@ -1,4 +1,5 @@
 import React from "react";
+import { Config } from "../../../types/";
 import { FormSelection } from "./FormSelection";
 
 export default {
@@ -28,8 +29,7 @@ export const Default = () => (
             type: "INVOICE",
           },
         ],
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      } as any
+      } as Config
     }
   />
 );
