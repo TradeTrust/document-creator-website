@@ -25,8 +25,8 @@ export const WalletDecryption: FunctionComponent<WalletDecryption> = ({
   };
 
   const inputBorderCSS = isIncorrectPassword
-    ? "w-full border-solid border border-red h-10 p-3 italic"
-    : "w-full border-solid border border-grey-lighter h-10 p-3 italic";
+    ? "w-full border-solid border border-red h-10 p-3"
+    : "w-full border-solid border border-grey-lighter h-10 p-3";
 
   return (
     <Wrapper>
@@ -37,7 +37,11 @@ export const WalletDecryption: FunctionComponent<WalletDecryption> = ({
           <input
             data-testid="password-field"
             placeholder="Enter Password"
-            className={`${inputBorderCSS} ${isDecrypting && "bg-grey-lighter"}`}
+            className={`
+              ${inputBorderCSS} 
+              ${isDecrypting && "bg-grey-lighter"} 
+              ${!password && "italic"}
+            `}
             type="password"
             value={password}
             onChange={(evt) => setPassword(evt.target.value)}
@@ -55,7 +59,7 @@ export const WalletDecryption: FunctionComponent<WalletDecryption> = ({
           </button>
           <Button
             data-testid="login-button"
-            className="bg-orange text-white self-end py-3 px-4 border-orange border-solid border mt-4"
+            className="bg-orange text-white self-end py-3 px-4 mt-4"
             onClick={onLogin}
             disabled={isDecrypting}
           >
