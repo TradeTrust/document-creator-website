@@ -25,7 +25,7 @@ describe("formSelection", () => {
 
     const buttons = screen.getAllByRole("button");
 
-    expect(buttons).toHaveLength(3);
+    expect(buttons).toHaveLength(2);
 
     const textBL = screen.getByText("Bill of Lading").textContent;
     expect(textBL).toStrictEqual("Bill of Lading");
