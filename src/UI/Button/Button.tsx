@@ -6,7 +6,6 @@ export const Button = styled.button`
   border-radius: 3px;
   ${mixin.fontRobotoBold()}
   ${mixin.fontSize(18)}
-  border: 1px solid #EEEEEE;
   display: inline-block;
   vertical-align: middle;
   letter-spacing: 0.01rem;

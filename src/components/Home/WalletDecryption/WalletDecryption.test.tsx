@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-empty-function */
-import { render, screen, fireEvent } from "@testing-library/react";
+import { fireEvent, render, screen } from "@testing-library/react";
 import React from "react";
 import { WalletDecryption } from "./WalletDecryption";
 
@@ -63,6 +63,6 @@ describe("walletDecryption", () => {
         onResetConfigFile={() => {}}
       />
     );
-    expect(screen.queryByText(/Password is incorrect/)).not.toBeNull();
+    expect(screen.queryByText(/Invalid password. Please try again./)).not.toBeNull();
   });
 });

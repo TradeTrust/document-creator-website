@@ -56,7 +56,7 @@ export const ConfigFileDropZone: FunctionComponent<ConfigFileDropZone> = ({
           <div className="text-base text-grey-dark my-4">
             {errorMessage || error ? "Please try again." : "or"}
           </div>
-          <Button className="py-3 px-12 bg-white text-orange hover:text-orange-dark">
+          <Button className="py-3 px-12 bg-white text-orange hover:text-orange-dark border border-solid border-white-dark">
             Browse File
           </Button>
         </div>

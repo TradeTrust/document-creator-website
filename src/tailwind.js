@@ -8,6 +8,7 @@ module.exports = {
     },
     fontWeight: {
       regular: 400,
+      medium: 500,
       bold: 700,
     },
     extend: {
@@ -48,6 +49,7 @@ module.exports = {
       },
       white: {
         default: "#ffffff",
+        dark: "#eeeeee",
       },
       black: {
         default: "#000000",
