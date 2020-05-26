@@ -41,8 +41,16 @@ module.exports = {
         default: "#48bb78",
         dark: "#38a169",
       },
+      red: {
+        lighter: "#FFF4F4",
+        default: "#FF2020",
+        dark: "#c53030",
+      },
       white: {
         default: "#ffffff",
+      },
+      black: {
+        default: "#000000",
       },
     },
   },

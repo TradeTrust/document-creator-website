@@ -5,7 +5,6 @@ import { ConfigFile } from "../../../types";
 import { Button } from "../../../UI/Button";
 import { Title } from "../../../UI/Title";
 import { Wrapper } from "../../../UI/Wrapper";
-import { ErrorAlert } from "../../Alert";
 
 interface ConfigFileDropZone {
   errorMessage?: string;
@@ -30,24 +29,33 @@ export const ConfigFileDropZone: FunctionComponent<ConfigFileDropZone> = ({
   };
   const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop });
 
+  const dropZoneCSS =
+    errorMessage || error
+      ? `border-dashed border-2 items-center border-red flex flex-col pt-16 pb-16 px-4 text-center ${
+          isDragActive ? "bg-grey-lighter" : "bg-red-lighter"
+        }`
+      : `border-dashed border-2 items-center border-grey-lighter flex flex-col pt-16 pb-16 px-4 text-center ${
+          isDragActive ? "bg-grey-lighter" : "bg-white"
+        }`;
+
   return (
     <Wrapper>
       <Title className="text-grey-dark">Upload Configuration File</Title>
-      {errorMessage && (
-        <div className="my-2">
-          <ErrorAlert message={errorMessage} />
-        </div>
-      )}
       <div {...getRootProps()}>
         <input data-testid="config-file-drop-zone" {...getInputProps()} />
-        <div
-          className={`border-dashed border-2 items-center border-grey-lighter flex flex-col pt-16 pb-16 px-4 text-center ${
-            isDragActive ? "bg-grey-lighter" : "bg-white"
-          }`}
-        >
-          {error && <div>Error: File cannot be read</div>}
-          <div className="font-bold text-lg text-grey-dark">Drag and drop file here</div>
-          <div className="text-base text-grey-dark my-4">or</div>
+        <div className={dropZoneCSS}>
+          {error && (
+            <div className="max-w-lg text-red font-bold text-lg">Error: File cannot be read</div>
+          )}
+          {errorMessage && !error && (
+            <div className="max-w-lg text-red font-bold text-lg">{errorMessage}</div>
+          )}
+          {!errorMessage && !error && (
+            <div className="font-bold text-lg text-grey-dark">Drag and drop file here</div>
+          )}
+          <div className="text-base text-grey-dark my-4">
+            {errorMessage || error ? "Please try again." : "or"}
+          </div>
           <Button className="py-3 px-12 bg-white text-orange hover:text-orange-dark">
             Browse File
           </Button>
