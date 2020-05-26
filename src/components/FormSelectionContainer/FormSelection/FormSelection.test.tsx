@@ -18,10 +18,6 @@ describe("formSelection", () => {
           name: "Purchase Order",
           type: "VERIFIABLE_DOCUMENT",
         },
-        {
-          name: "Invoice",
-          type: "INVOICE",
-        },
       ],
     };
 
@@ -36,8 +32,5 @@ describe("formSelection", () => {
 
     const textPO = screen.getByText("Purchase Order").textContent;
     expect(textPO).toStrictEqual("Purchase Order");
-
-    const textI = screen.getByText("Invoice").textContent;
-    expect(textI).toStrictEqual("Invoice");
   });
 });

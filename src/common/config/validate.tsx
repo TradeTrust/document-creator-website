@@ -7,10 +7,7 @@ const configFileSchema = Joi.object({
     .items(
       Joi.object({
         name: Joi.string().required(),
-        type: Joi.string()
-          .allow("TRANSFERABLE_RECORD", "VERIFIABLE_DOCUMENT", "INVOICE")
-          .only()
-          .required(),
+        type: Joi.string().allow("TRANSFERABLE_RECORD", "VERIFIABLE_DOCUMENT").only().required(),
       })
     )
     .required(),

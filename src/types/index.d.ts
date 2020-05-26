@@ -2,7 +2,7 @@ import { Wallet } from "ethers";
 
 export interface Form {
   name: string;
-  type: "TRANSFERABLE_RECORD" | "VERIFIABLE_DOCUMENT" | "INVOICE";
+  type: "TRANSFERABLE_RECORD" | "VERIFIABLE_DOCUMENT";
 }
 
 export interface ConfigFile {

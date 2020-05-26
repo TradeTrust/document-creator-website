@@ -24,10 +24,6 @@ export const Default = () => (
             name: "Purchase Order",
             type: "VERIFIABLE_DOCUMENT",
           },
-          {
-            name: "Invoice",
-            type: "INVOICE",
-          },
         ],
       } as Config
     }

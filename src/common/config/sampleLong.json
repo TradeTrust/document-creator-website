@@ -8,10 +8,6 @@
     {
       "name": "Purchase Order",
       "type": "VERIFIABLE_DOCUMENT"
-    },
-    {
-      "name": "Invoice",
-      "type": "INVOICE"
     }
   ]
 }
