@@ -1,6 +1,5 @@
 import styled from "@emotion/styled";
 import React, { FunctionComponent } from "react";
-import { vars } from "../../styles";
 
 interface ProgressBarProps {
   step: number;
@@ -12,15 +11,12 @@ export const ProgressBar: FunctionComponent<ProgressBarProps> = styled(({ classN
   const description = (step: number) => {
     switch (step) {
       case 1:
-        return "Upload Config";
-
-      case 2:
         return "Choose Type";
 
-      case 3:
+      case 2:
         return "Fill Form";
 
-      case 4:
+      case 3:
         return "Issue complete";
 
       default:
@@ -30,30 +26,16 @@ export const ProgressBar: FunctionComponent<ProgressBarProps> = styled(({ classN
 
   return (
     <div className={className}>
-      <div className="steps">{`Step ${step}/4: ${description(step)}`}</div>
-      <div className="unfilled">
-        <div className="filled" />
+      <div className="text-grey-dark font-bold text-base">
+        {`Step ${step}/3: ${description(step)}`}
+      </div>
+      <div className="w-full max-w-sm h-1 bg-grey-lighter mt-3 mb-6">
+        <div className="h-1 w-full bg-green-lighter transition duration-1000 ease-out progressBar" />
       </div>
     </div>
   );
 })`
-  .steps {
-    color: ${vars.greyDark};
-    font-weight: bold;
-    font-size: 16px;
-  }
-
-  .unfilled {
-    width: 388px;
-    height: 3px;
-    margin: 11px 0 24px 0;
-    background-color: ${vars.greyLight};
-  }
-
-  .filled {
-    height: 3px;
-    width: ${(props) => (props.step / 4) * 100}%;
-    background-color: ${vars.greenLight};
-    transition: width 1s ${vars.easeOutCubic};
+  .progressBar {
+    width: ${(props) => (props.step / 3) * 100}%;
   }
 `;

@@ -3,10 +3,14 @@ import { ConfigFile } from "../../types";
 
 const configFileSchema = Joi.object({
   wallet: Joi.string().required(), // Using string type since it's ethers type for encrypted JSON
-  forms: Joi.array().items({
-    name: Joi.string().required(),
-    type: Joi.string().required(),
-  }),
+  forms: Joi.array()
+    .items(
+      Joi.object({
+        name: Joi.string().required(),
+        type: Joi.string().required(),
+      })
+    )
+    .required(),
 });
 
 export const validateConfigFile = configFileSchema.validate;

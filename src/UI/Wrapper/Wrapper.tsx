@@ -14,7 +14,6 @@ const StandardWrapper = ({ className, children }: WrapperProps) => {
 export const Wrapper = styled(StandardWrapper)`
   display: flex;
   flex-direction: column;
-  width: 60%;
   max-width: 600px;
   margin: auto;
   padding-top: 32px;

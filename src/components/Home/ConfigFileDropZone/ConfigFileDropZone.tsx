@@ -2,13 +2,12 @@ import styled from "@emotion/styled";
 import React, { FunctionComponent, useState } from "react";
 import { useDropzone } from "react-dropzone";
 import { readFileAsJson } from "../../../common/utils";
-import { vars } from "../../../styles";
+import { mixin } from "../../../styles";
 import { ConfigFile } from "../../../types";
-import { ButtonSolidWhiteOrange } from "../../../UI/Button";
+import { Button } from "../../../UI/Button";
 import { Title } from "../../../UI/Title";
 import { Wrapper } from "../../../UI/Wrapper";
 import { ErrorAlert } from "../../Alert";
-import { ProgressBar } from "../../ProgressBar";
 
 interface ConfigFileDropZone {
   errorMessage?: string;
@@ -34,8 +33,7 @@ export const ConfigFileDropZone: FunctionComponent<ConfigFileDropZone> = styled(
     return (
       <div className={className}>
         <Wrapper>
-          <ProgressBar step={1} />
-          <Title>Upload Configuration File</Title>
+          <Title className="text-grey-dark">Upload Configuration File</Title>
           {errorMessage && (
             <div className="my-2">
               <ErrorAlert message={errorMessage} />
@@ -43,11 +41,17 @@ export const ConfigFileDropZone: FunctionComponent<ConfigFileDropZone> = styled(
           )}
           <div {...getRootProps()}>
             <input data-testid="config-file-drop-zone" {...getInputProps()} />
-            <div className={`dropZone ${isDragActive ? "bg-gray-400" : "bg-white"}`}>
+            <div
+              className={`border-dashed border-2 items-center border-grey-lighter flex flex-col pt-16 pb-16 px-4 text-center ${
+                isDragActive ? "bg-grey-lighter" : "bg-white"
+              }`}
+            >
               {error && <div>Error: File cannot be read</div>}
-              <div className="dropText">Drag and drop file here</div>
-              <div className="or">or</div>
-              <ButtonSolidWhiteOrange className="browseButton">Browse File</ButtonSolidWhiteOrange>
+              <div className="dropText text-grey-dark">Drag and drop file here</div>
+              <div className="text-base text-grey-dark my-4">or</div>
+              <Button className="py-3 px-12 bg-white text-orange hover:text-orange-dark">
+                Browse File
+              </Button>
             </div>
           </div>
         </Wrapper>
@@ -55,28 +59,8 @@ export const ConfigFileDropZone: FunctionComponent<ConfigFileDropZone> = styled(
     );
   }
 )`
-  .dropZone {
-    border: 2px dashed #dddddd;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding-top: 62px;
-    padding-bottom: 52px;
-  }
-
   .dropText {
-    font-weight: bold;
-    font-size: 18px;
-    color: ${vars.greyDark};
-  }
-
-  .or {
-    font-size: 16px;
-    margin: 24px 0;
-  }
-
-  .browseButton {
-    padding: 13px 42px;
-    font-weight: bold;
+    ${mixin.fontRobotoBold()}
+    ${mixin.fontSize(18)}
   }
 `;

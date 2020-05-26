@@ -1,5 +1,4 @@
-import styled from "@emotion/styled";
-import React from "react";
+import React, { FunctionComponent } from "react";
 import { Config, Form } from "../../../types";
 import { Button } from "../../../UI/Button";
 import { Title } from "../../../UI/Title";
@@ -9,9 +8,10 @@ import { ProgressBar } from "../../ProgressBar";
 
 interface FormSelection {
   config: Config;
+  className?: string;
 }
 
-export const FormSelection = styled(({ className, config }) => {
+export const FormSelection: FunctionComponent<FormSelection> = ({ className, config }) => {
   // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
   const selectedForm = (form: string) => {
     console.log(form);
@@ -21,12 +21,13 @@ export const FormSelection = styled(({ className, config }) => {
     <Container>
       <div className={className}>
         <Wrapper>
-          <ProgressBar step={2} />
-          <Title>Choose Document Type to Issue</Title>
-          <div className="buttonWrapper">
+          <ProgressBar step={1} />
+          <Title className="text-grey-dark">Choose Document Type to Issue</Title>
+          <div className="flex w-full">
             {config.forms.map((form: Form, i: number) => {
               return (
                 <Button
+                  className="bg-white text-grey-dark hover:text-blue w-full p-4"
                   data-testid={`${form.type}-button`}
                   key={i}
                   onClick={() => selectedForm(form.name)}
@@ -36,21 +37,15 @@ export const FormSelection = styled(({ className, config }) => {
               );
             })}
           </div>
-          <div className="or-word">or</div>
-          <Button onClick={() => selectedForm("Basic Template")}>Use a Basic Template</Button>
+          <div className="w-full text-center my-8 text-grey-dark ">or</div>
+          <Button
+            className="bg-white text-grey-dark hover:text-blue w-full p-4"
+            onClick={() => selectedForm("Basic Template")}
+          >
+            Use a Basic Template
+          </Button>
         </Wrapper>
       </div>
     </Container>
   );
-})`
-  .buttonWrapper {
-    display: flex;
-    width: 100%;
-  }
-
-  .or-word {
-    width: 100%;
-    text-align: center;
-    margin: 32px 0;
-  }
-`;
+};

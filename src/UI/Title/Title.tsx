@@ -1,6 +1,6 @@
 import styled from "@emotion/styled";
 import React from "react";
-import { vars } from "../../styles";
+import { mixin } from "../../styles";
 
 interface TitleProps {
   children?: React.ReactNode;
@@ -13,8 +13,7 @@ const StandardTitle = ({ className, children }: TitleProps) => {
 };
 
 export const Title = styled(StandardTitle)`
-  font-weight: bold;
-  font-size: 28px;
-  color: ${vars.greyDark};
+  ${mixin.fontRobotoBold}
+  ${mixin.fontSize(28)}
   margin-bottom: 32px;
 `;
