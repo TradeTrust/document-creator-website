@@ -1,11 +1,5 @@
 export const white = "#ffffff";
 export const black = "#000000";
-export const greyDark = "#4F4F4F";
-export const greyLight = "#DDDDDD";
-export const blue = "#0099CC";
-export const blueLighter = "#e6f5fa";
-export const orange = "#FF9220";
-export const greenLight = "#00CBBC";
 
 export const buttonRadius = "4px";
 

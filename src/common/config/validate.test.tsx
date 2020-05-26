@@ -9,11 +9,20 @@ describe("configFileSchema", () => {
   });
 
   it("throws when wallet is malformed", () => {
-    expect.assertions(3);
+    expect.assertions(6);
     expect(() => assertConfigFile({ ...sample, wallet: undefined } as any)).toThrow(/missing/);
     expect(() => assertConfigFile({ ...sample, wallet: "" } as any)).toThrow(
       /not allowed to be empty/
     );
     expect(() => assertConfigFile({ ...sample, forms: undefined } as any)).toThrow(/missing/);
+    expect(() =>
+      assertConfigFile({ ...sample, forms: [{ name: undefined, type: "abc" }] } as any)
+    ).toThrow(/missing/);
+    expect(() =>
+      assertConfigFile({ ...sample, forms: [{ name: "abc", type: undefined }] } as any)
+    ).toThrow(/missing/);
+    expect(() =>
+      assertConfigFile({ ...sample, forms: [{ name: "abc", type: "abc" }] } as any)
+    ).toThrow(/must be one of/);
   });
 });

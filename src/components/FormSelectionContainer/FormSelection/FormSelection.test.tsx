@@ -25,10 +25,19 @@ describe("formSelection", () => {
       ],
     };
 
-    render(<FormSelection config={configFile} as ConfigFile />);
+    render(<FormSelection config={configFile as any} />);
 
-    expect(screen.getByTestId("TRANSFERABLE_RECORD-button")).not.toBeNull();
-    expect(screen.getByTestId("VERIFIABLE_DOCUMENT-button")).not.toBeNull();
-    expect(screen.getByTestId("INVOICE-button")).not.toBeNull();
+    const buttons = screen.getAllByRole("button");
+
+    expect(buttons).toHaveLength(3);
+
+    const textBL = screen.getByText("Bill of Lading").textContent;
+    expect(textBL).toStrictEqual("Bill of Lading");
+
+    const textPO = screen.getByText("Purchase Order").textContent;
+    expect(textPO).toStrictEqual("Purchase Order");
+
+    const textI = screen.getByText("Invoice").textContent;
+    expect(textI).toStrictEqual("Invoice");
   });
 });

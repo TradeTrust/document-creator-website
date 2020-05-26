@@ -12,8 +12,7 @@ interface FormSelection {
 }
 
 export const FormSelection: FunctionComponent<FormSelection> = ({ className, config }) => {
-  // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
-  const selectedForm = (form: string) => {
+  const selectedForm = (form: string): void => {
     console.log(form);
   };
 
@@ -28,7 +27,7 @@ export const FormSelection: FunctionComponent<FormSelection> = ({ className, con
               return (
                 <Button
                   className="bg-white text-grey-dark hover:text-blue w-full p-4"
-                  data-testid={`${form.type}-button`}
+                  role="button"
                   key={i}
                   onClick={() => selectedForm(form.name)}
                 >
@@ -37,13 +36,6 @@ export const FormSelection: FunctionComponent<FormSelection> = ({ className, con
               );
             })}
           </div>
-          <div className="w-full text-center my-8 text-grey-dark ">or</div>
-          <Button
-            className="bg-white text-grey-dark hover:text-blue w-full p-4"
-            onClick={() => selectedForm("Basic Template")}
-          >
-            Use a Basic Template
-          </Button>
         </Wrapper>
       </div>
     </Container>
