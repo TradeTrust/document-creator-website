@@ -1,22 +1,8 @@
 import React, { FunctionComponent } from "react";
 import { Redirect } from "react-router";
 import { useConfigContext } from "../../common/context/config";
-import { Config } from "../../types";
-import { Container } from "../Container";
 import { NavigationBar } from "../NavigationBar";
-
-interface FormSelection {
-  config: Config;
-}
-
-export const FormSelection: FunctionComponent<FormSelection> = ({ config }) => {
-  return (
-    <Container>
-      <h1>Successfully decrypted wallet</h1>
-      <div data-testid="wallet-info">Wallet Address: {config.wallet.address}</div>
-    </Container>
-  );
-};
+import { FormSelection } from "./FormSelection";
 
 export const FormSelectionContainer: FunctionComponent = () => {
   const { config, setConfig } = useConfigContext();

@@ -17,7 +17,9 @@ export const HomeContainer: FunctionComponent = () => {
   return (
     <>
       <NavigationBar />
-      <Container>{configFile ? <WalletDecryptionContainer /> : <ConfigFileDropZoneContainer />}</Container>
+      <Container>
+        {configFile ? <WalletDecryptionContainer /> : <ConfigFileDropZoneContainer />}
+      </Container>
     </>
   );
 };

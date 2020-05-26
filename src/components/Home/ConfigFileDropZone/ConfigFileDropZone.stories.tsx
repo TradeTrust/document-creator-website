@@ -11,7 +11,9 @@ export default {
 
 export const Default = () => (
   <Container>
-    <ConfigFileDropZone onConfigFile={(configFile) => console.log(JSON.stringify(configFile, null, 2))} />
+    <ConfigFileDropZone
+      onConfigFile={(configFile) => console.log(JSON.stringify(configFile, null, 2))}
+    />
   </Container>
 );
 

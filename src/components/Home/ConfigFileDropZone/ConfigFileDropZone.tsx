@@ -2,13 +2,19 @@ import React, { FunctionComponent, useState } from "react";
 import { useDropzone } from "react-dropzone";
 import { readFileAsJson } from "../../../common/utils";
 import { ConfigFile } from "../../../types";
-import { ErrorAlert } from "../../Alert";
+import { Button } from "../../../UI/Button";
+import { Title } from "../../../UI/Title";
+import { Wrapper } from "../../../UI/Wrapper";
+
 interface ConfigFileDropZone {
   errorMessage?: string;
   onConfigFile: (configFile: ConfigFile) => void;
 }
 
-export const ConfigFileDropZone: FunctionComponent<ConfigFileDropZone> = ({ onConfigFile, errorMessage }) => {
+export const ConfigFileDropZone: FunctionComponent<ConfigFileDropZone> = ({
+  onConfigFile,
+  errorMessage,
+}) => {
   const [error, setError] = useState(false);
   const onDrop = async (files: File[]): Promise<void> => {
     try {
@@ -23,29 +29,38 @@ export const ConfigFileDropZone: FunctionComponent<ConfigFileDropZone> = ({ onCo
   };
   const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop });
 
+  const dropZoneCSS =
+    errorMessage || error
+      ? `border-dashed border-2 items-center border-red flex flex-col pt-16 pb-16 px-4 text-center ${
+          isDragActive ? "bg-grey-lighter" : "bg-red-lighter"
+        }`
+      : `border-dashed border-2 items-center border-grey-lighter flex flex-col pt-16 pb-16 px-4 text-center ${
+          isDragActive ? "bg-grey-lighter" : "bg-white"
+        }`;
+
   return (
-    <>
-      <div className="py-3">
-        <h1>Upload Configuration File</h1>
-      </div>
-      {errorMessage && (
-        <div className="my-2">
-          <ErrorAlert message={errorMessage} />
-        </div>
-      )}
+    <Wrapper>
+      <Title className="text-grey-dark">Upload Configuration File</Title>
       <div {...getRootProps()}>
         <input data-testid="config-file-drop-zone" {...getInputProps()} />
-        <div
-          className={`text-center w-100 border-dashed border-2 border-gray-600 p-3 ${
-            isDragActive ? "bg-gray-400" : "bg-white"
-          }`}
-        >
-          {error && <div>Error: File cannot be read</div>}
-          <div>Drag and drop file here</div>
-          <div>or</div>
-          <div>Browse File</div>
+        <div className={dropZoneCSS}>
+          {error && (
+            <div className="max-w-lg text-red font-bold text-lg">Error: File cannot be read</div>
+          )}
+          {errorMessage && !error && (
+            <div className="max-w-lg text-red font-bold text-lg">{errorMessage}</div>
+          )}
+          {!errorMessage && !error && (
+            <div className="font-bold text-lg text-grey-dark">Drag and drop file here</div>
+          )}
+          <div className="text-base text-grey-dark my-4">
+            {errorMessage || error ? "Please try again." : "or"}
+          </div>
+          <Button className="py-3 px-12 bg-white text-orange hover:text-orange-dark border border-solid border-white-dark">
+            Browse File
+          </Button>
         </div>
       </div>
-    </>
+    </Wrapper>
   );
 };

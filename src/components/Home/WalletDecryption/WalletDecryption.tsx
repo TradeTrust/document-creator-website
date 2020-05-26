@@ -1,8 +1,11 @@
-import React, { useState, FunctionComponent } from "react";
+import React, { FunctionComponent, useState } from "react";
 import { decryptWallet } from "../../../common/config/decrypt";
 import { useConfigContext } from "../../../common/context/config";
 import { usePersistedConfigFile } from "../../../common/hook/usePersistedConfigFile";
-import { ErrorAlert } from "../../Alert";
+import { Button } from "../../../UI/Button";
+import { Title } from "../../../UI/Title";
+import { Wrapper } from "../../../UI/Wrapper";
+
 interface WalletDecryption {
   isDecrypting: boolean;
   onDecryptConfigFile: (password: string) => void;
@@ -21,35 +24,50 @@ export const WalletDecryption: FunctionComponent<WalletDecryption> = ({
     onDecryptConfigFile(password);
   };
 
+  const inputBorderCSS = isIncorrectPassword
+    ? "w-full border-solid border border-red h-10 p-3"
+    : "w-full border-solid border border-grey-lighter h-10 p-3";
+
   return (
-    <>
-      <div className="py-3">
-        <h1>Login</h1>
-      </div>
-      {isIncorrectPassword && (
-        <div className="my-2">
-          <ErrorAlert message="Password is incorrect" />
+    <Wrapper>
+      <Title className="text-grey-dark">Login with Password</Title>
+      <div className="bg-white flex rounded pt-5 pl-5 pr-4 pb-6">
+        <div className="text-grey-dark mr-4 mt-2 font-medium">Password</div>
+        <div className="w-full flex flex-col items-start">
+          <input
+            data-testid="password-field"
+            placeholder="Enter Password"
+            className={`
+              ${inputBorderCSS} 
+              ${isDecrypting && "bg-grey-lighter"} 
+              ${!password && "italic"}
+            `}
+            type="password"
+            value={password}
+            onChange={(evt) => setPassword(evt.target.value)}
+            disabled={isDecrypting}
+          />
+          {isIncorrectPassword && (
+            <div className="text-red text-sm mt-2">Invalid password. Please try again.</div>
+          )}
+          <button
+            data-testid="reset-button"
+            className="text-blue font-bold mt-4"
+            onClick={onResetConfigFile}
+          >
+            Use another Config file
+          </button>
+          <Button
+            data-testid="login-button"
+            className="bg-orange text-white self-end py-3 px-4 mt-4"
+            onClick={onLogin}
+            disabled={isDecrypting}
+          >
+            Login
+          </Button>
         </div>
-      )}
-      <input
-        data-testid="password-field"
-        className="w-full"
-        type="password"
-        value={password}
-        onChange={(evt) => setPassword(evt.target.value)}
-        disabled={isDecrypting}
-      />
-      <div>
-        <button data-testid="login-button" onClick={onLogin} disabled={isDecrypting}>
-          Login
-        </button>
       </div>
-      <div>
-        <button data-testid="reset-button" onClick={onResetConfigFile}>
-          Use another config file
-        </button>
-      </div>
-    </>
+    </Wrapper>
   );
 };
 
@@ -72,6 +90,7 @@ export const WalletDecryptionContainer: FunctionComponent = () => {
       setIsDecrypting(false);
       setConfig({
         wallet,
+        forms: configFile.forms,
       });
     } catch (e) {
       setIsIncorrectPassword(true);

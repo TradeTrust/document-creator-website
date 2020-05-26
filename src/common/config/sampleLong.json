@@ -1,3 +1,13 @@
 {
-  "wallet": "{\"address\":\"f775610fc843f9b5604fc25b86905d813733c86b\",\"id\":\"7d7ee6f0-ba23-44c6-ba7d-d51d1af09224\",\"version\":3,\"Crypto\":{\"cipher\":\"aes-128-ctr\",\"cipherparams\":{\"iv\":\"80fe86276a08308a7cc16656c2da33e7\"},\"ciphertext\":\"c8e53dce676fa05723a771f0c63a5f1bb93880534ec2d3c926789ac9b3909e17\",\"kdf\":\"scrypt\",\"kdfparams\":{\"salt\":\"0652423cf2caf8e2d4ebcdebce852f740ab1da388172398c40195d94b85a5167\",\"n\":131072,\"dklen\":32,\"p\":1,\"r\":8},\"mac\":\"861b611931e708fc0f484939a31cae5ec9ee9a552321db8c141ea1aae38c42fc\"},\"x-ethers\":{\"client\":\"ethers.js\",\"gethFilename\":\"UTC--2020-05-15T11-07-00.0Z--f775610fc843f9b5604fc25b86905d813733c86b\",\"mnemonicCounter\":\"49e32c0b1e9eb8389185c23d8be967d6\",\"mnemonicCiphertext\":\"6aa00776474470a05aafd9cf2506b591\",\"path\":\"m/44'/60'/0'/0/0\",\"version\":\"0.1\"}}"
+  "wallet": "{\"address\":\"f775610fc843f9b5604fc25b86905d813733c86b\",\"id\":\"7d7ee6f0-ba23-44c6-ba7d-d51d1af09224\",\"version\":3,\"Crypto\":{\"cipher\":\"aes-128-ctr\",\"cipherparams\":{\"iv\":\"80fe86276a08308a7cc16656c2da33e7\"},\"ciphertext\":\"c8e53dce676fa05723a771f0c63a5f1bb93880534ec2d3c926789ac9b3909e17\",\"kdf\":\"scrypt\",\"kdfparams\":{\"salt\":\"0652423cf2caf8e2d4ebcdebce852f740ab1da388172398c40195d94b85a5167\",\"n\":131072,\"dklen\":32,\"p\":1,\"r\":8},\"mac\":\"861b611931e708fc0f484939a31cae5ec9ee9a552321db8c141ea1aae38c42fc\"},\"x-ethers\":{\"client\":\"ethers.js\",\"gethFilename\":\"UTC--2020-05-15T11-07-00.0Z--f775610fc843f9b5604fc25b86905d813733c86b\",\"mnemonicCounter\":\"49e32c0b1e9eb8389185c23d8be967d6\",\"mnemonicCiphertext\":\"6aa00776474470a05aafd9cf2506b591\",\"path\":\"m/44'/60'/0'/0/0\",\"version\":\"0.1\"}}",
+  "forms": [
+    {
+      "name": "Bill of Lading",
+      "type": "TRANSFERABLE_RECORD"
+    },
+    {
+      "name": "Purchase Order",
+      "type": "VERIFIABLE_DOCUMENT"
+    }
+  ]
 }

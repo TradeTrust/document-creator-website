@@ -1,4 +1,4 @@
-import React, { useState, FunctionComponent } from "react";
+import React, { FunctionComponent, useState } from "react";
 import { decryptWallet } from "../../../common/config/decrypt";
 import { useConfigContext } from "../../../common/context/config";
 import { usePersistedConfigFile } from "../../../common/hook/usePersistedConfigFile";
@@ -19,6 +19,7 @@ export const WalletDecryptionContainer: FunctionComponent = () => {
       setIsDecrypting(false);
       setConfig({
         wallet,
+        forms: configFile.forms,
       });
     } catch (e) {
       setIsIncorrectPassword(true);
