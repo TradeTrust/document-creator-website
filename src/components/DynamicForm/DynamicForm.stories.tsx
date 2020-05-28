@@ -31,12 +31,14 @@ const schema = {
       title: "BL Number",
     },
     shipper: {
+      title: "Shipper",
       type: "object",
       properties: {
         name: {
           type: "string",
         },
         address: {
+          title: "Address",
           type: "object",
           properties: {
             street: {
@@ -50,6 +52,7 @@ const schema = {
       },
     },
     consignee: {
+      title: "Consignee",
       type: "object",
       properties: {
         name: {
