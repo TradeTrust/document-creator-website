@@ -1,14 +1,15 @@
-// Bootstrap is messing around with the config with tailwind
-// Ideally we want to remove bootstrap, but first we have to extract the styles
-// for the forms first
 import styled from "@emotion/styled";
-// import "bootstrap/dist/css/bootstrap.min.css";
 import { merge } from "lodash";
 import React, { useState } from "react";
 import JsonForm, { IChangeEvent } from "react-jsonschema-form";
 import { mixin, vars } from "../../styles";
 import { Wrapper } from "../../UI/Wrapper";
 import { DataFileDropZone } from "./DataFileDropZone";
+
+// Bootstrap is messing around with the config with tailwind
+// Ideally we want to remove bootstrap, but first we have to extract the styles
+// for the forms first
+// import "bootstrap/dist/css/bootstrap.min.css";
 // import "./index.css";
 
 export interface Form {
