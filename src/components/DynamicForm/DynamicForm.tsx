@@ -5,6 +5,7 @@ import JsonForm, { IChangeEvent } from "react-jsonschema-form";
 import { mixin, vars } from "../../styles";
 import { Wrapper } from "../../UI/Wrapper";
 import { DataFileDropZone } from "./DataFileDropZone";
+import tw from "twin.macro";
 
 // Bootstrap is messing around with the config with tailwind
 // Ideally we want to remove bootstrap, but first we have to extract the styles
@@ -19,7 +20,7 @@ export interface Form {
   schema: any;
 }
 
-export const DynamicForm = styled(({ form, className }: { form: Form; className: string }) => {
+export const DynamicForm = styled(({ form, className }: { form: Form; className?: string }) => {
   const [formData, setFormData] = useState<IChangeEvent>();
 
   const setFormValue = (value: any) => {
@@ -70,25 +71,19 @@ export const DynamicForm = styled(({ form, className }: { form: Form; className:
     title,
     description,
   }: CustomObjectTemplate) {
-    return title ? (
-      <div>
-        <TitleField title={title} />
-        <div className="">
+    return (
+      <>
+        {title &&
+          <TitleField title={title} />
+        }
+        <ul>
           {properties.map((prop: any) => (
-            <div className="col-lg-2 col-md-4 col-sm-6 col-xs-12" key={prop.content.key}>
-              <div className="border border-solid border-red">{prop.content}</div>
-            </div>
+            <li className="mb-4" key={prop.content.key}>{prop.content}</li>
           ))}
-        </div>
+        </ul>
         {description}
-      </div>
-    ) : (
-      <div>
-        {properties.map((prop: any) => (
-          <div key={prop.content.key}>{prop.content}</div>
-        ))}
-      </div>
-    );
+      </>
+    )
   }
 
   return (
@@ -108,36 +103,40 @@ export const DynamicForm = styled(({ form, className }: { form: Form; className:
     </Wrapper>
   );
 })`
-  .field-object fieldset {
-    div:nth-child(2) {
+  legend {
+    ${mixin.fontRobotoBold()}
+    ${mixin.fontSize(20)}
+    color: ${vars.greyDark};
+    border-bottom: solid 1px ${vars.greyLighter};
+    width: 100%;
+    padding-bottom: 10px;
+    margin-bottom: 15px;
+
+    ~ ul {
+      margin-bottom: 80px;
     }
   }
 
   .field-string {
-    display: flex;
-    padding-right: 6rem;
-    margin-bottom: 1rem;
+    ${tw`
+      flex flex-wrap items-center
+    `}
   }
 
   label {
-    width: 40%;
-    text-align: right;
-    margin: auto;
-    margin-right: 1rem;
-    
-  }
-  input {
-    border-radius: 0;
-    border: 1px solid ${vars.greyLighter};
-    width: 100%;
-    height: 2.5rem;
+    ${tw`
+      w-full sm:w-1/3 px-0 sm:px-2 sm:text-right
+    `}
   }
 
-  legend {
-    ${mixin.fontRobotoBold()}
-    ${mixin.fontSize(24)}
-    color: ${vars.greyDark};
-    margin: 1rem 0;
+  input {
+    ${tw`
+      w-full sm:w-2/3 px-0 sm:px-2
+    `}
+
+    min-height: 40px;
+    border-radius: 0;
+    border: 1px solid ${vars.greyLighter};
   }
 
   button {
@@ -163,7 +162,7 @@ export const DynamicForm = styled(({ form, className }: { form: Form; className:
     :first-of-type {
       margin-left: 0;
     }
-  
+
     :last-child {
       margin-right: 0;
     }

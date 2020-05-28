@@ -6,7 +6,6 @@
     "@emotion/core": "^10.0.28",
     "@emotion/styled": "^10.0.27",
     "@hapi/joi": "^17.1.1",
-    "bootstrap": "^4.5.0",
     "ethers": "^4.0.47",
     "polished": "^3.6.3",
     "react": "^16.13.1",
@@ -14,6 +13,7 @@
     "react-dropzone": "^11.0.1",
     "react-jsonschema-form": "^1.8.1",
     "react-router-dom": "^5.2.0",
+    "twin.macro": "^1.2.0",
     "use-persisted-state": "^0.3.0"
   },
   "devDependencies": {
