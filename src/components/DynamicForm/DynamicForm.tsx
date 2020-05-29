@@ -1,10 +1,11 @@
 import styled from "@emotion/styled";
 import { merge } from "lodash";
-import React, { useState } from "react";
+import React, { ReactElement, useState } from "react";
 import JsonForm, { IChangeEvent } from "react-jsonschema-form";
 import tw from "twin.macro";
 import { mixin } from "../../styles";
 import { Wrapper } from "../../UI/Wrapper";
+import { DataFileButton } from "./DataFileButton";
 import { DataFileDropZone } from "./DataFileDropZone";
 
 export interface Form {
@@ -37,7 +38,7 @@ export const DynamicForm = styled(({ form, className }: { form: Form; className?
     properties,
     title,
     description,
-  }: CustomObjectTemplate) {
+  }: CustomObjectTemplate): ReactElement {
     return (
       <>
         {title && <TitleField title={title} />}
@@ -53,10 +54,50 @@ export const DynamicForm = styled(({ form, className }: { form: Form; className?
     );
   }
 
+  interface CustomFieldTemplateInterface {
+    id: string;
+    classNames: string;
+    label: string;
+    help: string;
+    required: boolean;
+    description: string;
+    errors: string;
+    children: string;
+    schema: {
+      format: string;
+      type: string;
+      title?: string;
+    };
+  }
+  function CustomFieldTemplate(props: CustomFieldTemplateInterface): ReactElement {
+    const { id, classNames, label, help, required, description, errors, children, schema } = props;
+    console.log(schema);
+    return (
+      <div className={classNames}>
+        {!schema.format &&
+          schema.type !== "object" &&
+          schema.type !== "array" &&
+          schema.type !== "boolean" && (
+            <label htmlFor={id}>
+              {label}
+              {required ? "*" : null}
+            </label>
+          )}
+        {schema.format && <legend>{schema.title}</legend>}
+        {description}
+        {children}
+        {errors}
+        {help}
+      </div>
+    );
+  }
+
+  const customWidgets = { FileWidget: DataFileDropZone };
+
   return (
     <Wrapper className={className}>
       <div className="mb-4">
-        <DataFileDropZone onDataFile={setFormValue} />
+        <DataFileButton onDataFile={setFormValue} />
       </div>
       <JsonForm
         onSubmit={onSubmit}
@@ -64,6 +105,8 @@ export const DynamicForm = styled(({ form, className }: { form: Form; className?
         onChange={setFormData}
         formData={formData?.formData}
         ObjectFieldTemplate={ObjectFieldTemplate}
+        FieldTemplate={CustomFieldTemplate}
+        widgets={customWidgets}
       />
     </Wrapper>
   );
@@ -74,17 +117,11 @@ export const DynamicForm = styled(({ form, className }: { form: Form; className?
     `}
   }
 
-  .field-array-of-object legend {
-    ${tw`
-      pt-4
-    `}
-  }
-
   legend {
     ${mixin.fontRobotoBold()}
     ${mixin.fontSize(20)}
     ${tw`
-      text-grey-dark w-full mt-8
+      text-grey-dark w-full mt-8 pt-4
     `}
   }
 
@@ -93,8 +130,8 @@ export const DynamicForm = styled(({ form, className }: { form: Form; className?
       flex flex-wrap items-center
     `}
   }
-  .field-string div {
-    ${tw`flex flex-wrap w-1/2`}
+  .field-string .file-drop-zone {
+    ${tw`flex flex-wrap w-full my-4`}
   }
 
   .checkbox label {

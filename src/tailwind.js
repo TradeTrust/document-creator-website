@@ -49,7 +49,7 @@ module.exports = {
       },
       white: {
         default: "#ffffff",
-        dark: "#eeeeee",
+        dark: "#fafafa",
       },
       black: {
         default: "#000000",
