@@ -41,7 +41,7 @@ export const DynamicForm = styled(({ form, className }: { form: Form; className?
     return (
       <>
         {title && <TitleField title={title} />}
-        <ul>
+        <ul className="dynamicForm-items">
           {properties.map((prop: any) => (
             <li className="my-4" key={prop.content.key}>
               {prop.content}
@@ -68,7 +68,7 @@ export const DynamicForm = styled(({ form, className }: { form: Form; className?
     </Wrapper>
   );
 })`
-  .form-group .form-group.field.field-object ul {
+  .form-group .form-group.field.field-object .dynamicForm-items {
     ${tw`
       border border-solid border-grey-lighter bg-white-dark my-4 rounded
     `}
@@ -88,11 +88,23 @@ export const DynamicForm = styled(({ form, className }: { form: Form; className?
     `}
   }
 
-  .field-string {
+  .field-string, .field-integer, .field-number, .field-null {
     ${tw`
       flex flex-wrap items-center
     `}
   }
+  .field-string div {
+    ${tw`flex flex-wrap w-1/2`}
+  }
+
+  .checkbox label {
+    ${tw`flex flex-wrap items-center w-full justify-center`}
+
+    input {
+      ${tw`mr-4`}
+    }
+  }
+
   .field-array {
     ${tw`
       mt-4
@@ -111,7 +123,7 @@ export const DynamicForm = styled(({ form, className }: { form: Form; className?
     `}
   }
 
-  input {
+  .field-string [type=text], .field-number input, .field-integer input {
     ${tw`
       w-full sm:w-3/6 px-0 sm:px-2 h-10 rounded-none border border-solid border-grey-lighter
     `}

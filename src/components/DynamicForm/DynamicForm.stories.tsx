@@ -89,22 +89,23 @@ const schema = {
         voyageNo: {
           title: "Voyage No.",
           type: "string",
+          format: "data-url",
         },
         portOfLoading: {
           title: "Port of Loading",
-          type: "string",
+          type: "null",
         },
         portOfDischarge: {
           title: "Port of Discharge",
-          type: "string",
+          type: "integer",
         },
         placeOfReceipt: {
           title: "Place of Receipt",
-          type: "string",
+          type: "number",
         },
         placeOfDelivery: {
           title: "Place of Delivery",
-          type: "string",
+          type: "boolean",
         },
       },
     },
