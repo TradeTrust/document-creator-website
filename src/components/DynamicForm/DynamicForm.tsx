@@ -6,7 +6,6 @@ import tw from "twin.macro";
 import { mixin } from "../../styles";
 import { Wrapper } from "../../UI/Wrapper";
 import { DataFileButton } from "./DataFileButton";
-import { DataFileDropZone } from "./DataFileDropZone";
 
 export interface Form {
   name: string;
@@ -92,8 +91,6 @@ export const DynamicForm = styled(({ form, className }: { form: Form; className?
     );
   }
 
-  const customWidgets = { FileWidget: DataFileDropZone };
-
   return (
     <Wrapper className={className}>
       <div className="mb-4">
@@ -106,7 +103,6 @@ export const DynamicForm = styled(({ form, className }: { form: Form; className?
         formData={formData?.formData}
         ObjectFieldTemplate={ObjectFieldTemplate}
         FieldTemplate={CustomFieldTemplate}
-        widgets={customWidgets}
       />
     </Wrapper>
   );

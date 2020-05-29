@@ -36,11 +36,6 @@ const schema = {
         },
       },
     },
-    files: {
-      title: "Files",
-      type: "string",
-      format: "data-url",
-    },
     shipper: {
       title: "Shipper",
       type: "object",
