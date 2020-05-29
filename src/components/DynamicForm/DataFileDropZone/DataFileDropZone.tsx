@@ -1,6 +1,7 @@
 import React, { FunctionComponent, useState } from "react";
 import { useDropzone } from "react-dropzone";
 import { readFileAsJson } from "../../../common/utils";
+import { Button } from "../../../UI/Button";
 import { ErrorAlert } from "../../Alert";
 
 interface DataFileDropZone {
@@ -20,7 +21,7 @@ export const DataFileDropZone: FunctionComponent<DataFileDropZone> = ({ onDataFi
       console.error(e);
     }
   };
-  const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop });
+  const { getRootProps, getInputProps } = useDropzone({ onDrop });
 
   return (
     <>
@@ -31,13 +32,7 @@ export const DataFileDropZone: FunctionComponent<DataFileDropZone> = ({ onDataFi
       )}
       <div {...getRootProps()}>
         <input data-testid="config-file-drop-zone" {...getInputProps()} />
-        <div
-          className={`text-center w-100 border-dashed border-2 border-gray-600 p-2 text-primary ${
-            isDragActive ? "bg-gray-400" : "bg-white"
-          }`}
-        >
-          Upload Data File
-        </div>
+        <Button className={`text-center w-full p-2 bg-white text-orange`}>Upload Data File</Button>
       </div>
     </>
   );

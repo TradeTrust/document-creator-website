@@ -22,139 +22,41 @@ const defaults = {
 };
 
 // Form values that the admin staff will be changing
-// const schema = {
-//   type: "object",
-//   required: ["blNumber"],
-//   properties: {
-//     blNumber: {
-//       title: "Bill of Lading",
-//       type: "object",
-//       properties: {
-//         name: {
-//           title: "BL Number*.",
-//           type: "string",
-//         },
-//       },
-//     },
-//     shipper: {
-//       title: "Shipper",
-//       type: "object",
-//       properties: {
-//         name: {
-//           title: "Shipper",
-//           type: "string",
-//         },
-//       },
-//     },
-//     address: {
-//       title: "Address",
-//       type: "object",
-//       properties: {
-//         street: {
-//           title: "Street",
-//           type: "string",
-//         },
-//         country: {
-//           title: "Country",
-//           type: "string",
-//         },
-//       },
-//     },
-//     consignee: {
-//       title: "Consignee",
-//       type: "object",
-//       properties: {
-//         name: {
-//           title: "Name",
-//           type: "string",
-//         },
-//         type: {
-//           title: "Type",
-//           type: "string",
-//         },
-//       },
-//     },
-//     notifyParty: {
-//       title: "Notify Party",
-//       type: "object",
-//       properties: {
-//         name: {
-//           title: "Name",
-//           type: "string",
-//         },
-//         vessel: {
-//           title: "Vessel",
-//           type: "string",
-//         },
-//         voyageNo: {
-//           title: "Voyage No.",
-//           type: "string",
-//         },
-//         portOfLoading: {
-//           title: "Port of Loading",
-//           type: "string",
-//         },
-//         portOfDischarge: {
-//           title: "Port of Discharge",
-//           type: "string",
-//         },
-//         placeOfReceipt: {
-//           title: "Place of Receipt",
-//           type: "string",
-//         },
-//         placeOfDelivery: {
-//           title: "Place of Delivery",
-//           type: "string",
-//         },
-//       },
-//     },
-//     packages: {
-//       type: "array",
-//       title: "Packages",
-//       items: {
-//         type: "object",
-//         properties: {
-//           description: {
-//             type: "string",
-//           },
-//           measurement: {
-//             type: "string",
-//           },
-//           weight: {
-//             type: "string",
-//           },
-//         },
-//       },
-//     },
-//   },
-// };
-
 const schema = {
   type: "object",
-  required: ["blNumber"],
   properties: {
     blNumber: {
-      type: "string",
-      title: "BL Number",
+      title: "Bill of Lading",
+      type: "object",
+      required: ["name"],
+      properties: {
+        name: {
+          title: "BL Number",
+          type: "string",
+        },
+      },
     },
     shipper: {
       title: "Shipper",
       type: "object",
       properties: {
         name: {
+          title: "Shipper",
           type: "string",
         },
-        address: {
-          title: "Address",
-          type: "object",
-          properties: {
-            street: {
-              type: "string",
-            },
-            country: {
-              type: "string",
-            },
-          },
+      },
+    },
+    address: {
+      title: "Address",
+      type: "object",
+      properties: {
+        street: {
+          title: "Street",
+          type: "string",
+        },
+        country: {
+          title: "Country",
+          type: "string",
         },
       },
     },
@@ -163,6 +65,11 @@ const schema = {
       type: "object",
       properties: {
         name: {
+          title: "Name",
+          type: "string",
+        },
+        type: {
+          title: "Type",
           type: "string",
         },
       },
@@ -172,32 +79,34 @@ const schema = {
       type: "object",
       properties: {
         name: {
+          title: "Name",
+          type: "string",
+        },
+        vessel: {
+          title: "Vessel",
+          type: "string",
+        },
+        voyageNo: {
+          title: "Voyage No.",
+          type: "string",
+        },
+        portOfLoading: {
+          title: "Port of Loading",
+          type: "string",
+        },
+        portOfDischarge: {
+          title: "Port of Discharge",
+          type: "string",
+        },
+        placeOfReceipt: {
+          title: "Place of Receipt",
+          type: "string",
+        },
+        placeOfDelivery: {
+          title: "Place of Delivery",
           type: "string",
         },
       },
-    },
-    vessel: {
-      type: "string",
-    },
-    voyageNo: {
-      title: "Voyage No.",
-      type: "string",
-    },
-    portOfLoading: {
-      title: "Port of Loading",
-      type: "string",
-    },
-    portOfDischarge: {
-      title: "Port of Discharge",
-      type: "string",
-    },
-    placeOfReceipt: {
-      title: "Place of Receipt",
-      type: "string",
-    },
-    placeOfDelivery: {
-      title: "Place of Delivery",
-      type: "string",
     },
     packages: {
       type: "array",

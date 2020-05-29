@@ -43,7 +43,7 @@ export const DynamicForm = styled(({ form, className }: { form: Form; className?
         {title && <TitleField title={title} />}
         <ul>
           {properties.map((prop: any) => (
-            <li className="mb-4" key={prop.content.key}>
+            <li className="my-4" key={prop.content.key}>
               {prop.content}
             </li>
           ))}
@@ -55,7 +55,7 @@ export const DynamicForm = styled(({ form, className }: { form: Form; className?
 
   return (
     <Wrapper className={className}>
-      <div className="mb-10">
+      <div className="mb-4">
         <DataFileDropZone onDataFile={setFormValue} />
       </div>
       <JsonForm
@@ -68,17 +68,29 @@ export const DynamicForm = styled(({ form, className }: { form: Form; className?
     </Wrapper>
   );
 })`
+  .form-group .form-group.field.field-object ul {
+    ${tw`
+      border border-solid border-grey-lighter bg-white-dark my-4 rounded
+    `}
+  }
+
+  .field-array-of-object legend {
+    ${tw`
+      pt-4
+    `}
+  }
+
   legend {
     ${mixin.fontRobotoBold()}
     ${mixin.fontSize(20)}
     ${tw`
-      mt-16 border-b border-grey-lighter border-solid text-grey-dark w-full mb-4
+      text-grey-dark w-full mt-8
     `}
   }
 
   .field-string {
     ${tw`
-      flex flex-wrap items-center pr-8
+      flex flex-wrap items-center
     `}
   }
   .field-array {
@@ -95,17 +107,17 @@ export const DynamicForm = styled(({ form, className }: { form: Form; className?
 
   label {
     ${tw`
-      w-full sm:w-1/3 px-0 sm:px-4 sm:text-right text-grey-dark
+      w-full sm:w-2/6 px-0 sm:px-4 sm:text-right text-grey-dark
     `}
   }
 
   input {
     ${tw`
-      w-full sm:w-2/3 px-0 sm:px-2 h-10 rounded-none border border-solid border-grey-lighter
+      w-full sm:w-3/6 px-0 sm:px-2 h-10 rounded-none border border-solid border-grey-lighter
     `}
   }
 
-  button {
+  .btn {
     ${tw`
       border border-solid border-orange bg-orange rounded py-2 px-4 text-white m-2 shadow-md inline-block align-middle
     `}
