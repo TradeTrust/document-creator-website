@@ -1,23 +1,26 @@
 // If you update anything here, please update tailwind.js file too. Since we are using tailwind and emotion style component together.
+import resolveConfig from "tailwindcss/resolveConfig";
+import tailwindConfig from "../../tailwind.js";
+const fullConfig = resolveConfig(tailwindConfig);
 
-export const white = "#ffffff";
-export const black = "#000000";
-export const whiteDark = "#eeeeee";
-export const grey = "#a0aec0";
-export const greyLighter = "#dddddd";
-export const greyDark = "#4F4F4F";
-export const blue = "#0099CC";
-export const blueLighter = "#e6f5fa";
-export const blueDark = "#2b6cb0";
-export const orange = "#f6ad55";
-export const orangeDark = "#ed8936";
-export const orangeLighter = "#fbd38d";
-export const green = "#48bb78";
-export const greenLighter = "#68d391";
-export const greenDark = "#38a169";
-export const red = "#FF2020";
-export const redDark = "#c53030";
-export const redLighter = "#FFF4F4";
+export const white = `${fullConfig.theme.colors.white.default}`;
+export const black = `${fullConfig.theme.colors.black.default}`;
+export const whiteDark = `${fullConfig.theme.colors.white.dark}`;
+export const grey = `${fullConfig.theme.colors.grey.default}`;
+export const greyLighter = `${fullConfig.theme.colors.grey.lighter}`;
+export const greyDark = `${fullConfig.theme.colors.grey.dark}`;
+export const blue = `${fullConfig.theme.colors.blue.default}`;
+export const blueLighter = `${fullConfig.theme.colors.blue.lighter}`;
+export const blueDark = `${fullConfig.theme.colors.blue.dark}`;
+export const orange = `${fullConfig.theme.colors.orange.default}`;
+export const orangeDark = `${fullConfig.theme.colors.orange.dark}`;
+export const orangeLighter = `${fullConfig.theme.colors.orange.lighter}`;
+export const green = `${fullConfig.theme.colors.green.default}`;
+export const greenLighter = `${fullConfig.theme.colors.green.lighter}`;
+export const greenDark = `${fullConfig.theme.colors.green.dark}`;
+export const red = `${fullConfig.theme.colors.red.default}`;
+export const redDark = `${fullConfig.theme.colors.red.dark}`;
+export const redLighter = `${fullConfig.theme.colors.red.lighter}`;
 
 export const buttonRadius = "4px";
 

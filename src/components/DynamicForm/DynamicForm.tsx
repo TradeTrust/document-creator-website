@@ -2,16 +2,10 @@ import styled from "@emotion/styled";
 import { merge } from "lodash";
 import React, { useState } from "react";
 import JsonForm, { IChangeEvent } from "react-jsonschema-form";
-import { mixin, vars } from "../../styles";
+import tw from "twin.macro";
+import { mixin } from "../../styles";
 import { Wrapper } from "../../UI/Wrapper";
 import { DataFileDropZone } from "./DataFileDropZone";
-import tw from "twin.macro";
-
-// Bootstrap is messing around with the config with tailwind
-// Ideally we want to remove bootstrap, but first we have to extract the styles
-// for the forms first
-// import "bootstrap/dist/css/bootstrap.min.css";
-// import "./index.css";
 
 export interface Form {
   name: string;
@@ -32,33 +26,6 @@ export const DynamicForm = styled(({ form, className }: { form: Form; className?
     console.log(rawDocument);
   };
 
-  // interface FieldProps {
-  //   id: string;
-  //   classNames: string;
-  //   label: string;
-  //   help: string;
-  //   required: boolean;
-  //   description: string;
-  //   errors: string;
-  //   children: string;
-  //   fields: string;
-  // }
-  // function CustomFieldTemplate(props: FieldProps) {
-  //   const { id, classNames, label, help, required, description, errors, children, fields } = props;
-  //   console.log("field", fields);
-  //   return (
-  //     <div className={classNames}>
-  //       <label htmlFor={id}>
-  //         {label}
-  //         {required ? "*" : null}
-  //       </label>
-  //       <div className="border border-red border-solid">{children}</div>
-  //       {description}
-  //       {errors}
-  //       {help}
-  //     </div>
-  //   );
-  // }
   interface CustomObjectTemplate {
     TitleField: any;
     properties: any;
@@ -73,17 +40,17 @@ export const DynamicForm = styled(({ form, className }: { form: Form; className?
   }: CustomObjectTemplate) {
     return (
       <>
-        {title &&
-          <TitleField title={title} />
-        }
+        {title && <TitleField title={title} />}
         <ul>
           {properties.map((prop: any) => (
-            <li className="mb-4" key={prop.content.key}>{prop.content}</li>
+            <li className="mb-4" key={prop.content.key}>
+              {prop.content}
+            </li>
           ))}
         </ul>
         {description}
       </>
-    )
+    );
   }
 
   return (
@@ -96,8 +63,6 @@ export const DynamicForm = styled(({ form, className }: { form: Form; className?
         schema={form.schema}
         onChange={setFormData}
         formData={formData?.formData}
-        // uiSchema={uiSchema}
-        // FieldTemplate={CustomFieldTemplate}
         ObjectFieldTemplate={ObjectFieldTemplate}
       />
     </Wrapper>
@@ -106,49 +71,44 @@ export const DynamicForm = styled(({ form, className }: { form: Form; className?
   legend {
     ${mixin.fontRobotoBold()}
     ${mixin.fontSize(20)}
-    color: ${vars.greyDark};
-    border-bottom: solid 1px ${vars.greyLighter};
-    width: 100%;
-    padding-bottom: 10px;
-    margin-bottom: 15px;
-
-    ~ ul {
-      margin-bottom: 80px;
-    }
+    ${tw`
+      mt-16 border-b border-grey-lighter border-solid text-grey-dark w-full mb-4
+    `}
   }
 
   .field-string {
     ${tw`
-      flex flex-wrap items-center
+      flex flex-wrap items-center pr-8
+    `}
+  }
+  .field-array {
+    ${tw`
+      mt-4
+    `}
+  }
+
+  .array-item {
+    ${tw`
+      border-b border-grey-lighter border-solid pb-2 mb-4
     `}
   }
 
   label {
     ${tw`
-      w-full sm:w-1/3 px-0 sm:px-2 sm:text-right
+      w-full sm:w-1/3 px-0 sm:px-4 sm:text-right text-grey-dark
     `}
   }
 
   input {
     ${tw`
-      w-full sm:w-2/3 px-0 sm:px-2
+      w-full sm:w-2/3 px-0 sm:px-2 h-10 rounded-none border border-solid border-grey-lighter
     `}
-
-    min-height: 40px;
-    border-radius: 0;
-    border: 1px solid ${vars.greyLighter};
   }
 
   button {
-    border: 1px solid ${vars.orange};
-    background: ${vars.orange};
-    border-radius: ${vars.buttonRadius};
-    padding: 0.5rem 1rem;
-    color: ${vars.white};
-    margin: auto 0.5rem;
-    box-shadow: -10px -10px 20px rgba(255, 255, 255, 0.2), 2px 2px 5px rgba(0, 0, 0, 0.1);
-    display: inline-block;
-    vertical-align: middle;
+    ${tw`
+      border border-solid border-orange bg-orange rounded py-2 px-4 text-white m-2 shadow-md inline-block align-middle
+    `}
 
     &:not(:disabled):not(.disabled):active,
     &:focus,
@@ -160,16 +120,16 @@ export const DynamicForm = styled(({ form, className }: { form: Form; className?
     }
 
     :first-of-type {
-      margin-left: 0;
+      ${tw`ml-0`}
     }
 
     :last-child {
-      margin-right: 0;
+      ${tw`mr-0`}
     }
   }
 
   i.glyphicon {
-    display: none;
+    ${tw`hidden`}
   }
   .btn-add::after {
     content: "Add";
@@ -184,31 +144,14 @@ export const DynamicForm = styled(({ form, className }: { form: Form; className?
     content: "Remove";
   }
 
-  .array-item {
-    margin-bottom: 10px;
-    margin-right: 30px;
-  }
-
-  .array-item-remove {
-    flex: 0.8 !important;
-  }
-
   .item-pd-0,
   .item-pd-0 > fieldset {
-    padding-right: 0;
-    padding-left: 0;
-  }
-
-  .array-item-add {
-    margin-left: 85px;
-  }
-
-  .array-item-list {
-    margin: 0 !important;
+    ${tw`px-0`}
   }
 
   .help-block {
-    font-size: 13px;
-    margin: 8px 0;
+    ${tw`
+      text-sm my-2 mx-0
+    `}
   }
 `;
