@@ -1,11 +1,12 @@
 import styled from "@emotion/styled";
 import { merge } from "lodash";
-import React, { ReactElement, useState } from "react";
+import React, { useState } from "react";
 import JsonForm, { IChangeEvent } from "react-jsonschema-form";
 import tw from "twin.macro";
 import { mixin } from "../../styles";
 import { Wrapper } from "../../UI/Wrapper";
 import { DataFileButton } from "./DataFileButton";
+import { CustomFieldTemplate, CustomObjectFieldTemplate } from "./CustomTemplates";
 
 export interface Form {
   name: string;
@@ -26,71 +27,6 @@ export const DynamicForm = styled(({ form, className }: { form: Form; className?
     console.log(rawDocument);
   };
 
-  interface CustomObjectTemplate {
-    TitleField: any;
-    properties: any;
-    title: string;
-    description: string;
-  }
-  function ObjectFieldTemplate({
-    TitleField,
-    properties,
-    title,
-    description,
-  }: CustomObjectTemplate): ReactElement {
-    return (
-      <>
-        {title && <TitleField title={title} />}
-        <ul className="dynamicForm-items">
-          {properties.map((prop: any) => (
-            <li className="my-4" key={prop.content.key}>
-              {prop.content}
-            </li>
-          ))}
-        </ul>
-        {description}
-      </>
-    );
-  }
-
-  interface CustomFieldTemplateInterface {
-    id: string;
-    classNames: string;
-    label: string;
-    help: string;
-    required: boolean;
-    description: string;
-    errors: string;
-    children: string;
-    schema: {
-      format: string;
-      type: string;
-      title?: string;
-    };
-  }
-  function CustomFieldTemplate(props: CustomFieldTemplateInterface): ReactElement {
-    const { id, classNames, label, help, required, description, errors, children, schema } = props;
-    console.log(schema);
-    return (
-      <div className={classNames}>
-        {!schema.format &&
-          schema.type !== "object" &&
-          schema.type !== "array" &&
-          schema.type !== "boolean" && (
-            <label htmlFor={id}>
-              {label}
-              {required ? "*" : null}
-            </label>
-          )}
-        {schema.format && <legend>{schema.title}</legend>}
-        {description}
-        {children}
-        {errors}
-        {help}
-      </div>
-    );
-  }
-
   return (
     <Wrapper className={className}>
       <div className="mb-4">
@@ -101,7 +37,7 @@ export const DynamicForm = styled(({ form, className }: { form: Form; className?
         schema={form.schema}
         onChange={setFormData}
         formData={formData?.formData}
-        ObjectFieldTemplate={ObjectFieldTemplate}
+        ObjectFieldTemplate={CustomObjectFieldTemplate}
         FieldTemplate={CustomFieldTemplate}
       />
     </Wrapper>
