@@ -1,10 +1,12 @@
 import React, { FunctionComponent } from "react";
+import { Redirect } from "react-router-dom";
 import { Config, Form } from "../../../types";
 import { Button } from "../../../UI/Button";
 import { Title } from "../../../UI/Title";
 import { Wrapper } from "../../../UI/Wrapper";
 import { Container } from "../../Container";
 import { ProgressBar } from "../../ProgressBar";
+import { useActiveFormContext } from "../../../common/context/activeForm";
 
 interface FormSelection {
   config: Config;
@@ -12,9 +14,14 @@ interface FormSelection {
 }
 
 export const FormSelection: FunctionComponent<FormSelection> = ({ className, config }) => {
-  const selectedForm = (form: string): void => {
-    console.log(form);
+  const { activeFormIndex, setActiveFormIndex } = useActiveFormContext();
+  const selectedForm = (index: number): void => {
+    setActiveFormIndex(index);
   };
+
+  // Once the active form has been set, redirect to /form
+  // To get back to this page, the previous page has to unset the activeFormIndex first
+  if (activeFormIndex !== undefined) return <Redirect to="/form" />;
 
   return (
     <Container>
@@ -23,13 +30,13 @@ export const FormSelection: FunctionComponent<FormSelection> = ({ className, con
           <ProgressBar step={1} />
           <Title className="text-grey-dark">Choose Document Type to Issue</Title>
           <div className="flex w-full">
-            {config.forms.map((form: Form, i: number) => {
+            {config.forms.map((form: Form, index: number) => {
               return (
                 <Button
                   className="bg-white text-grey-dark hover:text-blue w-full p-4"
                   role="button"
-                  key={i}
-                  onClick={() => selectedForm(form.name)}
+                  key={index}
+                  onClick={() => selectedForm(index)}
                 >
                   {form.name}
                 </Button>
