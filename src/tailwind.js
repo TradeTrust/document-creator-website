@@ -43,11 +43,13 @@ module.exports = {
         dark: "#38a169",
       },
       teal: {
-        lighter: "#00ceba",
+        lighter: "#e5f9f8",
         default: "#00CBBC",
       },
+      pink: {
+        default: "#ffe8e8",
+      },
       red: {
-        lightest: "#ff1d1d",
         lighter: "#FFF4F4",
         default: "#FF2020",
         dark: "#c53030",

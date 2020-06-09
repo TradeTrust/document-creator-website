@@ -1,4 +1,4 @@
-import React, { FunctionComponent } from "react";
+import React, { FunctionComponent, useState } from "react";
 import { Redirect } from "react-router";
 import { useActiveFormContext } from "../../common/context/activeForm";
 import { useConfigContext } from "../../common/context/config";
@@ -11,6 +11,7 @@ import { DynamicForm } from "./DynamicForm";
 
 export const DynamicFormLayout: FunctionComponent = () => {
   const { config } = useConfigContext();
+  const [toggleValue, setToggleValue] = useState(false);
   const { activeFormIndex, setActiveFormIndex } = useActiveFormContext();
   if (activeFormIndex === undefined) return <Redirect to="/forms-selection" />;
   const activeForm = config?.forms[activeFormIndex];
@@ -34,9 +35,9 @@ export const DynamicFormLayout: FunctionComponent = () => {
       </div>
       <div className="bg-white-dark p-6">
         <div className="bg-white container mx-auto p-4">
-          <div className="text-grey-dark flex">
-            <p>Preview mode:</p>
-            <ToggleSwitch isOn={true} />
+          <div className="text-grey-dark flex items-center">
+            <div className="align-middle">Preview mode:</div>
+            <ToggleSwitch isOn={toggleValue} handleToggle={() => setToggleValue(!toggleValue)} />
           </div>
           <div className="max-w-screen-sm mx-auto mt-6">
             <DynamicForm form={activeForm} />

@@ -1,5 +1,6 @@
 import styled from "@emotion/styled";
 import React from "react";
+import tw from "twin.macro";
 
 interface ToggleSwitchProps {
   isOn: boolean;
@@ -7,49 +8,61 @@ interface ToggleSwitchProps {
   className?: string;
 }
 
-export const ToggleSwitch = styled(({ className, isOn }: ToggleSwitchProps) => {
+export const ToggleSwitch = styled(({ className, isOn, handleToggle }: ToggleSwitchProps) => {
   return (
     <div className={className}>
-      <input className="react-switch-checkbox" id={`react-switch-new`} type="checkbox" />
-      <label className="react-switch-label" htmlFor={`react-switch-new`}>
-        <span className={`react-switch-button`} />
+      <input
+        className="toggle-switch-checkbox"
+        id={`toggle-switch`}
+        checked={isOn}
+        onChange={handleToggle}
+        type="checkbox"
+      />
+      <label className="toggle-switch-label" htmlFor={`toggle-switch`}>
+        <span className={`toggle-switch-button`} />
       </label>
     </div>
   );
 })`
-  .react-switch-checkbox {
-    height: 0;
-    width: 0;
-    visibility: hidden;
+  .toggle-switch-checkbox {
+    ${tw`h-0 w-0 invisible`}
   }
 
-  .react-switch-label {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    cursor: pointer;
-    width: 72px;
-    height: 32px;
-    background: ${(props) => (props.isOn ? "green" : "red")};
-    border-radius: 50px;
-    position: relative;
+  .toggle-switch-label {
+    ${tw`flex items-center justify-between cursor-pointer w-20 h-8 rounded-full relative -mt-6 ml-4`}
+    ${(props) =>
+      props.isOn ? tw`bg-teal-lighter` : tw`bg-pink`}
     transition: background-color 0.2s;
   }
 
-  .react-switch-label .react-switch-button {
+  .toggle-switch-label .toggle-switch-button {
+    ${tw`absolute w-6 h-6 rounded-full bg-white`}
     content: "";
-    position: absolute;
     top: 4px;
     left: 4px;
-    width: 24px;
-    height: 24px;
-    border-radius: 24px;
     transition: 0.2s;
-    background: #fff;
-    box-shadow: 0 0 2px 0 rgba(10, 10, 10, 0.29);
+    box-shadow: -10px -10px 20px rgba(255, 255, 255, 0.2), 2px 2px 5px rgba(0, 0, 0, 0.1);
   }
 
-  .react-switch-checkbox:checked + .react-switch-label .react-switch-button {
+  .toggle-switch-label:before {
+    content: "On";
+    ${tw`text-teal font-bold pl-3 opacity-0 uppercase`}
+  }
+
+  .toggle-switch-label:after {
+    content: "Off";
+    ${tw`text-red font-bold pr-3 uppercase`}
+  }
+
+  .toggle-switch-checkbox:checked ~ .toggle-switch-label:after {
+    opacity: 0;
+  }
+
+  .toggle-switch-checkbox:checked ~ .toggle-switch-label:before {
+    opacity: 1;
+  }
+
+  .toggle-switch-checkbox:checked + .toggle-switch-label .toggle-switch-button {
     left: calc(100% - 4px);
     transform: translateX(-100%);
   }

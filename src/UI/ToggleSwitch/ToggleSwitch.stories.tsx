@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { ToggleSwitch } from "./ToggleSwitch";
 
 export default {
@@ -9,4 +9,7 @@ export default {
   },
 };
 
-export const Default = () => <ToggleSwitch isOn={true} />;
+export const Default = () => {
+  const [toggleValue, setToggleValue] = useState(false);
+  return <ToggleSwitch isOn={toggleValue} handleToggle={() => setToggleValue(!toggleValue)} />;
+};
