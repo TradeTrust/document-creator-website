@@ -3,17 +3,10 @@ import { merge } from "lodash";
 import React, { useState, FunctionComponent } from "react";
 import JsonForm from "react-jsonschema-form";
 import tw from "twin.macro";
-import { mixin } from "../../styles";
-import { Wrapper } from "../../UI/Wrapper";
+import { mixin } from "../../../styles";
 import { DataFileButton } from "./DataFileButton";
 import { CustomFieldTemplate, CustomObjectFieldTemplate } from "./CustomTemplates";
-
-export interface Form {
-  name: string;
-  type: string;
-  defaults: any; // eslint-disable-line @typescript-eslint/no-explicit-any
-  schema: any; // eslint-disable-line @typescript-eslint/no-explicit-any
-}
+import { Form } from "../../../types";
 
 export interface DynamicForm {
   form: Form;
@@ -34,7 +27,7 @@ export const DynamicFormRaw: FunctionComponent<DynamicForm> = ({ form, className
   };
 
   return (
-    <Wrapper className={className}>
+    <div className={className}>
       <div className="mb-4">
         <DataFileButton onDataFile={setFormValue} />
       </div>
@@ -46,7 +39,7 @@ export const DynamicFormRaw: FunctionComponent<DynamicForm> = ({ form, className
         ObjectFieldTemplate={CustomObjectFieldTemplate}
         FieldTemplate={CustomFieldTemplate}
       />
-    </Wrapper>
+    </div>
   );
 };
 

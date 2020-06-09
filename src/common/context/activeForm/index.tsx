@@ -2,7 +2,7 @@ import React, { useState, useContext, createContext, FunctionComponent } from "r
 
 interface ActiveFormContext {
   activeFormIndex?: number;
-  setActiveFormIndex: (index: number) => void;
+  setActiveFormIndex: (index?: number) => void;
 }
 
 export const ActiveFormContext = createContext<ActiveFormContext>({

@@ -1,5 +1,6 @@
 import React from "react";
 import { DynamicForm } from "./DynamicForm";
+import { Form } from "../../../types";
 
 // Default values in the document we do not want the admin staff to change
 const defaults = {
@@ -129,7 +130,7 @@ const schema = {
   },
 };
 
-const form = {
+const form: Form = {
   name: "Bill of lading",
   type: "TRANSFERABLE_RECORD",
   defaults,

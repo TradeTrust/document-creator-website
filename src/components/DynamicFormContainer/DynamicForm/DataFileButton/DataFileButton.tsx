@@ -1,8 +1,8 @@
 import React, { FunctionComponent, useState } from "react";
 import { useDropzone } from "react-dropzone";
-import { readFileAsJson } from "../../../common/utils";
-import { Button } from "../../../UI/Button";
-import { ErrorAlert } from "../../Alert";
+import { readFileAsJson } from "../../../../common/utils";
+import { Button } from "../../../../UI/Button";
+import { ErrorAlert } from "../../../Alert";
 
 interface DataFileButton {
   onDataFile: (dataFile: any) => void; // eslint-disable-line @typescript-eslint/no-explicit-any

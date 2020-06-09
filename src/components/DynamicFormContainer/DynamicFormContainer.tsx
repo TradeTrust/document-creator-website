@@ -2,6 +2,7 @@ import React, { FunctionComponent } from "react";
 import { Redirect } from "react-router";
 import { useConfigContext } from "../../common/context/config";
 import { NavigationBar } from "../NavigationBar";
+import { DynamicFormLayout } from "./DynamicFormLayout";
 
 export const DynamicFormContainer: FunctionComponent = () => {
   const { config, setConfig } = useConfigContext();
@@ -12,6 +13,7 @@ export const DynamicFormContainer: FunctionComponent = () => {
   return (
     <>
       <NavigationBar logout={logout} />
+      <DynamicFormLayout />
     </>
   );
 };
