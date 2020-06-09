@@ -5,7 +5,7 @@ import { Button } from "../../../UI/Button";
 import { ErrorAlert } from "../../Alert";
 
 interface DataFileButton {
-  onDataFile: (dataFile: any) => void;
+  onDataFile: (dataFile: any) => void; // eslint-disable-line @typescript-eslint/no-explicit-any
 }
 
 export const DataFileButton: FunctionComponent<DataFileButton> = ({ onDataFile }) => {
@@ -13,6 +13,7 @@ export const DataFileButton: FunctionComponent<DataFileButton> = ({ onDataFile }
   const onDrop = async (files: File[]): Promise<void> => {
     try {
       const file = files[0];
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       const config = await readFileAsJson<any>(file);
       setError(false);
       onDataFile(config);

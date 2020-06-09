@@ -7,13 +7,14 @@ export const CustomObjectFieldTemplate = ({
   title,
   description,
   required,
-}: ObjectFieldTemplateProps<any>): ReactElement => {
+}: // eslint-disable-next-line  @typescript-eslint/no-explicit-any
+ObjectFieldTemplateProps<any>): ReactElement => {
   return (
     <>
       {title && <TitleField title={title} id={title} required={required} />}
       <ul className="dynamicForm-items">
-        {properties.map((prop: any) => (
-          <li className="my-4" key={prop.content.key}>
+        {properties.map((prop) => (
+          <li className="my-4" key={prop.content.key ?? undefined}>
             {prop.content}
           </li>
         ))}
