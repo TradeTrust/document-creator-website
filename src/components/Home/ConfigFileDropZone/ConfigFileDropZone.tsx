@@ -40,7 +40,7 @@ export const ConfigFileDropZone: FunctionComponent<ConfigFileDropZone> = ({
 
   return (
     <Wrapper>
-      <Title className="text-grey-dark">Upload Configuration File</Title>
+      <Title>Upload Configuration File</Title>
       <div {...getRootProps()}>
         <input data-testid="config-file-drop-zone" {...getInputProps()} />
         <div className={dropZoneCSS}>

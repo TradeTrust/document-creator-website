@@ -1,11 +1,13 @@
 import React, { FunctionComponent } from "react";
 import { Redirect } from "react-router";
-import { Container } from "../Container";
 import { useActiveFormContext } from "../../common/context/activeForm";
 import { useConfigContext } from "../../common/context/config";
-import { DynamicForm } from "./DynamicForm";
-import { Wrapper } from "../../UI/Wrapper";
+import { SvgIcon, SvgIconArrowLeft } from "../../UI/SvgIcon";
+import { Title } from "../../UI/Title";
+import { ToggleSwitch } from "../../UI/ToggleSwitch";
+import { Container } from "../Container";
 import { ProgressBar } from "../ProgressBar";
+import { DynamicForm } from "./DynamicForm";
 
 export const DynamicFormLayout: FunctionComponent = () => {
   const { config } = useConfigContext();
@@ -20,11 +22,27 @@ export const DynamicFormLayout: FunctionComponent = () => {
 
   return (
     <Container>
-      <Wrapper>
-        <button onClick={onBackToFormSelection}>Back</button>
+      <div className="container mx-auto">
+        <div onClick={onBackToFormSelection} className="text-grey flex cursor-pointer py-4">
+          <SvgIcon>
+            <SvgIconArrowLeft />
+          </SvgIcon>
+          <div className="pl-2">Back</div>
+        </div>
         <ProgressBar step={2} />
-        <DynamicForm form={activeForm} />
-      </Wrapper>
+        <Title>Fill and Preview Form</Title>
+      </div>
+      <div className="bg-white-dark p-6">
+        <div className="bg-white container mx-auto p-4">
+          <div className="text-grey-dark flex">
+            <p>Preview mode:</p>
+            <ToggleSwitch isOn={true} />
+          </div>
+          <div className="max-w-screen-sm mx-auto mt-6">
+            <DynamicForm form={activeForm} />
+          </div>
+        </div>
+      </div>
     </Container>
   );
 };

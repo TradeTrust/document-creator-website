@@ -1,8 +1,9 @@
 import styled from "@emotion/styled";
+import tw from "twin.macro";
 import { mixin } from "../../styles";
 
 export const Title = styled.div`
   ${mixin.fontRobotoBold}
   ${mixin.fontSize(28)}
-  margin-bottom: 32px;
+  ${tw`text-grey-dark mb-8`}
 `;

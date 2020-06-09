@@ -1,18 +1,13 @@
 import styled from "@emotion/styled";
+import tw from "twin.macro";
 import { mixin } from "../../styles";
 
 export const Button = styled.button`
   box-shadow: -10px -10px 20px rgba(255, 255, 255, 0.2), 2px 2px 5px rgba(0, 0, 0, 0.1);
-  border-radius: 3px;
+  ${tw`rounded inline-block align-middle tracking-normal outline-none mx-2`}
   ${mixin.fontRobotoBold()}
   ${mixin.fontSize(18)}
-  display: inline-block;
-  vertical-align: middle;
-  letter-spacing: 0.01rem;
-  outline: none;
   min-height: 40px;
-  margin-left: 8px;
-  margin-right: 8px;
 
   &:not(:disabled):not(.disabled):active,
   &:focus,
@@ -24,8 +19,7 @@ export const Button = styled.button`
   }
 
   &[disabled] {
-    pointer-events: none;
-    box-shadow: none;
+    ${tw`pointer-events-none shadow-none`}
   }
 
   :first-of-type {

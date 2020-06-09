@@ -1,12 +1,12 @@
 import React, { FunctionComponent } from "react";
 import { Redirect } from "react-router-dom";
+import { useActiveFormContext } from "../../../common/context/activeForm";
 import { Config, Form } from "../../../types";
 import { Button } from "../../../UI/Button";
 import { Title } from "../../../UI/Title";
 import { Wrapper } from "../../../UI/Wrapper";
 import { Container } from "../../Container";
 import { ProgressBar } from "../../ProgressBar";
-import { useActiveFormContext } from "../../../common/context/activeForm";
 
 interface FormSelection {
   config: Config;
@@ -28,7 +28,7 @@ export const FormSelection: FunctionComponent<FormSelection> = ({ className, con
       <div className={className}>
         <Wrapper>
           <ProgressBar step={1} />
-          <Title className="text-grey-dark">Choose Document Type to Issue</Title>
+          <Title>Choose Document Type to Issue</Title>
           <div className="flex w-full">
             {config.forms.map((form: Form, index: number) => {
               return (

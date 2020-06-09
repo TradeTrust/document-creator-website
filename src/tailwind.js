@@ -34,7 +34,7 @@ module.exports = {
       },
       orange: {
         lighter: "#fbd38d",
-        default: "#f6ad55",
+        default: "#FF9220",
         dark: "#ed8936",
       },
       green: {
@@ -42,7 +42,12 @@ module.exports = {
         default: "#48bb78",
         dark: "#38a169",
       },
+      teal: {
+        lighter: "#00ceba",
+        default: "#00CBBC",
+      },
       red: {
+        lightest: "#ff1d1d",
         lighter: "#FFF4F4",
         default: "#FF2020",
         dark: "#c53030",
