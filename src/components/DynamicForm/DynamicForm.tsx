@@ -1,5 +1,4 @@
 import styled from "@emotion/styled";
-import { JSONSchema6 } from "json-schema";
 import { merge } from "lodash";
 import React, { useState, FunctionComponent } from "react";
 import JsonForm from "react-jsonschema-form";
@@ -13,7 +12,7 @@ export interface Form {
   name: string;
   type: string;
   defaults: any; // eslint-disable-line @typescript-eslint/no-explicit-any
-  schema: JSONSchema6;
+  schema: any; // eslint-disable-line @typescript-eslint/no-explicit-any
 }
 
 export interface DynamicForm {
