@@ -11,7 +11,7 @@ export const ProgressBar: FunctionComponent<ProgressBarProps> = styled(({ classN
 
   return (
     <div className={className}>
-      <div className="text-grey-dark font-bold text-base">
+      <div className="text-grey-dark font-bold text-base" data-testid={"progress-bar"}>
         {`Step ${step}/3: ${description[step - 1]}`}
       </div>
       <div className="w-full max-w-sm h-1 bg-grey-lighter mt-3 mb-6">

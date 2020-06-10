@@ -11,7 +11,7 @@ import { DynamicForm } from "./DynamicForm";
 
 export const DynamicFormLayout: FunctionComponent = () => {
   const { config } = useConfigContext();
-  const [toggleValue, setToggleValue] = useState(false);
+  const [isPreviewMode, setIsPreviewMode] = useState(false);
   const { activeFormIndex, setActiveFormIndex } = useActiveFormContext();
   if (activeFormIndex === undefined) return <Redirect to="/forms-selection" />;
   const activeForm = config?.forms[activeFormIndex];
@@ -37,7 +37,10 @@ export const DynamicFormLayout: FunctionComponent = () => {
         <div className="bg-white container mx-auto p-4">
           <div className="text-grey-dark flex items-center">
             <div className="align-middle">Preview mode:</div>
-            <ToggleSwitch isOn={toggleValue} handleToggle={() => setToggleValue(!toggleValue)} />
+            <ToggleSwitch
+              isOn={isPreviewMode}
+              handleToggle={() => setIsPreviewMode(!isPreviewMode)}
+            />
           </div>
           <div className="max-w-screen-sm mx-auto mt-6">
             <DynamicForm form={activeForm} />
