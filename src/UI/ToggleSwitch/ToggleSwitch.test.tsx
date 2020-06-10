@@ -12,11 +12,11 @@ describe("toggleSwitch", () => {
   it("should display `ON` when isOn is true", () => {
     render(<ToggleSwitch isOn={true} handleToggle={() => {}} />);
     const toggle: any = screen.getByTestId("toggle-switch");
-    expect(toggle.checked).toBeTruthy();
+    expect(toggle.checked).toBeTruthy(); // eslint-disable-line jest/no-truthy-falsy
   });
   it("should display `OFF` when isOn is false", () => {
     render(<ToggleSwitch isOn={false} handleToggle={() => {}} />);
     const toggle: any = screen.getByTestId("toggle-switch");
-    expect(toggle.checked).toBeFalsy();
+    expect(toggle.checked).toBeFalsy(); // eslint-disable-line jest/no-truthy-falsy
   });
 });
