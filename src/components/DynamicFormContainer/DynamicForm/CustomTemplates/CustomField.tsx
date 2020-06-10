@@ -13,7 +13,7 @@ export const CustomFieldTemplate = ({
   schema,
 }: FieldTemplateProps): ReactElement => {
   return (
-    <div className={classNames}>
+    <div className={classNames} data-testid={classNames}>
       {!schema.format &&
         schema.type !== "object" &&
         schema.type !== "array" &&

@@ -5,11 +5,18 @@ import { ToggleSwitch } from "./ToggleSwitch";
 describe("toggleSwitch", () => {
   it("should fire handleToggle when clicked", () => {
     const mockHandleToggle = jest.fn();
-
     render(<ToggleSwitch isOn={true} handleToggle={mockHandleToggle} />);
     fireEvent.click(screen.getByTestId("toggle-switch"));
-    expect(mockHandleToggle).toHaveBeenCalled();
+    expect(mockHandleToggle).toHaveBeenCalled(); // eslint-disable-line jest/prefer-called-with
   });
-  xit("should display `ON` when isOn is true", () => {});
-  xit("should display `OFF` when isOn is false", () => {});
+  it("should display `ON` when isOn is true", () => {
+    render(<ToggleSwitch isOn={true} handleToggle={() => {}} />);
+    const toggle: any = screen.getByTestId("toggle-switch");
+    expect(toggle.checked).toBeTruthy();
+  });
+  it("should display `OFF` when isOn is false", () => {
+    render(<ToggleSwitch isOn={false} handleToggle={() => {}} />);
+    const toggle: any = screen.getByTestId("toggle-switch");
+    expect(toggle.checked).toBeFalsy();
+  });
 });

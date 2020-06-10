@@ -11,9 +11,14 @@ import { Form } from "../../../types";
 export interface DynamicForm {
   form: Form;
   className?: string;
+  handleSubmit: (formData: any) => void; // eslint-disable-line @typescript-eslint/no-explicit-any
 }
 
-export const DynamicFormRaw: FunctionComponent<DynamicForm> = ({ form, className }) => {
+export const DynamicFormRaw: FunctionComponent<DynamicForm> = ({
+  form,
+  className,
+  handleSubmit,
+}) => {
   const [formData, setFormData] = useState<any>(); // eslint-disable-line @typescript-eslint/no-explicit-any
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -23,7 +28,7 @@ export const DynamicFormRaw: FunctionComponent<DynamicForm> = ({ form, className
   };
   const onSubmit = (): void => {
     const rawDocument = merge(form.defaults, formData?.formData);
-    console.log(rawDocument);
+    handleSubmit(rawDocument);
   };
 
   return (

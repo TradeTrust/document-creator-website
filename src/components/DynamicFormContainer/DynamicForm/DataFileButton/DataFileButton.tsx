@@ -27,13 +27,14 @@ export const DataFileButton: FunctionComponent<DataFileButton> = ({ onDataFile }
   return (
     <>
       {error && (
-        <div className="my-2">
+        <div className="my-2" data-testid="file-read-error">
           <ErrorAlert message="File cannot be read" />
         </div>
       )}
-      <div {...getRootProps()}>
+      <div data-testid="data-upload-zone" {...getRootProps()}>
         <input data-testid="config-file-drop-zone" {...getInputProps()} />
         <Button
+          data-testid="data-upload-button"
           className={`text-center w-full p-2 bg-white text-orange border-grey-lighter border-solid border h-12`}
         >
           Upload Data File

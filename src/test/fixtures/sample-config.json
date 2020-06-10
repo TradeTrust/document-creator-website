@@ -24,52 +24,37 @@
       },
       "schema": {
         "type": "object",
+        "required": [
+          "blNumber"
+        ],
         "properties": {
           "blNumber": {
-            "title": "Bill of Lading",
-            "type": "object",
-            "required": ["name"],
-            "properties": {
-              "name": {
-                "title": "BL Number",
-                "type": "string"
-              }
-            }
+            "type": "string",
+            "title": "BL Number"
           },
           "shipper": {
-            "title": "Shipper",
             "type": "object",
             "properties": {
               "name": {
-                "title": "Shipper",
-                "type": "string"
-              }
-            }
-          },
-          "address": {
-            "title": "Address",
-            "type": "object",
-            "properties": {
-              "street": {
-                "title": "Street",
                 "type": "string"
               },
-              "country": {
-                "title": "Country",
-                "type": "string"
+              "address": {
+                "type": "object",
+                "properties": {
+                  "street": {
+                    "type": "string"
+                  },
+                  "country": {
+                    "type": "string"
+                  }
+                }
               }
             }
           },
           "consignee": {
-            "title": "Consignee",
             "type": "object",
             "properties": {
               "name": {
-                "title": "Name",
-                "type": "string"
-              },
-              "type": {
-                "title": "Type",
                 "type": "string"
               }
             }
@@ -79,34 +64,32 @@
             "type": "object",
             "properties": {
               "name": {
-                "title": "Name",
                 "type": "string"
-              },
-              "vessel": {
-                "title": "Vessel",
-                "type": "string"
-              },
-              "voyageNo": {
-                "title": "Voyage No.",
-                "type": "string"
-              },
-              "portOfLoading": {
-                "title": "Port of Loading",
-                "type": "null"
-              },
-              "portOfDischarge": {
-                "title": "Port of Discharge",
-                "type": "integer"
-              },
-              "placeOfReceipt": {
-                "title": "Place of Receipt",
-                "type": "number"
-              },
-              "placeOfDelivery": {
-                "title": "Place of Delivery",
-                "type": "boolean"
               }
             }
+          },
+          "vessel": {
+            "type": "string"
+          },
+          "voyageNo": {
+            "title": "Voyage No.",
+            "type": "string"
+          },
+          "portOfLoading": {
+            "title": "Port of Loading",
+            "type": "string"
+          },
+          "portOfDischarge": {
+            "title": "Port of Discharge",
+            "type": "string"
+          },
+          "placeOfReceipt": {
+            "title": "Place of Receipt",
+            "type": "string"
+          },
+          "placeOfDelivery": {
+            "title": "Place of Delivery",
+            "type": "string"
           },
           "packages": {
             "type": "array",

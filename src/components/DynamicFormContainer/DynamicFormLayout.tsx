@@ -24,7 +24,11 @@ export const DynamicFormLayout: FunctionComponent = () => {
   return (
     <Container>
       <div className="container mx-auto">
-        <div onClick={onBackToFormSelection} className="text-grey flex cursor-pointer py-4">
+        <div
+          onClick={onBackToFormSelection}
+          className="text-grey flex cursor-pointer py-4"
+          data-testid="back-button"
+        >
           <SvgIcon>
             <SvgIconArrowLeft />
           </SvgIcon>
@@ -43,7 +47,7 @@ export const DynamicFormLayout: FunctionComponent = () => {
             />
           </div>
           <div className="max-w-screen-sm mx-auto mt-6">
-            <DynamicForm form={activeForm} />
+            <DynamicForm form={activeForm} handleSubmit={console.log} />
           </div>
         </div>
       </div>

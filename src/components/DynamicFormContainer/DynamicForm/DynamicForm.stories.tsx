@@ -1,6 +1,8 @@
 import React from "react";
 import { DynamicForm } from "./DynamicForm";
 import { Form } from "../../../types";
+import sample from "../../../test/fixtures/sample-config.json";
+import { ConfigFile } from "../../../types";
 
 // Default values in the document we do not want the admin staff to change
 const defaults = {
@@ -23,112 +25,114 @@ const defaults = {
 };
 
 // Form values that the admin staff will be changing
-const schema = {
-  type: "object",
-  properties: {
-    blNumber: {
-      title: "Bill of Lading",
-      type: "object",
-      required: ["name"],
-      properties: {
-        name: {
-          title: "BL Number",
-          type: "string",
-        },
-      },
-    },
-    shipper: {
-      title: "Shipper",
-      type: "object",
-      properties: {
-        name: {
-          title: "Shipper",
-          type: "string",
-        },
-      },
-    },
-    address: {
-      title: "Address",
-      type: "object",
-      properties: {
-        street: {
-          title: "Street",
-          type: "string",
-        },
-        country: {
-          title: "Country",
-          type: "string",
-        },
-      },
-    },
-    consignee: {
-      title: "Consignee",
-      type: "object",
-      properties: {
-        name: {
-          title: "Name",
-          type: "string",
-        },
-        type: {
-          title: "Type",
-          type: "string",
-        },
-      },
-    },
-    notifyParty: {
-      title: "Notify Party",
-      type: "object",
-      properties: {
-        name: {
-          title: "Name",
-          type: "string",
-        },
-        vessel: {
-          title: "Vessel",
-          type: "string",
-        },
-        voyageNo: {
-          title: "Voyage No.",
-          type: "string",
-        },
-        portOfLoading: {
-          title: "Port of Loading",
-          type: "null",
-        },
-        portOfDischarge: {
-          title: "Port of Discharge",
-          type: "integer",
-        },
-        placeOfReceipt: {
-          title: "Place of Receipt",
-          type: "number",
-        },
-        placeOfDelivery: {
-          title: "Place of Delivery",
-          type: "boolean",
-        },
-      },
-    },
-    packages: {
-      type: "array",
-      title: "Packages",
-      items: {
-        type: "object",
-        properties: {
-          description: {
-            type: "string",
-          },
-          measurement: {
-            type: "string",
-          },
-          weight: {
-            type: "string",
-          },
-        },
-      },
-    },
-  },
-};
+const configFile = sample as ConfigFile;
+const schema = configFile.forms[0].schema;
+// {
+//   type: "object",
+//   properties: {
+//     blNumber: {
+//       title: "Bill of Lading",
+//       type: "object",
+//       required: ["name"],
+//       properties: {
+//         name: {
+//           title: "BL Number",
+//           type: "string",
+//         },
+//       },
+//     },
+//     shipper: {
+//       title: "Shipper",
+//       type: "object",
+//       properties: {
+//         name: {
+//           title: "Shipper",
+//           type: "string",
+//         },
+//       },
+//     },
+//     address: {
+//       title: "Address",
+//       type: "object",
+//       properties: {
+//         street: {
+//           title: "Street",
+//           type: "string",
+//         },
+//         country: {
+//           title: "Country",
+//           type: "string",
+//         },
+//       },
+//     },
+//     consignee: {
+//       title: "Consignee",
+//       type: "object",
+//       properties: {
+//         name: {
+//           title: "Name",
+//           type: "string",
+//         },
+//         type: {
+//           title: "Type",
+//           type: "string",
+//         },
+//       },
+//     },
+//     notifyParty: {
+//       title: "Notify Party",
+//       type: "object",
+//       properties: {
+//         name: {
+//           title: "Name",
+//           type: "string",
+//         },
+//         vessel: {
+//           title: "Vessel",
+//           type: "string",
+//         },
+//         voyageNo: {
+//           title: "Voyage No.",
+//           type: "string",
+//         },
+//         portOfLoading: {
+//           title: "Port of Loading",
+//           type: "null",
+//         },
+//         portOfDischarge: {
+//           title: "Port of Discharge",
+//           type: "integer",
+//         },
+//         placeOfReceipt: {
+//           title: "Place of Receipt",
+//           type: "number",
+//         },
+//         placeOfDelivery: {
+//           title: "Place of Delivery",
+//           type: "boolean",
+//         },
+//       },
+//     },
+//     packages: {
+//       type: "array",
+//       title: "Packages",
+//       items: {
+//         type: "object",
+//         properties: {
+//           description: {
+//             type: "string",
+//           },
+//           measurement: {
+//             type: "string",
+//           },
+//           weight: {
+//             type: "string",
+//           },
+//         },
+//       },
+//     },
+//   },
+// };
 
 const form: Form = {
   name: "Bill of lading",
@@ -146,4 +150,4 @@ export default {
 };
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-export const Default = () => <DynamicForm form={form} />;
+export const Default = () => <DynamicForm form={form} handleSubmit={console.log} />;

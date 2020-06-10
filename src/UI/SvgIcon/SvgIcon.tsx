@@ -1,4 +1,4 @@
-import React from "react";
+import React, { FunctionComponent } from "react";
 
 interface SvgIconProps {
   tooltipId?: string;
@@ -6,7 +6,7 @@ interface SvgIconProps {
   onClick?: () => void;
 }
 
-export const SvgIconArrowLeft = () => {
+export const SvgIconArrowLeft: FunctionComponent = () => {
   return (
     <g className="arrow-left">
       <line x1="19" y1="12" x2="5" y2="12" />
@@ -15,7 +15,7 @@ export const SvgIconArrowLeft = () => {
   );
 };
 
-export const SvgIcon = ({ tooltipId, children, ...props }: SvgIconProps) => {
+export const SvgIcon: FunctionComponent<SvgIconProps> = ({ tooltipId, children, ...props }) => {
   const tooltipProps = tooltipId
     ? {
         "data-tip": "",

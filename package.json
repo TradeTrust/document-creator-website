@@ -173,7 +173,9 @@
           "plugin:jest/all"
         ],
         "rules": {
-          "jest/prefer-expect-assertions": "off"
+          "jest/prefer-expect-assertions": "off",
+          "@typescript-eslint/no-empty-function": "off",
+          "@typescript-eslint/no-explicit-any": "off"
         }
       },
       {
