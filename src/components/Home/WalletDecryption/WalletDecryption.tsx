@@ -20,8 +20,9 @@ export const WalletDecryption: FunctionComponent<WalletDecryption> = ({
   onResetConfigFile,
 }) => {
   const [password, setPassword] = useState("");
-  const onLogin = (): void => {
+  const onLogin = (event: React.SyntheticEvent): void => {
     onDecryptConfigFile(password);
+    event.preventDefault();
   };
 
   const inputBorderCSS = isIncorrectPassword
@@ -30,8 +31,8 @@ export const WalletDecryption: FunctionComponent<WalletDecryption> = ({
 
   return (
     <Wrapper>
-      <Title className="text-grey-dark">Login with Password</Title>
-      <div className="bg-white flex rounded pt-5 pl-5 pr-4 pb-6">
+      <Title>Login with Password</Title>
+      <form className="bg-white flex rounded pt-5 pl-5 pr-4 pb-6">
         <div className="text-grey-dark mr-4 mt-2 font-medium">Password</div>
         <div className="w-full flex flex-col items-start">
           <input
@@ -50,13 +51,13 @@ export const WalletDecryption: FunctionComponent<WalletDecryption> = ({
           {isIncorrectPassword && (
             <div className="text-red text-sm mt-2">Invalid password. Please try again.</div>
           )}
-          <button
+          <div
             data-testid="reset-button"
-            className="text-blue font-bold mt-4"
+            className="text-blue font-bold mt-4 cursor-pointer"
             onClick={onResetConfigFile}
           >
             Use another Config file
-          </button>
+          </div>
           <Button
             data-testid="login-button"
             className="bg-orange text-white self-end py-3 px-4 mt-4"
@@ -66,7 +67,7 @@ export const WalletDecryption: FunctionComponent<WalletDecryption> = ({
             Login
           </Button>
         </div>
-      </div>
+      </form>
     </Wrapper>
   );
 };

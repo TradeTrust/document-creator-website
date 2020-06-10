@@ -40,7 +40,7 @@ export const ConfigFileDropZone: FunctionComponent<ConfigFileDropZone> = ({
 
   return (
     <Wrapper>
-      <Title className="text-grey-dark">Upload Configuration File</Title>
+      <Title>Upload Configuration File</Title>
       <div {...getRootProps()}>
         <input data-testid="config-file-drop-zone" {...getInputProps()} />
         <div className={dropZoneCSS}>
@@ -56,7 +56,7 @@ export const ConfigFileDropZone: FunctionComponent<ConfigFileDropZone> = ({
           <div className="text-base text-grey-dark my-4">
             {errorMessage || error ? "Please try again." : "or"}
           </div>
-          <Button className="py-3 px-12 bg-white text-orange hover:text-orange-dark border border-solid border-white-dark">
+          <Button className="py-3 px-12 bg-white text-orange hover:text-orange-dark border border-solid border-grey-lighter">
             Browse File
           </Button>
         </div>

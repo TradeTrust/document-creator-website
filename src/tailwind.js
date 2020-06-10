@@ -24,7 +24,7 @@ module.exports = {
     colors: {
       grey: {
         lighter: "#dddddd",
-        default: "#5c6ac4",
+        default: "#a0aec0",
         dark: "#4F4F4F",
       },
       blue: {
@@ -34,13 +34,20 @@ module.exports = {
       },
       orange: {
         lighter: "#fbd38d",
-        default: "#f6ad55",
+        default: "#FF9220",
         dark: "#ed8936",
       },
       green: {
         lighter: "#68d391",
         default: "#48bb78",
         dark: "#38a169",
+      },
+      teal: {
+        lighter: "#e5f9f8",
+        default: "#00CBBC",
+      },
+      pink: {
+        default: "#ffe8e8",
       },
       red: {
         lighter: "#FFF4F4",
@@ -49,7 +56,7 @@ module.exports = {
       },
       white: {
         default: "#ffffff",
-        dark: "#eeeeee",
+        dark: "#fafafa",
       },
       black: {
         default: "#000000",

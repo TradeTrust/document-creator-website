@@ -1,6 +1,6 @@
 import { ConfigFile } from "../../types";
 import { decryptWallet } from "./decrypt";
-import sample from "./sample.json";
+import sample from "../../test/fixtures/sample-config.json";
 
 const configFile = sample as ConfigFile;
 

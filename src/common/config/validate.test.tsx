@@ -1,5 +1,5 @@
 /* eslint-disable  @typescript-eslint/no-explicit-any */
-import sample from "./sample.json";
+import sample from "../../test/fixtures/sample-config.json";
 import { assertConfigFile } from "./validate";
 
 describe("configFileSchema", () => {
@@ -24,5 +24,28 @@ describe("configFileSchema", () => {
     expect(() =>
       assertConfigFile({ ...sample, forms: [{ name: "abc", type: "abc" }] } as any)
     ).toThrow(/must be one of/);
+  });
+
+  describe("forms", () => {
+    it("should throw when defaults is missing", () => {
+      expect(() =>
+        assertConfigFile({ ...sample, forms: [{ ...sample.forms[0], defaults: undefined }] } as any)
+      ).toThrow(/missing/);
+    });
+    it("should throw when schema is missing", () => {
+      expect(() =>
+        assertConfigFile({ ...sample, forms: [{ ...sample.forms[0], schema: undefined }] } as any)
+      ).toThrow(/missing/);
+    });
+    it("should throw when type is malformed", () => {
+      expect(() =>
+        assertConfigFile({ ...sample, forms: [{ ...sample.forms[0], type: "FOO_BAR" }] } as any)
+      ).toThrow(/must be one of/);
+    });
+    it("should throw when name is missing", () => {
+      expect(() =>
+        assertConfigFile({ ...sample, forms: [{ ...sample.forms[0], name: undefined }] } as any)
+      ).toThrow(/missing/);
+    });
   });
 });

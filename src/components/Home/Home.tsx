@@ -12,7 +12,7 @@ export const HomeContainer: FunctionComponent = () => {
   const { configFile } = usePersistedConfigFile();
 
   // If wallet has been decrypted, redirect to forms
-  if (config) return <Redirect to="/forms" />;
+  if (config) return <Redirect to="/forms-selection" />;
 
   return (
     <>

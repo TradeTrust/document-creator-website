@@ -11,7 +11,9 @@
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-dropzone": "^11.0.1",
+    "react-jsonschema-form": "^1.8.1",
     "react-router-dom": "^5.2.0",
+    "twin.macro": "^1.2.0",
     "use-persisted-state": "^0.3.0"
   },
   "devDependencies": {
@@ -35,6 +37,7 @@
     "@types/node": "^12.0.0",
     "@types/react": "^16.9.0",
     "@types/react-dom": "^16.9.0",
+    "@types/react-jsonschema-form": "^1.7.3",
     "@types/react-router-dom": "^5.1.5",
     "@types/use-persisted-state": "^0.3.0",
     "@typescript-eslint/eslint-plugin": "^2.30.0",
@@ -170,7 +173,9 @@
           "plugin:jest/all"
         ],
         "rules": {
-          "jest/prefer-expect-assertions": "off"
+          "jest/prefer-expect-assertions": "off",
+          "@typescript-eslint/no-empty-function": "off",
+          "@typescript-eslint/no-explicit-any": "off"
         }
       },
       {
