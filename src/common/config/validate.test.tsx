@@ -25,4 +25,11 @@ describe("configFileSchema", () => {
       assertConfigFile({ ...sample, forms: [{ name: "abc", type: "abc" }] } as any)
     ).toThrow(/must be one of/);
   });
+
+  describe("forms", () => {
+    xit("should throw when defaults is missing", () => {});
+    xit("should throw when schema is missing", () => {});
+    xit("should throw when type is malformed", () => {});
+    xit("should throw when name is missing", () => {});
+  });
 });
