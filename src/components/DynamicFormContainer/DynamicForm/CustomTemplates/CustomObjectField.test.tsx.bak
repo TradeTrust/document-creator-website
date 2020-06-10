@@ -1,8 +1,8 @@
-import { CustomObjectFieldTemplate } from "./CustomObjectField";
-import { fireEvent, render, screen, act, wait } from "@testing-library/react";
+import { render, screen } from "@testing-library/react";
 import React from "react";
 import sample from "../../../../test/fixtures/sample-config.json";
 import { ConfigFile } from "../../../../types";
+import { CustomObjectFieldTemplate } from "./CustomObjectField";
 
 const configFile = sample as ConfigFile;
 const schema = configFile.forms[0].schema;
@@ -20,24 +20,38 @@ const mockProperties = {
   readonly: false,
 };
 
+const mockTitleField = (title: string, id: string, required: boolean) => {
+return(
+<div id={id}>
+  {title}
+ {required && <span>*</span>}
+</div>
+);
+}
+
 describe("customObjectFieldTemplate", () => {
-  it("shouldould render all fields correctly");
-  render(
-    <CustomObjectFieldTemplate
-      DescriptionField={mockDescriptionField}
-      TitleField={mockTitleField}
-      title="title"
-      description="description"
-      properties={[mockProperties]}
-      required={false}
-      schema={schema}
-      uiSchema={{}}
-      idSchema={{}}
-      formData={{}}
-      formContext={{}}
-    />
-  );
-  expect(screen.getByTestId("")).toBeNull();
+  it("shouldould render all fields correctly", () => {
+    render(
+      <CustomObjectFieldTemplate
+        // DescriptionField={mockDescriptionField}
+        // TitleField={mockTitleField}
+        // title="title"
+        // description="description"
+        // properties={[mockProperties]}
+        // required={false}
+        // schema={schema}
+        // uiSchema={{}}
+        // formData={{}}
+        // formContext={{}}
+        TitleField={mockTitleField}
+        properties,
+        title,
+        description,
+        required,
+      />
+    );
+    expect(screen.getByTestId("")).toBeNull();
+  });
 
   it.todo("should render title if it exist");
   it.todo("should render all properties in a list");
