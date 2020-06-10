@@ -14,6 +14,7 @@ export const ToggleSwitch = styled(({ className, isOn, handleToggle }: ToggleSwi
       <input
         className="toggle-switch-checkbox"
         id={`toggle-switch`}
+        data-testid={"toggle-switch"}
         checked={isOn}
         onChange={handleToggle}
         type="checkbox"
