@@ -1,14 +1,15 @@
 import React, { ReactElement } from "react";
 import { ObjectFieldTemplateProps } from "react-jsonschema-form";
 
-export const CustomObjectFieldTemplate = ({
-  TitleField,
-  properties,
-  title,
-  description,
-  required,
-}: // eslint-disable-next-line  @typescript-eslint/no-explicit-any
-ObjectFieldTemplateProps<any>): ReactElement => {
+export const CustomObjectFieldTemplate = (props: ObjectFieldTemplateProps): ReactElement => {
+  const {
+    TitleField,
+    properties,
+    title,
+    description,
+    required,
+  }: // eslint-disable-next-line  @typescript-eslint/no-explicit-any
+  ObjectFieldTemplateProps<any> = props;
   return (
     <>
       {title && <TitleField title={title} id={title} required={required} />}

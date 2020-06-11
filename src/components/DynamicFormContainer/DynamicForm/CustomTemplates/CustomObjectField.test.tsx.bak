@@ -7,49 +7,167 @@ import { CustomObjectFieldTemplate } from "./CustomObjectField";
 const configFile = sample as ConfigFile;
 const schema = configFile.forms[0].schema;
 
-const mockDescriptionField = () => {
-  return <div>DescriptionField</div>;
-};
-const mockTitleField = () => {
-  return <div>TitleField</div>;
-};
-const mockProperties = {
-  content: <div>content</div>,
-  name: "name",
-  disabled: false,
-  readonly: false,
+const mockObjectStatelessComponent = (id: string, description: string): React.ReactElement => {
+  return <div key={id}>{description}</div>;
 };
 
-const mockTitleField = (title: string, id: string, required: boolean) => {
-return(
-<div id={id}>
-  {title}
- {required && <span>*</span>}
-</div>
-);
-}
+const mockTitleStatelessComponent = (
+  id: string,
+  title: string,
+  required: boolean
+): React.ReactElement => {
+  return (
+    <div key={id} id={id}>
+      {title}
+      {required && <span>*</span>}
+    </div>
+  );
+};
+
+const mockObjectField = {
+  DescriptionField: mockObjectStatelessComponent,
+  TitleField: mockTitleStatelessComponent,
+  description: undefined,
+  disabled: false,
+  formContext: {},
+  formData: {
+    consignee: {},
+    notifyParty: {},
+    shipper: {
+      address: {},
+    },
+  },
+  idSchema: {
+    $id: "root",
+    blNumber: {
+      $id: "root_blNumber",
+    },
+    consignee: {
+      $id: "root_consignee",
+      name: {
+        $id: "root_consignee_name",
+      },
+    },
+    notifyParty: {
+      $id: "root_notifyParty",
+      name: {
+        $id: "root_notifyParty_name",
+      },
+    },
+    packages: {
+      $id: "root_packages",
+      description: {
+        $id: "root_packages_description",
+      },
+      measurement: {
+        $id: "root_packages_measurement",
+      },
+      weight: {
+        $id: "root_packages_weight",
+      },
+    },
+    placeOfDelivery: {
+      $id: "root_placeOfDelivery",
+    },
+    placeOfReceipt: {
+      $id: "root_placeOfReceipt",
+    },
+    portOfDischarge: {
+      $id: "root_portOfDischarge",
+    },
+    portOfLoading: {
+      $id: "root_portOfLoading",
+    },
+    shipper: {
+      $id: "root_shipper",
+      address: {
+        $id: "root_shipper_address",
+        country: {
+          $id: "root_shipper_address_country",
+        },
+        street: {
+          $id: "root_shipper_address_street",
+        },
+      },
+      name: {
+        $id: "root_shipper_name",
+      },
+    },
+    vessel: {
+      $id: "root_vessel",
+    },
+    voyageNo: {
+      $id: "root_voyageNo",
+    },
+  },
+  onAddClick: () => {},
+  properties: [
+    {
+      content: {
+        key: "1",
+      },
+      disabled: false,
+      name: "blNumber",
+      readonly: false,
+      required: false,
+    },
+    {
+      content: {
+        key: "11",
+      },
+      disabled: false,
+      name: "shipper",
+      readonly: false,
+      required: false,
+    },
+    {
+      content: {
+        key: "2",
+      },
+      disabled: false,
+      name: "consignee",
+      readonly: false,
+      required: false,
+    },
+  ],
+  readonly: false,
+  required: false,
+  schema: {
+    properties: {
+      blNumber: {
+        title: "BL Number",
+        type: "string",
+      },
+      consignee: {
+        properties: {
+          name: {
+            type: "string",
+          },
+        },
+        type: "object",
+      },
+      notifyParty: {
+        properties: {
+          name: {
+            type: "string",
+          },
+        },
+        title: "notify party",
+        type: "object",
+      },
+    },
+    required: ["blNumber"],
+    type: "object",
+  },
+  title: undefined,
+  uiSchema: {
+    classNames: undefined,
+  },
+};
 
 describe("customObjectFieldTemplate", () => {
-  it("shouldould render all fields correctly", () => {
-    render(
-      <CustomObjectFieldTemplate
-        // DescriptionField={mockDescriptionField}
-        // TitleField={mockTitleField}
-        // title="title"
-        // description="description"
-        // properties={[mockProperties]}
-        // required={false}
-        // schema={schema}
-        // uiSchema={{}}
-        // formData={{}}
-        // formContext={{}}
-        TitleField={mockTitleField}
-        properties,
-        title,
-        description,
-        required,
-      />
-    );
+  it("should render all fields correctly", () => {
+    render(<CustomObjectFieldTemplate {...mockObjectField} />);
     expect(screen.getByTestId("")).toBeNull();
   });
 
