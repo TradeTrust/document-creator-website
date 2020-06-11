@@ -24,9 +24,7 @@
       },
       "schema": {
         "type": "object",
-        "required": [
-          "blNumber"
-        ],
+        "required": ["blNumber"],
         "properties": {
           "blNumber": {
             "type": "string",
@@ -60,7 +58,7 @@
             }
           },
           "notifyParty": {
-            "title": "Notify Party",
+            "title": "notify party",
             "type": "object",
             "properties": {
               "name": {
