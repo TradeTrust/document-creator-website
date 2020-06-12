@@ -39,8 +39,8 @@ export const WalletDecryption: FunctionComponent<WalletDecryption> = ({
             data-testid="password-field"
             placeholder="Enter Password"
             className={`
-              ${inputBorderCSS} 
-              ${isDecrypting && "bg-grey-lighter"} 
+              ${inputBorderCSS}
+              ${isDecrypting && "bg-grey-lighter"}
               ${!password && "italic"}
             `}
             type="password"
@@ -49,7 +49,9 @@ export const WalletDecryption: FunctionComponent<WalletDecryption> = ({
             disabled={isDecrypting}
           />
           {isIncorrectPassword && (
-            <div className="text-red text-sm mt-2">Invalid password. Please try again.</div>
+            <div data-testid="password-field-msg" className="text-red text-sm mt-2">
+              Invalid password. Please try again.
+            </div>
           )}
           <div
             data-testid="reset-button"
