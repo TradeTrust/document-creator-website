@@ -59,7 +59,7 @@
     "prettier": "^2.0.5",
     "react-scripts": "3.4.1",
     "tailwindcss": "^1.3.5",
-    "testcafe": "1.7.1",
+    "testcafe": "^1.8.6",
     "typescript": "~3.7.2"
   },
   "scripts": {
@@ -70,6 +70,7 @@
     "commit:retry": "npm run commit -- --retry",
     "eject": "react-scripts eject",
     "integration": "testcafe chrome integration/**/*.spec.ts --ts-config-path ./tsconfig.testcafe.json --app \"BROWSER=none npm run start\"",
+    "integration:single": "testcafe chrome -L",
     "integration:headless": "testcafe chrome:headless integration/**/*.spec.ts --ts-config-path ./tsconfig.testcafe.json --app \"npm run start\" --app-init-delay 4000",
     "lint": "eslint . --ext .ts,.tsx --max-warnings 0",
     "lint:fix": "npm run lint -- --fix",
