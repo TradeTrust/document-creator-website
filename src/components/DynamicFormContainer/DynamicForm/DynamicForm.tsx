@@ -1,12 +1,12 @@
 import styled from "@emotion/styled";
 import { merge } from "lodash";
-import React, { useState, FunctionComponent } from "react";
+import React, { FunctionComponent, useState } from "react";
 import JsonForm from "react-jsonschema-form";
 import tw from "twin.macro";
 import { mixin } from "../../../styles";
-import { DataFileButton } from "./DataFileButton";
-import { CustomFieldTemplate, CustomObjectFieldTemplate } from "./CustomTemplates";
 import { Form } from "../../../types";
+import { CustomFieldTemplate, CustomObjectFieldTemplate } from "./CustomTemplates";
+import { DataFileButton } from "./DataFileButton";
 
 export interface DynamicForm {
   form: Form;
@@ -32,8 +32,8 @@ export const DynamicFormRaw: FunctionComponent<DynamicForm> = ({
   };
 
   return (
-    <div className={className}>
-      <div className="mb-4">
+    <div className={`${className} max-w-screen-sm mx-auto mt-6`}>
+      <div className="mb-10">
         <DataFileButton onDataFile={setFormValue} />
       </div>
       <JsonForm
@@ -51,7 +51,7 @@ export const DynamicFormRaw: FunctionComponent<DynamicForm> = ({
 export const DynamicForm = styled(DynamicFormRaw)`
 .form-group .form-group.field.field-object .dynamicForm-items {
   ${tw`
-    border border-solid border-grey-lighter bg-white-dark my-4 rounded
+    my-4
   `}
 }
 
@@ -59,7 +59,7 @@ legend {
   ${mixin.fontRobotoBold()}
   ${mixin.fontSize(20)}
   ${tw`
-    text-grey-dark w-full mt-8 pt-4
+    text-grey-dark w-full mt-8 pt-6 capitalize border-t border-solid border-grey-lighter
   `}
 }
 
@@ -94,13 +94,13 @@ legend {
 
 label {
   ${tw`
-    w-full sm:w-2/6 px-0 sm:px-4 sm:text-right text-grey-dark
+    w-full sm:w-3/12 px-0 sm:px-4 sm:text-right text-grey-dark
   `}
 }
 
 .field-string [type=text], .field-number input, .field-integer input {
   ${tw`
-    w-full sm:w-3/6 px-0 sm:px-2 h-10 rounded-none border border-solid border-grey-lighter
+    w-full sm:w-8/12 px-0 sm:px-2 h-10 rounded-none border border-solid border-grey-lighter
   `}
 }
 

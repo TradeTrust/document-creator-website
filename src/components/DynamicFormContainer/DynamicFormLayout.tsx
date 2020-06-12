@@ -46,7 +46,7 @@ export const DynamicFormLayout: FunctionComponent = () => {
               handleToggle={() => setIsPreviewMode(!isPreviewMode)}
             />
           </div>
-          <div className="max-w-screen-sm mx-auto mt-6">
+          <div className="">
             <DynamicForm form={activeForm} handleSubmit={console.log} />
           </div>
         </div>
