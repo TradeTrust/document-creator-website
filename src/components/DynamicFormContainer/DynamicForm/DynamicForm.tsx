@@ -1,6 +1,6 @@
 import styled from "@emotion/styled";
 import { merge } from "lodash";
-import React, { FunctionComponent, useState } from "react";
+import React, { FunctionComponent } from "react";
 import JsonForm from "react-jsonschema-form";
 import tw from "twin.macro";
 import { mixin } from "../../../styles";
@@ -10,27 +10,25 @@ import { CustomFieldTemplate, CustomObjectFieldTemplate } from "./CustomTemplate
 import { DataFileButton } from "./DataFileButton";
 
 export interface DynamicForm {
-  form: Form;
+  schema: Form["schema"];
   className?: string;
-  handleSubmit: (formData: any) => void; // eslint-disable-line @typescript-eslint/no-explicit-any
+  formData: any;
+  setFormData: (formData: any) => void;
+  form: any;
 }
 
 export const DynamicFormRaw: FunctionComponent<DynamicForm> = ({
-  form,
+  schema,
+  formData,
+  setFormData,
   className,
-  handleSubmit,
+  form,
 }) => {
-  const [formData, setFormData] = useState<any>(); // eslint-disable-line @typescript-eslint/no-explicit-any
-
+  console.log(form);
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const setFormValue = (value: any): void => {
     if (!formData) return;
     setFormData({ ...formData, formData: merge(formData.formData, value) });
-  };
-
-  const onSubmit = (): void => {
-    const rawDocument = merge(form.defaults, formData?.formData);
-    handleSubmit(rawDocument);
   };
 
   const handleUpload = (processedFiles: FileUploadType[]): void => {
@@ -63,8 +61,7 @@ export const DynamicFormRaw: FunctionComponent<DynamicForm> = ({
         <DataFileButton onDataFile={setFormValue} />
       </div>
       <JsonForm
-        onSubmit={onSubmit}
-        schema={form.schema}
+        schema={schema}
         onChange={setFormData}
         formData={formData?.formData}
         ObjectFieldTemplate={CustomObjectFieldTemplate}
@@ -159,6 +156,10 @@ label {
   :last-child {
     ${tw`mr-0`}
   }
+}
+
+.btn[type=submit] {
+  display: none;
 }
 
 i.glyphicon {

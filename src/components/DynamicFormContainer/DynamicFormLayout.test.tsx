@@ -2,20 +2,20 @@ import { DynamicFormLayout } from "./DynamicFormLayout";
 import React from "react";
 import { MemoryRouter } from "react-router";
 import { fireEvent, render, screen } from "@testing-library/react";
-import { useActiveFormContext } from "../../common/context/activeForm";
+import { useFormsContext } from "../../common/context/forms";
 import { useConfigContext } from "../../common/context/config";
 import sampleConfig from "../../test/fixtures/sample-config.json";
 
 jest.mock("../../common/context/activeForm");
 jest.mock("../../common/context/config");
 
-const mockUseActiveFormContext = useActiveFormContext as jest.Mock;
+const mockUseFormsContext = useFormsContext as jest.Mock;
 const mockUseConfigContext = useConfigContext as jest.Mock;
 const mockSetActiveFormIndex = jest.fn();
 
 const whenActiveFormIsAvailable = (): void => {
   mockUseConfigContext.mockReturnValue({ config: sampleConfig });
-  mockUseActiveFormContext.mockReturnValue({
+  mockUseFormsContext.mockReturnValue({
     activeFormIndex: 0,
     setActiveFormIndex: mockSetActiveFormIndex,
   });
@@ -23,14 +23,14 @@ const whenActiveFormIsAvailable = (): void => {
 
 const whenActiveFormIndexIsNotAvailable = (): void => {
   mockUseConfigContext.mockReturnValue({ config: sampleConfig });
-  mockUseActiveFormContext.mockReturnValue({
+  mockUseFormsContext.mockReturnValue({
     activeFormIndex: undefined,
     setActiveFormIndex: mockSetActiveFormIndex,
   });
 };
 const whenActiveFormConfigIsNotAvailable = (): void => {
   mockUseConfigContext.mockReturnValue({});
-  mockUseActiveFormContext.mockReturnValue({
+  mockUseFormsContext.mockReturnValue({
     activeFormIndex: undefined,
     setActiveFormIndex: mockSetActiveFormIndex,
   });

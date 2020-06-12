@@ -5,6 +5,7 @@
   "dependencies": {
     "@emotion/core": "^10.0.28",
     "@emotion/styled": "^10.0.27",
+    "@govtechsg/open-attestation": "^3.8.1",
     "@hapi/joi": "^17.1.1",
     "ethers": "^4.0.47",
     "polished": "^3.6.3",

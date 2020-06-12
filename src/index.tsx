@@ -5,14 +5,14 @@ import ReactDOM from "react-dom";
 import "./index.css";
 import { App } from "./App";
 import { ConfigContextProvider } from "./common/context/config";
-import { ActiveFormContextProvider } from "./common/context/activeForm";
+import { FormsContextProvider } from "./common/context/forms";
 
 ReactDOM.render(
   <React.StrictMode>
     <ConfigContextProvider>
-      <ActiveFormContextProvider>
+      <FormsContextProvider>
         <App />
-      </ActiveFormContextProvider>
+      </FormsContextProvider>
     </ConfigContextProvider>
   </React.StrictMode>,
   document.getElementById("root")
