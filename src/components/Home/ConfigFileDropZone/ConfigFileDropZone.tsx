@@ -45,10 +45,17 @@ export const ConfigFileDropZone: FunctionComponent<ConfigFileDropZone> = ({
         <input data-testid="config-file-drop-zone" {...getInputProps()} />
         <div className={dropZoneCSS}>
           {error && (
-            <div className="max-w-lg text-red font-bold text-lg">Error: File cannot be read</div>
+            <div
+              className="max-w-lg text-red font-bold text-lg"
+              data-testid={"error-cannot-read-file"}
+            >
+              Error: File cannot be read
+            </div>
           )}
           {errorMessage && !error && (
-            <div className="max-w-lg text-red font-bold text-lg">{errorMessage}</div>
+            <div className="max-w-lg text-red font-bold text-lg" data-testid={"config-error"}>
+              {errorMessage}
+            </div>
           )}
           {!errorMessage && !error && (
             <div className="font-bold text-lg text-grey-dark">Drag and drop file here</div>
