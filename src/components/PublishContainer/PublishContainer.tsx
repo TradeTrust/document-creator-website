@@ -17,7 +17,7 @@ export const PublishContainer: FunctionComponent = () => {
       <NavigationBar />
       <Container>
         <h1>Publishing {forms.length} Documents!</h1>
-        <small>{JSON.stringify(forms)}</small>
+        <small>{JSON.stringify(forms, null, 2)}</small>
       </Container>
     </>
   );

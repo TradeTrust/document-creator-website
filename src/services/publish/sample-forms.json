@@ -1,0 +1,98 @@
+[
+  {
+    "templateIndex": 0,
+    "data": {
+      "schema": {
+        "type": "object",
+        "required": ["blNumber"],
+        "properties": {
+          "blNumber": { "type": "string", "title": "BL Number" },
+          "shipper": {
+            "type": "object",
+            "properties": {
+              "name": { "type": "string" },
+              "address": {
+                "type": "object",
+                "properties": { "street": { "type": "string" }, "country": { "type": "string" } }
+              }
+            }
+          },
+          "consignee": { "type": "object", "properties": { "name": { "type": "string" } } },
+          "notifyParty": {
+            "title": "Notify Party",
+            "type": "object",
+            "properties": { "name": { "type": "string" } }
+          },
+          "vessel": { "type": "string" },
+          "voyageNo": { "title": "Voyage No.", "type": "string" },
+          "portOfLoading": { "title": "Port of Loading", "type": "string" },
+          "portOfDischarge": { "title": "Port of Discharge", "type": "string" },
+          "placeOfReceipt": { "title": "Place of Receipt", "type": "string" },
+          "placeOfDelivery": { "title": "Place of Delivery", "type": "string" },
+          "packages": {
+            "type": "array",
+            "title": "Packages",
+            "items": {
+              "type": "object",
+              "properties": {
+                "description": { "type": "string" },
+                "measurement": { "type": "string" },
+                "weight": { "type": "string" }
+              }
+            }
+          }
+        }
+      },
+      "uiSchema": {},
+      "idSchema": {
+        "$id": "root",
+        "blNumber": { "$id": "root_blNumber" },
+        "shipper": {
+          "$id": "root_shipper",
+          "name": { "$id": "root_shipper_name" },
+          "address": {
+            "$id": "root_shipper_address",
+            "street": { "$id": "root_shipper_address_street" },
+            "country": { "$id": "root_shipper_address_country" }
+          }
+        },
+        "consignee": { "$id": "root_consignee", "name": { "$id": "root_consignee_name" } },
+        "notifyParty": { "$id": "root_notifyParty", "name": { "$id": "root_notifyParty_name" } },
+        "vessel": { "$id": "root_vessel" },
+        "voyageNo": { "$id": "root_voyageNo" },
+        "portOfLoading": { "$id": "root_portOfLoading" },
+        "portOfDischarge": { "$id": "root_portOfDischarge" },
+        "placeOfReceipt": { "$id": "root_placeOfReceipt" },
+        "placeOfDelivery": { "$id": "root_placeOfDelivery" },
+        "packages": {
+          "$id": "root_packages",
+          "description": { "$id": "root_packages_description" },
+          "measurement": { "$id": "root_packages_measurement" },
+          "weight": { "$id": "root_packages_weight" }
+        }
+      },
+      "formData": {
+        "shipper": {
+          "address": { "street": "street", "country": "country" },
+          "name": "shipper.name"
+        },
+        "consignee": { "name": "consignee_name" },
+        "notifyParty": { "name": "jhbkh" },
+        "blNumber": "BL_NO_2",
+        "vessel": "bjb",
+        "voyageNo": "jh",
+        "portOfLoading": "bjh",
+        "portOfDischarge": "bjh",
+        "placeOfReceipt": "b",
+        "placeOfDelivery": "jhbj",
+        "packages": [
+          { "description": "adsf", "measurement": "sdfsdf", "weight": "sdfsdf" },
+          { "description": "sdf", "measurement": "sdf", "weight": "sdf" }
+        ]
+      },
+      "edit": true,
+      "errors": [],
+      "errorSchema": {}
+    }
+  }
+]

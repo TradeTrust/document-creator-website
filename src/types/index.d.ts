@@ -28,3 +28,19 @@ export interface FileUploadType {
   filename: string;
   type: string;
 }
+export interface FormData {
+  schema: any;
+  uiSchema: any;
+  idSchema: any;
+  formData: any;
+  edit: boolean;
+  errors: any;
+  errorSchema: any;
+}
+
+export interface FormEntry {
+  // Can set the file name here as well
+  // fileName: string;
+  data: FormData;
+  templateIndex: number;
+}

@@ -1,21 +1,13 @@
 import React, { useState, useContext, createContext, FunctionComponent } from "react";
-
-interface Form {
-  // Can set the file name here as well
-  // fileName: string;
-  data: any;
-  templateIndex: number;
-}
-
-type FormData = any;
+import { FormEntry, FormData } from "../../../types";
 
 interface FormsContext {
   activeFormIndex?: number;
-  forms: Form[];
-  currentForm?: Form;
+  forms: FormEntry[];
+  currentForm?: FormEntry;
   currentFormData?: FormData;
   setActiveFormIndex: (index?: number) => void;
-  setForms: (forms: Form[]) => void;
+  setForms: (forms: FormEntry[]) => void;
   newForm: (templateIndex: number) => void;
   setCurrentFormData: (formData: FormData) => void;
 }
@@ -32,11 +24,11 @@ export const useFormsContext = (): FormsContext => useContext<FormsContext>(Form
 
 export const FormsContextProvider: FunctionComponent = ({ children }) => {
   const [activeFormIndex, setActiveFormIndex] = useState<number | undefined>(undefined);
-  const [forms, setForms] = useState<Form[]>([]);
+  const [forms, setForms] = useState<FormEntry[]>([]);
 
   const newForm = (templateIndex: number) => {
     const newIndex = forms.length;
-    setForms([...forms, { templateIndex, data: {} }]);
+    setForms([...forms, { templateIndex, data: {} as any }]);
     setActiveFormIndex(newIndex);
   };
 
