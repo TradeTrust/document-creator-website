@@ -5,7 +5,11 @@ import JsonForm from "react-jsonschema-form";
 import tw from "twin.macro";
 import { mixin } from "../../../styles";
 import { Form } from "../../../types";
-import { CustomFieldTemplate, CustomObjectFieldTemplate } from "./CustomTemplates";
+import {
+  CustomFieldTemplate,
+  CustomFileWidget,
+  CustomObjectFieldTemplate,
+} from "./CustomTemplates";
 import { DataFileButton } from "./DataFileButton";
 
 export interface DynamicForm {
@@ -31,6 +35,32 @@ export const DynamicFormRaw: FunctionComponent<DynamicForm> = ({
     handleSubmit(rawDocument);
   };
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const getAcceptedFormat = (schema: any): string => {
+    if (schema.accept) return schema.accept;
+
+    let accept = "";
+    for (const subSchema of Object.values(schema)) {
+      if (typeof subSchema === "object") {
+        const value = getAcceptedFormat(subSchema);
+        if (value) accept = value;
+      }
+    }
+    return accept;
+  };
+
+  const uiSchema = {
+    attachments: {
+      files: {
+        "ui:options": getAcceptedFormat(form),
+        "ui:widget": CustomFileWidget,
+      },
+    },
+  };
+
+  console.log("formData", formData);
+  console.log("form", form);
+
   return (
     <div className={`${className} max-w-screen-sm mx-auto mt-6`}>
       <div className="mb-10">
@@ -39,6 +69,7 @@ export const DynamicFormRaw: FunctionComponent<DynamicForm> = ({
       <JsonForm
         onSubmit={onSubmit}
         schema={form.schema}
+        uiSchema={uiSchema}
         onChange={setFormData}
         formData={formData?.formData}
         ObjectFieldTemplate={CustomObjectFieldTemplate}
