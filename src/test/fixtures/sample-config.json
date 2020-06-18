@@ -106,6 +106,20 @@
                 }
               }
             }
+          },
+          "attachments": {
+            "title": "Attachments",
+            "accept": ".pdf, .json",
+            "type": "object",
+            "properties": {
+              "files": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "format": "data-url"
+                }
+              }
+            }
           }
         }
       }
