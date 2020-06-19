@@ -22,7 +22,7 @@ export const DataFileButton: FunctionComponent<DataFileButton> = ({ onDataFile }
       console.error(e);
     }
   };
-  const { getRootProps, getInputProps } = useDropzone({ onDrop });
+  const { getRootProps, getInputProps } = useDropzone({ onDrop, multiple: false });
 
   return (
     <>
