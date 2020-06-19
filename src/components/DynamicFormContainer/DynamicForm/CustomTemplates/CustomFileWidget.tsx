@@ -100,6 +100,7 @@ const FilesInfo: FunctionComponent<any> = ({ filesInfo, removeFile }) => {
         return (
           <li
             key={key}
+            data-testid={`upload-file-${key}`}
             className="border border-grey-lighter border-solid rounded my-1 h-16 flex items-center px-4"
           >
             <div className="rounded-full bg-grey-lighter h-12 w-12 flex items-center justify-center mr-2">
@@ -115,6 +116,7 @@ const FilesInfo: FunctionComponent<any> = ({ filesInfo, removeFile }) => {
 
             <div
               className="cursor-pointer"
+              data-testid={`remove-uploaded-file-${key}`}
               onClick={() => {
                 removeFile(key);
               }}
