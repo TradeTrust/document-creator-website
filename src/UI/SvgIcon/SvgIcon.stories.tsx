@@ -1,5 +1,5 @@
 import React from "react";
-import { SvgIcon, SvgIconArrowLeft, SvgIconPaperClip } from "./SvgIcon";
+import { SvgIcon, SvgIconArrowLeft, SvgIconPaperClip, SvgIconX } from "./SvgIcon";
 
 export default {
   title: "SvgIcons|SvgIcon",
@@ -18,5 +18,11 @@ export const ArrowLeft = () => (
 export const PaperClip = () => (
   <SvgIcon>
     <SvgIconPaperClip />
+  </SvgIcon>
+);
+
+export const IconX = () => (
+  <SvgIcon>
+    <SvgIconX />
   </SvgIcon>
 );

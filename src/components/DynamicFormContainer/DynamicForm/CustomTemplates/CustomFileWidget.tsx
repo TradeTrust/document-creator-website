@@ -1,14 +1,23 @@
 import React, { FunctionComponent, useCallback, useEffect, useState } from "react";
 import { useDropzone } from "react-dropzone";
 import { Button } from "../../../../UI/Button";
-import { SvgIcon, SvgIconPaperClip } from "../../../../UI/SvgIcon";
+import { SvgIcon, SvgIconPaperClip, SvgIconX } from "../../../../UI/SvgIcon";
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-export const CustomFileWidget: FunctionComponent<any> = (props) => {
-  const { onChange, value, multiple, options, disabled } = props;
+export const CustomFileWidget: FunctionComponent<any> = ({
+  onChange,
+  value,
+  multiple,
+  options,
+  disabled,
+}) => {
   const [filesInfo, setFilesInfo] = useState(
     extractFileInfo(Array.isArray(value) ? value : [value])
   );
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const [uploadedFiles, setUploadedFiles] = useState<any[]>([]);
+
+  const maxSize = 20000000;
 
   useEffect(() => {
     setFilesInfo(extractFileInfo(Array.isArray(value) ? value : [value]));
@@ -19,17 +28,21 @@ export const CustomFileWidget: FunctionComponent<any> = (props) => {
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       processFiles(files).then((filesInfo: any) => {
         const values = filesInfo.map((fileInfo: any) => fileInfo.dataURL); // eslint-disable-line @typescript-eslint/no-explicit-any
-        if (multiple) {
-          onChange(values);
-        } else {
-          onChange(values[0]);
-        }
+        const allFiles = uploadedFiles.concat(values);
+        onChange(allFiles);
+        setUploadedFiles(allFiles);
       });
     },
-    [multiple, onChange]
+    [onChange, uploadedFiles]
   );
 
-  const maxSize = 20000000;
+  const removeFile = (fileIndex: number): void => {
+    const latestFiles = uploadedFiles;
+    latestFiles.splice(fileIndex, 1);
+    onChange(latestFiles);
+    setUploadedFiles(latestFiles);
+    setFilesInfo(extractFileInfo(Array.isArray(latestFiles) ? latestFiles : [latestFiles]));
+  };
 
   const { getRootProps, getInputProps, isDragActive, fileRejections } = useDropzone({
     onDrop,
@@ -69,8 +82,51 @@ export const CustomFileWidget: FunctionComponent<any> = (props) => {
           </Button>
         </div>
       </div>
-      <FilesInfo filesInfo={filesInfo} />
+      <FilesInfo filesInfo={filesInfo} removeFile={removeFile} />
     </div>
+  );
+};
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const FilesInfo: FunctionComponent<any> = ({ filesInfo, removeFile }) => {
+  if (filesInfo.length === 0) {
+    return null;
+  }
+  return (
+    <ul className="file-info mt-4">
+      {/* eslint-disable-next-line @typescript-eslint/no-explicit-any*/}
+      {filesInfo.map((fileInfo: any, key: any) => {
+        const { name, size } = fileInfo;
+        return (
+          <li
+            key={key}
+            className="border border-grey-lighter border-solid rounded my-1 h-16 flex items-center px-4"
+          >
+            <div className="rounded-full bg-grey-lighter h-12 w-12 flex items-center justify-center mr-2">
+              <SvgIcon>
+                <SvgIconPaperClip />
+              </SvgIcon>
+            </div>
+
+            <p className="font-bold text-grey-dark flex-grow">
+              {name}
+              <span className="text-grey text-xs font-regular"> ({size}KB)</span>
+            </p>
+
+            <div
+              className="cursor-pointer"
+              onClick={() => {
+                removeFile(key);
+              }}
+            >
+              <SvgIcon>
+                <SvgIconX />
+              </SvgIcon>
+            </div>
+          </li>
+        );
+      })}
+    </ul>
   );
 };
 
@@ -112,39 +168,6 @@ const dataURItoBlob = (dataURI: any): DataURItoBlobType => {
   const blob = new window.Blob([new Uint8Array(array)], { type });
 
   return { blob, name };
-};
-
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-const FilesInfo: FunctionComponent<any> = (props) => {
-  const { filesInfo } = props;
-  if (filesInfo.length === 0) {
-    return null;
-  }
-  return (
-    <ul className="file-info mt-4">
-      {/* eslint-disable-next-line @typescript-eslint/no-explicit-any*/}
-      {filesInfo.map((fileInfo: any, key: any) => {
-        const { name, size } = fileInfo;
-        return (
-          <li
-            key={key}
-            className="border border-grey-lighter border-solid rounded my-1 h-16 flex items-center px-4"
-          >
-            <div className="rounded-full bg-grey-lighter h-12 w-12 flex items-center justify-center mr-2">
-              <SvgIcon>
-                <SvgIconPaperClip />
-              </SvgIcon>
-            </div>
-
-            <p className="font-bold text-grey-dark">
-              {name}
-              <span className="text-grey text-xs font-regular"> ({size}KB)</span>
-            </p>
-          </li>
-        );
-      })}
-    </ul>
-  );
 };
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
