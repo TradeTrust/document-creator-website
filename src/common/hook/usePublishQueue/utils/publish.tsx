@@ -1,14 +1,6 @@
-import sampleForms from "./sample-forms.json";
-import sampleFormatted from "./sample-formated.json";
-import sampleConfigFile from "../../test/fixtures/sample-config.json";
-import { FormEntry, Config } from "../../types";
+import { FormEntry, Config } from "../../../../types";
 import { defaultsDeep } from "lodash";
 import { wrapDocuments } from "@govtechsg/open-attestation";
-
-const sampleConfig = {
-  ...sampleConfigFile,
-  wallet: "FAKE_WALLET" as any,
-} as Config;
 
 // Temporary method to enforce the publishing constraint
 export const assertPublishingConstraintTemp = (documents: any[]) => {
@@ -20,6 +12,8 @@ export const assertPublishingConstraintTemp = (documents: any[]) => {
       if (issuer.tokenRegistry) {
         contractAddresses.add(issuer.tokenRegistry);
         tokenRegistries += 1;
+        // Decided to throw after realising that we don't have beneficiary & holder yet
+        throw new Error("Token Registry is not supported yet");
       }
       if (issuer.documentStore) {
         contractAddresses.add(issuer.documentStore);
@@ -44,7 +38,7 @@ export const getRawDocuments = (forms: FormEntry[], config: Config) => {
   });
 };
 
-export const getWrappedDocuments = (forms: FormEntry[], config: Config) => {
+export const getPublishingQueue = (forms: FormEntry[], config: Config) => {
   // Currently assumes that the input is either:
   // 1. All verifiable documents with same document store
   // 2. One transferable record
@@ -53,27 +47,26 @@ export const getWrappedDocuments = (forms: FormEntry[], config: Config) => {
   const rawDocuments = getRawDocuments(forms, config);
   assertPublishingConstraintTemp(rawDocuments);
 
-  // At this point, wrappedDocuments is either:
+  // At this point, wrappedDocuments is either (because of assertPublishingConstraintTemp):
   // 1. array of 1 transferable record
   // 2. array of multiple verifiable documents
   const wrappedDocuments = wrapDocuments(rawDocuments);
 
-  // Need to group documents together first?
-  return {
-      type: "",
+  // TODO can swap assertPublishingConstraintTemp to regroup documents so that it can form a series
+  // of transactions that can be published onto the blockchain with minimal transaction counts.
+  // For that reason, we return an array first
+  const firstDocumentType = config.forms[forms[0].templateIndex].type;
+  const firstWrappedDocument = wrappedDocuments[0] as any;
+  const merkleRoot = firstWrappedDocument?.signature?.merkleRoot;
+  const contractAddress = rawDocuments[0].issuers[0].documentStore;
+  return [
+    {
+      type: firstDocumentType,
       forms, // To get the file name back later
       documents: wrappedDocuments,
-      merkleRoot: "",
-      contractAddress: ""
-  };
+      merkleRoot,
+      contractAddress,
+      // To add beneficiary and holder here
+    },
+  ];
 };
-
-describe("getRawDocuments", () => {
-  it("should get raw documents with default values", () => {
-    expect(getRawDocuments(sampleForms, sampleConfig)).toEqual(sampleFormatted);
-  });
-});
-
-it("works", () => {
-  console.log(getWrappedDocuments(sampleForms, sampleConfig));
-});

@@ -28,7 +28,10 @@ export const FormsContextProvider: FunctionComponent = ({ children }) => {
 
   const newForm = (templateIndex: number) => {
     const newIndex = forms.length;
-    setForms([...forms, { templateIndex, data: {} as any }]);
+    setForms([
+      ...forms,
+      { templateIndex, data: {} as any, fileName: `Document-${forms.length + 1}.tt` },
+    ]);
     setActiveFormIndex(newIndex);
   };
 

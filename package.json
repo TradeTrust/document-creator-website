@@ -5,7 +5,10 @@
   "dependencies": {
     "@emotion/core": "^10.0.28",
     "@emotion/styled": "^10.0.27",
+    "@govtechsg/document-store": "^1.1.6",
+    "@govtechsg/ethers-contract-hook": "^1.4.0",
     "@govtechsg/open-attestation": "^3.8.1",
+    "@govtechsg/token-registry": "^1.3.0",
     "@hapi/joi": "^17.1.1",
     "ethers": "^4.0.47",
     "polished": "^3.6.3",

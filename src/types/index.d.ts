@@ -1,19 +1,24 @@
 import { Wallet } from "ethers";
 
+type Network = "homestead" | "ropsten" | "rinkeby";
+type FormType = "TRANSFERABLE_RECORD" | "VERIFIABLE_DOCUMENT";
+
 export interface Form {
   name: string;
-  type: "TRANSFERABLE_RECORD" | "VERIFIABLE_DOCUMENT";
+  type: FormType;
   defaults: any; // eslint-disable-line @typescript-eslint/no-explicit-any
   schema: any; // eslint-disable-line @typescript-eslint/no-explicit-any
   attachments?: Attachments;
 }
 
 export interface ConfigFile {
+  network: Network;
   wallet: string;
   forms: Form[];
 }
 
 export interface Config {
+  network: Network;
   wallet: Wallet;
   forms: Form[];
 }
@@ -39,8 +44,7 @@ export interface FormData {
 }
 
 export interface FormEntry {
-  // Can set the file name here as well
-  // fileName: string;
+  fileName: string;
   data: FormData;
   templateIndex: number;
 }
