@@ -26,7 +26,7 @@ export const DynamicFormLayout: FunctionComponent = () => {
       <div className="container mx-auto">
         <div
           onClick={onBackToFormSelection}
-          className="text-grey flex cursor-pointer py-4"
+          className="text-grey flex cursor-pointer py-4 w-20"
           data-testid="back-button"
         >
           <SvgIcon>
