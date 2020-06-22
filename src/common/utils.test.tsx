@@ -1,4 +1,4 @@
-import { getAcceptedFormatValue, numberWithCommas } from "./utils";
+import { getAcceptedFormatValue, showInKB } from "./utils";
 
 describe("getAcceptedFormatValue", () => {
   it("should get the 'accept' value if there is a accept in the schema", () => {
@@ -62,12 +62,12 @@ describe("getAcceptedFormatValue", () => {
   });
 });
 
-describe("numberWithCommas", () => {
+describe("showInKB", () => {
   it("should return values with commas that separate the thousands and millions and so on", () => {
-    expect(numberWithCommas(100)).toStrictEqual("100");
-    expect(numberWithCommas(1000)).toStrictEqual("1,000");
-    expect(numberWithCommas(1000000)).toStrictEqual("1,000,000");
-    expect(numberWithCommas(1000000000)).toStrictEqual("1,000,000,000");
-    expect(numberWithCommas(1000000000000)).toStrictEqual("1,000,000,000,000");
+    expect(showInKB(100)).toStrictEqual("");
+    expect(showInKB(1000)).toStrictEqual("1");
+    expect(showInKB(1000000)).toStrictEqual("1,000");
+    expect(showInKB(1000000000)).toStrictEqual("1,000,000");
+    expect(showInKB(1000000000000)).toStrictEqual("1,000,000,000");
   });
 });

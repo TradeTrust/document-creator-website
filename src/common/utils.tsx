@@ -30,6 +30,7 @@ export const getAcceptedFormatValue = (schema: any): string => {
   return accept;
 };
 
-export const numberWithCommas = (x: number): string => {
-  return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+export const showInKB = (x: number): string => {
+  const byte = x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+  return byte.substring(0, byte.length - 4);
 };
