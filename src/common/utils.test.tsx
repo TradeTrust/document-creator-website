@@ -63,7 +63,7 @@ describe("getAcceptedFormatValue", () => {
 });
 
 describe("showInKB", () => {
-  it("should return values with commas that separate the thousands and millions and so on", () => {
+  it("should return values in KB with commas when pass in a byte value", () => {
     expect(showInKB(100)).toStrictEqual("");
     expect(showInKB(1000)).toStrictEqual("1");
     expect(showInKB(1000000)).toStrictEqual("1,000");

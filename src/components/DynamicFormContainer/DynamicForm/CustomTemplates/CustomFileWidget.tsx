@@ -119,7 +119,8 @@ interface FilesInfoType {
   filesInfo: FileUploadType[];
   removeFile: (index: number) => void;
 }
-const FilesInfo: FunctionComponent<FilesInfoType> = ({ filesInfo, removeFile }) => {
+
+export const FilesInfo: FunctionComponent<FilesInfoType> = ({ filesInfo, removeFile }) => {
   if (filesInfo.length === 0) {
     return null;
   }
@@ -132,7 +133,10 @@ const FilesInfo: FunctionComponent<FilesInfoType> = ({ filesInfo, removeFile }) 
             data-testid={`upload-file-${key}`}
             className="border border-grey-lighter border-solid rounded my-1 h-16 flex items-center px-4"
           >
-            <div className="rounded-full bg-grey-lighter h-12 w-12 flex items-center justify-center mr-2">
+            <div
+              className="rounded-full bg-grey-lighter h-12 w-12 flex items-center justify-center mr-2"
+              data-testid={`attachment-icon-${key}`}
+            >
               <SvgIcon>
                 <SvgIconPaperClip />
               </SvgIcon>

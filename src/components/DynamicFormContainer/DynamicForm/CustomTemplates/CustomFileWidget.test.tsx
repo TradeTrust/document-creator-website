@@ -1,6 +1,6 @@
 import { act, fireEvent, render, screen } from "@testing-library/react";
 import React from "react";
-import { CustomFileWidget } from "./CustomFileWidget";
+import { CustomFileWidget, FilesInfo } from "./CustomFileWidget";
 
 describe("customFileWidget", () => {
   it("should render with the props", () => {
@@ -19,29 +19,44 @@ describe("customFileWidget", () => {
     expect(screen.getByText("Browse File")).not.toBeNull();
     expect(screen.queryByTestId(/upload-file-/)).toBeNull();
   });
+});
 
-  it("should render the uploaded file when a file is uploaded", () => {
+describe("filesInfo", () => {
+  it("should render a uploaded file correctly", () => {
     render(
-      <CustomFileWidget
-        onChange={() => {}}
-        value={"data:application/json;name=ebl-unwrapped.json;base64,ewq="}
-        multiple={true}
-        options={{ accept: ".pdf, .json" }}
-        disabled={false}
+      <FilesInfo
+        filesInfo={[
+          {
+            name: "asdfdfs.pdf",
+            size: 123123,
+            dataURL: "asdfasdf",
+            type: "application/pdf",
+          },
+        ]}
+        removeFile={() => {}}
       />
     );
-
-    expect(screen.queryByTestId(/upload-file-/)).not.toBeNull();
+    expect(screen.queryByTestId("upload-file-0")).not.toBeNull();
+    expect(screen.queryByTestId("attachment-icon-0")).not.toBeNull();
+    expect(screen.queryByText("asdfdfs.pdf")).not.toBeNull();
+    expect(screen.queryByText("(123KB)")).not.toBeNull();
+    expect(screen.queryByTestId("remove-uploaded-file-0")).not.toBeNull();
   });
 
   it("should remove the file when 'X' is clicked", async () => {
+    const mockRemoveFileFn = jest.fn();
+
     render(
-      <CustomFileWidget
-        onChange={() => {}}
-        value={"data:application/json;name=ebl-unwrapped.json;base64,ewq="}
-        multiple={true}
-        options={{ accept: ".pdf, .json" }}
-        disabled={false}
+      <FilesInfo
+        filesInfo={[
+          {
+            name: "asdfdfs.pdf",
+            size: 123123,
+            dataURL: "asdfasdf",
+            type: "application/pdf",
+          },
+        ]}
+        removeFile={mockRemoveFileFn}
       />
     );
 
@@ -49,6 +64,6 @@ describe("customFileWidget", () => {
       fireEvent.click(screen.getByTestId("remove-uploaded-file-0"));
     });
 
-    expect(screen.queryByTestId(/upload-file-/)).toBeNull();
+    expect(mockRemoveFileFn).toHaveBeenCalledTimes(1);
   });
 });
