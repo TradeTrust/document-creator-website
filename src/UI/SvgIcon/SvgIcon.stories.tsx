@@ -2,7 +2,7 @@ import React from "react";
 import { SvgIcon, SvgIconArrowLeft, SvgIconPaperClip, SvgIconX } from "./SvgIcon";
 
 export default {
-  title: "SvgIcons|SvgIcon",
+  title: "SvgIcons/SvgIcon",
   component: SvgIcon,
   parameters: {
     info: { inline: true, header: false },
