@@ -1,5 +1,6 @@
 import React, { FunctionComponent, useCallback, useEffect, useState } from "react";
 import { useDropzone } from "react-dropzone";
+import { numberWithCommas } from "../../../../common/utils";
 import { Button } from "../../../../UI/Button";
 import { SvgIcon, SvgIconPaperClip, SvgIconX } from "../../../../UI/SvgIcon";
 
@@ -16,6 +17,8 @@ export const CustomFileWidget: FunctionComponent<any> = ({
   );
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [uploadedFiles, setUploadedFiles] = useState<any[]>([]);
+  const [totalFilesSize, setTotalFilesSize] = useState(0);
+  const [fileSizeError, setFileSizeError] = useState(false);
 
   const maxSize = 20000000;
 
@@ -25,37 +28,62 @@ export const CustomFileWidget: FunctionComponent<any> = ({
 
   const onDrop = useCallback(
     (files) => {
+      console.log("files", files);
+      let fileSizeUploaded = 0;
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      processFiles(files).then((filesInfo: any) => {
-        const values = filesInfo.map((fileInfo: any) => fileInfo.dataURL); // eslint-disable-line @typescript-eslint/no-explicit-any
-        const allFiles = uploadedFiles.concat(values);
-        onChange(allFiles);
-        setUploadedFiles(allFiles);
+      files.forEach((file: any) => {
+        fileSizeUploaded += file.size;
       });
+
+      if (totalFilesSize + fileSizeUploaded <= maxSize) {
+        const totalFileSizeUploaded = totalFilesSize + fileSizeUploaded;
+        setTotalFilesSize(totalFileSizeUploaded);
+
+        if (totalFileSizeUploaded <= maxSize) {
+          setFileSizeError(false);
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          processFiles(files).then((filesInfo: any) => {
+            const values = filesInfo.map((fileInfo: any) => fileInfo.dataURL); // eslint-disable-line @typescript-eslint/no-explicit-any
+            const allFiles = uploadedFiles.concat(values);
+            onChange(allFiles);
+            setUploadedFiles(allFiles);
+          });
+        }
+      } else {
+        setFileSizeError(true);
+      }
     },
-    [onChange, uploadedFiles]
+    [onChange, uploadedFiles, totalFilesSize]
   );
 
   const removeFile = (fileIndex: number): void => {
     const latestFiles = uploadedFiles;
+    const removedFile = latestFiles[fileIndex];
+    const removedFileInfo = extractFileInfo(
+      Array.isArray(removedFile) ? removedFile : [removedFile]
+    );
+    const updatedFilesSize = totalFilesSize - removedFileInfo[0].size;
+    setTotalFilesSize(updatedFilesSize);
+    setFileSizeError(false);
+
     latestFiles.splice(fileIndex, 1);
     onChange(latestFiles);
     setUploadedFiles(latestFiles);
     setFilesInfo(extractFileInfo(Array.isArray(latestFiles) ? latestFiles : [latestFiles]));
   };
 
-  const { getRootProps, getInputProps, isDragActive, fileRejections } = useDropzone({
+  const dropZone = useDropzone({
     onDrop,
     accept: options.accept,
     multiple,
-    maxSize,
     disabled,
   });
 
-  const isFileTooLarge = fileRejections.length > 0 && fileRejections[0].file.size > maxSize;
+  console.log("dropZone", dropZone);
+  const { getRootProps, getInputProps, isDragActive, fileRejections } = dropZone;
   const isFileRejected = fileRejections.length > 0;
 
-  const error = isFileRejected || isFileTooLarge;
+  const error = isFileRejected || fileSizeError;
 
   const dropZoneCSS = error
     ? `border-dashed border-2 items-center border-red flex flex-col pt-16 pb-16 px-4 text-center ${
@@ -70,13 +98,30 @@ export const CustomFileWidget: FunctionComponent<any> = ({
       <div {...getRootProps()}>
         <input {...getInputProps()} />
         <div className={dropZoneCSS}>
-          {error && (
-            <div className="max-w-lg text-red font-bold text-lg">Error: File cannot be read</div>
+          {isFileRejected && (
+            <>
+              <div className="max-w-lg text-red font-bold text-lg">
+                Error: Incorrect file type selected
+              </div>
+              <div className="text-base text-grey-dark my-4">{`Only ${options.accept} are allowed`}</div>
+            </>
+          )}
+          {fileSizeError && (
+            <>
+              <div className="max-w-lg text-red font-bold text-lg">
+                Error: Total attachment file size exceeds 20MB
+              </div>
+              <div className="text-base text-grey-dark my-4">
+                Please try again with a smaller file size.
+              </div>
+            </>
           )}
           {!error && (
-            <div className="font-bold text-lg text-grey-dark">Drag and drop file here</div>
+            <>
+              <div className="font-bold text-lg text-grey-dark">Drag and drop file here</div>
+              <div className="text-base text-grey-dark my-4">or</div>
+            </>
           )}
-          <div className="text-base text-grey-dark my-4">{error ? "Please try again." : "or"}</div>
           <Button className="py-3 px-12 bg-white text-orange hover:text-orange-dark border border-solid border-grey-lighter">
             Browse File
           </Button>
@@ -111,7 +156,7 @@ const FilesInfo: FunctionComponent<any> = ({ filesInfo, removeFile }) => {
 
             <p className="font-bold text-grey-dark flex-grow">
               {name}
-              <span className="text-grey text-xs font-regular"> ({size}KB)</span>
+              <span className="text-grey text-xs font-regular"> ({numberWithCommas(size)}KB)</span>
             </p>
 
             <div
