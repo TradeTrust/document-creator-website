@@ -50,8 +50,7 @@ export const CustomFileWidget: FunctionComponent<any> = ({
   const removeFile = (fileIndex: number): void => {
     setFileSizeError(false);
 
-    const latestFiles = uploadedFiles;
-    latestFiles.splice(fileIndex, 1);
+    const latestFiles = uploadedFiles.filter((item, index) => index !== fileIndex);
     setUploadedFiles(latestFiles);
 
     const dataValue = latestFiles.map((fileInfo: FileUploadType) => fileInfo.dataURL);
