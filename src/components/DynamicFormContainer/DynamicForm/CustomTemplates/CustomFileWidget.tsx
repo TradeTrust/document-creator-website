@@ -1,20 +1,11 @@
-import React, { FunctionComponent, useCallback, useEffect, useState } from "react";
+import React, { FunctionComponent, useCallback, useState } from "react";
 import { useDropzone } from "react-dropzone";
 import { numberWithCommas } from "../../../../common/utils";
 import { Button } from "../../../../UI/Button";
 import { SvgIcon, SvgIconPaperClip, SvgIconX } from "../../../../UI/SvgIcon";
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-export const CustomFileWidget: FunctionComponent<any> = ({
-  onChange,
-  value,
-  multiple,
-  options,
-  disabled,
-}) => {
-  const [filesInfo, setFilesInfo] = useState(
-    extractFileInfo(Array.isArray(value) ? value : [value])
-  );
+export const CustomFileWidget: FunctionComponent<any> = ({ multiple, options, disabled }) => {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [uploadedFiles, setUploadedFiles] = useState<any[]>([]);
   const [totalFilesSize, setTotalFilesSize] = useState(0);
@@ -22,13 +13,8 @@ export const CustomFileWidget: FunctionComponent<any> = ({
 
   const maxSize = 20000000;
 
-  useEffect(() => {
-    setFilesInfo(extractFileInfo(Array.isArray(value) ? value : [value]));
-  }, [value]);
-
   const onDrop = useCallback(
     (files) => {
-      console.log("files", files);
       let fileSizeUploaded = 0;
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       files.forEach((file: any) => {
@@ -39,37 +25,24 @@ export const CustomFileWidget: FunctionComponent<any> = ({
         const totalFileSizeUploaded = totalFilesSize + fileSizeUploaded;
         setTotalFilesSize(totalFileSizeUploaded);
 
-        if (totalFileSizeUploaded <= maxSize) {
-          setFileSizeError(false);
-          // eslint-disable-next-line @typescript-eslint/no-explicit-any
-          processFiles(files).then((filesInfo: any) => {
-            const values = filesInfo.map((fileInfo: any) => fileInfo.dataURL); // eslint-disable-line @typescript-eslint/no-explicit-any
-            const allFiles = uploadedFiles.concat(values);
-            onChange(allFiles);
-            setUploadedFiles(allFiles);
-          });
-        }
+        setUploadedFiles([...uploadedFiles, ...files]);
       } else {
         setFileSizeError(true);
       }
     },
-    [onChange, uploadedFiles, totalFilesSize]
+    [uploadedFiles, totalFilesSize]
   );
 
   const removeFile = (fileIndex: number): void => {
-    const latestFiles = uploadedFiles;
-    const removedFile = latestFiles[fileIndex];
-    const removedFileInfo = extractFileInfo(
-      Array.isArray(removedFile) ? removedFile : [removedFile]
-    );
-    const updatedFilesSize = totalFilesSize - removedFileInfo[0].size;
+    const removedFileInfo = uploadedFiles[fileIndex];
+    const filtered = uploadedFiles.filter((item, index) => {
+      return index !== fileIndex;
+    });
+    setUploadedFiles(filtered);
+
+    const updatedFilesSize = totalFilesSize - removedFileInfo.size;
     setTotalFilesSize(updatedFilesSize);
     setFileSizeError(false);
-
-    latestFiles.splice(fileIndex, 1);
-    onChange(latestFiles);
-    setUploadedFiles(latestFiles);
-    setFilesInfo(extractFileInfo(Array.isArray(latestFiles) ? latestFiles : [latestFiles]));
   };
 
   const dropZone = useDropzone({
@@ -79,7 +52,6 @@ export const CustomFileWidget: FunctionComponent<any> = ({
     disabled,
   });
 
-  console.log("dropZone", dropZone);
   const { getRootProps, getInputProps, isDragActive, fileRejections } = dropZone;
   const isFileRejected = fileRejections.length > 0;
 
@@ -127,25 +99,24 @@ export const CustomFileWidget: FunctionComponent<any> = ({
           </Button>
         </div>
       </div>
-      <FilesInfo filesInfo={filesInfo} removeFile={removeFile} />
+      <FilesInfo removeFile={removeFile} uploadedFiles={uploadedFiles} />
     </div>
   );
 };
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-const FilesInfo: FunctionComponent<any> = ({ filesInfo, removeFile }) => {
-  if (filesInfo.length === 0) {
+const FilesInfo: FunctionComponent<any> = ({ removeFile, uploadedFiles }) => {
+  if (uploadedFiles.length === 0) {
     return null;
   }
   return (
     <ul className="file-info mt-4">
       {/* eslint-disable-next-line @typescript-eslint/no-explicit-any*/}
-      {filesInfo.map((fileInfo: any, key: any) => {
-        const { name, size } = fileInfo;
+      {uploadedFiles.map((file: { path: string; name: string; size: number }, index: string) => {
         return (
           <li
-            key={key}
-            data-testid={`upload-file-${key}`}
+            key={index}
+            data-testid={`upload-file-${index}`}
             className="border border-grey-lighter border-solid rounded my-1 h-16 flex items-center px-4"
           >
             <div className="rounded-full bg-grey-lighter h-12 w-12 flex items-center justify-center mr-2">
@@ -155,15 +126,18 @@ const FilesInfo: FunctionComponent<any> = ({ filesInfo, removeFile }) => {
             </div>
 
             <p className="font-bold text-grey-dark flex-grow">
-              {name}
-              <span className="text-grey text-xs font-regular"> ({numberWithCommas(size)}KB)</span>
+              {file.name}
+              <span className="text-grey text-xs font-regular">
+                {" "}
+                ({numberWithCommas(file.size)}KB)
+              </span>
             </p>
 
             <div
               className="cursor-pointer"
-              data-testid={`remove-uploaded-file-${key}`}
+              data-testid={`remove-uploaded-file-${index}`}
               onClick={() => {
-                removeFile(key);
+                removeFile(index);
               }}
             >
               <SvgIcon>
@@ -174,90 +148,5 @@ const FilesInfo: FunctionComponent<any> = ({ filesInfo, removeFile }) => {
         );
       })}
     </ul>
-  );
-};
-
-interface DataURItoBlobType {
-  blob: Blob;
-  name: string;
-}
-
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-const dataURItoBlob = (dataURI: any): DataURItoBlobType => {
-  // Split metadata from data
-  const splitted = dataURI.split(",");
-  // Split params
-  const params = splitted[0].split(";");
-  // Get mime-type from params
-  const type = params[0].replace("data:", "");
-  // Filter the name property from params
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const properties = params.filter((param: any) => {
-    return param.split("=")[0] === "name";
-  });
-  // Look for the name and use unknown if no name property.
-  let name;
-  if (properties.length !== 1) {
-    name = "unknown";
-  } else {
-    // Because we filtered out the other property,
-    // we only have the name case here.
-    name = properties[0].split("=")[1];
-  }
-
-  // Built the Uint8Array Blob parameter from the base64 string.
-  const binary = atob(splitted[1]);
-  const array = [];
-  for (let i = 0; i < binary.length; i++) {
-    array.push(binary.charCodeAt(i));
-  }
-  // Create the blob object
-  const blob = new window.Blob([new Uint8Array(array)], { type });
-
-  return { blob, name };
-};
-
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-const addNameToDataURL = (dataURL: any, name: any): string => {
-  return dataURL.replace(";base64", `;name=${encodeURIComponent(name)};base64`);
-};
-
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-const processFile = (file: any): any => {
-  const { name, size, type } = file;
-  return new Promise((resolve, reject) => {
-    const reader = new window.FileReader();
-    reader.onerror = reject;
-    reader.onload = (event) => {
-      resolve({
-        dataURL: addNameToDataURL(event?.target?.result, name),
-        name,
-        size,
-        type,
-      });
-    };
-    reader.readAsDataURL(file);
-  });
-};
-
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-const processFiles = (files: any): any => {
-  return Promise.all([].map.call(files, processFile));
-};
-
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-const extractFileInfo = (dataURLs: any): any => {
-  return (
-    dataURLs
-      .filter((dataURL: any) => typeof dataURL !== "undefined") // eslint-disable-line @typescript-eslint/no-explicit-any
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      .map((dataURL: any) => {
-        const { blob, name } = dataURItoBlob(dataURL);
-        return {
-          name: name,
-          size: blob.size,
-          type: blob.type,
-        };
-      })
   );
 };
