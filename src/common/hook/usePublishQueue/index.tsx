@@ -1,15 +1,8 @@
 import { useState } from "react";
-import { FormEntry, Config } from "../../../types";
-import { getPublishingQueue } from "./utils/publish";
-import { getDefaultProvider } from "ethers";
+import { FormEntry, Config, PublishingJob, WrappedDocument } from "../../../types";
+import { getPublishingJobs } from "./utils/publish";
 import { ContractFunctionState } from "@govtechsg/ethers-contract-hook";
-import { DocumentStoreFactory } from "@govtechsg/document-store";
-import { DocumentStore } from "@govtechsg/document-store/src/contracts/DocumentStore";
-
-interface WrappedDocument {
-  fileName: string;
-  data: any;
-}
+import { publishJob } from "../../../services/publishing";
 
 export const usePublishQueue = (
   config: Config,
@@ -22,48 +15,33 @@ export const usePublishQueue = (
 } => {
   const [error, setError] = useState<string>();
   const [publishState, setPublishState] = useState<ContractFunctionState>("UNINITIALIZED");
-  const [wrappedDocuments, setWrappedDocuments] = useState<WrappedDocument[]>([]);
+  const [jobs, setJobs] = useState<PublishingJob[]>([]);
+  const [completedJobIndex, setCompletedJobIndex] = useState<number[]>([]);
 
-  config.wallet.connect(getDefaultProvider(config.network));
+  const markJobAsCompleted = (index: number) => {
+    setCompletedJobIndex([...completedJobIndex, index]);
+  };
 
-  const publish = () => {
-    const publishQueue = getPublishingQueue(formEntries, config);
-    const nextWrappedDocuments: WrappedDocument[] = [];
-    publishQueue.forEach((queuedRequest) => {
-      queuedRequest.documents.forEach((document, index) => {
-        nextWrappedDocuments.push({
-          data: document,
-          fileName: queuedRequest.forms[index].fileName,
-        });
-      });
-    });
-    setWrappedDocuments(nextWrappedDocuments);
+  const wrappedDocuments = completedJobIndex.reduce((acc, curr) => {
+    const documentsIssuesInJob = jobs[curr].documents;
+    return [...acc, ...documentsIssuesInJob];
+  }, [] as WrappedDocument[]);
 
-    const contracts: DocumentStore[] = publishQueue.map((queued) => {
-      // Only document store can be used here for now
-      return DocumentStoreFactory.connect(queued.contractAddress, config.wallet);
-    });
-
-    setPublishState("INITIALIZED");
-    const deferredTransactions = contracts.map((contract, index) => {
-      const merkleRoot = `0x${publishQueue[index].merkleRoot}`;
-      return contract
-        .issue(merkleRoot)
-        .then((receipt) => receipt.wait())
-        .catch((e) => {
-          throw e;
-        });
-    });
-    setPublishState("PENDING_CONFIRMATION");
-    Promise.all(deferredTransactions)
-      .then((transactions) => {
-        console.log(transactions);
-        setPublishState("CONFIRMED");
-      })
-      .catch((e) => {
-        console.error(e);
-        setError(e.message);
-      });
+  const publish = async () => {
+    try {
+      setPublishState("INITIALIZED");
+      const publishingJobs = getPublishingJobs(formEntries, config);
+      setJobs(publishingJobs);
+      const deferredJobs = publishingJobs.map((job, index) =>
+        publishJob(job, config.wallet).then(() => markJobAsCompleted(index))
+      );
+      setPublishState("PENDING_CONFIRMATION");
+      await Promise.all(deferredJobs);
+      setPublishState("CONFIRMED");
+    } catch (e) {
+      console.error(e);
+      setError(e.message);
+    }
   };
 
   return { publish, publishState, error, wrappedDocuments };

@@ -34,17 +34,37 @@ export interface FileUploadType {
   type: string;
 }
 export interface FormData {
-  schema: any;
-  uiSchema: any;
-  idSchema: any;
+  schema?: any;
+  uiSchema?: any;
+  idSchema?: any;
   formData: any;
-  edit: boolean;
-  errors: any;
-  errorSchema: any;
+  edit?: boolean;
+  errors?: any;
+  errorSchema?: any;
 }
 
 export interface FormEntry {
   fileName: string;
   data: FormData;
   templateIndex: number;
+}
+
+export interface RawDocument {
+  type: FormType;
+  contractAddress: string;
+  rawDocument: any;
+  fileName: string;
+  payload?: any;
+}
+
+export interface WrappedDocument extends RawDocument {
+  wrappedDocument: any;
+}
+
+export interface PublishingJob {
+  type: FormType;
+  contractAddress: string;
+  documents: WrappedDocument[];
+  merkleRoot: string;
+  payload?: any; // For verifiable document's bene & holder
 }

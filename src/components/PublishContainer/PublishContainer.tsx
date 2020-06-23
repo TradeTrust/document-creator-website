@@ -12,7 +12,7 @@ export const PublishContainer: FunctionComponent = () => {
 
   useEffect(() => {
     publish();
-  }, []);
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
     <>
@@ -25,7 +25,7 @@ export const PublishContainer: FunctionComponent = () => {
           return (
             <div key={index}>
               <a
-                href={`data:text/json;charset=utf-8,${JSON.stringify(doc.data)}`}
+                href={`data:text/json;charset=utf-8,${JSON.stringify(doc.wrappedDocument)}`}
                 download={doc.fileName}
               >
                 Download {doc.fileName}

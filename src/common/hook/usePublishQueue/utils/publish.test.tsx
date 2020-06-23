@@ -1,8 +1,8 @@
 import sampleForms from "./sample-forms.json";
 import sampleFormatted from "./sample-formated.json";
-import sampleConfigFile from "../../../../test/fixtures/sample-config.json";
+import sampleConfigFile from "./sample-config.json";
 import { Config } from "../../../../types";
-import { getPublishingQueue, getRawDocuments } from "./publish";
+import { getRawDocuments, RawDocument, groupDocumentsIntoJobs } from "./publish";
 
 const sampleConfig = {
   ...sampleConfigFile,
@@ -15,12 +15,20 @@ describe("getRawDocuments", () => {
   });
 });
 
-describe("getPublishingQueue", () => {
-  it("should return the contract type, merkle root, contract address & forms in that batch", () => {
-    const [wrappedDocuments] = getPublishingQueue(sampleForms, sampleConfig);
-    expect(wrappedDocuments.type).toBe("TRANSFERABLE_RECORD");
-    expect(wrappedDocuments.forms.length).toBe(1);
-    expect(wrappedDocuments.merkleRoot).toBeTruthy();
-    expect(wrappedDocuments.contractAddress).toBe("0xc3E9eBc6aDA9BA4B4Ce65D71901Cb2307e9670cE");
+describe("groupDocumentsIntoJobs", () => {
+  it("should batch transactions accordingly and return the jobs", () => {
+    const publishingJobs = groupDocumentsIntoJobs(sampleFormatted as RawDocument[]);
+
+    console.log(JSON.stringify(publishingJobs, null, 2));
+
+    expect(publishingJobs.length).toBe(2);
+
+    expect(publishingJobs[0].contractAddress).toBe("0x8bA63EAB43342AAc3AdBB4B827b68Cf4aAE5Caca");
+    expect(publishingJobs[0].merkleRoot).toBeTruthy();
+    expect(publishingJobs[0].documents.length).toBe(2);
+
+    expect(publishingJobs[1].contractAddress).toBe("0x8AE02d36F5eE60604cf46C086b3Ad5Ac43137f58");
+    expect(publishingJobs[1].merkleRoot).toBeTruthy();
+    expect(publishingJobs[1].documents.length).toBe(1);
   });
 });
