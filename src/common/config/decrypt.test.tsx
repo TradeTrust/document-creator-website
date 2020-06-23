@@ -14,8 +14,6 @@ describe("decryptWallet", () => {
   });
 
   it("should throw when decryption fails", async () => {
-    await expect(decryptWallet(configFile, "wrongPassword")).rejects.toThrow(
-      /invalid password/
-    );
+    await expect(decryptWallet(configFile, "wrongPassword")).rejects.toThrow(/invalid password/);
   });
 });

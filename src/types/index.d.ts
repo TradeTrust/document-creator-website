@@ -62,6 +62,7 @@ export interface WrappedDocument extends RawDocument {
 }
 
 export interface PublishingJob {
+  nonce: number; // For transaction ordering
   type: FormType;
   contractAddress: string;
   documents: WrappedDocument[];

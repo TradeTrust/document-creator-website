@@ -33,18 +33,22 @@ export const getRawDocuments = (forms: FormEntry[], config: Config): RawDocument
 };
 
 // Given a list of documents, create a list of jobs
-export const groupDocumentsIntoJobs = (rawDocuments: RawDocument[]): PublishingJob[] => {
+export const groupDocumentsIntoJobs = (
+  rawDocuments: RawDocument[],
+  currentNonce: number
+): PublishingJob[] => {
   // Below grouping assumes that a contract address cannot both be a document store and token registry.
   // Also need to be changed when verifiable document is added, since each one is it's own job queue.
   const grouped = groupBy(rawDocuments, "contractAddress");
   const contractAddresses = Object.keys(grouped);
-  return contractAddresses.map((contractAddress) => {
+  return contractAddresses.map((contractAddress, index) => {
     const firstRawDocument = grouped[contractAddress][0];
     const rawDocuments = grouped[contractAddress].map((doc) => doc.rawDocument);
     const wrappedDocuments = wrapDocuments(rawDocuments);
     const firstWrappedDocument = wrappedDocuments[0];
     return {
       type: firstRawDocument.type,
+      nonce: currentNonce + index, // Need to skip 1 for transferable records
       contractAddress,
       documents: grouped[contractAddress].map((doc, index) => ({
         ...doc,
@@ -55,10 +59,10 @@ export const groupDocumentsIntoJobs = (rawDocuments: RawDocument[]): PublishingJ
   });
 };
 
-export const getPublishingJobs = (forms: FormEntry[], config: Config) => {
+export const getPublishingJobs = (forms: FormEntry[], config: Config, nonce: number) => {
   // Currently works for only multiple verifiable document issuance:
   const rawDocuments = getRawDocuments(forms, config);
   assertPublishingConstraintTemp(rawDocuments);
 
-  return groupDocumentsIntoJobs(rawDocuments);
+  return groupDocumentsIntoJobs(rawDocuments, nonce);
 };

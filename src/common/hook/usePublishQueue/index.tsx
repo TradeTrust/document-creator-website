@@ -18,10 +18,6 @@ export const usePublishQueue = (
   const [jobs, setJobs] = useState<PublishingJob[]>([]);
   const [completedJobIndex, setCompletedJobIndex] = useState<number[]>([]);
 
-  const markJobAsCompleted = (index: number) => {
-    setCompletedJobIndex([...completedJobIndex, index]);
-  };
-
   const wrappedDocuments = completedJobIndex.reduce((acc, curr) => {
     const documentsIssuesInJob = jobs[curr].documents;
     return [...acc, ...documentsIssuesInJob];
@@ -29,14 +25,21 @@ export const usePublishQueue = (
 
   const publish = async () => {
     try {
+      // Cannot use setCompletedJobIndex here as async update does not with the promise race
+      const completedJobs: number[] = [];
       setPublishState("INITIALIZED");
-      const publishingJobs = getPublishingJobs(formEntries, config);
+      const nonce = await config.wallet.getTransactionCount();
+      const publishingJobs = getPublishingJobs(formEntries, config, nonce);
       setJobs(publishingJobs);
       const deferredJobs = publishingJobs.map((job, index) =>
-        publishJob(job, config.wallet).then(() => markJobAsCompleted(index))
+        publishJob(job, config.wallet).then(() => {
+          completedJobs.push(index);
+          setCompletedJobIndex(completedJobs);
+        })
       );
       setPublishState("PENDING_CONFIRMATION");
       await Promise.all(deferredJobs);
+      setCompletedJobIndex(completedJobs);
       setPublishState("CONFIRMED");
     } catch (e) {
       console.error(e);

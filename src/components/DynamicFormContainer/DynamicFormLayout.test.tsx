@@ -36,7 +36,7 @@ const whenActiveFormConfigIsNotAvailable = (): void => {
   });
 };
 
-describe.skip("dynamicFormLayout", () => {
+describe("dynamicFormLayout", () => {
   it("should render the progress bar", () => {
     whenActiveFormIsAvailable();
     render(
