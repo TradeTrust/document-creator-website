@@ -26,12 +26,14 @@ const defaults = {
 // Form values that the admin staff will be changing
 const configFile = sample as ConfigFile;
 const schema = configFile.forms[0].schema;
+const attachments = configFile.forms[0].attachments;
 
 const form: Form = {
   name: "Bill of lading",
   type: "TRANSFERABLE_RECORD",
   defaults,
   schema,
+  attachments,
 };
 
 export default {

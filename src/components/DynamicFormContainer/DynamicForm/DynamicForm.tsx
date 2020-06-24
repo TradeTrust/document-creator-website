@@ -4,7 +4,8 @@ import React, { FunctionComponent, useState } from "react";
 import JsonForm from "react-jsonschema-form";
 import tw from "twin.macro";
 import { mixin } from "../../../styles";
-import { Form } from "../../../types";
+import { FileUploadType, Form } from "../../../types";
+import { AttachmentDropzone } from "./AttachmentDropzone";
 import { CustomFieldTemplate, CustomObjectFieldTemplate } from "./CustomTemplates";
 import { DataFileButton } from "./DataFileButton";
 
@@ -26,10 +27,35 @@ export const DynamicFormRaw: FunctionComponent<DynamicForm> = ({
     if (!formData) return;
     setFormData({ ...formData, formData: merge(formData.formData, value) });
   };
+
   const onSubmit = (): void => {
     const rawDocument = merge(form.defaults, formData?.formData);
     handleSubmit(rawDocument);
   };
+
+  const handleUpload = (processedFiles: FileUploadType[]): void => {
+    const attachedFile = formData.formData.attachments || [];
+    const allAttachments = [...attachedFile, ...processedFiles];
+
+    setFormData({
+      ...formData,
+      formData: { attachments: allAttachments },
+    });
+  };
+
+  const handleRemoveUpload = (fileIndex: number): void => {
+    const allAttachments = formData.formData.attachments.filter(
+      (file: FileUploadType, index: number) => index !== fileIndex
+    );
+
+    setFormData({
+      ...formData,
+      formData: { attachments: allAttachments },
+    });
+  };
+
+  const allowAttachments = !!form.attachments?.allow;
+  const acceptedFormat = form.attachments?.accept ? form.attachments?.accept : "";
 
   return (
     <div className={`${className} max-w-screen-sm mx-auto mt-6`}>
@@ -44,6 +70,14 @@ export const DynamicFormRaw: FunctionComponent<DynamicForm> = ({
         ObjectFieldTemplate={CustomObjectFieldTemplate}
         FieldTemplate={CustomFieldTemplate}
       />
+      {allowAttachments && (
+        <AttachmentDropzone
+          acceptedFormat={acceptedFormat}
+          onUpload={handleUpload}
+          onRemove={handleRemoveUpload}
+          uploadedFiles={formData?.formData?.attachments}
+        />
+      )}
     </div>
   );
 };
