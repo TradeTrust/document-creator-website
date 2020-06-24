@@ -44,6 +44,7 @@ export const usePublishQueue = (
     } catch (e) {
       console.error(e);
       setError(e.message);
+      setPublishState("ERROR");
     }
   };
 
