@@ -54,8 +54,8 @@ export const DynamicFormRaw: FunctionComponent<DynamicForm> = ({
     });
   };
 
-  const haveAttachments = !!form.attachments?.allow;
-  const acceptedFormat = form.attachments.accept ? form.attachments.accept : "";
+  const allowAttachments = !!form.attachments?.allow;
+  const acceptedFormat = form.attachments?.accept ? form.attachments?.accept : "";
 
   return (
     <div className={`${className} max-w-screen-sm mx-auto mt-6`}>
@@ -70,7 +70,7 @@ export const DynamicFormRaw: FunctionComponent<DynamicForm> = ({
         ObjectFieldTemplate={CustomObjectFieldTemplate}
         FieldTemplate={CustomFieldTemplate}
       />
-      {haveAttachments && (
+      {allowAttachments && (
         <AttachmentDropzone
           acceptedFormat={acceptedFormat}
           onUpload={handleUpload}

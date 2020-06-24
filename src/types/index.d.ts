@@ -20,7 +20,7 @@ export interface Config {
 
 interface Attachments {
   allow: boolean;
-  accept: string;
+  accept?: string;
 }
 
 export interface FileUploadType {
