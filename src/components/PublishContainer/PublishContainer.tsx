@@ -4,11 +4,16 @@ import { Container } from "../Container";
 import { NavigationBar } from "../NavigationBar";
 import { useFormsContext } from "../../common/context/forms";
 import { usePublishQueue } from "../../common/hook/usePublishQueue";
+import { Redirect } from "react-router-dom";
+import { Config } from "../../types";
 
-export const PublishContainer: FunctionComponent = () => {
-  const { config } = useConfigContext();
+interface PublishPage {
+  config: Config;
+}
+
+export const PublishPage: FunctionComponent<PublishPage> = ({ config }) => {
   const { forms } = useFormsContext();
-  const { publish, publishState, wrappedDocuments } = usePublishQueue(config!, forms);
+  const { publish, publishState, wrappedDocuments } = usePublishQueue(config, forms);
 
   useEffect(() => {
     publish();
@@ -36,4 +41,10 @@ export const PublishContainer: FunctionComponent = () => {
       </Container>
     </>
   );
+};
+
+export const PublishContainer: FunctionComponent = () => {
+  const { config } = useConfigContext();
+  if (!config) return <Redirect to="/" />;
+  return <PublishPage config={config} />;
 };

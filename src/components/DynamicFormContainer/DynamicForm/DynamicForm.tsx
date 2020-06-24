@@ -12,9 +12,9 @@ import { DataFileButton } from "./DataFileButton";
 export interface DynamicForm {
   schema: Form["schema"];
   className?: string;
-  formData: any;
-  setFormData: (formData: any) => void;
-  form: any;
+  form: any; // eslint-disable-line @typescript-eslint/no-explicit-any
+  formData: any; // eslint-disable-line @typescript-eslint/no-explicit-any
+  setFormData: (formData: any) => void; // eslint-disable-line @typescript-eslint/no-explicit-any
 }
 
 export const DynamicFormRaw: FunctionComponent<DynamicForm> = ({

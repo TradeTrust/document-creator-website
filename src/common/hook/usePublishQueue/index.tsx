@@ -23,7 +23,7 @@ export const usePublishQueue = (
     return [...acc, ...documentsIssuesInJob];
   }, [] as WrappedDocument[]);
 
-  const publish = async () => {
+  const publish = async (): Promise<void> => {
     try {
       // Cannot use setCompletedJobIndex here as async update does not with the promise race
       const completedJobs: number[] = [];

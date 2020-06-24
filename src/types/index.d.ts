@@ -34,13 +34,13 @@ export interface FileUploadType {
   type: string;
 }
 export interface FormData {
-  schema?: any;
-  uiSchema?: any;
-  idSchema?: any;
-  formData: any;
+  schema?: any; // eslint-disable-line @typescript-eslint/no-explicit-any
+  uiSchema?: any; // eslint-disable-line @typescript-eslint/no-explicit-any
+  idSchema?: any; // eslint-disable-line @typescript-eslint/no-explicit-any
+  formData: any; // eslint-disable-line @typescript-eslint/no-explicit-any
   edit?: boolean;
-  errors?: any;
-  errorSchema?: any;
+  errors?: any; // eslint-disable-line @typescript-eslint/no-explicit-any
+  errorSchema?: any; // eslint-disable-line @typescript-eslint/no-explicit-any
 }
 
 export interface FormEntry {
@@ -52,13 +52,13 @@ export interface FormEntry {
 export interface RawDocument {
   type: FormType;
   contractAddress: string;
-  rawDocument: any;
+  rawDocument: any; // eslint-disable-line @typescript-eslint/no-explicit-any
   fileName: string;
-  payload?: any;
+  payload?: any; // eslint-disable-line @typescript-eslint/no-explicit-any
 }
 
 export interface WrappedDocument extends RawDocument {
-  wrappedDocument: any;
+  wrappedDocument: any; // eslint-disable-line @typescript-eslint/no-explicit-any
 }
 
 export interface PublishingJob {
@@ -67,5 +67,5 @@ export interface PublishingJob {
   contractAddress: string;
   documents: WrappedDocument[];
   merkleRoot: string;
-  payload?: any; // For verifiable document's bene & holder
+  payload?: any; // eslint-disable-line @typescript-eslint/no-explicit-any
 }

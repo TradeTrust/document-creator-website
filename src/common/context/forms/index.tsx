@@ -26,10 +26,11 @@ export const FormsContextProvider: FunctionComponent = ({ children }) => {
   const [activeFormIndex, setActiveFormIndex] = useState<number | undefined>(undefined);
   const [forms, setForms] = useState<FormEntry[]>([]);
 
-  const newForm = (templateIndex: number) => {
+  const newForm = (templateIndex: number): void => {
     const newIndex = forms.length;
     setForms([
       ...forms,
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       { templateIndex, data: {} as any, fileName: `Document-${forms.length + 1}.tt` },
     ]);
     setActiveFormIndex(newIndex);
@@ -37,7 +38,9 @@ export const FormsContextProvider: FunctionComponent = ({ children }) => {
 
   const currentForm = activeFormIndex === undefined ? undefined : forms[activeFormIndex];
   const currentFormData = currentForm ? currentForm.data : undefined;
-  const setCurrentFormData = (data: any) => {
+
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const setCurrentFormData = (data: any): void => {
     if (activeFormIndex === undefined)
       throw new Error("Trying to set form when there is no activeFormIndex");
     const nextForms = [...forms];

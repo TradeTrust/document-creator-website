@@ -3,8 +3,9 @@ import { defaultsDeep, groupBy } from "lodash";
 import { wrapDocuments } from "@govtechsg/open-attestation";
 
 // Temporary method to enforce the publishing constraint
-export const assertPublishingConstraintTemp = (documents: RawDocument[]) => {
+export const assertPublishingConstraintTemp = (documents: RawDocument[]): void => {
   documents.forEach(({ rawDocument }) => {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     rawDocument.issuers.forEach((issuer: any) => {
       if (issuer.tokenRegistry) {
         throw new Error("Token Registry is not supported yet");
@@ -59,7 +60,11 @@ export const groupDocumentsIntoJobs = (
   });
 };
 
-export const getPublishingJobs = (forms: FormEntry[], config: Config, nonce: number) => {
+export const getPublishingJobs = (
+  forms: FormEntry[],
+  config: Config,
+  nonce: number
+): PublishingJob[] => {
   // Currently works for only multiple verifiable document issuance:
   const rawDocuments = getRawDocuments(forms, config);
   assertPublishingConstraintTemp(rawDocuments);

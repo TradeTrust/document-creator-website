@@ -26,7 +26,7 @@ export const DynamicFormLayout: FunctionComponent = () => {
   if (!formSchema) return <Redirect to="/forms-selection" />;
   if (isSubmitted) return <Redirect to="/publish" />;
 
-  const validateCurrentForm = () => {
+  const validateCurrentForm = (): void => {
     // TODO validate current form
     // This should block transition to new form or publish page when validation fail for this form
     console.log("Running Validation");
