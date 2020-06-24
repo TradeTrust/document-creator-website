@@ -9,7 +9,6 @@ describe("filesInfo", () => {
         filesInfo={[
           {
             filename: "asdfdfs.pdf",
-            size: 123123,
             data: "asdfasdf",
             type: "application/pdf",
           },
@@ -20,7 +19,7 @@ describe("filesInfo", () => {
     expect(screen.queryByTestId("upload-file-0")).not.toBeNull();
     expect(screen.queryByTestId("attachment-icon-0")).not.toBeNull();
     expect(screen.queryByText("asdfdfs.pdf")).not.toBeNull();
-    expect(screen.queryByText("(123 kB)")).not.toBeNull();
+    expect(screen.queryByText("(6 B)")).not.toBeNull();
     expect(screen.queryByTestId("remove-uploaded-file-0")).not.toBeNull();
   });
 
@@ -32,7 +31,6 @@ describe("filesInfo", () => {
         filesInfo={[
           {
             filename: "asdfdfs.pdf",
-            size: 123123,
             data: "asdfasdf",
             type: "application/pdf",
           },
