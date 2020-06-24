@@ -3,14 +3,10 @@ import { merge } from "lodash";
 import React, { FunctionComponent, useState } from "react";
 import JsonForm from "react-jsonschema-form";
 import tw from "twin.macro";
-import { getAcceptedFormatValue } from "../../../common/utils";
 import { mixin } from "../../../styles";
-import { Form } from "../../../types";
-import {
-  CustomFieldTemplate,
-  CustomFileWidget,
-  CustomObjectFieldTemplate,
-} from "./CustomTemplates";
+import { FileUploadType, Form } from "../../../types";
+import { AttachmentDropzone } from "./AttachmentDropzone";
+import { CustomFieldTemplate, CustomObjectFieldTemplate } from "./CustomTemplates";
 import { DataFileButton } from "./DataFileButton";
 
 export interface DynamicForm {
@@ -31,19 +27,35 @@ export const DynamicFormRaw: FunctionComponent<DynamicForm> = ({
     if (!formData) return;
     setFormData({ ...formData, formData: merge(formData.formData, value) });
   };
+
   const onSubmit = (): void => {
     const rawDocument = merge(form.defaults, formData?.formData);
     handleSubmit(rawDocument);
   };
 
-  const uiSchema = {
-    attachments: {
-      files: {
-        "ui:options": { accept: getAcceptedFormatValue(form) },
-        "ui:widget": CustomFileWidget,
-      },
-    },
+  const handleUpload = (processedFiles: FileUploadType[]): void => {
+    const attachedFile = formData.formData.attachments || [];
+    const allAttachments = [...attachedFile, ...processedFiles];
+
+    setFormData({
+      ...formData,
+      formData: { attachments: allAttachments },
+    });
   };
+
+  const handleRemoveUpload = (fileIndex: number): void => {
+    const allAttachments = formData.formData.attachments.filter(
+      (file: FileUploadType, index: number) => index !== fileIndex
+    );
+
+    setFormData({
+      ...formData,
+      formData: { attachments: allAttachments },
+    });
+  };
+
+  const haveAttachments = !!form.attachments?.allow;
+  const acceptedFormat = form.attachments.accept ? form.attachments.accept : "";
 
   return (
     <div className={`${className} max-w-screen-sm mx-auto mt-6`}>
@@ -53,12 +65,19 @@ export const DynamicFormRaw: FunctionComponent<DynamicForm> = ({
       <JsonForm
         onSubmit={onSubmit}
         schema={form.schema}
-        uiSchema={uiSchema}
         onChange={setFormData}
         formData={formData?.formData}
         ObjectFieldTemplate={CustomObjectFieldTemplate}
         FieldTemplate={CustomFieldTemplate}
       />
+      {haveAttachments && (
+        <AttachmentDropzone
+          acceptedFormat={acceptedFormat}
+          onUpload={handleUpload}
+          onRemove={handleRemoveUpload}
+          uploadedFiles={formData?.formData?.attachments}
+        />
+      )}
     </div>
   );
 };

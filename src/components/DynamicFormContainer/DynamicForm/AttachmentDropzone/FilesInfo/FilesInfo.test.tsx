@@ -1,25 +1,6 @@
 import { act, fireEvent, render, screen } from "@testing-library/react";
 import React from "react";
-import { CustomFileWidget, FilesInfo } from "./CustomFileWidget";
-
-describe("customFileWidget", () => {
-  it("should render with the props", () => {
-    render(
-      <CustomFileWidget
-        onChange={() => {}}
-        value={[]}
-        multiple={true}
-        options={{ accept: ".pdf" }}
-        disabled={false}
-      />
-    );
-
-    expect(screen.getByText("Drag and drop file here")).not.toBeNull();
-    expect(screen.getByText("or")).not.toBeNull();
-    expect(screen.getByText("Browse File")).not.toBeNull();
-    expect(screen.queryByTestId(/upload-file-/)).toBeNull();
-  });
-});
+import { FilesInfo } from "./FilesInfo";
 
 describe("filesInfo", () => {
   it("should render a uploaded file correctly", () => {
@@ -27,9 +8,9 @@ describe("filesInfo", () => {
       <FilesInfo
         filesInfo={[
           {
-            name: "asdfdfs.pdf",
+            filename: "asdfdfs.pdf",
             size: 123123,
-            dataURL: "asdfasdf",
+            data: "asdfasdf",
             type: "application/pdf",
           },
         ]}
@@ -39,7 +20,7 @@ describe("filesInfo", () => {
     expect(screen.queryByTestId("upload-file-0")).not.toBeNull();
     expect(screen.queryByTestId("attachment-icon-0")).not.toBeNull();
     expect(screen.queryByText("asdfdfs.pdf")).not.toBeNull();
-    expect(screen.queryByText("(123KB)")).not.toBeNull();
+    expect(screen.queryByText("(123 kB)")).not.toBeNull();
     expect(screen.queryByTestId("remove-uploaded-file-0")).not.toBeNull();
   });
 
@@ -50,9 +31,9 @@ describe("filesInfo", () => {
       <FilesInfo
         filesInfo={[
           {
-            name: "asdfdfs.pdf",
+            filename: "asdfdfs.pdf",
             size: 123123,
-            dataURL: "asdfasdf",
+            data: "asdfasdf",
             type: "application/pdf",
           },
         ]}

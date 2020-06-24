@@ -10,6 +10,7 @@ const configFileSchema = Joi.object({
         type: Joi.string().allow("TRANSFERABLE_RECORD", "VERIFIABLE_DOCUMENT").only().required(),
         defaults: Joi.object().required(),
         schema: Joi.object().required(),
+        attachments: Joi.object(),
       })
     )
     .required(),
