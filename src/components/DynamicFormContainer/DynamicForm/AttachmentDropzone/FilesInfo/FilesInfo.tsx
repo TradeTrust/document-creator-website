@@ -14,7 +14,9 @@ export const FilesInfo: FunctionComponent<FilesInfoType> = ({ filesInfo, removeF
   }
   return (
     <ul className="file-info mt-4">
-      {filesInfo.map(({ filename, size }: FileUploadType, key: number) => {
+      {filesInfo.map(({ filename, data }: FileUploadType, key: number) => {
+        const decodedData = atob(data);
+        const size = prettyBytes(decodedData.length);
         return (
           <li
             key={key}
@@ -32,7 +34,7 @@ export const FilesInfo: FunctionComponent<FilesInfoType> = ({ filesInfo, removeF
 
             <p className="font-bold text-grey-dark flex-grow">
               {filename}
-              <span className="text-grey text-xs font-regular"> ({prettyBytes(size)})</span>
+              <span className="text-grey text-xs font-regular"> ({size})</span>
             </p>
 
             <div

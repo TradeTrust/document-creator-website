@@ -24,7 +24,10 @@ export const AttachmentDropzone: FunctionComponent<AttachmentDropzone> = ({
   const onDrop = useCallback(
     async (files: File[]) => {
       let totalSize = uploadedFiles
-        ? uploadedFiles.reduce((acc: number, current: FileUploadType) => acc + current.size, 0)
+        ? uploadedFiles.reduce(
+            (acc: number, current: FileUploadType) => acc + atob(current.data).length,
+            0
+          )
         : 0;
 
       files.reduce((acc: number, current: File) => (totalSize += current.size), 0);
@@ -61,7 +64,8 @@ export const AttachmentDropzone: FunctionComponent<AttachmentDropzone> = ({
 
   return (
     <div className="flex flex-col max-w-screen-sm m-auto" key="AttachmentDropzone">
-      <div data-testid="attachment-upload-zone" {...getRootProps()}>
+      <legend>Attachments</legend>
+      <div data-testid="attachment-upload-zone" className="mt-4" {...getRootProps()}>
         <input data-testid="attachment-file-drop-zone" {...getInputProps()} />
         <div className={dropZoneCSS}>
           {isFileRejected && (
@@ -99,7 +103,7 @@ export const AttachmentDropzone: FunctionComponent<AttachmentDropzone> = ({
 };
 
 const processFiles = (file: File): Promise<FileUploadType> => {
-  const { name, size, type } = file;
+  const { name, type } = file;
   return new Promise((resolve, reject) => {
     const reader = new window.FileReader();
     reader.onerror = reject;
@@ -107,7 +111,6 @@ const processFiles = (file: File): Promise<FileUploadType> => {
       resolve({
         data: extractBase64(event?.target?.result as string, type),
         filename: name,
-        size,
         type,
       });
     };

@@ -27,5 +27,4 @@ export interface FileUploadType {
   data: string;
   filename: string;
   type: string;
-  size: number;
 }
