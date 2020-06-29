@@ -1,7 +1,9 @@
+import Ajv from "ajv";
 import React, { FunctionComponent, useState } from "react";
 import { Redirect } from "react-router";
 import { useConfigContext } from "../../common/context/config";
 import { useFormsContext } from "../../common/context/forms";
+import { Button } from "../../UI/Button";
 import { SvgIcon, SvgIconArrowLeft } from "../../UI/SvgIcon";
 import { Title } from "../../UI/Title";
 import { ToggleSwitch } from "../../UI/ToggleSwitch";
@@ -29,7 +31,15 @@ export const DynamicFormLayout: FunctionComponent = () => {
   const validateCurrentForm = (): void => {
     // TODO validate current form
     // This should block transition to new form or publish page when validation fail for this form
-    console.log("Running Validation");
+    console.log(forms);
+
+    const ajv = new Ajv();
+    forms.forEach((form) => {
+      console.log("Running Validation");
+      const validForm = ajv.validate(form.data.schema, form.data.formData);
+      if (!validForm) return console.log(ajv.errors);
+      console.log("all Good", validForm);
+    });
   };
 
   const onBackToFormSelection = (): void => {
@@ -64,13 +74,19 @@ export const DynamicFormLayout: FunctionComponent = () => {
           <div className="pl-2">Back</div>
         </div>
         <ProgressBar step={2} />
-        <Title>Fill and Preview Form</Title>
-        <button className="bg-white text-grey-dark hover:text-blue p-4" onClick={onNewForm}>
-          New Document
-        </button>
-        <button className="bg-white text-grey-dark hover:text-blue p-4" onClick={onFormSubmit}>
-          Publish
-        </button>
+        <div className="flex justify-between items-end">
+          <div className="flex flex-col">
+            <Title className="mb-6">Fill and Preview Form</Title>
+          </div>
+          <div>
+            <Button className="bg-white text-orange px-4 py-3 mb-6" onClick={onNewForm}>
+              Add New
+            </Button>
+            <Button className="bg-orange text-white self-end py-3 px-4 mb-6" onClick={onFormSubmit}>
+              Issue Document
+            </Button>
+          </div>
+        </div>
       </div>
       <div className="bg-white-dark p-6">
         <div className="bg-white container mx-auto p-4">

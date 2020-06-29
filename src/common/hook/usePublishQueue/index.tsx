@@ -1,8 +1,8 @@
-import { useState } from "react";
-import { FormEntry, Config, PublishingJob, WrappedDocument } from "../../../types";
-import { getPublishingJobs } from "./utils/publish";
 import { ContractFunctionState } from "@govtechsg/ethers-contract-hook";
+import { useState } from "react";
 import { publishJob } from "../../../services/publishing";
+import { Config, FormEntry, PublishingJob, WrappedDocument } from "../../../types";
+import { getPublishingJobs } from "./utils/publish";
 
 export const usePublishQueue = (
   config: Config,
@@ -28,6 +28,7 @@ export const usePublishQueue = (
       // Cannot use setCompletedJobIndex here as async update does not with the promise race
       const completedJobs: number[] = [];
       setPublishState("INITIALIZED");
+      console.log("wallet", config.wallet);
       const nonce = await config.wallet.getTransactionCount();
       const publishingJobs = getPublishingJobs(formEntries, config, nonce);
       setJobs(publishingJobs);
