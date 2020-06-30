@@ -12,12 +12,26 @@ jest.mock("../../common/context/config");
 const mockUseFormsContext = useFormsContext as jest.Mock;
 const mockUseConfigContext = useConfigContext as jest.Mock;
 const mockSetActiveFormIndex = jest.fn();
+const mockSetForms = jest.fn();
 
 const whenActiveFormIsAvailable = (): void => {
   mockUseConfigContext.mockReturnValue({ config: sampleConfig });
   mockUseFormsContext.mockReturnValue({
     activeFormIndex: 0,
+    setForms: mockSetForms,
     setActiveFormIndex: mockSetActiveFormIndex,
+    forms: [
+      {
+        fileName: "document-1.tt",
+        data: { formData: {} },
+        templateIndex: 0,
+      },
+    ],
+    currentForm: {
+      fileName: "document-1.tt",
+      data: { formData: {} },
+      templateIndex: 0,
+    },
   });
 };
 
@@ -35,6 +49,11 @@ const whenActiveFormConfigIsNotAvailable = (): void => {
     setActiveFormIndex: mockSetActiveFormIndex,
   });
 };
+
+beforeEach(() => {
+  mockSetActiveFormIndex.mockReset();
+  mockSetForms.mockReset();
+});
 
 describe("dynamicFormLayout", () => {
   it("should render the progress bar", () => {
@@ -65,6 +84,7 @@ describe("dynamicFormLayout", () => {
 
     fireEvent.click(screen.getByTestId("back-button"));
     expect(mockSetActiveFormIndex).toHaveBeenCalled(); // eslint-disable-line jest/prefer-called-with
+    expect(mockSetForms).toHaveBeenCalledWith([]);
   });
   it("should render toggle switch for preview mode", () => {
     whenActiveFormIsAvailable();
@@ -83,7 +103,7 @@ describe("dynamicFormLayout", () => {
       </MemoryRouter>
     );
 
-    expect(screen.getByLabelText("BL Number*")).not.toBeUndefined();
+    expect(screen.getByLabelText("Consignment Information")).not.toBeUndefined();
   });
   it("should redirect when activeFormIndex === 'undefined'", () => {
     whenActiveFormIndexIsNotAvailable();

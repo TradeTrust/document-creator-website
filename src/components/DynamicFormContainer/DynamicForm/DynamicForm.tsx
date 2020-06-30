@@ -11,8 +11,9 @@ import { DataFileButton } from "./DataFileButton";
 
 export interface DynamicForm {
   schema: Form["schema"];
+  attachmentAccepted: boolean;
+  attachmentAcceptedFormat?: string;
   className?: string;
-  form: any; // eslint-disable-line @typescript-eslint/no-explicit-any
   formData: any; // eslint-disable-line @typescript-eslint/no-explicit-any
   setFormData: (formData: any) => void; // eslint-disable-line @typescript-eslint/no-explicit-any
 }
@@ -22,9 +23,9 @@ export const DynamicFormRaw: FunctionComponent<DynamicForm> = ({
   formData,
   setFormData,
   className,
-  form,
+  attachmentAccepted,
+  attachmentAcceptedFormat = "",
 }) => {
-  console.log(form);
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const setFormValue = (value: any): void => {
     if (!formData) return;
@@ -43,7 +44,7 @@ export const DynamicFormRaw: FunctionComponent<DynamicForm> = ({
 
   const handleRemoveUpload = (fileIndex: number): void => {
     const allAttachments = formData.formData.attachments.filter(
-      (file: FileUploadType, index: number) => index !== fileIndex
+      (_file: FileUploadType, index: number) => index !== fileIndex
     );
 
     setFormData({
@@ -51,9 +52,6 @@ export const DynamicFormRaw: FunctionComponent<DynamicForm> = ({
       formData: { attachments: allAttachments },
     });
   };
-
-  const allowAttachments = !!form.attachments?.allow;
-  const acceptedFormat = form.attachments?.accept ? form.attachments?.accept : "";
 
   return (
     <div className={`${className} max-w-screen-sm mx-auto mt-6`}>
@@ -67,9 +65,9 @@ export const DynamicFormRaw: FunctionComponent<DynamicForm> = ({
         ObjectFieldTemplate={CustomObjectFieldTemplate}
         FieldTemplate={CustomFieldTemplate}
       />
-      {allowAttachments && (
+      {attachmentAccepted && (
         <AttachmentDropzone
-          acceptedFormat={acceptedFormat}
+          acceptedFormat={attachmentAcceptedFormat}
           onUpload={handleUpload}
           onRemove={handleRemoveUpload}
           uploadedFiles={formData?.formData?.attachments}

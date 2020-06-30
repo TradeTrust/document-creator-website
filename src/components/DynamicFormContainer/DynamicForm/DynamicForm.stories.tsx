@@ -47,5 +47,12 @@ export default {
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const Default = () => {
   const [formData, setFormData] = useState<any>();
-  return <DynamicForm schema={form.schema} formData={formData} setFormData={setFormData} />;
+  return (
+    <DynamicForm
+      schema={form.schema}
+      formData={formData}
+      setFormData={setFormData}
+      attachmentAccepted={true}
+    />
+  );
 };

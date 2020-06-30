@@ -18,25 +18,26 @@ export const DynamicFormLayout: FunctionComponent = () => {
     forms,
     setForms,
     setActiveFormIndex,
-    currentFormData,
     currentForm,
     setCurrentFormData,
   } = useFormsContext();
   const [isSubmitted, setIsSubmitted] = useState(false);
   if (!currentForm) return <Redirect to="/forms-selection" />;
-  const formSchema = config?.forms[currentForm?.templateIndex].schema;
-  if (!formSchema) return <Redirect to="/forms-selection" />;
+  const currentFormDefinition = config?.forms[currentForm?.templateIndex];
+  if (!currentFormDefinition) return <Redirect to="/forms-selection" />;
   if (isSubmitted) return <Redirect to="/publish" />;
+
+  const formSchema = currentFormDefinition.schema;
+  const attachmentAccepted = !!currentFormDefinition.attachments?.allow;
+  const attachmentAcceptedFormat = currentFormDefinition.attachments?.accept;
 
   const validateCurrentForm = (): void => {
     // TODO validate current form
     // This should block transition to new form or publish page when validation fail for this form
-    console.log(forms);
-
     const ajv = new Ajv();
     forms.forEach((form) => {
       const validForm = ajv.validate(form.data.schema, form.data.formData);
-      if (!validForm) return console.log(ajv.errors);
+      if (!validForm) return console.error(ajv.errors);
     });
   };
 
@@ -115,9 +116,10 @@ export const DynamicFormLayout: FunctionComponent = () => {
           <div className="max-w-screen-sm mx-auto mt-6">
             <DynamicForm
               schema={formSchema}
-              formData={currentFormData}
+              formData={currentForm.data}
               setFormData={setCurrentFormData}
-              form={currentForm}
+              attachmentAccepted={attachmentAccepted}
+              attachmentAcceptedFormat={attachmentAcceptedFormat}
             />
           </div>
         </div>

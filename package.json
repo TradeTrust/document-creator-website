@@ -36,7 +36,7 @@
     "@storybook/preset-create-react-app": "^2.1.1",
     "@storybook/react": "^5.3.18",
     "@testing-library/jest-dom": "^4.2.4",
-    "@testing-library/react": "^9.3.2",
+    "@testing-library/react": "^10.4.3",
     "@testing-library/react-hooks": "^3.3.0",
     "@testing-library/user-event": "^7.2.1",
     "@types/hapi__joi": "^17.1.0",
@@ -60,6 +60,7 @@
     "eslint-plugin-testcafe": "^0.2.1",
     "eslint-plugin-testing-library": "^3.1.2",
     "git-cz": "^4.3.1",
+    "jest-environment-jsdom-sixteen": "^1.0.3",
     "npm-run-all": "^4.1.5",
     "postcss-cli": "^7.1.1",
     "postcss-import": "^12.0.1",
@@ -87,7 +88,7 @@
     "start:js": "sleep 2 && react-scripts start",
     "storybook": "start-storybook -p 9009 -s public",
     "storybook:build": "npm run build:css && build-storybook -s public",
-    "test": "react-scripts test"
+    "test": "react-scripts test --env=jest-environment-jsdom-sixteen"
   },
   "config": {
     "commitizen": {

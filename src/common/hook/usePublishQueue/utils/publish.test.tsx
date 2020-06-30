@@ -18,9 +18,7 @@ describe("getRawDocuments", () => {
 describe("groupDocumentsIntoJobs", () => {
   it("should batch transactions accordingly and return the jobs", () => {
     const publishingJobs = groupDocumentsIntoJobs(sampleFormatted as RawDocument[], 0);
-
-    console.log(JSON.stringify(publishingJobs, null, 2));
-
+    
     expect(publishingJobs).toHaveLength(2);
 
     expect(publishingJobs[0].contractAddress).toBe("0x8bA63EAB43342AAc3AdBB4B827b68Cf4aAE5Caca");
@@ -31,6 +29,6 @@ describe("groupDocumentsIntoJobs", () => {
     expect(publishingJobs[1].contractAddress).toBe("0x8AE02d36F5eE60604cf46C086b3Ad5Ac43137f58");
     expect(publishingJobs[1].merkleRoot).toBeTruthy(); // eslint-disable-line jest/no-truthy-falsy
     expect(publishingJobs[1].documents).toHaveLength(1);
-    expect(publishingJobs[0].nonce).toBe(1);
+    expect(publishingJobs[1].nonce).toBe(1);
   });
 });
