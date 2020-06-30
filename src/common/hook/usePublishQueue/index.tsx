@@ -28,7 +28,6 @@ export const usePublishQueue = (
       // Cannot use setCompletedJobIndex here as async update does not with the promise race
       const completedJobs: number[] = [];
       setPublishState("INITIALIZED");
-      console.log("wallet", config.wallet);
       const nonce = await config.wallet.getTransactionCount();
       const publishingJobs = getPublishingJobs(formEntries, config, nonce);
       setJobs(publishingJobs);

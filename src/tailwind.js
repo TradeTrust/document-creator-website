@@ -12,6 +12,11 @@ module.exports = {
       bold: 700,
     },
     extend: {
+      spacing: {
+        "72": "18rem",
+        "84": "21rem",
+        "96": "24rem",
+      },
       colors: {
         primary: {
           default: "#FF9220",
@@ -22,6 +27,10 @@ module.exports = {
       },
     },
     colors: {
+      lightgrey: {
+        default: "#eeeeee",
+        dark: "#89969F",
+      },
       grey: {
         lighter: "#dddddd",
         default: "#a0aec0",

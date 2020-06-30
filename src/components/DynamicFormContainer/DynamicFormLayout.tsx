@@ -4,7 +4,7 @@ import { Redirect } from "react-router";
 import { useConfigContext } from "../../common/context/config";
 import { useFormsContext } from "../../common/context/forms";
 import { Button } from "../../UI/Button";
-import { SvgIcon, SvgIconArrowLeft } from "../../UI/SvgIcon";
+import { SvgIcon, SvgIconArrowLeft, SvgIconTrash } from "../../UI/SvgIcon";
 import { Title } from "../../UI/Title";
 import { ToggleSwitch } from "../../UI/ToggleSwitch";
 import { Container } from "../Container";
@@ -35,19 +35,21 @@ export const DynamicFormLayout: FunctionComponent = () => {
 
     const ajv = new Ajv();
     forms.forEach((form) => {
-      console.log("Running Validation");
       const validForm = ajv.validate(form.data.schema, form.data.formData);
       if (!validForm) return console.log(ajv.errors);
-      console.log("all Good", validForm);
     });
   };
 
-  const onBackToFormSelection = (): void => {
+  const removeCurrentForm = (): void => {
     // Remove current form data before going back
     const nextForms = [...forms];
     nextForms.splice(nextForms.length - 1, 1);
     setForms(nextForms);
     setActiveFormIndex(undefined);
+  };
+
+  const onBackToFormSelection = (): void => {
+    removeCurrentForm();
   };
 
   const onNewForm = (): void => {
@@ -58,6 +60,10 @@ export const DynamicFormLayout: FunctionComponent = () => {
   const onFormSubmit = (): void => {
     validateCurrentForm();
     setIsSubmitted(true);
+  };
+
+  const deleteForm = (): void => {
+    removeCurrentForm();
   };
 
   return (
@@ -90,12 +96,21 @@ export const DynamicFormLayout: FunctionComponent = () => {
       </div>
       <div className="bg-white-dark p-6">
         <div className="bg-white container mx-auto p-4">
-          <div className="text-grey-dark flex items-center">
-            <div className="align-middle">Preview mode:</div>
-            <ToggleSwitch
-              isOn={isPreviewMode}
-              handleToggle={() => setIsPreviewMode(!isPreviewMode)}
-            />
+          <div className="flex justify-between">
+            <div className="text-grey-dark flex items-center">
+              <div className="align-middle">Preview mode:</div>
+              <ToggleSwitch
+                isOn={isPreviewMode}
+                handleToggle={() => setIsPreviewMode(!isPreviewMode)}
+              />
+            </div>
+            <Button onClick={deleteForm}>
+              <div className="rounded w-12 h-12 border border-solid border-lightgrey flex items-center justify-center">
+                <SvgIcon className="text-lightgrey-dark">
+                  <SvgIconTrash />
+                </SvgIcon>
+              </div>
+            </Button>
           </div>
           <div className="max-w-screen-sm mx-auto mt-6">
             <DynamicForm
