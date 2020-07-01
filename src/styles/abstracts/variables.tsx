@@ -21,6 +21,8 @@ export const greenDark = `${fullConfig.theme.colors.green.dark}`;
 export const red = `${fullConfig.theme.colors.red.default}`;
 export const redDark = `${fullConfig.theme.colors.red.dark}`;
 export const redLighter = `${fullConfig.theme.colors.red.lighter}`;
+export const teal = `${fullConfig.theme.colors.teal.default}`;
+export const tealLighter = `${fullConfig.theme.colors.teal.lighter}`;
 
 export const buttonRadius = "4px";
 
