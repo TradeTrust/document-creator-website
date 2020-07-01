@@ -1,5 +1,5 @@
 import styled from "@emotion/styled";
-import { merge } from "lodash";
+import { defaultsDeep, cloneDeep } from "lodash";
 import React, { FunctionComponent } from "react";
 import JsonForm from "react-jsonschema-form";
 import tw from "twin.macro";
@@ -28,18 +28,17 @@ export const DynamicFormRaw: FunctionComponent<DynamicForm> = ({
 }) => {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const setFormValue = (value: any): void => {
-    if (!formData) return;
-    setFormData({ ...formData, formData: merge(formData.formData, value) });
+    // Avoid using spread which will lazy copy the object
+    // See discussion: https://github.com/rjsf-team/react-jsonschema-form/issues/306
+    const nextFormData = cloneDeep(formData.formData);
+    setFormData({ ...formData, formData: defaultsDeep(value, nextFormData) });
   };
 
   const handleUpload = (processedFiles: FileUploadType[]): void => {
     const attachedFile = formData.formData.attachments || [];
     const allAttachments = [...attachedFile, ...processedFiles];
 
-    setFormData({
-      ...formData,
-      formData: { attachments: allAttachments },
-    });
+    setFormValue({ attachments: allAttachments });
   };
 
   const handleRemoveUpload = (fileIndex: number): void => {
@@ -47,10 +46,7 @@ export const DynamicFormRaw: FunctionComponent<DynamicForm> = ({
       (_file: FileUploadType, index: number) => index !== fileIndex
     );
 
-    setFormData({
-      ...formData,
-      formData: { attachments: allAttachments },
-    });
+    setFormValue({ attachments: allAttachments });
   };
 
   return (

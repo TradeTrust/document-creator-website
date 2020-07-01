@@ -20,6 +20,7 @@ const ConfigError = Selector("[data-testid='config-error']");
 
 const FormIdField = Selector("#root_iD");
 const FormAttachmentField = Selector("[data-testid='upload-file-0']");
+const FormExporterNameField = Selector("#root_supplyChainConsignment_exporter_name");
 
 test("Upload configuration file, choose form, fill form, preview form, submit form correctly", async (t) => {
   // upload invalid config file(without wallet)
@@ -73,7 +74,9 @@ test("Upload configuration file, choose form, fill form, preview form, submit fo
   await t.setFilesToUpload("input[data-testid=attachment-file-drop-zone]", [AttachmentSample]);
   await t.expect(FormAttachmentField.textContent).contains("sample.pdf");
 
-  // TODO: Validated the content is overwritten by the data file
+  // Validated the content is overwritten by the data file
+  await t.expect(FormIdField.value).eql("wfa.org.au:coo:WBC208897");
+  await t.expect(FormExporterNameField.value).eql("TREASURY WINE ESTATES VINTNERS LIMITED");
 
   // preview form
   // submit form (probably can spin up a test net here)
