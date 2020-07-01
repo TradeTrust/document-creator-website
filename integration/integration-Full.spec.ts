@@ -19,7 +19,6 @@ const ErrorCantReadFile = Selector("[data-testid='error-cannot-read-file']");
 const ConfigError = Selector("[data-testid='config-error']");
 
 const FormIdField = Selector("#root_iD");
-const FormDateField = Selector("root_issueDateTime");
 const FormAttachmentField = Selector("[data-testid='upload-file-0']");
 
 test("Upload configuration file, choose form, fill form, preview form, submit form correctly", async (t) => {
@@ -69,7 +68,7 @@ test("Upload configuration file, choose form, fill form, preview form, submit fo
 
   // Test data upload file
   await t.setFilesToUpload("input[type=file][data-testid=config-file-drop-zone]", [DataFile]);
-  
+
   // Add attachment
   await t.setFilesToUpload("input[data-testid=attachment-file-drop-zone]", [AttachmentSample]);
   await t.expect(FormAttachmentField.textContent).contains("sample.pdf");
