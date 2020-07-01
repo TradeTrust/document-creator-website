@@ -18,7 +18,7 @@ describe("getRawDocuments", () => {
 describe("groupDocumentsIntoJobs", () => {
   it("should batch transactions accordingly and return the jobs", () => {
     const publishingJobs = groupDocumentsIntoJobs(sampleFormatted as RawDocument[], 0);
-    
+
     expect(publishingJobs).toHaveLength(2);
 
     expect(publishingJobs[0].contractAddress).toBe("0x8bA63EAB43342AAc3AdBB4B827b68Cf4aAE5Caca");

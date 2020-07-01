@@ -50,12 +50,12 @@ const whenActiveFormConfigIsNotAvailable = (): void => {
   });
 };
 
-beforeEach(() => {
-  mockSetActiveFormIndex.mockReset();
-  mockSetForms.mockReset();
-});
-
 describe("dynamicFormLayout", () => {
+  beforeEach(() => {
+    mockSetActiveFormIndex.mockReset();
+    mockSetForms.mockReset();
+  });
+
   it("should render the progress bar", () => {
     whenActiveFormIsAvailable();
     render(

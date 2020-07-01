@@ -185,6 +185,7 @@
         ],
         "rules": {
           "jest/prefer-expect-assertions": "off",
+          "jest/no-hooks": "off",
           "@typescript-eslint/no-empty-function": "off",
           "@typescript-eslint/no-explicit-any": "off"
         }

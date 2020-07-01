@@ -22,11 +22,11 @@ const mockData = (files: File[]): any => {
 
 const mockSetFormData = jest.fn();
 
-beforeEach(() => {
-  mockSetFormData.mockReset();
-});
-
 describe("dynamicForm", () => {
+  beforeEach(() => {
+    mockSetFormData.mockReset();
+  });
+
   it("should render the fields from the form definition", async () => {
     render(
       <DynamicForm

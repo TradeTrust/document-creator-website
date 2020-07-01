@@ -5,6 +5,7 @@ fixture("Document Creator").page`http://localhost:3000`;
 const Config = "./../src/test/fixtures/sample-config.json";
 const ConfigWithError = "./../src/test/fixtures/sample-error-config.json";
 const ConfigErrorFile = "./../src/test/fixtures/sample-empty-error-config.json";
+const AttachmentSample = "./../src/test/fixtures/sample.pdf";
 const DataFile = "./../src/test/fixtures/sample-data-file.json";
 const Title = Selector("h1");
 const Button = Selector("button");
@@ -19,6 +20,7 @@ const ConfigError = Selector("[data-testid='config-error']");
 
 const FormIdField = Selector("#root_iD");
 const FormDateField = Selector("root_issueDateTime");
+const FormAttachmentField = Selector("[data-testid='upload-file-0']");
 
 test("Upload configuration file, choose form, fill form, preview form, submit form correctly", async (t) => {
   // upload invalid config file(without wallet)
@@ -60,17 +62,20 @@ test("Upload configuration file, choose form, fill form, preview form, submit fo
   // Test back button
   await t.click(ButtonBack);
   await t.expect(Title.textContent).contains("Choose Document Type to Issue");
-  
+
   // Navigate to form and fill form
   await t.click(Button.withText("COO"));
   await t.typeText(FormIdField, "COO-ID");
-  await t.expect(FormIdField.textContent).contains("COO-ID");
-
 
   // Test data upload file
   await t.setFilesToUpload("input[type=file][data-testid=config-file-drop-zone]", [DataFile]);
-  await t.typeText(FormIdField, "COO-ID");
+  
+  // Add attachment
+  await t.setFilesToUpload("input[data-testid=attachment-file-drop-zone]", [AttachmentSample]);
+  await t.expect(FormAttachmentField.textContent).contains("sample.pdf");
+
+  // TODO: Validated the content is overwritten by the data file
 
   // preview form
-  // submit form
+  // submit form (probably can spin up a test net here)
 });
