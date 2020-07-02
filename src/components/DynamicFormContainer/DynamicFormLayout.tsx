@@ -24,6 +24,7 @@ export const DynamicFormLayout: FunctionComponent = () => {
     setCurrentFormData,
   } = useFormsContext();
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [formError, setFormError] = useState(false);
   if (!currentForm) return <Redirect to="/forms-selection" />;
   const currentFormDefinition = config?.forms[currentForm?.templateIndex];
   if (!currentFormDefinition) return <Redirect to="/forms-selection" />;
@@ -33,14 +34,20 @@ export const DynamicFormLayout: FunctionComponent = () => {
   const attachmentAccepted = !!currentFormDefinition.attachments?.allow;
   const attachmentAcceptedFormat = currentFormDefinition.attachments?.accept;
 
-  const validateCurrentForm = (): void => {
-    // TODO validate current form
-    // This should block transition to new form or publish page when validation fail for this form
+  const validateCurrentForm = (): boolean[] => {
     const ajv = new Ajv();
+    const error = [] as any; // eslint-disable-line @typescript-eslint/no-explicit-any
     forms.forEach((form) => {
       const validForm = ajv.validate(form.data.schema, form.data.formData);
-      if (!validForm) return console.error(ajv.errors);
+      if (!validForm) {
+        setFormError(true);
+        console.error(ajv.errors);
+        error.push(true);
+      }
+      setFormError(false);
+      error.push(false);
     });
+    return error;
   };
 
   const removeCurrentForm = (): void => {
@@ -56,13 +63,13 @@ export const DynamicFormLayout: FunctionComponent = () => {
   };
 
   const onNewForm = (): void => {
-    validateCurrentForm();
-    setActiveFormIndex(undefined);
+    const anyError = validateCurrentForm().includes(true);
+    !anyError && setActiveFormIndex(undefined);
   };
 
   const onFormSubmit = (): void => {
-    validateCurrentForm();
-    setIsSubmitted(true);
+    const anyError = validateCurrentForm().includes(true);
+    !anyError && setIsSubmitted(true);
   };
 
   const deleteForm = (): void => {
@@ -125,6 +132,11 @@ export const DynamicFormLayout: FunctionComponent = () => {
         </div>
       </div>
       <div className="bg-white-dark p-6">
+        {formError && (
+          <div className="text-red text-xl text-center mb-4">
+            There seem to be an error in the form, please check the fields before issuing.
+          </div>
+        )}
         <div className="bg-white container mx-auto p-4">
           <div className="flex justify-between">
             <div className="text-grey-dark flex items-center">
