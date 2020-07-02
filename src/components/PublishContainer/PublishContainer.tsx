@@ -64,18 +64,10 @@ export const PublishPage: FunctionComponent<PublishPage> = ({ config }) => {
                 Document(s) issued successfully
               </Title>
               <div>
-                <Button
-                  className="bg-white text-orange px-4 py-3 mb-6"
-                  onClick={createAnotherDoc}
-                  disabled={!documentsPublished}
-                >
+                <Button className="bg-white text-orange px-4 py-3 mb-6" onClick={createAnotherDoc}>
                   Create another Document
                 </Button>
-                <Button
-                  className="bg-orange text-white self-end py-3 px-4 mb-6"
-                  onClick={iAmDone}
-                  disabled={!documentsPublished}
-                >
+                <Button className="bg-orange text-white self-end py-3 px-4 mb-6" onClick={iAmDone}>
                   I am Done
                 </Button>
               </div>

@@ -8,11 +8,13 @@ import { SvgIcon, SvgIconArrowLeft, SvgIconTrash } from "../../UI/SvgIcon";
 import { Title } from "../../UI/Title";
 import { ToggleSwitch } from "../../UI/ToggleSwitch";
 import { Container } from "../Container";
+import { ModalDialog } from "../ModalDialog";
 import { ProgressBar } from "../ProgressBar";
 import { DynamicForm } from "./DynamicForm";
 
 export const DynamicFormLayout: FunctionComponent = () => {
   const { config } = useConfigContext();
+  const [showDeleteModal, setDeleteModal] = useState(false);
   const [isPreviewMode, setIsPreviewMode] = useState(false);
   const {
     forms,
@@ -65,10 +67,36 @@ export const DynamicFormLayout: FunctionComponent = () => {
 
   const deleteForm = (): void => {
     removeCurrentForm();
+    closeDeleteModal();
+  };
+
+  const closeDeleteModal = (): void => {
+    setDeleteModal(false);
   };
 
   return (
     <Container>
+      <ModalDialog show={showDeleteModal} close={closeDeleteModal}>
+        <div className="flex flex-col ">
+          <div className="text-2xl text-grey-dark font-bold">Delete Form</div>
+          <div className="text-grey-dark mt-4 mr-16">
+            Are you sure you want to delete this form?
+          </div>
+          <div className="mt-16">
+            <div className="flex justify-end">
+              <Button
+                className="py-3 px-4 text-grey border border-solid border-lightgrey"
+                onClick={closeDeleteModal}
+              >
+                Cancel
+              </Button>
+              <Button className="py-3 px-4 text-white bg-red" onClick={deleteForm}>
+                Delete
+              </Button>
+            </div>
+          </div>
+        </div>
+      </ModalDialog>
       <div className="container mx-auto">
         <div
           onClick={onBackToFormSelection}
@@ -105,7 +133,7 @@ export const DynamicFormLayout: FunctionComponent = () => {
                 handleToggle={() => setIsPreviewMode(!isPreviewMode)}
               />
             </div>
-            <Button onClick={deleteForm}>
+            <Button onClick={() => setDeleteModal(true)}>
               <div className="rounded w-12 h-12 border border-solid border-lightgrey flex items-center justify-center">
                 <SvgIcon className="text-lightgrey-dark">
                   <SvgIconTrash />
