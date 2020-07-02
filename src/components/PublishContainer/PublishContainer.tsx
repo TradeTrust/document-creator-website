@@ -21,7 +21,7 @@ interface PublishPage {
 export const PublishPage: FunctionComponent<PublishPage> = ({ config }) => {
   const { setConfig } = useConfigContext();
   const { forms, currentForm, setForms, setActiveFormIndex } = useFormsContext();
-  const { publish, publishState, wrappedDocuments } = usePublishQueue(config, forms);
+  const { publish, publishState, publishedDocuments } = usePublishQueue(config, forms);
 
   useEffect(() => {
     publish();
@@ -79,7 +79,7 @@ export const PublishPage: FunctionComponent<PublishPage> = ({ config }) => {
               </div>
 
               <div className="flex flex-wrap">
-                {wrappedDocuments.map((doc, index) => {
+                {publishedDocuments.map((doc, index) => {
                   const size = prettyBytes(getFileSize(JSON.stringify(doc.wrappedDocument)));
                   return (
                     <div
