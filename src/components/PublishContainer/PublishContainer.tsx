@@ -28,7 +28,6 @@ export const PublishPage: FunctionComponent<PublishPage> = ({ config }) => {
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   const documentsPublished = publishState === "CONFIRMED";
-  // const documentsPublished = true;
 
   const createAnotherDoc = (): void => {
     const nextForms = [...forms];

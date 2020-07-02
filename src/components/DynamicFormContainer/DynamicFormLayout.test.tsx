@@ -1,10 +1,10 @@
-import { DynamicFormLayout } from "./DynamicFormLayout";
+import { fireEvent, render, screen } from "@testing-library/react";
 import React from "react";
 import { MemoryRouter } from "react-router";
-import { fireEvent, render, screen } from "@testing-library/react";
-import { useFormsContext } from "../../common/context/forms";
 import { useConfigContext } from "../../common/context/config";
+import { useFormsContext } from "../../common/context/forms";
 import sampleConfig from "../../test/fixtures/sample-config.json";
+import { DynamicFormLayout } from "./DynamicFormLayout";
 
 jest.mock("../../common/context/forms");
 jest.mock("../../common/context/config");
@@ -122,5 +122,32 @@ describe("dynamicFormLayout", () => {
       </MemoryRouter>
     );
     expect(screen.queryAllByText("Fill and Preview Form")).toHaveLength(0);
+  });
+
+  it("should display the modal when delete button is clicked", () => {
+    whenActiveFormIsAvailable();
+    render(
+      <MemoryRouter>
+        <DynamicFormLayout />
+      </MemoryRouter>
+    );
+
+    fireEvent.click(screen.getByTestId("delete-button"));
+
+    expect(screen.getByTestId("modal-dialog")).not.toBeNull();
+  });
+
+  it("should remove dialog when cancel is clicked", () => {
+    whenActiveFormIsAvailable();
+    render(
+      <MemoryRouter>
+        <DynamicFormLayout />
+      </MemoryRouter>
+    );
+
+    fireEvent.click(screen.getByTestId("delete-button"));
+    fireEvent.click(screen.getByTestId("cancel-form-button"));
+
+    expect(screen.queryAllByText("Delete Form")).toHaveLength(0);
   });
 });

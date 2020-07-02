@@ -87,6 +87,7 @@ export const DynamicFormLayout: FunctionComponent = () => {
               <Button
                 className="py-3 px-4 text-grey border border-solid border-lightgrey"
                 onClick={closeDeleteModal}
+                data-testid="cancel-form-button"
               >
                 Cancel
               </Button>
@@ -133,7 +134,7 @@ export const DynamicFormLayout: FunctionComponent = () => {
                 handleToggle={() => setIsPreviewMode(!isPreviewMode)}
               />
             </div>
-            <Button onClick={() => setDeleteModal(true)}>
+            <Button data-testid="delete-button" onClick={() => setDeleteModal(true)}>
               <div className="rounded w-12 h-12 border border-solid border-lightgrey flex items-center justify-center">
                 <SvgIcon className="text-lightgrey-dark">
                   <SvgIconTrash />
