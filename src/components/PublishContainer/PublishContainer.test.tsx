@@ -29,18 +29,20 @@ const whenPublishStateIsNotConfirmed = (): void => {
         fileName: "document-1.tt",
         data: { formData: {} },
         templateIndex: 0,
+        ownershipData: { holderAddress: "", beneficiaryAddress: "" },
       },
     ],
     currentForm: {
       fileName: "document-1.tt",
       data: { formData: {} },
       templateIndex: 0,
+      ownershipData: { holderAddress: "", beneficiaryAddress: "" },
     },
   });
   mockUsePublishQueue.mockReturnValue({
     publish: mockPublish,
     publishState: "INITIALIZED",
-    wrappedDocuments: [
+    publishedDocuments: [
       {
         contractAddress: "",
         fileName: "Document-1.tt",
@@ -79,7 +81,7 @@ const whenPublishStateIsConfirmed = (): void => {
   mockUsePublishQueue.mockReturnValue({
     publish: mockPublish,
     publishState: "CONFIRMED",
-    wrappedDocuments: [
+    publishedDocuments: [
       {
         contractAddress: "",
         fileName: "Document-1.tt",

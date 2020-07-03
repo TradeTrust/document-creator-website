@@ -23,7 +23,12 @@ describe("useFormsContext", () => {
       result.current.newForm(1);
     });
 
-    const expectedFormData = { templateIndex: 1, data: {}, fileName: "Document-1.tt" };
+    const expectedFormData = {
+      templateIndex: 1,
+      data: {},
+      fileName: "Document-1.tt",
+      ownershipData: { holderAddress: "", beneficiaryAddress: "" },
+    };
 
     expect(result.current.forms).toStrictEqual([expectedFormData]);
     expect(result.current.activeFormIndex).toStrictEqual(0);
@@ -55,16 +60,19 @@ describe("useFormsContext", () => {
         templateIndex: 1,
         data: {},
         fileName: "Document-1.tt",
+        ownershipData: { holderAddress: "", beneficiaryAddress: "" },
       },
       {
         templateIndex: 0,
         data: { formData: { foo: "bar" } },
         fileName: "Document-2.tt",
+        ownershipData: { holderAddress: "", beneficiaryAddress: "" },
       },
       {
         templateIndex: 1,
         data: {},
         fileName: "Document-3.tt",
+        ownershipData: { holderAddress: "", beneficiaryAddress: "" },
       },
     ];
 

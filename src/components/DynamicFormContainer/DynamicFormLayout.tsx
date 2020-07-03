@@ -11,6 +11,7 @@ import { Container } from "../Container";
 import { ModalDialog } from "../ModalDialog";
 import { ProgressBar } from "../ProgressBar";
 import { DynamicForm } from "./DynamicForm";
+import { TransferableRecordForm } from "./TransferableRecordForm";
 
 export const DynamicFormLayout: FunctionComponent = () => {
   const { config } = useConfigContext();
@@ -22,6 +23,7 @@ export const DynamicFormLayout: FunctionComponent = () => {
     setActiveFormIndex,
     currentForm,
     setCurrentFormData,
+    setCurrentFormOwnershipData,
   } = useFormsContext();
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [formError, setFormError] = useState(false);
@@ -30,6 +32,7 @@ export const DynamicFormLayout: FunctionComponent = () => {
   if (!currentFormDefinition) return <Redirect to="/forms-selection" />;
   if (isSubmitted) return <Redirect to="/publish" />;
 
+  const isTransferableRecord = currentFormDefinition.type === "TRANSFERABLE_RECORD";
   const formSchema = currentFormDefinition.schema;
   const attachmentAccepted = !!currentFormDefinition.attachments?.allow;
   const attachmentAcceptedFormat = currentFormDefinition.attachments?.accept;
@@ -155,6 +158,24 @@ export const DynamicFormLayout: FunctionComponent = () => {
             </Button>
           </div>
           <div className="max-w-screen-sm mx-auto mt-6">
+            {isTransferableRecord && (
+              <TransferableRecordForm
+                beneficiaryAddress={currentForm.ownershipData.beneficiaryAddress}
+                holderAddress={currentForm.ownershipData.holderAddress}
+                setBeneficiaryAddress={(beneficiaryAddress) =>
+                  setCurrentFormOwnershipData({
+                    beneficiaryAddress,
+                    holderAddress: currentForm.ownershipData.holderAddress,
+                  })
+                }
+                setHolderAddress={(holderAddress) =>
+                  setCurrentFormOwnershipData({
+                    beneficiaryAddress: currentForm.ownershipData.beneficiaryAddress,
+                    holderAddress,
+                  })
+                }
+              />
+            )}
             <DynamicForm
               schema={formSchema}
               formData={currentForm.data}

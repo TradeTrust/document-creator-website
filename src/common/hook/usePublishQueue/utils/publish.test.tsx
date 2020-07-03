@@ -18,17 +18,25 @@ describe("getRawDocuments", () => {
 describe("groupDocumentsIntoJobs", () => {
   it("should batch transactions accordingly and return the jobs", () => {
     const publishingJobs = groupDocumentsIntoJobs(sampleFormatted as RawDocument[], 0);
-
-    expect(publishingJobs).toHaveLength(2);
+    
+    // One tx with 2 verifiable document
+    // Two tx with 1 transferable records each
+    expect(publishingJobs).toHaveLength(3);
 
     expect(publishingJobs[0].contractAddress).toBe("0x8bA63EAB43342AAc3AdBB4B827b68Cf4aAE5Caca");
     expect(publishingJobs[0].merkleRoot).toBeTruthy(); // eslint-disable-line jest/no-truthy-falsy
     expect(publishingJobs[0].documents).toHaveLength(2);
     expect(publishingJobs[0].nonce).toBe(0);
 
-    expect(publishingJobs[1].contractAddress).toBe("0x8AE02d36F5eE60604cf46C086b3Ad5Ac43137f58");
+    expect(publishingJobs[1].contractAddress).toBe("0xc3E9eBc6aDA9BA4B4Ce65D71901Cb2307e9670cE");
     expect(publishingJobs[1].merkleRoot).toBeTruthy(); // eslint-disable-line jest/no-truthy-falsy
     expect(publishingJobs[1].documents).toHaveLength(1);
     expect(publishingJobs[1].nonce).toBe(1);
+
+    expect(publishingJobs[2].contractAddress).toBe("0xc3E9eBc6aDA9BA4B4Ce65D71901Cb2307e9670cE");
+    expect(publishingJobs[2].merkleRoot).toBeTruthy(); // eslint-disable-line jest/no-truthy-falsy
+    expect(publishingJobs[2].documents).toHaveLength(1);
+    // Skipped 2 since the previous tx takes 2 transactions
+    expect(publishingJobs[2].nonce).toBe(3);
   });
 });
