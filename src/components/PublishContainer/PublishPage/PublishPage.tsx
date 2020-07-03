@@ -20,7 +20,7 @@ interface PublishPage {
 export const PublishPage: FunctionComponent<PublishPage> = ({ config }) => {
   const { setConfig } = useConfigContext();
   const { forms, currentForm, setForms, setActiveFormIndex } = useFormsContext();
-  const { publish, publishState, wrappedDocuments } = usePublishQueue(config, forms);
+  const { publish, publishState, publishedDocuments } = usePublishQueue(config, forms);
 
   useEffect(() => {
     publish();
@@ -78,37 +78,38 @@ export const PublishPage: FunctionComponent<PublishPage> = ({ config }) => {
               </div>
 
               <div className="flex flex-wrap">
-                {wrappedDocuments.map((doc, index) => {
-                  const size = prettyBytes(getFileSize(JSON.stringify(doc.wrappedDocument)));
-                  return (
-                    <div
-                      key={index}
-                      className="mt-4 flex rounded bg-white p-3 w-72 border border-solid border-lightgrey mr-4"
-                    >
-                      <div className="rounded-full bg-blue mr-4 w-12 h-12 text-white font-bold flex justify-center items-center">
-                        TT
-                      </div>
-                      <div className="flex flex-col">
-                        <div className="font-bold text-lightgrey-dark">
-                          {doc.fileName}
-                          <span className="text-lightgrey-dark text-xs font-regular">
-                            {" "}
-                            ({size})
-                          </span>
+                {publishedDocuments &&
+                  publishedDocuments.map((doc, index) => {
+                    const size = prettyBytes(getFileSize(JSON.stringify(doc.wrappedDocument)));
+                    return (
+                      <div
+                        key={index}
+                        className="mt-4 flex rounded bg-white p-3 w-72 border border-solid border-lightgrey mr-4"
+                      >
+                        <div className="rounded-full bg-blue mr-4 w-12 h-12 text-white font-bold flex justify-center items-center">
+                          TT
                         </div>
-                        <a
-                          className="text-blue font-bold"
-                          href={`data:text/json;charset=utf-8,${JSON.stringify(
-                            doc.wrappedDocument
-                          )}`}
-                          download={doc.fileName}
-                        >
-                          Download
-                        </a>
+                        <div className="flex flex-col">
+                          <div className="font-bold text-lightgrey-dark">
+                            {doc.fileName}
+                            <span className="text-lightgrey-dark text-xs font-regular">
+                              {" "}
+                              ({size})
+                            </span>
+                          </div>
+                          <a
+                            className="text-blue font-bold"
+                            href={`data:text/json;charset=utf-8,${JSON.stringify(
+                              doc.wrappedDocument
+                            )}`}
+                            download={doc.fileName}
+                          >
+                            Download
+                          </a>
+                        </div>
                       </div>
-                    </div>
-                  );
-                })}
+                    );
+                  })}
               </div>
             </div>
           </div>

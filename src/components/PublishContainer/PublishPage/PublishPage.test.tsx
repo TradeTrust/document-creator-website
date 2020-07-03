@@ -40,7 +40,7 @@ const whenPublishStateIsConfirmed = (): void => {
   mockUsePublishQueue.mockReturnValue({
     publish: mockPublish,
     publishState: "CONFIRMED",
-    wrappedDocuments: [
+    publishedDocuments: [
       {
         contractAddress: "",
         fileName: "Document-1.tt",
