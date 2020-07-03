@@ -136,18 +136,4 @@ describe("dynamicFormLayout", () => {
 
     expect(screen.getByTestId("modal-dialog")).not.toBeNull();
   });
-
-  it("should remove dialog when cancel is clicked", () => {
-    whenActiveFormIsAvailable();
-    render(
-      <MemoryRouter>
-        <DynamicFormLayout />
-      </MemoryRouter>
-    );
-
-    fireEvent.click(screen.getByTestId("delete-button"));
-    fireEvent.click(screen.getByTestId("cancel-form-button"));
-
-    expect(screen.queryAllByText("Delete Form")).toHaveLength(0);
-  });
 });

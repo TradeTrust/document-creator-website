@@ -1,7 +1,8 @@
 import styled from "@emotion/styled";
 import { rgba } from "polished";
-import React, { FunctionComponent, useEffect } from "react";
+import React, { FunctionComponent } from "react";
 import tw from "twin.macro";
+import { useLockBodyScroll } from "../../common/hook/useLockBodyScroll";
 import { vars } from "../../styles";
 
 interface ModalDialogProps {
@@ -17,9 +18,7 @@ export const ModalDialogUnStyled: FunctionComponent<ModalDialogProps> = ({
   close,
   children,
 }) => {
-  useEffect(() => {
-    document.body.style.overflow = show ? "hidden" : "visible";
-  }, [show]);
+  useLockBodyScroll();
 
   return (
     <>
