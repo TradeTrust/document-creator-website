@@ -33,7 +33,7 @@ const CREATOR_CONTRACTS: CreatorContract = {
   rinkeby: "0xa51B8dAC076d5aC80507041146AC769542aAe195",
 };
 
-export const getTitleEscrowCreator = async (wallet: Wallet): TitleEscrowCreator => {
+export const getTitleEscrowCreator = async (wallet: Wallet): Promise<TitleEscrowCreator> => {
   const { name } = await wallet.provider.getNetwork();
   const creatorContractAddress = CREATOR_CONTRACTS[name];
   if (!creatorContractAddress)
