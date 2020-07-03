@@ -73,5 +73,5 @@ export interface PublishingJob {
   contractAddress: string;
   documents: WrappedDocument[];
   merkleRoot: string;
-  payload?: any; // eslint-disable-line @typescript-eslint/no-explicit-any
+  payload: { ownershipData?: OwnershipData }; // eslint-disable-line @typescript-eslint/no-explicit-any
 }

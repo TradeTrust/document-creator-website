@@ -53,13 +53,14 @@ export const groupDocumentsIntoJobs = (
         wrappedDocument: wrappedDocuments[index],
       })),
       merkleRoot: firstWrappedDocument.signature?.merkleRoot,
+      payload: {},
     });
     nonce += TX_NEEDED_FOR_VERIFIABLE_DOCUMENTS;
   });
 
   // Process all transferable records next
   transferableRecords.forEach((transferableRecord) => {
-    const { type, contractAddress, rawDocument } = transferableRecord;
+    const { type, contractAddress, rawDocument, payload } = transferableRecord;
     const documents = wrapDocuments([rawDocument]);
     jobs.push({
       type,
@@ -67,6 +68,7 @@ export const groupDocumentsIntoJobs = (
       contractAddress,
       documents: [{ ...transferableRecord, wrappedDocument: documents[0] }],
       merkleRoot: documents[0].signature?.merkleRoot,
+      payload,
     });
     nonce += TX_NEEDED_FOR_TRANSFERABLE_RECORDS;
   });

@@ -33,10 +33,9 @@ export const FormsContextProvider: FunctionComponent = ({ children }) => {
     const newIndex = forms.length;
     setForms([
       ...forms,
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       {
         templateIndex,
-        data: {} as any,
+        data: {} as any, // eslint-disable-line @typescript-eslint/no-explicit-any
         fileName: `Document-${forms.length + 1}.tt`,
         ownershipData: { beneficiaryAddress: "", holderAddress: "" },
       },
@@ -58,7 +57,10 @@ export const FormsContextProvider: FunctionComponent = ({ children }) => {
     setForms(nextForms);
   };
 
-  const setCurrentFormOwnershipData = ({ beneficiaryAddress, holderAddress }: OwnershipData) => {
+  const setCurrentFormOwnershipData = ({
+    beneficiaryAddress,
+    holderAddress,
+  }: OwnershipData): void => {
     if (activeFormIndex === undefined)
       throw new Error("Trying to set form when there is no activeFormIndex");
     const nextForms = [...forms];

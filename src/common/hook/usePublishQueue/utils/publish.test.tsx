@@ -18,7 +18,7 @@ describe("getRawDocuments", () => {
 describe("groupDocumentsIntoJobs", () => {
   it("should batch transactions accordingly and return the jobs", () => {
     const publishingJobs = groupDocumentsIntoJobs(sampleFormatted as RawDocument[], 0);
-    
+
     // One tx with 2 verifiable document
     // Two tx with 1 transferable records each
     expect(publishingJobs).toHaveLength(3);
