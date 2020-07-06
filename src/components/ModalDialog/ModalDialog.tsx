@@ -7,14 +7,12 @@ import { vars } from "../../styles";
 
 interface ModalDialogProps {
   className?: string;
-  show: boolean;
   close: () => void;
   children?: React.ReactNode;
 }
 
 export const ModalDialogUnStyled: FunctionComponent<ModalDialogProps> = ({
   className,
-  show,
   close,
   children,
 }) => {
@@ -22,12 +20,10 @@ export const ModalDialogUnStyled: FunctionComponent<ModalDialogProps> = ({
 
   return (
     <>
-      {show && (
-        <div className={className} data-testid="modal-dialog">
-          <div className="modal-content p-6">{children}</div>
-          <div className="modal-backdrop" onClick={() => close()} />
-        </div>
-      )}
+      <div className={className} data-testid="modal-dialog">
+        <div className="modal-content p-6">{children}</div>
+        <div className="modal-backdrop" data-testid="modal-backdrop" onClick={() => close()} />
+      </div>
     </>
   );
 };

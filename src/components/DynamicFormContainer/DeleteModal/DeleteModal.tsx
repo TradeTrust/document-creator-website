@@ -16,7 +16,7 @@ export const DeleteModal: FunctionComponent<DeleteModalProps> = ({
   return (
     <>
       {show && (
-        <ModalDialog show={show} close={closeDeleteModal}>
+        <ModalDialog close={closeDeleteModal}>
           <div className="flex flex-col ">
             <div className="text-2xl text-grey-dark font-bold">Delete Form</div>
             <div className="text-grey-dark mt-4 mr-16">

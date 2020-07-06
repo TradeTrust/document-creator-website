@@ -35,18 +35,10 @@ export const DynamicFormLayout: FunctionComponent = () => {
 
   const validateCurrentForm = (): boolean => {
     const ajv = new Ajv();
-    let hasError = false;
-    forms.forEach((form) => {
-      const validForm = ajv.validate(form.data.schema, form.data.formData);
-      if (!validForm) {
-        console.error(ajv.errors);
-        setFormError(ajv.errors);
-        return (hasError = true);
-      }
-      setFormError(ajv.errors);
-      return (hasError = false);
-    });
-    return hasError;
+
+    const validForm = ajv.validate(currentForm.data.schema, currentForm.data.formData);
+    setFormError(ajv.errors);
+    return validForm as boolean;
   };
 
   const removeCurrentForm = (): void => {
@@ -57,16 +49,12 @@ export const DynamicFormLayout: FunctionComponent = () => {
     setActiveFormIndex(undefined);
   };
 
-  const onBackToFormSelection = (): void => {
-    removeCurrentForm();
-  };
-
   const onNewForm = (): void => {
-    if (!validateCurrentForm()) setActiveFormIndex(undefined);
+    if (validateCurrentForm()) setActiveFormIndex(undefined);
   };
 
   const onFormSubmit = (): void => {
-    if (!validateCurrentForm()) setIsSubmitted(true);
+    if (validateCurrentForm()) setIsSubmitted(true);
   };
 
   const closeDeleteModal = (): void => {
@@ -86,7 +74,7 @@ export const DynamicFormLayout: FunctionComponent = () => {
         closeDeleteModal={closeDeleteModal}
       />
       <DynamicFormHeader
-        onBackToFormSelection={onBackToFormSelection}
+        onBackToFormSelection={removeCurrentForm}
         onNewForm={onNewForm}
         onFormSubmit={onFormSubmit}
       />
@@ -109,12 +97,22 @@ export const DynamicFormLayout: FunctionComponent = () => {
             </Button>
           </div>
           {formError && formError.length > 0 && (
-            <div className="bg-red-lighter rounded max-w-screen-sm mx-auto h-12 flex items-center">
-              <SvgIcon className="text-red mx-3">
+            <div className="bg-red-lighter rounded max-w-screen-sm mx-auto flex items-start py-3">
+              <SvgIcon className="text-red mx-3 my-1">
                 <SvgIconXCircle />
               </SvgIcon>
-              <div className="text-red text-xl text-center">
-                This form has errors. Please fix the errors and submit again.
+              <div className="text-red text-xl flex flex-col justify-center items-start">
+                <div>This form has errors. Please fix the errors and submit again.</div>
+                <ul className="list-disc pl-5">
+                  {formError &&
+                    formError.map((error, index: number) => {
+                      return (
+                        <li key={index}>
+                          {error.dataPath} {error.message}
+                        </li>
+                      );
+                    })}
+                </ul>
               </div>
             </div>
           )}
