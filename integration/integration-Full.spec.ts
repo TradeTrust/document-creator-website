@@ -5,6 +5,8 @@ fixture("Document Creator").page`http://localhost:3000`;
 const Config = "./../src/test/fixtures/sample-config.json";
 const ConfigWithError = "./../src/test/fixtures/sample-error-config.json";
 const ConfigErrorFile = "./../src/test/fixtures/sample-empty-error-config.json";
+const AttachmentSample = "./../src/test/fixtures/sample.pdf";
+const DataFile = "./../src/test/fixtures/sample-data-file.json";
 const Title = Selector("h1");
 const Button = Selector("button");
 const ButtonReset = Selector("[data-testid='reset-button']");
@@ -15,6 +17,10 @@ const PasswordFieldMsg = Selector("[data-testid='password-field-msg']");
 const ProgressBar = Selector("[data-testid='progress-bar']");
 const ErrorCantReadFile = Selector("[data-testid='error-cannot-read-file']");
 const ConfigError = Selector("[data-testid='config-error']");
+
+const FormIdField = Selector("#root_iD");
+const FormAttachmentField = Selector("[data-testid='upload-file-0']");
+const FormExporterNameField = Selector("#root_supplyChainConsignment_exporter_name");
 
 test("Upload configuration file, choose form, fill form, preview form, submit form correctly", async (t) => {
   // upload invalid config file(without wallet)
@@ -48,18 +54,30 @@ test("Upload configuration file, choose form, fill form, preview form, submit fo
   await t.expect(Title.textContent).contains("Choose Document Type to Issue");
   await t.expect(ProgressBar.textContent).contains("Step 1/3");
 
-  // move to step 2
-  await t.click(Button.withText("Bill of Lading"));
+  // Navigate to form
+  await t.click(Button.withText("COO"));
   await t.expect(Title.textContent).contains("Fill and Preview Form");
   await t.expect(ProgressBar.textContent).contains("Step 2/3");
 
-  // try back button
+  // Test back button
   await t.click(ButtonBack);
   await t.expect(Title.textContent).contains("Choose Document Type to Issue");
 
-  // step 2 to fill form
-  await t.click(Button.withText("Bill of Lading"));
+  // Navigate to form and fill form
+  await t.click(Button.withText("COO"));
+  await t.typeText(FormIdField, "COO-ID");
+
+  // Test data upload file
+  await t.setFilesToUpload("input[type=file][data-testid=config-file-drop-zone]", [DataFile]);
+
+  // Add attachment
+  await t.setFilesToUpload("input[data-testid=attachment-file-drop-zone]", [AttachmentSample]);
+  await t.expect(FormAttachmentField.textContent).contains("sample.pdf");
+
+  // Validated the content is overwritten by the data file
+  await t.expect(FormIdField.value).eql("wfa.org.au:coo:WBC208897");
+  await t.expect(FormExporterNameField.value).eql("TREASURY WINE ESTATES VINTNERS LIMITED");
 
   // preview form
-  // submit form
+  // submit form (probably can spin up a test net here)
 });

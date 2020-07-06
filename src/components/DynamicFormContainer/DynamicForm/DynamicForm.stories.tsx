@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import sample from "../../../test/fixtures/sample-config.json";
 import { ConfigFile, Form } from "../../../types";
 import { DynamicForm } from "./DynamicForm";
@@ -45,4 +45,14 @@ export default {
 };
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-export const Default = () => <DynamicForm form={form} handleSubmit={console.log} />;
+export const Default = () => {
+  const [formData, setFormData] = useState<any>();
+  return (
+    <DynamicForm
+      schema={form.schema}
+      formData={formData}
+      setFormData={setFormData}
+      attachmentAccepted={true}
+    />
+  );
+};

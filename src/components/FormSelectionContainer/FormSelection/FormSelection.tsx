@@ -1,6 +1,6 @@
 import React, { FunctionComponent } from "react";
 import { Redirect } from "react-router-dom";
-import { useActiveFormContext } from "../../../common/context/activeForm";
+import { useFormsContext } from "../../../common/context/forms";
 import { Config, Form } from "../../../types";
 import { Button } from "../../../UI/Button";
 import { Title } from "../../../UI/Title";
@@ -14,9 +14,9 @@ interface FormSelection {
 }
 
 export const FormSelection: FunctionComponent<FormSelection> = ({ className, config }) => {
-  const { activeFormIndex, setActiveFormIndex } = useActiveFormContext();
-  const selectedForm = (index: number): void => {
-    setActiveFormIndex(index);
+  const { activeFormIndex, newForm } = useFormsContext();
+  const selectedForm = (templateIndex: number): void => {
+    newForm(templateIndex);
   };
 
   // Once the active form has been set, redirect to /form

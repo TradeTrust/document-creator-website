@@ -47,5 +47,10 @@ describe("configFileSchema", () => {
         assertConfigFile({ ...sample, forms: [{ ...sample.forms[0], name: undefined }] } as any)
       ).toThrow(/missing/);
     });
+    it("should throw when network is missing", () => {
+      expect(() =>
+        assertConfigFile({ ...sample, forms: [{ ...sample.forms[0], network: undefined }] } as any)
+      ).toThrow(/missing/);
+    });
   });
 });

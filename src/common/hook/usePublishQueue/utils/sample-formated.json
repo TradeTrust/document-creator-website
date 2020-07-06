@@ -1,0 +1,170 @@
+[
+  {
+    "type": "VERIFIABLE_DOCUMENT",
+    "contractAddress": "0x8bA63EAB43342AAc3AdBB4B827b68Cf4aAE5Caca",
+    "rawDocument": {
+      "shipper": {
+        "address": {
+          "street": "street",
+          "country": "country"
+        },
+        "name": "Shipper 1"
+      },
+      "consignee": {
+        "name": "consignee_name"
+      },
+      "notifyParty": {
+        "name": "jhbkh"
+      },
+      "blNumber": "BL_NO_2",
+      "vessel": "bjb",
+      "voyageNo": "jh",
+      "portOfLoading": "bjh",
+      "portOfDischarge": "bjh",
+      "placeOfReceipt": "b",
+      "placeOfDelivery": "jhbj",
+      "packages": [
+        {
+          "description": "adsf",
+          "measurement": "sdfsdf",
+          "weight": "sdfsdf"
+        },
+        {
+          "description": "sdf",
+          "measurement": "sdf",
+          "weight": "sdf"
+        }
+      ],
+      "$template": {
+        "type": "EMBEDDED_RENDERER",
+        "name": "BILL_OF_LADING",
+        "url": "https://demo-cnm.openattestation.com"
+      },
+      "issuers": [
+        {
+          "identityProof": {
+            "type": "DNS-TXT",
+            "location": "demo-tradetrust.openattestation.com"
+          },
+          "name": "DEMO STORE",
+          "documentStore": "0x8bA63EAB43342AAc3AdBB4B827b68Cf4aAE5Caca"
+        }
+      ],
+      "name": "Maersk Bill of Lading"
+    },
+    "fileName": "Document-1.tt",
+    "payload": {}
+  },
+  {
+    "type": "VERIFIABLE_DOCUMENT",
+    "contractAddress": "0x8AE02d36F5eE60604cf46C086b3Ad5Ac43137f58",
+    "rawDocument": {
+      "shipper": {
+        "address": {
+          "street": "street",
+          "country": "country"
+        },
+        "name": "Shipper 2"
+      },
+      "consignee": {
+        "name": "consignee_name"
+      },
+      "notifyParty": {
+        "name": "jhbkh"
+      },
+      "blNumber": "BL_NO_2",
+      "vessel": "bjb",
+      "voyageNo": "jh",
+      "portOfLoading": "bjh",
+      "portOfDischarge": "bjh",
+      "placeOfReceipt": "b",
+      "placeOfDelivery": "jhbj",
+      "packages": [
+        {
+          "description": "adsf",
+          "measurement": "sdfsdf",
+          "weight": "sdfsdf"
+        },
+        {
+          "description": "sdf",
+          "measurement": "sdf",
+          "weight": "sdf"
+        }
+      ],
+      "$template": {
+        "type": "EMBEDDED_RENDERER",
+        "name": "BILL_OF_LADING",
+        "url": "https://demo-cnm.openattestation.com"
+      },
+      "issuers": [
+        {
+          "identityProof": {
+            "type": "DNS-TXT",
+            "location": "demo-tradetrust.openattestation.com"
+          },
+          "name": "DEMO STORE",
+          "documentStore": "0x8AE02d36F5eE60604cf46C086b3Ad5Ac43137f58"
+        }
+      ],
+      "name": "Bill of Lading"
+    },
+    "fileName": "Document-2.tt",
+    "payload": {}
+  },
+  {
+    "type": "VERIFIABLE_DOCUMENT",
+    "contractAddress": "0x8bA63EAB43342AAc3AdBB4B827b68Cf4aAE5Caca",
+    "rawDocument": {
+      "shipper": {
+        "address": {
+          "street": "street",
+          "country": "country"
+        },
+        "name": "Shipper 3"
+      },
+      "consignee": {
+        "name": "consignee_name"
+      },
+      "notifyParty": {
+        "name": "jhbkh"
+      },
+      "blNumber": "BL_NO_2",
+      "vessel": "bjb",
+      "voyageNo": "jh",
+      "portOfLoading": "bjh",
+      "portOfDischarge": "bjh",
+      "placeOfReceipt": "b",
+      "placeOfDelivery": "jhbj",
+      "packages": [
+        {
+          "description": "adsf",
+          "measurement": "sdfsdf",
+          "weight": "sdfsdf"
+        },
+        {
+          "description": "sdf",
+          "measurement": "sdf",
+          "weight": "sdf"
+        }
+      ],
+      "$template": {
+        "type": "EMBEDDED_RENDERER",
+        "name": "BILL_OF_LADING",
+        "url": "https://demo-cnm.openattestation.com"
+      },
+      "issuers": [
+        {
+          "identityProof": {
+            "type": "DNS-TXT",
+            "location": "demo-tradetrust.openattestation.com"
+          },
+          "name": "DEMO STORE",
+          "documentStore": "0x8bA63EAB43342AAc3AdBB4B827b68Cf4aAE5Caca"
+        }
+      ],
+      "name": "Maersk Bill of Lading"
+    },
+    "fileName": "Document-3.tt",
+    "payload": {}
+  }
+]

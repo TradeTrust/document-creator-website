@@ -1,0 +1,77 @@
+[
+  {
+    "fileName": "Document-1.tt",
+    "templateIndex": 0,
+    "data": {
+      "formData": {
+        "shipper": {
+          "address": { "street": "street", "country": "country" },
+          "name": "Shipper 1"
+        },
+        "consignee": { "name": "consignee_name" },
+        "notifyParty": { "name": "jhbkh" },
+        "blNumber": "BL_NO_2",
+        "vessel": "bjb",
+        "voyageNo": "jh",
+        "portOfLoading": "bjh",
+        "portOfDischarge": "bjh",
+        "placeOfReceipt": "b",
+        "placeOfDelivery": "jhbj",
+        "packages": [
+          { "description": "adsf", "measurement": "sdfsdf", "weight": "sdfsdf" },
+          { "description": "sdf", "measurement": "sdf", "weight": "sdf" }
+        ]
+      }
+    }
+  },
+  {
+    "fileName": "Document-2.tt",
+    "templateIndex": 1,
+    "data": {
+      "formData": {
+        "shipper": {
+          "address": { "street": "street", "country": "country" },
+          "name": "Shipper 2"
+        },
+        "consignee": { "name": "consignee_name" },
+        "notifyParty": { "name": "jhbkh" },
+        "blNumber": "BL_NO_2",
+        "vessel": "bjb",
+        "voyageNo": "jh",
+        "portOfLoading": "bjh",
+        "portOfDischarge": "bjh",
+        "placeOfReceipt": "b",
+        "placeOfDelivery": "jhbj",
+        "packages": [
+          { "description": "adsf", "measurement": "sdfsdf", "weight": "sdfsdf" },
+          { "description": "sdf", "measurement": "sdf", "weight": "sdf" }
+        ]
+      }
+    }
+  },
+  {
+    "fileName": "Document-3.tt",
+    "templateIndex": 0,
+    "data": {
+      "formData": {
+        "shipper": {
+          "address": { "street": "street", "country": "country" },
+          "name": "Shipper 3"
+        },
+        "consignee": { "name": "consignee_name" },
+        "notifyParty": { "name": "jhbkh" },
+        "blNumber": "BL_NO_2",
+        "vessel": "bjb",
+        "voyageNo": "jh",
+        "portOfLoading": "bjh",
+        "portOfDischarge": "bjh",
+        "placeOfReceipt": "b",
+        "placeOfDelivery": "jhbj",
+        "packages": [
+          { "description": "adsf", "measurement": "sdfsdf", "weight": "sdfsdf" },
+          { "description": "sdf", "measurement": "sdf", "weight": "sdf" }
+        ]
+      }
+    }
+  }
+]

@@ -1,42 +1,61 @@
-import { DynamicFormLayout } from "./DynamicFormLayout";
+import { fireEvent, render, screen } from "@testing-library/react";
 import React from "react";
 import { MemoryRouter } from "react-router";
-import { fireEvent, render, screen } from "@testing-library/react";
-import { useActiveFormContext } from "../../common/context/activeForm";
 import { useConfigContext } from "../../common/context/config";
+import { useFormsContext } from "../../common/context/forms";
 import sampleConfig from "../../test/fixtures/sample-config.json";
+import { DynamicFormLayout } from "./DynamicFormLayout";
 
-jest.mock("../../common/context/activeForm");
+jest.mock("../../common/context/forms");
 jest.mock("../../common/context/config");
 
-const mockUseActiveFormContext = useActiveFormContext as jest.Mock;
+const mockUseFormsContext = useFormsContext as jest.Mock;
 const mockUseConfigContext = useConfigContext as jest.Mock;
 const mockSetActiveFormIndex = jest.fn();
+const mockSetForms = jest.fn();
 
 const whenActiveFormIsAvailable = (): void => {
   mockUseConfigContext.mockReturnValue({ config: sampleConfig });
-  mockUseActiveFormContext.mockReturnValue({
+  mockUseFormsContext.mockReturnValue({
     activeFormIndex: 0,
+    setForms: mockSetForms,
     setActiveFormIndex: mockSetActiveFormIndex,
+    forms: [
+      {
+        fileName: "document-1.tt",
+        data: { formData: {} },
+        templateIndex: 0,
+      },
+    ],
+    currentForm: {
+      fileName: "document-1.tt",
+      data: { formData: {} },
+      templateIndex: 0,
+    },
   });
 };
 
 const whenActiveFormIndexIsNotAvailable = (): void => {
   mockUseConfigContext.mockReturnValue({ config: sampleConfig });
-  mockUseActiveFormContext.mockReturnValue({
+  mockUseFormsContext.mockReturnValue({
     activeFormIndex: undefined,
     setActiveFormIndex: mockSetActiveFormIndex,
   });
 };
 const whenActiveFormConfigIsNotAvailable = (): void => {
   mockUseConfigContext.mockReturnValue({});
-  mockUseActiveFormContext.mockReturnValue({
+  mockUseFormsContext.mockReturnValue({
     activeFormIndex: undefined,
     setActiveFormIndex: mockSetActiveFormIndex,
   });
 };
 
 describe("dynamicFormLayout", () => {
+  beforeEach(() => {
+    mockSetActiveFormIndex.mockReset();
+    mockSetForms.mockReset();
+  });
+
   it("should render the progress bar", () => {
     whenActiveFormIsAvailable();
     render(
@@ -65,6 +84,7 @@ describe("dynamicFormLayout", () => {
 
     fireEvent.click(screen.getByTestId("back-button"));
     expect(mockSetActiveFormIndex).toHaveBeenCalled(); // eslint-disable-line jest/prefer-called-with
+    expect(mockSetForms).toHaveBeenCalledWith([]);
   });
   it("should render toggle switch for preview mode", () => {
     whenActiveFormIsAvailable();
@@ -83,7 +103,7 @@ describe("dynamicFormLayout", () => {
       </MemoryRouter>
     );
 
-    expect(screen.getByLabelText("BL Number*")).not.toBeUndefined();
+    expect(screen.getByLabelText("Consignment Information")).not.toBeUndefined();
   });
   it("should redirect when activeFormIndex === 'undefined'", () => {
     whenActiveFormIndexIsNotAvailable();
@@ -102,5 +122,18 @@ describe("dynamicFormLayout", () => {
       </MemoryRouter>
     );
     expect(screen.queryAllByText("Fill and Preview Form")).toHaveLength(0);
+  });
+
+  it("should display the modal when delete button is clicked", () => {
+    whenActiveFormIsAvailable();
+    render(
+      <MemoryRouter>
+        <DynamicFormLayout />
+      </MemoryRouter>
+    );
+
+    fireEvent.click(screen.getByTestId("delete-button"));
+
+    expect(screen.getByTestId("modal-dialog")).not.toBeNull();
   });
 });

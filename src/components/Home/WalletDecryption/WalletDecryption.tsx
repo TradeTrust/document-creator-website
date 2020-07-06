@@ -89,9 +89,10 @@ export const WalletDecryptionContainer: FunctionComponent = () => {
     try {
       setIsIncorrectPassword(false);
       setIsDecrypting(true);
-      const wallet = await decryptWallet(configFile.wallet, password);
+      const wallet = await decryptWallet(configFile, password);
       setIsDecrypting(false);
       setConfig({
+        network: configFile.network,
         wallet,
         forms: configFile.forms,
       });

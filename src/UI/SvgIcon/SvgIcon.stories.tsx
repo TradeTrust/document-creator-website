@@ -1,5 +1,13 @@
 import React from "react";
-import { SvgIcon, SvgIconArrowLeft, SvgIconPaperClip, SvgIconX } from "./SvgIcon";
+import {
+  SvgIcon,
+  SvgIconArrowLeft,
+  SvgIconCheckCircle,
+  SvgIconPaperClip,
+  SvgIconTrash,
+  SvgIconX,
+  SvgIconXCircle,
+} from "./SvgIcon";
 
 export default {
   title: "SvgIcons/SvgIcon",
@@ -24,5 +32,23 @@ export const PaperClip = () => (
 export const IconX = () => (
   <SvgIcon>
     <SvgIconX />
+  </SvgIcon>
+);
+
+export const CheckCircle = () => (
+  <SvgIcon>
+    <SvgIconCheckCircle />
+  </SvgIcon>
+);
+
+export const Trash = () => (
+  <SvgIcon>
+    <SvgIconTrash />
+  </SvgIcon>
+);
+
+export const XCircle = () => (
+  <SvgIcon>
+    <SvgIconXCircle />
   </SvgIcon>
 );

@@ -1,6 +1,6 @@
 import styled from "@emotion/styled";
-import { merge } from "lodash";
-import React, { FunctionComponent, useState } from "react";
+import { defaultsDeep, cloneDeep } from "lodash";
+import React, { FunctionComponent } from "react";
 import JsonForm from "react-jsonschema-form";
 import tw from "twin.macro";
 import { mixin } from "../../../styles";
@@ -10,52 +10,44 @@ import { CustomFieldTemplate, CustomObjectFieldTemplate } from "./CustomTemplate
 import { DataFileButton } from "./DataFileButton";
 
 export interface DynamicForm {
-  form: Form;
+  schema: Form["schema"];
+  attachmentAccepted: boolean;
+  attachmentAcceptedFormat?: string;
   className?: string;
-  handleSubmit: (formData: any) => void; // eslint-disable-line @typescript-eslint/no-explicit-any
+  formData: any; // eslint-disable-line @typescript-eslint/no-explicit-any
+  setFormData: (formData: any) => void; // eslint-disable-line @typescript-eslint/no-explicit-any
 }
 
 export const DynamicFormRaw: FunctionComponent<DynamicForm> = ({
-  form,
+  schema,
+  formData,
+  setFormData,
   className,
-  handleSubmit,
+  attachmentAccepted,
+  attachmentAcceptedFormat = "",
 }) => {
-  const [formData, setFormData] = useState<any>(); // eslint-disable-line @typescript-eslint/no-explicit-any
-
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const setFormValue = (value: any): void => {
-    if (!formData) return;
-    setFormData({ ...formData, formData: merge(formData.formData, value) });
-  };
-
-  const onSubmit = (): void => {
-    const rawDocument = merge(form.defaults, formData?.formData);
-    handleSubmit(rawDocument);
+    // Avoid using spread which will lazy copy the object
+    // See discussion: https://github.com/rjsf-team/react-jsonschema-form/issues/306
+    const nextFormData = cloneDeep(formData.formData);
+    setFormData({ ...formData, formData: defaultsDeep(value, nextFormData) });
   };
 
   const handleUpload = (processedFiles: FileUploadType[]): void => {
     const attachedFile = formData.formData.attachments || [];
     const allAttachments = [...attachedFile, ...processedFiles];
 
-    setFormData({
-      ...formData,
-      formData: { attachments: allAttachments },
-    });
+    setFormValue({ attachments: allAttachments });
   };
 
   const handleRemoveUpload = (fileIndex: number): void => {
     const allAttachments = formData.formData.attachments.filter(
-      (file: FileUploadType, index: number) => index !== fileIndex
+      (_file: FileUploadType, index: number) => index !== fileIndex
     );
 
-    setFormData({
-      ...formData,
-      formData: { attachments: allAttachments },
-    });
+    setFormValue({ attachments: allAttachments });
   };
-
-  const allowAttachments = !!form.attachments?.allow;
-  const acceptedFormat = form.attachments?.accept ? form.attachments?.accept : "";
 
   return (
     <div className={`${className} max-w-screen-sm mx-auto mt-6`}>
@@ -63,16 +55,15 @@ export const DynamicFormRaw: FunctionComponent<DynamicForm> = ({
         <DataFileButton onDataFile={setFormValue} />
       </div>
       <JsonForm
-        onSubmit={onSubmit}
-        schema={form.schema}
+        schema={schema}
         onChange={setFormData}
         formData={formData?.formData}
         ObjectFieldTemplate={CustomObjectFieldTemplate}
         FieldTemplate={CustomFieldTemplate}
       />
-      {allowAttachments && (
+      {attachmentAccepted && (
         <AttachmentDropzone
-          acceptedFormat={acceptedFormat}
+          acceptedFormat={attachmentAcceptedFormat}
           onUpload={handleUpload}
           onRemove={handleRemoveUpload}
           uploadedFiles={formData?.formData?.attachments}
@@ -159,6 +150,10 @@ label {
   :last-child {
     ${tw`mr-0`}
   }
+}
+
+.btn[type=submit] {
+  display: none;
 }
 
 i.glyphicon {
