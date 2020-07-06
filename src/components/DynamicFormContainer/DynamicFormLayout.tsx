@@ -1,4 +1,5 @@
 import Ajv from "ajv";
+import { cloneDeep, defaultsDeep } from "lodash";
 import React, { FunctionComponent, useState } from "react";
 import { Redirect } from "react-router";
 import { useConfigContext } from "../../common/context/config";
@@ -7,6 +8,7 @@ import { Button } from "../../UI/Button";
 import { SvgIcon, SvgIconTrash, SvgIconXCircle } from "../../UI/SvgIcon";
 import { ToggleSwitch } from "../../UI/ToggleSwitch";
 import { Container } from "../Container";
+import { DataFileButton } from "./DataFileButton";
 import { DeleteModal } from "./DeleteModal";
 import { DynamicForm } from "./DynamicForm";
 import { DynamicFormHeader } from "./DynamicFormHeader";
@@ -69,6 +71,23 @@ export const DynamicFormLayout: FunctionComponent = () => {
     closeDeleteModal();
   };
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const setFormValue = (value: any): void => {
+    // Avoid using spread which will lazy copy the object
+    // See discussion: https://github.com/rjsf-team/react-jsonschema-form/issues/306
+    const nextFormData = cloneDeep(currentForm.data.formData);
+    setCurrentFormData({ ...currentForm.data, formData: defaultsDeep(value, nextFormData) });
+  };
+
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const setAttachmentValue = (attachmentValue: any): void => {
+    const currentFormData = cloneDeep(currentForm.data.formData);
+    setCurrentFormData({
+      ...currentForm.data,
+      formData: { ...currentFormData, ...attachmentValue },
+    });
+  };
+
   return (
     <Container>
       <DeleteModal
@@ -120,6 +139,9 @@ export const DynamicFormLayout: FunctionComponent = () => {
             </div>
           )}
           <div className="max-w-screen-sm mx-auto mt-6">
+            <div className="mb-10">
+              <DataFileButton onDataFile={setFormValue} />
+            </div>
             {isTransferableRecord && (
               <TransferableRecordForm
                 beneficiaryAddress={currentForm.ownershipData.beneficiaryAddress}
@@ -144,6 +166,7 @@ export const DynamicFormLayout: FunctionComponent = () => {
               setFormData={setCurrentFormData}
               attachmentAccepted={attachmentAccepted}
               attachmentAcceptedFormat={attachmentAcceptedFormat}
+              setAttachmentValue={setAttachmentValue}
             />
           </div>
         </div>

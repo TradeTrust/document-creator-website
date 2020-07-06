@@ -1,5 +1,4 @@
 import styled from "@emotion/styled";
-import { defaultsDeep, cloneDeep } from "lodash";
 import React, { FunctionComponent } from "react";
 import JsonForm from "react-jsonschema-form";
 import tw from "twin.macro";
@@ -7,73 +6,63 @@ import { mixin } from "../../../styles";
 import { FileUploadType, Form } from "../../../types";
 import { AttachmentDropzone } from "./AttachmentDropzone";
 import { CustomFieldTemplate, CustomObjectFieldTemplate } from "./CustomTemplates";
-import { DataFileButton } from "./DataFileButton";
 
-export interface DynamicForm {
+export interface DynamicFormProps {
   schema: Form["schema"];
   attachmentAccepted: boolean;
   attachmentAcceptedFormat?: string;
   className?: string;
   formData: any; // eslint-disable-line @typescript-eslint/no-explicit-any
   setFormData: (formData: any) => void; // eslint-disable-line @typescript-eslint/no-explicit-any
+  setAttachmentValue: (formValue: any) => void; // eslint-disable-line @typescript-eslint/no-explicit-any
 }
 
-export const DynamicFormRaw: FunctionComponent<DynamicForm> = ({
-  schema,
-  formData,
-  setFormData,
-  className,
-  attachmentAccepted,
-  attachmentAcceptedFormat = "",
-}) => {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const setFormValue = (value: any): void => {
-    // Avoid using spread which will lazy copy the object
-    // See discussion: https://github.com/rjsf-team/react-jsonschema-form/issues/306
-    const nextFormData = cloneDeep(formData.formData);
-    setFormData({ ...formData, formData: defaultsDeep(value, nextFormData) });
-  };
+export const DynamicForm: FunctionComponent<DynamicFormProps> = styled(
+  ({
+    schema,
+    formData,
+    setFormData,
+    className,
+    attachmentAccepted,
+    attachmentAcceptedFormat = "",
+    setAttachmentValue,
+  }) => {
+    const handleUpload = (processedFiles: FileUploadType[]): void => {
+      const attachedFile = formData.formData.attachments || [];
+      const allAttachments = [...attachedFile, ...processedFiles];
 
-  const handleUpload = (processedFiles: FileUploadType[]): void => {
-    const attachedFile = formData.formData.attachments || [];
-    const allAttachments = [...attachedFile, ...processedFiles];
+      setAttachmentValue({ attachments: allAttachments });
+    };
 
-    setFormValue({ attachments: allAttachments });
-  };
+    const handleRemoveUpload = (fileIndex: number): void => {
+      const allAttachments = formData.formData.attachments.filter(
+        (_file: FileUploadType, index: number) => index !== fileIndex
+      );
 
-  const handleRemoveUpload = (fileIndex: number): void => {
-    const allAttachments = formData.formData.attachments.filter(
-      (_file: FileUploadType, index: number) => index !== fileIndex
-    );
+      setAttachmentValue({ attachments: allAttachments });
+    };
 
-    setFormValue({ attachments: allAttachments });
-  };
-
-  return (
-    <div className={`${className} max-w-screen-sm mx-auto mt-6`}>
-      <div className="mb-10">
-        <DataFileButton onDataFile={setFormValue} />
-      </div>
-      <JsonForm
-        schema={schema}
-        onChange={setFormData}
-        formData={formData?.formData}
-        ObjectFieldTemplate={CustomObjectFieldTemplate}
-        FieldTemplate={CustomFieldTemplate}
-      />
-      {attachmentAccepted && (
-        <AttachmentDropzone
-          acceptedFormat={attachmentAcceptedFormat}
-          onUpload={handleUpload}
-          onRemove={handleRemoveUpload}
-          uploadedFiles={formData?.formData?.attachments}
+    return (
+      <div className={`${className} max-w-screen-sm mx-auto mt-6`}>
+        <JsonForm
+          schema={schema}
+          onChange={setFormData}
+          formData={formData?.formData}
+          ObjectFieldTemplate={CustomObjectFieldTemplate}
+          FieldTemplate={CustomFieldTemplate}
         />
-      )}
-    </div>
-  );
-};
-
-export const DynamicForm = styled(DynamicFormRaw)`
+        {attachmentAccepted && (
+          <AttachmentDropzone
+            acceptedFormat={attachmentAcceptedFormat}
+            onUpload={handleUpload}
+            onRemove={handleRemoveUpload}
+            uploadedFiles={formData?.formData?.attachments}
+          />
+        )}
+      </div>
+    );
+  }
+)`
 .form-group .form-group.field.field-object .dynamicForm-items {
   ${tw`
     my-4

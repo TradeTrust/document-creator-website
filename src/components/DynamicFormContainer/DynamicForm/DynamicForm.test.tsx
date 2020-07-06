@@ -1,8 +1,8 @@
+import { act, fireEvent, render, screen, waitFor } from "@testing-library/react";
 import React from "react";
-import { render, screen, fireEvent, act, waitFor } from "@testing-library/react";
-import { DynamicForm } from "./DynamicForm";
 import sampleConfig from "../../../test/fixtures/sample-config.json";
 import { Form } from "../../../types";
+import { DynamicForm } from "./DynamicForm";
 
 const form = sampleConfig.forms[0] as Form;
 
@@ -34,6 +34,7 @@ describe("dynamicForm", () => {
         formData={{}}
         setFormData={mockSetFormData}
         attachmentAccepted={false}
+        setAttachmentValue={() => {}}
       />
     );
     expect(screen.getByLabelText("Information")).not.toBeUndefined();
@@ -48,6 +49,7 @@ describe("dynamicForm", () => {
         }}
         setFormData={mockSetFormData}
         attachmentAccepted={false}
+        setAttachmentValue={() => {}}
       />
     );
 
