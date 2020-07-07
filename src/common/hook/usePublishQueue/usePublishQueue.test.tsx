@@ -1,11 +1,11 @@
-import { renderHook, act } from "@testing-library/react-hooks";
-import { usePublishQueue } from "./index";
+import { act, renderHook } from "@testing-library/react-hooks";
+import { getDefaultProvider, Wallet } from "ethers";
 import { publishJob } from "../../../services/publishing";
-import { getPublishingJobs } from "./utils/publish";
 import sampleConfig from "../../../test/fixtures/sample-config.json";
 import sampleJobs from "../../../test/fixtures/sample-jobs.json";
 import { Config, FormEntry } from "../../../types";
-import { Wallet, getDefaultProvider } from "ethers";
+import { usePublishQueue } from "./index";
+import { getPublishingJobs } from "./utils/publish";
 
 jest.mock("../../../services/publishing");
 jest.mock("./utils/publish");
@@ -55,6 +55,13 @@ describe("usePublishQueue", () => {
     expect(result.current.publishedDocuments).toHaveLength(3);
   });
 
-  it.todo("should file successfully published jobs to publishedDocuments");
-  it.todo("should file failed jobs to failPublishedDocuments");
+  it("should file failed jobs to failPublishedDocuments", async () => {
+    mockGetPublishingJobs.mockReturnValueOnce(sampleJobs);
+    mockPublishJob.mockRejectedValueOnce(new Error("Some error"));
+    const { result } = renderHook(() => usePublishQueue(config, formEntires));
+    await act(async () => {
+      await result.current.publish();
+    });
+    expect(result.current.failPublishedDocuments).toHaveLength(2);
+  });
 });
