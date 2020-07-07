@@ -1,4 +1,5 @@
 import styled from "@emotion/styled";
+import { cloneDeep } from "lodash";
 import React, { FunctionComponent } from "react";
 import JsonForm from "react-jsonschema-form";
 import tw from "twin.macro";
@@ -6,7 +7,6 @@ import { mixin } from "../../../styles";
 import { FileUploadType, Form } from "../../../types";
 import { AttachmentDropzone } from "./AttachmentDropzone";
 import { CustomFieldTemplate, CustomObjectFieldTemplate } from "./CustomTemplates";
-import { cloneDeep } from "lodash";
 
 export interface DynamicFormProps {
   schema: Form["schema"];

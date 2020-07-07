@@ -134,22 +134,25 @@ export const DynamicFormLayout: FunctionComponent = () => {
               <DataFileButton onDataFile={mergeFormValue} />
             </div>
             {isTransferableRecord && (
-              <TransferableRecordForm
-                beneficiaryAddress={currentForm.ownershipData.beneficiaryAddress}
-                holderAddress={currentForm.ownershipData.holderAddress}
-                setBeneficiaryAddress={(beneficiaryAddress) =>
-                  setCurrentFormOwnershipData({
-                    beneficiaryAddress,
-                    holderAddress: currentForm.ownershipData.holderAddress,
-                  })
-                }
-                setHolderAddress={(holderAddress) =>
-                  setCurrentFormOwnershipData({
-                    beneficiaryAddress: currentForm.ownershipData.beneficiaryAddress,
-                    holderAddress,
-                  })
-                }
-              />
+              <>
+                <TransferableRecordForm
+                  beneficiaryAddress={currentForm.ownershipData.beneficiaryAddress}
+                  holderAddress={currentForm.ownershipData.holderAddress}
+                  setBeneficiaryAddress={(beneficiaryAddress) =>
+                    setCurrentFormOwnershipData({
+                      beneficiaryAddress,
+                      holderAddress: currentForm.ownershipData.holderAddress,
+                    })
+                  }
+                  setHolderAddress={(holderAddress) =>
+                    setCurrentFormOwnershipData({
+                      beneficiaryAddress: currentForm.ownershipData.beneficiaryAddress,
+                      holderAddress,
+                    })
+                  }
+                />
+                <div className="text-grey-dark font-bold text-xl pt-4">Document Details</div>
+              </>
             )}
             <DynamicForm
               schema={formSchema}
