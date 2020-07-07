@@ -14,7 +14,6 @@ export const publishVerifiableDocumentJob = async (
   job: PublishingJob,
   wallet: Wallet
 ): Promise<string> => {
-  console.log("Publishing job", job);
   const { contractAddress, merkleRoot, nonce } = job;
   await assertAddressIsSmartContract(contractAddress, wallet);
   const documentStore: DocumentStore = DocumentStoreFactory.connect(contractAddress, wallet);
@@ -45,7 +44,6 @@ export const publishTransferableRecordJob = async (
   job: PublishingJob,
   wallet: Wallet
 ): Promise<string> => {
-  console.log("Publishing job", job);
   const { payload, contractAddress, nonce, merkleRoot } = job;
   if (!payload.ownershipData) throw new Error("Ownership data is not provided");
   const { beneficiaryAddress, holderAddress } = payload.ownershipData;
@@ -68,9 +66,6 @@ export const publishTransferableRecordJob = async (
       `Address for deployed title escrow cannot be found. Tx: ${JSON.stringify(escrowDeploymentTx)}`
     );
   const tokenRegistryContract = TradeTrustERC721Factory.connect(contractAddress, wallet);
-  console.log("Deployed title escrow", deployedTitleEscrowAddress);
-  console.log("Deploy escrow", escrowDeploymentTx);
-  console.log(tokenRegistryContract);
 
   // Using explicit safeMint function which exist but not typed by typechain due to
   // overloads

@@ -35,7 +35,7 @@ describe("useFormsContext", () => {
     expect(result.current.activeFormIndex).toStrictEqual(0);
     expect(result.current.currentForm).toStrictEqual(expectedFormData);
     expect(result.current.currentFormData).toStrictEqual(expectedFormData.data);
-    expect(result.current.currentFormOwnershipData).toEqual({
+    expect(result.current.currentFormOwnershipData).toStrictEqual({
       beneficiaryAddress: "",
       holderAddress: "",
     });
