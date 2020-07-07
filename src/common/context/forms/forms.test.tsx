@@ -14,6 +14,7 @@ describe("useFormsContext", () => {
     expect(result.current.activeFormIndex).toBeUndefined();
     expect(result.current.currentForm).toBeUndefined();
     expect(result.current.currentFormData).toBeUndefined();
+    expect(result.current.currentFormOwnershipData).toBeUndefined();
   });
 
   it("should add a new form when newForm is called", async () => {
@@ -34,6 +35,10 @@ describe("useFormsContext", () => {
     expect(result.current.activeFormIndex).toStrictEqual(0);
     expect(result.current.currentForm).toStrictEqual(expectedFormData);
     expect(result.current.currentFormData).toStrictEqual(expectedFormData.data);
+    expect(result.current.currentFormOwnershipData).toEqual({
+      beneficiaryAddress: "",
+      holderAddress: "",
+    });
   });
 
   it("should edit current form with setCurrentFormData", async () => {
@@ -81,4 +86,6 @@ describe("useFormsContext", () => {
     expect(result.current.currentForm).toStrictEqual(expectedForms[1]);
     expect(result.current.currentFormData).toStrictEqual(expectedForms[1].data);
   });
+
+  it.todo("should edit current form's ownership data with setCurrentFormOwnershipData");
 });

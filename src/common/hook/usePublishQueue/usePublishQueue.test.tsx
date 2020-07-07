@@ -54,4 +54,7 @@ describe("usePublishQueue", () => {
     expect(result.current.publishState).toBe("CONFIRMED");
     expect(result.current.publishedDocuments).toHaveLength(3);
   });
+
+  it.todo("should file successfully published jobs to publishedDocuments");
+  it.todo("should file failed jobs to failPublishedDocuments");
 });

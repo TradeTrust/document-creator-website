@@ -9,7 +9,7 @@
         "$template": {
           "type": "EMBEDDED_RENDERER",
           "name": "custom",
-          "url": "https://chafta.tradetrust.io"
+          "url": "https://malicous-renderer.netlify.app"
         },
         "issuers": [
           {

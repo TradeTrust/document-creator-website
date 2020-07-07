@@ -1,5 +1,5 @@
 import sampleForms from "./sample-forms.json";
-import sampleFormatted from "./sample-formated.json";
+import sampleFormatted from "./sample-formatted.json";
 import sampleConfigFile from "./sample-config.json";
 import { Config, RawDocument } from "../../../../types";
 import { getRawDocuments, groupDocumentsIntoJobs } from "./publish";
