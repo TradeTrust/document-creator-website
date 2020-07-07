@@ -1,6 +1,6 @@
+import { act, renderHook } from "@testing-library/react-hooks";
 import React, { FunctionComponent } from "react";
-import { renderHook, act } from "@testing-library/react-hooks";
-import { useFormsContext, FormsContextProvider } from "./index";
+import { FormsContextProvider, useFormsContext } from "./index";
 
 const wrapper: FunctionComponent = ({ children }) => (
   <FormsContextProvider>{children}</FormsContextProvider>
@@ -87,5 +87,28 @@ describe("useFormsContext", () => {
     expect(result.current.currentFormData).toStrictEqual(expectedForms[1].data);
   });
 
-  it.todo("should edit current form's ownership data with setCurrentFormOwnershipData");
+  it("should edit current form's ownership data with setCurrentFormOwnershipData", () => {
+    const { result } = renderHook(() => useFormsContext(), { wrapper });
+
+    act(() => {
+      result.current.newForm(1);
+    });
+    act(() => {
+      result.current.setCurrentFormOwnershipData({
+        beneficiaryAddress: "0x0Foo",
+        holderAddress: "0x0Bar",
+      });
+    });
+
+    const expectedFormWithOwnershipData = [
+      {
+        templateIndex: 1,
+        data: {},
+        fileName: "Document-1.tt",
+        ownershipData: { holderAddress: "0x0Bar", beneficiaryAddress: "0x0Foo" },
+      },
+    ];
+
+    expect(result.current.forms).toStrictEqual(expectedFormWithOwnershipData);
+  });
 });

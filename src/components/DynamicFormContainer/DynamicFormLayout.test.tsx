@@ -1,4 +1,4 @@
-import { fireEvent, render, screen, act, waitFor } from "@testing-library/react";
+import { act, fireEvent, render, screen, waitFor } from "@testing-library/react";
 import React from "react";
 import { MemoryRouter } from "react-router";
 import { useConfigContext } from "../../common/context/config";
@@ -45,12 +45,56 @@ const whenActiveFormIsAvailable = (): void => {
         fileName: "document-1.tt",
         data: { formData: {} },
         templateIndex: 0,
+        ownershipData: { holderAddress: "", beneficiaryAddress: "" },
       },
     ],
     currentForm: {
       fileName: "document-1.tt",
       data: { formData: {} },
       templateIndex: 0,
+      ownershipData: { holderAddress: "", beneficiaryAddress: "" },
+    },
+  });
+};
+
+const whenIsTransferableRecord = (): void => {
+  mockUseConfigContext.mockReturnValue({
+    config: {
+      ...sampleConfig,
+      forms: [
+        {
+          name: "Bill of Lading",
+          type: "TRANSFERABLE_RECORD",
+          defaults: {},
+          schema: {
+            type: "object",
+            properties: {
+              foo: { type: "string", title: "Foo Field" },
+              bar: { type: "string" },
+            },
+          },
+        },
+      ],
+    },
+  });
+  mockUseFormsContext.mockReturnValue({
+    activeFormIndex: 0,
+    setForms: mockSetForms,
+    setActiveFormIndex: mockSetActiveFormIndex,
+    setCurrentFormData: mockSetCurrentFormData,
+    forms: [
+      {
+        fileName: "document-1.tt",
+        data: { formData: {} },
+        templateIndex: 0,
+        ownershipData: { holderAddress: "", beneficiaryAddress: "" },
+      },
+    ],
+    currentForm: {
+      fileName: "document-1.tt",
+      data: { formData: {} },
+      templateIndex: 0,
+      ownershipData: { holderAddress: "", beneficiaryAddress: "" },
     },
   });
 };
@@ -208,5 +252,15 @@ describe("dynamicFormLayout", () => {
     );
   });
 
-  it.todo("should show the TransferableRecordForm when a form is a transferable record");
+  it("should show the TransferableRecordForm when a form is a transferable record", () => {
+    whenIsTransferableRecord();
+    render(
+      <MemoryRouter>
+        <DynamicFormLayout />
+      </MemoryRouter>
+    );
+
+    expect(screen.queryAllByText("Beneficiary")).toHaveLength(1);
+    expect(screen.queryAllByText("Holder")).toHaveLength(1);
+  });
 });
