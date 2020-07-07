@@ -52,7 +52,4 @@ describe("transferableRecordForm", () => {
 
     expect(mockSetHolderAddress).toHaveBeenCalledTimes(1);
   });
-  it.todo("should render");
-  it.todo("should call setBeneficiaryAddress when beneficiary address send");
-  it.todo("should call setHolderAddress when holder address send");
 });
