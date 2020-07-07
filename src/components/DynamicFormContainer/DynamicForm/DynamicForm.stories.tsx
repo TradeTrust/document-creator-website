@@ -53,9 +53,6 @@ export const Default = () => {
       formData={formData}
       setFormData={setFormData}
       attachmentAccepted={true}
-      setAttachmentValue={(value) => {
-        console.log(value);
-      }}
     />
   );
 };

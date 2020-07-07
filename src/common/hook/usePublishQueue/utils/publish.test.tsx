@@ -28,12 +28,12 @@ describe("groupDocumentsIntoJobs", () => {
     expect(publishingJobs[0].documents).toHaveLength(2);
     expect(publishingJobs[0].nonce).toBe(0);
 
-    expect(publishingJobs[1].contractAddress).toBe("0xc3E9eBc6aDA9BA4B4Ce65D71901Cb2307e9670cE");
+    expect(publishingJobs[1].contractAddress).toBe("0x10E936e6BA85dC92505760259881167141365821");
     expect(publishingJobs[1].merkleRoot).toBeTruthy(); // eslint-disable-line jest/no-truthy-falsy
     expect(publishingJobs[1].documents).toHaveLength(1);
     expect(publishingJobs[1].nonce).toBe(1);
 
-    expect(publishingJobs[2].contractAddress).toBe("0xc3E9eBc6aDA9BA4B4Ce65D71901Cb2307e9670cE");
+    expect(publishingJobs[2].contractAddress).toBe("0x10E936e6BA85dC92505760259881167141365821");
     expect(publishingJobs[2].merkleRoot).toBeTruthy(); // eslint-disable-line jest/no-truthy-falsy
     expect(publishingJobs[2].documents).toHaveLength(1);
     // Skipped 2 since the previous tx takes 2 transactions

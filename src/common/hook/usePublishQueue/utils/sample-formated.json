@@ -26,7 +26,7 @@
   },
   {
     "type": "TRANSFERABLE_RECORD",
-    "contractAddress": "0xc3E9eBc6aDA9BA4B4Ce65D71901Cb2307e9670cE",
+    "contractAddress": "0x10E936e6BA85dC92505760259881167141365821",
     "rawDocument": {
       "blNumber": "BL 1",
       "$template": {
@@ -41,7 +41,7 @@
             "location": "demo-tradetrust.openattestation.com"
           },
           "name": "DEMO STORE",
-          "tokenRegistry": "0xc3E9eBc6aDA9BA4B4Ce65D71901Cb2307e9670cE"
+          "tokenRegistry": "0x10E936e6BA85dC92505760259881167141365821"
         }
       ],
       "name": "Maersk Bill of Lading"
@@ -81,7 +81,7 @@
   },
   {
     "type": "TRANSFERABLE_RECORD",
-    "contractAddress": "0xc3E9eBc6aDA9BA4B4Ce65D71901Cb2307e9670cE",
+    "contractAddress": "0x10E936e6BA85dC92505760259881167141365821",
     "rawDocument": {
       "blNumber": "BL 2",
       "$template": {
@@ -96,7 +96,7 @@
             "location": "demo-tradetrust.openattestation.com"
           },
           "name": "DEMO STORE",
-          "tokenRegistry": "0xc3E9eBc6aDA9BA4B4Ce65D71901Cb2307e9670cE"
+          "tokenRegistry": "0x10E936e6BA85dC92505760259881167141365821"
         }
       ],
       "name": "Maersk Bill of Lading"

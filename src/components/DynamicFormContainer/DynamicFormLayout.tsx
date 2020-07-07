@@ -72,20 +72,11 @@ export const DynamicFormLayout: FunctionComponent = () => {
   };
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const setFormValue = (value: any): void => {
+  const mergeFormValue = (value: any): void => {
     // Avoid using spread which will lazy copy the object
     // See discussion: https://github.com/rjsf-team/react-jsonschema-form/issues/306
     const nextFormData = cloneDeep(currentForm.data.formData);
     setCurrentFormData({ ...currentForm.data, formData: defaultsDeep(value, nextFormData) });
-  };
-
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const setAttachmentValue = (attachmentValue: any): void => {
-    const currentFormData = cloneDeep(currentForm.data.formData);
-    setCurrentFormData({
-      ...currentForm.data,
-      formData: { ...currentFormData, ...attachmentValue },
-    });
   };
 
   return (
@@ -140,7 +131,7 @@ export const DynamicFormLayout: FunctionComponent = () => {
           )}
           <div className="max-w-screen-sm mx-auto mt-6">
             <div className="mb-10">
-              <DataFileButton onDataFile={setFormValue} />
+              <DataFileButton onDataFile={mergeFormValue} />
             </div>
             {isTransferableRecord && (
               <TransferableRecordForm
@@ -166,7 +157,6 @@ export const DynamicFormLayout: FunctionComponent = () => {
               setFormData={setCurrentFormData}
               attachmentAccepted={attachmentAccepted}
               attachmentAcceptedFormat={attachmentAcceptedFormat}
-              setAttachmentValue={setAttachmentValue}
             />
           </div>
         </div>

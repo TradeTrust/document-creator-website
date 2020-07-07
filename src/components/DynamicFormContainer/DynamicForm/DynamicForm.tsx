@@ -6,6 +6,7 @@ import { mixin } from "../../../styles";
 import { FileUploadType, Form } from "../../../types";
 import { AttachmentDropzone } from "./AttachmentDropzone";
 import { CustomFieldTemplate, CustomObjectFieldTemplate } from "./CustomTemplates";
+import { cloneDeep } from "lodash";
 
 export interface DynamicFormProps {
   schema: Form["schema"];
@@ -14,7 +15,6 @@ export interface DynamicFormProps {
   className?: string;
   formData: any; // eslint-disable-line @typescript-eslint/no-explicit-any
   setFormData: (formData: any) => void; // eslint-disable-line @typescript-eslint/no-explicit-any
-  setAttachmentValue: (formValue: any) => void; // eslint-disable-line @typescript-eslint/no-explicit-any
 }
 
 export const DynamicForm: FunctionComponent<DynamicFormProps> = styled(
@@ -25,21 +25,29 @@ export const DynamicForm: FunctionComponent<DynamicFormProps> = styled(
     className,
     attachmentAccepted,
     attachmentAcceptedFormat = "",
-    setAttachmentValue,
   }) => {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const setAttachments = (attachments: any): void => {
+      const currentFormData = cloneDeep(formData);
+      setFormData({
+        ...formData,
+        formData: { ...currentFormData, attachments },
+      });
+    };
+
     const handleUpload = (processedFiles: FileUploadType[]): void => {
       const attachedFile = formData.formData.attachments || [];
-      const allAttachments = [...attachedFile, ...processedFiles];
+      const nextAttachment = [...attachedFile, ...processedFiles];
 
-      setAttachmentValue({ attachments: allAttachments });
+      setAttachments(nextAttachment);
     };
 
     const handleRemoveUpload = (fileIndex: number): void => {
-      const allAttachments = formData.formData.attachments.filter(
+      const nextAttachment = formData.formData.attachments.filter(
         (_file: FileUploadType, index: number) => index !== fileIndex
       );
 
-      setAttachmentValue({ attachments: allAttachments });
+      setAttachments(nextAttachment);
     };
 
     return (
