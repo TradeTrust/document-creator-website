@@ -1,26 +1,27 @@
+import { render, screen } from "@testing-library/react";
 import React from "react";
-import { render, screen, fireEvent, act, waitFor } from "@testing-library/react";
-import { DynamicForm } from "./DynamicForm";
 import sampleConfig from "../../../test/fixtures/sample-config.json";
-import { Form } from "../../../types";
+import { Form, FormType } from "../../../types";
+import { DynamicForm } from "./DynamicForm";
 
 const form = sampleConfig.forms[0] as Form;
 
-const mockData = (files: File[]): any => {
-  return {
-    dataTransfer: {
-      files,
-      items: files.map((file: any) => ({
-        kind: "file",
-        type: file.type,
-        getAsFile: () => file,
-      })),
-      types: ["Files"],
-    },
-  };
-};
-
 const mockSetFormData = jest.fn();
+const mockSetOwnership = jest.fn();
+
+const commonProps = {
+  type: "TRANSFERABLE_RECORD" as FormType,
+  schema: form.schema,
+  form: {
+    fileName: "",
+    data: { formData: {} },
+    templateIndex: 0,
+    ownership: { beneficiaryAddress: "", holderAddress: "" },
+  },
+  setFormData: mockSetFormData,
+  setOwnership: mockSetOwnership,
+  attachmentAccepted: false,
+};
 
 describe("dynamicForm", () => {
   beforeEach(() => {
@@ -28,56 +29,32 @@ describe("dynamicForm", () => {
   });
 
   it("should render the fields from the form definition", async () => {
-    render(
-      <DynamicForm
-        schema={form.schema}
-        formData={{}}
-        setFormData={mockSetFormData}
-        attachmentAccepted={false}
-      />
-    );
-    expect(screen.getByLabelText("Information")).not.toBeUndefined();
+    render(<DynamicForm {...commonProps} />);
+    expect(screen.queryByLabelText("Information")).not.toBeNull();
   });
 
-  it("should merge the data with defaults and file drop and fire handleSubmit when form is submitted", async () => {
-    render(
-      <DynamicForm
-        schema={form.schema}
-        formData={{
-          formData: { foo: "bar" },
-        }}
-        setFormData={mockSetFormData}
-        attachmentAccepted={false}
-      />
-    );
+  it("should show the ownership section when type is transferable record", () => {
+    render(<DynamicForm {...commonProps} />);
+    expect(screen.queryByTestId("transferable-record-form")).not.toBeNull();
+  });
 
-    // Drop data file in drop zone
-    const dropzone = screen.getByTestId("data-upload-zone");
-    const file = new File(
-      [
-        JSON.stringify({
-          cow: "moo",
-        }),
-      ],
-      "sample.json",
-      {
-        type: "application/json",
-      }
-    );
-    const data = mockData([file]);
-    const event = new Event("drop", { bubbles: true });
-    Object.assign(event, data);
+  it("should not show the ownership section when type is verifiable document", () => {
+    render(<DynamicForm {...commonProps} type="VERIFIABLE_DOCUMENT" />);
+    expect(screen.queryByTestId("transferable-record-form")).toBeNull();
+  });
 
-    await act(async () => {
-      await fireEvent(dropzone, event);
-    });
-    await waitFor(() =>
-      expect(mockSetFormData).toHaveBeenCalledWith({
-        formData: {
-          foo: "bar",
-          cow: "moo",
-        },
-      })
-    );
+  it("should render the attachment dropzone section if attachment is accepted", () => {
+    render(<DynamicForm {...commonProps} attachmentAccepted={true} />);
+    expect(screen.queryByTestId("attachment-dropzone")).not.toBeNull();
+  });
+
+  it("should not render the attachment dropzone section if attachment is not accepted", () => {
+    render(<DynamicForm {...commonProps} attachmentAccepted={false} />);
+    expect(screen.queryByTestId("attachment-dropzone")).toBeNull();
+  });
+
+  it("should render the data file dropzone", () => {
+    render(<DynamicForm {...commonProps} />);
+    expect(screen.queryByTestId("data-upload-zone")).not.toBeNull();
   });
 });

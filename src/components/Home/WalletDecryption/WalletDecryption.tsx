@@ -2,9 +2,9 @@ import React, { FunctionComponent, useState } from "react";
 import { decryptWallet } from "../../../common/config/decrypt";
 import { useConfigContext } from "../../../common/context/config";
 import { usePersistedConfigFile } from "../../../common/hook/usePersistedConfigFile";
-import { Button } from "../../../UI/Button";
-import { Title } from "../../../UI/Title";
-import { Wrapper } from "../../../UI/Wrapper";
+import { Button } from "../../UI/Button";
+import { Title } from "../../UI/Title";
+import { Wrapper } from "../../UI/Wrapper";
 
 interface WalletDecryption {
   isDecrypting: boolean;

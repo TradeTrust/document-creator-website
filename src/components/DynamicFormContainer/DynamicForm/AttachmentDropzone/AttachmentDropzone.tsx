@@ -1,7 +1,7 @@
 import React, { FunctionComponent, useCallback, useState } from "react";
 import { useDropzone } from "react-dropzone";
 import { FileUploadType } from "../../../../types";
-import { Button } from "../../../../UI/Button";
+import { Button } from "../../../UI/Button";
 import { FilesInfo } from "./FilesInfo";
 
 const MAX_FILE_SIZE = 20971520;
@@ -63,7 +63,11 @@ export const AttachmentDropzone: FunctionComponent<AttachmentDropzone> = ({
       }`;
 
   return (
-    <div className="flex flex-col max-w-screen-sm m-auto" key="AttachmentDropzone">
+    <div
+      className="flex flex-col max-w-screen-sm m-auto"
+      key="AttachmentDropzone"
+      data-testid="attachment-dropzone"
+    >
       <legend>Attachments</legend>
       <div data-testid="attachment-upload-zone" className="mt-4" {...getRootProps()}>
         <input data-testid="attachment-file-drop-zone" {...getInputProps()} />

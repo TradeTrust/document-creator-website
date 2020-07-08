@@ -1,4 +1,4 @@
-import { fireEvent, render, screen } from "@testing-library/react";
+import { act, fireEvent, render, screen, waitFor } from "@testing-library/react";
 import React from "react";
 import { MemoryRouter } from "react-router";
 import { useConfigContext } from "../../common/context/config";
@@ -13,24 +13,88 @@ const mockUseFormsContext = useFormsContext as jest.Mock;
 const mockUseConfigContext = useConfigContext as jest.Mock;
 const mockSetActiveFormIndex = jest.fn();
 const mockSetForms = jest.fn();
+const mockSetCurrentFormData = jest.fn();
 
 const whenActiveFormIsAvailable = (): void => {
-  mockUseConfigContext.mockReturnValue({ config: sampleConfig });
+  mockUseConfigContext.mockReturnValue({
+    config: {
+      ...sampleConfig,
+      forms: [
+        {
+          name: "COO",
+          type: "VERIFIABLE_DOCUMENT",
+          defaults: {},
+          schema: {
+            type: "object",
+            properties: {
+              foo: { type: "string", title: "Foo Field" },
+              bar: { type: "string" },
+            },
+          },
+        },
+      ],
+    },
+  });
   mockUseFormsContext.mockReturnValue({
     activeFormIndex: 0,
     setForms: mockSetForms,
     setActiveFormIndex: mockSetActiveFormIndex,
+    setCurrentFormData: mockSetCurrentFormData,
     forms: [
       {
         fileName: "document-1.tt",
         data: { formData: {} },
         templateIndex: 0,
+        ownership: { holderAddress: "", beneficiaryAddress: "" },
       },
     ],
     currentForm: {
       fileName: "document-1.tt",
       data: { formData: {} },
       templateIndex: 0,
+      ownership: { holderAddress: "", beneficiaryAddress: "" },
+    },
+  });
+};
+
+const whenIsTransferableRecord = (): void => {
+  mockUseConfigContext.mockReturnValue({
+    config: {
+      ...sampleConfig,
+      forms: [
+        {
+          name: "Bill of Lading",
+          type: "TRANSFERABLE_RECORD",
+          defaults: {},
+          schema: {
+            type: "object",
+            properties: {
+              foo: { type: "string", title: "Foo Field" },
+              bar: { type: "string" },
+            },
+          },
+        },
+      ],
+    },
+  });
+  mockUseFormsContext.mockReturnValue({
+    activeFormIndex: 0,
+    setForms: mockSetForms,
+    setActiveFormIndex: mockSetActiveFormIndex,
+    setCurrentFormData: mockSetCurrentFormData,
+    forms: [
+      {
+        fileName: "document-1.tt",
+        data: { formData: {} },
+        templateIndex: 0,
+        ownership: { holderAddress: "", beneficiaryAddress: "" },
+      },
+    ],
+    currentForm: {
+      fileName: "document-1.tt",
+      data: { formData: {} },
+      templateIndex: 0,
+      ownership: { holderAddress: "", beneficiaryAddress: "" },
     },
   });
 };
@@ -48,6 +112,20 @@ const whenActiveFormConfigIsNotAvailable = (): void => {
     activeFormIndex: undefined,
     setActiveFormIndex: mockSetActiveFormIndex,
   });
+};
+
+const mockData = (files: File[]): any => {
+  return {
+    dataTransfer: {
+      files,
+      items: files.map((file: any) => ({
+        kind: "file",
+        type: file.type,
+        getAsFile: () => file,
+      })),
+      types: ["Files"],
+    },
+  };
 };
 
 describe("dynamicFormLayout", () => {
@@ -103,7 +181,7 @@ describe("dynamicFormLayout", () => {
       </MemoryRouter>
     );
 
-    expect(screen.getByLabelText("Consignment Information")).not.toBeUndefined();
+    expect(screen.getByLabelText("Foo Field")).not.toBeUndefined();
   });
   it("should redirect when activeFormIndex === 'undefined'", () => {
     whenActiveFormIndexIsNotAvailable();
@@ -135,5 +213,54 @@ describe("dynamicFormLayout", () => {
     fireEvent.click(screen.getByTestId("delete-button"));
 
     expect(screen.getByTestId("modal-dialog")).not.toBeNull();
+  });
+
+  it("should merge the data with defaults and file drop and fire handleSubmit when form is submitted", async () => {
+    whenActiveFormIsAvailable();
+    render(
+      <MemoryRouter>
+        <DynamicFormLayout />
+      </MemoryRouter>
+    );
+
+    // Drop data file in drop zone
+    const dropzone = screen.getByTestId("data-upload-zone");
+    const file = new File(
+      [
+        JSON.stringify({
+          cow: "moo",
+        }),
+      ],
+      "sample.json",
+      {
+        type: "application/json",
+      }
+    );
+    const data = mockData([file]);
+    const event = new Event("drop", { bubbles: true });
+    Object.assign(event, data);
+
+    await act(async () => {
+      await fireEvent(dropzone, event);
+    });
+    await waitFor(() =>
+      expect(mockSetCurrentFormData).toHaveBeenCalledWith({
+        formData: {
+          cow: "moo",
+        },
+      })
+    );
+  });
+
+  it("should show the TransferableRecordForm when a form is a transferable record", () => {
+    whenIsTransferableRecord();
+    render(
+      <MemoryRouter>
+        <DynamicFormLayout />
+      </MemoryRouter>
+    );
+
+    expect(screen.queryAllByText("Beneficiary")).toHaveLength(1);
+    expect(screen.queryAllByText("Holder")).toHaveLength(1);
   });
 });

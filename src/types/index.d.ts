@@ -43,10 +43,16 @@ export interface FormData {
   errorSchema?: any; // eslint-disable-line @typescript-eslint/no-explicit-any
 }
 
+export interface Ownership {
+  beneficiaryAddress: string;
+  holderAddress: string;
+}
+
 export interface FormEntry {
   fileName: string;
   data: FormData;
   templateIndex: number;
+  ownership: Ownership;
 }
 
 export interface RawDocument {
@@ -54,7 +60,7 @@ export interface RawDocument {
   contractAddress: string;
   rawDocument: any; // eslint-disable-line @typescript-eslint/no-explicit-any
   fileName: string;
-  payload?: any; // eslint-disable-line @typescript-eslint/no-explicit-any
+  payload: { ownership?: Ownership };
 }
 
 export interface WrappedDocument extends RawDocument {
@@ -67,5 +73,5 @@ export interface PublishingJob {
   contractAddress: string;
   documents: WrappedDocument[];
   merkleRoot: string;
-  payload?: any; // eslint-disable-line @typescript-eslint/no-explicit-any
+  payload: { ownership?: Ownership };
 }

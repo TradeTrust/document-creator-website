@@ -2,20 +2,8 @@ import { FormEntry, Config, RawDocument, PublishingJob } from "../../../../types
 import { defaultsDeep, groupBy } from "lodash";
 import { wrapDocuments } from "@govtechsg/open-attestation";
 
-// Temporary method to enforce the publishing constraint
-export const assertPublishingConstraintTemp = (documents: RawDocument[]): void => {
-  documents.forEach(({ rawDocument }) => {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    rawDocument.issuers.forEach((issuer: any) => {
-      if (issuer.tokenRegistry) {
-        throw new Error("Token Registry is not supported yet");
-      }
-    });
-  });
-};
-
 export const getRawDocuments = (forms: FormEntry[], config: Config): RawDocument[] => {
-  return forms.map(({ data, templateIndex, fileName }) => {
+  return forms.map(({ data, templateIndex, fileName, ownership }) => {
     const formConfig = config.forms[templateIndex];
     if (!formConfig) throw new Error("Form definition not found");
     const formDefaults = formConfig.defaults;
@@ -23,41 +11,69 @@ export const getRawDocuments = (forms: FormEntry[], config: Config): RawDocument
     defaultsDeep(formData, formDefaults);
     const contractAddress =
       formData.issuers[0]?.documentStore || formData.issuers[0]?.tokenRegistry;
+    const payload = formConfig.type === "TRANSFERABLE_RECORD" ? { ownership } : {};
     return {
-      type: "VERIFIABLE_DOCUMENT", // To extend to transferable records next time
+      type: formConfig.type,
       contractAddress,
       rawDocument: formData,
       fileName,
-      payload: {}, // For additional data like beneficiary and holder later
+      payload,
     };
   });
 };
+
+const TX_NEEDED_FOR_VERIFIABLE_DOCUMENTS = 1;
+const TX_NEEDED_FOR_TRANSFERABLE_RECORDS = 2;
 
 // Given a list of documents, create a list of jobs
 export const groupDocumentsIntoJobs = (
   rawDocuments: RawDocument[],
   currentNonce: number
 ): PublishingJob[] => {
-  // Below grouping assumes that a contract address cannot both be a document store and token registry.
-  // Also need to be changed when verifiable document is added, since each one is it's own job queue.
-  const grouped = groupBy(rawDocuments, "contractAddress");
-  const contractAddresses = Object.keys(grouped);
-  return contractAddresses.map((contractAddress, index) => {
-    const firstRawDocument = grouped[contractAddress][0];
-    const rawDocuments = grouped[contractAddress].map((doc) => doc.rawDocument);
+  const transferableRecords = rawDocuments.filter((doc) => doc.type === "TRANSFERABLE_RECORD");
+  const verifiableDocuments = rawDocuments.filter((doc) => doc.type === "VERIFIABLE_DOCUMENT");
+  const groupedVerifiableDocuments = groupBy(verifiableDocuments, "contractAddress");
+  const documentStoreAddresses = Object.keys(groupedVerifiableDocuments);
+  let nonce = currentNonce;
+
+  const jobs: PublishingJob[] = [];
+
+  // Process all verifiable documents first
+  documentStoreAddresses.forEach((contractAddress) => {
+    const firstRawDocument = groupedVerifiableDocuments[contractAddress][0];
+    const rawDocuments = groupedVerifiableDocuments[contractAddress].map((doc) => doc.rawDocument);
     const wrappedDocuments = wrapDocuments(rawDocuments);
     const firstWrappedDocument = wrappedDocuments[0];
-    return {
+    jobs.push({
       type: firstRawDocument.type,
-      nonce: currentNonce + index, // Need to skip 1 for transferable records
+      nonce,
       contractAddress,
-      documents: grouped[contractAddress].map((doc, index) => ({
+      documents: groupedVerifiableDocuments[contractAddress].map((doc, index) => ({
         ...doc,
         wrappedDocument: wrappedDocuments[index],
       })),
       merkleRoot: firstWrappedDocument.signature?.merkleRoot,
-    };
+      payload: {},
+    });
+    nonce += TX_NEEDED_FOR_VERIFIABLE_DOCUMENTS;
   });
+
+  // Process all transferable records next
+  transferableRecords.forEach((transferableRecord) => {
+    const { type, contractAddress, rawDocument, payload } = transferableRecord;
+    const documents = wrapDocuments([rawDocument]);
+    jobs.push({
+      type,
+      nonce,
+      contractAddress,
+      documents: [{ ...transferableRecord, wrappedDocument: documents[0] }],
+      merkleRoot: documents[0].signature?.merkleRoot,
+      payload,
+    });
+    nonce += TX_NEEDED_FOR_TRANSFERABLE_RECORDS;
+  });
+
+  return jobs;
 };
 
 export const getPublishingJobs = (
@@ -67,7 +83,6 @@ export const getPublishingJobs = (
 ): PublishingJob[] => {
   // Currently works for only multiple verifiable document issuance:
   const rawDocuments = getRawDocuments(forms, config);
-  assertPublishingConstraintTemp(rawDocuments);
 
   return groupDocumentsIntoJobs(rawDocuments, nonce);
 };

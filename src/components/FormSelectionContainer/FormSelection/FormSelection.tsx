@@ -2,9 +2,9 @@ import React, { FunctionComponent } from "react";
 import { Redirect } from "react-router-dom";
 import { useFormsContext } from "../../../common/context/forms";
 import { Config, Form } from "../../../types";
-import { Button } from "../../../UI/Button";
-import { Title } from "../../../UI/Title";
-import { Wrapper } from "../../../UI/Wrapper";
+import { Button } from "../../UI/Button";
+import { Title } from "../../UI/Title";
+import { Wrapper } from "../../UI/Wrapper";
 import { Container } from "../../Container";
 import { ProgressBar } from "../../ProgressBar";
 

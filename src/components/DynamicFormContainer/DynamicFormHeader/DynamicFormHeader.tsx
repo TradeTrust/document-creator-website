@@ -1,7 +1,7 @@
 import React, { FunctionComponent } from "react";
-import { Button } from "../../../UI/Button";
-import { SvgIcon, SvgIconArrowLeft } from "../../../UI/SvgIcon";
-import { Title } from "../../../UI/Title";
+import { Button } from "../../UI/Button";
+import { SvgIcon, SvgIconArrowLeft } from "../../UI/SvgIcon";
+import { Title } from "../../UI/Title";
 import { ProgressBar } from "../../ProgressBar";
 
 interface DynamicFormHeaderProps {

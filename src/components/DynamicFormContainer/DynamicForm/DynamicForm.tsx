@@ -1,63 +1,99 @@
 import styled from "@emotion/styled";
-import { defaultsDeep, cloneDeep } from "lodash";
+import { cloneDeep, defaultsDeep } from "lodash";
 import React, { FunctionComponent } from "react";
 import JsonForm from "react-jsonschema-form";
 import tw from "twin.macro";
 import { mixin } from "../../../styles";
-import { FileUploadType, Form } from "../../../types";
+import { FileUploadType, Form, Ownership, FormEntry, FormType } from "../../../types";
 import { AttachmentDropzone } from "./AttachmentDropzone";
 import { CustomFieldTemplate, CustomObjectFieldTemplate } from "./CustomTemplates";
-import { DataFileButton } from "./DataFileButton";
+import { DataFileButton } from "../DataFileButton";
+import { TransferableRecordForm } from "../TransferableRecordForm";
 
-export interface DynamicForm {
+export interface DynamicFormProps {
   schema: Form["schema"];
   attachmentAccepted: boolean;
   attachmentAcceptedFormat?: string;
+  form: FormEntry;
   className?: string;
-  formData: any; // eslint-disable-line @typescript-eslint/no-explicit-any
+  type: FormType;
   setFormData: (formData: any) => void; // eslint-disable-line @typescript-eslint/no-explicit-any
+  setOwnership: (ownership: Ownership) => void;
 }
 
-export const DynamicFormRaw: FunctionComponent<DynamicForm> = ({
+export const DynamicFormRaw: FunctionComponent<DynamicFormProps> = ({
   schema,
-  formData,
+  form,
   setFormData,
+  setOwnership,
   className,
   attachmentAccepted,
+  type,
   attachmentAcceptedFormat = "",
 }) => {
+  const { data, ownership } = form;
+
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const setFormValue = (value: any): void => {
+  const mergeFormValue = (value: any): void => {
     // Avoid using spread which will lazy copy the object
     // See discussion: https://github.com/rjsf-team/react-jsonschema-form/issues/306
-    const nextFormData = cloneDeep(formData.formData);
-    setFormData({ ...formData, formData: defaultsDeep(value, nextFormData) });
+    const nextFormData = cloneDeep(data.formData);
+    setFormData({ ...data, formData: defaultsDeep(value, nextFormData) });
+  };
+
+  const isTransferableRecord = type === "TRANSFERABLE_RECORD";
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const setAttachments = (attachments: any): void => {
+    const currentFormData = cloneDeep(data.formData);
+    setFormData({
+      ...data,
+      formData: { ...currentFormData, attachments },
+    });
   };
 
   const handleUpload = (processedFiles: FileUploadType[]): void => {
-    const attachedFile = formData.formData.attachments || [];
-    const allAttachments = [...attachedFile, ...processedFiles];
+    const attachedFile = data.formData.attachments || [];
+    const nextAttachment = [...attachedFile, ...processedFiles];
 
-    setFormValue({ attachments: allAttachments });
+    setAttachments(nextAttachment);
   };
 
   const handleRemoveUpload = (fileIndex: number): void => {
-    const allAttachments = formData.formData.attachments.filter(
+    const nextAttachment = data.formData.attachments.filter(
       (_file: FileUploadType, index: number) => index !== fileIndex
     );
 
-    setFormValue({ attachments: allAttachments });
+    setAttachments(nextAttachment);
   };
 
   return (
     <div className={`${className} max-w-screen-sm mx-auto mt-6`}>
       <div className="mb-10">
-        <DataFileButton onDataFile={setFormValue} />
+        <DataFileButton onDataFile={mergeFormValue} />
       </div>
+      {isTransferableRecord && (
+        <TransferableRecordForm
+          beneficiaryAddress={ownership.beneficiaryAddress}
+          holderAddress={ownership.holderAddress}
+          setBeneficiaryAddress={(beneficiaryAddress) =>
+            setOwnership({
+              beneficiaryAddress,
+              holderAddress: ownership.holderAddress,
+            })
+          }
+          setHolderAddress={(holderAddress) =>
+            setOwnership({
+              beneficiaryAddress: ownership.beneficiaryAddress,
+              holderAddress,
+            })
+          }
+        />
+      )}
+      <div className="text-grey-dark font-bold text-xl pt-4">Document Details</div>
       <JsonForm
         schema={schema}
         onChange={setFormData}
-        formData={formData?.formData}
+        formData={data?.formData}
         ObjectFieldTemplate={CustomObjectFieldTemplate}
         FieldTemplate={CustomFieldTemplate}
       />
@@ -66,7 +102,7 @@ export const DynamicFormRaw: FunctionComponent<DynamicForm> = ({
           acceptedFormat={attachmentAcceptedFormat}
           onUpload={handleUpload}
           onRemove={handleRemoveUpload}
-          uploadedFiles={formData?.formData?.attachments}
+          uploadedFiles={data?.formData?.attachments}
         />
       )}
     </div>

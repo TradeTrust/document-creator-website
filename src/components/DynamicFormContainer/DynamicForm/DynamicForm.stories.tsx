@@ -50,9 +50,12 @@ export const Default = () => {
   return (
     <DynamicForm
       schema={form.schema}
-      formData={formData}
+      form={formData}
       setFormData={setFormData}
+      // eslint-disable-next-line @typescript-eslint/no-empty-function
+      setOwnership={() => {}}
       attachmentAccepted={true}
+      type="TRANSFERABLE_RECORD"
     />
   );
 };

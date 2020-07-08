@@ -2,9 +2,9 @@ import React, { FunctionComponent, useState } from "react";
 import { useDropzone } from "react-dropzone";
 import { readFileAsJson } from "../../../common/utils";
 import { ConfigFile } from "../../../types";
-import { Button } from "../../../UI/Button";
-import { Title } from "../../../UI/Title";
-import { Wrapper } from "../../../UI/Wrapper";
+import { Button } from "../../UI/Button";
+import { Title } from "../../UI/Title";
+import { Wrapper } from "../../UI/Wrapper";
 
 interface ConfigFileDropZone {
   errorMessage?: string;

@@ -1,7 +1,7 @@
 import React, { FunctionComponent } from "react";
 import { FormEntry } from "../../../types";
-import { PublishLoader } from "../../../UI/PublishLoader";
-import { Wrapper } from "../../../UI/Wrapper";
+import { PublishLoader } from "../../UI/PublishLoader";
+import { Wrapper } from "../../UI/Wrapper";
 import { Container } from "../../Container";
 
 interface PublishingProps {

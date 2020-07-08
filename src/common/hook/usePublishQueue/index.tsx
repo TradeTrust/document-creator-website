@@ -58,6 +58,7 @@ export const usePublishQueue = (
       setFailedJobIndex(failedJobs);
       setPublishState("CONFIRMED");
     } catch (e) {
+      console.error(e);
       setError(e.message);
       setPublishState("ERROR");
     }

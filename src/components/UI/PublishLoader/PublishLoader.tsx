@@ -1,7 +1,7 @@
 import { keyframes } from "@emotion/core";
 import styled from "@emotion/styled";
 import tw from "twin.macro";
-import { vars } from "../../styles";
+import { vars } from "../../../styles";
 
 const spin = keyframes`
   from, 0%, to {
