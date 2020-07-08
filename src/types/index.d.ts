@@ -60,7 +60,7 @@ export interface RawDocument {
   contractAddress: string;
   rawDocument: any; // eslint-disable-line @typescript-eslint/no-explicit-any
   fileName: string;
-  payload: { ownershipData?: OwnershipData }; // eslint-disable-line @typescript-eslint/no-explicit-any
+  payload: { ownershipData?: OwnershipData };
 }
 
 export interface WrappedDocument extends RawDocument {
@@ -73,5 +73,5 @@ export interface PublishingJob {
   contractAddress: string;
   documents: WrappedDocument[];
   merkleRoot: string;
-  payload: { ownershipData?: OwnershipData }; // eslint-disable-line @typescript-eslint/no-explicit-any
+  payload: { ownershipData?: OwnershipData };
 }
