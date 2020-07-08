@@ -3,10 +3,10 @@ import React, { FunctionComponent, useState } from "react";
 import { Redirect } from "react-router";
 import { useConfigContext } from "../../common/context/config";
 import { useFormsContext } from "../../common/context/forms";
+import { Container } from "../Container";
 import { Button } from "../UI/Button";
 import { SvgIcon, SvgIconTrash } from "../UI/SvgIcon";
 import { ToggleSwitch } from "../UI/ToggleSwitch";
-import { Container } from "../Container";
 import { DeleteModal } from "./DeleteModal";
 import { DynamicForm } from "./DynamicForm";
 import { DynamicFormHeader } from "./DynamicFormHeader";
@@ -80,7 +80,7 @@ export const DynamicFormLayout: FunctionComponent = () => {
         onNewForm={onNewForm}
         onFormSubmit={onFormSubmit}
       />
-      <div className="bg-white-dark p-6">
+      <div className="bg-lightgrey-lighter p-6">
         <div className="bg-white container mx-auto p-4">
           <div className="flex justify-between">
             <div className="text-grey-dark flex items-center">

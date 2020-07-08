@@ -5,7 +5,6 @@ const fullConfig = resolveConfig(tailwindConfig);
 
 export const white = `${fullConfig.theme.colors.white.default}`;
 export const black = `${fullConfig.theme.colors.black.default}`;
-export const whiteDark = `${fullConfig.theme.colors.white.dark}`;
 export const grey = `${fullConfig.theme.colors.grey.default}`;
 export const greyLighter = `${fullConfig.theme.colors.grey.lighter}`;
 export const greyDark = `${fullConfig.theme.colors.grey.dark}`;
@@ -23,6 +22,10 @@ export const redDark = `${fullConfig.theme.colors.red.dark}`;
 export const redLighter = `${fullConfig.theme.colors.red.lighter}`;
 export const teal = `${fullConfig.theme.colors.teal.default}`;
 export const tealLighter = `${fullConfig.theme.colors.teal.lighter}`;
+export const pink = `${fullConfig.theme.colors.pink.default}`;
+export const lightgrey = `${fullConfig.theme.colors.lightgrey.default}`;
+export const lightgreyDark = `${fullConfig.theme.colors.lightgrey.dark}`;
+export const lightgreyLighter = `${fullConfig.theme.colors.lightgrey.lighter}`;
 
 export const buttonRadius = "4px";
 

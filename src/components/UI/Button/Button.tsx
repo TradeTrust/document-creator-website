@@ -19,7 +19,7 @@ export const Button = styled.button`
   }
 
   &[disabled] {
-    ${tw`pointer-events-none shadow-none text-grey-lighter bg-white-dark`}
+    ${tw`pointer-events-none shadow-none text-grey-lighter bg-lightgrey-lighter`}
   }
 
   :first-of-type {
