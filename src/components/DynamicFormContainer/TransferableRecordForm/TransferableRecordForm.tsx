@@ -14,7 +14,7 @@ export const TransferableRecordForm: FunctionComponent<TransferableRecordForm> =
   setHolderAddress,
 }) => {
   return (
-    <div>
+    <div data-testid="transferable-record-form">
       <div className="text-grey-dark font-bold text-xl pb-4">Transferable Record Owner</div>
       <div className="border border-solid border-grey-lighter pb-3 rounded bg-lightgrey">
         <div className="flex my-4 items-center">

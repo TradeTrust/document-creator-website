@@ -63,7 +63,11 @@ export const AttachmentDropzone: FunctionComponent<AttachmentDropzone> = ({
       }`;
 
   return (
-    <div className="flex flex-col max-w-screen-sm m-auto" key="AttachmentDropzone">
+    <div
+      className="flex flex-col max-w-screen-sm m-auto"
+      key="AttachmentDropzone"
+      data-testid="attachment-dropzone"
+    >
       <legend>Attachments</legend>
       <div data-testid="attachment-upload-zone" className="mt-4" {...getRootProps()}>
         <input data-testid="attachment-file-drop-zone" {...getInputProps()} />
