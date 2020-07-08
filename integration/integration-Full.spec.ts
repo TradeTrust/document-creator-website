@@ -17,6 +17,7 @@ const PasswordFieldMsg = Selector("[data-testid='password-field-msg']");
 const ProgressBar = Selector("[data-testid='progress-bar']");
 const ErrorCantReadFile = Selector("[data-testid='error-cannot-read-file']");
 const ConfigError = Selector("[data-testid='config-error']");
+const AttachmentXButton = Selector("[data-testid='remove-uploaded-file-0']");
 
 const FormIdField = Selector("#root_iD");
 const FormAttachmentField = Selector("[data-testid='upload-file-0']");
@@ -71,6 +72,15 @@ test("Upload configuration file, choose form, fill form, preview form, submit fo
   await t.setFilesToUpload("input[type=file][data-testid=config-file-drop-zone]", [DataFile]);
 
   // Add attachment
+  await t.setFilesToUpload("input[data-testid=attachment-file-drop-zone]", [AttachmentSample]);
+  await t.expect(FormAttachmentField.textContent).contains("sample.pdf");
+  
+  // // Remove attachment
+  await t.click(AttachmentXButton);
+  // await t.expect(FormAttachmentField).notOk;
+  
+  // Add attachment again
+  // await t.wait(20000)
   await t.setFilesToUpload("input[data-testid=attachment-file-drop-zone]", [AttachmentSample]);
   await t.expect(FormAttachmentField.textContent).contains("sample.pdf");
 

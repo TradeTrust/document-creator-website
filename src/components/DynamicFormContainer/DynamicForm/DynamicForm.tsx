@@ -28,7 +28,7 @@ export const DynamicForm: FunctionComponent<DynamicFormProps> = styled(
   }) => {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const setAttachments = (attachments: any): void => {
-      const currentFormData = cloneDeep(formData);
+      const currentFormData = cloneDeep(formData.formData);
       setFormData({
         ...formData,
         formData: { ...currentFormData, attachments },
