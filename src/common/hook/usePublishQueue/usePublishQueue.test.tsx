@@ -25,7 +25,7 @@ const formEntires: FormEntry[] = [
     data: {
       formData: { foo: "bar" },
     },
-    ownershipData: { holderAddress: "", beneficiaryAddress: "" },
+    ownership: { holderAddress: "", beneficiaryAddress: "" },
   },
   {
     fileName: "document-2.tt",
@@ -33,7 +33,7 @@ const formEntires: FormEntry[] = [
     data: {
       formData: { foo: "bar" },
     },
-    ownershipData: { holderAddress: "", beneficiaryAddress: "" },
+    ownership: { holderAddress: "", beneficiaryAddress: "" },
   },
 ];
 

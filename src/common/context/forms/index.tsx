@@ -1,17 +1,17 @@
 import React, { useState, useContext, createContext, FunctionComponent } from "react";
-import { FormEntry, FormData, OwnershipData } from "../../../types";
+import { FormEntry, FormData, Ownership } from "../../../types";
 
 interface FormsContext {
   activeFormIndex?: number;
   forms: FormEntry[];
   currentForm?: FormEntry;
   currentFormData?: FormData;
-  currentFormOwnershipData?: OwnershipData;
+  currentFormOwnership?: Ownership;
   setActiveFormIndex: (index?: number) => void;
   setForms: (forms: FormEntry[]) => void;
   newForm: (templateIndex: number) => void;
   setCurrentFormData: (formData: FormData) => void;
-  setCurrentFormOwnershipData: (ownershipData: OwnershipData) => void;
+  setCurrentFormOwnership: (ownership: Ownership) => void;
 }
 
 export const FormsContext = createContext<FormsContext>({
@@ -20,7 +20,7 @@ export const FormsContext = createContext<FormsContext>({
   setForms: () => {}, // eslint-disable-line @typescript-eslint/no-empty-function
   newForm: () => {}, // eslint-disable-line @typescript-eslint/no-empty-function
   setCurrentFormData: () => {}, // eslint-disable-line @typescript-eslint/no-empty-function
-  setCurrentFormOwnershipData: () => {}, // eslint-disable-line @typescript-eslint/no-empty-function
+  setCurrentFormOwnership: () => {}, // eslint-disable-line @typescript-eslint/no-empty-function
 });
 
 export const useFormsContext = (): FormsContext => useContext<FormsContext>(FormsContext);
@@ -37,7 +37,7 @@ export const FormsContextProvider: FunctionComponent = ({ children }) => {
         templateIndex,
         data: {} as any, // eslint-disable-line @typescript-eslint/no-explicit-any
         fileName: `Document-${forms.length + 1}.tt`,
-        ownershipData: { beneficiaryAddress: "", holderAddress: "" },
+        ownership: { beneficiaryAddress: "", holderAddress: "" },
       },
     ]);
     setActiveFormIndex(newIndex);
@@ -45,7 +45,7 @@ export const FormsContextProvider: FunctionComponent = ({ children }) => {
 
   const currentForm = activeFormIndex === undefined ? undefined : forms[activeFormIndex];
   const currentFormData = currentForm ? currentForm.data : undefined;
-  const currentFormOwnershipData = currentForm ? currentForm.ownershipData : undefined;
+  const currentFormOwnership = currentForm ? currentForm.ownership : undefined;
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const setCurrentFormData = (data: any): void => {
@@ -57,17 +57,14 @@ export const FormsContextProvider: FunctionComponent = ({ children }) => {
     setForms(nextForms);
   };
 
-  const setCurrentFormOwnershipData = ({
-    beneficiaryAddress,
-    holderAddress,
-  }: OwnershipData): void => {
+  const setCurrentFormOwnership = ({ beneficiaryAddress, holderAddress }: Ownership): void => {
     if (activeFormIndex === undefined)
       throw new Error("Trying to set form when there is no activeFormIndex");
     const nextForms = [...forms];
     const currentForm = forms[activeFormIndex];
     nextForms.splice(activeFormIndex, 1, {
       ...currentForm,
-      ownershipData: { beneficiaryAddress, holderAddress },
+      ownership: { beneficiaryAddress, holderAddress },
     });
     setForms(nextForms);
   };
@@ -79,9 +76,9 @@ export const FormsContextProvider: FunctionComponent = ({ children }) => {
         forms,
         currentForm,
         currentFormData,
-        currentFormOwnershipData,
+        currentFormOwnership,
         setCurrentFormData,
-        setCurrentFormOwnershipData,
+        setCurrentFormOwnership,
         newForm,
         setActiveFormIndex,
         setForms,

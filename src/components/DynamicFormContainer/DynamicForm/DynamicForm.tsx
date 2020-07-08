@@ -1,76 +1,115 @@
 import styled from "@emotion/styled";
-import { cloneDeep } from "lodash";
+import { cloneDeep, defaultsDeep } from "lodash";
 import React, { FunctionComponent } from "react";
 import JsonForm from "react-jsonschema-form";
 import tw from "twin.macro";
 import { mixin } from "../../../styles";
-import { FileUploadType, Form } from "../../../types";
+import { FileUploadType, Form, Ownership, FormEntry, FormType } from "../../../types";
 import { AttachmentDropzone } from "./AttachmentDropzone";
 import { CustomFieldTemplate, CustomObjectFieldTemplate } from "./CustomTemplates";
+import { DataFileButton } from "../DataFileButton";
+import { TransferableRecordForm } from "../TransferableRecordForm";
 
 export interface DynamicFormProps {
   schema: Form["schema"];
   attachmentAccepted: boolean;
   attachmentAcceptedFormat?: string;
+  form: FormEntry;
   className?: string;
-  formData: any; // eslint-disable-line @typescript-eslint/no-explicit-any
+  type: FormType;
   setFormData: (formData: any) => void; // eslint-disable-line @typescript-eslint/no-explicit-any
+  setOwnership: (ownership: Ownership) => void;
 }
 
-export const DynamicForm: FunctionComponent<DynamicFormProps> = styled(
-  ({
-    schema,
-    formData,
-    setFormData,
-    className,
-    attachmentAccepted,
-    attachmentAcceptedFormat = "",
-  }) => {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const setAttachments = (attachments: any): void => {
-      const currentFormData = cloneDeep(formData.formData);
-      setFormData({
-        ...formData,
-        formData: { ...currentFormData, attachments },
-      });
-    };
+export const DynamicFormRaw: FunctionComponent<DynamicFormProps> = ({
+  schema,
+  form,
+  setFormData,
+  setOwnership,
+  className,
+  attachmentAccepted,
+  type,
+  attachmentAcceptedFormat = "",
+}) => {
+  const { data, ownership } = form;
 
-    const handleUpload = (processedFiles: FileUploadType[]): void => {
-      const attachedFile = formData.formData.attachments || [];
-      const nextAttachment = [...attachedFile, ...processedFiles];
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const mergeFormValue = (value: any): void => {
+    // Avoid using spread which will lazy copy the object
+    // See discussion: https://github.com/rjsf-team/react-jsonschema-form/issues/306
+    const nextFormData = cloneDeep(data.formData);
+    setFormData({ ...data, formData: defaultsDeep(value, nextFormData) });
+  };
 
-      setAttachments(nextAttachment);
-    };
+  const isTransferableRecord = type === "TRANSFERABLE_RECORD";
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const setAttachments = (attachments: any): void => {
+    const currentFormData = cloneDeep(data.formData);
+    setFormData({
+      ...data,
+      formData: { ...currentFormData, attachments },
+    });
+  };
 
-    const handleRemoveUpload = (fileIndex: number): void => {
-      const nextAttachment = formData.formData.attachments.filter(
-        (_file: FileUploadType, index: number) => index !== fileIndex
-      );
+  const handleUpload = (processedFiles: FileUploadType[]): void => {
+    const attachedFile = data.formData.attachments || [];
+    const nextAttachment = [...attachedFile, ...processedFiles];
 
-      setAttachments(nextAttachment);
-    };
+    setAttachments(nextAttachment);
+  };
 
-    return (
-      <div className={`${className} max-w-screen-sm mx-auto mt-6`}>
-        <JsonForm
-          schema={schema}
-          onChange={setFormData}
-          formData={formData?.formData}
-          ObjectFieldTemplate={CustomObjectFieldTemplate}
-          FieldTemplate={CustomFieldTemplate}
-        />
-        {attachmentAccepted && (
-          <AttachmentDropzone
-            acceptedFormat={attachmentAcceptedFormat}
-            onUpload={handleUpload}
-            onRemove={handleRemoveUpload}
-            uploadedFiles={formData?.formData?.attachments}
-          />
-        )}
-      </div>
+  const handleRemoveUpload = (fileIndex: number): void => {
+    const nextAttachment = data.formData.attachments.filter(
+      (_file: FileUploadType, index: number) => index !== fileIndex
     );
-  }
-)`
+
+    setAttachments(nextAttachment);
+  };
+
+  return (
+    <div className={`${className} max-w-screen-sm mx-auto mt-6`}>
+      <div className="mb-10">
+        <DataFileButton onDataFile={mergeFormValue} />
+      </div>
+      {isTransferableRecord && (
+        <TransferableRecordForm
+          beneficiaryAddress={ownership.beneficiaryAddress}
+          holderAddress={ownership.holderAddress}
+          setBeneficiaryAddress={(beneficiaryAddress) =>
+            setOwnership({
+              beneficiaryAddress,
+              holderAddress: ownership.holderAddress,
+            })
+          }
+          setHolderAddress={(holderAddress) =>
+            setOwnership({
+              beneficiaryAddress: ownership.beneficiaryAddress,
+              holderAddress,
+            })
+          }
+        />
+      )}
+      <div className="text-grey-dark font-bold text-xl pt-4">Document Details</div>
+      <JsonForm
+        schema={schema}
+        onChange={setFormData}
+        formData={data?.formData}
+        ObjectFieldTemplate={CustomObjectFieldTemplate}
+        FieldTemplate={CustomFieldTemplate}
+      />
+      {attachmentAccepted && (
+        <AttachmentDropzone
+          acceptedFormat={attachmentAcceptedFormat}
+          onUpload={handleUpload}
+          onRemove={handleRemoveUpload}
+          uploadedFiles={data?.formData?.attachments}
+        />
+      )}
+    </div>
+  );
+};
+
+export const DynamicForm = styled(DynamicFormRaw)`
 .form-group .form-group.field.field-object .dynamicForm-items {
   ${tw`
     my-4

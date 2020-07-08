@@ -45,8 +45,8 @@ export const publishTransferableRecordJob = async (
   wallet: Wallet
 ): Promise<string> => {
   const { payload, contractAddress, nonce, merkleRoot } = job;
-  if (!payload.ownershipData) throw new Error("Ownership data is not provided");
-  const { beneficiaryAddress, holderAddress } = payload.ownershipData;
+  if (!payload.ownership) throw new Error("Ownership data is not provided");
+  const { beneficiaryAddress, holderAddress } = payload.ownership;
   const titleEscrowCreatorContract = await getTitleEscrowCreator(wallet);
 
   // Impossible to do contract address forecasting since the nonce at the title escrow creator

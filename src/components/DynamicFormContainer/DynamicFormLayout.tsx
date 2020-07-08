@@ -1,5 +1,4 @@
 import Ajv from "ajv";
-import { cloneDeep, defaultsDeep } from "lodash";
 import React, { FunctionComponent, useState } from "react";
 import { Redirect } from "react-router";
 import { useConfigContext } from "../../common/context/config";
@@ -8,11 +7,9 @@ import { Button } from "../UI/Button";
 import { SvgIcon, SvgIconTrash, SvgIconXCircle } from "../UI/SvgIcon";
 import { ToggleSwitch } from "../UI/ToggleSwitch";
 import { Container } from "../Container";
-import { DataFileButton } from "./DataFileButton";
 import { DeleteModal } from "./DeleteModal";
 import { DynamicForm } from "./DynamicForm";
 import { DynamicFormHeader } from "./DynamicFormHeader";
-import { TransferableRecordForm } from "./TransferableRecordForm";
 
 export const DynamicFormLayout: FunctionComponent = () => {
   const { config } = useConfigContext();
@@ -24,7 +21,7 @@ export const DynamicFormLayout: FunctionComponent = () => {
     setActiveFormIndex,
     currentForm,
     setCurrentFormData,
-    setCurrentFormOwnershipData,
+    setCurrentFormOwnership,
   } = useFormsContext();
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [formError, setFormError] = useState<Ajv.ErrorObject[] | null | undefined>();
@@ -33,7 +30,6 @@ export const DynamicFormLayout: FunctionComponent = () => {
   if (!currentFormDefinition) return <Redirect to="/forms-selection" />;
   if (isSubmitted) return <Redirect to="/publish" />;
 
-  const isTransferableRecord = currentFormDefinition.type === "TRANSFERABLE_RECORD";
   const formSchema = currentFormDefinition.schema;
   const attachmentAccepted = !!currentFormDefinition.attachments?.allow;
   const attachmentAcceptedFormat = currentFormDefinition.attachments?.accept;
@@ -69,14 +65,6 @@ export const DynamicFormLayout: FunctionComponent = () => {
   const deleteForm = (): void => {
     removeCurrentForm();
     closeDeleteModal();
-  };
-
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const mergeFormValue = (value: any): void => {
-    // Avoid using spread which will lazy copy the object
-    // See discussion: https://github.com/rjsf-team/react-jsonschema-form/issues/306
-    const nextFormData = cloneDeep(currentForm.data.formData);
-    setCurrentFormData({ ...currentForm.data, formData: defaultsDeep(value, nextFormData) });
   };
 
   return (
@@ -130,34 +118,12 @@ export const DynamicFormLayout: FunctionComponent = () => {
             </div>
           )}
           <div className="max-w-screen-sm mx-auto mt-6">
-            <div className="mb-10">
-              <DataFileButton onDataFile={mergeFormValue} />
-            </div>
-            {isTransferableRecord && (
-              <>
-                <TransferableRecordForm
-                  beneficiaryAddress={currentForm.ownershipData.beneficiaryAddress}
-                  holderAddress={currentForm.ownershipData.holderAddress}
-                  setBeneficiaryAddress={(beneficiaryAddress) =>
-                    setCurrentFormOwnershipData({
-                      beneficiaryAddress,
-                      holderAddress: currentForm.ownershipData.holderAddress,
-                    })
-                  }
-                  setHolderAddress={(holderAddress) =>
-                    setCurrentFormOwnershipData({
-                      beneficiaryAddress: currentForm.ownershipData.beneficiaryAddress,
-                      holderAddress,
-                    })
-                  }
-                />
-                <div className="text-grey-dark font-bold text-xl pt-4">Document Details</div>
-              </>
-            )}
             <DynamicForm
               schema={formSchema}
-              formData={currentForm.data}
+              form={currentForm}
+              type={currentFormDefinition.type}
               setFormData={setCurrentFormData}
+              setOwnership={setCurrentFormOwnership}
               attachmentAccepted={attachmentAccepted}
               attachmentAcceptedFormat={attachmentAcceptedFormat}
             />

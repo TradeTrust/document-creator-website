@@ -3,7 +3,7 @@ import { defaultsDeep, groupBy } from "lodash";
 import { wrapDocuments } from "@govtechsg/open-attestation";
 
 export const getRawDocuments = (forms: FormEntry[], config: Config): RawDocument[] => {
-  return forms.map(({ data, templateIndex, fileName, ownershipData }) => {
+  return forms.map(({ data, templateIndex, fileName, ownership }) => {
     const formConfig = config.forms[templateIndex];
     if (!formConfig) throw new Error("Form definition not found");
     const formDefaults = formConfig.defaults;
@@ -11,7 +11,7 @@ export const getRawDocuments = (forms: FormEntry[], config: Config): RawDocument
     defaultsDeep(formData, formDefaults);
     const contractAddress =
       formData.issuers[0]?.documentStore || formData.issuers[0]?.tokenRegistry;
-    const payload = formConfig.type === "TRANSFERABLE_RECORD" ? { ownershipData } : {};
+    const payload = formConfig.type === "TRANSFERABLE_RECORD" ? { ownership } : {};
     return {
       type: formConfig.type,
       contractAddress,

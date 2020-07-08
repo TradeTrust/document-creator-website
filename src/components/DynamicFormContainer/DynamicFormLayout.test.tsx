@@ -45,14 +45,14 @@ const whenActiveFormIsAvailable = (): void => {
         fileName: "document-1.tt",
         data: { formData: {} },
         templateIndex: 0,
-        ownershipData: { holderAddress: "", beneficiaryAddress: "" },
+        ownership: { holderAddress: "", beneficiaryAddress: "" },
       },
     ],
     currentForm: {
       fileName: "document-1.tt",
       data: { formData: {} },
       templateIndex: 0,
-      ownershipData: { holderAddress: "", beneficiaryAddress: "" },
+      ownership: { holderAddress: "", beneficiaryAddress: "" },
     },
   });
 };
@@ -87,14 +87,14 @@ const whenIsTransferableRecord = (): void => {
         fileName: "document-1.tt",
         data: { formData: {} },
         templateIndex: 0,
-        ownershipData: { holderAddress: "", beneficiaryAddress: "" },
+        ownership: { holderAddress: "", beneficiaryAddress: "" },
       },
     ],
     currentForm: {
       fileName: "document-1.tt",
       data: { formData: {} },
       templateIndex: 0,
-      ownershipData: { holderAddress: "", beneficiaryAddress: "" },
+      ownership: { holderAddress: "", beneficiaryAddress: "" },
     },
   });
 };
@@ -263,4 +263,6 @@ describe("dynamicFormLayout", () => {
     expect(screen.queryAllByText("Beneficiary")).toHaveLength(1);
     expect(screen.queryAllByText("Holder")).toHaveLength(1);
   });
+
+  it.todo("should show errors when there is a form error");
 });

@@ -165,7 +165,7 @@ describe("publishing", () => {
           documents: [],
           merkleRoot: "9999",
           payload: {
-            ownershipData: {
+            ownership: {
               beneficiaryAddress: "0x1111",
               holderAddress: "0x2222",
             },
@@ -200,7 +200,7 @@ describe("publishing", () => {
             documents: [],
             merkleRoot: "9999",
             payload: {
-              ownershipData: {
+              ownership: {
                 beneficiaryAddress: "0x1111",
                 holderAddress: "0x2222",
               },
@@ -223,7 +223,7 @@ describe("publishing", () => {
             documents: [],
             merkleRoot: "9999",
             payload: {
-              ownershipData: {
+              ownership: {
                 beneficiaryAddress: "0x1111",
                 holderAddress: "0x2222",
               },
