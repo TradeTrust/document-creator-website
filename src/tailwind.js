@@ -28,6 +28,7 @@ module.exports = {
     },
     colors: {
       lightgrey: {
+        lighter: "#fafafa",
         default: "#eeeeee",
         dark: "#89969F",
       },
@@ -65,7 +66,6 @@ module.exports = {
       },
       white: {
         default: "#ffffff",
-        dark: "#fafafa",
       },
       black: {
         default: "#000000",

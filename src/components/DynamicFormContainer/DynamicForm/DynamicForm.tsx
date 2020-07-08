@@ -4,11 +4,11 @@ import React, { FunctionComponent } from "react";
 import JsonForm from "react-jsonschema-form";
 import tw from "twin.macro";
 import { mixin } from "../../../styles";
-import { FileUploadType, Form, Ownership, FormEntry, FormType } from "../../../types";
-import { AttachmentDropzone } from "./AttachmentDropzone";
-import { CustomFieldTemplate, CustomObjectFieldTemplate } from "./CustomTemplates";
+import { FileUploadType, Form, FormEntry, FormType, Ownership } from "../../../types";
 import { DataFileButton } from "../DataFileButton";
 import { TransferableRecordForm } from "../TransferableRecordForm";
+import { AttachmentDropzone } from "./AttachmentDropzone";
+import { CustomFieldTemplate, CustomObjectFieldTemplate } from "./CustomTemplates";
 
 export interface DynamicFormProps {
   schema: Form["schema"];
@@ -68,9 +68,6 @@ export const DynamicFormRaw: FunctionComponent<DynamicFormProps> = ({
 
   return (
     <div className={`${className} max-w-screen-sm mx-auto mt-6`}>
-      <div className="mb-10">
-        <DataFileButton onDataFile={mergeFormValue} />
-      </div>
       {isTransferableRecord && (
         <TransferableRecordForm
           beneficiaryAddress={ownership.beneficiaryAddress}
@@ -89,7 +86,9 @@ export const DynamicFormRaw: FunctionComponent<DynamicFormProps> = ({
           }
         />
       )}
-      <div className="text-grey-dark font-bold text-xl pt-4">Document Details</div>
+      <div className="mb-10">
+        <DataFileButton onDataFile={mergeFormValue} />
+      </div>
       <JsonForm
         schema={schema}
         onChange={setFormData}

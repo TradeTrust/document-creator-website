@@ -5,12 +5,12 @@ import { useConfigContext } from "../../../common/context/config";
 import { useFormsContext } from "../../../common/context/forms";
 import { usePublishQueue } from "../../../common/hook/usePublishQueue";
 import { Config } from "../../../types";
-import { Button } from "../../UI/Button";
-import { SvgIcon, SvgIconCheckCircle } from "../../UI/SvgIcon";
-import { Title } from "../../UI/Title";
 import { Container } from "../../Container";
 import { NavigationBar } from "../../NavigationBar";
 import { ProgressBar } from "../../ProgressBar";
+import { Button } from "../../UI/Button";
+import { SvgIcon, SvgIconCheckCircle } from "../../UI/SvgIcon";
+import { Title } from "../../UI/Title";
 import { Publishing } from "../Publishing";
 
 interface PublishPage {
@@ -71,7 +71,7 @@ export const PublishPage: FunctionComponent<PublishPage> = ({ config }) => {
               </div>
             </div>
           </div>
-          <div className="bg-white-dark p-6 h-screen">
+          <div className="bg-lightgrey-lighter p-6 h-screen">
             <div className="container mx-auto">
               <div className="border-b border-solid border-lightgrey">
                 <div className="text-grey font-medium text-lg mb-4">{forms.length} Documents</div>

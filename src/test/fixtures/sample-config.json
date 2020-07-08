@@ -417,6 +417,61 @@
         "allow": true,
         "accept": ".pdf"
       }
+    },
+    {
+      "name": "Bill of Lading",
+      "type": "TRANSFERABLE_RECORD",
+      "defaults": {
+        "$template": {
+          "type": "EMBEDDED_RENDERER",
+          "name": "BILL_OF_LADING",
+          "url": "https://demo-cnm.openattestation.com"
+        },
+        "issuers": [
+          {
+            "identityProof": {
+              "type": "DNS-TXT",
+              "location": "demo-tradetrust.openattestation.com"
+            },
+            "name": "DEMO STORE",
+            "tokenRegistry": "0x10E936e6BA85dC92505760259881167141365821"
+          }
+        ],
+        "name": "Maersk Bill of Lading"
+      },
+      "schema": {
+        "type": "object",
+        "required": ["blNumber"],
+        "properties": {
+          "blNumber": {
+            "type": "string",
+            "title": "BL Number"
+          },
+          "shipper": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string"
+              },
+              "address": {
+                "type": "object",
+                "properties": {
+                  "street": {
+                    "type": "string"
+                  },
+                  "country": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "attachments": {
+        "allow": true,
+        "accept": ".pdf, .json"
+      }
     }
   ]
 }
