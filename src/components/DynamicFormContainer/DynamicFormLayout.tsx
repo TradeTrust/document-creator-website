@@ -4,12 +4,13 @@ import { Redirect } from "react-router";
 import { useConfigContext } from "../../common/context/config";
 import { useFormsContext } from "../../common/context/forms";
 import { Button } from "../UI/Button";
-import { SvgIcon, SvgIconTrash, SvgIconXCircle } from "../UI/SvgIcon";
+import { SvgIcon, SvgIconTrash } from "../UI/SvgIcon";
 import { ToggleSwitch } from "../UI/ToggleSwitch";
 import { Container } from "../Container";
 import { DeleteModal } from "./DeleteModal";
 import { DynamicForm } from "./DynamicForm";
 import { DynamicFormHeader } from "./DynamicFormHeader";
+import { FormErrorBanner } from "./FormErrorBanner";
 
 export const DynamicFormLayout: FunctionComponent = () => {
   const { config } = useConfigContext();
@@ -24,7 +25,7 @@ export const DynamicFormLayout: FunctionComponent = () => {
     setCurrentFormOwnership,
   } = useFormsContext();
   const [isSubmitted, setIsSubmitted] = useState(false);
-  const [formError, setFormError] = useState<Ajv.ErrorObject[] | null | undefined>();
+  const [formError, setFormError] = useState<Ajv.ErrorObject[] | null | undefined>(null);
   if (!currentForm) return <Redirect to="/forms-selection" />;
   const currentFormDefinition = config?.forms[currentForm?.templateIndex];
   if (!currentFormDefinition) return <Redirect to="/forms-selection" />;
@@ -97,26 +98,7 @@ export const DynamicFormLayout: FunctionComponent = () => {
               </div>
             </Button>
           </div>
-          {formError && formError.length > 0 && (
-            <div className="bg-red-lighter rounded max-w-screen-sm mx-auto flex items-start py-3">
-              <SvgIcon className="text-red mx-3 my-1">
-                <SvgIconXCircle />
-              </SvgIcon>
-              <div className="text-red text-xl flex flex-col justify-center items-start">
-                <div>This form has errors. Please fix the errors and submit again.</div>
-                <ul className="list-disc pl-5">
-                  {formError &&
-                    formError.map((error, index: number) => {
-                      return (
-                        <li key={index}>
-                          {error.dataPath} {error.message}
-                        </li>
-                      );
-                    })}
-                </ul>
-              </div>
-            </div>
-          )}
+          <FormErrorBanner formError={formError} />
           <div className="max-w-screen-sm mx-auto mt-6">
             <DynamicForm
               schema={formSchema}

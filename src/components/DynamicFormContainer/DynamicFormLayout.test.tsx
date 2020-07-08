@@ -263,6 +263,4 @@ describe("dynamicFormLayout", () => {
     expect(screen.queryAllByText("Beneficiary")).toHaveLength(1);
     expect(screen.queryAllByText("Holder")).toHaveLength(1);
   });
-
-  it.todo("should show errors when there is a form error");
 });
