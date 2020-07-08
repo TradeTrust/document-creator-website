@@ -1,6 +1,6 @@
 import styled from "@emotion/styled";
 import tw from "twin.macro";
-import { mixin } from "../../styles";
+import { mixin } from "../../../styles";
 
 export const Button = styled.button`
   box-shadow: -10px -10px 20px rgba(255, 255, 255, 0.2), 2px 2px 5px rgba(0, 0, 0, 0.1);

@@ -24,4 +24,8 @@ describe("dynamicForm", () => {
     );
     expect(screen.getByLabelText("Information")).not.toBeUndefined();
   });
+
+  it.todo("should render the attachment dropzone section if attachment is accepted");
+  it.todo("should not render the attachment dropzone section if attachment is not accepted");
+  it.todo("should render the data file dropzone");
 });

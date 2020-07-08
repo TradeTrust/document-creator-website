@@ -1,7 +1,7 @@
 import React, { FunctionComponent, useCallback, useState } from "react";
 import { useDropzone } from "react-dropzone";
 import { FileUploadType } from "../../../../types";
-import { Button } from "../../../../UI/Button";
+import { Button } from "../../../UI/Button";
 import { FilesInfo } from "./FilesInfo";
 
 const MAX_FILE_SIZE = 20971520;

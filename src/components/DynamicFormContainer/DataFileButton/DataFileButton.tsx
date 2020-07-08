@@ -1,7 +1,7 @@
 import React, { FunctionComponent, useState } from "react";
 import { useDropzone } from "react-dropzone";
 import { readFileAsJson } from "../../../common/utils";
-import { Button } from "../../../UI/Button";
+import { Button } from "../../UI/Button";
 import { ErrorAlert } from "../../Alert";
 
 interface DataFileButton {

@@ -1,5 +1,5 @@
 import React, { FunctionComponent } from "react";
-import { Button } from "../../../UI/Button";
+import { Button } from "../../UI/Button";
 import { ModalDialog } from "../../ModalDialog";
 
 interface DeleteModalProps {

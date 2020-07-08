@@ -1,7 +1,7 @@
 import prettyBytes from "pretty-bytes";
 import React, { FunctionComponent } from "react";
 import { FileUploadType } from "../../../../../types";
-import { SvgIcon, SvgIconPaperClip, SvgIconX } from "../../../../../UI/SvgIcon";
+import { SvgIcon, SvgIconPaperClip, SvgIconX } from "../../../../UI/SvgIcon";
 
 interface FilesInfoType {
   filesInfo: FileUploadType[];
