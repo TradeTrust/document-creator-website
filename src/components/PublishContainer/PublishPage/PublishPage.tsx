@@ -1,4 +1,3 @@
-import prettyBytes from "pretty-bytes";
 import React, { FunctionComponent, useEffect } from "react";
 import { Redirect } from "react-router-dom";
 import { useConfigContext } from "../../../common/context/config";
@@ -11,6 +10,7 @@ import { ProgressBar } from "../../ProgressBar";
 import { Button } from "../../UI/Button";
 import { SvgIcon, SvgIconCheckCircle } from "../../UI/SvgIcon";
 import { Title } from "../../UI/Title";
+import { PublishedTag } from "../PublishedTag";
 import { Publishing } from "../Publishing";
 
 interface PublishPage {
@@ -29,19 +29,14 @@ export const PublishPage: FunctionComponent<PublishPage> = ({ config }) => {
   const documentsPublished = publishState === "CONFIRMED";
 
   const createAnotherDoc = (): void => {
-    const nextForms = [...forms];
-    nextForms.splice(nextForms.length - 1, 1);
-    setForms(nextForms);
+    setForms([]);
     setActiveFormIndex(undefined);
   };
 
   const iAmDone = (): void => {
+    setForms([]);
+    setActiveFormIndex(undefined);
     setConfig(undefined);
-  };
-
-  const getFileSize = (jsonString: string): number => {
-    const m = encodeURIComponent(jsonString).match(/%[89ABab]/g);
-    return jsonString.length + (m ? m.length : 0);
   };
 
   if (!config) return <Redirect to="/" />;
@@ -79,37 +74,7 @@ export const PublishPage: FunctionComponent<PublishPage> = ({ config }) => {
 
               <div className="flex flex-wrap">
                 {publishedDocuments &&
-                  publishedDocuments.map((doc, index) => {
-                    const size = prettyBytes(getFileSize(JSON.stringify(doc.wrappedDocument)));
-                    return (
-                      <div
-                        key={index}
-                        className="mt-4 flex rounded bg-white p-3 w-72 border border-solid border-lightgrey mr-4"
-                      >
-                        <div className="rounded-full bg-blue mr-4 w-12 h-12 text-white font-bold flex justify-center items-center">
-                          TT
-                        </div>
-                        <div className="flex flex-col">
-                          <div className="font-bold text-lightgrey-dark">
-                            {doc.fileName}
-                            <span className="text-lightgrey-dark text-xs font-regular">
-                              {" "}
-                              ({size})
-                            </span>
-                          </div>
-                          <a
-                            className="text-blue font-bold"
-                            href={`data:text/json;charset=utf-8,${JSON.stringify(
-                              doc.wrappedDocument
-                            )}`}
-                            download={doc.fileName}
-                          >
-                            Download
-                          </a>
-                        </div>
-                      </div>
-                    );
-                  })}
+                  publishedDocuments.map((doc, index) => <PublishedTag doc={doc} key={index} />)}
               </div>
             </div>
           </div>
