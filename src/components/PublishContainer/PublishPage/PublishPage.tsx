@@ -33,7 +33,7 @@ export const PublishPage: FunctionComponent<PublishPage> = ({ config }) => {
     setActiveFormIndex(undefined);
   };
 
-  const iAmDone = (): void => {
+  const onDone = (): void => {
     setForms([]);
     setActiveFormIndex(undefined);
     setConfig(undefined);
@@ -60,8 +60,8 @@ export const PublishPage: FunctionComponent<PublishPage> = ({ config }) => {
                 <Button className="bg-white text-orange px-4 py-3 mb-6" onClick={createAnotherDoc}>
                   Create another Document
                 </Button>
-                <Button className="bg-orange text-white self-end py-3 px-4 mb-6" onClick={iAmDone}>
-                  I am Done
+                <Button className="bg-orange text-white self-end py-3 px-4 mb-6" onClick={onDone}>
+                  Logout
                 </Button>
               </div>
             </div>
