@@ -3,6 +3,7 @@ import { useState } from "react";
 import { publishJob } from "../../../services/publishing";
 import { Config, FailedJobErrors, FormEntry, PublishingJob, WrappedDocument } from "../../../types";
 import { getLogger } from "../../../utils/logger";
+import { uploadToStorage } from "../../API/storageAPI";
 import { getPublishingJobs } from "./utils/publish";
 
 const { stack } = getLogger("usePublishQueue");
@@ -47,13 +48,16 @@ export const usePublishQueue = (
       const failedJobs: FailedJob[] = [];
       setPublishState("INITIALIZED");
       const nonce = await config.wallet.getTransactionCount();
-      const publishingJobs = getPublishingJobs(formEntries, config, nonce);
+      const publishingJobs = await getPublishingJobs(formEntries, config, nonce);
       setJobs(publishingJobs);
       const deferredJobs = publishingJobs.map((job, index) =>
         publishJob(job, config.wallet)
           .then(() => {
             completedJobs.push(index);
             setCompletedJobIndex(completedJobs);
+            job.documents.forEach((doc) => {
+              uploadToStorage(config.network, doc);
+            });
           })
           .catch((e) => {
             failedJobs.push({

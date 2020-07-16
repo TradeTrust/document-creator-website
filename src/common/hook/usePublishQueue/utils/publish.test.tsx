@@ -1,17 +1,22 @@
-import sampleForms from "./sample-forms.json";
-import sampleFormatted from "./sample-formatted.json";
-import sampleConfigFile from "./sample-config.json";
 import { Config, RawDocument } from "../../../../types";
+import { getQueueNumber } from "../../../API/storageAPI";
 import { getRawDocuments, groupDocumentsIntoJobs } from "./publish";
+import sampleConfigFile from "./sample-config.json";
+import sampleFormatted from "./sample-formatted.json";
+import sampleForms from "./sample-forms.json";
 
 const sampleConfig = {
   ...sampleConfigFile,
   wallet: "FAKE_WALLET" as any,
 } as Config;
 
+jest.mock("./storageAPI");
+const mockGetQueueNumber = getQueueNumber as jest.Mock;
+
 describe("getRawDocuments", () => {
-  it("should get raw documents with default values", () => {
-    expect(getRawDocuments(sampleForms, sampleConfig)).toStrictEqual(sampleFormatted);
+  it("should get raw documents with default values", async () => {
+    mockGetQueueNumber.mockResolvedValue({ id: "123", key: "123" });
+    expect(await getRawDocuments(sampleForms, sampleConfig)).toStrictEqual(sampleFormatted);
   });
 });
 

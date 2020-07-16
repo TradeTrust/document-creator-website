@@ -1,25 +1,62 @@
-import { FormEntry, Config, RawDocument, PublishingJob } from "../../../../types";
-import { defaultsDeep, groupBy } from "lodash";
 import { wrapDocuments } from "@govtechsg/open-attestation";
+import { defaultsDeep, groupBy } from "lodash";
+import { Config, FormEntry, PublishingJob, RawDocument } from "../../../../types";
+import { getQueueNumber } from "../../../API/storageAPI";
+import { encodeQrCode } from "../../../utils";
 
-export const getRawDocuments = (forms: FormEntry[], config: Config): RawDocument[] => {
-  return forms.map(({ data, templateIndex, fileName, ownership }) => {
-    const formConfig = config.forms[templateIndex];
-    if (!formConfig) throw new Error("Form definition not found");
-    const formDefaults = formConfig.defaults;
-    const formData = { ...data.formData };
-    defaultsDeep(formData, formDefaults);
-    const contractAddress =
-      formData.issuers[0]?.documentStore || formData.issuers[0]?.tokenRegistry;
-    const payload = formConfig.type === "TRANSFERABLE_RECORD" ? { ownership } : {};
-    return {
-      type: formConfig.type,
-      contractAddress,
-      rawDocument: formData,
-      fileName,
-      payload,
-    };
-  });
+interface QueueNumberTypes {
+  id: string;
+  key: string;
+}
+
+interface QrURLObj {
+  links: { self: { href: string } };
+}
+
+const getQrURL = (queueNumber: QueueNumberTypes, network: string): QrURLObj => {
+  const qrCodeObject = { links: { self: { href: "" } } };
+  if (!queueNumber) return qrCodeObject;
+
+  const qrURLObj = {
+    type: "DOCUMENT",
+    payload: {
+      uri: `https://api${network === "homestead" ? "" : `-${network}`}.tradetrust.io/storage/${
+        queueNumber.id
+      }`,
+      key: queueNumber.key,
+      permittedActions: ["STORE"],
+      redirect: `https://${network === "homestead" ? "" : "dev."}tradetrust.io/`,
+    },
+  };
+
+  qrCodeObject.links.self.href = encodeQrCode(qrURLObj);
+  return qrCodeObject;
+};
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export const getRawDocuments = async (forms: FormEntry[], config: Config): Promise<any[]> => {
+  return Promise.all(
+    forms.map(async ({ data, templateIndex, fileName, ownership }) => {
+      const queueNumber = await getQueueNumber(config.network);
+      const qrURL = getQrURL(queueNumber, config.network);
+      const formConfig = config.forms[templateIndex];
+      if (!formConfig) throw new Error("Form definition not found");
+      const formDefaults = formConfig.defaults;
+      const formData = { ...data.formData, ...qrURL, queueNumber };
+      defaultsDeep(formData, formDefaults);
+      const contractAddress =
+        formData.issuers[0]?.documentStore || formData.issuers[0]?.tokenRegistry;
+      const payload = formConfig.type === "TRANSFERABLE_RECORD" ? { ownership } : {};
+
+      return {
+        type: formConfig.type,
+        contractAddress,
+        rawDocument: formData,
+        fileName,
+        payload,
+      };
+    })
+  );
 };
 
 const TX_NEEDED_FOR_VERIFIABLE_DOCUMENTS = 1;
@@ -76,13 +113,12 @@ export const groupDocumentsIntoJobs = (
   return jobs;
 };
 
-export const getPublishingJobs = (
+export const getPublishingJobs = async (
   forms: FormEntry[],
   config: Config,
   nonce: number
-): PublishingJob[] => {
+): Promise<PublishingJob[]> => {
   // Currently works for only multiple verifiable document issuance:
-  const rawDocuments = getRawDocuments(forms, config);
-
+  const rawDocuments = await getRawDocuments(forms, config);
   return groupDocumentsIntoJobs(rawDocuments, nonce);
 };

@@ -15,3 +15,16 @@ export function readFileAsJson<T>(file: File): Promise<T> {
     reader.readAsText(file);
   });
 }
+
+interface QrCode {
+  type: string;
+  payload: {
+    uri: string;
+    key: string;
+    permittedActions: string[];
+    redirect: string;
+  };
+}
+
+export const encodeQrCode = (payload: QrCode): string =>
+  `https://action.openattestation.com/?q=${encodeURIComponent(JSON.stringify(payload))}`;

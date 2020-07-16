@@ -26,7 +26,7 @@ describe("publishedTag", () => {
     expect(screen.getAllByText("Download")).toHaveLength(1);
     expect(screen.getByText("Download").closest("a")).toHaveAttribute(
       "href",
-      'data:text/json;charset=utf-8,{"data":"test document"}'
+      "data:text/json;charset=utf-8,%7B%22data%22%3A%22test%20document%22%7D"
     );
   });
 });
