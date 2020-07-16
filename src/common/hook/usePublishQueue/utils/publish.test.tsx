@@ -10,7 +10,7 @@ const sampleConfig = {
   wallet: "FAKE_WALLET" as any,
 } as Config;
 
-jest.mock("./storageAPI");
+jest.mock("../../../API/storageAPI");
 const mockGetQueueNumber = getQueueNumber as jest.Mock;
 
 describe("getRawDocuments", () => {
