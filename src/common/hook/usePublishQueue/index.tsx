@@ -1,7 +1,14 @@
 import { ContractFunctionState } from "@govtechsg/ethers-contract-hook";
 import { useState } from "react";
 import { publishJob } from "../../../services/publishing";
-import { Config, FailedJobErrors, FormEntry, PublishingJob, WrappedDocument } from "../../../types";
+import {
+  Config,
+  FailedJobErrors,
+  FormEntry,
+  PublishingJob,
+  UploadToStorageResponse,
+  WrappedDocument,
+} from "../../../types";
 import { getLogger } from "../../../utils/logger";
 import { uploadToStorage } from "../../API/storageAPI";
 import { getPublishingJobs } from "./utils/publish";
@@ -22,12 +29,16 @@ export const usePublishQueue = (
   publish: () => void;
   publishedDocuments: WrappedDocument[];
   failedPublishedDocuments: FailedJobErrors[];
+  uploadToStorageResponse: UploadToStorageResponse[];
 } => {
   const [error, setError] = useState<string>();
   const [publishState, setPublishState] = useState<ContractFunctionState>("UNINITIALIZED");
   const [jobs, setJobs] = useState<PublishingJob[]>([]);
   const [completedJobIndex, setCompletedJobIndex] = useState<number[]>([]);
   const [failedJob, setFailedJob] = useState<FailedJob[]>([]);
+  const [uploadToStorageResponse, setUploadToStorageResponse] = useState<UploadToStorageResponse[]>(
+    []
+  );
 
   const publishedDocuments = completedJobIndex.reduce((acc, curr) => {
     const documentsIssuesInJob = jobs[curr].documents;
@@ -46,6 +57,7 @@ export const usePublishQueue = (
       // Cannot use setCompletedJobIndex here as async update does not with the promise race
       const completedJobs: number[] = [];
       const failedJobs: FailedJob[] = [];
+      const uploadResponse: UploadToStorageResponse[] = [];
       setPublishState("INITIALIZED");
       const nonce = await config.wallet.getTransactionCount();
       const publishingJobs = await getPublishingJobs(formEntries, config, nonce);
@@ -55,8 +67,9 @@ export const usePublishQueue = (
           .then(() => {
             completedJobs.push(index);
             setCompletedJobIndex(completedJobs);
-            job.documents.forEach((doc) => {
-              uploadToStorage(config.network, doc);
+            job.documents.forEach(async (doc) => {
+              const uploadRes = await uploadToStorage(config.network, doc);
+              uploadResponse.push(uploadRes);
             });
           })
           .catch((e) => {
@@ -73,6 +86,7 @@ export const usePublishQueue = (
       await Promise.allSettled(deferredJobs);
       setCompletedJobIndex(completedJobs);
       setFailedJob(failedJobs);
+      setUploadToStorageResponse(uploadResponse);
       setPublishState("CONFIRMED");
     } catch (e) {
       stack(e);
@@ -87,5 +101,6 @@ export const usePublishQueue = (
     error,
     publishedDocuments,
     failedPublishedDocuments,
+    uploadToStorageResponse,
   };
 };

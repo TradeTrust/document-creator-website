@@ -4,14 +4,17 @@ import { publishJob } from "../../../services/publishing";
 import sampleConfig from "../../../test/fixtures/sample-config.json";
 import sampleJobs from "../../../test/fixtures/sample-jobs.json";
 import { Config, FormEntry } from "../../../types";
+import { uploadToStorage } from "../../API/storageAPI";
 import { usePublishQueue } from "./index";
 import { getPublishingJobs } from "./utils/publish";
 
 jest.mock("../../../services/publishing");
 jest.mock("./utils/publish");
+jest.mock("../../API/storageAPI");
 
 const mockPublishJob = publishJob as jest.Mock;
 const mockGetPublishingJobs = getPublishingJobs as jest.Mock;
+const mockUploadToStorage = uploadToStorage as jest.Mock;
 
 const config = {
   ...sampleConfig,
@@ -37,6 +40,11 @@ const formEntires: FormEntry[] = [
   },
 ];
 
+const uploadSuccess = {
+  success: true,
+  errorMsg: "",
+};
+
 describe("usePublishQueue", () => {
   it("should have the correct initial state", () => {
     const { result } = renderHook(() => usePublishQueue(config, formEntires));
@@ -47,6 +55,7 @@ describe("usePublishQueue", () => {
   it("should publish correctly", async () => {
     mockGetPublishingJobs.mockReturnValueOnce(sampleJobs);
     mockPublishJob.mockResolvedValue("tx-id");
+    mockUploadToStorage.mockReturnValueOnce(uploadSuccess);
     const { result } = renderHook(() => usePublishQueue(config, formEntires));
     await act(async () => {
       await result.current.publish();
@@ -59,10 +68,24 @@ describe("usePublishQueue", () => {
     mockGetPublishingJobs.mockReturnValueOnce(sampleJobs);
     mockPublishJob.mockResolvedValue("tx-id");
     mockPublishJob.mockRejectedValueOnce(new Error("Some error"));
+    mockUploadToStorage.mockReturnValueOnce(uploadSuccess);
     const { result } = renderHook(() => usePublishQueue(config, formEntires));
     await act(async () => {
       await result.current.publish();
     });
     expect(result.current.failedPublishedDocuments).toHaveLength(1);
+  });
+
+  it("should get a list of uploaded document response", async () => {
+    mockGetPublishingJobs.mockReturnValueOnce(sampleJobs);
+    mockPublishJob.mockResolvedValue("tx-id");
+    mockUploadToStorage.mockReturnValue(uploadSuccess);
+
+    const { result } = renderHook(() => usePublishQueue(config, formEntires));
+    await act(async () => {
+      await result.current.publish();
+    });
+
+    expect(result.current.uploadToStorageResponse).toHaveLength(3);
   });
 });

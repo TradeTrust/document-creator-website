@@ -84,3 +84,8 @@ export interface FailedJobErrors {
   documents: WrappedDocument[];
   error: Error;
 }
+
+export interface UploadToStorageResponse {
+  success: boolean;
+  errorMsg: string;
+}

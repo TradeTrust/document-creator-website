@@ -15,11 +15,12 @@ interface QrURLObj {
 
 const getQrURL = (queueNumber: QueueNumberTypes, network: string): QrURLObj => {
   const qrCodeObject = { links: { self: { href: "" } } };
-  if (!queueNumber) return qrCodeObject;
+  if (!queueNumber.id) return qrCodeObject;
 
   const qrURLObj = {
     type: "DOCUMENT",
     payload: {
+      //TODO: replace this hardcoded url with the one in the config.json in another story
       uri: `https://api${network === "homestead" ? "" : `-${network}`}.tradetrust.io/storage/${
         queueNumber.id
       }`,
@@ -33,8 +34,10 @@ const getQrURL = (queueNumber: QueueNumberTypes, network: string): QrURLObj => {
   return qrCodeObject;
 };
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-export const getRawDocuments = async (forms: FormEntry[], config: Config): Promise<any[]> => {
+export const getRawDocuments = async (
+  forms: FormEntry[],
+  config: Config
+): Promise<RawDocument[]> => {
   return Promise.all(
     forms.map(async ({ data, templateIndex, fileName, ownership }) => {
       const queueNumber = await getQueueNumber(config.network);

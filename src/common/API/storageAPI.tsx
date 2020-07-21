@@ -1,7 +1,13 @@
 import axios from "axios";
+import { UploadToStorageResponse, WrappedDocument } from "../../types";
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-export const getQueueNumber = async (network: string): Promise<any> => {
+interface QueueNumberResponse {
+  id: string;
+  key: string;
+}
+
+export const getQueueNumber = async (network: string): Promise<QueueNumberResponse> => {
+  //TODO: replace this hardcoded url with the one in the config.json in another story
   const url = `api${network === "homestead" ? "" : `-${network}`}.tradetrust.io/storage/queue`;
 
   try {
@@ -14,15 +20,26 @@ export const getQueueNumber = async (network: string): Promise<any> => {
     });
     return response.data;
   } catch (e) {
-    return {};
+    return {
+      id: "",
+      key: "",
+    };
   }
 };
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-export const uploadToStorage = async (network: string, docData: any): Promise<any> => {
+export const uploadToStorage = async (
+  network: string,
+  docData: WrappedDocument
+): Promise<UploadToStorageResponse> => {
+  //TODO: replace this hardcoded url with the one in the config.json in another story
   const url = `api${network === "homestead" ? "" : `-${network}`}.tradetrust.io/storage`;
+  const res = {
+    success: false,
+    errorMsg: "",
+  };
+
   try {
-    const response = await axios({
+    await axios({
       method: "post",
       url: `https://${url}/${docData.rawDocument.queueNumber.id}`,
       headers: {
@@ -32,8 +49,10 @@ export const uploadToStorage = async (network: string, docData: any): Promise<an
         document: docData.wrappedDocument,
       },
     });
-    return response;
+    res.success = true;
+    return res;
   } catch (e) {
-    return {};
+    res.errorMsg = `There seem to be an error uploading ${docData.fileName} to storeage`;
+    return res;
   }
 };
