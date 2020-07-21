@@ -5,7 +5,9 @@ import { ConfigFile } from "../../../types";
 import { Button } from "../../UI/Button";
 import { Title } from "../../UI/Title";
 import { Wrapper } from "../../UI/Wrapper";
+import { getLogger } from "../../../utils/logger";
 
+const { stack } = getLogger("ConfigFileDropZone");
 interface ConfigFileDropZone {
   errorMessage?: string;
   onConfigFile: (configFile: ConfigFile) => void;
@@ -24,7 +26,7 @@ export const ConfigFileDropZone: FunctionComponent<ConfigFileDropZone> = ({
       onConfigFile(config);
     } catch (e) {
       setError(true);
-      console.error(e);
+      stack(e);
     }
   };
   const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop });

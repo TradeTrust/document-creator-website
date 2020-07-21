@@ -3,6 +3,9 @@ import { useState } from "react";
 import { publishJob } from "../../../services/publishing";
 import { Config, FormEntry, PublishingJob, WrappedDocument } from "../../../types";
 import { getPublishingJobs } from "./utils/publish";
+import { getLogger } from "../../../utils/logger";
+
+const { stack } = getLogger("usePublishQueue");
 
 export const usePublishQueue = (
   config: Config,
@@ -48,7 +51,7 @@ export const usePublishQueue = (
           .catch((e) => {
             failedJobs.push(index);
             setFailedJobIndex(failedJobs);
-            console.error(e);
+            stack(e);
             throw e; // Re-throwing error to preserve stack when Promise.allSettled resolves
           })
       );
@@ -58,7 +61,7 @@ export const usePublishQueue = (
       setFailedJobIndex(failedJobs);
       setPublishState("CONFIRMED");
     } catch (e) {
-      console.error(e);
+      stack(e);
       setError(e.message);
       setPublishState("ERROR");
     }
