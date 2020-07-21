@@ -28,6 +28,7 @@ export const PublishedTag: FunctionComponent<PublishedTagProps> = ({ doc }) => {
         </div>
         <div
           className="text-blue font-bold cursor-pointer"
+          data-testid="download-file-button"
           onClick={() => saveAs(blob, doc.fileName)}
         >
           Download

@@ -1,7 +1,12 @@
-import { render, screen } from "@testing-library/react";
+import { fireEvent, render, screen } from "@testing-library/react";
+import { saveAs } from "file-saver";
 import React from "react";
 import { WrappedDocument } from "../../../../types";
 import { PublishedTag } from "./PublishedTag";
+
+jest.mock("file-saver");
+
+const mockSaveAs = saveAs as jest.Mock;
 
 const mockDoc = {
   type: "VERIFIABLE_DOCUMENT",
@@ -21,12 +26,11 @@ describe("publishedTag", () => {
   });
 
   it("should generate the 'href' accordingly for download", () => {
+    mockSaveAs;
     render(<PublishedTag doc={mockDoc} />);
 
     expect(screen.getAllByText("Download")).toHaveLength(1);
-    expect(screen.getByText("Download").closest("a")).toHaveAttribute(
-      "href",
-      "data:text/json;charset=utf-8,%7B%22data%22%3A%22test%20document%22%7D"
-    );
+    fireEvent.click(screen.getByTestId("download-file-button"));
+    expect(mockSaveAs).toHaveBeenCalledTimes(1);
   });
 });
