@@ -1,6 +1,9 @@
 trap "exit" INT TERM ERR
 trap "kill 0" EXIT
 
+# Exit when anything fail
+set -e
+
 # Setup local blockchain on the background
 node_modules/ganache-cli/cli.js --mnemonic "indicate swing place chair flight used hammer soon photo region volume shuffle" &
 

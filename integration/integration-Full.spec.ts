@@ -30,6 +30,8 @@ const EblHolderField = Selector("[data-testid='transferable-record-holder-input'
 const EblNumberField = Selector("input#root_blNumber");
 
 test("Upload configuration file, choose form, fill form, preview form, submit form correctly", async (t) => {
+  await t.expect(Title.textContent).contains("sdasdasdasdasknk(s) issued successfully");
+
   // upload invalid config file(without wallet)
   await t.setFilesToUpload("input[type=file]", [ConfigWithError]);
   await t.expect(ConfigError.textContent).contains("Config is malformed");
@@ -125,8 +127,4 @@ test("Upload configuration file, choose form, fill form, preview form, submit fo
   await t.expect(Title.textContent).contains("Document(s) issued successfully");
   await t.expect(Selector("div").withText("Document-1.tt").exists).ok();
   await t.expect(Selector("a[download='Document-1.tt']").exists).ok();
-
-  // preview form
-  await t.wait(5000);
-  // submit form (probably can spin up a test net here)
 });
