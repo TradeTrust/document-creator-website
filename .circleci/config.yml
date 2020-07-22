@@ -22,4 +22,4 @@ jobs:
           command: npm run build
       - run:
           name: integration
-          command: npm run integration:headless
+          command: HEADLESS=true ./scripts/integration.sh
