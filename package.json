@@ -27,7 +27,6 @@
     "@commitlint/config-conventional": "^8.3.4",
     "@commitlint/prompt": "^8.3.5",
     "@fullhuman/postcss-purgecss": "^2.1.2",
-    "@govtechsg/open-attestation-cli": "^1.25.0",
     "@ls-age/commitlint-circle": "^1.0.0",
     "@storybook/addon-actions": "^5.3.18",
     "@storybook/addon-info": "^5.3.18",
