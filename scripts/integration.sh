@@ -1,5 +1,14 @@
-trap "exit" INT TERM ERR
-trap "kill 0" EXIT
+function cleanup {
+  TEST_SIGNAL=$?
+  # kills all subprocess of this process
+  pkill -P $$
+  exit $TEST_SIGNAL
+}
+
+# Any interrupt signal to cause exit to be fired
+trap exit INT TERM ERR
+# Cleanup the process when the process exit
+trap cleanup EXIT
 
 # Exit when anything fail
 set -e
@@ -11,4 +20,9 @@ node_modules/ganache-cli/cli.js --mnemonic "indicate swing place chair flight us
 account_key=0xe82294532bcfcd8e0763ee5cef194f36f00396be59b94fb418f5f8d83140d9a7 ./scripts/deploy.sh
 
 # Run integration test
-[  -z "$HEADLESS" ] && npm run integration:internal || npm run integration:internal:headless
+if [  -z "$HEADLESS" ]
+then
+    npm run integration:internal
+else
+    npm run integration:internal:headless
+fi
