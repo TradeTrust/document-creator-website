@@ -121,7 +121,7 @@ test("Upload configuration file, choose form, fill form, preview form, submit fo
   // Submit
   await t.click(SubmitButton);
 
-  // Check that EBL is created 
+  // Check that EBL is created
   await t.expect(Title.textContent).contains("Document(s) issued successfully");
   await t.expect(Selector("div").withText("Document-1.tt").exists).ok();
   await t.expect(Selector("a[download='Document-1.tt']").exists).ok();

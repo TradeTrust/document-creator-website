@@ -59,10 +59,9 @@ export const publishTransferableRecordJob = async (
     { nonce }
   );
   const escrowDeploymentTx = await escrowDeploymentReceipt.wait();
-  const deployedTitleEscrowEvent: any = escrowDeploymentTx.events?.find(
+  const deployedTitleEscrowAddress = escrowDeploymentTx.events?.find(
     (event) => event.event === "TitleEscrowDeployed"
-  )?.args;
-  const deployedTitleEscrowAddress = deployedTitleEscrowEvent.escrowAddress;
+  )?.args?.escrowAddress;
   if (!deployedTitleEscrowAddress)
     throw new Error(
       `Address for deployed title escrow cannot be found. Tx: ${JSON.stringify(escrowDeploymentTx)}`
