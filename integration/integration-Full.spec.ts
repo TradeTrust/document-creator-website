@@ -2,7 +2,7 @@ import { Selector } from "testcafe";
 
 fixture("Document Creator").page`http://localhost:3000`;
 
-const Config = "./../src/test/fixtures/sample-config.json";
+const Config = "./../src/test/fixtures/sample-local-config.json";
 const ConfigWithError = "./../src/test/fixtures/sample-error-config.json";
 const ConfigErrorFile = "./../src/test/fixtures/sample-empty-error-config.json";
 const AttachmentSample = "./../src/test/fixtures/sample.pdf";
