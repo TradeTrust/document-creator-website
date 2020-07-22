@@ -13,7 +13,7 @@ const assertAddressIsSmartContract = async (address: string, wallet: Wallet): Pr
 export const publishVerifiableDocumentJob = async (
   job: PublishingJob,
   wallet: Wallet
-): Promise<string> => {
+): Promise<string | undefined> => {
   const { contractAddress, merkleRoot, nonce } = job;
   await assertAddressIsSmartContract(contractAddress, wallet);
   const documentStore: DocumentStore = DocumentStoreFactory.connect(contractAddress, wallet);
@@ -30,6 +30,7 @@ const CREATOR_CONTRACTS: CreatorContract = {
   homestead: "0x907A4D491A09D59Bcb5dC38eeb9d121ac47237F1",
   ropsten: "0xB0dE5E22bAc12820b6dbF6f63287B1ec44026c83",
   rinkeby: "0xa51B8dAC076d5aC80507041146AC769542aAe195",
+  unknown: "0x4Bf7E4777a8D1b6EdD5F2d9b8582e2817F0B0953",
 };
 
 export const getTitleEscrowCreator = async (wallet: Wallet): Promise<TitleEscrowCreator> => {
@@ -58,9 +59,10 @@ export const publishTransferableRecordJob = async (
     { nonce }
   );
   const escrowDeploymentTx = await escrowDeploymentReceipt.wait();
-  const deployedTitleEscrowAddress = escrowDeploymentTx.events?.find(
+  const deployedTitleEscrowEvent: any = escrowDeploymentTx.events?.find(
     (event) => event.event === "TitleEscrowDeployed"
-  )?.args?.escrowAddress;
+  )?.args;
+  const deployedTitleEscrowAddress = deployedTitleEscrowEvent.escrowAddress;
   if (!deployedTitleEscrowAddress)
     throw new Error(
       `Address for deployed title escrow cannot be found. Tx: ${JSON.stringify(escrowDeploymentTx)}`
@@ -80,7 +82,10 @@ export const publishTransferableRecordJob = async (
   return mintingTx.transactionHash;
 };
 
-export const publishJob = async (job: PublishingJob, wallet: Wallet): Promise<string> => {
+export const publishJob = async (
+  job: PublishingJob,
+  wallet: Wallet
+): Promise<string | undefined> => {
   if (job.type === "VERIFIABLE_DOCUMENT") return publishVerifiableDocumentJob(job, wallet);
   if (job.type === "TRANSFERABLE_RECORD") return publishTransferableRecordJob(job, wallet);
   throw new Error("Job type is not supported");
