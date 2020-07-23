@@ -3,7 +3,9 @@ import { useDropzone } from "react-dropzone";
 import { readFileAsJson } from "../../../common/utils";
 import { Button } from "../../UI/Button";
 import { ErrorAlert } from "../../Alert";
+import { getLogger } from "../../../utils/logger";
 
+const { stack } = getLogger("DataFileButton");
 interface DataFileButton {
   onDataFile: (dataFile: any) => void; // eslint-disable-line @typescript-eslint/no-explicit-any
 }
@@ -18,8 +20,8 @@ export const DataFileButton: FunctionComponent<DataFileButton> = ({ onDataFile }
       setError(false);
       onDataFile(config);
     } catch (e) {
+      stack(e);
       setError(true);
-      console.error(e);
     }
   };
   const { getRootProps, getInputProps } = useDropzone({ onDrop, multiple: false });
