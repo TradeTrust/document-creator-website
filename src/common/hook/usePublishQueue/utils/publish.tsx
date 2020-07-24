@@ -1,6 +1,6 @@
 import { wrapDocuments } from "@govtechsg/open-attestation";
 import { defaultsDeep, groupBy } from "lodash";
-import { Config, FormEntry, PublishingJob, RawDocument } from "../../../../types";
+import { ActionsUrlObject, Config, FormEntry, PublishingJob, RawDocument } from "../../../../types";
 import { getQueueNumber } from "../../../API/storageAPI";
 import { encodeQrCode } from "../../../utils";
 
@@ -9,28 +9,30 @@ interface QueueNumberTypes {
   key: string;
 }
 
-interface QrURLObj {
-  links: { self: { href: string } };
-}
+//TODO: replace this hardcoded url with the one in the config.json in another story
+const STORAGE_ENDPOINT = "https://api-ropsten.tradetrust.io/storage";
 
-const getQrURL = (queueNumber: QueueNumberTypes, network: string): QrURLObj => {
+const getReservedStorageUrl = async (
+  storageEndpoint: string,
+  network: string
+): Promise<ActionsUrlObject> => {
   const qrCodeObject = { links: { self: { href: "" } } };
+
+  const queueNumber = await getQueueNumber(storageEndpoint);
+
   if (!queueNumber.id) return qrCodeObject;
 
-  const qrURLObj = {
+  const qrUrlObj = {
     type: "DOCUMENT",
     payload: {
-      //TODO: replace this hardcoded url with the one in the config.json in another story
-      uri: `https://api${network === "homestead" ? "" : `-${network}`}.tradetrust.io/storage/${
-        queueNumber.id
-      }`,
+      uri: `${STORAGE_ENDPOINT}/${queueNumber.id}`,
       key: queueNumber.key,
       permittedActions: ["STORE"],
       redirect: `https://${network === "homestead" ? "" : "dev."}tradetrust.io/`,
     },
   };
 
-  qrCodeObject.links.self.href = encodeQrCode(qrURLObj);
+  qrCodeObject.links.self.href = encodeQrCode(qrUrlObj);
   return qrCodeObject;
 };
 
@@ -40,17 +42,15 @@ export const getRawDocuments = async (
 ): Promise<RawDocument[]> => {
   return Promise.all(
     forms.map(async ({ data, templateIndex, fileName, ownership }) => {
-      const queueNumber = await getQueueNumber(config.network);
-      const qrURL = getQrURL(queueNumber, config.network);
+      const qrUrl = await getReservedStorageUrl(STORAGE_ENDPOINT, config.network);
       const formConfig = config.forms[templateIndex];
       if (!formConfig) throw new Error("Form definition not found");
       const formDefaults = formConfig.defaults;
-      const formData = { ...data.formData, ...qrURL, queueNumber };
+      const formData = { ...data.formData, ...qrUrl };
       defaultsDeep(formData, formDefaults);
       const contractAddress =
         formData.issuers[0]?.documentStore || formData.issuers[0]?.tokenRegistry;
       const payload = formConfig.type === "TRANSFERABLE_RECORD" ? { ownership } : {};
-
       return {
         type: formConfig.type,
         contractAddress,

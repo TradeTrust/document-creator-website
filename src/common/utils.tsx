@@ -28,3 +28,12 @@ interface QrCode {
 
 export const encodeQrCode = (payload: QrCode): string =>
   `https://action.openattestation.com/?q=${encodeURIComponent(JSON.stringify(payload))}`;
+
+export const decodeQrCode = (qrCode: string): QrCode => {
+  const ttRegex = /https:\/\/action.openattestation.com\/\?q=(.*)/;
+  if (!ttRegex.test(qrCode))
+    throw new Error("QR Code is not formatted to TradeTrust specifications");
+  const [, encodedPayload] = ttRegex.exec(qrCode);
+  const decodedPayload = JSON.parse(decodeURIComponent(encodedPayload));
+  return decodedPayload;
+};

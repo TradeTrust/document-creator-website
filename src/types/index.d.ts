@@ -85,7 +85,11 @@ export interface FailedJobErrors {
   error: Error;
 }
 
-export interface UploadToStorageResponse {
-  success: boolean;
-  errorMsg: string;
+export interface ActionsUrlObject {
+  links: { self: { href: string } };
+}
+
+export interface QueueNumberResponse {
+  id: string;
+  key: string;
 }

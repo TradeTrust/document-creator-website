@@ -13,8 +13,8 @@ const getFileSize = (jsonString: string): number => {
 };
 
 export const PublishedTag: FunctionComponent<PublishedTagProps> = ({ doc }) => {
-  const size = prettyBytes(getFileSize(JSON.stringify(doc.wrappedDocument)));
   const file = JSON.stringify(doc.wrappedDocument);
+  const size = prettyBytes(getFileSize(file));
   const blob = new Blob([file], { type: "text/json;charset=utf-8" });
   return (
     <div className="mt-4 flex rounded bg-white p-3 w-72 border border-solid border-lightgrey mr-4">
