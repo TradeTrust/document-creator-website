@@ -1,25 +1,17 @@
-function cleanup {
-  TEST_SIGNAL=$?
-  # kills all subprocess of this process
-  pkill -P $$
-  exit $TEST_SIGNAL
-}
+account_key=0xe82294532bcfcd8e0763ee5cef194f36f00396be59b94fb418f5f8d83140d9a7
 
-# Any interrupt signal to cause exit to be fired
-trap exit INT TERM ERR
-# Cleanup the process when the process exit
-trap cleanup EXIT
+# Wait for ganache to listen on 8545
+sleep 2
 
-# Exit when anything fail
-set -e
+# Deploy document store to 0x63A223E025256790E88778a01f480eBA77731D04
+./node_modules/@govtechsg/open-attestation-cli/dist/cjs/index.js deploy document-store "My Document Store" -n local -k $account_key
 
-# Setup local blockchain on the background
-node_modules/ganache-cli/cli.js --mnemonic "indicate swing place chair flight used hammer soon photo region volume shuffle" &
+# Deploy token registry to 0x9Eb613a88534E2939518f4ffBFE65F5969b491FF
+./node_modules/@govtechsg/open-attestation-cli/dist/cjs/index.js deploy token-registry "My Token Registry" MTR -n local -k $account_key
 
-# Setup contracts
-account_key=0xe82294532bcfcd8e0763ee5cef194f36f00396be59b94fb418f5f8d83140d9a7 ./scripts/deploy.sh
+# Deploy title escrow creator to 0x4Bf7E4777a8D1b6EdD5F2d9b8582e2817F0B0953
+./node_modules/@govtechsg/open-attestation-cli/dist/cjs/index.js deploy title-escrow-creator "test" -n local -k $account_key
 
-# Run integration test
 if [  -z "$HEADLESS" ]
 then
     npm run integration:internal
