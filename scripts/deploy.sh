@@ -1,9 +1,6 @@
 # Wait for ganache to listen on 8545
 sleep 2
 
-# Using npx for the time being until all the ethers package are in sync
-# If using the installed binaries, the v5 signer will not be compatible with the v4 cli
-
 # Deploy document store to 0x63A223E025256790E88778a01f480eBA77731D04
 ./node_modules/@govtechsg/open-attestation-cli/dist/cjs/index.js deploy document-store "My Document Store" -n local -k $account_key
 

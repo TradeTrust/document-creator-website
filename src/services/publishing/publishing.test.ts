@@ -44,7 +44,7 @@ const whenDocumentStoreExist = (): void => {
 const whenTokenRegistryExist = (): void => {
   mockTxWait.mockResolvedValue({
     transactionHash: "TX_HASH",
-    events: [{ event: "TitleEscrowDeployed", args: { escrowAddress: "0x7777" } }],
+    events: [{ event: "TitleEscrowDeployed", args: ["0x7777"] }],
   });
   mockTokenRegistrySafeMint.mockResolvedValue(mockTransactionReceipt);
   mockTitleEscrowDeployNewTitleEscrow.mockResolvedValue(mockTransactionReceipt);
