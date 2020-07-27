@@ -59,13 +59,14 @@ export const publishTransferableRecordJob = async (
     { nonce }
   );
   const escrowDeploymentTx = await escrowDeploymentReceipt.wait();
-  const deployedTitleEscrowAddress = escrowDeploymentTx.events?.find(
+  const deployedTitleEscrowArgs = escrowDeploymentTx.events?.find(
     (event) => event.event === "TitleEscrowDeployed"
-  )?.args?.escrowAddress;
-  if (!deployedTitleEscrowAddress)
+  )?.args;
+  if (!deployedTitleEscrowArgs || !deployedTitleEscrowArgs[0])
     throw new Error(
       `Address for deployed title escrow cannot be found. Tx: ${JSON.stringify(escrowDeploymentTx)}`
     );
+  const deployedTitleEscrowAddress = deployedTitleEscrowArgs[0];
   const tokenRegistryContract = TradeTrustERC721Factory.connect(contractAddress, wallet);
 
   // Using explicit safeMint function which exist but not typed by typechain due to
