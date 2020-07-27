@@ -13,12 +13,13 @@ const assertAddressIsSmartContract = async (address: string, wallet: Wallet): Pr
 export const publishVerifiableDocumentJob = async (
   job: PublishingJob,
   wallet: Wallet
-): Promise<string | undefined> => {
+): Promise<string> => {
   const { contractAddress, merkleRoot, nonce } = job;
   await assertAddressIsSmartContract(contractAddress, wallet);
   const documentStore: DocumentStore = DocumentStoreFactory.connect(contractAddress, wallet);
   const receipt = await documentStore.issue(`0x${merkleRoot}`, { nonce });
   const tx = await receipt.wait();
+  if (!tx.transactionHash) throw new Error(`Tx hash not available: ${JSON.stringify(tx)}`);
   return tx.transactionHash;
 };
 
@@ -80,13 +81,12 @@ export const publishTransferableRecordJob = async (
     }
   );
   const mintingTx = await mintingReceipt.wait();
+  if (!mintingTx.transactionHash)
+    throw new Error(`Tx hash not available: ${JSON.stringify(mintingTx)}`);
   return mintingTx.transactionHash;
 };
 
-export const publishJob = async (
-  job: PublishingJob,
-  wallet: Wallet
-): Promise<string | undefined> => {
+export const publishJob = async (job: PublishingJob, wallet: Wallet): Promise<string> => {
   if (job.type === "VERIFIABLE_DOCUMENT") return publishVerifiableDocumentJob(job, wallet);
   if (job.type === "TRANSFERABLE_RECORD") return publishTransferableRecordJob(job, wallet);
   throw new Error("Job type is not supported");
