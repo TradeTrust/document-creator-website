@@ -47,7 +47,7 @@ export const AttachmentDropzone: FunctionComponent<AttachmentDropzone> = ({
 
   const { getRootProps, getInputProps, isDragActive, fileRejections } = useDropzone({
     onDrop,
-    accept: acceptedFormat.split(" "),
+    accept: acceptedFormat,
   });
 
   const isFileRejected = fileRejections.length > 0;
