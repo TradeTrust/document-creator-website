@@ -24,10 +24,9 @@ export const AttachmentDropzone: FunctionComponent<AttachmentDropzone> = ({
   const onDrop = useCallback(
     async (files: File[]) => {
       let totalSize = uploadedFiles
-        ? uploadedFiles.reduce(
-            (acc: number, current: FileUploadType) => acc + atob(current.data).length,
-            0
-          )
+        ? uploadedFiles.reduce((acc: number, current: FileUploadType) => {
+            return acc + atob(current.data.split(",").reverse()[0]).length;
+          }, 0)
         : 0;
 
       files.forEach((file) => (totalSize += file.size));
@@ -48,7 +47,7 @@ export const AttachmentDropzone: FunctionComponent<AttachmentDropzone> = ({
 
   const { getRootProps, getInputProps, isDragActive, fileRejections } = useDropzone({
     onDrop,
-    accept: acceptedFormat,
+    accept: acceptedFormat.split(" "),
   });
 
   const isFileRejected = fileRejections.length > 0;
