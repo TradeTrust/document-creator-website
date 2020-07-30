@@ -19,6 +19,7 @@ export const publishVerifiableDocumentJob = async (
   const documentStore: DocumentStore = DocumentStoreFactory.connect(contractAddress, wallet);
   const receipt = await documentStore.issue(`0x${merkleRoot}`, { nonce });
   const tx = await receipt.wait();
+  if (!tx.transactionHash) throw new Error(`Tx hash not available: ${JSON.stringify(tx)}`);
   return tx.transactionHash;
 };
 
@@ -30,6 +31,8 @@ const CREATOR_CONTRACTS: CreatorContract = {
   homestead: "0x907A4D491A09D59Bcb5dC38eeb9d121ac47237F1",
   ropsten: "0xB0dE5E22bAc12820b6dbF6f63287B1ec44026c83",
   rinkeby: "0xa51B8dAC076d5aC80507041146AC769542aAe195",
+  // unknown is used for local test net, see integration test
+  unknown: "0x4Bf7E4777a8D1b6EdD5F2d9b8582e2817F0B0953",
 };
 
 export const getTitleEscrowCreator = async (wallet: Wallet): Promise<TitleEscrowCreator> => {
@@ -58,13 +61,14 @@ export const publishTransferableRecordJob = async (
     { nonce }
   );
   const escrowDeploymentTx = await escrowDeploymentReceipt.wait();
-  const deployedTitleEscrowAddress = escrowDeploymentTx.events?.find(
+  const deployedTitleEscrowArgs = escrowDeploymentTx.events?.find(
     (event) => event.event === "TitleEscrowDeployed"
-  )?.args?.escrowAddress;
-  if (!deployedTitleEscrowAddress)
+  )?.args;
+  if (!deployedTitleEscrowArgs || !deployedTitleEscrowArgs[0])
     throw new Error(
       `Address for deployed title escrow cannot be found. Tx: ${JSON.stringify(escrowDeploymentTx)}`
     );
+  const deployedTitleEscrowAddress = deployedTitleEscrowArgs[0];
   const tokenRegistryContract = TradeTrustERC721Factory.connect(contractAddress, wallet);
 
   // Using explicit safeMint function which exist but not typed by typechain due to
@@ -77,6 +81,8 @@ export const publishTransferableRecordJob = async (
     }
   );
   const mintingTx = await mintingReceipt.wait();
+  if (!mintingTx.transactionHash)
+    throw new Error(`Tx hash not available: ${JSON.stringify(mintingTx)}`);
   return mintingTx.transactionHash;
 };
 

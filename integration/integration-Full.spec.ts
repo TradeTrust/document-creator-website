@@ -2,7 +2,7 @@ import { Selector } from "testcafe";
 
 fixture("Document Creator").page`http://localhost:3000`;
 
-const Config = "./../src/test/fixtures/sample-config.json";
+const Config = "./../src/test/fixtures/sample-local-config.json";
 const ConfigWithError = "./../src/test/fixtures/sample-error-config.json";
 const ConfigErrorFile = "./../src/test/fixtures/sample-empty-error-config.json";
 const AttachmentSample = "./../src/test/fixtures/sample.pdf";
@@ -18,10 +18,16 @@ const ProgressBar = Selector("[data-testid='progress-bar']");
 const ErrorCantReadFile = Selector("[data-testid='error-cannot-read-file']");
 const ConfigError = Selector("[data-testid='config-error']");
 const AttachmentXButton = Selector("[data-testid='remove-uploaded-file-0']");
+const AddNewButton = Selector("[data-testid='add-new-button']");
+const SubmitButton = Selector("[data-testid='form-submit-button']");
 
 const FormIdField = Selector("#root_iD");
 const FormAttachmentField = Selector("[data-testid='upload-file-0']");
 const FormExporterNameField = Selector("#root_supplyChainConsignment_exporter_name");
+
+const EblBeneficiaryField = Selector("[data-testid='transferable-record-beneficiary-input']");
+const EblHolderField = Selector("[data-testid='transferable-record-holder-input']");
+const EblNumberField = Selector("input#root_blNumber");
 
 test("Upload configuration file, choose form, fill form, preview form, submit form correctly", async (t) => {
   // upload invalid config file(without wallet)
@@ -86,6 +92,37 @@ test("Upload configuration file, choose form, fill form, preview form, submit fo
   await t.expect(FormIdField.value).eql("wfa.org.au:coo:WBC208897");
   await t.expect(FormExporterNameField.value).eql("TREASURY WINE ESTATES VINTNERS LIMITED");
 
-  // preview form
-  // submit form (probably can spin up a test net here)
+  // Add new form
+  await t.click(AddNewButton);
+
+  // Navigate to form and fill form
+  await t.click(Button.withText("COO"));
+  await t.typeText(FormIdField, "COO-ID");
+
+  // Submit
+  await t.click(SubmitButton);
+
+  // Check that download exists
+  await t.expect(Title.textContent).contains("Document(s) issued successfully");
+  await t.expect(Selector("div").withText("Document-1.tt").exists).ok();
+  await t.expect(Selector("div").withText("Document-2.tt").exists).ok();
+  await t.expect(Selector("a[download='Document-1.tt']").exists).ok();
+  await t.expect(Selector("a[download='Document-2.tt']").exists).ok();
+
+  // Issue transferable record
+  await t.click(Button.withText("Create another Document"));
+  await t.click(Button.withText("Bill of Lading"));
+
+  // Fill in form
+  await t.typeText(EblBeneficiaryField, "0x6FFeD6E6591b808130a9b248fEA32101b5220eca");
+  await t.typeText(EblHolderField, "0x8e87c7cEc2D4464119C937bfef3398ebb1d9452e");
+  await t.typeText(EblNumberField, "MY-BL-NUMBER");
+
+  // Submit
+  await t.click(SubmitButton);
+
+  // Check that EBL is created
+  await t.expect(Title.textContent).contains("Document(s) issued successfully");
+  await t.expect(Selector("div").withText("Document-1.tt").exists).ok();
+  await t.expect(Selector("a[download='Document-1.tt']").exists).ok();
 });

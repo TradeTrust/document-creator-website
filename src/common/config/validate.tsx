@@ -2,7 +2,7 @@ import Joi from "@hapi/joi";
 import { ConfigFile } from "../../types";
 
 const configFileSchema = Joi.object({
-  network: Joi.string().allow("homestead", "ropsten", "rinkeby").only().required(),
+  network: Joi.string().allow("homestead", "ropsten", "rinkeby", "local").only().required(),
   wallet: Joi.string().required(), // Using string type since it's ethers type for encrypted JSON
   forms: Joi.array()
     .items(

@@ -1,6 +1,6 @@
 import { Wallet } from "ethers";
 
-type Network = "homestead" | "ropsten" | "rinkeby";
+type Network = "homestead" | "ropsten" | "rinkeby" | "local";
 type FormType = "TRANSFERABLE_RECORD" | "VERIFIABLE_DOCUMENT";
 
 export interface Form {
