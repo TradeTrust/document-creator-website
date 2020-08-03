@@ -12,7 +12,7 @@ export const usePublishQueue = (
   formEntries: FormEntry[]
 ): {
   error?: string;
-  publishState: string;
+  publishState: ContractFunctionState;
   publish: () => void;
   publishedDocuments: WrappedDocument[];
   failPublishedDocuments: WrappedDocument[];
@@ -61,6 +61,8 @@ export const usePublishQueue = (
       setFailedJobIndex(failedJobs);
       setPublishState("CONFIRMED");
     } catch (e) {
+      // Applications should not reach here if it fails at the publishing transaction
+      // Reaching here could mean that validation has failed
       stack(e);
       setError(e.message);
       setPublishState("ERROR");

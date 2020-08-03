@@ -8,7 +8,7 @@ interface PublishingProps {
   forms: FormEntry[];
 }
 
-export const Publishing: FunctionComponent<PublishingProps> = ({ forms }) => {
+export const PublishingPending: FunctionComponent<PublishingProps> = ({ forms }) => {
   return (
     <Container>
       <Wrapper>
