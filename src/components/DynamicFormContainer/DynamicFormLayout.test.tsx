@@ -1,40 +1,17 @@
 import { act, fireEvent, render, screen, waitFor } from "@testing-library/react";
 import React from "react";
 import { MemoryRouter } from "react-router";
-import { useConfigContext } from "../../common/context/config";
 import { useFormsContext } from "../../common/context/forms";
-import sampleConfig from "../../test/fixtures/sample-config.json";
 import { DynamicFormLayout } from "./DynamicFormLayout";
 
 jest.mock("../../common/context/forms");
-jest.mock("../../common/context/config");
 
 const mockUseFormsContext = useFormsContext as jest.Mock;
-const mockUseConfigContext = useConfigContext as jest.Mock;
 const mockSetActiveFormIndex = jest.fn();
 const mockSetForms = jest.fn();
 const mockSetCurrentFormData = jest.fn();
 
 const whenActiveFormIsAvailable = (): void => {
-  mockUseConfigContext.mockReturnValue({
-    config: {
-      ...sampleConfig,
-      forms: [
-        {
-          name: "COO",
-          type: "VERIFIABLE_DOCUMENT",
-          defaults: {},
-          schema: {
-            type: "object",
-            properties: {
-              foo: { type: "string", title: "Foo Field" },
-              bar: { type: "string" },
-            },
-          },
-        },
-      ],
-    },
-  });
   mockUseFormsContext.mockReturnValue({
     activeFormIndex: 0,
     setForms: mockSetForms,
@@ -53,30 +30,23 @@ const whenActiveFormIsAvailable = (): void => {
       data: { formData: {} },
       templateIndex: 0,
       ownership: { holderAddress: "", beneficiaryAddress: "" },
+    },
+    currentFormTemplate: {
+      name: "COO",
+      type: "VERIFIABLE_DOCUMENT",
+      defaults: {},
+      schema: {
+        type: "object",
+        properties: {
+          foo: { type: "string", title: "Foo Field" },
+          bar: { type: "string" },
+        },
+      },
     },
   });
 };
 
 const whenIsTransferableRecord = (): void => {
-  mockUseConfigContext.mockReturnValue({
-    config: {
-      ...sampleConfig,
-      forms: [
-        {
-          name: "Bill of Lading",
-          type: "TRANSFERABLE_RECORD",
-          defaults: {},
-          schema: {
-            type: "object",
-            properties: {
-              foo: { type: "string", title: "Foo Field" },
-              bar: { type: "string" },
-            },
-          },
-        },
-      ],
-    },
-  });
   mockUseFormsContext.mockReturnValue({
     activeFormIndex: 0,
     setForms: mockSetForms,
@@ -96,21 +66,33 @@ const whenIsTransferableRecord = (): void => {
       templateIndex: 0,
       ownership: { holderAddress: "", beneficiaryAddress: "" },
     },
+    currentFormTemplate: {
+      name: "Bill of Lading",
+      type: "TRANSFERABLE_RECORD",
+      defaults: {},
+      schema: {
+        type: "object",
+        properties: {
+          foo: { type: "string", title: "Foo Field" },
+          bar: { type: "string" },
+        },
+      },
+    },
   });
 };
 
 const whenActiveFormIndexIsNotAvailable = (): void => {
-  mockUseConfigContext.mockReturnValue({ config: sampleConfig });
   mockUseFormsContext.mockReturnValue({
     activeFormIndex: undefined,
     setActiveFormIndex: mockSetActiveFormIndex,
+    currentFormTemplate: undefined,
   });
 };
 const whenActiveFormConfigIsNotAvailable = (): void => {
-  mockUseConfigContext.mockReturnValue({});
   mockUseFormsContext.mockReturnValue({
     activeFormIndex: undefined,
     setActiveFormIndex: mockSetActiveFormIndex,
+    currentFormTemplate: undefined,
   });
 };
 

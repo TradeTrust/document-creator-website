@@ -1,7 +1,7 @@
 import React, { FunctionComponent } from "react";
 import { Redirect } from "react-router-dom";
 import { useFormsContext } from "../../../common/context/forms";
-import { Config, Form } from "../../../types";
+import { Config, FormTemplate } from "../../../types";
 import { Button } from "../../UI/Button";
 import { Title } from "../../UI/Title";
 import { Wrapper } from "../../UI/Wrapper";
@@ -30,7 +30,7 @@ export const FormSelection: FunctionComponent<FormSelection> = ({ className, con
           <ProgressBar step={1} />
           <Title>Choose Document Type to Issue</Title>
           <div className="flex w-full">
-            {config.forms.map((form: Form, index: number) => {
+            {config.forms.map((form: FormTemplate, index: number) => {
               return (
                 <Button
                   className="bg-white text-grey-dark hover:text-blue w-full p-4"

@@ -1,10 +1,10 @@
 import { render, screen } from "@testing-library/react";
 import React from "react";
 import sampleConfig from "../../../test/fixtures/sample-config.json";
-import { Form, FormType } from "../../../types";
+import { FormTemplate, FormType } from "../../../types";
 import { DynamicForm } from "./DynamicForm";
 
-const form = sampleConfig.forms[0] as Form;
+const form = sampleConfig.forms[0] as FormTemplate;
 
 const mockSetFormData = jest.fn();
 const mockSetOwnership = jest.fn();

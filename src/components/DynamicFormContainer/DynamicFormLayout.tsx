@@ -1,7 +1,6 @@
 import Ajv from "ajv";
 import React, { FunctionComponent, useState } from "react";
 import { Redirect } from "react-router";
-import { useConfigContext } from "../../common/context/config";
 import { useFormsContext } from "../../common/context/forms";
 import { Container } from "../Container";
 import { Button } from "../UI/Button";
@@ -13,7 +12,6 @@ import { DynamicFormHeader } from "./DynamicFormHeader";
 import { FormErrorBanner } from "./FormErrorBanner";
 
 export const DynamicFormLayout: FunctionComponent = () => {
-  const { config } = useConfigContext();
   const [showDeleteModal, setDeleteModal] = useState(false);
   const [isPreviewMode, setIsPreviewMode] = useState(false);
   const {
@@ -21,19 +19,19 @@ export const DynamicFormLayout: FunctionComponent = () => {
     setForms,
     setActiveFormIndex,
     currentForm,
+    currentFormTemplate,
     setCurrentFormData,
     setCurrentFormOwnership,
   } = useFormsContext();
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [formError, setFormError] = useState<Ajv.ErrorObject[] | null | undefined>(null);
   if (!currentForm) return <Redirect to="/forms-selection" />;
-  const currentFormDefinition = config?.forms[currentForm?.templateIndex];
-  if (!currentFormDefinition) return <Redirect to="/forms-selection" />;
+  if (!currentFormTemplate) return <Redirect to="/forms-selection" />;
   if (isSubmitted) return <Redirect to="/publish" />;
 
-  const formSchema = currentFormDefinition.schema;
-  const attachmentAccepted = !!currentFormDefinition.attachments?.allow;
-  const attachmentAcceptedFormat = currentFormDefinition.attachments?.accept;
+  const { schema: formSchema } = currentFormTemplate;
+  const attachmentAccepted = !!currentFormTemplate.attachments?.allow;
+  const attachmentAcceptedFormat = currentFormTemplate.attachments?.accept;
 
   const validateCurrentForm = (): boolean => {
     const ajv = new Ajv();
@@ -103,7 +101,7 @@ export const DynamicFormLayout: FunctionComponent = () => {
             <DynamicForm
               schema={formSchema}
               form={currentForm}
-              type={currentFormDefinition.type}
+              type={currentFormTemplate.type}
               setFormData={setCurrentFormData}
               setOwnership={setCurrentFormOwnership}
               attachmentAccepted={attachmentAccepted}
