@@ -83,16 +83,12 @@ const whenIsTransferableRecord = (): void => {
 
 const whenActiveFormIndexIsNotAvailable = (): void => {
   mockUseFormsContext.mockReturnValue({
-    activeFormIndex: undefined,
     setActiveFormIndex: mockSetActiveFormIndex,
-    currentFormTemplate: undefined,
   });
 };
 const whenActiveFormConfigIsNotAvailable = (): void => {
   mockUseFormsContext.mockReturnValue({
-    activeFormIndex: undefined,
     setActiveFormIndex: mockSetActiveFormIndex,
-    currentFormTemplate: undefined,
   });
 };
 
