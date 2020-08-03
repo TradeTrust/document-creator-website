@@ -32,7 +32,7 @@ export const FormsContextProvider: FunctionComponent = ({ children }) => {
   const [forms, setForms] = useState<FormEntry[]>([]);
   const { config } = useConfigContext();
 
-  const currentForm = activeFormIndex === undefined ? undefined : forms[activeFormIndex];
+  const currentForm = typeof activeFormIndex === "number" ? forms[activeFormIndex] : undefined;
   const currentFormData = currentForm?.data;
   const currentFormOwnership = currentForm?.ownership;
   const currentFormTemplate = currentForm ? config?.forms[currentForm?.templateIndex] : undefined;
