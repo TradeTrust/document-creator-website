@@ -36,7 +36,7 @@ export const FormsContextProvider: FunctionComponent = ({ children }) => {
   const currentFormData = currentForm ? currentForm.data : undefined;
   const currentFormOwnership = currentForm ? currentForm.ownership : undefined;
   const currentFormTemplate = currentForm ? config?.forms[currentForm?.templateIndex] : undefined;
-  
+
   const newForm = (templateIndex: number): void => {
     const newIndex = forms.length;
     const newFormTemplate = config?.forms[templateIndex];
