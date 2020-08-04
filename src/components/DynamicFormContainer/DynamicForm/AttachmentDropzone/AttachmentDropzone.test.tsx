@@ -1,6 +1,6 @@
 import { act, fireEvent, render, screen, wait } from "@testing-library/react";
 import React from "react";
-import { AttachmentDropzone } from "./AttachmentDropzone";
+import { AttachmentDropzone, fileInfo } from "./AttachmentDropzone";
 
 const mockData = (files: File[]): any => {
   return {
@@ -125,6 +125,27 @@ describe("attachmentDropzone", () => {
     await act(async () => {
       fireEvent(dropzone, event);
       await wait(() => expect(screen.getByTestId("file-size-error")).not.toBeUndefined());
+    });
+  });
+});
+
+describe("fileInfo", () => {
+  it("works for all types of files", () => {
+    expect(fileInfo("data:application/pdf;base64,JVBERi0xLjQKJdPr6eEKM")).toEqual({
+      type: "application/pdf",
+      data: "JVBERi0xLjQKJdPr6eEKM",
+    });
+    expect(fileInfo("data:application/zip;base64,UEsDBBQAAgAIAKB47VBTBq")).toEqual({
+      type: "application/zip",
+      data: "UEsDBBQAAgAIAKB47VBTBq",
+    });
+    expect(fileInfo("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAADawA")).toEqual({
+      type: "image/png",
+      data: "iVBORw0KGgoAAAANSUhEUgAADawA",
+    });
+    expect(fileInfo("data:application/octet-stream;base64,ewogICJzY2hlb")).toEqual({
+      type: "application/octet-stream",
+      data: "ewogICJzY2hlb",
     });
   });
 });

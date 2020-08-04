@@ -30,7 +30,7 @@ export const AttachmentDropzone: FunctionComponent<AttachmentDropzone> = ({
           )
         : 0;
 
-      files.reduce((acc: number, current: File) => (totalSize += current.size), 0);
+      files.forEach((file) => (totalSize += file.size));
 
       if (totalSize > MAX_FILE_SIZE) return setFileSizeError(true);
 
@@ -106,22 +106,29 @@ export const AttachmentDropzone: FunctionComponent<AttachmentDropzone> = ({
   );
 };
 
+export const fileInfo = (dataUrl: string): { type: string; data: string } => {
+  const result = dataUrl.match(/^data:(.+);base64,(.*)/);
+  if (!result) throw new Error(`File data cannot be read: ${dataUrl}`);
+  const [_match, type, data] = result;
+  return {
+    type,
+    data,
+  };
+};
+
 const processFiles = (file: File): Promise<FileUploadType> => {
-  const { name, type } = file;
+  const { name } = file;
   return new Promise((resolve, reject) => {
     const reader = new window.FileReader();
     reader.onerror = reject;
     reader.onload = (event) => {
+      const { data, type } = fileInfo(event?.target?.result as string);
       resolve({
-        data: extractBase64(event?.target?.result as string, type),
+        data,
         filename: name,
         type,
       });
     };
     reader.readAsDataURL(file);
   });
-};
-
-const extractBase64 = (dataURL: string, type: string): string => {
-  return dataURL.replace(`data:${type};base64,`, "");
 };
