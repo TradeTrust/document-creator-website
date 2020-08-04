@@ -131,19 +131,19 @@ describe("attachmentDropzone", () => {
 
 describe("fileInfo", () => {
   it("should work for all types of files", () => {
-    expect(fileInfo("data:application/pdf;base64,JVBERi0xLjQKJdPr6eEKM")).toEqual({
+    expect(fileInfo("data:application/pdf;base64,JVBERi0xLjQKJdPr6eEKM")).toStrictEqual({
       type: "application/pdf",
       data: "JVBERi0xLjQKJdPr6eEKM",
     });
-    expect(fileInfo("data:application/zip;base64,UEsDBBQAAgAIAKB47VBTBq")).toEqual({
+    expect(fileInfo("data:application/zip;base64,UEsDBBQAAgAIAKB47VBTBq")).toStrictEqual({
       type: "application/zip",
       data: "UEsDBBQAAgAIAKB47VBTBq",
     });
-    expect(fileInfo("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAADawA")).toEqual({
+    expect(fileInfo("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAADawA")).toStrictEqual({
       type: "image/png",
       data: "iVBORw0KGgoAAAANSUhEUgAADawA",
     });
-    expect(fileInfo("data:application/octet-stream;base64,ewogICJzY2hlb")).toEqual({
+    expect(fileInfo("data:application/octet-stream;base64,ewogICJzY2hlb")).toStrictEqual({
       type: "application/octet-stream",
       data: "ewogICJzY2hlb",
     });

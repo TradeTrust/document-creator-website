@@ -109,7 +109,7 @@ export const AttachmentDropzone: FunctionComponent<AttachmentDropzone> = ({
 export const fileInfo = (dataUrl: string): { type: string; data: string } => {
   const result = dataUrl.match(/^data:(.+);base64,(.*)/);
   if (!result) throw new Error(`File data cannot be read: ${dataUrl}`);
-  const [_match, type, data] = result;
+  const [, type, data] = result;
   return {
     type,
     data,
