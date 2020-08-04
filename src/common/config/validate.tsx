@@ -13,7 +13,7 @@ const configFileSchema = Joi.object({
         schema: Joi.object().required(),
         attachments: Joi.object({
           allow: Joi.boolean().required(),
-          accept: Joi.string(),
+          accept: Joi.alternatives().try(Joi.array().items(Joi.string()), Joi.string()),
         }),
       })
     )
