@@ -4,14 +4,14 @@ import React, { FunctionComponent } from "react";
 import JsonForm from "react-jsonschema-form";
 import tw from "twin.macro";
 import { mixin } from "../../../styles";
-import { FileUploadType, Form, FormEntry, FormType, Ownership } from "../../../types";
+import { FileUploadType, FormTemplate, FormEntry, FormType, Ownership } from "../../../types";
 import { DataFileButton } from "../DataFileButton";
 import { TransferableRecordForm } from "../TransferableRecordForm";
 import { AttachmentDropzone } from "./AttachmentDropzone";
 import { CustomFieldTemplate, CustomObjectFieldTemplate } from "./CustomTemplates";
 
 export interface DynamicFormProps {
-  schema: Form["schema"];
+  schema: FormTemplate["schema"];
   attachmentAccepted: boolean;
   attachmentAcceptedFormat?: string;
   form: FormEntry;

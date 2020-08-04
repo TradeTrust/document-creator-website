@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import sample from "../../../test/fixtures/sample-config.json";
-import { ConfigFile, Form } from "../../../types";
+import { ConfigFile, FormTemplate } from "../../../types";
 import { DynamicForm } from "./DynamicForm";
 
 // Default values in the document we do not want the admin staff to change
@@ -28,7 +28,7 @@ const configFile = sample as ConfigFile;
 const schema = configFile.forms[0].schema;
 const attachments = configFile.forms[0].attachments;
 
-const form: Form = {
+const form: FormTemplate = {
   name: "Bill of lading",
   type: "TRANSFERABLE_RECORD",
   defaults,

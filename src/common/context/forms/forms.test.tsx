@@ -1,12 +1,24 @@
 import { act, renderHook } from "@testing-library/react-hooks";
 import React, { FunctionComponent } from "react";
 import { FormsContextProvider, useFormsContext } from "./index";
+import { useConfigContext } from "../config";
+
+jest.mock("../config");
+
+const mockUseConfigContext = useConfigContext as jest.Mock;
 
 const wrapper: FunctionComponent = ({ children }) => (
   <FormsContextProvider>{children}</FormsContextProvider>
 );
 
 describe("useFormsContext", () => {
+  beforeAll(() => {
+    mockUseConfigContext.mockReturnValue({
+      config: {
+        forms: [{ schema: "FORM_1_SCHEMA" }, { defaults: { foo: "bar" }, schema: "FORM_2_SCHEMA" }],
+      },
+    });
+  });
   it("should have correct initial state", () => {
     const { result } = renderHook(() => useFormsContext(), { wrapper });
 
@@ -26,7 +38,12 @@ describe("useFormsContext", () => {
 
     const expectedFormData = {
       templateIndex: 1,
-      data: {},
+      data: {
+        formData: {
+          foo: "bar",
+        },
+        schema: "FORM_2_SCHEMA",
+      },
       fileName: "Document-1.tt",
       ownership: { holderAddress: "", beneficiaryAddress: "" },
     };
@@ -63,7 +80,12 @@ describe("useFormsContext", () => {
     const expectedForms = [
       {
         templateIndex: 1,
-        data: {},
+        data: {
+          formData: {
+            foo: "bar",
+          },
+          schema: "FORM_2_SCHEMA",
+        },
         fileName: "Document-1.tt",
         ownership: { holderAddress: "", beneficiaryAddress: "" },
       },
@@ -75,7 +97,12 @@ describe("useFormsContext", () => {
       },
       {
         templateIndex: 1,
-        data: {},
+        data: {
+          formData: {
+            foo: "bar",
+          },
+          schema: "FORM_2_SCHEMA",
+        },
         fileName: "Document-3.tt",
         ownership: { holderAddress: "", beneficiaryAddress: "" },
       },
@@ -103,7 +130,12 @@ describe("useFormsContext", () => {
     const expectedFormWithOwnership = [
       {
         templateIndex: 1,
-        data: {},
+        data: {
+          formData: {
+            foo: "bar",
+          },
+          schema: "FORM_2_SCHEMA",
+        },
         fileName: "Document-1.tt",
         ownership: { holderAddress: "0x0Bar", beneficiaryAddress: "0x0Foo" },
       },

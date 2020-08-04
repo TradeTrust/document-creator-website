@@ -66,6 +66,14 @@ test("Upload configuration file, choose form, fill form, preview form, submit fo
   await t.expect(Title.textContent).contains("Fill and Preview Form");
   await t.expect(ProgressBar.textContent).contains("Step 2/3");
 
+  // Validate that default values is populated
+  await t
+    .expect(Selector("#root_supplyChainConsignment_loadingBaseportLocation_iD").value)
+    .contains("DEFAULT_BASEPORT_ID");
+  await t
+    .expect(Selector("#root_supplyChainConsignment_loadingBaseportLocation_name").value)
+    .contains("DEFAULT_BASEPORT_LOCATION");
+
   // Test back button
   await t.click(ButtonBack);
   await t.expect(Title.textContent).contains("Choose Document Type to Issue");

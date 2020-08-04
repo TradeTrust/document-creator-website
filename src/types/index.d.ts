@@ -3,7 +3,8 @@ import { Wallet } from "ethers";
 type Network = "homestead" | "ropsten" | "rinkeby" | "local";
 type FormType = "TRANSFERABLE_RECORD" | "VERIFIABLE_DOCUMENT";
 
-export interface Form {
+// FormTemplate is defined in configuration file
+export interface FormTemplate {
   name: string;
   type: FormType;
   defaults: any; // eslint-disable-line @typescript-eslint/no-explicit-any
@@ -14,13 +15,13 @@ export interface Form {
 export interface ConfigFile {
   network: Network;
   wallet: string;
-  forms: Form[];
+  forms: FormTemplate[];
 }
 
 export interface Config {
   network: Network;
   wallet: Wallet;
-  forms: Form[];
+  forms: FormTemplate[];
 }
 
 interface Attachments {
@@ -33,6 +34,8 @@ export interface FileUploadType {
   filename: string;
   type: string;
 }
+
+// FormData is used by json-schema-forms internally to track state of a single form
 export interface FormData {
   schema?: any; // eslint-disable-line @typescript-eslint/no-explicit-any
   uiSchema?: any; // eslint-disable-line @typescript-eslint/no-explicit-any
@@ -48,6 +51,7 @@ export interface Ownership {
   holderAddress: string;
 }
 
+// FormEntry is used to store a form's inputs (from FromData) & metadata
 export interface FormEntry {
   fileName: string;
   data: FormData;
