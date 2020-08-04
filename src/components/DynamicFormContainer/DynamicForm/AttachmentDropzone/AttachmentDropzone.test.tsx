@@ -130,7 +130,7 @@ describe("attachmentDropzone", () => {
 });
 
 describe("fileInfo", () => {
-  it("works for all types of files", () => {
+  it("should work for all types of files", () => {
     expect(fileInfo("data:application/pdf;base64,JVBERi0xLjQKJdPr6eEKM")).toEqual({
       type: "application/pdf",
       data: "JVBERi0xLjQKJdPr6eEKM",
@@ -147,5 +147,10 @@ describe("fileInfo", () => {
       type: "application/octet-stream",
       data: "ewogICJzY2hlb",
     });
+  });
+  it("should throw for malformed file data", () => {
+    expect(() => fileInfo("data:application/octet-stream:base64:ewogICJzY2hlb")).toThrow(
+      /File data cannot be read/
+    );
   });
 });
