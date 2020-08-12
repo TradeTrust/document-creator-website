@@ -5,7 +5,7 @@ import sampleConfig from "../../../test/fixtures/sample-config.json";
 import sampleJobs from "../../../test/fixtures/sample-jobs.json";
 import { Config, FormEntry } from "../../../types";
 import { uploadToStorage } from "../../API/storageAPI";
-import { usePublishQueue } from "./index";
+import { usePublishQueue } from "./usePublishQueue";
 import { getPublishingJobs } from "./utils/publish";
 
 jest.mock("../../../services/publishing");
