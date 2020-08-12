@@ -15,7 +15,7 @@ export const FilesInfo: FunctionComponent<FilesInfoType> = ({ filesInfo, removeF
   return (
     <ul className="file-info mt-4">
       {filesInfo.map(({ filename, data }: FileUploadType, key: number) => {
-        const decodedData = atob(data.split(",").reverse()[0]);
+        const decodedData = atob(data);
         const size = prettyBytes(decodedData.length);
         return (
           <li
