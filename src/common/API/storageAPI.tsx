@@ -1,6 +1,9 @@
 import axios, { AxiosResponse } from "axios";
 import { QueueNumberResponse, WrappedDocument } from "../../types";
+import { getLogger } from "../../utils/logger";
 import { decodeQrCode } from "../utils";
+
+const { stack } = getLogger("getPublishQueue");
 
 export const getQueueNumber = async (storageEndpoint: string): Promise<QueueNumberResponse> => {
   //TODO: replace this hardcoded url with the one in the config.json in another story
@@ -16,10 +19,8 @@ export const getQueueNumber = async (storageEndpoint: string): Promise<QueueNumb
     });
     return response.data;
   } catch (e) {
-    return {
-      id: "",
-      key: "",
-    };
+    stack(e);
+    throw e;
   }
 };
 

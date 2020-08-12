@@ -1,8 +1,13 @@
 import { wrapDocuments } from "@govtechsg/open-attestation";
 import { defaultsDeep, groupBy } from "lodash";
 import { ActionsUrlObject, Config, FormEntry, PublishingJob, RawDocument } from "../../../../types";
+import { getLogger } from "../../../../utils/logger";
 import { getQueueNumber } from "../../../API/storageAPI";
 import { encodeQrCode } from "../../../utils";
+
+const { stack } = getLogger("getPublishQueue");
+
+const QR_CODE_OBJECT = { links: { self: { href: "" } } };
 
 interface QueueNumberTypes {
   id: string;
@@ -16,11 +21,14 @@ const getReservedStorageUrl = async (
   storageEndpoint: string,
   network: string
 ): Promise<ActionsUrlObject> => {
-  const qrCodeObject = { links: { self: { href: "" } } };
+  let queueNumber;
 
-  const queueNumber = await getQueueNumber(storageEndpoint);
-
-  if (!queueNumber.id) return qrCodeObject;
+  try {
+    queueNumber = await getQueueNumber(storageEndpoint);
+  } catch (e) {
+    stack(e);
+    throw e;
+  }
 
   const qrUrlObj = {
     type: "DOCUMENT",
@@ -32,8 +40,9 @@ const getReservedStorageUrl = async (
     },
   };
 
-  qrCodeObject.links.self.href = encodeQrCode(qrUrlObj);
-  return qrCodeObject;
+  QR_CODE_OBJECT.links.self.href = encodeQrCode(qrUrlObj);
+
+  return QR_CODE_OBJECT;
 };
 
 export const getRawDocuments = async (
@@ -42,7 +51,14 @@ export const getRawDocuments = async (
 ): Promise<RawDocument[]> => {
   return Promise.all(
     forms.map(async ({ data, templateIndex, fileName, ownership }) => {
-      const qrUrl = await getReservedStorageUrl(STORAGE_ENDPOINT, config.network);
+      let qrUrl;
+      try {
+        qrUrl = await getReservedStorageUrl(STORAGE_ENDPOINT, config.network);
+      } catch (e) {
+        stack(e);
+        qrUrl = QR_CODE_OBJECT;
+      }
+
       const formConfig = config.forms[templateIndex];
       if (!formConfig) throw new Error("Form definition not found");
       const formDefaults = formConfig.defaults;
