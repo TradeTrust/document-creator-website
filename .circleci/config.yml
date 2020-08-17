@@ -19,7 +19,7 @@ jobs:
           command: npm run test
       - run:
           name: build
-          command: CI=false npm run build
+          command: npm run build
       - run:
           name: integration
           command: npm run integration:concurrently:headless
