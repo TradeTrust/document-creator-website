@@ -1,14 +1,14 @@
 import React, { FunctionComponent } from "react";
 import { FormEntry } from "../../../types";
+import { Container } from "../../Container";
 import { PublishLoader } from "../../UI/PublishLoader";
 import { Wrapper } from "../../UI/Wrapper";
-import { Container } from "../../Container";
 
 interface PublishingProps {
   forms: FormEntry[];
 }
 
-export const Publishing: FunctionComponent<PublishingProps> = ({ forms }) => {
+export const PublishingScreen: FunctionComponent<PublishingProps> = ({ forms }) => {
   return (
     <Container>
       <Wrapper>

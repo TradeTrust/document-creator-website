@@ -1,6 +1,6 @@
 import prettyBytes from "pretty-bytes";
 import React, { FunctionComponent } from "react";
-import { WrappedDocument } from "../../../types";
+import { WrappedDocument } from "../../../../types";
 
 interface PublishedTagProps {
   doc: WrappedDocument;
