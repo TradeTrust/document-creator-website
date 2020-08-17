@@ -12,7 +12,7 @@ const ProgressBar = Selector("[data-testid='progress-bar']");
 const Iframe = Selector("#iframe[title='Decentralised Rendered Certificate']");
 const IframeRoot = Selector("#root");
 
-test("Upload configuration file, choose form, fill form, preview form, submit form correctly", async (t) => {
+test("Preview form with data", async (t) => {
   // upload config and reset config file
   await t.setFilesToUpload("input[type=file]", [Config]);
   await t.expect(Title.textContent).contains("Login with Password");
