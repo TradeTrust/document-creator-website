@@ -1,4 +1,5 @@
 import Ajv from "ajv";
+import { defaultsDeep } from "lodash";
 import React, { FunctionComponent, useState } from "react";
 import { Redirect } from "react-router";
 import { useFormsContext } from "../../common/context/forms";
@@ -10,6 +11,7 @@ import { DeleteModal } from "./DeleteModal";
 import { DynamicForm } from "./DynamicForm";
 import { DynamicFormHeader } from "./DynamicFormHeader";
 import { FormErrorBanner } from "./FormErrorBanner";
+import { DocumentPreview } from "./DocumentPreview";
 
 export const DynamicFormLayout: FunctionComponent = () => {
   const [showDeleteModal, setDeleteModal] = useState(false);
@@ -66,6 +68,12 @@ export const DynamicFormLayout: FunctionComponent = () => {
     closeDeleteModal();
   };
 
+  const currentUnwrappedData = defaultsDeep(
+    {},
+    currentForm.data.formData,
+    currentFormTemplate.defaults
+  );
+
   return (
     <Container>
       <DeleteModal
@@ -97,17 +105,23 @@ export const DynamicFormLayout: FunctionComponent = () => {
             </Button>
           </div>
           <FormErrorBanner formError={formError} />
-          <div className="max-w-screen-sm mx-auto mt-6">
-            <DynamicForm
-              schema={formSchema}
-              form={currentForm}
-              type={currentFormTemplate.type}
-              setFormData={setCurrentFormData}
-              setOwnership={setCurrentFormOwnership}
-              attachmentAccepted={attachmentAccepted}
-              attachmentAcceptedFormat={attachmentAcceptedFormat}
-            />
-          </div>
+          {isPreviewMode ? (
+            <div className="max-w-screen-xl mx-auto mt-6">
+              <DocumentPreview document={currentUnwrappedData} />
+            </div>
+          ) : (
+            <div className="max-w-screen-sm mx-auto mt-6">
+              <DynamicForm
+                schema={formSchema}
+                form={currentForm}
+                type={currentFormTemplate.type}
+                setFormData={setCurrentFormData}
+                setOwnership={setCurrentFormOwnership}
+                attachmentAccepted={attachmentAccepted}
+                attachmentAcceptedFormat={attachmentAcceptedFormat}
+              />
+            </div>
+          )}
         </div>
       </div>
     </Container>
