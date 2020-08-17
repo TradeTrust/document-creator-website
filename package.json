@@ -5,6 +5,7 @@
   "dependencies": {
     "@emotion/core": "^10.0.28",
     "@emotion/styled": "^10.0.27",
+    "@govtechsg/decentralized-renderer-react-components": "^3.0.1",
     "@govtechsg/document-store": "^1.1.6",
     "@govtechsg/ethers-contract-hook": "^2.1.1",
     "@govtechsg/open-attestation": "^3.10.0",
