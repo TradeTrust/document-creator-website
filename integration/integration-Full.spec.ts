@@ -7,6 +7,9 @@ const ConfigWithError = "./../src/test/fixtures/sample-error-config.json";
 const ConfigErrorFile = "./../src/test/fixtures/sample-empty-error-config.json";
 const AttachmentSample = "./../src/test/fixtures/sample.pdf";
 const DataFile = "./../src/test/fixtures/sample-data-file.json";
+const ConfigFailPublishDocument =
+  "./../src/test/fixtures/sample-config- fail-publish-document.json";
+
 const Title = Selector("h1");
 const Button = Selector("button");
 const ButtonReset = Selector("[data-testid='reset-button']");
@@ -20,11 +23,10 @@ const ConfigError = Selector("[data-testid='config-error']");
 const AttachmentXButton = Selector("[data-testid='remove-uploaded-file-0']");
 const AddNewButton = Selector("[data-testid='add-new-button']");
 const SubmitButton = Selector("[data-testid='form-submit-button']");
-
+const LogoutButton = Selector("[data-testid='form-logout-button']");
 const FormIdField = Selector("#root_iD");
 const FormAttachmentField = Selector("[data-testid='upload-file-0']");
 const FormExporterNameField = Selector("#root_supplyChainConsignment_exporter_name");
-
 const EblBeneficiaryField = Selector("[data-testid='transferable-record-beneficiary-input']");
 const EblHolderField = Selector("[data-testid='transferable-record-holder-input']");
 const EblNumberField = Selector("input#root_blNumber");
@@ -133,4 +135,24 @@ test("Upload configuration file, choose form, fill form, preview form, submit fo
   await t.expect(Title.textContent).contains("Document(s) issued successfully");
   await t.expect(Selector("div").withText("Document-1.tt").exists).ok();
   await t.expect(Selector("a[download='Document-1.tt']").exists).ok();
+
+  // Failed publish document
+  await t.click(LogoutButton);
+  await t.click(ButtonReset);
+  await t.setFilesToUpload("input[type=file]", [ConfigFailPublishDocument]);
+  await t.typeText(PasswordField, "password");
+  await t.click(ButtonLogin);
+  await t.expect(Title.textContent).contains("Choose Document Type to Issue");
+  await t.click(Button.withText("Covering Letter (GT)"));
+  await t.click(SubmitButton);
+  await t.expect(Title.textContent).contains("Document(s) failed to issue");
+  await t.expect(Selector("div").withText("1 Document(s) Failed").exists).ok();
+  await t
+    .expect(
+      Selector("div").withText(
+        "These documents failed to publish due to some errors. Kindly rectify and try publishing again."
+      ).exists
+    )
+    .ok();
+  await t.expect(Selector("div").withText("Document-1.tt").exists).ok();
 });

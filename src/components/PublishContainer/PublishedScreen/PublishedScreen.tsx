@@ -82,7 +82,11 @@ export const PublishedScreen: FunctionComponent<PublishScreen> = ({
             <Button className="bg-white text-orange px-4 py-3 mb-6" onClick={createAnotherDoc}>
               Create another Document
             </Button>
-            <Button className="bg-orange text-white self-end py-3 px-4 mb-6" onClick={onDone}>
+            <Button
+              className="bg-orange text-white self-end py-3 px-4 mb-6"
+              data-testid="form-logout-button"
+              onClick={onDone}
+            >
               Logout
             </Button>
           </div>
