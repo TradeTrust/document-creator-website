@@ -2,7 +2,7 @@ import prettyBytes from "pretty-bytes";
 import React, { FunctionComponent } from "react";
 import { useConfigContext } from "../../../common/context/config";
 import { useFormsContext } from "../../../common/context/forms";
-import { WrappedDocument } from "../../../types";
+import { FailedJobErrors, WrappedDocument } from "../../../types";
 import { Container } from "../../Container";
 import { ProgressBar } from "../../ProgressBar";
 import { Button } from "../../UI/Button";
@@ -12,14 +12,12 @@ import { PublishedTag } from "../PublishedScreen/PublishedTag";
 
 interface PublishScreen {
   publishedDocuments: WrappedDocument[];
-  failPublishedDocuments: WrappedDocument[];
-  failedJobErrors: Error[];
+  failedPublishedDocuments: FailedJobErrors[];
 }
 
 export const PublishedScreen: FunctionComponent<PublishScreen> = ({
   publishedDocuments,
-  failPublishedDocuments,
-  failedJobErrors,
+  failedPublishedDocuments,
 }) => {
   const { setConfig } = useConfigContext();
   const { setForms, setActiveFormIndex } = useFormsContext();
@@ -40,16 +38,23 @@ export const PublishedScreen: FunctionComponent<PublishScreen> = ({
     return jsonString.length + (m ? m.length : 0);
   };
 
+  const failPublishedDocuments = failedPublishedDocuments.reduce((acc, curr) => {
+    const documentsIssuesInJob = curr.documents;
+    return [...acc, ...documentsIssuesInJob];
+  }, [] as WrappedDocument[]);
+
   const downloadErrorLog = (): void => {
     const errorLog = document.createElement("a");
 
-    const formattedErrorLog = failPublishedDocuments.map((failedDocs, index) => {
+    const formattedErrorLog = failedPublishedDocuments.map((failedJob) => {
+      const fileNames = failedJob.documents.map((document) => document.fileName).join(", ");
       return {
-        [failedDocs.fileName]: failedJobErrors[index],
+        files: fileNames,
+        error: failedJob.error,
       };
     });
 
-    errorLog.href = `data:text/plain;charset=UTF-8,${JSON.stringify(formattedErrorLog)}`;
+    errorLog.href = `data:text/plain;charset=UTF-8,${JSON.stringify(formattedErrorLog, null, 2)}`;
     errorLog.download = "error_log.txt";
     document.body.appendChild(errorLog);
     errorLog.click();

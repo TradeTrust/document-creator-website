@@ -13,13 +13,10 @@ interface PublishPage {
 
 export const PublishPage: FunctionComponent<PublishPage> = ({ config }) => {
   const { forms, currentForm } = useFormsContext();
-  const {
-    publish,
-    publishState,
-    publishedDocuments,
-    failPublishedDocuments,
-    failedJobErrors,
-  } = usePublishQueue(config, forms);
+  const { publish, publishState, publishedDocuments, failedPublishedDocuments } = usePublishQueue(
+    config,
+    forms
+  );
 
   useEffect(() => {
     publish();
@@ -36,8 +33,7 @@ export const PublishPage: FunctionComponent<PublishPage> = ({ config }) => {
       {documentsPublished ? (
         <PublishedScreen
           publishedDocuments={publishedDocuments}
-          failPublishedDocuments={failPublishedDocuments}
-          failedJobErrors={failedJobErrors}
+          failedPublishedDocuments={failedPublishedDocuments}
         />
       ) : (
         <PublishingScreen forms={forms} />
