@@ -93,6 +93,7 @@ const whenNoCurrentForm = (): void => {
         },
       },
     ],
+    failedPublishedDocuments: [],
   });
 };
 

@@ -38,10 +38,14 @@ export const PublishedScreen: FunctionComponent<PublishScreen> = ({
     return jsonString.length + (m ? m.length : 0);
   };
 
-  const failPublishedDocuments = failedPublishedDocuments.reduce((acc, curr) => {
-    const documentsIssuesInJob = curr.documents;
-    return [...acc, ...documentsIssuesInJob];
-  }, [] as WrappedDocument[]);
+  let failPublishedDocuments = [] as WrappedDocument[];
+
+  if (failedPublishedDocuments && failedPublishedDocuments.length > 0) {
+    failPublishedDocuments = failedPublishedDocuments.reduce((acc, curr) => {
+      const documentsIssuesInJob = curr.documents;
+      return [...acc, ...documentsIssuesInJob];
+    }, [] as WrappedDocument[]);
+  }
 
   const downloadErrorLog = (): void => {
     const errorLog = document.createElement("a");

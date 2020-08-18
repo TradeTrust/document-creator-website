@@ -1,6 +1,6 @@
 import { render, screen } from "@testing-library/react";
 import React from "react";
-import { WrappedDocument } from "../../../types";
+import { FailedJobErrors, WrappedDocument } from "../../../types";
 import { PublishedScreen } from "./PublishedScreen";
 
 const mockPublishedDocuments = [
@@ -20,28 +20,30 @@ const mockPublishedDocuments = [
 
 const mockFailPublishedDocuments = [
   {
-    contractAddress: "",
-    fileName: "Document-3.tt",
-    payload: {},
-    type: "VERIFIABLE_DOCUMENT",
-    rawDocument: {},
-    wrappedDocument: {
-      data: {},
-      signature: {},
-      version: "",
-    },
+    error: new Error("error"),
+    documents: [
+      {
+        contractAddress: "",
+        fileName: "Document-3.tt",
+        payload: {},
+        type: "VERIFIABLE_DOCUMENT",
+        rawDocument: {},
+        wrappedDocument: {
+          data: {},
+          signature: {},
+          version: "",
+        },
+      },
+    ],
   },
-] as WrappedDocument[];
-
-const mockFailedJobErrors = [] as Error[];
+] as FailedJobErrors[];
 
 describe("publishedScreen", () => {
   it("should display page when everything is ok", () => {
     render(
       <PublishedScreen
         publishedDocuments={mockPublishedDocuments}
-        failPublishedDocuments={mockFailPublishedDocuments}
-        failedJobErrors={mockFailedJobErrors}
+        failedPublishedDocuments={mockFailPublishedDocuments}
       />
     );
 
@@ -52,8 +54,7 @@ describe("publishedScreen", () => {
     render(
       <PublishedScreen
         publishedDocuments={mockPublishedDocuments}
-        failPublishedDocuments={mockFailPublishedDocuments}
-        failedJobErrors={mockFailedJobErrors}
+        failedPublishedDocuments={mockFailPublishedDocuments}
       />
     );
 
@@ -64,8 +65,7 @@ describe("publishedScreen", () => {
     render(
       <PublishedScreen
         publishedDocuments={[]}
-        failPublishedDocuments={mockFailPublishedDocuments}
-        failedJobErrors={mockFailedJobErrors}
+        failedPublishedDocuments={mockFailPublishedDocuments}
       />
     );
 
@@ -76,8 +76,7 @@ describe("publishedScreen", () => {
     render(
       <PublishedScreen
         publishedDocuments={mockPublishedDocuments}
-        failPublishedDocuments={mockFailPublishedDocuments}
-        failedJobErrors={mockFailedJobErrors}
+        failedPublishedDocuments={mockFailPublishedDocuments}
       />
     );
 
@@ -86,11 +85,7 @@ describe("publishedScreen", () => {
 
   it("should not display failed published documents section when there are no failed published documents", () => {
     render(
-      <PublishedScreen
-        publishedDocuments={mockPublishedDocuments}
-        failPublishedDocuments={[]}
-        failedJobErrors={mockFailedJobErrors}
-      />
+      <PublishedScreen publishedDocuments={mockPublishedDocuments} failedPublishedDocuments={[]} />
     );
 
     expect(screen.queryAllByText("1 Document(s) Failed")).toHaveLength(0);

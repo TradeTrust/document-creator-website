@@ -62,6 +62,6 @@ describe("usePublishQueue", () => {
     await act(async () => {
       await result.current.publish();
     });
-    expect(result.current.failPublishedDocuments).toHaveLength(2);
+    expect(result.current.failedPublishedDocuments).toHaveLength(1);
   });
 });
