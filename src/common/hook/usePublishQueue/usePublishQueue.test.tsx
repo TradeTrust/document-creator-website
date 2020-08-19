@@ -57,11 +57,12 @@ describe("usePublishQueue", () => {
 
   it("should file failed jobs to failPublishedDocuments", async () => {
     mockGetPublishingJobs.mockReturnValueOnce(sampleJobs);
+    mockPublishJob.mockResolvedValue("tx-id");
     mockPublishJob.mockRejectedValueOnce(new Error("Some error"));
     const { result } = renderHook(() => usePublishQueue(config, formEntires));
     await act(async () => {
       await result.current.publish();
     });
-    expect(result.current.failPublishedDocuments).toHaveLength(2);
+    expect(result.current.failedPublishedDocuments).toHaveLength(1);
   });
 });

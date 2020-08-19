@@ -79,3 +79,8 @@ export interface PublishingJob {
   merkleRoot: string;
   payload: { ownership?: Ownership };
 }
+
+export interface FailedJobErrors {
+  documents: WrappedDocument[];
+  error: Error;
+}

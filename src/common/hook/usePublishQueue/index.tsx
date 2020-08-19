@@ -1,11 +1,16 @@
 import { ContractFunctionState } from "@govtechsg/ethers-contract-hook";
 import { useState } from "react";
 import { publishJob } from "../../../services/publishing";
-import { Config, FormEntry, PublishingJob, WrappedDocument } from "../../../types";
-import { getPublishingJobs } from "./utils/publish";
+import { Config, FailedJobErrors, FormEntry, PublishingJob, WrappedDocument } from "../../../types";
 import { getLogger } from "../../../utils/logger";
+import { getPublishingJobs } from "./utils/publish";
 
 const { stack } = getLogger("usePublishQueue");
+
+interface FailedJob {
+  index: number;
+  error: Error;
+}
 
 export const usePublishQueue = (
   config: Config,
@@ -15,29 +20,31 @@ export const usePublishQueue = (
   publishState: string;
   publish: () => void;
   publishedDocuments: WrappedDocument[];
-  failPublishedDocuments: WrappedDocument[];
+  failedPublishedDocuments: FailedJobErrors[];
 } => {
   const [error, setError] = useState<string>();
   const [publishState, setPublishState] = useState<ContractFunctionState>("UNINITIALIZED");
   const [jobs, setJobs] = useState<PublishingJob[]>([]);
   const [completedJobIndex, setCompletedJobIndex] = useState<number[]>([]);
-  const [failedJobIndex, setFailedJobIndex] = useState<number[]>([]);
+  const [failedJob, setFailedJob] = useState<FailedJob[]>([]);
 
   const publishedDocuments = completedJobIndex.reduce((acc, curr) => {
     const documentsIssuesInJob = jobs[curr].documents;
     return [...acc, ...documentsIssuesInJob];
   }, [] as WrappedDocument[]);
 
-  const failPublishedDocuments = failedJobIndex.reduce((acc, curr) => {
-    const documentsIssuesInJob = jobs[curr].documents;
-    return [...acc, ...documentsIssuesInJob];
-  }, [] as WrappedDocument[]);
+  const failedPublishedDocuments = failedJob.map((job) => {
+    return {
+      documents: jobs[job.index].documents,
+      error: job.error,
+    };
+  });
 
   const publish = async (): Promise<void> => {
     try {
       // Cannot use setCompletedJobIndex here as async update does not with the promise race
       const completedJobs: number[] = [];
-      const failedJobs: number[] = [];
+      const failedJobs: FailedJob[] = [];
       setPublishState("INITIALIZED");
       const nonce = await config.wallet.getTransactionCount();
       const publishingJobs = getPublishingJobs(formEntries, config, nonce);
@@ -49,8 +56,11 @@ export const usePublishQueue = (
             setCompletedJobIndex(completedJobs);
           })
           .catch((e) => {
-            failedJobs.push(index);
-            setFailedJobIndex(failedJobs);
+            failedJobs.push({
+              index: index,
+              error: e,
+            });
+            setFailedJob(failedJobs);
             stack(e);
             throw e; // Re-throwing error to preserve stack when Promise.allSettled resolves
           })
@@ -58,7 +68,7 @@ export const usePublishQueue = (
       setPublishState("PENDING_CONFIRMATION");
       await Promise.allSettled(deferredJobs);
       setCompletedJobIndex(completedJobs);
-      setFailedJobIndex(failedJobs);
+      setFailedJob(failedJobs);
       setPublishState("CONFIRMED");
     } catch (e) {
       stack(e);
@@ -67,5 +77,11 @@ export const usePublishQueue = (
     }
   };
 
-  return { publish, publishState, error, publishedDocuments, failPublishedDocuments };
+  return {
+    publish,
+    publishState,
+    error,
+    publishedDocuments,
+    failedPublishedDocuments,
+  };
 };

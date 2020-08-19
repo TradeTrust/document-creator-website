@@ -1,6 +1,6 @@
 import { render, screen } from "@testing-library/react";
 import React from "react";
-import { Publishing } from "./Publishing";
+import { PublishingScreen } from "./PublishingScreen";
 
 const forms = [
   {
@@ -15,6 +15,10 @@ const forms = [
       errorSchema: {},
     },
     templateIndex: 1,
+    ownership: {
+      beneficiaryAddress: "",
+      holderAddress: "",
+    },
   },
   {
     fileName: "abcd.tt",
@@ -28,12 +32,16 @@ const forms = [
       errorSchema: {},
     },
     templateIndex: 1,
+    ownership: {
+      beneficiaryAddress: "",
+      holderAddress: "",
+    },
   },
 ];
 
 describe("publishing", () => {
   it("should load the UI and the number of forms correctly", () => {
-    render(<Publishing forms={forms} />);
+    render(<PublishingScreen forms={forms} />);
 
     expect(
       screen.queryAllByText("Please wait while we are publishing the document(s).")

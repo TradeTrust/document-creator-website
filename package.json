@@ -86,6 +86,7 @@
     "eject": "react-scripts eject",
     "blockchain": "ganache-cli --mnemonic \"indicate swing place chair flight used hammer soon photo region volume shuffle\"",
     "integration": "./scripts/integration.sh",
+    "integration:single": "testcafe chrome -L",
     "integration:headless": "HEADLESS=true ./scripts/integration.sh",
     "integration:internal": "testcafe chrome integration/**/*.spec.ts --ts-config-path ./tsconfig.testcafe.json --app \"BROWSER=none npm run start\"",
     "integration:internal:headless": "testcafe chrome:headless integration/**/*.spec.ts --ts-config-path ./tsconfig.testcafe.json --app \"npm run start\" --app-init-delay 5000",

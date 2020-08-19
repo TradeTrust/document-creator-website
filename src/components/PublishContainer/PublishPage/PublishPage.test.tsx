@@ -54,10 +54,73 @@ const whenPublishStateIsConfirmed = (): void => {
         },
       },
     ],
+    failedPublishedDocuments: [],
+  });
+};
+
+const whenNoConfig = (): void => {
+  mockUseConfigContext.mockReturnValue({ config: undefined });
+};
+
+const whenNoCurrentForm = (): void => {
+  mockUseConfigContext.mockReturnValue({ config: sampleConfig });
+  mockUseFormsContext.mockReturnValue({
+    activeFormIndex: 0,
+    setForms: mockSetForms,
+    setActiveFormIndex: mockSetActiveFormIndex,
+    forms: [
+      {
+        fileName: "document-1.tt",
+        data: { formData: {} },
+        templateIndex: 0,
+      },
+    ],
+    currentForm: undefined,
+  });
+  mockUsePublishQueue.mockReturnValue({
+    publish: mockPublish,
+    publishState: "CONFIRMED",
+    publishedDocuments: [
+      {
+        contractAddress: "",
+        fileName: "Document-1.tt",
+        payload: {},
+        type: "VERIFIABLE_DOCUMENT",
+        rawDocument: {},
+        wrappedDocument: {
+          data: {},
+          signature: {},
+          version: "",
+        },
+      },
+    ],
+    failedPublishedDocuments: [],
   });
 };
 
 describe("publishContainer", () => {
+  it("should redirect to '/' when there is no config", () => {
+    whenNoConfig();
+    render(
+      <MemoryRouter>
+        <PublishContainer />
+      </MemoryRouter>
+    );
+
+    expect(screen.queryAllByText(/Document(s) issued successfully/)).toHaveLength(0);
+  });
+
+  it("should display the publishing screen when publishing document", () => {
+    whenNoCurrentForm();
+    render(
+      <MemoryRouter>
+        <PublishContainer />
+      </MemoryRouter>
+    );
+
+    expect(screen.queryAllByText(/Document(s) issued successfully/)).toHaveLength(0);
+  });
+
   it("should display the published screen when documents are published", () => {
     whenPublishStateIsConfirmed();
     render(

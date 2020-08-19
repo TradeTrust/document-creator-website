@@ -7,6 +7,7 @@ const ConfigWithError = "./../src/test/fixtures/sample-error-config.json";
 const ConfigErrorFile = "./../src/test/fixtures/sample-empty-error-config.json";
 const AttachmentSample = "./../src/test/fixtures/sample.pdf";
 const DataFile = "./../src/test/fixtures/sample-data-file.json";
+
 const Title = Selector("h1");
 const Button = Selector("button");
 const ButtonReset = Selector("[data-testid='reset-button']");
@@ -20,11 +21,9 @@ const ConfigError = Selector("[data-testid='config-error']");
 const AttachmentXButton = Selector("[data-testid='remove-uploaded-file-0']");
 const AddNewButton = Selector("[data-testid='add-new-button']");
 const SubmitButton = Selector("[data-testid='form-submit-button']");
-
 const FormIdField = Selector("#root_iD");
 const FormAttachmentField = Selector("[data-testid='upload-file-0']");
 const FormExporterNameField = Selector("#root_supplyChainConsignment_exporter_name");
-
 const EblBeneficiaryField = Selector("[data-testid='transferable-record-beneficiary-input']");
 const EblHolderField = Selector("[data-testid='transferable-record-holder-input']");
 const EblNumberField = Selector("input#root_blNumber");
