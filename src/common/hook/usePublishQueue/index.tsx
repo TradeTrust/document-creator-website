@@ -33,13 +33,12 @@ export const usePublishQueue = (
     return [...acc, ...documentsIssuesInJob];
   }, [] as WrappedDocument[]);
 
-  const failedPublishedDocuments = failedJob.reduce((acc, curr) => {
-    const formattedError = {
-      documents: jobs[curr.index].documents,
-      error: curr.error,
+  const failedPublishedDocuments = failedJob.map((job) => {
+    return {
+      documents: jobs[job.index].documents,
+      error: job.error,
     };
-    return [...acc, formattedError];
-  }, [] as FailedJobErrors[]);
+  });
 
   const publish = async (): Promise<void> => {
     try {

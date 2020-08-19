@@ -38,32 +38,17 @@ export const PublishedScreen: FunctionComponent<PublishScreen> = ({
     return jsonString.length + (m ? m.length : 0);
   };
 
-  let failPublishedDocuments = [] as WrappedDocument[];
+  const failPublishedDocuments = failedPublishedDocuments
+    .map((failedjob) => failedjob.documents)
+    .flat();
 
-  if (failedPublishedDocuments && failedPublishedDocuments.length > 0) {
-    failPublishedDocuments = failedPublishedDocuments.reduce((acc, curr) => {
-      const documentsIssuesInJob = curr.documents;
-      return [...acc, ...documentsIssuesInJob];
-    }, [] as WrappedDocument[]);
-  }
-
-  const downloadErrorLog = (): void => {
-    const errorLog = document.createElement("a");
-
-    const formattedErrorLog = failedPublishedDocuments.map((failedJob) => {
-      const fileNames = failedJob.documents.map((document) => document.fileName).join(", ");
-      return {
-        files: fileNames,
-        error: failedJob.error,
-      };
-    });
-
-    errorLog.href = `data:text/plain;charset=UTF-8,${JSON.stringify(formattedErrorLog, null, 2)}`;
-    errorLog.download = "error_log.txt";
-    document.body.appendChild(errorLog);
-    errorLog.click();
-    document.body.removeChild(errorLog);
-  };
+  const formattedErrorLog = failedPublishedDocuments.map((failedJob) => {
+    const fileNames = failedJob.documents.map((document) => document.fileName).join(", ");
+    return {
+      files: fileNames,
+      error: failedJob.error,
+    };
+  });
 
   return (
     <Container>
@@ -121,13 +106,22 @@ export const PublishedScreen: FunctionComponent<PublishScreen> = ({
                   These documents failed to publish due to some errors. Kindly rectify and try
                   publishing again.
                 </div>
-                <Button className="bg-white text-red px-4 py-3" onClick={downloadErrorLog}>
-                  <div className="flex">
-                    <SvgIcon>
-                      <SvgIconDownload />
-                    </SvgIcon>
-                    <div className="text-red ml-2">Download Error Log</div>
-                  </div>
+                <Button className="bg-white text-red px-4 py-3">
+                  <a
+                    download="error_log.txt"
+                    href={`data:text/plain;charset=UTF-8,${JSON.stringify(
+                      formattedErrorLog,
+                      null,
+                      2
+                    )}`}
+                  >
+                    <div className="flex">
+                      <SvgIcon>
+                        <SvgIconDownload />
+                      </SvgIcon>
+                      <div className="text-red ml-2">Download Error Log</div>
+                    </div>
+                  </a>
                 </Button>
               </div>
               {failPublishedDocuments.map((doc, index) => {

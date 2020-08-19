@@ -54,6 +54,7 @@ const whenPublishStateIsConfirmed = (): void => {
         },
       },
     ],
+    failedPublishedDocuments: [],
   });
 };
 
