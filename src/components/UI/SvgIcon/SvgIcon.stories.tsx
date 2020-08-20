@@ -4,7 +4,9 @@ import {
   SvgIconArrowLeft,
   SvgIconCheckCircle,
   SvgIconDownload,
+  SvgIconLeftArrowBracket,
   SvgIconPaperClip,
+  SvgIconRightArrowBracket,
   SvgIconTrash,
   SvgIconX,
   SvgIconXCircle,
@@ -57,5 +59,17 @@ export const XCircle = () => (
 export const Download = () => (
   <SvgIcon>
     <SvgIconDownload />
+  </SvgIcon>
+);
+
+export const RightArrowBracket = () => (
+  <SvgIcon>
+    <SvgIconRightArrowBracket />
+  </SvgIcon>
+);
+
+export const LeftArrowBracket = () => (
+  <SvgIcon>
+    <SvgIconLeftArrowBracket />
   </SvgIcon>
 );

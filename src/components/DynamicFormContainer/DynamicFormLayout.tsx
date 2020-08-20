@@ -8,10 +8,10 @@ import { Button } from "../UI/Button";
 import { SvgIcon, SvgIconTrash } from "../UI/SvgIcon";
 import { ToggleSwitch } from "../UI/ToggleSwitch";
 import { DeleteModal } from "./DeleteModal";
+import { DocumentPreview } from "./DocumentPreview";
 import { DynamicForm } from "./DynamicForm";
 import { DynamicFormHeader } from "./DynamicFormHeader";
 import { FormErrorBanner } from "./FormErrorBanner";
-import { DocumentPreview } from "./DocumentPreview";
 
 export const DynamicFormLayout: FunctionComponent = () => {
   const [showDeleteModal, setDeleteModal] = useState(false);
@@ -85,6 +85,7 @@ export const DynamicFormLayout: FunctionComponent = () => {
         onBackToFormSelection={removeCurrentForm}
         onNewForm={onNewForm}
         onFormSubmit={onFormSubmit}
+        validateCurrentForm={validateCurrentForm}
       />
       <div className="bg-lightgrey-lighter p-6">
         <div className="bg-white container mx-auto p-4">

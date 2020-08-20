@@ -99,3 +99,31 @@ export const SvgIconDownload: FunctionComponent = () => {
     </g>
   );
 };
+
+export const SvgIconRightArrowBracket: FunctionComponent = () => {
+  return (
+    <g className="right-arrow-bracket">
+      <polyline
+        points="8 18 14 12 8 6"
+        stroke="#4F4F4F"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </g>
+  );
+};
+
+export const SvgIconLeftArrowBracket: FunctionComponent = () => {
+  return (
+    <g className="left-arrow-bracket">
+      <polyline
+        points="14 18 8 12 14 6"
+        stroke="#4F4F4F"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </g>
+  );
+};
