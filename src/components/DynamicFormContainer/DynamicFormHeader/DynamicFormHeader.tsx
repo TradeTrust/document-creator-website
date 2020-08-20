@@ -83,6 +83,7 @@ export const DynamicFormHeader: FunctionComponent<DynamicFormHeaderProps> = ({
               </SvgIcon>
             </div>
             <input
+              data-testid="file-name-input"
               type="text"
               value={docName}
               onChange={setFileName}

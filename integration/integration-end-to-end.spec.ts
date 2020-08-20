@@ -1,23 +1,16 @@
 import { Selector } from "testcafe";
+import { enterPassword, loadConfigFile } from "./helper";
 
 fixture("Document Creator").page`http://localhost:3000`;
 
 const Config = "./../src/test/fixtures/sample-local-config.json";
-const ConfigWithError = "./../src/test/fixtures/sample-error-config.json";
-const ConfigErrorFile = "./../src/test/fixtures/sample-empty-error-config.json";
 const AttachmentSample = "./../src/test/fixtures/sample.pdf";
 const DataFile = "./../src/test/fixtures/sample-data-file.json";
 
 const Title = Selector("h1");
 const Button = Selector("button");
-const ButtonReset = Selector("[data-testid='reset-button']");
-const ButtonLogin = Selector("[data-testid='login-button']");
 const ButtonBack = Selector("[data-testid='back-button']");
-const PasswordField = Selector("[data-testid='password-field']");
-const PasswordFieldMsg = Selector("[data-testid='password-field-msg']");
 const ProgressBar = Selector("[data-testid='progress-bar']");
-const ErrorCantReadFile = Selector("[data-testid='error-cannot-read-file']");
-const ConfigError = Selector("[data-testid='config-error']");
 const AttachmentXButton = Selector("[data-testid='remove-uploaded-file-0']");
 const AddNewButton = Selector("[data-testid='add-new-button']");
 const SubmitButton = Selector("[data-testid='form-submit-button']");
@@ -27,36 +20,17 @@ const FormExporterNameField = Selector("#root_supplyChainConsignment_exporter_na
 const EblBeneficiaryField = Selector("[data-testid='transferable-record-beneficiary-input']");
 const EblHolderField = Selector("[data-testid='transferable-record-holder-input']");
 const EblNumberField = Selector("input#root_blNumber");
+const previousDocumentButton = Selector("[data-testid='previous-document-button']");
+const nextDocumentButton = Selector("[data-testid='next-document-button']");
+const fileNameField = Selector("[data-testid='file-name-input']");
 
-test("Upload configuration file, choose form, fill form, preview form, submit form correctly", async (t) => {
-  // upload invalid config file(without wallet)
-  await t.setFilesToUpload("input[type=file]", [ConfigWithError]);
-  await t.expect(ConfigError.textContent).contains("Config is malformed");
-
-  // upload invalid file that is not a config file
-  await t.setFilesToUpload("input[type=file]", [ConfigErrorFile]);
-  await t.expect(ErrorCantReadFile.textContent).contains("File cannot be read");
-
-  // upload config and reset config file
-  await t.setFilesToUpload("input[type=file]", [Config]);
+test("Upload configuration file, choose form, fill form, submit form correctly", async (t) => {
+  // Upload config file
+  await loadConfigFile(Config);
   await t.expect(Title.textContent).contains("Login with Password");
-  await t.click(ButtonReset);
-  await t.expect(Title.textContent).contains("Upload Configuration File");
 
-  // try login without password
-  await t.setFilesToUpload("input[type=file]", [Config]);
-  await t.click(ButtonLogin);
-  await t.expect(PasswordFieldMsg.textContent).contains("Invalid password. Please try again.");
-
-  // try login with wrong password
-  await t.typeText(PasswordField, "test error");
-  await t.click(ButtonLogin);
-  await t.expect(PasswordFieldMsg.textContent).contains("Invalid password. Please try again.");
-
-  // login to step 1
-  await t.selectText(PasswordField);
-  await t.typeText(PasswordField, "password");
-  await t.click(ButtonLogin);
+  // login
+  await enterPassword("password");
   await t.expect(Title.textContent).contains("Choose Document Type to Issue");
   await t.expect(ProgressBar.textContent).contains("Step 1/3");
 
@@ -106,15 +80,27 @@ test("Upload configuration file, choose form, fill form, preview form, submit fo
   await t.click(Button.withText("COO"));
   await t.typeText(FormIdField, "COO-ID");
 
+  // rename document
+  await t.selectText(fileNameField);
+  await t.typeText(fileNameField, "File-2");
+
+  // go to the previous document
+  await t.click(previousDocumentButton);
+  await t.expect(fileNameField.value).eql("Document-1");
+
+  // go back to the other document
+  await t.click(nextDocumentButton);
+  await t.expect(fileNameField.value).eql("File-2");
+
   // Submit
   await t.click(SubmitButton);
 
   // Check that download exists
   await t.expect(Title.textContent).contains("Document(s) issued successfully");
   await t.expect(Selector("div").withText("Document-1.tt").exists).ok();
-  await t.expect(Selector("div").withText("Document-2.tt").exists).ok();
+  await t.expect(Selector("div").withText("File-2.tt").exists).ok();
   await t.expect(Selector("a[download='Document-1.tt']").exists).ok();
-  await t.expect(Selector("a[download='Document-2.tt']").exists).ok();
+  await t.expect(Selector("a[download='File-2.tt']").exists).ok();
 
   // Issue transferable record
   await t.click(Button.withText("Create another Document"));
