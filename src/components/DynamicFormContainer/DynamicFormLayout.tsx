@@ -20,6 +20,7 @@ export const DynamicFormLayout: FunctionComponent = () => {
     forms,
     setForms,
     setActiveFormIndex,
+    activeFormIndex,
     currentForm,
     currentFormTemplate,
     setCurrentFormData,
@@ -44,11 +45,12 @@ export const DynamicFormLayout: FunctionComponent = () => {
   };
 
   const removeCurrentForm = (): void => {
-    // Remove current form data before going back
+    if (activeFormIndex === undefined) return;
     const nextForms = [...forms];
-    nextForms.splice(nextForms.length - 1, 1);
+    nextForms.splice(activeFormIndex, 1);
     setForms(nextForms);
-    setActiveFormIndex(undefined);
+    const nextActiveFormIndex = nextForms.length > 0 ? nextForms.length - 1 : undefined;
+    setActiveFormIndex(nextActiveFormIndex);
   };
 
   const onNewForm = (): void => {
