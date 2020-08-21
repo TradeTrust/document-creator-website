@@ -58,6 +58,28 @@ const whenPublishStateIsConfirmed = (): void => {
   });
 };
 
+const whenPublishStateIsError = (): void => {
+  mockUsePublishQueue.mockReturnValue({
+    publish: mockPublish,
+    publishState: "ERROR",
+    publishedDocuments: [
+      {
+        contractAddress: "",
+        fileName: "Document-1.tt",
+        payload: {},
+        type: "VERIFIABLE_DOCUMENT",
+        rawDocument: {},
+        wrappedDocument: {
+          data: {},
+          signature: {},
+          version: "",
+        },
+      },
+    ],
+    failedPublishedDocuments: [],
+  });
+};
+
 const whenNoConfig = (): void => {
   mockUseConfigContext.mockReturnValue({ config: undefined });
 };
@@ -131,5 +153,17 @@ describe("publishContainer", () => {
 
     expect(screen.queryAllByText("Document(s) issued successfully")).toHaveLength(1);
     expect(screen.queryAllByText("Document-1.tt")).toHaveLength(1);
+  });
+
+  it("should display the publish error screen when there is an error", () => {
+    whenPublishStateIsError();
+    render(
+      <MemoryRouter>
+        <PublishContainer />
+      </MemoryRouter>
+    );
+
+    expect(screen.queryAllByText("Document(s) failed to issue")).toHaveLength(1);
+    expect(screen.queryAllByText("Failed to publish due to:")).toHaveLength(1);
   });
 });

@@ -5,6 +5,7 @@ import { usePublishQueue } from "../../../common/hook/usePublishQueue";
 import { Config } from "../../../types";
 import { NavigationBar } from "../../NavigationBar";
 import { PublishedScreen } from "../PublishedScreen";
+import { PublishErrorScreen } from "../PublishErrorScreen";
 import { PublishingScreen } from "../PublishingScreen";
 
 interface PublishPage {
@@ -13,16 +14,21 @@ interface PublishPage {
 
 export const PublishPage: FunctionComponent<PublishPage> = ({ config }) => {
   const { forms, currentForm } = useFormsContext();
-  const { publish, publishState, publishedDocuments, failedPublishedDocuments } = usePublishQueue(
-    config,
-    forms
-  );
+  const {
+    publish,
+    publishState,
+    publishedDocuments,
+    failedPublishedDocuments,
+    error,
+  } = usePublishQueue(config, forms);
 
   useEffect(() => {
     publish();
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   const documentsPublished = publishState === "CONFIRMED";
+  const documentsPublishing = publishState === "UNINITIALIZED" || publishState === "INITIALIZED";
+  const ErrorPublishing = publishState === "ERROR";
 
   if (!config) return <Redirect to="/" />;
   if (!currentForm) return <Redirect to="/forms-selection" />;
@@ -30,14 +36,14 @@ export const PublishPage: FunctionComponent<PublishPage> = ({ config }) => {
   return (
     <>
       <NavigationBar />
-      {documentsPublished ? (
+      {documentsPublished && (
         <PublishedScreen
           publishedDocuments={publishedDocuments}
           failedPublishedDocuments={failedPublishedDocuments}
         />
-      ) : (
-        <PublishingScreen forms={forms} />
       )}
+      {documentsPublishing && <PublishingScreen forms={forms} />}
+      {ErrorPublishing && <PublishErrorScreen error={error} />}
     </>
   );
 };

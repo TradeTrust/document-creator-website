@@ -33,8 +33,8 @@ const getReservedStorageUrl = async (
   const qrUrlObj = {
     type: "DOCUMENT",
     payload: {
-      uri: `${STORAGE_ENDPOINT}/${queueNumber.id}`,
-      key: queueNumber.key,
+      uri: `${STORAGE_ENDPOINT}/${queueNumber.data.id}`,
+      key: queueNumber.data.key,
       permittedActions: ["STORE"],
       redirect: `https://${network === "homestead" ? "" : "dev."}tradetrust.io/`,
     },
@@ -51,12 +51,16 @@ export const getRawDocuments = async (
 ): Promise<RawDocument[]> => {
   return Promise.all(
     forms.map(async ({ data, templateIndex, fileName, ownership }) => {
-      let qrUrl;
-      try {
-        qrUrl = await getReservedStorageUrl(STORAGE_ENDPOINT, config.network);
-      } catch (e) {
-        stack(e);
-        qrUrl = QR_CODE_OBJECT;
+      let qrUrl = {};
+
+      if (STORAGE_ENDPOINT) {
+        try {
+          qrUrl = await getReservedStorageUrl(STORAGE_ENDPOINT, config.network);
+        } catch (e) {
+          stack(e);
+          // qrUrl = QR_CODE_OBJECT;
+          throw e;
+        }
       }
 
       const formConfig = config.forms[templateIndex];
@@ -138,6 +142,12 @@ export const getPublishingJobs = async (
   nonce: number
 ): Promise<PublishingJob[]> => {
   // Currently works for only multiple verifiable document issuance:
-  const rawDocuments = await getRawDocuments(forms, config);
+  let rawDocuments;
+  try {
+    rawDocuments = await getRawDocuments(forms, config);
+  } catch (e) {
+    stack(e);
+    throw e;
+  }
   return groupDocumentsIntoJobs(rawDocuments, nonce);
 };

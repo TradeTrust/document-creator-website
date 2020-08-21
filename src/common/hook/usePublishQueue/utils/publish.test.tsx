@@ -15,7 +15,7 @@ const mockGetQueueNumber = getQueueNumber as jest.Mock;
 
 describe("getRawDocuments", () => {
   it("should get raw documents with default values", async () => {
-    mockGetQueueNumber.mockResolvedValue({ id: "123", key: "123" });
+    mockGetQueueNumber.mockResolvedValue({ data: { id: "123", key: "123" } });
     expect(await getRawDocuments(sampleForms, sampleConfig)).toStrictEqual(sampleFormatted);
   });
 });

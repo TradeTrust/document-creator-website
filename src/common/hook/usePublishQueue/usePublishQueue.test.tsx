@@ -89,16 +89,14 @@ describe("usePublishQueue", () => {
     expect(result.current.publishedDocuments).toHaveLength(3);
   });
 
-  it("should file failed jobs to failedPublishedDocuments if upload document returns an error", async () => {
-    mockGetPublishingJobs.mockReturnValueOnce(sampleJobs);
+  it("should have error if getPublishJobs throw error", async () => {
+    mockGetPublishingJobs.mockRejectedValue(new Error("some Error"));
     mockPublishJob.mockResolvedValue("tx-id");
-    mockUploadToStorage.mockRejectedValue(new Error("Upload to Storage error"));
-
     const { result } = renderHook(() => usePublishQueue(config, formEntires));
     await act(async () => {
       await result.current.publish();
     });
 
-    expect(result.current.failPublishedDocuments).toHaveLength(3);
+    expect(result.current.error).toStrictEqual(new Error("some Error"));
   });
 });
