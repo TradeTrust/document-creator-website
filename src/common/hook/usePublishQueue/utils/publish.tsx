@@ -1,6 +1,13 @@
 import { wrapDocuments } from "@govtechsg/open-attestation";
 import { defaultsDeep, groupBy } from "lodash";
-import { ActionsUrlObject, Config, FormEntry, PublishingJob, RawDocument } from "../../../../types";
+import {
+  ActionsUrlObject,
+  Config,
+  DocumentStorage,
+  FormEntry,
+  PublishingJob,
+  RawDocument,
+} from "../../../../types";
 import { getLogger } from "../../../../utils/logger";
 import { getQueueNumber } from "../../../API/storageAPI";
 import { encodeQrCode } from "../../../utils";
@@ -14,29 +21,38 @@ interface QueueNumberTypes {
   key: string;
 }
 
-//TODO: replace this hardcoded url with the one in the config.json in another story
-const STORAGE_ENDPOINT = "https://api-ropsten.tradetrust.io/storage";
+interface NetworkUrl {
+  homestead: string;
+  ropsten: string;
+  rinkeby: string;
+}
 
 const getReservedStorageUrl = async (
-  storageEndpoint: string,
-  network: string
+  documentStorage: DocumentStorage,
+  network: "homestead" | "ropsten" | "rinkeby"
 ): Promise<ActionsUrlObject> => {
   let queueNumber;
 
   try {
-    queueNumber = await getQueueNumber(storageEndpoint);
+    queueNumber = await getQueueNumber(documentStorage);
   } catch (e) {
     stack(e);
     throw e;
   }
 
+  const networkUrl = {
+    homestead: "",
+    ropsten: "dev.",
+    rinkeby: "rinkeby",
+  } as NetworkUrl;
+
   const qrUrlObj = {
     type: "DOCUMENT",
     payload: {
-      uri: `${STORAGE_ENDPOINT}/${queueNumber.data.id}`,
+      uri: `${documentStorage.url}/${queueNumber.data.id}`,
       key: queueNumber.data.key,
       permittedActions: ["STORE"],
-      redirect: `https://${network === "homestead" ? "" : "dev."}tradetrust.io/`,
+      redirect: `https://${networkUrl[network]}tradetrust.io/`,
     },
   };
 
@@ -53,13 +69,14 @@ export const getRawDocuments = async (
     forms.map(async ({ data, templateIndex, fileName, ownership }) => {
       let qrUrl = {};
 
-      if (STORAGE_ENDPOINT) {
-        try {
-          qrUrl = await getReservedStorageUrl(STORAGE_ENDPOINT, config.network);
-        } catch (e) {
-          stack(e);
-          // qrUrl = QR_CODE_OBJECT;
-          throw e;
+      if (config.network !== "local") {
+        if (config.documentStorage !== undefined) {
+          try {
+            qrUrl = await getReservedStorageUrl(config.documentStorage, config.network);
+          } catch (e) {
+            stack(e);
+            throw e;
+          }
         }
       }
 

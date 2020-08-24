@@ -1,21 +1,24 @@
 import axios, { AxiosResponse } from "axios";
-import { WrappedDocument } from "../../types";
+import { DocumentStorage, WrappedDocument } from "../../types";
 import { decodeQrCode } from "../utils";
 
-export const getQueueNumber = async (storageEndpoint: string): Promise<AxiosResponse> => {
-  //TODO: replace this hardcoded url with the one in the config.json in another story
-  const url = `${storageEndpoint}/queue`;
+export const getQueueNumber = async (documentStorage: DocumentStorage): Promise<AxiosResponse> => {
+  const url = `${documentStorage.url}/queue`;
 
   return axios({
     method: "get",
     url: url,
     headers: {
       "Content-Type": "application/json",
+      "x-api-key": documentStorage.apiKey,
     },
   });
 };
 
-export const uploadToStorage = async (doc: WrappedDocument): Promise<AxiosResponse> => {
+export const uploadToStorage = async (
+  doc: WrappedDocument,
+  documentStorage: DocumentStorage | undefined
+): Promise<AxiosResponse> => {
   const qrCodeObj = decodeQrCode(doc.rawDocument.links.self.href);
   const uri = qrCodeObj.payload.uri;
 
@@ -24,6 +27,7 @@ export const uploadToStorage = async (doc: WrappedDocument): Promise<AxiosRespon
     url: uri,
     headers: {
       "Content-Type": "application/json",
+      "x-api-key": documentStorage?.apiKey,
     },
     data: {
       document: doc.wrappedDocument,

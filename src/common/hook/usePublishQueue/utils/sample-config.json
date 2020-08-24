@@ -93,5 +93,9 @@
         "accept": ".pdf, .json"
       }
     }
-  ]
+  ],
+  "documentStorage": {
+    "apiKey": "randonKey",
+    "url": "https://api-ropsten.tradetrust.io/storage"
+  }
 }

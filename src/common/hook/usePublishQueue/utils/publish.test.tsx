@@ -2,11 +2,18 @@ import { Config, RawDocument } from "../../../../types";
 import { getQueueNumber } from "../../../API/storageAPI";
 import { getRawDocuments, groupDocumentsIntoJobs } from "./publish";
 import sampleConfigFile from "./sample-config.json";
+import sampleFormattedWithoutQrUrl from "./sample-formatted-without-qr-url.json";
 import sampleFormatted from "./sample-formatted.json";
 import sampleForms from "./sample-forms.json";
 
 const sampleConfig = {
   ...sampleConfigFile,
+  wallet: "FAKE_WALLET" as any,
+} as Config;
+
+const configWithoutDocumentStorage = {
+  ...sampleConfigFile,
+  documentStorage: undefined,
   wallet: "FAKE_WALLET" as any,
 } as Config;
 
@@ -17,6 +24,12 @@ describe("getRawDocuments", () => {
   it("should get raw documents with default values", async () => {
     mockGetQueueNumber.mockResolvedValue({ data: { id: "123", key: "123" } });
     expect(await getRawDocuments(sampleForms, sampleConfig)).toStrictEqual(sampleFormatted);
+  });
+
+  it("should not have any qr url when no documentStorage is present in config file", async () => {
+    expect(await getRawDocuments(sampleForms, configWithoutDocumentStorage)).toStrictEqual(
+      sampleFormattedWithoutQrUrl
+    );
   });
 });
 

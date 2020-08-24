@@ -54,9 +54,12 @@ export const usePublishQueue = (
         try {
           await publishJob(job, config.wallet);
           const uploadDocuments = job.documents.map(async (doc) => {
-            return uploadToStorage(doc);
+            if (config.documentStorage === undefined) return;
+            await uploadToStorage(doc, config.documentStorage);
           });
           await Promise.all(uploadDocuments);
+          completedJobs.push(index);
+          setCompletedJobIndex(completedJobs);
         } catch (e) {
           failedJobs.push({
             index: index,
@@ -65,9 +68,6 @@ export const usePublishQueue = (
           setFailedJob(failedJobs);
           stack(e);
           throw e; // Re-throwing error to preserve stack when Promise.allSettled resolves
-        } finally {
-          completedJobs.push(index);
-          setCompletedJobIndex(completedJobs);
         }
       });
       setPublishState("PENDING_CONFIRMATION");

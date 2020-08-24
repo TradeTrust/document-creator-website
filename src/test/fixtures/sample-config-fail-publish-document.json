@@ -79,5 +79,9 @@
         "allow": true
       }
     }
-  ]
+  ],
+  "documentStorage": {
+    "apiKey": "randonKey",
+    "url": "https://api-ropsten.tradetrust.io/storage"
+  }
 }
