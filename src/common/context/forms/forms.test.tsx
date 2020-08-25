@@ -1,7 +1,7 @@
 import { act, renderHook } from "@testing-library/react-hooks";
 import React, { FunctionComponent } from "react";
-import { FormsContextProvider, useFormsContext } from "./index";
 import { useConfigContext } from "../config";
+import { FormsContextProvider, useFormsContext } from "./index";
 
 jest.mock("../config");
 
@@ -44,7 +44,7 @@ describe("useFormsContext", () => {
         },
         schema: "FORM_2_SCHEMA",
       },
-      fileName: "Document-1.tt",
+      fileName: "Document-1",
       ownership: { holderAddress: "", beneficiaryAddress: "" },
     };
 
@@ -86,13 +86,13 @@ describe("useFormsContext", () => {
           },
           schema: "FORM_2_SCHEMA",
         },
-        fileName: "Document-1.tt",
+        fileName: "Document-1",
         ownership: { holderAddress: "", beneficiaryAddress: "" },
       },
       {
         templateIndex: 0,
         data: { formData: { foo: "bar" } },
-        fileName: "Document-2.tt",
+        fileName: "Document-2",
         ownership: { holderAddress: "", beneficiaryAddress: "" },
       },
       {
@@ -103,7 +103,7 @@ describe("useFormsContext", () => {
           },
           schema: "FORM_2_SCHEMA",
         },
-        fileName: "Document-3.tt",
+        fileName: "Document-3",
         ownership: { holderAddress: "", beneficiaryAddress: "" },
       },
     ];
@@ -136,7 +136,7 @@ describe("useFormsContext", () => {
           },
           schema: "FORM_2_SCHEMA",
         },
-        fileName: "Document-1.tt",
+        fileName: "Document-1",
         ownership: { holderAddress: "0x0Bar", beneficiaryAddress: "0x0Foo" },
       },
     ];

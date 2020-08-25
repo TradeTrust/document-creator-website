@@ -1,5 +1,5 @@
-import React, { useState, useContext, createContext, FunctionComponent } from "react";
-import { FormEntry, FormData, Ownership, FormTemplate } from "../../../types";
+import React, { createContext, FunctionComponent, useContext, useState } from "react";
+import { FormData, FormEntry, FormTemplate, Ownership } from "../../../types";
 import { useConfigContext } from "../config";
 
 interface FormsContext {
@@ -14,6 +14,7 @@ interface FormsContext {
   newForm: (templateIndex: number) => void;
   setCurrentFormData: (formData: FormData) => void;
   setCurrentFormOwnership: (ownership: Ownership) => void;
+  setCurrentFileName: (fileName: string) => void;
 }
 
 export const FormsContext = createContext<FormsContext>({
@@ -23,6 +24,7 @@ export const FormsContext = createContext<FormsContext>({
   newForm: () => {}, // eslint-disable-line @typescript-eslint/no-empty-function
   setCurrentFormData: () => {}, // eslint-disable-line @typescript-eslint/no-empty-function
   setCurrentFormOwnership: () => {}, // eslint-disable-line @typescript-eslint/no-empty-function
+  setCurrentFileName: () => {}, // eslint-disable-line @typescript-eslint/no-empty-function
 });
 
 export const useFormsContext = (): FormsContext => useContext<FormsContext>(FormsContext);
@@ -49,7 +51,7 @@ export const FormsContextProvider: FunctionComponent = ({ children }) => {
           formData: newFormTemplate?.defaults || {},
           schema: newFormTemplate?.schema,
         },
-        fileName: `Document-${forms.length + 1}.tt`,
+        fileName: `Document-${forms.length + 1}`,
         ownership: { beneficiaryAddress: "", holderAddress: "" },
       },
     ]);
@@ -78,6 +80,18 @@ export const FormsContextProvider: FunctionComponent = ({ children }) => {
     setForms(nextForms);
   };
 
+  const setCurrentFileName = (fileName: string): void => {
+    if (activeFormIndex === undefined) return;
+    // setDocName(event.target.value);
+    const updatedCurrentForm = {
+      ...currentForm,
+      fileName: fileName,
+    } as FormEntry;
+    const nextForms = [...forms];
+    nextForms.splice(activeFormIndex, 1, { ...updatedCurrentForm });
+    setForms(nextForms);
+  };
+
   return (
     <FormsContext.Provider
       value={{
@@ -92,6 +106,7 @@ export const FormsContextProvider: FunctionComponent = ({ children }) => {
         newForm,
         setActiveFormIndex,
         setForms,
+        setCurrentFileName,
       }}
     >
       {children}

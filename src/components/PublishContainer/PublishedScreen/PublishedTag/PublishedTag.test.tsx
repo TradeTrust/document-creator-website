@@ -6,7 +6,7 @@ import { PublishedTag } from "./PublishedTag";
 const mockDoc = {
   type: "VERIFIABLE_DOCUMENT",
   contractAddress: "",
-  fileName: "test.pdf",
+  fileName: "test",
   payload: {},
   rawDocument: {},
   wrappedDocument: { data: "test document" },
@@ -16,7 +16,7 @@ describe("publishedTag", () => {
   it("should render correctly with the given doc", () => {
     render(<PublishedTag doc={mockDoc} />);
 
-    expect(screen.getAllByText("test.pdf")).toHaveLength(1);
+    expect(screen.getAllByText("test.tt")).toHaveLength(1);
     expect(screen.getAllByText("(24 B)")).toHaveLength(1);
   });
 

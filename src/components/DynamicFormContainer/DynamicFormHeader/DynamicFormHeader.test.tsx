@@ -16,20 +16,20 @@ const whenActiveFormsAreAvailable = (): void => {
     setActiveFormIndex: mockSetActiveFormIndex,
     forms: [
       {
-        fileName: "document-1.tt",
+        fileName: "document-1",
         data: { formData: {} },
         templateIndex: 0,
         ownership: { holderAddress: "", beneficiaryAddress: "" },
       },
       {
-        fileName: "document-2.tt",
+        fileName: "document-2",
         data: { formData: {} },
         templateIndex: 0,
         ownership: { holderAddress: "", beneficiaryAddress: "" },
       },
     ],
     currentForm: {
-      fileName: "document-1.tt",
+      fileName: "document-1",
       data: { formData: {} },
       templateIndex: 0,
       ownership: { holderAddress: "", beneficiaryAddress: "" },

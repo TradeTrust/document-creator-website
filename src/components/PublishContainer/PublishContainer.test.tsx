@@ -30,13 +30,13 @@ const whenPublishStateIsNotConfirmed = (): void => {
     setActiveFormIndex: mockSetActiveFormIndex,
     forms: [
       {
-        fileName: "document-1.tt",
+        fileName: "document-1",
         data: { formData: {} },
         templateIndex: 0,
       },
     ],
     currentForm: {
-      fileName: "document-1.tt",
+      fileName: "document-1",
       data: { formData: {} },
       templateIndex: 0,
     },
@@ -47,7 +47,7 @@ const whenPublishStateIsNotConfirmed = (): void => {
     wrappedDocuments: [
       {
         contractAddress: "",
-        fileName: "Document-1.tt",
+        fileName: "Document-1",
         payload: {},
         type: "VERIFIABLE_DOCUMENT",
         rawDocument: {},
