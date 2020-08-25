@@ -29,7 +29,7 @@ export const PublishedTag: FunctionComponent<PublishedTagProps> = ({ doc }) => {
         <div
           className="text-blue font-bold cursor-pointer"
           data-testid="download-file-button"
-          onClick={() => saveAs(blob, doc.fileName)}
+          onClick={() => saveAs(blob, doc.fileName + ".tt")}
         >
           Download
         </div>
