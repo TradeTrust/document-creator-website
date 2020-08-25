@@ -10,6 +10,7 @@ const DataFile = "./../src/test/fixtures/sample-data-file.json";
 const Title = Selector("h1");
 const Button = Selector("button");
 const ButtonBack = Selector("[data-testid='back-button']");
+const ButtonBackRed = Selector("[data-testid='red-back-button']");
 const ProgressBar = Selector("[data-testid='progress-bar']");
 const AttachmentXButton = Selector("[data-testid='remove-uploaded-file-0']");
 const AddNewButton = Selector("[data-testid='add-new-button']");
@@ -49,6 +50,10 @@ test("Upload configuration file, choose form, fill form, submit form correctly",
 
   // Test back button
   await t.click(ButtonBack);
+  await t
+    .expect(Selector("[data-testid='modal-title']").textContent)
+    .contains("Back to form selection");
+  await t.click(ButtonBackRed);
   await t.expect(Title.textContent).contains("Choose Document Type to Issue");
 
   // Navigate to form and fill form
