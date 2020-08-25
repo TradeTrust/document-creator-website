@@ -7,6 +7,7 @@ import { Container } from "../Container";
 import { Button } from "../UI/Button";
 import { SvgIcon, SvgIconTrash } from "../UI/SvgIcon";
 import { ToggleSwitch } from "../UI/ToggleSwitch";
+import { BackModal } from "./BackModal";
 import { DeleteModal } from "./DeleteModal";
 import { DocumentPreview } from "./DocumentPreview";
 import { DynamicForm } from "./DynamicForm";
@@ -15,6 +16,7 @@ import { FormErrorBanner } from "./FormErrorBanner";
 
 export const DynamicFormLayout: FunctionComponent = () => {
   const [showDeleteModal, setDeleteModal] = useState(false);
+  const [showBackModal, setShowBackModal] = useState(false);
   const [isPreviewMode, setIsPreviewMode] = useState(false);
   const {
     forms,
@@ -70,6 +72,16 @@ export const DynamicFormLayout: FunctionComponent = () => {
     closeDeleteModal();
   };
 
+  const closeBackModal = (): void => {
+    setShowBackModal(false);
+  };
+
+  const deleteAllForms = (): void => {
+    setActiveFormIndex(undefined);
+    setForms([]);
+    closeBackModal();
+  };
+
   const currentUnwrappedData = defaultsDeep(
     {},
     currentForm.data.formData,
@@ -83,8 +95,13 @@ export const DynamicFormLayout: FunctionComponent = () => {
         show={showDeleteModal}
         closeDeleteModal={closeDeleteModal}
       />
+      <BackModal
+        backToFormSelection={deleteAllForms}
+        show={showBackModal}
+        closeBackModal={closeBackModal}
+      />
       <DynamicFormHeader
-        onBackToFormSelection={removeCurrentForm}
+        onBackToFormSelection={() => setShowBackModal(true)}
         onNewForm={onNewForm}
         onFormSubmit={onFormSubmit}
         validateCurrentForm={validateCurrentForm}
