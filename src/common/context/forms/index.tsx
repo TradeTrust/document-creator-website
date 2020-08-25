@@ -82,7 +82,6 @@ export const FormsContextProvider: FunctionComponent = ({ children }) => {
 
   const setCurrentFileName = (fileName: string): void => {
     if (activeFormIndex === undefined) return;
-    // setDocName(event.target.value);
     const updatedCurrentForm = {
       ...currentForm,
       fileName: fileName,

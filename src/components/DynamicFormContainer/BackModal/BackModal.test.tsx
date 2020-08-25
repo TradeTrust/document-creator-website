@@ -3,7 +3,7 @@ import React from "react";
 import { BackModal } from "./BackModal";
 
 describe("backModal", () => {
-  it("shouldnot display anythingg on initial", () => {
+  it("should not display anything initially", () => {
     render(<BackModal backToFormSelection={() => {}} show={false} closeBackModal={() => {}} />);
 
     expect(screen.queryAllByText(/Back to form selection/)).toHaveLength(0);

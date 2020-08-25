@@ -128,7 +128,7 @@ export const PublishedScreen: FunctionComponent<PublishScreen> = ({
                 const size = prettyBytes(getFileSize(JSON.stringify(doc.wrappedDocument)));
                 return (
                   <div key={index} className="flex items-center">
-                    <div className="font-bold text-lightgrey-dark">{`${doc.fileName}.tt`}</div>
+                    <div className="font-bold text-lightgrey-dark">{doc.fileName}.tt</div>
                     <div className="text-xs text-lightgrey-dark ml-1">({size})</div>
                   </div>
                 );

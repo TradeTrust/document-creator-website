@@ -20,7 +20,7 @@ export const PublishedTag: FunctionComponent<PublishedTagProps> = ({ doc }) => {
       </div>
       <div className="flex flex-col">
         <div className="font-bold text-lightgrey-dark">
-          {`${doc.fileName}.tt`}
+          {doc.fileName}.tt
           <span className="text-lightgrey-dark text-xs font-regular"> ({size})</span>
         </div>
         <a
