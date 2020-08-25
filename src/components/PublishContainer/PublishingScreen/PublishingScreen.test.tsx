@@ -4,7 +4,7 @@ import { PublishingScreen } from "./PublishingScreen";
 
 const forms = [
   {
-    fileName: "abc.tt",
+    fileName: "abc",
     data: {
       schema: {},
       uiSchema: {},
@@ -21,7 +21,7 @@ const forms = [
     },
   },
   {
-    fileName: "abcd.tt",
+    fileName: "abcd",
     data: {
       schema: {},
       uiSchema: {},

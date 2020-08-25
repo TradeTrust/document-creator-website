@@ -1,5 +1,5 @@
-import React, { FunctionComponent } from "react";
 import Ajv from "ajv";
+import React, { FunctionComponent } from "react";
 import { SvgIcon, SvgIconXCircle } from "../../UI/SvgIcon";
 
 interface FormErrorBanner {
@@ -16,7 +16,7 @@ export const FormErrorBanner: FunctionComponent<FormErrorBanner> = ({ formError 
         <SvgIconXCircle />
       </SvgIcon>
       <div className="text-red text-xl flex flex-col justify-center items-start">
-        <div>This form has errors. Please fix the errors and submit again.</div>
+        <div>This form has errors. Please fix the errors to proceed.</div>
         <ul className="list-disc pl-5">
           {formError &&
             formError.map((error, index: number) => {

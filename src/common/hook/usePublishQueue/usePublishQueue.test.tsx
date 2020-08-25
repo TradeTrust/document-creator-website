@@ -20,7 +20,7 @@ const config = {
 
 const formEntires: FormEntry[] = [
   {
-    fileName: "document-1.tt",
+    fileName: "document",
     templateIndex: 0,
     data: {
       formData: { foo: "bar" },
@@ -28,7 +28,7 @@ const formEntires: FormEntry[] = [
     ownership: { holderAddress: "", beneficiaryAddress: "" },
   },
   {
-    fileName: "document-2.tt",
+    fileName: "document-2",
     templateIndex: 0,
     data: {
       formData: { foo: "bar" },

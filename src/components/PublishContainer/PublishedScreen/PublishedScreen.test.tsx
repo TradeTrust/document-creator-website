@@ -6,7 +6,7 @@ import { PublishedScreen } from "./PublishedScreen";
 const mockPublishedDocuments = [
   {
     contractAddress: "",
-    fileName: "Document-1.tt",
+    fileName: "Document-1",
     payload: {},
     type: "VERIFIABLE_DOCUMENT",
     rawDocument: {},
@@ -24,7 +24,7 @@ const mockFailPublishedDocuments = [
     documents: [
       {
         contractAddress: "",
-        fileName: "Document-3.tt",
+        fileName: "Document-3",
         payload: {},
         type: "VERIFIABLE_DOCUMENT",
         rawDocument: {},

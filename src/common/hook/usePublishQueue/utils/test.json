@@ -55,7 +55,7 @@
               ],
               "name": "Maersk Bill of Lading"
             },
-            "fileName": "Document-1.tt",
+            "fileName": "Document-1",
             "payload": {},
             "wrappedDocument": {
               "version": "https://schema.openattestation.com/2.0/schema.json",
@@ -172,7 +172,7 @@
               ],
               "name": "Maersk Bill of Lading"
             },
-            "fileName": "Document-3.tt",
+            "fileName": "Document-3",
             "payload": {},
             "wrappedDocument": {
               "version": "https://schema.openattestation.com/2.0/schema.json",
@@ -296,7 +296,7 @@
               ],
               "name": "Bill of Lading"
             },
-            "fileName": "Document-2.tt",
+            "fileName": "Document-2",
             "payload": {},
             "wrappedDocument": {
               "version": "https://schema.openattestation.com/2.0/schema.json",

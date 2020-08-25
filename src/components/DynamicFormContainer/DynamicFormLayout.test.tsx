@@ -19,14 +19,14 @@ const whenActiveFormIsAvailable = (): void => {
     setCurrentFormData: mockSetCurrentFormData,
     forms: [
       {
-        fileName: "document-1.tt",
+        fileName: "document-1",
         data: { formData: {} },
         templateIndex: 0,
         ownership: { holderAddress: "", beneficiaryAddress: "" },
       },
     ],
     currentForm: {
-      fileName: "document-1.tt",
+      fileName: "document-1",
       data: { formData: {} },
       templateIndex: 0,
       ownership: { holderAddress: "", beneficiaryAddress: "" },
@@ -54,14 +54,14 @@ const whenIsTransferableRecord = (): void => {
     setCurrentFormData: mockSetCurrentFormData,
     forms: [
       {
-        fileName: "document-1.tt",
+        fileName: "document-1",
         data: { formData: {} },
         templateIndex: 0,
         ownership: { holderAddress: "", beneficiaryAddress: "" },
       },
     ],
     currentForm: {
-      fileName: "document-1.tt",
+      fileName: "document-1",
       data: { formData: {} },
       templateIndex: 0,
       ownership: { holderAddress: "", beneficiaryAddress: "" },
@@ -139,9 +139,23 @@ describe("dynamicFormLayout", () => {
     );
 
     fireEvent.click(screen.getByTestId("back-button"));
+    fireEvent.click(screen.getByTestId("red-back-button"));
     expect(mockSetActiveFormIndex).toHaveBeenCalled(); // eslint-disable-line jest/prefer-called-with
     expect(mockSetForms).toHaveBeenCalledWith([]);
   });
+  it("should render the document selector", () => {
+    whenActiveFormIsAvailable();
+    render(
+      <MemoryRouter>
+        <DynamicFormLayout />
+      </MemoryRouter>
+    );
+
+    expect(screen.queryAllByTestId("file-name-input")).toHaveLength(1);
+    expect(screen.queryAllByTestId("previous-document-button")).toHaveLength(1);
+    expect(screen.queryAllByTestId("next-document-button")).toHaveLength(1);
+  });
+
   it("should render toggle switch for preview mode", () => {
     whenActiveFormIsAvailable();
     render(

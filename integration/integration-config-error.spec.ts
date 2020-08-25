@@ -1,4 +1,5 @@
 import { Selector } from "testcafe";
+import { loadConfigFile } from "./helper";
 
 fixture("Document Creator").page`http://localhost:3000`;
 
@@ -11,17 +12,17 @@ const ButtonReset = Selector("[data-testid='reset-button']");
 const ErrorCantReadFile = Selector("[data-testid='error-cannot-read-file']");
 const ConfigError = Selector("[data-testid='config-error']");
 
-test("Upload configuration file, choose form, fill form, preview form, submit form correctly", async (t) => {
+test("Upload configuration file with error to test the errors", async (t) => {
   // upload invalid config file(without wallet)
-  await t.setFilesToUpload("input[type=file]", [ConfigWithError]);
+  await loadConfigFile(ConfigWithError);
   await t.expect(ConfigError.textContent).contains("Config is malformed");
 
   // upload invalid file that is not a config file
-  await t.setFilesToUpload("input[type=file]", [ConfigErrorFile]);
+  await loadConfigFile(ConfigErrorFile);
   await t.expect(ErrorCantReadFile.textContent).contains("File cannot be read");
 
   // upload config and reset config file
-  await t.setFilesToUpload("input[type=file]", [Config]);
+  await loadConfigFile(Config);
   await t.expect(Title.textContent).contains("Login with Password");
   await t.click(ButtonReset);
   await t.expect(Title.textContent).contains("Upload Configuration File");

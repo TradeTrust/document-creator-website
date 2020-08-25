@@ -1,22 +1,28 @@
 import React, { FunctionComponent } from "react";
+import { useFormsContext } from "../../../common/context/forms";
+import { ProgressBar } from "../../ProgressBar";
 import { Button } from "../../UI/Button";
 import { SvgIcon, SvgIconArrowLeft } from "../../UI/SvgIcon";
 import { Title } from "../../UI/Title";
-import { ProgressBar } from "../../ProgressBar";
+import { DocumentSelector } from "../DocumentSelector";
 
 interface DynamicFormHeaderProps {
   onBackToFormSelection: () => void;
   onNewForm: () => void;
   onFormSubmit: () => void;
+  validateCurrentForm: () => boolean;
 }
 
 export const DynamicFormHeader: FunctionComponent<DynamicFormHeaderProps> = ({
   onBackToFormSelection,
   onNewForm,
   onFormSubmit,
+  validateCurrentForm,
 }) => {
+  const { forms, activeFormIndex } = useFormsContext();
+
   return (
-    <div className="container mx-auto">
+    <div className="container mx-auto mb-6">
       <div
         onClick={onBackToFormSelection}
         className="text-grey flex cursor-pointer py-4 w-20"
@@ -30,18 +36,22 @@ export const DynamicFormHeader: FunctionComponent<DynamicFormHeaderProps> = ({
       <ProgressBar step={2} />
       <div className="flex justify-between items-end">
         <div className="flex flex-col">
-          <Title className="mb-6">Fill and Preview Form</Title>
+          <Title className="mb-4">Fill and Preview Form</Title>
+          <div className="text-grey-dark text-lg">
+            {`${(activeFormIndex || 0) + 1} of ${forms.length} document(s)`}
+          </div>
+          <DocumentSelector validateCurrentForm={validateCurrentForm} />
         </div>
         <div>
           <Button
-            className="bg-white text-orange px-4 py-3 mb-6"
+            className="bg-white text-orange px-4 py-3"
             onClick={onNewForm}
             data-testid="add-new-button"
           >
             Add New
           </Button>
           <Button
-            className="bg-orange text-white self-end py-3 px-4 mb-6"
+            className="bg-orange text-white self-end py-3 px-4"
             onClick={onFormSubmit}
             data-testid="form-submit-button"
           >

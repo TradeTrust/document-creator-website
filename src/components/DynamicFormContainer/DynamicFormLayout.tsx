@@ -7,19 +7,22 @@ import { Container } from "../Container";
 import { Button } from "../UI/Button";
 import { SvgIcon, SvgIconTrash } from "../UI/SvgIcon";
 import { ToggleSwitch } from "../UI/ToggleSwitch";
+import { BackModal } from "./BackModal";
 import { DeleteModal } from "./DeleteModal";
+import { DocumentPreview } from "./DocumentPreview";
 import { DynamicForm } from "./DynamicForm";
 import { DynamicFormHeader } from "./DynamicFormHeader";
 import { FormErrorBanner } from "./FormErrorBanner";
-import { DocumentPreview } from "./DocumentPreview";
 
 export const DynamicFormLayout: FunctionComponent = () => {
   const [showDeleteModal, setDeleteModal] = useState(false);
+  const [showBackModal, setShowBackModal] = useState(false);
   const [isPreviewMode, setIsPreviewMode] = useState(false);
   const {
     forms,
     setForms,
     setActiveFormIndex,
+    activeFormIndex,
     currentForm,
     currentFormTemplate,
     setCurrentFormData,
@@ -44,11 +47,12 @@ export const DynamicFormLayout: FunctionComponent = () => {
   };
 
   const removeCurrentForm = (): void => {
-    // Remove current form data before going back
+    if (activeFormIndex === undefined) return;
     const nextForms = [...forms];
-    nextForms.splice(nextForms.length - 1, 1);
+    nextForms.splice(activeFormIndex, 1);
     setForms(nextForms);
-    setActiveFormIndex(undefined);
+    const nextActiveFormIndex = nextForms.length > 0 ? nextForms.length - 1 : undefined;
+    setActiveFormIndex(nextActiveFormIndex);
   };
 
   const onNewForm = (): void => {
@@ -68,6 +72,16 @@ export const DynamicFormLayout: FunctionComponent = () => {
     closeDeleteModal();
   };
 
+  const closeBackModal = (): void => {
+    setShowBackModal(false);
+  };
+
+  const deleteAllForms = (): void => {
+    setActiveFormIndex(undefined);
+    setForms([]);
+    closeBackModal();
+  };
+
   const currentUnwrappedData = defaultsDeep(
     {},
     currentForm.data.formData,
@@ -81,10 +95,16 @@ export const DynamicFormLayout: FunctionComponent = () => {
         show={showDeleteModal}
         closeDeleteModal={closeDeleteModal}
       />
+      <BackModal
+        backToFormSelection={deleteAllForms}
+        show={showBackModal}
+        closeBackModal={closeBackModal}
+      />
       <DynamicFormHeader
-        onBackToFormSelection={removeCurrentForm}
+        onBackToFormSelection={() => setShowBackModal(true)}
         onNewForm={onNewForm}
         onFormSubmit={onFormSubmit}
+        validateCurrentForm={validateCurrentForm}
       />
       <div className="bg-lightgrey-lighter p-6">
         <div className="bg-white container mx-auto p-4">

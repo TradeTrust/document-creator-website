@@ -20,13 +20,13 @@ export const PublishedTag: FunctionComponent<PublishedTagProps> = ({ doc }) => {
       </div>
       <div className="flex flex-col">
         <div className="font-bold text-lightgrey-dark">
-          {doc.fileName}
+          {doc.fileName}.tt
           <span className="text-lightgrey-dark text-xs font-regular"> ({size})</span>
         </div>
         <a
           className="text-blue font-bold"
           href={`data:text/json;charset=utf-8,${JSON.stringify(doc.wrappedDocument)}`}
-          download={doc.fileName}
+          download={`${doc.fileName}.tt`}
         >
           Download
         </a>

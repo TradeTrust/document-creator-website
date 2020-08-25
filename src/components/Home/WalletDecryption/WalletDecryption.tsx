@@ -31,7 +31,7 @@ export const WalletDecryption: FunctionComponent<WalletDecryption> = ({
 
   return (
     <Wrapper>
-      <Title>Login with Password</Title>
+      <Title className="mb-8">Login with Password</Title>
       <form className="bg-white flex rounded pt-5 pl-5 pr-4 pb-6">
         <div className="text-grey-dark mr-4 mt-2 font-medium">Password</div>
         <div className="w-full flex flex-col items-start">
