@@ -8,11 +8,8 @@ import {
   PublishingJob,
   RawDocument,
 } from "../../../../types";
-import { getLogger } from "../../../../utils/logger";
 import { getQueueNumber } from "../../../API/storageAPI";
 import { encodeQrCode } from "../../../utils";
-
-const { stack } = getLogger("getPublishQueue");
 
 const QR_CODE_OBJECT = { links: { self: { href: "" } } };
 
@@ -31,14 +28,7 @@ const getReservedStorageUrl = async (
   documentStorage: DocumentStorage,
   network: "homestead" | "ropsten" | "rinkeby"
 ): Promise<ActionsUrlObject> => {
-  let queueNumber;
-
-  try {
-    queueNumber = await getQueueNumber(documentStorage);
-  } catch (e) {
-    stack(e);
-    throw e;
-  }
+  const queueNumber = await getQueueNumber(documentStorage);
 
   const networkUrl = {
     homestead: "",
@@ -71,12 +61,7 @@ export const getRawDocuments = async (
 
       if (config.network !== "local") {
         if (config.documentStorage !== undefined) {
-          try {
-            qrUrl = await getReservedStorageUrl(config.documentStorage, config.network);
-          } catch (e) {
-            stack(e);
-            throw e;
-          }
+          qrUrl = await getReservedStorageUrl(config.documentStorage, config.network);
         }
       }
 
@@ -159,12 +144,6 @@ export const getPublishingJobs = async (
   nonce: number
 ): Promise<PublishingJob[]> => {
   // Currently works for only multiple verifiable document issuance:
-  let rawDocuments;
-  try {
-    rawDocuments = await getRawDocuments(forms, config);
-  } catch (e) {
-    stack(e);
-    throw e;
-  }
+  const rawDocuments = await getRawDocuments(forms, config);
   return groupDocumentsIntoJobs(rawDocuments, nonce);
 };

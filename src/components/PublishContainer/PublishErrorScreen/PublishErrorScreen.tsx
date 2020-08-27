@@ -26,7 +26,7 @@ export const PublishErrorScreen: FunctionComponent<PublishErrorScreen> = ({ erro
       <div className="container mx-auto pt-8">
         <ProgressBar step={3} />
         <div className="flex justify-between items-end">
-          <Title className="flex items-center">
+          <Title className="flex items-center mb-8">
             <SvgIcon className="mr-2 text-teal">
               <SvgIconCheckCircle />
             </SvgIcon>
