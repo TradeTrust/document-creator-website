@@ -31,9 +31,9 @@ const getReservedStorageUrl = async (
   const queueNumber = await getQueueNumber(documentStorage);
 
   const networkUrl = {
-    homestead: "",
-    ropsten: "dev.",
-    rinkeby: "rinkeby",
+    homestead: "https://tradetrust.io/",
+    ropsten: "https://dev.tradetrust.io/",
+    rinkeby: "https://rinkeby.tradetrust.io/",
   } as NetworkUrl;
 
   const qrUrlObj = {
@@ -42,7 +42,7 @@ const getReservedStorageUrl = async (
       uri: `${documentStorage.url}/${queueNumber.data.id}`,
       key: queueNumber.data.key,
       permittedActions: ["STORE"],
-      redirect: `https://${networkUrl[network]}tradetrust.io/`,
+      redirect: networkUrl[network],
     },
   };
 

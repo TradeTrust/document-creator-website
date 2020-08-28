@@ -19,7 +19,7 @@ const configFileSchema = Joi.object({
     )
     .required(),
   documentStorage: Joi.object({
-    apiKey: Joi.string().required(),
+    apiKey: Joi.string(),
     url: Joi.string().required(),
   }),
 });

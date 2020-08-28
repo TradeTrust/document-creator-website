@@ -65,15 +65,6 @@ describe("configFileSchema", () => {
       ).not.toThrow(/missing/);
     });
 
-    it("should throw when apikey is missing", () => {
-      expect(() =>
-        assertConfigFile({
-          ...sample,
-          documentStorage: { ...sample.documentStorage, apiKey: undefined },
-        } as any)
-      ).toThrow(/missing/);
-    });
-
     it("should throw when url is missing", () => {
       expect(() =>
         assertConfigFile({
