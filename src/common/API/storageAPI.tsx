@@ -36,17 +36,18 @@ export const uploadToStorage = async (
   const qrCodeObj = decodeQrCode(doc.rawDocument.links.self.href);
   const uri = qrCodeObj.payload.uri;
 
-  const res = axios
-    .post(uri, {
-      headers: getHeaders(documentStorage),
-      data: {
-        document: doc.wrappedDocument,
-      },
-    })
-    .catch((e) => {
-      console.log(e.toJSON());
-      throw e;
-    });
+  const res = axios({
+    method: "post",
+    url: uri,
+    headers: getHeaders(documentStorage),
+    data: {
+      document: doc.wrappedDocument,
+    },
+  }).catch((e) => {
+    console.log(e.toJSON());
+    console.log(e.response);
+    throw e;
+  });
 
   return res;
 };
