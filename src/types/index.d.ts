@@ -12,16 +12,23 @@ export interface FormTemplate {
   attachments?: Attachments;
 }
 
+export interface DocumentStorage {
+  apiKey: string;
+  url: string;
+}
+
 export interface ConfigFile {
   network: Network;
   wallet: string;
   forms: FormTemplate[];
+  documentStorage?: DocumentStorage;
 }
 
 export interface Config {
   network: Network;
   wallet: Wallet;
   forms: FormTemplate[];
+  documentStorage?: DocumentStorage;
 }
 
 interface Attachments {
@@ -83,4 +90,13 @@ export interface PublishingJob {
 export interface FailedJobErrors {
   documents: WrappedDocument[];
   error: Error;
+}
+
+export interface ActionsUrlObject {
+  links: { self: { href: string } };
+}
+
+export interface QueueNumberResponse {
+  id: string;
+  key: string;
 }

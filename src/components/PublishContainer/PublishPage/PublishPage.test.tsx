@@ -58,11 +58,7 @@ const whenPublishStateIsConfirmed = (): void => {
   });
 };
 
-const whenNoConfig = (): void => {
-  mockUseConfigContext.mockReturnValue({ config: undefined });
-};
-
-const whenNoCurrentForm = (): void => {
+const whenPublishStateIsError = (): void => {
   mockUseConfigContext.mockReturnValue({ config: sampleConfig });
   mockUseFormsContext.mockReturnValue({
     activeFormIndex: 0,
@@ -75,25 +71,47 @@ const whenNoCurrentForm = (): void => {
         templateIndex: 0,
       },
     ],
-    currentForm: undefined,
+    currentForm: {
+      fileName: "document-1",
+      data: { formData: {} },
+      templateIndex: 0,
+    },
   });
   mockUsePublishQueue.mockReturnValue({
     publish: mockPublish,
-    publishState: "CONFIRMED",
-    publishedDocuments: [
+    publishState: "ERROR",
+    publishedDocuments: [],
+    failedPublishedDocuments: [],
+  });
+};
+
+const whenNoConfig = (): void => {
+  mockUseConfigContext.mockReturnValue({ config: undefined });
+};
+
+const whenPublishStateIsPending = (): void => {
+  mockUseConfigContext.mockReturnValue({ config: sampleConfig });
+  mockUseFormsContext.mockReturnValue({
+    activeFormIndex: 0,
+    setForms: mockSetForms,
+    setActiveFormIndex: mockSetActiveFormIndex,
+    forms: [
       {
-        contractAddress: "",
-        fileName: "Document-1",
-        payload: {},
-        type: "VERIFIABLE_DOCUMENT",
-        rawDocument: {},
-        wrappedDocument: {
-          data: {},
-          signature: {},
-          version: "",
-        },
+        fileName: "document-1",
+        data: { formData: {} },
+        templateIndex: 0,
       },
     ],
+    currentForm: {
+      fileName: "document-1",
+      data: { formData: {} },
+      templateIndex: 0,
+    },
+  });
+  mockUsePublishQueue.mockReturnValue({
+    publish: mockPublish,
+    publishState: "PENDING_CONFIRMATION",
+    publishedDocuments: [],
     failedPublishedDocuments: [],
   });
 };
@@ -111,14 +129,16 @@ describe("publishContainer", () => {
   });
 
   it("should display the publishing screen when publishing document", () => {
-    whenNoCurrentForm();
+    whenPublishStateIsPending();
     render(
       <MemoryRouter>
         <PublishContainer />
       </MemoryRouter>
     );
 
-    expect(screen.queryAllByText(/Document(s) issued successfully/)).toHaveLength(0);
+    expect(
+      screen.queryAllByText(/Please wait while we are publishing the document(s)./)
+    ).toHaveLength(0);
   });
 
   it("should display the published screen when documents are published", () => {
@@ -131,5 +151,16 @@ describe("publishContainer", () => {
 
     expect(screen.queryAllByText("Document(s) issued successfully")).toHaveLength(1);
     expect(screen.queryAllByText("Document-1.tt")).toHaveLength(1);
+  });
+
+  it("should display the publish error screen when there is an error", () => {
+    whenPublishStateIsError();
+    render(
+      <MemoryRouter>
+        <PublishContainer />
+      </MemoryRouter>
+    );
+
+    expect(screen.queryAllByText(/Failed to publish due to:/)).toHaveLength(1);
   });
 });

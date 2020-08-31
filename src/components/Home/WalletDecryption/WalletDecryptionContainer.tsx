@@ -10,6 +10,10 @@ export const WalletDecryptionContainer: FunctionComponent = () => {
   const [isIncorrectPassword, setIsIncorrectPassword] = useState(false);
   const { configFile, setConfigFile } = usePersistedConfigFile();
 
+  const onResetConfigFile = (): void => {
+    setConfigFile();
+  };
+
   const onDecryptConfigFile = async (password: string): Promise<void> => {
     if (!configFile) return;
     try {
@@ -21,6 +25,7 @@ export const WalletDecryptionContainer: FunctionComponent = () => {
         network: configFile.network,
         wallet,
         forms: configFile.forms,
+        documentStorage: configFile.documentStorage,
       });
     } catch (e) {
       setIsIncorrectPassword(true);
@@ -33,7 +38,7 @@ export const WalletDecryptionContainer: FunctionComponent = () => {
       isIncorrectPassword={isIncorrectPassword}
       isDecrypting={isDecrypting}
       onDecryptConfigFile={onDecryptConfigFile}
-      onResetConfigFile={setConfigFile}
+      onResetConfigFile={onResetConfigFile}
     />
   );
 };

@@ -26,6 +26,12 @@ describe("configFileSchema", () => {
     ).toThrow(/must be one of/);
   });
 
+  describe("wallet", () => {
+    it("should throw when network is missing", () => {
+      expect(() => assertConfigFile({ ...sample, network: undefined } as any)).toThrow(/missing/);
+    });
+  });
+
   describe("forms", () => {
     it("should throw when defaults is missing", () => {
       expect(() =>
@@ -47,9 +53,24 @@ describe("configFileSchema", () => {
         assertConfigFile({ ...sample, forms: [{ ...sample.forms[0], name: undefined }] } as any)
       ).toThrow(/missing/);
     });
-    it("should throw when network is missing", () => {
+  });
+
+  describe("documentStorage", () => {
+    it("should not throw when documentStorage is missing", () => {
       expect(() =>
-        assertConfigFile({ ...sample, forms: [{ ...sample.forms[0], network: undefined }] } as any)
+        assertConfigFile({
+          ...sample,
+          documentStorage: undefined,
+        } as any)
+      ).not.toThrow(/missing/);
+    });
+
+    it("should throw when url is missing", () => {
+      expect(() =>
+        assertConfigFile({
+          ...sample,
+          documentStorage: { ...sample.documentStorage, url: undefined },
+        } as any)
       ).toThrow(/missing/);
     });
   });

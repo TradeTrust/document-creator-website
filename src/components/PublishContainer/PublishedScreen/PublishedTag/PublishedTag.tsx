@@ -1,3 +1,4 @@
+import { saveAs } from "file-saver";
 import prettyBytes from "pretty-bytes";
 import React, { FunctionComponent } from "react";
 import { WrappedDocument } from "../../../../types";
@@ -12,7 +13,9 @@ const getFileSize = (jsonString: string): number => {
 };
 
 export const PublishedTag: FunctionComponent<PublishedTagProps> = ({ doc }) => {
-  const size = prettyBytes(getFileSize(JSON.stringify(doc.wrappedDocument)));
+  const file = JSON.stringify(doc.wrappedDocument);
+  const size = prettyBytes(getFileSize(file));
+  const blob = new Blob([file], { type: "text/json;charset=utf-8" });
   return (
     <div className="mt-4 flex rounded bg-white p-3 w-72 border border-solid border-lightgrey mr-4">
       <div className="rounded-full bg-blue mr-4 w-12 h-12 text-white font-bold flex justify-center items-center">
@@ -23,13 +26,13 @@ export const PublishedTag: FunctionComponent<PublishedTagProps> = ({ doc }) => {
           {doc.fileName}.tt
           <span className="text-lightgrey-dark text-xs font-regular"> ({size})</span>
         </div>
-        <a
-          className="text-blue font-bold"
-          href={`data:text/json;charset=utf-8,${JSON.stringify(doc.wrappedDocument)}`}
-          download={`${doc.fileName}.tt`}
+        <div
+          className="text-blue font-bold cursor-pointer"
+          data-testid="download-file-button"
+          onClick={() => saveAs(blob, doc.fileName + ".tt")}
         >
           Download
-        </a>
+        </div>
       </div>
     </div>
   );

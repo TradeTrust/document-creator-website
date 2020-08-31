@@ -18,6 +18,10 @@ const configFileSchema = Joi.object({
       })
     )
     .required(),
+  documentStorage: Joi.object({
+    apiKey: Joi.string(),
+    url: Joi.string().required(),
+  }),
 });
 
 export const validateConfigFile = configFileSchema.validate;
