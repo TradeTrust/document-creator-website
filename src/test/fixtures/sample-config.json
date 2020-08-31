@@ -530,6 +530,135 @@
         "allow": true,
         "accept": ".pdf, .json"
       }
+    },
+    {
+      "name": "Covering Letter (GT)",
+      "type": "VERIFIABLE_DOCUMENT",
+      "defaults": {
+        "$template": {
+          "type": "EMBEDDED_RENDERER",
+          "name": "COVERING_LETTER",
+          "url": "https://generic-templates.openattestation.com"
+        },
+        "issuers": [
+          {
+            "name": "Demo Issuer",
+            "documentStore": "0x8bA63EAB43342AAc3AdBB4B827b68Cf4aAE5Caca",
+            "identityProof": {
+              "type": "DNS-TXT",
+              "location": "demo-tradetrust.openattestation.com"
+            }
+          }
+        ],
+        "name": "Covering Letter",
+        "logo": "https://www.aretese.com/images/govtech-animated-logo.gif",
+        "title": "Documents Bundle",
+        "description": "Some very important documents in here for some submission"
+      },
+      "schema": {
+        "type": "object",
+        "properties": {
+          "title": {
+            "type": "string",
+            "title": "Document Title"
+          },
+          "description": {
+            "type": "string",
+            "title": "Document Description"
+          }
+        }
+      },
+      "attachments": {
+        "allow": true
+      }
+    },
+    {
+      "name": "Covering Letter (DBS)",
+      "type": "VERIFIABLE_DOCUMENT",
+      "defaults": {
+        "$template": {
+          "type": "EMBEDDED_RENDERER",
+          "name": "COVERING_LETTER",
+          "url": "https://generic-templates.openattestation.com"
+        },
+        "issuers": [
+          {
+            "name": "Demo Issuer",
+            "documentStore": "0x8bA63EAB43342AAc3AdBB4B827b68Cf4aAE5Caca",
+            "identityProof": {
+              "type": "DNS-TXT",
+              "location": "demo-tradetrust.openattestation.com"
+            }
+          }
+        ],
+        "name": "Covering Letter",
+        "logo": "https://pluspng.com/img-png/logo-dbs-png-file-dbs-bank-logo-svg-1280.png",
+        "backgroundColor": "black",
+        "titleColor": "white",
+        "descriptionColor": "white",
+        "title": "Documents Bundle",
+        "description": "Some very important documents in here for some submission"
+      },
+      "schema": {
+        "type": "object",
+        "properties": {
+          "title": {
+            "type": "string",
+            "title": "Document Title"
+          },
+          "description": {
+            "type": "string",
+            "title": "Document Description"
+          }
+        }
+      },
+      "attachments": {
+        "allow": true
+      }
+    },
+    {
+      "name": "Covering Letter (ERROR)",
+      "type": "VERIFIABLE_DOCUMENT",
+      "defaults": {
+        "$template": {
+          "type": "COVERING_LETTER",
+          "name": "custom",
+          "url": "https://generic-templates.openattestation.com"
+        },
+        "issuers": [
+          {
+            "name": "Demo Issuer",
+            "documentStore": "0x8bA63EAB43342AAc3AdBB4B827b68Cf4aAE5Caca",
+            "identityProof": {
+              "type": "DNS-TXT",
+              "location": "demo-tradetrust.openattestation.com"
+            }
+          }
+        ],
+        "name": "Covering Letter",
+        "logo": "https://pluspng.com/img-png/logo-dbs-png-file-dbs-bank-logo-svg-1280.png",
+        "backgroundColor": "black",
+        "titleColor": "white",
+        "descriptionColor": "white",
+        "title": "Documents Bundle",
+        "description": "Some very important documents in here for some submission"
+      },
+      "schema": {
+        "type": "object",
+        "properties": {
+          "title": {
+            "type": "string",
+            "title": "Document Title"
+          },
+          "description": {
+            "type": "string",
+            "title": "Document Description"
+          }
+        }
+      },
+      "attachments": {
+        "allow": true
+      }
     }
   ],
   "documentStorage": {

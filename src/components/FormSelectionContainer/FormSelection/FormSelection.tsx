@@ -29,11 +29,11 @@ export const FormSelection: FunctionComponent<FormSelection> = ({ className, con
         <Wrapper>
           <ProgressBar step={1} />
           <Title className="mb-8">Choose Document Type to Issue</Title>
-          <div className="flex w-full">
+          <div className="flex flex-wrap justify-start">
             {config.forms.map((form: FormTemplate, index: number) => {
               return (
                 <Button
-                  className="bg-white text-grey-dark hover:text-blue w-full p-4"
+                  className="bg-white text-grey-dark hover:text-blue w-40 p-4 mb-4 mr-4"
                   role="button"
                   key={index}
                   onClick={() => selectedForm(index)}

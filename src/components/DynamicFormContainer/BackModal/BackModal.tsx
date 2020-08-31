@@ -28,7 +28,7 @@ export const BackModal: FunctionComponent<BackModalProps> = ({
             <div className="mt-16">
               <div className="flex justify-end">
                 <Button
-                  className="py-3 px-4 text-grey border border-solid border-lightgrey"
+                  className="py-3 px-4 text-grey border border-solid border-lightgrey mr-4"
                   onClick={closeBackModal}
                   data-testid="cancel-form-button"
                 >
