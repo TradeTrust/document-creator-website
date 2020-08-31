@@ -1,6 +1,6 @@
 import React, { FunctionComponent } from "react";
-import { Button } from "../../UI/Button";
 import { ModalDialog } from "../../ModalDialog";
+import { Button } from "../../UI/Button";
 
 interface DeleteModalProps {
   deleteForm: () => void;
@@ -25,7 +25,7 @@ export const DeleteModal: FunctionComponent<DeleteModalProps> = ({
             <div className="mt-16">
               <div className="flex justify-end">
                 <Button
-                  className="py-3 px-4 text-grey border border-solid border-lightgrey"
+                  className="py-3 px-4 text-grey border border-solid border-lightgrey mr-4"
                   onClick={closeDeleteModal}
                   data-testid="cancel-form-button"
                 >

@@ -64,7 +64,7 @@ export const PublishedScreen: FunctionComponent<PublishScreen> = ({
               : "Document(s) failed to issue"}
           </Title>
           <div>
-            <Button className="bg-white text-orange px-4 py-3 mb-6" onClick={createAnotherDoc}>
+            <Button className="bg-white text-orange px-4 py-3 mb-6 mr-4" onClick={createAnotherDoc}>
               Create another Document
             </Button>
             <Button
