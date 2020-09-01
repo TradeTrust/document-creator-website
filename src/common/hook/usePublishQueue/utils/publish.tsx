@@ -11,8 +11,6 @@ import {
 import { getQueueNumber } from "../../../API/storageAPI";
 import { encodeQrCode } from "../../../utils";
 
-const QR_CODE_OBJECT = { links: { self: { href: "" } } };
-
 interface QueueNumberTypes {
   id: string;
   key: string;
@@ -46,9 +44,15 @@ const getReservedStorageUrl = async (
     },
   };
 
-  QR_CODE_OBJECT.links.self.href = encodeQrCode(qrUrlObj);
+  const qrCodeObject = {
+    links: {
+      self: {
+        href: encodeQrCode(qrUrlObj),
+      },
+    },
+  };
 
-  return QR_CODE_OBJECT;
+  return qrCodeObject;
 };
 
 export const getRawDocuments = async (
