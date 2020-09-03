@@ -1,0 +1,62 @@
+import React, { useState, useEffect } from "react";
+import styled from "@emotion/styled";
+import { vars } from "../../../styles";
+import { SvgIcon, SvgIconX } from "../SvgIcon";
+
+const NetworkWrap = styled.div`
+  background-color: #001f29;
+  color: ${vars.white};
+  padding: 8px 0;
+
+  .network {
+    text-transform: capitalize;
+  }
+
+  svg {
+    cursor: pointer;
+
+    &:hover {
+      color: ${vars.grey};
+    }
+  }
+`;
+
+interface NetworkBarProps {
+  network?: string;
+}
+
+export const NetworkBar: React.FunctionComponent<NetworkBarProps> = ({
+  network,
+}: NetworkBarProps) => {
+  const [show, setShow] = useState(false);
+
+  useEffect(() => {
+    if (network) {
+      setShow(true);
+    } else {
+      setShow(false);
+    }
+  }, [network]);
+
+  if (!show) return null;
+
+  return (
+    <NetworkWrap data-testid="network-bar">
+      <div className="container mx-auto">
+        <div className="flex flex-wrap">
+          <div className="col-auto ml-auto">
+            <p className="mb-0">
+              You are currently on <span className="network">{network}</span> network. To change it,
+              please upload a new config file.
+            </p>
+          </div>
+          <div className="col-auto ml-auto">
+            <SvgIcon onClick={() => setShow(false)}>
+              <SvgIconX />
+            </SvgIcon>
+          </div>
+        </div>
+      </div>
+    </NetworkWrap>
+  );
+};
