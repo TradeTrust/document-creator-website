@@ -51,6 +51,7 @@ module.exports = {
         lighter: "#68d391",
         default: "#48bb78",
         dark: "#38a169",
+        darker: "#001f29",
       },
       teal: {
         lighter: "#e5f9f8",

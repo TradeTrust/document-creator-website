@@ -17,6 +17,7 @@ export const orangeLighter = `${fullConfig.theme.colors.orange.lighter}`;
 export const green = `${fullConfig.theme.colors.green.default}`;
 export const greenLighter = `${fullConfig.theme.colors.green.lighter}`;
 export const greenDark = `${fullConfig.theme.colors.green.dark}`;
+export const greenDarker = `${fullConfig.theme.colors.green.darker}`;
 export const red = `${fullConfig.theme.colors.red.default}`;
 export const redDark = `${fullConfig.theme.colors.red.dark}`;
 export const redLighter = `${fullConfig.theme.colors.red.lighter}`;
