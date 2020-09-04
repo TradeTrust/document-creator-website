@@ -150,7 +150,7 @@ describe("publishContainer", () => {
     );
 
     expect(screen.queryAllByText("Document(s) issued successfully")).toHaveLength(1);
-    expect(screen.queryAllByText("Document-1.tt")).toHaveLength(1);
+    expect(screen.queryAllByText("Document-1-ropsten.tt")).toHaveLength(1);
   });
 
   it("should display the publish error screen when there is an error", () => {
