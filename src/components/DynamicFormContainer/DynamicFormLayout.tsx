@@ -134,7 +134,9 @@ export const DynamicFormLayout: FunctionComponent = () => {
               <DynamicForm
                 schema={formSchema}
                 form={currentForm}
+                forms={forms}
                 type={currentFormTemplate.type}
+                setForms={setForms}
                 setFormData={setCurrentFormData}
                 setOwnership={setCurrentFormOwnership}
                 attachmentAccepted={attachmentAccepted}

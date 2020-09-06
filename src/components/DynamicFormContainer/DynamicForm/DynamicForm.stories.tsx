@@ -47,11 +47,15 @@ export default {
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const Default = () => {
   const [formData, setFormData] = useState<any>();
+  const [forms, setForms] = useState<any>();
+
   return (
     <DynamicForm
       schema={form.schema}
       form={formData}
+      forms={forms}
       setFormData={setFormData}
+      setForms={setForms}
       // eslint-disable-next-line @typescript-eslint/no-empty-function
       setOwnership={() => {}}
       attachmentAccepted={true}

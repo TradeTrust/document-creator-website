@@ -16,9 +16,9 @@ export const DataFileButton: FunctionComponent<DataFileButton> = ({ onDataFile }
     try {
       const file = files[0];
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      const config = await readFileAsJson<any>(file);
+      const data = await readFileAsJson<any>(file);
       setError(false);
-      onDataFile(config);
+      onDataFile(data);
     } catch (e) {
       stack(e);
       setError(true);
