@@ -2,6 +2,7 @@ import React from "react";
 import {
   SvgIcon,
   SvgIconArrowLeft,
+  SvgIconArrowRight,
   SvgIconCheckCircle,
   SvgIconDownload,
   SvgIconLeftArrowBracket,
@@ -23,6 +24,12 @@ export default {
 export const ArrowLeft = () => (
   <SvgIcon>
     <SvgIconArrowLeft />
+  </SvgIcon>
+);
+
+export const ArrowRight = () => (
+  <SvgIcon>
+    <SvgIconArrowRight />
   </SvgIcon>
 );
 
