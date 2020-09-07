@@ -11,6 +11,10 @@ module.exports = {
       medium: 500,
       bold: 700,
     },
+    minWidth: {
+      "0": "0",
+      xs: "18rem",
+    },
     extend: {
       spacing: {
         "72": "18rem",
