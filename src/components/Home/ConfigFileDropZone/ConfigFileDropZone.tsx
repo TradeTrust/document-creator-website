@@ -5,7 +5,6 @@ import { ConfigFile } from "../../../types";
 import { getLogger } from "../../../utils/logger";
 import { Button } from "../../UI/Button";
 import { Title } from "../../UI/Title";
-import { Wrapper } from "../../UI/Wrapper";
 
 const { stack } = getLogger("ConfigFileDropZone");
 interface ConfigFileDropZone {
@@ -41,7 +40,7 @@ export const ConfigFileDropZone: FunctionComponent<ConfigFileDropZone> = ({
         }`;
 
   return (
-    <Wrapper>
+    <>
       <Title className="mb-8">Upload Configuration File</Title>
       <div {...getRootProps()}>
         <input data-testid="config-file-drop-zone" {...getInputProps()} />
@@ -70,6 +69,6 @@ export const ConfigFileDropZone: FunctionComponent<ConfigFileDropZone> = ({
           </Button>
         </div>
       </div>
-    </Wrapper>
+    </>
   );
 };

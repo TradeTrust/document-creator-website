@@ -43,6 +43,15 @@ export const SvgIconArrowLeft: FunctionComponent = () => {
   );
 };
 
+export const SvgIconArrowRight: FunctionComponent = () => {
+  return (
+    <g className="arrow-right">
+      <line x1="19" y1="12" x2="5" y2="12" />
+      <polyline points="12 5 19 12 12 19" />
+    </g>
+  );
+};
+
 export const SvgIconCheckCircle: FunctionComponent = () => {
   return (
     <g className="check-circle">
