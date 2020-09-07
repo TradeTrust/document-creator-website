@@ -1,6 +1,6 @@
 import styled from "@emotion/styled";
 import { cloneDeep, defaultsDeep } from "lodash";
-import React, { FunctionComponent, useEffect } from "react";
+import React, { FunctionComponent } from "react";
 import JsonForm from "react-jsonschema-form";
 import tw from "twin.macro";
 import { mixin } from "../../../styles";

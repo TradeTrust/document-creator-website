@@ -68,16 +68,6 @@ export const FormsContextProvider: FunctionComponent = ({ children }) => {
     setForms(nextForms);
   };
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const setMultipleFormData = (data: any): void => {
-    if (activeFormIndex === undefined)
-      throw new Error("Trying to set form when there is no activeFormIndex");
-    const nextForms = [...forms];
-    const currentForm = forms[activeFormIndex];
-    nextForms.splice(activeFormIndex, 1, { ...currentForm, data });
-    setForms(nextForms);
-  };
-
   const setCurrentFormOwnership = ({ beneficiaryAddress, holderAddress }: Ownership): void => {
     if (activeFormIndex === undefined)
       throw new Error("Trying to set form when there is no activeFormIndex");
