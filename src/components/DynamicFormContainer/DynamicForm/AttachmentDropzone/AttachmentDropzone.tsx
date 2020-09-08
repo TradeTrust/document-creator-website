@@ -4,6 +4,7 @@ import { FileUploadType } from "../../../../types";
 import { Button } from "../../../UI/Button";
 import { FilesInfo } from "./FilesInfo";
 
+// 5MB is 5242880 bytes as 1MB is 1048576 bytes
 const MAX_FILE_SIZE = 5242880;
 const BYTE_CONVERTION_RATE = 1048576;
 
