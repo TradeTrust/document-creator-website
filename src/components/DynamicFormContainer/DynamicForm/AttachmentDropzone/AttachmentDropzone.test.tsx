@@ -96,7 +96,7 @@ describe("attachmentDropzone", () => {
     });
   });
 
-  it("should show error when the total file size is over 20MB", async () => {
+  it("should show error when the total file size is over 5MB", async () => {
     atobSpy.mockImplementation(() => ({ length: 123000000 }));
 
     render(

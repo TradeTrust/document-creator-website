@@ -4,7 +4,9 @@ import { FileUploadType } from "../../../../types";
 import { Button } from "../../../UI/Button";
 import { FilesInfo } from "./FilesInfo";
 
-const MAX_FILE_SIZE = 20971520;
+// 5MB is 5242880 bytes as 1MB is 1048576 bytes
+const MAX_FILE_SIZE = 5242880;
+const BYTE_CONVERTION_RATE = 1048576;
 
 interface AttachmentDropzone {
   acceptedFormat: string;
@@ -69,6 +71,9 @@ export const AttachmentDropzone: FunctionComponent<AttachmentDropzone> = ({
       data-testid="attachment-dropzone"
     >
       <legend>Attachments</legend>
+      <div className="text-grey-dark">
+        Max. total file size: {MAX_FILE_SIZE / BYTE_CONVERTION_RATE}MB
+      </div>
       <div data-testid="attachment-upload-zone" className="mt-4" {...getRootProps()}>
         <input data-testid="attachment-file-drop-zone" {...getInputProps()} />
         <div className={dropZoneCSS}>
@@ -83,7 +88,7 @@ export const AttachmentDropzone: FunctionComponent<AttachmentDropzone> = ({
           {fileSizeError && (
             <>
               <div className="max-w-lg text-red font-bold text-lg" data-testid="file-size-error">
-                Error: Total attachment file size exceeds 20MB
+                Error: Total attachment file size exceeds {MAX_FILE_SIZE / BYTE_CONVERTION_RATE}MB
               </div>
               <div className="text-base text-grey-dark my-4">
                 Please try again with a smaller file size.
