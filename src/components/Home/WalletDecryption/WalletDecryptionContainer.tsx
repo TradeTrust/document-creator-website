@@ -6,9 +6,9 @@ import { WalletDecryption } from "./WalletDecryption";
 
 export const WalletDecryptionContainer: FunctionComponent = () => {
   const { setConfig } = useConfigContext();
-  const [isDecrypting, setIsDecrypting] = useState(false);
   const [isIncorrectPassword, setIsIncorrectPassword] = useState(false);
   const { configFile, setConfigFile } = usePersistedConfigFile();
+  const [decryptProgress, setDecryptProgress] = useState<number>(0);
 
   const onResetConfigFile = (): void => {
     setConfigFile();
@@ -18,9 +18,9 @@ export const WalletDecryptionContainer: FunctionComponent = () => {
     if (!configFile) return;
     try {
       setIsIncorrectPassword(false);
-      setIsDecrypting(true);
-      const wallet = await decryptWallet(configFile, password);
-      setIsDecrypting(false);
+      const wallet = await decryptWallet(configFile, password, (progress) => {
+        setDecryptProgress(progress);
+      });
       setConfig({
         network: configFile.network,
         wallet,
@@ -29,14 +29,13 @@ export const WalletDecryptionContainer: FunctionComponent = () => {
       });
     } catch (e) {
       setIsIncorrectPassword(true);
-      setIsDecrypting(false);
     }
   };
 
   return (
     <WalletDecryption
+      decryptProgress={decryptProgress}
       isIncorrectPassword={isIncorrectPassword}
-      isDecrypting={isDecrypting}
       onDecryptConfigFile={onDecryptConfigFile}
       onResetConfigFile={onResetConfigFile}
     />

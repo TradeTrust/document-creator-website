@@ -12,7 +12,7 @@ export default {
 export const Default = () => (
   <Container>
     <WalletDecryption
-      isDecrypting={false}
+      decryptProgress={0}
       isIncorrectPassword={false}
       onDecryptConfigFile={alert}
       onResetConfigFile={() => alert("Reset")}
@@ -23,7 +23,7 @@ export const Default = () => (
 export const Decrypting = () => (
   <Container>
     <WalletDecryption
-      isDecrypting={true}
+      decryptProgress={0.75}
       isIncorrectPassword={false}
       onDecryptConfigFile={alert}
       onResetConfigFile={() => alert("Reset")}
@@ -34,7 +34,7 @@ export const Decrypting = () => (
 export const Error = () => (
   <Container>
     <WalletDecryption
-      isDecrypting={false}
+      decryptProgress={0}
       onDecryptConfigFile={alert}
       onResetConfigFile={() => alert("Reset")}
       isIncorrectPassword={true}
