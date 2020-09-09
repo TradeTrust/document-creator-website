@@ -4,11 +4,15 @@ import React, { FunctionComponent } from "react";
 import JsonForm from "react-jsonschema-form";
 import tw from "twin.macro";
 import { mixin } from "../../../styles";
-import { FileUploadType, FormTemplate, FormEntry, FormType, Ownership } from "../../../types";
+import { FileUploadType, FormEntry, FormTemplate, FormType, Ownership } from "../../../types";
 import { DataFileButton } from "../DataFileButton";
 import { TransferableRecordForm } from "../TransferableRecordForm";
 import { AttachmentDropzone } from "./AttachmentDropzone";
-import { CustomFieldTemplate, CustomObjectFieldTemplate } from "./CustomTemplates";
+import {
+  CustomFieldTemplate,
+  CustomObjectFieldTemplate,
+  CustomTextareaWidget,
+} from "./CustomTemplates";
 
 export interface DynamicFormProps {
   schema: FormTemplate["schema"];
@@ -66,6 +70,12 @@ export const DynamicFormRaw: FunctionComponent<DynamicFormProps> = ({
     setAttachments(nextAttachment);
   };
 
+  const uiSchema = data.formData.uiSchema || {};
+
+  const widgets = {
+    TextareaWidget: CustomTextareaWidget,
+  };
+
   return (
     <div className={`${className} max-w-screen-sm mx-auto mt-6`}>
       {isTransferableRecord && (
@@ -91,6 +101,8 @@ export const DynamicFormRaw: FunctionComponent<DynamicFormProps> = ({
       </div>
       <JsonForm
         schema={schema}
+        uiSchema={uiSchema}
+        widgets={widgets}
         onChange={setFormData}
         formData={data?.formData}
         ObjectFieldTemplate={CustomObjectFieldTemplate}
