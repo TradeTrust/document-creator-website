@@ -1,6 +1,8 @@
 import React, { ChangeEvent, FunctionComponent } from "react";
 import { WidgetProps } from "react-jsonschema-form";
 
+// This component has the same implementation as the default textarea widget in react-jsonschema-form.
+// We want to keep most of the default behaviour of this widget and just edit the styling of the component.
 export const CustomTextareaWidget: FunctionComponent<WidgetProps> = ({
   id,
   options,

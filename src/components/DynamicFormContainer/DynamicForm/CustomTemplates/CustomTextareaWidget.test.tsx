@@ -40,6 +40,6 @@ describe("customTextareaWidget", () => {
     render(<CustomTextareaWidget {...propsToPassIntoWidget()} />);
 
     expect(screen.queryAllByText("some default text")).toHaveLength(1);
-    expect(screen.queryAllByText("some placeholder text")).toHaveLength(0);
+    expect(screen.queryAllByPlaceholderText("some placeholder text")).toHaveLength(1);
   });
 });
