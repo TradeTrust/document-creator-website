@@ -553,7 +553,12 @@
         "name": "Covering Letter",
         "logo": "https://www.aretese.com/images/govtech-animated-logo.gif",
         "title": "Documents Bundle",
-        "description": "Some very important documents in here for some submission"
+        "remarks": "Some very important documents in here for some submission",
+        "uiSchema": {
+          "remarks": {
+            "ui:widget": "textarea"
+          }
+        }
       },
       "schema": {
         "type": "object",
@@ -562,9 +567,9 @@
             "type": "string",
             "title": "Document Title"
           },
-          "description": {
+          "remarks": {
             "type": "string",
-            "title": "Document Description"
+            "title": "Remarks"
           }
         }
       },
@@ -595,9 +600,14 @@
         "logo": "https://pluspng.com/img-png/logo-dbs-png-file-dbs-bank-logo-svg-1280.png",
         "backgroundColor": "black",
         "titleColor": "white",
-        "descriptionColor": "white",
+        "remarksColor": "white",
         "title": "Documents Bundle",
-        "description": "Some very important documents in here for some submission"
+        "remarks": "Some very important documents in here for some submission",
+        "uiSchema": {
+          "remarks": {
+            "ui:widget": "textarea"
+          }
+        }
       },
       "schema": {
         "type": "object",
@@ -606,9 +616,9 @@
             "type": "string",
             "title": "Document Title"
           },
-          "description": {
+          "remarks": {
             "type": "string",
-            "title": "Document Description"
+            "title": "Remarks"
           }
         }
       },
@@ -639,20 +649,25 @@
         "logo": "https://pluspng.com/img-png/logo-dbs-png-file-dbs-bank-logo-svg-1280.png",
         "backgroundColor": "black",
         "titleColor": "white",
-        "descriptionColor": "white",
+        "remarksColor": "white",
         "title": "Documents Bundle",
-        "description": "Some very important documents in here for some submission"
+        "remarks": "Some very important documents in here for some submission",
+        "uiSchema": {
+          "remarks": {
+            "ui:widget": "textarea"
+          }
+        }
       },
       "schema": {
         "type": "object",
         "properties": {
           "title": {
             "type": "string",
-            "title": "Document Title"
+            "title": "Title"
           },
-          "description": {
+          "remarks": {
             "type": "string",
-            "title": "Document Description"
+            "title": "Remarks"
           }
         }
       },
