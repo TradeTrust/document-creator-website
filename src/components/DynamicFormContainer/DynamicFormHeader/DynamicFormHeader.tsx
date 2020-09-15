@@ -2,7 +2,7 @@ import React, { FunctionComponent } from "react";
 import { useFormsContext } from "../../../common/context/forms";
 import { ProgressBar } from "../../ProgressBar";
 import { Button } from "../../UI/Button";
-import { SvgIcon, SvgIconArrowLeft } from "../../UI/SvgIcon";
+import { ArrowLeft } from "react-feather";
 import { Title } from "../../UI/Title";
 import { DocumentSelector } from "../DocumentSelector";
 
@@ -28,9 +28,7 @@ export const DynamicFormHeader: FunctionComponent<DynamicFormHeaderProps> = ({
         className="text-grey flex cursor-pointer py-4 w-20"
         data-testid="back-button"
       >
-        <SvgIcon>
-          <SvgIconArrowLeft />
-        </SvgIcon>
+        <ArrowLeft />
         <div className="pl-2">Back</div>
       </div>
       <ProgressBar step={2} />

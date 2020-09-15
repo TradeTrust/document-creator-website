@@ -5,7 +5,7 @@ import { Redirect } from "react-router";
 import { useFormsContext } from "../../common/context/forms";
 import { Container } from "../Container";
 import { Button } from "../UI/Button";
-import { SvgIcon, SvgIconTrash } from "../UI/SvgIcon";
+import { Trash2 } from "react-feather";
 import { ToggleSwitch } from "../UI/ToggleSwitch";
 import { BackModal } from "./BackModal";
 import { DeleteModal } from "./DeleteModal";
@@ -118,9 +118,7 @@ export const DynamicFormLayout: FunctionComponent = () => {
             </div>
             <Button data-testid="delete-button" onClick={() => setDeleteModal(true)}>
               <div className="rounded w-12 h-12 border border-solid border-lightgrey flex items-center justify-center">
-                <SvgIcon className="text-lightgrey-dark">
-                  <SvgIconTrash />
-                </SvgIcon>
+                <Trash2 className="text-lightgrey-dark" />
               </div>
             </Button>
           </div>

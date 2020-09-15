@@ -1,6 +1,6 @@
 import React, { FunctionComponent } from "react";
 import { useFormsContext } from "../../../common/context/forms";
-import { SvgIcon, SvgIconLeftArrowBracket, SvgIconRightArrowBracket } from "../../UI/SvgIcon";
+import { ChevronLeft, ChevronRight } from "react-feather";
 
 interface DocumentSelector {
   validateCurrentForm: () => boolean;
@@ -31,9 +31,7 @@ export const DocumentSelector: FunctionComponent<DocumentSelector> = ({ validate
         onClick={previousDocument}
         className="cursor-pointer border border-solid border-grey-lighter h-12 w-12 bg-lightgrey-lighter active:bg-lightgrey border-r-0 flex items-center justify-center"
       >
-        <SvgIcon className="flex items-center justify-center">
-          <SvgIconLeftArrowBracket />
-        </SvgIcon>
+        <ChevronLeft className="flex items-center justify-center" />
       </div>
       <input
         data-testid="file-name-input"
@@ -48,9 +46,7 @@ export const DocumentSelector: FunctionComponent<DocumentSelector> = ({ validate
         onClick={nextDocument}
         className="cursor-pointer border border-solid border-grey-lighter h-12 w-12 bg-lightgrey-lighter active:bg-lightgrey border-l-0 flex items-center justify-center"
       >
-        <SvgIcon className="flex items-center justify-center">
-          <SvgIconRightArrowBracket />
-        </SvgIcon>
+        <ChevronRight className="flex items-center justify-center" />
       </div>
     </div>
   );

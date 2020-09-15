@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import styled from "@emotion/styled";
 import { vars } from "../../../styles";
-import { SvgIcon, SvgIconX } from "../SvgIcon";
+import { X } from "react-feather";
 
 const NetworkWrap = styled.div`
   background-color: ${vars.greenDarker};
@@ -51,9 +51,7 @@ export const NetworkBar: React.FunctionComponent<NetworkBarProps> = ({
             </p>
           </div>
           <div className="col-auto ml-auto">
-            <SvgIcon onClick={() => setShow(false)}>
-              <SvgIconX />
-            </SvgIcon>
+            <X onClick={() => setShow(false)} />
           </div>
         </div>
       </div>

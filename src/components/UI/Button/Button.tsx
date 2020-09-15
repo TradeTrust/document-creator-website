@@ -26,10 +26,4 @@ export const Button = styled.button`
     margin-top: 0;
     margin-bottom: 0;
   }
-
-  svg {
-    display: block;
-    width: 100%;
-    max-width: 24px;
-  }
 `;

@@ -2,7 +2,7 @@ import React, { FunctionComponent, useState } from "react";
 import { assertConfigFile } from "../../../common/config/validate";
 import { usePersistedConfigFile } from "../../../common/hook/usePersistedConfigFile";
 import { ConfigFile } from "../../../types";
-import { SvgIcon, SvgIconArrowRight } from "../../UI/SvgIcon";
+import { ArrowRight } from "react-feather";
 import { Wrapper } from "../../UI/Wrapper";
 import { ConfigFileDropZone } from "./ConfigFileDropZone";
 
@@ -31,9 +31,7 @@ export const ConfigFileDropZoneContainer: FunctionComponent = () => {
         data-testid="config-file-docs-button"
       >
         Don’t have a config file? Learn how to create one
-        <SvgIcon>
-          <SvgIconArrowRight />
-        </SvgIcon>
+        <ArrowRight />
       </a>
     </Wrapper>
   );
