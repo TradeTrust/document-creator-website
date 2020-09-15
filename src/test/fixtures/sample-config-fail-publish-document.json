@@ -45,7 +45,7 @@
         "$template": {
           "type": "EMBEDDED_RENDERER",
           "name": "COVERING_LETTER",
-          "url": "https://generic-templates.openattestation.com"
+          "url": "https://generic-templates.tradetrust.io"
         },
         "issuers": [
           {
