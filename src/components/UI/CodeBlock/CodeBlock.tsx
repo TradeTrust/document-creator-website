@@ -35,15 +35,15 @@ export const CodeBlock: React.FunctionComponent<CodeBlockProps> = ({ code }: Cod
   const copyToClipboard = (): void => {
     const str = document.getElementById("copy-textarea")?.innerText || "";
     // Needs to be input element to copy so created a temp
-    const $temp = document.createElement("textarea");
-    $temp.value = str;
-    $temp.setAttribute("readonly", "");
-    $temp.style.position = "absolute";
-    $temp.style.left = "-9999px";
-    document.body.appendChild($temp);
-    $temp.select();
+    const temporaryDomElement = document.createElement("textarea");
+    temporaryDomElement.value = str;
+    temporaryDomElement.setAttribute("readonly", "");
+    temporaryDomElement.style.position = "absolute";
+    temporaryDomElement.style.left = "-9999px";
+    document.body.appendChild(temporaryDomElement);
+    temporaryDomElement.select();
     document.execCommand("copy");
-    document.body.removeChild($temp);
+    document.body.removeChild(temporaryDomElement);
   };
 
   return (
