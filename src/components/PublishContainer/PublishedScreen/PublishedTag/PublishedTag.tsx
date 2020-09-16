@@ -3,6 +3,7 @@ import prettyBytes from "pretty-bytes";
 import React, { FunctionComponent } from "react";
 import { useConfigContext } from "../../../../common/context/config";
 import { WrappedDocument } from "../../../../types";
+import { generateFileName } from "../../../../utils/fileName";
 
 interface PublishedTagProps {
   doc: WrappedDocument;
@@ -18,9 +19,7 @@ export const PublishedTag: FunctionComponent<PublishedTagProps> = ({ doc }) => {
   const file = JSON.stringify(doc.wrappedDocument);
   const size = prettyBytes(getFileSize(file));
   const blob = new Blob([file], { type: "text/json;charset=utf-8" });
-  const fileName = `${doc.fileName}${
-    config?.network === "homestead" ? "" : `-${config?.network}`
-  }.tt`;
+  const fileName = generateFileName(config, doc.fileName, "tt");
   return (
     <div className="mt-4 flex rounded bg-white p-3 min-w-xs max-w-xs border border-solid border-lightgrey mr-4">
       <div className="rounded-full bg-blue mr-4 w-12 h-12 text-white font-bold flex justify-center items-center">

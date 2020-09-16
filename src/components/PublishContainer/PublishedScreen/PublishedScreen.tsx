@@ -3,6 +3,7 @@ import React, { FunctionComponent } from "react";
 import { useConfigContext } from "../../../common/context/config";
 import { useFormsContext } from "../../../common/context/forms";
 import { FailedJobErrors, WrappedDocument } from "../../../types";
+import { generateFileName } from "../../../utils/fileName";
 import { Container } from "../../Container";
 import { ProgressBar } from "../../ProgressBar";
 import { Button } from "../../UI/Button";
@@ -19,7 +20,7 @@ export const PublishedScreen: FunctionComponent<PublishScreen> = ({
   publishedDocuments,
   failedPublishedDocuments,
 }) => {
-  const { setConfig } = useConfigContext();
+  const { setConfig, config } = useConfigContext();
   const { setForms, setActiveFormIndex } = useFormsContext();
 
   const createAnotherDoc = (): void => {
@@ -108,7 +109,7 @@ export const PublishedScreen: FunctionComponent<PublishScreen> = ({
                 </div>
                 <Button className="bg-white text-red px-4 py-3">
                   <a
-                    download="error_log.txt"
+                    download={generateFileName(config, "error-log", "txt")}
                     href={`data:text/plain;charset=UTF-8,${JSON.stringify(
                       formattedErrorLog,
                       null,
@@ -128,7 +129,9 @@ export const PublishedScreen: FunctionComponent<PublishScreen> = ({
                 const size = prettyBytes(getFileSize(JSON.stringify(doc.wrappedDocument)));
                 return (
                   <div key={index} className="flex items-center">
-                    <div className="font-bold text-lightgrey-dark">{doc.fileName}.tt</div>
+                    <div className="font-bold text-lightgrey-dark">
+                      {generateFileName(config, doc.fileName, "tt")}
+                    </div>
                     <div className="text-xs text-lightgrey-dark ml-1">({size})</div>
                   </div>
                 );
