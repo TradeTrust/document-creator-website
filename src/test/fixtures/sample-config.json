@@ -538,7 +538,7 @@
         "$template": {
           "type": "EMBEDDED_RENDERER",
           "name": "COVERING_LETTER",
-          "url": "https://generic-templates.openattestation.com"
+          "url": "https://generic-templates.tradetrust.io"
         },
         "issuers": [
           {
@@ -584,7 +584,7 @@
         "$template": {
           "type": "EMBEDDED_RENDERER",
           "name": "COVERING_LETTER",
-          "url": "https://generic-templates.openattestation.com"
+          "url": "https://generic-templates.tradetrust.io"
         },
         "issuers": [
           {
@@ -633,7 +633,7 @@
         "$template": {
           "type": "COVERING_LETTER",
           "name": "custom",
-          "url": "https://generic-templates.openattestation.com"
+          "url": "https://generic-templates.tradetrust.io"
         },
         "issuers": [
           {
