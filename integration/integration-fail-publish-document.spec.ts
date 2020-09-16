@@ -32,5 +32,5 @@ test("Upload configuration file, choose form, submit form, encounter failed publ
       ).exists
     )
     .ok();
-  await t.expect(Selector("div").withText("Document-1.tt").exists).ok();
+  await t.expect(Selector("div").withText("Document-1-local.tt").exists).ok();
 });
