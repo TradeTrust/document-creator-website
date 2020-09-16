@@ -11,7 +11,7 @@ export const ErrorBoundaryContent: FunctionComponent<{
     className="flex min-h-screen min-w-screen items-center justify-center"
     data-testid="error-boundary-content"
   >
-    <div className="container max-w-screen-md">
+    <div className="container max-w-screen-sm">
       <img
         style={{ width: 120, height: "auto" }}
         className="mb-6"
