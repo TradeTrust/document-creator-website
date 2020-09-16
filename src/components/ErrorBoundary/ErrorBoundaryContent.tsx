@@ -7,7 +7,10 @@ import { CodeBlock } from "../UI/CodeBlock";
 export const ErrorBoundaryContent: FunctionComponent<{
   error?: string;
 }> = ({ error }) => (
-  <div className="flex min-h-screen min-w-screen items-center justify-center">
+  <div
+    className="flex min-h-screen min-w-screen items-center justify-center"
+    data-testid="error-boundary-content"
+  >
     <div className="container max-w-screen-md">
       <img
         style={{ width: 120, height: "auto" }}

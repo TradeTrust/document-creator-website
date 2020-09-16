@@ -10,6 +10,7 @@ const CodeBlockWrap = styled.div`
   height: 160px;
   position: relative;
   overflow-y: scroll;
+  border-radius: ${vars.buttonRadius};
 
   svg {
     color: ${vars.blue};
