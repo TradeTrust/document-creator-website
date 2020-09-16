@@ -19,4 +19,13 @@ describe("generateFileName", () => {
 
     expect(fileName).toStrictEqual("document-1.tt");
   });
+
+  it("should generate the extention correctly", async () => {
+    const wallet = await decryptWallet(sampleConfig as ConfigFile, "password");
+    const config = { ...sampleConfig, network: "homestead", wallet } as Config;
+    const extension = "txt";
+    const fileName = generateFileName(config, "document-1", extension);
+
+    expect(fileName).toStrictEqual("document-1.txt");
+  });
 });
