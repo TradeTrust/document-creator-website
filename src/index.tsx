@@ -6,14 +6,17 @@ import "./index.css";
 import { App } from "./App";
 import { ConfigContextProvider } from "./common/context/config";
 import { FormsContextProvider } from "./common/context/forms";
+import { ErrorBoundary } from "./components/ErrorBoundary";
 
 ReactDOM.render(
   <React.StrictMode>
-    <ConfigContextProvider>
-      <FormsContextProvider>
-        <App />
-      </FormsContextProvider>
-    </ConfigContextProvider>
+    <ErrorBoundary>
+      <ConfigContextProvider>
+        <FormsContextProvider>
+          <App />
+        </FormsContextProvider>
+      </ConfigContextProvider>
+    </ErrorBoundary>
   </React.StrictMode>,
   document.getElementById("root")
 );
