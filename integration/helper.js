@@ -4,6 +4,7 @@ const PasswordField = Selector("[data-testid='password-field']");
 const ButtonLogin = Selector("[data-testid='login-button']");
 
 export const loadConfigFile = async (configFile) => {
+  await Selector("[data-testid='config-file-drop-zone']")();
   await t.setFilesToUpload("input[type=file]", [configFile]);
 };
 
