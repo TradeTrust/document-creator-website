@@ -14,8 +14,8 @@ const spin = keyframes`
 `;
 
 export const PublishLoader = styled.div`
-  ${tw`rounded-full border-8 border-solid border-grey-lighter w-48 h-48 absolute`}
-  border-top: 8px solid ${vars.teal};
+  ${tw`rounded-full border-4 border-solid border-grey-lighter w-full h-full`}
+  border-top: 4px solid ${vars.teal};
   -webkit-animation: spin 2s linear infinite; /* Safari */
   animation: ${spin} 2s linear infinite;
 `;

@@ -17,7 +17,9 @@ export const PublishingScreen: FunctionComponent<PublishingProps> = ({ forms }) 
             Please wait while we are publishing the document(s).
           </div>
           <div className="text-grey-dark font-medium text-lg flex flex-col justify-center items-center text-xl mt-24">
-            <PublishLoader />
+            <div className="h-24 w-24">
+              <PublishLoader />
+            </div>
             Publishing <span className="text-blue font-bold">{forms.length}</span> document(s)
           </div>
         </div>
