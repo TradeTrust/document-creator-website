@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "@emotion/styled";
 import { vars } from "../../../styles";
-import { SvgIcon, SvgIconCopy } from "../SvgIcon";
+import { Copy } from "react-feather";
 
 const CodeBlockWrap = styled.div`
   background-color: ${vars.blueLighter};
@@ -52,9 +52,7 @@ export const CodeBlock: React.FunctionComponent<CodeBlockProps> = ({ code }: Cod
         {code}
       </p>
       <div className="absolute copy-icon">
-        <SvgIcon onClick={copyToClipboard}>
-          <SvgIconCopy />
-        </SvgIcon>
+        <Copy onClick={copyToClipboard} />
       </div>
     </CodeBlockWrap>
   );
