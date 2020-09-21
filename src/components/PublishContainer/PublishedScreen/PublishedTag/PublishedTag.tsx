@@ -26,7 +26,7 @@ export const PublishedTag: FunctionComponent<PublishedTagProps> = ({ doc, isPend
     <div className="mt-4 flex rounded bg-white p-3 min-w-xs max-w-xs border border-solid border-lightgrey mr-4 items-center">
       {isPending ? (
         <>
-          <div className="h-12 w-12 mr-4">
+          <div className="h-12 w-12 mr-4" data-testid="publish-loader">
             <PublishLoader />
           </div>
           <div className="font-bold text-lightgrey-lightest">

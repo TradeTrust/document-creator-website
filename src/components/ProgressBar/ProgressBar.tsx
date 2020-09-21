@@ -7,7 +7,7 @@ interface ProgressBarProps {
 }
 
 export const ProgressBar: FunctionComponent<ProgressBarProps> = styled(({ className, step }) => {
-  const description = ["Choose Type", "Fill Form", " Issue Complete"];
+  const description = ["Choose Type", "Fill Form", "Issue Document(s)"];
 
   return (
     <div className={className}>

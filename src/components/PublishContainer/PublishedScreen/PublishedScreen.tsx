@@ -59,7 +59,14 @@ export const PublishedScreen: FunctionComponent<PublishScreen> = ({
   const getDisplayTitle = (): ReactElement => {
     switch (publishState) {
       case "PENDING_CONFIRMATION":
-        return <>Issuing Document(s)</>;
+        return (
+          <>
+            <div className="h-6 w-6 mr-2">
+              <PublishLoader />
+            </div>
+            Issuing Document(s)
+          </>
+        );
 
       case "CONFIRMED":
         if (publishedDocuments.length > 0) {
@@ -79,14 +86,7 @@ export const PublishedScreen: FunctionComponent<PublishScreen> = ({
         }
 
       default:
-        return (
-          <>
-            <div className="h-8 w-8 mr-3">
-              <PublishLoader />
-            </div>
-            Please wait while we prepare your documents.
-          </>
-        );
+        return <>Please wait while we prepare your document(s)</>;
     }
   };
 

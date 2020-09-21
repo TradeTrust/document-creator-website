@@ -28,19 +28,28 @@ const mockDoc = {
 describe("publishedTag", () => {
   it("should render correctly with the given doc", () => {
     withConfigFile();
-    render(<PublishedTag doc={mockDoc} />);
+    render(<PublishedTag doc={mockDoc} isPending={false} />);
 
     expect(screen.getAllByText("test-ropsten.tt")).toHaveLength(1);
     expect(screen.getAllByText("(24 B)")).toHaveLength(1);
+    expect(screen.queryAllByTestId("publish-loader")).toHaveLength(0);
   });
 
   it("should generate the 'href' accordingly for download", () => {
     mockSaveAs;
     withConfigFile();
-    render(<PublishedTag doc={mockDoc} />);
+    render(<PublishedTag doc={mockDoc} isPending={false} />);
 
     expect(screen.getAllByText("Download")).toHaveLength(1);
     fireEvent.click(screen.getByTestId("download-file-button"));
     expect(mockSaveAs).toHaveBeenCalledTimes(1);
+    expect(screen.queryAllByTestId("publish-loader")).toHaveLength(0);
+  });
+
+  it("should display the loader when isPending is true", () => {
+    withConfigFile();
+    render(<PublishedTag doc={mockDoc} isPending={true} />);
+
+    expect(screen.queryAllByTestId("publish-loader")).toHaveLength(1);
   });
 });
