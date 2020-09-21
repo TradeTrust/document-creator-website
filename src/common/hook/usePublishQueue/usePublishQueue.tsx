@@ -22,12 +22,15 @@ export const usePublishQueue = (
   publish: () => void;
   publishedDocuments: WrappedDocument[];
   failedPublishedDocuments: FailedJobErrors[];
+  pendingPublishDocuments: WrappedDocument[];
 } => {
   const [error, setError] = useState<Error>();
   const [publishState, setPublishState] = useState<ContractFunctionState>("UNINITIALIZED");
   const [jobs, setJobs] = useState<PublishingJob[]>([]);
   const [completedJobIndex, setCompletedJobIndex] = useState<number[]>([]);
   const [failedJob, setFailedJob] = useState<FailedJob[]>([]);
+  const [pendingPublishJobs, setPendingPublishJobs] = useState<PublishingJob[]>([]);
+  const [jobsNotPendingIndex, setJobsNotPendingIndex] = useState<number[]>([]);
 
   const publishedDocuments = completedJobIndex.reduce((acc, curr) => {
     const documentsIssuesInJob = jobs[curr].documents;
@@ -41,15 +44,26 @@ export const usePublishQueue = (
     };
   });
 
+  const pendingPublishDocuments = pendingPublishJobs
+    .filter((job, index) => {
+      return jobsNotPendingIndex.indexOf(index) === -1;
+    })
+    .reduce((acc, curr) => {
+      const documentsInPendingJobs = curr.documents;
+      return [...acc, ...documentsInPendingJobs];
+    }, [] as WrappedDocument[]);
+
   const publish = async (): Promise<void> => {
     try {
       // Cannot use setCompletedJobIndex here as async update does not with the promise race
       const completedJobs: number[] = [];
       const failedJobs: FailedJob[] = [];
+      const jobsNotPending: number[] = [];
       setPublishState("INITIALIZED");
       const nonce = await config.wallet.getTransactionCount();
       const publishingJobs = await getPublishingJobs(formEntries, config, nonce);
       setJobs(publishingJobs);
+      setPendingPublishJobs(publishingJobs);
       const deferredJobs = publishingJobs.map(async (job, index) => {
         try {
           await publishJob(job, config.wallet);
@@ -68,6 +82,9 @@ export const usePublishQueue = (
           setFailedJob(failedJobs);
           stack(e);
           throw e; // Re-throwing error to preserve stack when Promise.allSettled resolves
+        } finally {
+          jobsNotPending.push(index);
+          setJobsNotPendingIndex(jobsNotPending);
         }
       });
       setPublishState("PENDING_CONFIRMATION");
@@ -88,5 +105,6 @@ export const usePublishQueue = (
     error,
     publishedDocuments,
     failedPublishedDocuments,
+    pendingPublishDocuments,
   };
 };

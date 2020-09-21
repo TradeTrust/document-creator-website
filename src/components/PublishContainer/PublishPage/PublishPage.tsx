@@ -6,7 +6,6 @@ import { Config } from "../../../types";
 import { NavigationBar } from "../../NavigationBar";
 import { PublishedScreen } from "../PublishedScreen";
 import { PublishErrorScreen } from "../PublishErrorScreen";
-import { PublishingScreen } from "../PublishingScreen";
 
 interface PublishPage {
   config: Config;
@@ -19,6 +18,7 @@ export const PublishPage: FunctionComponent<PublishPage> = ({ config }) => {
     publishState,
     publishedDocuments,
     failedPublishedDocuments,
+    pendingPublishDocuments,
     error,
   } = usePublishQueue(config, forms);
 
@@ -31,18 +31,18 @@ export const PublishPage: FunctionComponent<PublishPage> = ({ config }) => {
 
   const switchScreen = (): JSX.Element => {
     switch (publishState) {
-      case "CONFIRMED":
-        return (
-          <PublishedScreen
-            publishedDocuments={publishedDocuments}
-            failedPublishedDocuments={failedPublishedDocuments}
-          />
-        );
       case "ERROR":
         return <PublishErrorScreen error={error} />;
 
       default:
-        return <PublishingScreen forms={forms} />;
+        return (
+          <PublishedScreen
+            publishedDocuments={publishedDocuments}
+            failedPublishedDocuments={failedPublishedDocuments}
+            pendingPublishDocuments={pendingPublishDocuments}
+            publishState={publishState}
+          />
+        );
     }
   };
   return (

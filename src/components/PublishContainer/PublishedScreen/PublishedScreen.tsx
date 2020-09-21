@@ -1,5 +1,6 @@
 import prettyBytes from "pretty-bytes";
-import React, { FunctionComponent } from "react";
+import React, { FunctionComponent, ReactElement } from "react";
+import { CheckCircle, Download, XCircle } from "react-feather";
 import { useConfigContext } from "../../../common/context/config";
 import { useFormsContext } from "../../../common/context/forms";
 import { FailedJobErrors, WrappedDocument } from "../../../types";
@@ -7,18 +8,22 @@ import { generateFileName } from "../../../utils/fileName";
 import { Container } from "../../Container";
 import { ProgressBar } from "../../ProgressBar";
 import { Button } from "../../UI/Button";
-import { CheckCircle, Download, XCircle } from "react-feather";
+import { PublishLoader } from "../../UI/PublishLoader";
 import { Title } from "../../UI/Title";
 import { PublishedTag } from "../PublishedScreen/PublishedTag";
 
 interface PublishScreen {
   publishedDocuments: WrappedDocument[];
   failedPublishedDocuments: FailedJobErrors[];
+  pendingPublishDocuments: WrappedDocument[];
+  publishState: string;
 }
 
 export const PublishedScreen: FunctionComponent<PublishScreen> = ({
   publishedDocuments,
   failedPublishedDocuments,
+  pendingPublishDocuments,
+  publishState,
 }) => {
   const { setConfig, config } = useConfigContext();
   const { setForms, setActiveFormIndex } = useFormsContext();
@@ -51,42 +56,80 @@ export const PublishedScreen: FunctionComponent<PublishScreen> = ({
     };
   });
 
+  const getDisplayTitle = (): ReactElement => {
+    switch (publishState) {
+      case "PENDING_CONFIRMATION":
+        return <>Issuing Document(s)</>;
+
+      case "CONFIRMED":
+        if (publishedDocuments.length > 0) {
+          return (
+            <>
+              <CheckCircle className="mr-2 text-teal" />
+              Document(s) issued successfully
+            </>
+          );
+        } else {
+          return (
+            <>
+              <XCircle className="mr-2 text-red" />
+              Document(s) failed to issue
+            </>
+          );
+        }
+
+      default:
+        return (
+          <>
+            <div className="h-8 w-8 mr-3">
+              <PublishLoader />
+            </div>
+            Please wait while we prepare your documents.
+          </>
+        );
+    }
+  };
+
   return (
     <Container>
       <div className="container mx-auto pt-8">
         <ProgressBar step={3} />
         <div className="flex justify-between items-end">
-          <Title className="flex items-center mb-8">
-            <CheckCircle className="mr-2 text-teal" />
-            {publishedDocuments.length > 0
-              ? "Document(s) issued successfully"
-              : "Document(s) failed to issue"}
-          </Title>
-          <div>
-            <Button className="bg-white text-orange px-4 py-3 mb-6 mr-4" onClick={createAnotherDoc}>
-              Create another Document
-            </Button>
-            <Button
-              className="bg-orange text-white self-end py-3 px-4 mb-6"
-              data-testid="form-logout-button"
-              onClick={onDone}
-            >
-              Logout
-            </Button>
-          </div>
+          <Title className="flex items-center mb-8">{getDisplayTitle()}</Title>
+          {publishState === "CONFIRMED" && (
+            <div>
+              <Button
+                className="bg-white text-orange px-4 py-3 mb-6 mr-4"
+                onClick={createAnotherDoc}
+              >
+                Create another Document
+              </Button>
+              <Button
+                className="bg-orange text-white self-end py-3 px-4 mb-6"
+                data-testid="form-logout-button"
+                onClick={onDone}
+              >
+                Logout
+              </Button>
+            </div>
+          )}
         </div>
       </div>
       <div className="bg-lightgrey-lighter p-6 h-screen">
-        {publishedDocuments && publishedDocuments.length > 0 && (
+        {(publishState === "PENDING_CONFIRMATION" ||
+          (publishedDocuments && publishedDocuments.length > 0)) && (
           <div className="container mx-auto">
             <div className="border-b border-solid border-lightgrey">
               <div className="text-grey font-medium text-lg mb-4">
-                {publishedDocuments.length} Document(s)
+                {publishedDocuments.length + pendingPublishDocuments.length} Document(s)
               </div>
             </div>
             <div className="flex flex-wrap border-b border-solid border-lightgrey pb-4 mb-4">
               {publishedDocuments.map((doc, index) => (
-                <PublishedTag doc={doc} key={index} />
+                <PublishedTag doc={doc} key={index} isPending={false} />
+              ))}
+              {pendingPublishDocuments.map((doc, index) => (
+                <PublishedTag doc={doc} key={index} isPending={true} />
               ))}
             </div>
           </div>

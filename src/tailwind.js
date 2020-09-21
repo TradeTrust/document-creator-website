@@ -32,6 +32,7 @@ module.exports = {
     },
     colors: {
       lightgrey: {
+        lightest: "#cccccc",
         lighter: "#fafafa",
         default: "#eeeeee",
         dark: "#89969F",

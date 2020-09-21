@@ -20,9 +20,9 @@ const mockDoc = {
 } as WrappedDocument;
 
 export const Loading = () => {
-  return <PublishedTag doc={mockDoc} />;
+  return <PublishedTag doc={mockDoc} isPending={true} />;
 };
 
 export const Default = () => {
-  return <PublishedTag doc={mockDoc} />;
+  return <PublishedTag doc={mockDoc} isPending={false} />;
 };
