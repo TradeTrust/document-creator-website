@@ -5,7 +5,7 @@ import { generateFileName } from "../../../utils/fileName";
 import { Container } from "../../Container";
 import { ProgressBar } from "../../ProgressBar";
 import { Button } from "../../UI/Button";
-import { SvgIcon, SvgIconCheckCircle, SvgIconDownload, SvgIconXCircle } from "../../UI/SvgIcon";
+import { CheckCircle, Download, XCircle } from "react-feather";
 import { Title } from "../../UI/Title";
 
 interface PublishErrorScreen {
@@ -28,9 +28,7 @@ export const PublishErrorScreen: FunctionComponent<PublishErrorScreen> = ({ erro
         <ProgressBar step={3} />
         <div className="flex justify-between items-end">
           <Title className="flex items-center mb-8">
-            <SvgIcon className="mr-2 text-teal">
-              <SvgIconCheckCircle />
-            </SvgIcon>
+            <CheckCircle className="mr-2 text-teal" />
             Document(s) failed to issue
           </Title>
           <Button
@@ -46,9 +44,7 @@ export const PublishErrorScreen: FunctionComponent<PublishErrorScreen> = ({ erro
         <div className="container mx-auto">
           <div className="bg-red-lighter p-3 flex flex-col">
             <div className="flex">
-              <SvgIcon className="text-red">
-                <SvgIconXCircle />
-              </SvgIcon>
+              <Download className="text-red" />
               <div className="flex flex-col flex-grow">
                 <div className="text-red ml-2 flex-grow">Failed to publish due to:</div>
                 <div className="text-red ml-2 flex-grow">- {error?.message}</div>
@@ -62,9 +58,7 @@ export const PublishErrorScreen: FunctionComponent<PublishErrorScreen> = ({ erro
                   href={`data:text/plain;charset=UTF-8,${JSON.stringify(error, null, 2)}`}
                 >
                   <div className="flex">
-                    <SvgIcon>
-                      <SvgIconDownload />
-                    </SvgIcon>
+                    <XCircle />
                     <div className="text-red ml-2">Download Error Log</div>
                   </div>
                 </a>

@@ -1,7 +1,7 @@
 import prettyBytes from "pretty-bytes";
 import React, { FunctionComponent } from "react";
 import { FileUploadType } from "../../../../../types";
-import { SvgIcon, SvgIconPaperClip, SvgIconX } from "../../../../UI/SvgIcon";
+import { Paperclip, X } from "react-feather";
 
 interface FilesInfoType {
   filesInfo: FileUploadType[];
@@ -27,9 +27,7 @@ export const FilesInfo: FunctionComponent<FilesInfoType> = ({ filesInfo, removeF
               className="rounded-full bg-grey-lighter h-12 w-12 flex items-center justify-center mr-2"
               data-testid={`attachment-icon-${key}`}
             >
-              <SvgIcon>
-                <SvgIconPaperClip />
-              </SvgIcon>
+              <Paperclip />
             </div>
 
             <p className="font-bold text-grey-dark flex-grow">
@@ -44,9 +42,7 @@ export const FilesInfo: FunctionComponent<FilesInfoType> = ({ filesInfo, removeF
                 removeFile(key);
               }}
             >
-              <SvgIcon>
-                <SvgIconX />
-              </SvgIcon>
+              <X />
             </div>
           </li>
         );

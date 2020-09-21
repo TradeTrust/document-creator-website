@@ -7,7 +7,7 @@ import { generateFileName } from "../../../utils/fileName";
 import { Container } from "../../Container";
 import { ProgressBar } from "../../ProgressBar";
 import { Button } from "../../UI/Button";
-import { SvgIcon, SvgIconCheckCircle, SvgIconDownload, SvgIconXCircle } from "../../UI/SvgIcon";
+import { CheckCircle, Download, XCircle } from "react-feather";
 import { Title } from "../../UI/Title";
 import { PublishedTag } from "../PublishedScreen/PublishedTag";
 
@@ -57,9 +57,7 @@ export const PublishedScreen: FunctionComponent<PublishScreen> = ({
         <ProgressBar step={3} />
         <div className="flex justify-between items-end">
           <Title className="flex items-center mb-8">
-            <SvgIcon className="mr-2 text-teal">
-              <SvgIconCheckCircle />
-            </SvgIcon>
+            <CheckCircle className="mr-2 text-teal" />
             {publishedDocuments.length > 0
               ? "Document(s) issued successfully"
               : "Document(s) failed to issue"}
@@ -100,9 +98,7 @@ export const PublishedScreen: FunctionComponent<PublishScreen> = ({
             </div>
             <div className="bg-red-lighter p-3 flex flex-col">
               <div className="flex">
-                <SvgIcon className="text-red">
-                  <SvgIconXCircle />
-                </SvgIcon>
+                <XCircle className="text-red" />
                 <div className="text-red ml-2 flex-grow">
                   These documents failed to publish due to some errors. Kindly rectify and try
                   publishing again.
@@ -117,9 +113,7 @@ export const PublishedScreen: FunctionComponent<PublishScreen> = ({
                     )}`}
                   >
                     <div className="flex">
-                      <SvgIcon>
-                        <SvgIconDownload />
-                      </SvgIcon>
+                      <Download />
                       <div className="text-red ml-2">Download Error Log</div>
                     </div>
                   </a>
