@@ -109,6 +109,9 @@ test("Upload configuration file, choose form, fill form, submit form correctly",
   // Submit
   await t.click(SubmitButton);
 
+  // pending confirmation of issued documents
+  await t.expect(Selector("[data-testid='publish-loader']").exists).ok();
+
   // Check that download exists
   await t.expect(Title.textContent).contains("Document(s) issued successfully");
   await t.expect(Selector("div").withText("Document-1-local.tt").exists).ok();
