@@ -96,7 +96,7 @@
     "integration:internal": "testcafe chrome integration/**/*.spec.ts --ts-config-path ./tsconfig.testcafe.json --app \"BROWSER=none npm run start\"",
     "integration:internal:single": "testcafe chrome -L --ts-config-path ./tsconfig.testcafe.json --app \"npm run start\"",
     "integration:internal:headless": "testcafe chrome:headless integration/**/*.spec.ts --ts-config-path ./tsconfig.testcafe.json --app \"npm run start\" --app-init-delay 5000",
-    "integration:concurrently:headless": "concurrently -k -s first \"npm:blockchain\" \"npm:integration:headless\"",
+    "integration:concurrently:headless": "concurrently -k -s first \"npm:blockchain\" \"npm:integration:internal:headless\"",
     "lint": "eslint . --ext .ts,.tsx --max-warnings 0",
     "lint:fix": "npm run lint -- --fix",
     "start": "npm-run-all -p start:*",
