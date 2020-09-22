@@ -98,7 +98,7 @@
     "integration:headless": "HEADLESS=true ./scripts/integration.sh",
     "integration:internal": "testcafe chrome integration/**/*.spec.ts --ts-config-path ./tsconfig.testcafe.json --app \"BROWSER=none npm run start\"",
     "integration:internal:single": "testcafe chrome -L --ts-config-path ./tsconfig.testcafe.json --app \"npm run start\"",
-    "integration:internal:headless": "testcafe chrome:headless integration/**/*.spec.ts --ts-config-path ./tsconfig.testcafe.json --app \"npm run start\" --app-init-delay 5000",
+    "integration:internal:headless": "testcafe -c 4 chrome:headless integration/**/*.spec.ts --ts-config-path ./tsconfig.testcafe.json --app \"npm run start\" --app-init-delay 5000",
     "integration:concurrently:headless": "concurrently -k -s first \"npm:blockchain\" \"npm:integration:wait:headless\"",
     "lint": "eslint . --ext .ts,.tsx --max-warnings 0",
     "lint:fix": "npm run lint -- --fix",
