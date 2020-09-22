@@ -65,7 +65,7 @@ export const PublishedScreen: FunctionComponent<PublishScreen> = ({
             <div className="h-6 w-6 mr-2">
               <PublishLoader />
             </div>
-            Issuing Document(s)
+            Publishing document(s)...
           </>
         );
 
