@@ -65,7 +65,7 @@ describe("publishedScreen", () => {
     );
 
     expect(screen.queryAllByText("2 Document(s)")).toHaveLength(1);
-    expect(screen.queryAllByText("Issuing Document(s)")).toHaveLength(1);
+    expect(screen.queryAllByText(/Publishing document/)).toHaveLength(1);
     expect(screen.queryAllByTestId("publish-loader")).toHaveLength(1);
   });
 
@@ -80,7 +80,7 @@ describe("publishedScreen", () => {
     );
 
     expect(screen.queryAllByText("1 Document(s)")).toHaveLength(0);
-    expect(screen.queryAllByText("Issuing Document(s)")).toHaveLength(1);
+    expect(screen.queryAllByText(/Publishing document/)).toHaveLength(1);
     expect(screen.queryAllByTestId("publish-loader")).toHaveLength(0);
   });
 
@@ -95,7 +95,7 @@ describe("publishedScreen", () => {
     );
 
     expect(screen.queryAllByText("1 Document(s) Failed")).toHaveLength(1);
-    expect(screen.queryAllByText("Issuing Document(s)")).toHaveLength(1);
+    expect(screen.queryAllByText(/Publishing document/)).toHaveLength(1);
     expect(screen.queryAllByTestId("publish-loader")).toHaveLength(1);
   });
 
@@ -110,7 +110,7 @@ describe("publishedScreen", () => {
     );
 
     expect(screen.queryAllByText("1 Document(s) Failed")).toHaveLength(0);
-    expect(screen.queryAllByText("Issuing Document(s)")).toHaveLength(1);
+    expect(screen.queryAllByText(/Publishing document/)).toHaveLength(1);
     expect(screen.queryAllByTestId("publish-loader")).toHaveLength(1);
   });
 
