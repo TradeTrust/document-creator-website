@@ -1,0 +1,9 @@
+import { PublishState } from "../types";
+
+export const PUBLISH_STATE = {
+  UNINITIALIZED: "UNINITIALIZED",
+  INITIALIZED: "INITIALIZED",
+  PENDING_CONFIRMATION: "PENDING_CONFIRMATION",
+  CONFIRMED: "CONFIRMED",
+  ERROR: "ERROR",
+} as PublishState;

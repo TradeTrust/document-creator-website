@@ -4,6 +4,7 @@ import { MemoryRouter } from "react-router";
 import { useConfigContext } from "../../../common/context/config";
 import { useFormsContext } from "../../../common/context/forms";
 import { usePublishQueue } from "../../../common/hook/usePublishQueue";
+import { PUBLISH_STATE } from "../../../constants";
 import sampleConfig from "../../../test/fixtures/sample-config.json";
 import { PublishContainer } from "../PublishContainer";
 
@@ -39,7 +40,7 @@ const whenPublishStateIsConfirmed = (): void => {
   });
   mockUsePublishQueue.mockReturnValue({
     publish: mockPublish,
-    publishState: "CONFIRMED",
+    publishState: PUBLISH_STATE.CONFIRMED,
     publishedDocuments: [
       {
         contractAddress: "",
@@ -80,7 +81,7 @@ const whenPublishStateIsError = (): void => {
   });
   mockUsePublishQueue.mockReturnValue({
     publish: mockPublish,
-    publishState: "ERROR",
+    publishState: PUBLISH_STATE.ERROR,
     publishedDocuments: [],
     failedPublishedDocuments: [],
     pendingPublishDocuments: [],
@@ -112,7 +113,7 @@ const whenPublishStateIsPending = (): void => {
   });
   mockUsePublishQueue.mockReturnValue({
     publish: mockPublish,
-    publishState: "INITIALIZED",
+    publishState: PUBLISH_STATE.INITIALIZED,
     publishedDocuments: [],
     failedPublishedDocuments: [],
     pendingPublishDocuments: [],

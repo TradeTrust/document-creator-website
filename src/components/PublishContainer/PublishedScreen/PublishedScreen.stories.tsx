@@ -1,4 +1,5 @@
 import React from "react";
+import { PUBLISH_STATE } from "../../../constants";
 import { FailedJobErrors, WrappedDocument } from "../../../types";
 import { PublishedScreen } from "./PublishedScreen";
 
@@ -51,7 +52,7 @@ export const Initialized = () => {
       publishedDocuments={[]}
       failedPublishedDocuments={[]}
       pendingPublishDocuments={[]}
-      publishState={"INITIALIZED"}
+      publishState={PUBLISH_STATE.INITIALIZED}
     />
   );
 };
@@ -62,7 +63,7 @@ export const Pending = () => {
       publishedDocuments={mockPublishedDocuments}
       failedPublishedDocuments={[]}
       pendingPublishDocuments={mockPublishedDocuments}
-      publishState={"PENDING_CONFIRMATION"}
+      publishState={PUBLISH_STATE.PENDING_CONFIRMATION}
     />
   );
 };
@@ -73,7 +74,7 @@ export const Confirmed = () => {
       publishedDocuments={mockPublishedDocuments}
       failedPublishedDocuments={mockFailPublishedDocuments}
       pendingPublishDocuments={[]}
-      publishState={"CONFIRMED"}
+      publishState={PUBLISH_STATE.CONFIRMED}
     />
   );
 };
@@ -84,7 +85,7 @@ export const Failed = () => {
       publishedDocuments={[]}
       failedPublishedDocuments={mockFailPublishedDocuments}
       pendingPublishDocuments={mockPublishedDocuments}
-      publishState={"CONFIRMED"}
+      publishState={PUBLISH_STATE.CONFIRMED}
     />
   );
 };

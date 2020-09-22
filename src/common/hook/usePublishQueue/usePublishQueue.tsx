@@ -1,5 +1,6 @@
 import { ContractFunctionState } from "@govtechsg/ethers-contract-hook";
 import { useState } from "react";
+import { PUBLISH_STATE } from "../../../constants";
 import { publishJob } from "../../../services/publishing";
 import { Config, FailedJobErrors, FormEntry, PublishingJob, WrappedDocument } from "../../../types";
 import { getLogger } from "../../../utils/logger";
@@ -25,7 +26,9 @@ export const usePublishQueue = (
   pendingPublishDocuments: WrappedDocument[];
 } => {
   const [error, setError] = useState<Error>();
-  const [publishState, setPublishState] = useState<ContractFunctionState>("UNINITIALIZED");
+  const [publishState, setPublishState] = useState<ContractFunctionState>(
+    PUBLISH_STATE.UNINITIALIZED
+  );
   const [jobs, setJobs] = useState<PublishingJob[]>([]);
   const [completedJobIndex, setCompletedJobIndex] = useState<number[]>([]);
   const [failedJob, setFailedJob] = useState<FailedJob[]>([]);
@@ -59,7 +62,7 @@ export const usePublishQueue = (
       const completedJobs: number[] = [];
       const failedJobs: FailedJob[] = [];
       const jobsNotPending: number[] = [];
-      setPublishState("INITIALIZED");
+      setPublishState(PUBLISH_STATE.INITIALIZED);
       const nonce = await config.wallet.getTransactionCount();
       const publishingJobs = await getPublishingJobs(formEntries, config, nonce);
       setJobs(publishingJobs);
@@ -87,15 +90,15 @@ export const usePublishQueue = (
           setJobsNotPendingIndex(jobsNotPending);
         }
       });
-      setPublishState("PENDING_CONFIRMATION");
+      setPublishState(PUBLISH_STATE.PENDING_CONFIRMATION);
       await Promise.allSettled(deferredJobs);
       setCompletedJobIndex(completedJobs);
       setFailedJob(failedJobs);
-      setPublishState("CONFIRMED");
+      setPublishState(PUBLISH_STATE.CONFIRMED);
     } catch (e) {
       stack(e);
       setError(e);
-      setPublishState("ERROR");
+      setPublishState(PUBLISH_STATE.ERROR);
     }
   };
 

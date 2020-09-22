@@ -2,6 +2,7 @@ import React, { FunctionComponent, useEffect } from "react";
 import { Redirect } from "react-router-dom";
 import { useFormsContext } from "../../../common/context/forms";
 import { usePublishQueue } from "../../../common/hook/usePublishQueue";
+import { PUBLISH_STATE } from "../../../constants";
 import { Config } from "../../../types";
 import { NavigationBar } from "../../NavigationBar";
 import { PublishedScreen } from "../PublishedScreen";
@@ -31,7 +32,7 @@ export const PublishPage: FunctionComponent<PublishPage> = ({ config }) => {
 
   const switchScreen = (): JSX.Element => {
     switch (publishState) {
-      case "ERROR":
+      case PUBLISH_STATE.ERROR:
         return <PublishErrorScreen error={error} />;
 
       default:

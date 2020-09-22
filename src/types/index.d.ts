@@ -3,6 +3,14 @@ import { Wallet } from "ethers";
 type Network = "homestead" | "ropsten" | "rinkeby" | "local";
 type FormType = "TRANSFERABLE_RECORD" | "VERIFIABLE_DOCUMENT";
 
+export interface PublishState {
+  UNINITIALIZED: "UNINITIALIZED";
+  INITIALIZED: "INITIALIZED";
+  PENDING_CONFIRMATION: "PENDING_CONFIRMATION";
+  CONFIRMED: "CONFIRMED";
+  ERROR: "ERROR";
+}
+
 // FormTemplate is defined in configuration file
 export interface FormTemplate {
   name: string;

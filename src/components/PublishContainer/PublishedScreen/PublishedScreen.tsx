@@ -3,6 +3,7 @@ import React, { FunctionComponent, ReactElement } from "react";
 import { CheckCircle, Download, XCircle } from "react-feather";
 import { useConfigContext } from "../../../common/context/config";
 import { useFormsContext } from "../../../common/context/forms";
+import { PUBLISH_STATE } from "../../../constants";
 import { FailedJobErrors, WrappedDocument } from "../../../types";
 import { generateFileName } from "../../../utils/fileName";
 import { Container } from "../../Container";
@@ -58,7 +59,7 @@ export const PublishedScreen: FunctionComponent<PublishScreen> = ({
 
   const getDisplayTitle = (): ReactElement => {
     switch (publishState) {
-      case "PENDING_CONFIRMATION":
+      case PUBLISH_STATE.PENDING_CONFIRMATION:
         return (
           <>
             <div className="h-6 w-6 mr-2">
@@ -68,7 +69,7 @@ export const PublishedScreen: FunctionComponent<PublishScreen> = ({
           </>
         );
 
-      case "CONFIRMED":
+      case PUBLISH_STATE.CONFIRMED:
         if (publishedDocuments.length > 0) {
           return (
             <>
@@ -96,7 +97,7 @@ export const PublishedScreen: FunctionComponent<PublishScreen> = ({
         <ProgressBar step={3} />
         <div className="flex justify-between items-end">
           <Title className="flex items-center mb-8">{getDisplayTitle()}</Title>
-          {publishState === "CONFIRMED" && (
+          {publishState === PUBLISH_STATE.CONFIRMED && (
             <div>
               <Button
                 className="bg-white text-orange px-4 py-3 mb-6 mr-4"
@@ -116,7 +117,7 @@ export const PublishedScreen: FunctionComponent<PublishScreen> = ({
         </div>
       </div>
       <div className="bg-lightgrey-lighter p-6 h-screen">
-        {(publishState === "PENDING_CONFIRMATION" ||
+        {(publishState === PUBLISH_STATE.PENDING_CONFIRMATION ||
           (publishedDocuments && publishedDocuments.length > 0)) && (
           <div className="container mx-auto">
             <div className="border-b border-solid border-lightgrey">
