@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useRef, FunctionComponent } from "react";
+import React, { useState, useCallback, useRef, FunctionComponent, useEffect } from "react";
 import {
   FrameConnector,
   HostActions,
@@ -16,6 +16,13 @@ interface DocumentPreview {
 export const DocumentPreview: FunctionComponent<DocumentPreview> = ({ document }) => {
   const toFrame = useRef<Dispatch>();
   const [height, setHeight] = useState(0);
+
+  // Update document preview every time when the user navigates through the different documents
+  useEffect(() => {
+    if (toFrame.current) {
+      toFrame.current(renderDocument({ document }));
+    }
+  }, [document]);
 
   const rendererUrl = document["$template"]?.url;
   const onConnected = useCallback(
