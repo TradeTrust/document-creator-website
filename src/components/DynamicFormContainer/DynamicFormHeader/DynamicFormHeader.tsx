@@ -5,6 +5,7 @@ import { Button } from "../../UI/Button";
 import { SvgIcon, SvgIconArrowLeft } from "../../UI/SvgIcon";
 import { Title } from "../../UI/Title";
 import { DocumentSelector } from "../DocumentSelector";
+import { useKeyboardShortcut } from "../../../common/hook/UseKeyboardShortcut";
 
 interface DynamicFormHeaderProps {
   onBackToFormSelection: () => void;
@@ -20,6 +21,10 @@ export const DynamicFormHeader: FunctionComponent<DynamicFormHeaderProps> = ({
   validateCurrentForm,
 }) => {
   const { forms, activeFormIndex } = useFormsContext();
+
+  // Add Keyboard macros to form
+  useKeyboardShortcut(["Control", "n"], onNewForm);
+  useKeyboardShortcut(["Control", "i"], onFormSubmit);
 
   return (
     <div className="container mx-auto mb-6">
