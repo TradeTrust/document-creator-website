@@ -4,7 +4,6 @@ import { MemoryRouter } from "react-router";
 import { useConfigContext } from "../../common/context/config";
 import { useFormsContext } from "../../common/context/forms";
 import { usePublishQueue } from "../../common/hook/usePublishQueue";
-import { PUBLISH_STATE } from "../../constants";
 import sampleConfig from "../../test/fixtures/sample-config.json";
 import { PublishContainer } from "./PublishContainer";
 
@@ -44,7 +43,7 @@ const whenPublishStateIsNotConfirmed = (): void => {
   });
   mockUsePublishQueue.mockReturnValue({
     publish: mockPublish,
-    publishState: PUBLISH_STATE.INITIALIZED,
+    publishState: "INITIALIZED",
     publishedDocuments: [],
     failedPublishedDocuments: [],
     pendingPublishDocuments: [],

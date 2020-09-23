@@ -1,6 +1,5 @@
 import { ContractFunctionState } from "@govtechsg/ethers-contract-hook";
 import { useState } from "react";
-import { PUBLISH_STATE } from "../../../constants";
 import { publishJob } from "../../../services/publishing";
 import { Config, FailedJobErrors, FormEntry, PublishingJob, WrappedDocument } from "../../../types";
 import { getLogger } from "../../../utils/logger";
@@ -26,14 +25,11 @@ export const usePublishQueue = (
   pendingPublishDocuments: WrappedDocument[];
 } => {
   const [error, setError] = useState<Error>();
-  const [publishState, setPublishState] = useState<ContractFunctionState>(
-    PUBLISH_STATE.UNINITIALIZED
-  );
+  const [publishState, setPublishState] = useState<ContractFunctionState>("UNINITIALIZED");
   const [jobs, setJobs] = useState<PublishingJob[]>([]);
   const [completedJobIndex, setCompletedJobIndex] = useState<number[]>([]);
   const [failedJob, setFailedJob] = useState<FailedJob[]>([]);
-  const [pendingPublishJobs, setPendingPublishJobs] = useState<PublishingJob[]>([]);
-  const [jobsNotPendingIndex, setJobsNotPendingIndex] = useState<number[]>([]);
+  const [pendingJobIndex, setPendingJobIndex] = useState<number[]>([]);
 
   const publishedDocuments = completedJobIndex.reduce((acc, curr) => {
     const documentsIssuesInJob = jobs[curr].documents;
@@ -47,26 +43,25 @@ export const usePublishQueue = (
     };
   });
 
-  const pendingPublishDocuments = pendingPublishJobs
-    .filter((job, index) => {
-      return jobsNotPendingIndex.indexOf(index) === -1;
-    })
-    .reduce((acc, curr) => {
-      const documentsInPendingJobs = curr.documents;
-      return [...acc, ...documentsInPendingJobs];
-    }, [] as WrappedDocument[]);
+  const pendingPublishDocuments = pendingJobIndex.reduce(
+    (acc, curr) => [...acc, ...jobs[curr].documents],
+    [] as WrappedDocument[]
+  );
 
   const publish = async (): Promise<void> => {
     try {
       // Cannot use setCompletedJobIndex here as async update does not with the promise race
       const completedJobs: number[] = [];
       const failedJobs: FailedJob[] = [];
-      const jobsNotPending: number[] = [];
-      setPublishState(PUBLISH_STATE.INITIALIZED);
+      // let pendingJobs: number[] = [];
+
+      setPublishState("INITIALIZED");
       const nonce = await config.wallet.getTransactionCount();
       const publishingJobs = await getPublishingJobs(formEntries, config, nonce);
       setJobs(publishingJobs);
-      setPendingPublishJobs(publishingJobs);
+      // pendingJobs = publishingJobs.map((job, index) => index);
+      const pendingJobs = new Set(publishingJobs.map((job, index) => index));
+      setPendingJobIndex(Array.from(pendingJobs));
       const deferredJobs = publishingJobs.map(async (job, index) => {
         try {
           await publishJob(job, config.wallet);
@@ -86,19 +81,20 @@ export const usePublishQueue = (
           stack(e);
           throw e; // Re-throwing error to preserve stack when Promise.allSettled resolves
         } finally {
-          jobsNotPending.push(index);
-          setJobsNotPendingIndex(jobsNotPending);
+          // pendingJobs = pendingJobs.filter((jobIndex) => jobIndex !== index);
+          pendingJobs.delete(index);
+          setPendingJobIndex(Array.from(pendingJobs));
         }
       });
-      setPublishState(PUBLISH_STATE.PENDING_CONFIRMATION);
+      setPublishState("PENDING_CONFIRMATION");
       await Promise.allSettled(deferredJobs);
       setCompletedJobIndex(completedJobs);
       setFailedJob(failedJobs);
-      setPublishState(PUBLISH_STATE.CONFIRMED);
+      setPublishState("CONFIRMED");
     } catch (e) {
       stack(e);
       setError(e);
-      setPublishState(PUBLISH_STATE.ERROR);
+      setPublishState("ERROR");
     }
   };
 

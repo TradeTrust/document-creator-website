@@ -1,6 +1,5 @@
 import { render, screen } from "@testing-library/react";
 import React from "react";
-import { PUBLISH_STATE } from "../../../constants";
 import { FailedJobErrors, WrappedDocument } from "../../../types";
 import { PublishedScreen } from "./PublishedScreen";
 
@@ -46,7 +45,7 @@ describe("publishedScreen", () => {
         publishedDocuments={mockPublishedDocuments}
         failedPublishedDocuments={mockFailPublishedDocuments}
         pendingPublishDocuments={[]}
-        publishState={PUBLISH_STATE.CONFIRMED}
+        publishState={"CONFIRMED"}
       />
     );
 
@@ -60,7 +59,7 @@ describe("publishedScreen", () => {
         publishedDocuments={mockPublishedDocuments}
         failedPublishedDocuments={mockFailPublishedDocuments}
         pendingPublishDocuments={mockPublishedDocuments}
-        publishState={PUBLISH_STATE.PENDING_CONFIRMATION}
+        publishState={"PENDING_CONFIRMATION"}
       />
     );
 
@@ -75,7 +74,7 @@ describe("publishedScreen", () => {
         publishedDocuments={[]}
         failedPublishedDocuments={mockFailPublishedDocuments}
         pendingPublishDocuments={[]}
-        publishState={PUBLISH_STATE.PENDING_CONFIRMATION}
+        publishState={"PENDING_CONFIRMATION"}
       />
     );
 
@@ -90,7 +89,7 @@ describe("publishedScreen", () => {
         publishedDocuments={mockPublishedDocuments}
         failedPublishedDocuments={mockFailPublishedDocuments}
         pendingPublishDocuments={mockPublishedDocuments}
-        publishState={PUBLISH_STATE.PENDING_CONFIRMATION}
+        publishState={"PENDING_CONFIRMATION"}
       />
     );
 
@@ -105,7 +104,7 @@ describe("publishedScreen", () => {
         publishedDocuments={mockPublishedDocuments}
         failedPublishedDocuments={[]}
         pendingPublishDocuments={mockPublishedDocuments}
-        publishState={PUBLISH_STATE.PENDING_CONFIRMATION}
+        publishState={"PENDING_CONFIRMATION"}
       />
     );
 
@@ -120,7 +119,7 @@ describe("publishedScreen", () => {
         publishedDocuments={mockPublishedDocuments}
         failedPublishedDocuments={[]}
         pendingPublishDocuments={[]}
-        publishState={PUBLISH_STATE.CONFIRMED}
+        publishState={"CONFIRMED"}
       />
     );
 
@@ -135,7 +134,7 @@ describe("publishedScreen", () => {
         publishedDocuments={[]}
         failedPublishedDocuments={mockFailPublishedDocuments}
         pendingPublishDocuments={[]}
-        publishState={PUBLISH_STATE.CONFIRMED}
+        publishState={"CONFIRMED"}
       />
     );
 
@@ -150,7 +149,7 @@ describe("publishedScreen", () => {
         publishedDocuments={[]}
         failedPublishedDocuments={[]}
         pendingPublishDocuments={[]}
-        publishState={PUBLISH_STATE.INITIALIZED}
+        publishState={"INITIALIZED"}
       />
     );
 

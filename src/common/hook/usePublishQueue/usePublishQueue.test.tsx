@@ -1,6 +1,5 @@
 import { act, renderHook } from "@testing-library/react-hooks";
 import { getDefaultProvider, Wallet } from "ethers";
-import { PUBLISH_STATE } from "../../../constants";
 import { publishJob } from "../../../services/publishing";
 import sampleConfig from "../../../test/fixtures/sample-config.json";
 import sampleJobs from "../../../test/fixtures/sample-jobs.json";
@@ -49,7 +48,7 @@ const uploadSuccess = {
 describe("usePublishQueue", () => {
   it("should have the correct initial state", () => {
     const { result } = renderHook(() => usePublishQueue(config, formEntires));
-    expect(result.current.publishState).toBe(PUBLISH_STATE.UNINITIALIZED);
+    expect(result.current.publishState).toBe("UNINITIALIZED");
     expect(result.current.publishedDocuments).toStrictEqual([]);
   });
 
@@ -61,7 +60,7 @@ describe("usePublishQueue", () => {
     await act(async () => {
       await result.current.publish();
     });
-    expect(result.current.publishState).toBe(PUBLISH_STATE.CONFIRMED);
+    expect(result.current.publishState).toBe("CONFIRMED");
     expect(result.current.publishedDocuments).toHaveLength(3);
   });
 
