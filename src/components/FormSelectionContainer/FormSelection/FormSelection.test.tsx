@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { render, screen } from "@testing-library/react";
+import { render, screen, fireEvent } from "@testing-library/react";
 import React from "react";
-import { FormSelection } from "./FormSelection";
+import { FormSelection, ButtonWrapper } from "./FormSelection";
 
 describe("formSelection", () => {
   it("should display the buttons according to the forms stored in the config file", () => {
@@ -32,5 +32,24 @@ describe("formSelection", () => {
 
     const textPO = screen.getByText("Purchase Order").textContent;
     expect(textPO).toStrictEqual("Purchase Order");
+  });
+});
+
+describe("buttomWrapper", () => {
+  it("should display forms accordingly when control + index is pressed", () => {
+    const mockOnFormSelection = jest.fn();
+    const mockForm = {
+      name: "Bill of Lading",
+      type: "TRANSFERABLE_RECORD",
+    };
+    const mockIndex = 0;
+    render(
+      <ButtonWrapper handleClick={mockOnFormSelection} form={mockForm as any} index={mockIndex} />
+    );
+
+    const formHeaderDom = screen.getByTestId("form-selection-button");
+    fireEvent.keyDown(formHeaderDom, { key: "Control" });
+    fireEvent.keyDown(formHeaderDom, { key: (mockIndex + 1).toString() });
+    expect(mockOnFormSelection).toHaveBeenCalledWith(mockIndex);
   });
 });

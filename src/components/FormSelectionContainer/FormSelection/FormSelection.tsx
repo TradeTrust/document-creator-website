@@ -7,7 +7,6 @@ import { ProgressBar } from "../../ProgressBar";
 import { Button } from "../../UI/Button";
 import { Title } from "../../UI/Title";
 import { Wrapper } from "../../UI/Wrapper";
-import { range } from "lodash";
 import { useKeyboardShortcut } from "../../../common/hook/UseKeyboardShortcut";
 
 interface FormSelection {
@@ -22,7 +21,7 @@ interface ButtonWrapperProps {
   form: FormTemplate;
 }
 
-const ButtonWrapper: FunctionComponent<ButtonWrapperProps> = ({
+export const ButtonWrapper: FunctionComponent<ButtonWrapperProps> = ({
   handleClick,
   className,
   form,
@@ -32,10 +31,16 @@ const ButtonWrapper: FunctionComponent<ButtonWrapperProps> = ({
     handleClick(index);
   };
 
+  // Index + 1 as index is zero indexing
   useKeyboardShortcut(["Control", (index + 1).toString()], handleButtonClick);
 
   return (
-    <Button className={className} role="button" onClick={handleButtonClick}>
+    <Button
+      className={className}
+      role="button"
+      onClick={handleButtonClick}
+      data-testid="form-selection-button"
+    >
       {form.name}
     </Button>
   );
@@ -46,9 +51,6 @@ export const FormSelection: FunctionComponent<FormSelection> = ({ className, con
   const selectedForm = (templateIndex: number): void => {
     newForm(templateIndex);
   };
-
-  const keymap = range(config.forms.length).map((_, i) => i.toString());
-  keymap.push("Control");
 
   // Once the active form has been set, redirect to /form
   // To get back to this page, the previous page has to unset the activeFormIndex first

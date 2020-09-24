@@ -27,7 +27,7 @@ export const DynamicFormHeader: FunctionComponent<DynamicFormHeaderProps> = ({
   useKeyboardShortcut(["Control", "i"], onFormSubmit);
 
   return (
-    <div className="container mx-auto mb-6">
+    <div className="container mx-auto mb-6" data-testid="dynamic-form-header">
       <div
         onClick={onBackToFormSelection}
         className="text-grey flex cursor-pointer py-4 w-20"

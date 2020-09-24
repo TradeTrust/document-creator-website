@@ -88,6 +88,23 @@ describe("dynamicFormHeader", () => {
     expect(mockOnNewForm).toHaveBeenCalledTimes(1);
   });
 
+  it("should fire the 'add new' function when control + n is pressed", () => {
+    whenActiveFormsAreAvailable();
+    const mockOnNewForm = jest.fn();
+    render(
+      <DynamicFormHeader
+        onBackToFormSelection={() => {}}
+        onFormSubmit={() => {}}
+        onNewForm={mockOnNewForm}
+        validateCurrentForm={() => false}
+      />
+    );
+    const formHeaderDom = screen.getByTestId("dynamic-form-header");
+    fireEvent.keyDown(formHeaderDom, { key: "Control" });
+    fireEvent.keyDown(formHeaderDom, { key: "n" });
+    expect(mockOnNewForm).toHaveBeenCalledTimes(1);
+  });
+
   it("should fire the 'back' function when back button is clicked", () => {
     whenActiveFormsAreAvailable();
     const mockOnBackToFormSelection = jest.fn();
@@ -117,6 +134,24 @@ describe("dynamicFormHeader", () => {
     );
 
     fireEvent.click(screen.getByTestId("form-submit-button"));
+    expect(mockonFormSubmit).toHaveBeenCalledTimes(1);
+  });
+
+  it("should fire the 'submit' function when control + i is pressed", () => {
+    whenActiveFormsAreAvailable();
+    const mockonFormSubmit = jest.fn();
+    render(
+      <DynamicFormHeader
+        onBackToFormSelection={() => {}}
+        onFormSubmit={mockonFormSubmit}
+        onNewForm={() => {}}
+        validateCurrentForm={() => false}
+      />
+    );
+
+    const formHeaderDom = screen.getByTestId("dynamic-form-header");
+    fireEvent.keyDown(formHeaderDom, { key: "Control" });
+    fireEvent.keyDown(formHeaderDom, { key: "i" });
     expect(mockonFormSubmit).toHaveBeenCalledTimes(1);
   });
 
