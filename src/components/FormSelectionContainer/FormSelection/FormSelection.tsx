@@ -32,7 +32,7 @@ export const ButtonWrapper: FunctionComponent<ButtonWrapperProps> = ({
   };
 
   // Index + 1 as index is zero indexing
-  useKeyboardShortcut(["Control", (index + 1).toString()], handleButtonClick);
+  useKeyboardShortcut(["Control", "Meta", (index + 1).toString()], handleButtonClick);
 
   return (
     <Button

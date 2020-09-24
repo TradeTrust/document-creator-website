@@ -101,6 +101,7 @@ describe("dynamicFormHeader", () => {
     );
     const formHeaderDom = screen.getByTestId("dynamic-form-header");
     fireEvent.keyDown(formHeaderDom, { key: "Control" });
+    fireEvent.keyDown(formHeaderDom, { key: "Meta" });
     fireEvent.keyDown(formHeaderDom, { key: "n" });
     expect(mockOnNewForm).toHaveBeenCalledTimes(1);
   });
@@ -151,6 +152,7 @@ describe("dynamicFormHeader", () => {
 
     const formHeaderDom = screen.getByTestId("dynamic-form-header");
     fireEvent.keyDown(formHeaderDom, { key: "Control" });
+    fireEvent.keyDown(formHeaderDom, { key: "Meta" });
     fireEvent.keyDown(formHeaderDom, { key: "i" });
     expect(mockonFormSubmit).toHaveBeenCalledTimes(1);
   });

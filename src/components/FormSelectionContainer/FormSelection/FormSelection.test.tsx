@@ -49,6 +49,7 @@ describe("buttomWrapper", () => {
 
     const formHeaderDom = screen.getByTestId("form-selection-button");
     fireEvent.keyDown(formHeaderDom, { key: "Control" });
+    fireEvent.keyDown(formHeaderDom, { key: "Meta" });
     fireEvent.keyDown(formHeaderDom, { key: (mockIndex + 1).toString() });
     expect(mockOnFormSelection).toHaveBeenCalledWith(mockIndex);
   });

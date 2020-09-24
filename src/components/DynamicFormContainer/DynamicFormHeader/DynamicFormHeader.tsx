@@ -23,8 +23,8 @@ export const DynamicFormHeader: FunctionComponent<DynamicFormHeaderProps> = ({
   const { forms, activeFormIndex } = useFormsContext();
 
   // Add Keyboard macros to form
-  useKeyboardShortcut(["Control", "n"], onNewForm);
-  useKeyboardShortcut(["Control", "i"], onFormSubmit);
+  useKeyboardShortcut(["Control", "Meta", "n"], onNewForm);
+  useKeyboardShortcut(["Control", "Meta", "i"], onFormSubmit);
 
   return (
     <div className="container mx-auto mb-6" data-testid="dynamic-form-header">
