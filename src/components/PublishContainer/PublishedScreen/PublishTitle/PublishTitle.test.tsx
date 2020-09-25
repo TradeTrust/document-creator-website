@@ -43,7 +43,7 @@ describe("publishTitle", () => {
   });
 
   it("should display 'preparing' when publishState is 'INITIALIZED'", () => {
-    render(<PublishTitle publishState={"CONFIINITIALIZEDRMED"} publishedDocuments={[]} />);
+    render(<PublishTitle publishState={"INITIALIZED"} publishedDocuments={[]} />);
 
     expect(screen.queryAllByText("Please wait while we prepare your document(s)")).toHaveLength(1);
   });

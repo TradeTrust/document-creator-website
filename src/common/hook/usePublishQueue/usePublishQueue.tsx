@@ -53,13 +53,11 @@ export const usePublishQueue = (
       // Cannot use setCompletedJobIndex here as async update does not with the promise race
       const completedJobs: number[] = [];
       const failedJobs: FailedJob[] = [];
-      // let pendingJobs: number[] = [];
 
       setPublishState("INITIALIZED");
       const nonce = await config.wallet.getTransactionCount();
       const publishingJobs = await getPublishingJobs(formEntries, config, nonce);
       setJobs(publishingJobs);
-      // pendingJobs = publishingJobs.map((job, index) => index);
       const pendingJobs = new Set(publishingJobs.map((job, index) => index));
       setPendingJobIndex(Array.from(pendingJobs));
       const deferredJobs = publishingJobs.map(async (job, index) => {
@@ -81,7 +79,6 @@ export const usePublishQueue = (
           stack(e);
           throw e; // Re-throwing error to preserve stack when Promise.allSettled resolves
         } finally {
-          // pendingJobs = pendingJobs.filter((jobIndex) => jobIndex !== index);
           pendingJobs.delete(index);
           setPendingJobIndex(Array.from(pendingJobs));
         }
