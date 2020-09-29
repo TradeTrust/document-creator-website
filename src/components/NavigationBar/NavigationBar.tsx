@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { Settings } from "react-feather";
 import logo from "./logo.svg";
 
-const urlPath = process.env.NODE_ENV === "development" ? "//dev.tradetrust.io" : "//tradetrust.io";
+const urlPath = "//tradetrust.io";
 
 const navItems = [
   {
@@ -19,7 +19,7 @@ const navItems = [
   {
     id: "resources",
     label: "Resources",
-    path: urlPath + "/#", // to update once resources page is in
+    path: urlPath + "/resources",
   },
   {
     id: "faq",
@@ -60,7 +60,7 @@ export const NavigationBar: FunctionComponent<NavigationBar> = ({ logout }) => {
                 } ${index === navItems.length ? "ml-auto" : "pr-0"}`}
                 key={index}
               >
-                {item.path === "/" ? (
+                {item.id === "create-documents" ? (
                   <Link className="text-greyblue hover:text-white" to={item.path}>
                     {item.label}
                   </Link>
