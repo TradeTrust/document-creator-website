@@ -12,7 +12,7 @@ sleep 5
 # Deploy title escrow creator to 0x4Bf7E4777a8D1b6EdD5F2d9b8582e2817F0B0953
 ./node_modules/@govtechsg/open-attestation-cli/dist/cjs/index.js deploy title-escrow-creator "test" -n local -k $account_key
 
-if [  -z "$HEADLESS" ]
+if [ -z "$HEADLESS" ]
 then
     npm run integration:internal
 else
