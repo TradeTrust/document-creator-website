@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { Settings } from "react-feather";
 import logo from "./logo.svg";
 
-const urlPath = "//tradetrust.io";
+const urlPath = "https://tradetrust.io";
 
 const navItems = [
   {
