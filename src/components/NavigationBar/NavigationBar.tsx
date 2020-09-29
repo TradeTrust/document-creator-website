@@ -73,8 +73,10 @@ export const NavigationBar: FunctionComponent<NavigationBar> = ({ logout }) => {
             );
           })}
           {logout && (
-            <div className="cursor-pointer" onClick={logout}>
-              Logout
+            <div className={`w-auto ml-0 pr-4 pt-4 lg:pl-8 lg:pr-0 lg:py-0`}>
+              <div className="text-greyblue hover:text-white cursor" onClick={logout}>
+                Logout
+              </div>
             </div>
           )}
         </div>
