@@ -37,6 +37,9 @@ module.exports = {
         default: "#eeeeee",
         dark: "#89969F",
       },
+      greyblue: {
+        default: "#c1c9d1"
+      },
       grey: {
         lighter: "#dddddd",
         default: "#a0aec0",
@@ -46,6 +49,9 @@ module.exports = {
         lighter: "#e6f5fa",
         default: "#0099CC",
         dark: "#2b6cb0",
+      },
+      navy: {
+        default: "#324353",
       },
       orange: {
         lighter: "#fbd38d",
