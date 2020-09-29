@@ -44,20 +44,9 @@ const whenPublishStateIsNotConfirmed = (): void => {
   mockUsePublishQueue.mockReturnValue({
     publish: mockPublish,
     publishState: "INITIALIZED",
-    wrappedDocuments: [
-      {
-        contractAddress: "",
-        fileName: "Document-1",
-        payload: {},
-        type: "VERIFIABLE_DOCUMENT",
-        rawDocument: {},
-        wrappedDocument: {
-          data: {},
-          signature: {},
-          version: "",
-        },
-      },
-    ],
+    publishedDocuments: [],
+    failedPublishedDocuments: [],
+    pendingPublishDocuments: [],
   });
 };
 
@@ -70,10 +59,10 @@ describe("publishContainer", () => {
       </MemoryRouter>
     );
 
-    expect(screen.queryAllByText(/Please wait while we are publishing/)).toHaveLength(0);
+    expect(screen.queryAllByText(/Please wait while we prepare your document/)).toHaveLength(0);
   });
 
-  it("should display publishing screen when documents are being publish", () => {
+  it("should display preparing screen when documents are being sorted into jobs", () => {
     whenPublishStateIsNotConfirmed();
     render(
       <MemoryRouter>
@@ -81,7 +70,6 @@ describe("publishContainer", () => {
       </MemoryRouter>
     );
 
-    expect(screen.queryAllByText(/Please wait while we are publishing/)).toHaveLength(1);
-    expect(screen.queryAllByText(/Publishing/)).toHaveLength(1);
+    expect(screen.queryAllByText(/Please wait while we prepare your document/)).toHaveLength(1);
   });
 });

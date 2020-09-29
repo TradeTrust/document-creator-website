@@ -27,6 +27,7 @@ export const pink = `${fullConfig.theme.colors.pink.default}`;
 export const lightgrey = `${fullConfig.theme.colors.lightgrey.default}`;
 export const lightgreyDark = `${fullConfig.theme.colors.lightgrey.dark}`;
 export const lightgreyLighter = `${fullConfig.theme.colors.lightgrey.lighter}`;
+export const lightgreyLightest = `${fullConfig.theme.colors.lightgrey.lightest}`;
 
 export const buttonRadius = "4px";
 

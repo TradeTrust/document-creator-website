@@ -22,12 +22,14 @@ export const usePublishQueue = (
   publish: () => void;
   publishedDocuments: WrappedDocument[];
   failedPublishedDocuments: FailedJobErrors[];
+  pendingPublishDocuments: WrappedDocument[];
 } => {
   const [error, setError] = useState<Error>();
   const [publishState, setPublishState] = useState<ContractFunctionState>("UNINITIALIZED");
   const [jobs, setJobs] = useState<PublishingJob[]>([]);
   const [completedJobIndex, setCompletedJobIndex] = useState<number[]>([]);
   const [failedJob, setFailedJob] = useState<FailedJob[]>([]);
+  const [pendingJobIndex, setPendingJobIndex] = useState<number[]>([]);
 
   const publishedDocuments = completedJobIndex.reduce((acc, curr) => {
     const documentsIssuesInJob = jobs[curr].documents;
@@ -41,15 +43,23 @@ export const usePublishQueue = (
     };
   });
 
+  const pendingPublishDocuments = pendingJobIndex.reduce(
+    (acc, curr) => [...acc, ...jobs[curr].documents],
+    [] as WrappedDocument[]
+  );
+
   const publish = async (): Promise<void> => {
     try {
       // Cannot use setCompletedJobIndex here as async update does not with the promise race
       const completedJobs: number[] = [];
       const failedJobs: FailedJob[] = [];
+
       setPublishState("INITIALIZED");
       const nonce = await config.wallet.getTransactionCount();
       const publishingJobs = await getPublishingJobs(formEntries, config, nonce);
       setJobs(publishingJobs);
+      const pendingJobs = new Set(publishingJobs.map((job, index) => index));
+      setPendingJobIndex(Array.from(pendingJobs));
       const deferredJobs = publishingJobs.map(async (job, index) => {
         try {
           await publishJob(job, config.wallet);
@@ -68,6 +78,9 @@ export const usePublishQueue = (
           setFailedJob(failedJobs);
           stack(e);
           throw e; // Re-throwing error to preserve stack when Promise.allSettled resolves
+        } finally {
+          pendingJobs.delete(index);
+          setPendingJobIndex(Array.from(pendingJobs));
         }
       });
       setPublishState("PENDING_CONFIRMATION");
@@ -88,5 +101,6 @@ export const usePublishQueue = (
     error,
     publishedDocuments,
     failedPublishedDocuments,
+    pendingPublishDocuments,
   };
 };

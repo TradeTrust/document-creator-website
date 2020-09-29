@@ -55,6 +55,7 @@ const whenPublishStateIsConfirmed = (): void => {
       },
     ],
     failedPublishedDocuments: [],
+    pendingPublishDocuments: [],
   });
 };
 
@@ -82,6 +83,7 @@ const whenPublishStateIsError = (): void => {
     publishState: "ERROR",
     publishedDocuments: [],
     failedPublishedDocuments: [],
+    pendingPublishDocuments: [],
   });
 };
 
@@ -110,9 +112,10 @@ const whenPublishStateIsPending = (): void => {
   });
   mockUsePublishQueue.mockReturnValue({
     publish: mockPublish,
-    publishState: "PENDING_CONFIRMATION",
+    publishState: "INITIALIZED",
     publishedDocuments: [],
     failedPublishedDocuments: [],
+    pendingPublishDocuments: [],
   });
 };
 
@@ -128,7 +131,7 @@ describe("publishContainer", () => {
     expect(screen.queryAllByText(/Document(s) issued successfully/)).toHaveLength(0);
   });
 
-  it("should display the publishing screen when publishing document", () => {
+  it("should display the preparing screen when sorting documents into jobs", () => {
     whenPublishStateIsPending();
     render(
       <MemoryRouter>
@@ -136,9 +139,7 @@ describe("publishContainer", () => {
       </MemoryRouter>
     );
 
-    expect(
-      screen.queryAllByText(/Please wait while we are publishing the document(s)./)
-    ).toHaveLength(0);
+    expect(screen.queryAllByText(/Please wait while we prepare your document/)).toHaveLength(1);
   });
 
   it("should display the published screen when documents are published", () => {

@@ -1,38 +1,29 @@
 import prettyBytes from "pretty-bytes";
 import React, { FunctionComponent } from "react";
+import { Download, XCircle } from "react-feather";
 import { useConfigContext } from "../../../common/context/config";
-import { useFormsContext } from "../../../common/context/forms";
 import { FailedJobErrors, WrappedDocument } from "../../../types";
 import { generateFileName } from "../../../utils/fileName";
 import { Container } from "../../Container";
 import { ProgressBar } from "../../ProgressBar";
 import { Button } from "../../UI/Button";
-import { CheckCircle, Download, XCircle } from "react-feather";
-import { Title } from "../../UI/Title";
 import { PublishedTag } from "../PublishedScreen/PublishedTag";
+import { PublishTitle } from "./PublishTitle";
 
 interface PublishScreen {
   publishedDocuments: WrappedDocument[];
   failedPublishedDocuments: FailedJobErrors[];
+  pendingPublishDocuments: WrappedDocument[];
+  publishState: string;
 }
 
 export const PublishedScreen: FunctionComponent<PublishScreen> = ({
   publishedDocuments,
   failedPublishedDocuments,
+  pendingPublishDocuments,
+  publishState,
 }) => {
-  const { setConfig, config } = useConfigContext();
-  const { setForms, setActiveFormIndex } = useFormsContext();
-
-  const createAnotherDoc = (): void => {
-    setForms([]);
-    setActiveFormIndex(undefined);
-  };
-
-  const onDone = (): void => {
-    setForms([]);
-    setActiveFormIndex(undefined);
-    setConfig(undefined);
-  };
+  const { config } = useConfigContext();
 
   const getFileSize = (jsonString: string): number => {
     const m = encodeURIComponent(jsonString).match(/%[89ABab]/g);
@@ -40,7 +31,7 @@ export const PublishedScreen: FunctionComponent<PublishScreen> = ({
   };
 
   const failPublishedDocuments = failedPublishedDocuments
-    .map((failedjob) => failedjob.documents)
+    .map((failedJob) => failedJob.documents)
     .flat();
 
   const formattedErrorLog = failedPublishedDocuments.map((failedJob) => {
@@ -56,37 +47,23 @@ export const PublishedScreen: FunctionComponent<PublishScreen> = ({
       <div className="container mx-auto pt-8">
         <ProgressBar step={3} />
         <div className="flex justify-between items-end">
-          <Title className="flex items-center mb-8">
-            <CheckCircle className="mr-2 text-teal" />
-            {publishedDocuments.length > 0
-              ? "Document(s) issued successfully"
-              : "Document(s) failed to issue"}
-          </Title>
-          <div>
-            <Button className="bg-white text-orange px-4 py-3 mb-6 mr-4" onClick={createAnotherDoc}>
-              Create another Document
-            </Button>
-            <Button
-              className="bg-orange text-white self-end py-3 px-4 mb-6"
-              data-testid="form-logout-button"
-              onClick={onDone}
-            >
-              Logout
-            </Button>
-          </div>
+          <PublishTitle publishState={publishState} publishedDocuments={publishedDocuments} />
         </div>
       </div>
       <div className="bg-lightgrey-lighter p-6 h-screen">
-        {publishedDocuments && publishedDocuments.length > 0 && (
+        {(pendingPublishDocuments.length > 0 || publishedDocuments.length > 0) && (
           <div className="container mx-auto">
             <div className="border-b border-solid border-lightgrey">
               <div className="text-grey font-medium text-lg mb-4">
-                {publishedDocuments.length} Document(s)
+                {publishedDocuments.length + pendingPublishDocuments.length} Document(s)
               </div>
             </div>
             <div className="flex flex-wrap border-b border-solid border-lightgrey pb-4 mb-4">
               {publishedDocuments.map((doc, index) => (
-                <PublishedTag doc={doc} key={index} />
+                <PublishedTag doc={doc} key={index} isPending={false} />
+              ))}
+              {pendingPublishDocuments.map((doc, index) => (
+                <PublishedTag doc={doc} key={index} isPending={true} />
               ))}
             </div>
           </div>

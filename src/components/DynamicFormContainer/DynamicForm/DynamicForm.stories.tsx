@@ -7,30 +7,38 @@ import { DynamicForm } from "./DynamicForm";
 const defaults = {
   $template: {
     type: "EMBEDDED_RENDERER",
-    name: "BILL_OF_LADING",
-    url: "https://demo-cnm.openattestation.com",
+    name: "COVERING_LETTER",
+    url: "https://generic-templates.tradetrust.io",
   },
   issuers: [
     {
+      name: "Demo Issuer",
+      documentStore: "0x8bA63EAB43342AAc3AdBB4B827b68Cf4aAE5Caca",
       identityProof: {
         type: "DNS-TXT",
         location: "demo-tradetrust.openattestation.com",
       },
-      name: "DEMO STORE",
-      tokenRegistry: "0xc3E9eBc6aDA9BA4B4Ce65D71901Cb2307e9670cE",
     },
   ],
-  name: "Maersk Bill of Lading",
+  name: "Covering Letter",
+  logo: "https://www.aretese.com/images/govtech-animated-logo.gif",
+  title: "Documents Bundle",
+  remarks: "Some very important documents in here for some submission",
+  uiSchema: {
+    remarks: {
+      "ui:widget": "textarea",
+    },
+  },
 };
 
 // Form values that the admin staff will be changing
 const configFile = sample as ConfigFile;
-const schema = configFile.forms[0].schema;
-const attachments = configFile.forms[0].attachments;
+const schema = configFile.forms[2].schema;
+const attachments = configFile.forms[2].attachments;
 
 const form: FormTemplate = {
-  name: "Bill of lading",
-  type: "TRANSFERABLE_RECORD",
+  name: "Covering Letter",
+  type: "VERIFIABLE_DOCUMENT",
   defaults,
   schema,
   attachments,
@@ -46,7 +54,13 @@ export default {
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const Default = () => {
-  const [formData, setFormData] = useState<any>();
+  const [formData, setFormData] = useState<any>({
+    fileName: "document-1",
+    data: { formData: {} },
+    templateIndex: 0,
+    ownership: { holderAddress: "", beneficiaryAddress: "" },
+  });
+
   return (
     <DynamicForm
       schema={form.schema}
@@ -55,7 +69,7 @@ export const Default = () => {
       // eslint-disable-next-line @typescript-eslint/no-empty-function
       setOwnership={() => {}}
       attachmentAccepted={true}
-      type="TRANSFERABLE_RECORD"
+      type="VERIFIABLE_DOCUMENT"
     />
   );
 };
