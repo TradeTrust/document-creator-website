@@ -1,7 +1,7 @@
 account_key=0xe82294532bcfcd8e0763ee5cef194f36f00396be59b94fb418f5f8d83140d9a7
 
 # Wait for ganache to listen on 8545
-sleep 2
+sleep 5
 
 # Deploy document store to 0x63A223E025256790E88778a01f480eBA77731D04
 ./node_modules/@govtechsg/open-attestation-cli/dist/cjs/index.js deploy document-store "My Document Store" -n local -k $account_key
