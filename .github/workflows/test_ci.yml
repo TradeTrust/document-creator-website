@@ -1,6 +1,6 @@
 name: CI
 
-on: [push]
+on: push
 
 jobs:
   test:
@@ -23,6 +23,8 @@ jobs:
             ${{ runner.os }}-build-${{ env.cache-name }}-	
             ${{ runner.os }}-build-	
             ${{ runner.os }}-
+      - uses: ./action-a
+
       - name: Install Packages
         run: npm install
       - name: Check Lint

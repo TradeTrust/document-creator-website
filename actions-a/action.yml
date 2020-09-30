@@ -1,0 +1,6 @@
+name: "Lint and Test"
+description: "Do lint checks and unit tests and integration tests"
+
+runs:
+  using: "docker"
+  image: "Dockerfile"
