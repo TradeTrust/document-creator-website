@@ -34,7 +34,8 @@ test("Upload configuration file, choose form, fill form, submit form correctly",
 
   // Upload config file
   await loadConfigFile(Config);
-  await t.expect(Title.textContent).contains("Login with Password");
+  await t.expect(Title.textContent).contains("Create Document");
+  await t.expect(Selector("[data-testid='login-title']").textContent).contains("Login");
 
   // Check if on correct network
   await t.expect(Selector("[data-testid='network-bar']").withText("Local network").exists).ok();

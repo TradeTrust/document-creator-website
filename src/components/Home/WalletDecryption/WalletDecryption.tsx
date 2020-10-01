@@ -28,44 +28,44 @@ export const WalletDecryption: FunctionComponent<WalletDecryption> = ({
 
   return (
     <Wrapper>
-      <Title className="mb-8">Login with Password</Title>
-      <form className="bg-white flex rounded pt-5 pl-5 pr-4 pb-6">
-        <div className="text-grey-dark mr-4 mt-2 font-medium">Password</div>
-        <div className="w-full flex flex-col items-start">
-          <input
-            data-testid="password-field"
-            placeholder="Enter Password"
-            className={`
+      <Title className="mb-8">Create Document</Title>
+      <form className="bg-white flex flex-col rounded pt-5 pl-5 pr-4 pb-6">
+        <div className="text-grey-dark mr-4 mb-4 font-bold text-lg" data-testid="login-title">
+          Login
+        </div>
+        <input
+          data-testid="password-field"
+          placeholder="Enter metawallet password"
+          className={`
               ${inputBorderCSS}
               ${isDecrypting && "bg-grey-lighter"}
               ${!password && "italic"}
             `}
-            type="password"
-            value={password}
-            onChange={(evt) => setPassword(evt.target.value)}
-            disabled={isDecrypting}
-          />
-          {isIncorrectPassword && (
-            <div data-testid="password-field-msg" className="text-red text-sm mt-2">
-              Invalid password. Please try again.
-            </div>
-          )}
-          <div
-            data-testid="reset-button"
-            className="text-blue font-bold mt-4 cursor-pointer"
-            onClick={onResetConfigFile}
-          >
-            Use another Config file
+          type="password"
+          value={password}
+          onChange={(evt) => setPassword(evt.target.value)}
+          disabled={isDecrypting}
+        />
+        {isIncorrectPassword && (
+          <div data-testid="password-field-msg" className="text-red text-sm mt-2">
+            Invalid password. Please try again.
           </div>
-          <Button
-            data-testid="login-button"
-            className="bg-orange text-white self-end py-3 px-4 mt-4"
-            onClick={onLogin}
-            disabled={isDecrypting}
-          >
-            Login
-          </Button>
+        )}
+        <div
+          data-testid="reset-button"
+          className="text-blue font-bold mt-4 cursor-pointer"
+          onClick={onResetConfigFile}
+        >
+          Upload new Config file
         </div>
+        <Button
+          data-testid="login-button"
+          className="bg-orange text-white self-end py-3 px-4 mt-4"
+          onClick={onLogin}
+          disabled={isDecrypting}
+        >
+          Login
+        </Button>
       </form>
     </Wrapper>
   );

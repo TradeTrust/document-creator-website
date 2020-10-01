@@ -65,4 +65,19 @@ describe("walletDecryption", () => {
     );
     expect(screen.queryByText(/Invalid password. Please try again./)).not.toBeNull();
   });
+
+  it("should display the correct text when rendered", () => {
+    expect.assertions(2);
+    render(
+      <WalletDecryption
+        isIncorrectPassword={false}
+        isDecrypting={false}
+        onDecryptConfigFile={() => {}}
+        onResetConfigFile={() => {}}
+      />
+    );
+
+    expect(screen.queryAllByText(/Create Document/)).toHaveLength(1);
+    expect(screen.queryAllByPlaceholderText(/Enter metawallet password/)).toHaveLength(1);
+  });
 });
