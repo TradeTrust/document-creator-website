@@ -61,11 +61,17 @@ export const NavigationBar: FunctionComponent<NavigationBar> = ({ logout }) => {
                 key={index}
               >
                 {item.id === "create-documents" ? (
-                  <Link className="text-greyblue hover:text-white" to={item.path}>
+                  <Link
+                    className="transition-colors duration-200 ease-out text-greyblue hover:text-white"
+                    to={item.path}
+                  >
                     {item.label}
                   </Link>
                 ) : (
-                  <a href={item.path} className="text-greyblue hover:text-white">
+                  <a
+                    href={item.path}
+                    className="transition-colors duration-200 ease-out text-greyblue hover:text-white"
+                  >
                     {item.id === "settings" ? <Settings /> : item.label}
                   </a>
                 )}
@@ -74,7 +80,10 @@ export const NavigationBar: FunctionComponent<NavigationBar> = ({ logout }) => {
           })}
           {logout && (
             <div className={`w-auto ml-0 pr-4 pt-4 lg:pl-8 lg:pr-0 lg:py-0`}>
-              <div className="text-greyblue hover:text-white cursor" onClick={logout}>
+              <div
+                className="transition-colors duration-200 ease-out text-greyblue cursor-pointer border-solid border-2 border-gray-100 rounded px-2 py-1 hover:bg-white hover:text-navy"
+                onClick={logout}
+              >
                 Logout
               </div>
             </div>
