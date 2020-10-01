@@ -41,7 +41,7 @@ export const ConfigFileDropZone: FunctionComponent<ConfigFileDropZone> = ({
 
   return (
     <>
-      <Title className="mb-8">Upload Configuration File</Title>
+      <Title className="mb-8">Create Document</Title>
       <div {...getRootProps()}>
         <input data-testid="config-file-drop-zone" {...getInputProps()} />
         <div className={dropZoneCSS}>
@@ -59,13 +59,15 @@ export const ConfigFileDropZone: FunctionComponent<ConfigFileDropZone> = ({
             </div>
           )}
           {!errorMessage && !error && (
-            <div className="font-bold text-lg text-grey-dark">Drag and drop file here</div>
+            <div className="font-bold text-lg text-grey-dark" data-testid="home-description">
+              Drag and drop your configuration file here
+            </div>
           )}
           <div className="text-base text-grey-dark my-4">
             {errorMessage || error ? "Please try again." : "or"}
           </div>
           <Button className="py-3 px-12 bg-white text-orange hover:text-orange-dark border border-solid border-grey-lighter">
-            Browse File
+            Browse Files
           </Button>
         </div>
       </div>
