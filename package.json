@@ -96,7 +96,7 @@
     "integration:internal": "testcafe chrome integration/**/*.spec.ts --ts-config-path ./tsconfig.testcafe.json --app \"BROWSER=none npm run start\"",
     "integration:internal:single": "testcafe chrome -L --ts-config-path ./tsconfig.testcafe.json --app \"npm run start\"",
     "integration:testcafe": "testcafe -c 4 chrome:headless integration/**/*.spec.ts --ts-config-path ./tsconfig.testcafe.json",
-    "integration:wait": "wait-on -l -i 1000 tcp:8545 http-get://localhost:3000",
+    "integration:wait": "wait-on -l -i 1000 tcp:8545 tcp:3000",
     "integration:internal:headless": "run-s integration:wait integration:testcafe",
     "integration:concurrently:headless": "run-p blockchain start integration:headless",
     "lint": "eslint . --ext .ts,.tsx --max-warnings 0",
