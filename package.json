@@ -59,7 +59,6 @@
     "@typescript-eslint/eslint-plugin": "^2.30.0",
     "@typescript-eslint/parser": "^2.30.0",
     "commitizen": "^4.0.4",
-    "concurrently": "^5.2.0",
     "eslint": "^6.8.0",
     "eslint-config-prettier": "^6.11.0",
     "eslint-plugin-import": "^2.20.2",
@@ -80,7 +79,8 @@
     "react-test-renderer": "^16.13.1",
     "tailwindcss": "^1.3.5",
     "testcafe": "^1.8.6",
-    "typescript": "^3.9.6"
+    "typescript": "^3.9.6",
+    "wait-on": "^5.2.0"
   },
   "scripts": {
     "build": "NODE_ENV=production CI=false npm-run-all -s build:css build:js",
@@ -95,8 +95,11 @@
     "integration:headless": "HEADLESS=true ./scripts/integration.sh",
     "integration:internal": "testcafe chrome integration/**/*.spec.ts --ts-config-path ./tsconfig.testcafe.json --app \"BROWSER=none npm run start\"",
     "integration:internal:single": "testcafe chrome -L --ts-config-path ./tsconfig.testcafe.json --app \"npm run start\"",
-    "integration:internal:headless": "testcafe -c 4 chrome:headless integration/**/*.spec.ts --ts-config-path ./tsconfig.testcafe.json --app \"npm run start\" --app-init-delay 15000",
-    "integration:concurrently:headless": "concurrently -k -s first \"npm:blockchain\" \"npm:integration:headless\"",
+    "integration:testcafe": "testcafe -c 4 chrome:headless integration/**/*.spec.ts --ts-config-path ./tsconfig.testcafe.json",
+    "integration:wait": "wait-on -l -i 1000 tcp:8545 http-get://localhost:3000",
+    "integration:internal:headless": "run-s integration:wait integration:testcafe",
+    "app:ci": "BROWSER=none npm run start",
+    "integration:concurrently:headless": "run-p blockchain app:ci integration:headless",
     "lint": "eslint . --ext .ts,.tsx --max-warnings 0",
     "lint:fix": "npm run lint -- --fix",
     "start": "npm-run-all -p start:*",
