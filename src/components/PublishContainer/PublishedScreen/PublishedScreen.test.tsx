@@ -165,7 +165,7 @@ describe("publishedScreen", () => {
     render(
       <PublishedScreen
         publishedDocuments={mockPublishedDocuments}
-        failedPublishedDocuments={mockFailPublishedDocuments}
+        failedPublishedDocuments={[]}
         pendingPublishDocuments={[]}
         publishState={"CONFIRMED"}
       />

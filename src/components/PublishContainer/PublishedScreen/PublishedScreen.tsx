@@ -47,13 +47,13 @@ export const PublishedScreen: FunctionComponent<PublishScreen> = ({
   const generateZipFile = (): void => {
     const zip = new JSZip();
     publishedDocuments.forEach((document) => {
-      const file = JSON.stringify(document.wrappedDocument);
+      const file = JSON.stringify(document.wrappedDocument, null, 2);
       const blob = new Blob([file], { type: "text/json;charset=utf-8" });
       zip.file(generateFileName(config, document.fileName, "tt"), blob);
     });
 
     zip.generateAsync({ type: "blob" }).then((content) => {
-      saveAs(content, generateFileName(config, "TradeTrust-Documents", "zip"));
+      saveAs(content, generateFileName(config, "Documents", "zip"));
     });
   };
 
