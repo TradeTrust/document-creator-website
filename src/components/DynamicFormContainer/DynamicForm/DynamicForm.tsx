@@ -16,6 +16,7 @@ import {
 
 export interface DynamicFormProps {
   schema: FormTemplate["schema"];
+  uiSchema?: FormTemplate["uiSchema"];
   attachmentAccepted: boolean;
   attachmentAcceptedFormat?: string;
   form: FormEntry;
@@ -27,6 +28,7 @@ export interface DynamicFormProps {
 
 export const DynamicFormRaw: FunctionComponent<DynamicFormProps> = ({
   schema,
+  uiSchema,
   form,
   setFormData,
   setOwnership,
@@ -70,7 +72,7 @@ export const DynamicFormRaw: FunctionComponent<DynamicFormProps> = ({
     setAttachments(nextAttachment);
   };
 
-  const uiSchema = data.formData.uiSchema || {};
+  uiSchema = uiSchema || {};
 
   const widgets = {
     TextareaWidget: CustomTextareaWidget,

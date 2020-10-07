@@ -24,10 +24,11 @@ const defaults = {
   logo: "https://www.aretese.com/images/govtech-animated-logo.gif",
   title: "Documents Bundle",
   remarks: "Some very important documents in here for some submission",
-  uiSchema: {
-    remarks: {
-      "ui:widget": "textarea",
-    },
+};
+
+const uiSchema = {
+  remarks: {
+    "ui:widget": "textarea",
   },
 };
 
@@ -41,6 +42,7 @@ const form: FormTemplate = {
   type: "VERIFIABLE_DOCUMENT",
   defaults,
   schema,
+  uiSchema,
   attachments,
 };
 
@@ -64,6 +66,7 @@ export const Default = () => {
   return (
     <DynamicForm
       schema={form.schema}
+      uiSchema={form.uiSchema}
       form={formData}
       setFormData={setFormData}
       // eslint-disable-next-line @typescript-eslint/no-empty-function
