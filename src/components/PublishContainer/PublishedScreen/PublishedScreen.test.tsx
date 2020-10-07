@@ -1,7 +1,10 @@
-import { render, screen } from "@testing-library/react";
+import { act, fireEvent, render, screen, waitFor } from "@testing-library/react";
+import FileSaver from "file-saver";
 import React from "react";
 import { FailedJobErrors, WrappedDocument } from "../../../types";
 import { PublishedScreen } from "./PublishedScreen";
+
+jest.mock("file-saver", () => ({ saveAs: jest.fn() }));
 
 const mockPublishedDocuments = [
   {
@@ -51,6 +54,7 @@ describe("publishedScreen", () => {
 
     expect(screen.queryAllByText("Document(s) issued successfully")).toHaveLength(1);
     expect(screen.queryAllByTestId("publish-loader")).toHaveLength(0);
+    expect(screen.queryAllByTestId("download-all-button")).toHaveLength(1);
   });
 
   it("should display published document section when there are published documents", () => {
@@ -155,5 +159,26 @@ describe("publishedScreen", () => {
 
     expect(screen.queryAllByText(/Please wait while we prepare your document/)).toHaveLength(1);
     expect(screen.queryAllByTestId("publish-loader")).toHaveLength(0);
+  });
+
+  it("should download the file correctly when generateZipFile method is called", async () => {
+    render(
+      <PublishedScreen
+        publishedDocuments={mockPublishedDocuments}
+        failedPublishedDocuments={[]}
+        pendingPublishDocuments={[]}
+        publishState={"CONFIRMED"}
+      />
+    );
+
+    expect(screen.queryAllByTestId("download-all-button")).toHaveLength(1);
+
+    await act(async () => {
+      await fireEvent.click(screen.getByTestId("download-all-button"));
+    });
+
+    await waitFor(() => {
+      expect(FileSaver.saveAs).toHaveBeenCalledTimes(1);
+    });
   });
 });

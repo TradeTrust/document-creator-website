@@ -15,6 +15,7 @@ const ProgressBar = Selector("[data-testid='progress-bar']");
 const AttachmentXButton = Selector("[data-testid='remove-uploaded-file-0']");
 const AddNewButton = Selector("[data-testid='add-new-button']");
 const SubmitButton = Selector("[data-testid='form-submit-button']");
+const DownloadAllButton = Selector("[data-testid='download-all-button']");
 const FormIdField = Selector("#root_iD");
 const FormAttachmentField = Selector("[data-testid='upload-file-0']");
 const FormExporterNameField = Selector("#root_supplyChainConsignment_exporter_name");
@@ -119,6 +120,7 @@ test("Upload configuration file, choose form, fill form, submit form correctly",
   await t.expect(Selector("div").withText("Download").exists).ok();
   await t.expect(Selector("div").withText("File-2-local.tt").exists).ok();
   await t.expect(Selector("div").withText("Download").exists).ok();
+  await t.expect(DownloadAllButton.exists).ok();
 
   // Issue transferable record
   await t.click(Button.withText("Create another Document"));

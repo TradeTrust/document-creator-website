@@ -1,3 +1,5 @@
+import { saveAs } from "file-saver";
+import JSZip from "jszip";
 import prettyBytes from "pretty-bytes";
 import React, { FunctionComponent } from "react";
 import { Download, XCircle } from "react-feather";
@@ -42,6 +44,19 @@ export const PublishedScreen: FunctionComponent<PublishScreen> = ({
     };
   });
 
+  const generateZipFile = (): void => {
+    const zip = new JSZip();
+    publishedDocuments.forEach((document) => {
+      const file = JSON.stringify(document.wrappedDocument, null, 2);
+      const blob = new Blob([file], { type: "text/json;charset=utf-8" });
+      zip.file(generateFileName(config, document.fileName, "tt"), blob);
+    });
+
+    zip.generateAsync({ type: "blob" }).then((content) => {
+      saveAs(content, generateFileName(config, "Documents", "zip"));
+    });
+  };
+
   return (
     <Container>
       <div className="container mx-auto pt-8">
@@ -53,10 +68,22 @@ export const PublishedScreen: FunctionComponent<PublishScreen> = ({
       <div className="bg-lightgrey-lighter p-6 h-screen">
         {(pendingPublishDocuments.length > 0 || publishedDocuments.length > 0) && (
           <div className="container mx-auto">
-            <div className="border-b border-solid border-lightgrey">
-              <div className="text-grey font-medium text-lg mb-4">
+            <div className="border-b border-solid border-lightgrey flex items-center">
+              <div className="text-grey font-medium text-lg mb-4 flex-grow py-3">
                 {publishedDocuments.length + pendingPublishDocuments.length} Document(s)
               </div>
+              {publishState === "CONFIRMED" && (
+                <Button
+                  className="bg-white text-blue px-4 py-3 mb-4"
+                  data-testid="download-all-button"
+                  onClick={generateZipFile}
+                >
+                  <div className="flex">
+                    <Download />
+                    <div className="text-blue ml-2">Download all</div>
+                  </div>
+                </Button>
+              )}
             </div>
             <div className="flex flex-wrap border-b border-solid border-lightgrey pb-4 mb-4">
               {publishedDocuments.map((doc, index) => (
