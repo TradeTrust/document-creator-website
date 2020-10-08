@@ -627,6 +627,63 @@
       }
     },
     {
+      "name": "Covering Letter (DBS, Nested UISchema)",
+      "type": "VERIFIABLE_DOCUMENT",
+      "defaults": {
+        "$template": {
+          "type": "EMBEDDED_RENDERER",
+          "name": "COVERING_LETTER",
+          "url": "https://generic-templates.tradetrust.io"
+        },
+        "issuers": [
+          {
+            "name": "Demo Issuer",
+            "documentStore": "0x8bA63EAB43342AAc3AdBB4B827b68Cf4aAE5Caca",
+            "identityProof": {
+              "type": "DNS-TXT",
+              "location": "demo-tradetrust.openattestation.com"
+            }
+          }
+        ],
+        "name": "Covering Letter",
+        "logo": "https://pluspng.com/img-png/logo-dbs-png-file-dbs-bank-logo-svg-1280.png",
+        "backgroundColor": "black",
+        "titleColor": "white",
+        "remarksColor": "white",
+        "title": "Documents Bundle",
+        "remarks": "Some very important documents in here for some submission",
+        "misc": {
+          "miscKey1": "miscValue1",
+          "uiSchema": {
+            "remarks": {
+              "ui:widget": "textarea"
+            }
+          }
+        },
+        "uiSchema": {
+          "remarks": {
+            "ui:widget": "textarea"
+          }
+        }
+      },
+      "schema": {
+        "type": "object",
+        "properties": {
+          "title": {
+            "type": "string",
+            "title": "Document Title"
+          },
+          "remarks": {
+            "type": "string",
+            "title": "Remarks"
+          }
+        }
+      },
+      "attachments": {
+        "allow": true
+      }
+    },
+    {
       "name": "Covering Letter (ERROR)",
       "type": "VERIFIABLE_DOCUMENT",
       "defaults": {
