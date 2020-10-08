@@ -28,7 +28,7 @@ export interface DynamicFormProps {
 
 export const DynamicFormRaw: FunctionComponent<DynamicFormProps> = ({
   schema,
-  uiSchema,
+  uiSchema = {},
   form,
   setFormData,
   setOwnership,
@@ -71,8 +71,6 @@ export const DynamicFormRaw: FunctionComponent<DynamicFormProps> = ({
 
     setAttachments(nextAttachment);
   };
-
-  uiSchema = uiSchema || {};
 
   const widgets = {
     TextareaWidget: CustomTextareaWidget,
