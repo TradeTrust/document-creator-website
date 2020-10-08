@@ -1,3 +1,8 @@
+# Install xdg-user-dirs for integration tests  
+if [[ "$OSTYPE" == "linux-gnu"* ]]; then
+    sudo apt-get install -y xdg-user-dirs
+fi
+
 account_key=0xe82294532bcfcd8e0763ee5cef194f36f00396be59b94fb418f5f8d83140d9a7
 
 # Wait for ganache to listen on 8545

@@ -1,3 +1,5 @@
+import { existsSync } from "fs";
+import downloadsFolder from "downloads-folder";
 import { ClientFunction, Selector } from "testcafe";
 import { enterPassword, loadConfigFile } from "./helper";
 
@@ -25,6 +27,17 @@ const previousDocumentButton = Selector("[data-testid='previous-document-button'
 const nextDocumentButton = Selector("[data-testid='next-document-button']");
 const fileNameField = Selector("[data-testid='file-name-input']");
 const goBack = ClientFunction(() => window.history.back());
+const downloadLink = Selector("[data-testid='download-file-button']");
+
+// From https://stackoverflow.com/a/57624660/950462
+const waitForFileDownload = async (t, filePath) => {
+  // Timeout after 10 seconds
+  for (let i = 0; i < 100; i++) {
+    if (existsSync(filePath)) return true;
+    await t.wait(100);
+  }
+  return existsSync(filePath);
+};
 
 test("Upload configuration file, choose form, fill form, submit form correctly", async (t) => {
   // Check go to doc button
@@ -136,4 +149,10 @@ test("Upload configuration file, choose form, fill form, submit form correctly",
   await t.expect(Title.textContent).contains("Document(s) issued successfully");
   await t.expect(Selector("div").withText("Document-1-local.tt").exists).ok();
   await t.expect(Selector("div").withText("Download").exists).ok();
+
+  const fileName = await downloadLink.value;
+  await t.click(downloadLink);
+  const filePath = `${downloadsFolder()}/${fileName}`;
+  t.ctx.filePath = filePath; // For use in cleanup
+  await t.expect(await waitForFileDownload(t, filePath)).eql(true);
 });
