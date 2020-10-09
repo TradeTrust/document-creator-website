@@ -1,4 +1,4 @@
-import { Wallet, getDefaultProvider, providers } from "ethers";
+import { Wallet, ethers, providers } from "ethers";
 import { ConfigFile } from "../../types";
 
 export const decryptWallet = async (config: ConfigFile, password: string): Promise<Wallet> => {
@@ -7,7 +7,9 @@ export const decryptWallet = async (config: ConfigFile, password: string): Promi
     const provider = new providers.JsonRpcProvider();
     return decryptedWallet.connect(provider);
   } else {
-    const connectedWallet = await decryptedWallet.connect(getDefaultProvider(config.network));
+    const connectedWallet = await decryptedWallet.connect(
+      ethers.getDefaultProvider(config.network)
+    );
     return connectedWallet;
   }
 };

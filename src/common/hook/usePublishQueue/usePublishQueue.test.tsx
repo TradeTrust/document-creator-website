@@ -1,5 +1,5 @@
 import { act, renderHook } from "@testing-library/react-hooks";
-import { getDefaultProvider, Wallet } from "ethers";
+import { ethers, Wallet } from "ethers";
 import { publishJob } from "../../../services/publishing";
 import sampleConfig from "../../../test/fixtures/sample-config.json";
 import sampleJobs from "../../../test/fixtures/sample-jobs.json";
@@ -18,7 +18,7 @@ const mockUploadToStorage = uploadToStorage as jest.Mock;
 
 const config = {
   ...sampleConfig,
-  wallet: Wallet.createRandom().connect(getDefaultProvider("ropsten")),
+  wallet: Wallet.createRandom().connect(ethers.getDefaultProvider("ropsten")),
 } as Config;
 
 const formEntires: FormEntry[] = [

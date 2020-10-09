@@ -2,7 +2,7 @@ import { PublishingJob } from "../../types";
 import { Wallet } from "ethers";
 import { DocumentStoreFactory } from "@govtechsg/document-store";
 import { DocumentStore } from "@govtechsg/document-store/src/contracts/DocumentStore";
-import { TitleEscrowCreatorFactory, TradeTrustERC721Factory } from "@govtechsg/token-registry";
+import { TitleEscrowCreatorFactory, TradeTrustErc721Factory } from "@govtechsg/token-registry";
 import { TitleEscrowCreator } from "@govtechsg/token-registry/types/TitleEscrowCreator";
 
 const assertAddressIsSmartContract = async (address: string, wallet: Wallet): Promise<void> => {
@@ -69,7 +69,7 @@ export const publishTransferableRecordJob = async (
       `Address for deployed title escrow cannot be found. Tx: ${JSON.stringify(escrowDeploymentTx)}`
     );
   const deployedTitleEscrowAddress = deployedTitleEscrowArgs[0];
-  const tokenRegistryContract = TradeTrustERC721Factory.connect(contractAddress, wallet);
+  const tokenRegistryContract = TradeTrustErc721Factory.connect(contractAddress, wallet);
 
   // Using explicit safeMint function which exist but not typed by typechain due to
   // overloads
