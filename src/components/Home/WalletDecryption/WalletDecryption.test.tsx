@@ -9,8 +9,8 @@ describe("walletDecryption", () => {
     const onDecryptConfigFile = jest.fn();
     render(
       <WalletDecryption
+        decryptProgress={0}
         isIncorrectPassword={false}
-        isDecrypting={false}
         onDecryptConfigFile={onDecryptConfigFile}
         onResetConfigFile={() => {}}
       />
@@ -25,8 +25,8 @@ describe("walletDecryption", () => {
     const onResetConfigFile = jest.fn();
     render(
       <WalletDecryption
+        decryptProgress={0}
         isIncorrectPassword={false}
-        isDecrypting={false}
         onResetConfigFile={onResetConfigFile}
         onDecryptConfigFile={() => {}}
       />
@@ -41,8 +41,8 @@ describe("walletDecryption", () => {
     const onDecryptConfigFile = jest.fn();
     render(
       <WalletDecryption
+        decryptProgress={0.75}
         isIncorrectPassword={false}
-        isDecrypting={true}
         onDecryptConfigFile={onDecryptConfigFile}
         onResetConfigFile={() => {}}
       />
@@ -57,8 +57,8 @@ describe("walletDecryption", () => {
     expect.assertions(1);
     render(
       <WalletDecryption
+        decryptProgress={0}
         isIncorrectPassword={true}
-        isDecrypting={false}
         onDecryptConfigFile={() => {}}
         onResetConfigFile={() => {}}
       />
