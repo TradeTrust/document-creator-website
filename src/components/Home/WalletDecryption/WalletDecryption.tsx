@@ -32,9 +32,7 @@ export const WalletDecryption: FunctionComponent<WalletDecryption> = ({
     <Wrapper>
       <Title className="mb-8">Create Document</Title>
       <form className="relative bg-white flex flex-col rounded pt-5 pl-5 pr-4 pb-6">
-        {decryptProgress > 0 && decryptProgress < 1 && (
-          <BarTrack progress={decryptProgress} className="absolute top-0 left-0" />
-        )}
+        {isDecrypting && <BarTrack progress={decryptProgress} className="absolute top-0 left-0" />}
         <div className="text-grey-dark mr-4 mb-4 font-bold text-lg" data-testid="login-title">
           Login
         </div>
