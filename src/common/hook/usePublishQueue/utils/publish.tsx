@@ -27,7 +27,7 @@ const getReservedStorageUrl = async (
   network: "homestead" | "ropsten" | "rinkeby"
 ): Promise<ActionsUrlObject> => {
   const queueNumber = await getQueueNumber(documentStorage);
-
+  console.log(documentStorage);
   const networkUrl = {
     homestead: "https://tradetrust.io/",
     ropsten: "https://dev.tradetrust.io/",

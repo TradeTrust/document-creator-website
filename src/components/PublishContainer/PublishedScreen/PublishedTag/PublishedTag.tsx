@@ -5,6 +5,7 @@ import { useConfigContext } from "../../../../common/context/config";
 import { WrappedDocument } from "../../../../types";
 import { generateFileName } from "../../../../utils/fileName";
 import { PublishLoader } from "../../../UI/PublishLoader";
+import { verify } from "@govtechsg/oa-verify";
 
 interface PublishedTagProps {
   doc: WrappedDocument;
@@ -14,6 +15,13 @@ interface PublishedTagProps {
 const getFileSize = (jsonString: string): number => {
   const m = encodeURIComponent(jsonString).match(/%[89ABab]/g);
   return jsonString.length + (m ? m.length : 0);
+};
+
+// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
+const verifyDocument = async (document: any) => {
+  console.log("Verifying...");
+  const status = await verify(document, { network: "ropsten" });
+  console.log(status);
 };
 
 export const PublishedTag: FunctionComponent<PublishedTagProps> = ({ doc, isPending }) => {
@@ -50,6 +58,20 @@ export const PublishedTag: FunctionComponent<PublishedTagProps> = ({ doc, isPend
               onClick={() => saveAs(blob, fileName)}
             >
               Download
+            </div>
+            <a
+              className="text-blue font-bold cursor-pointer"
+              href={doc.rawDocument.links.self.href}
+            >
+              Network: {config?.network}
+              Verify through s3 here
+            </a>
+            <div
+              className="text-blue font-bold cursor-pointer"
+              data-testid="download-file-button"
+              onClick={() => verifyDocument(doc.wrappedDocument)}
+            >
+              Verify alt
             </div>
           </div>
         </>

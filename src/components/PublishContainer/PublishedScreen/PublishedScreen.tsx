@@ -92,6 +92,7 @@ export const PublishedScreen: FunctionComponent<PublishScreen> = ({
               {pendingPublishDocuments.map((doc, index) => (
                 <PublishedTag doc={doc} key={index} isPending={true} />
               ))}
+              <div className="text-red ml-2 flex-grow">TESTING</div>
             </div>
           </div>
         )}
