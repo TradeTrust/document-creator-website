@@ -16,7 +16,6 @@ interface FilesInfoType {
 
 export const getExtension = (fileType: string): { hasIcon: boolean; fileType: string } => {
   const iconName = fileType.split("/")[1] || "";
-  console.log("fileType: ", fileType);
   if (iconName == "pdf") return { hasIcon: true, fileType: pdf };
   else if (iconName === "jpeg") return { hasIcon: true, fileType: jpg };
   else if (iconName === "vnd.openxmlformats-officedocument.wordprocessingml.document")
@@ -47,7 +46,7 @@ export const FilesInfo: FunctionComponent<FilesInfoType> = ({ filesInfo, removeF
               <img
                 src={fileType}
                 className="flex items-center justify-center mr-4"
-                data-testid="link-icon"
+                data-testid={`attachment-icon-${key}`}
               />
             ) : (
               <div
