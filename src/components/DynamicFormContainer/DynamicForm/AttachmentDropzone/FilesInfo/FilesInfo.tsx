@@ -74,7 +74,7 @@ export const FilesInfo: FunctionComponent<FilesInfoType> = ({ filesInfo, removeF
             className="border border-grey-lighter border-solid rounded my-1 h-16 flex items-center px-4"
           >
             {getExtension(type)}
-            <p className="font-bold text-grey-dark flex-grow">
+            <p className="font-bold text-grey-dark flex-grow break-all">
               {filename}
               <span className="text-grey text-xs font-regular"> ({size})</span>
             </p>
