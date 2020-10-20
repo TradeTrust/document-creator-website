@@ -14,16 +14,48 @@ interface FilesInfoType {
   removeFile: (index: number) => void;
 }
 
-export const getExtension = (fileType: string): { hasIcon: boolean; fileType: string } => {
-  const iconName = fileType.split("/")[1] || "";
-  if (iconName == "pdf") return { hasIcon: true, fileType: pdf };
-  else if (iconName === "jpeg") return { hasIcon: true, fileType: jpg };
-  else if (iconName === "vnd.openxmlformats-officedocument.wordprocessingml.document")
-    return { hasIcon: true, fileType: doc };
-  else if (iconName === "csv") return { hasIcon: true, fileType: csv };
-  else if (iconName === "png") return { hasIcon: true, fileType: png };
-  else if (iconName === "plain") return { hasIcon: true, fileType: txt };
-  else return { hasIcon: false, fileType: iconName };
+interface ExtensionIconProps {
+  src: string;
+  mimetype: string;
+}
+
+const ExtensionIcon: FunctionComponent<ExtensionIconProps> = ({
+  src,
+  mimetype,
+}: ExtensionIconProps) => {
+  return (
+    <img
+      src={src}
+      className="flex items-center justify-center mr-4"
+      data-testid={`attachment-icon-${mimetype}`}
+    />
+  );
+};
+
+export const getExtension = (mimeType: string): React.ReactNode => {
+  switch (true) {
+    case mimeType === "text/csv":
+      return <ExtensionIcon src={csv} mimetype={mimeType} />;
+    case mimeType === "application/vnd.openxmlformats-officedocument.wordprocessingml.document":
+      return <ExtensionIcon src={doc} mimetype={mimeType} />;
+    case mimeType === "image/jpeg":
+      return <ExtensionIcon src={jpg} mimetype={mimeType} />;
+    case mimeType === "image/png":
+      return <ExtensionIcon src={png} mimetype={mimeType} />;
+    case mimeType === "application/pdf":
+      return <ExtensionIcon src={pdf} mimetype={mimeType} />;
+    case mimeType === "text/plain":
+      return <ExtensionIcon src={txt} mimetype={mimeType} />;
+    default:
+      return (
+        <div
+          className="rounded-full bg-grey-lighter h-12 w-12 flex items-center justify-center mr-2"
+          data-testid={`attachment-icon-paperclip`}
+        >
+          <Paperclip />
+        </div>
+      );
+  }
 };
 
 export const FilesInfo: FunctionComponent<FilesInfoType> = ({ filesInfo, removeFile }) => {
@@ -35,27 +67,13 @@ export const FilesInfo: FunctionComponent<FilesInfoType> = ({ filesInfo, removeF
       {filesInfo.map(({ filename, data, type }: FileUploadType, key: number) => {
         const decodedData = atob(data);
         const size = prettyBytes(decodedData.length);
-        const { hasIcon, fileType } = getExtension(type);
         return (
           <li
             key={key}
             data-testid={`upload-file-${key}`}
             className="border border-grey-lighter border-solid rounded my-1 h-16 flex items-center px-4"
           >
-            {hasIcon ? (
-              <img
-                src={fileType}
-                className="flex items-center justify-center mr-4"
-                data-testid={`attachment-icon-${key}`}
-              />
-            ) : (
-              <div
-                className="rounded-full bg-grey-lighter h-12 w-12 flex items-center justify-center mr-2"
-                data-testid={`attachment-icon-${key}`}
-              >
-                <Paperclip />
-              </div>
-            )}
+            {getExtension(type)}
             <p className="font-bold text-grey-dark flex-grow">
               {filename}
               <span className="text-grey text-xs font-regular"> ({size})</span>
