@@ -36,7 +36,8 @@ export const getExtension = (mimeType: string): React.ReactNode => {
   switch (true) {
     case mimeType === "text/csv":
       return <ExtensionIcon src={csv} mimetype={mimeType} />;
-    case mimeType === "application/vnd.openxmlformats-officedocument.wordprocessingml.document":
+    case mimeType === "application/vnd.openxmlformats-officedocument.wordprocessingml.document" ||
+      mimeType === "application/msword":
       return <ExtensionIcon src={doc} mimetype={mimeType} />;
     case mimeType === "image/jpeg":
       return <ExtensionIcon src={jpg} mimetype={mimeType} />;
