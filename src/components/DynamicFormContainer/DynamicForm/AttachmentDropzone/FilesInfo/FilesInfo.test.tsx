@@ -83,12 +83,12 @@ describe("filesInfo", () => {
     expect(screen.queryByTestId("remove-uploaded-file-0")).not.toBeNull();
   });
 
-  it("should render a uploaded doc file correctly", () => {
+  it("should render a uploaded docx file correctly", () => {
     render(
       <FilesInfo
         filesInfo={[
           {
-            filename: "asdfdfs.doc",
+            filename: "asdfdfs.docx",
             data: "asdfasdf",
             type: "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
           },
@@ -102,6 +102,26 @@ describe("filesInfo", () => {
         "attachment-icon-application/vnd.openxmlformats-officedocument.wordprocessingml.document"
       )
     ).not.toBeNull();
+    expect(screen.queryByText("asdfdfs.docx")).not.toBeNull();
+    expect(screen.queryByText("(6 B)")).not.toBeNull();
+    expect(screen.queryByTestId("remove-uploaded-file-0")).not.toBeNull();
+  });
+
+  it("should render a uploaded doc file correctly", () => {
+    render(
+      <FilesInfo
+        filesInfo={[
+          {
+            filename: "asdfdfs.doc",
+            data: "asdfasdf",
+            type: "application/msword",
+          },
+        ]}
+        removeFile={() => {}}
+      />
+    );
+    expect(screen.queryByTestId("upload-file-0")).not.toBeNull();
+    expect(screen.queryByTestId("attachment-icon-application/msword")).not.toBeNull();
     expect(screen.queryByText("asdfdfs.doc")).not.toBeNull();
     expect(screen.queryByText("(6 B)")).not.toBeNull();
     expect(screen.queryByTestId("remove-uploaded-file-0")).not.toBeNull();
