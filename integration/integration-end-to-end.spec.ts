@@ -30,7 +30,7 @@ const goBack = ClientFunction(() => window.history.back());
 const downloadLink = Selector("[data-testid='download-file-button']");
 
 // From https://stackoverflow.com/a/57624660/950462
-const waitForFileDownload = async (t, filePath) => {
+const waitForFileDownload = async (t: TestController, filePath: string): Promise<boolean> => {
   // Timeout after 10 seconds
   for (let i = 0; i < 100; i++) {
     if (existsSync(filePath)) return true;
