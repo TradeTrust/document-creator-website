@@ -146,11 +146,12 @@ test("Upload configuration file, choose form, fill form, submit form correctly",
   await t.click(SubmitButton);
 
   // Check that EBL is created
+  const fileName = "Document-1-local.tt";
+
   await t.expect(Title.textContent).contains("Document(s) issued successfully");
-  await t.expect(Selector("div").withText("Document-1-local.tt").exists).ok();
+  await t.expect(Selector("div").withText(fileName).exists).ok();
   await t.expect(Selector("div").withText("Download").exists).ok();
 
-  const fileName = await downloadLink.value;
   await t.click(downloadLink);
   const filePath = `${downloadsFolder()}/${fileName}`;
   t.ctx.filePath = filePath; // For use in cleanup
