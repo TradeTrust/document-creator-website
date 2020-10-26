@@ -46,6 +46,7 @@ export interface FileUploadType {
 // FormData is used by json-schema-forms internally to track state of a single form
 export interface FormData {
   schema?: any; // eslint-disable-line @typescript-eslint/no-explicit-any
+  uiSchema?: any; // eslint-disable-line @typescript-eslint/no-explicit-any
   idSchema?: any; // eslint-disable-line @typescript-eslint/no-explicit-any
   formData: any; // eslint-disable-line @typescript-eslint/no-explicit-any
   edit?: boolean;
