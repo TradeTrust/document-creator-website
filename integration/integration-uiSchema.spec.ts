@@ -110,7 +110,6 @@ test("Upload configuration file, choose form, form renders correctly according t
   // We expect the contents of the first doc to NOT contain uiSchema key
   // Only doing a `contains` check because the value is non-deterministic due to the hash
   const docContents1 = JSON.parse(readFileSync(filePath1, "utf8"));
-  console.log(docContents1);
   await t.expect(docContents1.data).notContains({ uiSchema: { remarks: { "ui:widget": "" } } });
 
   // Check that the second Covering Letter has been downloaded successfully
@@ -121,7 +120,6 @@ test("Upload configuration file, choose form, form renders correctly according t
   // We expect the contents of the second doc to contain the uiSchema key,
   // one at the root level, the other nested in `misc`
   const docContents2 = readFileSync(filePath2, "utf8");
-  console.log(docContents2);
   await t.expect(docContents2).contains("uiSchema");
   await t.expect(docContents2).contains("remarks");
   await t.expect(docContents2).contains("ui:widget");
