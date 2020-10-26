@@ -1,9 +1,13 @@
-import { existsSync } from "fs";
+import { existsSync, unlinkSync } from "fs";
 import downloadsFolder from "downloads-folder";
 import { ClientFunction, Selector } from "testcafe";
 import { enterPassword, loadConfigFile } from "./helper";
 
-fixture("Document Creator").page`http://localhost:3000`;
+fixture("Document Creator").page`http://localhost:3000`.afterEach(async (t) => {
+  // Clean up files after each test
+  const filePath = t.ctx.filePath;
+  await unlinkSync(filePath);
+});
 
 const Config = "./../src/test/fixtures/sample-local-config.json";
 const AttachmentSample = "./../src/test/fixtures/sample.pdf";
@@ -147,11 +151,11 @@ test("Upload configuration file, choose form, fill form, submit form correctly",
 
   // Check that EBL is created
   const fileName = "Document-1-local.tt";
-
   await t.expect(Title.textContent).contains("Document(s) issued successfully");
   await t.expect(Selector("div").withText(fileName).exists).ok();
   await t.expect(Selector("div").withText("Download").exists).ok();
 
+  // Check that the file has been downloaded successfully
   await t.click(downloadLink);
   const filePath = `${downloadsFolder()}/${fileName}`;
   t.ctx.filePath = filePath; // For use in cleanup
