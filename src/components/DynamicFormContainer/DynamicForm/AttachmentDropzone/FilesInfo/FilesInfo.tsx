@@ -2,12 +2,6 @@ import prettyBytes from "pretty-bytes";
 import React, { FunctionComponent } from "react";
 import { FileUploadType } from "../../../../../types";
 import { Paperclip, X } from "react-feather";
-import pdf from "./pdf.svg";
-import jpg from "./jpg.svg";
-import doc from "./doc.svg";
-import csv from "./csv.svg";
-import png from "./png.svg";
-import txt from "./txt.svg";
 
 interface FilesInfoType {
   filesInfo: FileUploadType[];
@@ -16,43 +10,30 @@ interface FilesInfoType {
 
 interface ExtensionIconProps {
   src: string;
-  mimetype: string;
 }
 
-const ExtensionIcon: FunctionComponent<ExtensionIconProps> = ({
-  src,
-  mimetype,
-}: ExtensionIconProps) => {
-  return (
-    <img
-      src={src}
-      className="flex items-center justify-center mr-4"
-      data-testid={`attachment-icon-${mimetype}`}
-    />
-  );
+const ExtensionIcon: FunctionComponent<ExtensionIconProps> = ({ ...props }) => {
+  return <img {...props} className="flex items-center justify-center mr-2" />;
 };
 
-export const getExtension = (mimeType: string): React.ReactNode => {
+export const getExtension = (mimeType: string | undefined): React.ReactNode => {
   switch (true) {
     case mimeType === "text/csv":
-      return <ExtensionIcon src={csv} mimetype={mimeType} />;
+      return <ExtensionIcon src="./csv.svg" data-testid="attachment-icon-csv" />;
     case mimeType === "application/vnd.openxmlformats-officedocument.wordprocessingml.document" ||
       mimeType === "application/msword":
-      return <ExtensionIcon src={doc} mimetype={mimeType} />;
+      return <ExtensionIcon src="./doc.svg" data-testid="attachment-icon-doc" />;
     case mimeType === "image/jpeg":
-      return <ExtensionIcon src={jpg} mimetype={mimeType} />;
+      return <ExtensionIcon src="./jpg.svg" data-testid="attachment-icon-jpg" />;
     case mimeType === "image/png":
-      return <ExtensionIcon src={png} mimetype={mimeType} />;
+      return <ExtensionIcon src="./png.svg" data-testid="attachment-icon-png" />;
     case mimeType === "application/pdf":
-      return <ExtensionIcon src={pdf} mimetype={mimeType} />;
+      return <ExtensionIcon src="./pdf.svg" data-testid="attachment-icon-pdf" />;
     case mimeType === "text/plain":
-      return <ExtensionIcon src={txt} mimetype={mimeType} />;
+      return <ExtensionIcon src="./txt.svg" data-testid="attachment-icon-txt" />;
     default:
       return (
-        <div
-          className="rounded-full bg-grey-lighter h-12 w-12 flex items-center justify-center mr-2"
-          data-testid={`attachment-icon-paperclip`}
-        >
+        <div className="icon" data-testid={`attachment-icon-paperclip`}>
           <Paperclip />
         </div>
       );
