@@ -32,71 +32,36 @@ describe("filesInfo", () => {
               data: "asdfasdf",
               type: "application/pdf",
             },
-          ]}
-          removeFile={() => {}}
-        />
-        <FilesInfo
-          filesInfo={[
             {
               filename: "asdfdfs.txt",
               data: "asdfasdf",
               type: "text/plain",
             },
-          ]}
-          removeFile={() => {}}
-        />
-        <FilesInfo
-          filesInfo={[
             {
               filename: "asdfdfs.png",
               data: "asdfasdf",
               type: "image/png",
             },
-          ]}
-          removeFile={() => {}}
-        />
-        <FilesInfo
-          filesInfo={[
             {
               filename: "asdfdfs.csv",
               data: "asdfasdf",
               type: "text/csv",
             },
-          ]}
-          removeFile={() => {}}
-        />
-        <FilesInfo
-          filesInfo={[
             {
               filename: "asdfdfs.docx",
               data: "asdfasdf",
               type: "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
             },
-          ]}
-          removeFile={() => {}}
-        />
-        <FilesInfo
-          filesInfo={[
             {
               filename: "asdfdfs.doc",
               data: "asdfasdf",
               type: "application/msword",
             },
-          ]}
-          removeFile={() => {}}
-        />
-        <FilesInfo
-          filesInfo={[
             {
               filename: "asdfdfs.jpeg",
               data: "asdfasdf",
               type: "image/jpeg",
             },
-          ]}
-          removeFile={() => {}}
-        />
-        <FilesInfo
-          filesInfo={[
             {
               filename: "asdfdfs.json",
               data: "asdfasdf",
