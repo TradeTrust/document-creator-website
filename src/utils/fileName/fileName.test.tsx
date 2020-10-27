@@ -31,12 +31,8 @@ describe("generateFileName", () => {
 });
 
 describe("generateErrorLogFileName", () => {
-  // beforeEach(() => {
-  //   const date = new Date(1572393600000); // 2019-10-30T00:00Z0 (GMT)
-
-  // });
   it("should generate the correct date time at the end of the error log file name", () => {
-    const mockDate = new Date("Tue, 23 Jun 2020 14:34:56");
+    const mockDate = new Date(1572393600000);
     const RealDate = Date;
     (global as any).Date = class extends RealDate {
       constructor() {
@@ -45,7 +41,7 @@ describe("generateErrorLogFileName", () => {
       }
     };
 
-    expect(generateErrorLogFileName()).toStrictEqual("error-log_2020-06-23T06:34:56.000Z");
+    expect(generateErrorLogFileName()).toStrictEqual("error-log_2019-10-30T00:00:00.000Z");
 
     global.Date = RealDate;
   });
