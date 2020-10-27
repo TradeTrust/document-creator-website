@@ -7,3 +7,8 @@ export const generateFileName = (
 ): string => {
   return `${fileName}${config?.network === "homestead" ? "" : `-${config?.network}`}.${extension}`;
 };
+
+export const generateErrorLogFileName = (): string => {
+  const dateFormat = new Date().toISOString();
+  return `error-log_${dateFormat}`;
+};

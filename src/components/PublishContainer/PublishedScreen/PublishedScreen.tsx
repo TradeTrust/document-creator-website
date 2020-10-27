@@ -5,7 +5,7 @@ import React, { FunctionComponent } from "react";
 import { Download, XCircle } from "react-feather";
 import { useConfigContext } from "../../../common/context/config";
 import { FailedJobErrors, WrappedDocument } from "../../../types";
-import { generateFileName } from "../../../utils/fileName";
+import { generateFileName, generateErrorLogFileName } from "../../../utils/fileName";
 import { Container } from "../../Container";
 import { ProgressBar } from "../../ProgressBar";
 import { Button } from "../../UI/Button";
@@ -109,7 +109,7 @@ export const PublishedScreen: FunctionComponent<PublishScreen> = ({
                 </div>
                 <Button className="bg-white text-red px-4 py-3">
                   <a
-                    download={generateFileName(config, "error-log", "txt")}
+                    download={generateFileName(config, generateErrorLogFileName(), "txt")}
                     href={`data:text/plain;charset=UTF-8,${JSON.stringify(
                       formattedErrorLog,
                       null,
