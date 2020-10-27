@@ -19,7 +19,7 @@ test("Upload configuration file, choose form, submit form, encounter failed publ
   await t.expect(Title.textContent).contains("Choose Document Type to Issue");
   await t.click(Button.withText("Covering Letter (GT)"));
 
-  // sibmit form
+  // submit form
   await t.click(SubmitButton);
 
   // encounter failed published document
