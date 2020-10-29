@@ -48,6 +48,16 @@ describe("filesInfo", () => {
               type: "text/csv",
             },
             {
+              filename: "asdfdfs.xls",
+              data: "asdfasdf",
+              type: "application/vnd.ms-excel",
+            },
+            {
+              filename: "asdfdfs.xlsx",
+              data: "asdfasdf",
+              type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+            },
+            {
               filename: "asdfdfs.docx",
               data: "asdfasdf",
               type: "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
@@ -73,7 +83,7 @@ describe("filesInfo", () => {
       </>
     );
     expect(screen.queryByTestId("attachment-icon-pdf")).not.toBeNull();
-    expect(screen.queryByTestId("attachment-icon-csv")).not.toBeNull();
+    expect(screen.getAllByTestId("attachment-icon-csv")).toHaveLength(3);
     expect(screen.queryByTestId("attachment-icon-png")).not.toBeNull();
     expect(screen.queryByTestId("attachment-icon-txt")).not.toBeNull();
     expect(screen.getAllByTestId("attachment-icon-doc")).toHaveLength(2);
