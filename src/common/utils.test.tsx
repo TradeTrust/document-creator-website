@@ -19,12 +19,16 @@ describe("encodeQrCode", () => {
 });
 
 describe("decodeQrCode", () => {
-  it("decodes an action correctly", () => {
-    const encodedQrCode =
+  it("decodes an action correctly regardless of trailing slash", () => {
+    const encodedQrCodeSlash =
+      "https://action.openattestation.com/?q=%7B%22uri%22%3A%22https%3A%2F%2Fsample.domain%2Fdocument%2Fid%3Fq%3Dabc%23123%22%7D";
+    const encodedQrCodeNoSlash =
       "https://action.openattestation.com?q=%7B%22uri%22%3A%22https%3A%2F%2Fsample.domain%2Fdocument%2Fid%3Fq%3Dabc%23123%22%7D";
 
-    const action = decodeQrCode(encodedQrCode);
-    expect(action).toStrictEqual({
+    expect(decodeQrCode(encodedQrCodeSlash)).toStrictEqual({
+      uri: "https://sample.domain/document/id?q=abc#123",
+    });
+    expect(decodeQrCode(encodedQrCodeNoSlash)).toStrictEqual({
       uri: "https://sample.domain/document/id?q=abc#123",
     });
   });
