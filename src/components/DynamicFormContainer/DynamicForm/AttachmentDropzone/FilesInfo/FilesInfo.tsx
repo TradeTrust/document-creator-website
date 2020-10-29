@@ -24,7 +24,9 @@ const ExtensionIcon: FunctionComponent<ExtensionIconProps> = ({ ...props }) => {
 
 export const getExtension = (mimeType: string | undefined): React.ReactNode => {
   switch (true) {
-    case mimeType === "text/csv":
+    case mimeType === "text/csv" ||
+      mimeType === "application/vnd.ms-excel" ||
+      mimeType === "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet":
       return <ExtensionIcon src={csv} data-testid="attachment-icon-csv" />;
     case mimeType === "application/vnd.openxmlformats-officedocument.wordprocessingml.document" ||
       mimeType === "application/msword":
