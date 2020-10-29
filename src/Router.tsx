@@ -7,6 +7,7 @@ import { HomeContainer } from "./components/Home";
 import { NetworkBar } from "./components/UI/NetworkBar";
 import { usePersistedConfigFile } from "./common/hook/usePersistedConfigFile";
 import { Overlay } from "@govtechsg/tradetrust-ui-components";
+import { AddressResolverContainer } from "./components/AddressResolverContainter/AddressResolverContainer";
 
 export const Router = (): ReactElement => {
   const { configFile } = usePersistedConfigFile();
@@ -27,6 +28,9 @@ export const Router = (): ReactElement => {
           </Route>
           <Route path="/publish">
             <PublishContainer />
+          </Route>
+          <Route path="/settings">
+            <AddressResolverContainer />
           </Route>
         </Switch>
       </BrowserRouter>
