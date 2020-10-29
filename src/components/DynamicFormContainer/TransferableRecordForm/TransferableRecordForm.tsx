@@ -1,4 +1,12 @@
 import React, { FunctionComponent } from "react";
+import {
+  ButtonIconOrangeWhite,
+  useOverlayContext,
+  AddressBook,
+} from "@govtechsg/tradetrust-ui-components";
+import { Book } from "react-feather";
+import { useAddressBook, useThirdPartyAPIEndpoints } from "@govtechsg/address-identity-resolver";
+import { usePersistedConfigFile } from "../../../common/hook/usePersistedConfigFile";
 
 interface TransferableRecordForm {
   beneficiaryAddress: string;
@@ -13,6 +21,24 @@ export const TransferableRecordForm: FunctionComponent<TransferableRecordForm> =
   holderAddress,
   setHolderAddress,
 }) => {
+  const { showOverlay } = useOverlayContext();
+  const { addressBook, handleLocalAddressBookCsv } = useAddressBook();
+  const { thirdPartyAPIEndpoints } = useThirdPartyAPIEndpoints();
+  const { configFile } = usePersistedConfigFile();
+
+  const onOverlayHandler = (onAddressSelected: (address: string) => void): void => {
+    showOverlay(
+      <AddressBook
+        title="Address Book"
+        onAddressSelected={onAddressSelected}
+        thirdPartyAPIEndpoints={thirdPartyAPIEndpoints}
+        addressBook={addressBook}
+        handleLocalAddressBookCsv={handleLocalAddressBookCsv}
+        network={configFile?.network ?? "local"}
+      />
+    );
+  };
+
   return (
     <div
       data-testid="transferable-record-form"
@@ -30,6 +56,9 @@ export const TransferableRecordForm: FunctionComponent<TransferableRecordForm> =
           type="text"
           onChange={(e) => setBeneficiaryAddress(e.target.value)}
         />
+        <ButtonIconOrangeWhite onClick={() => onOverlayHandler(setBeneficiaryAddress)}>
+          <Book />
+        </ButtonIconOrangeWhite>
       </div>
       <div className="flex my-4 items-center">
         <div className="w-full sm:w-3/12 px-0 sm:px-4 sm:text-right text-grey-dark">Holder</div>
@@ -40,6 +69,9 @@ export const TransferableRecordForm: FunctionComponent<TransferableRecordForm> =
           type="text"
           onChange={(e) => setHolderAddress(e.target.value)}
         />
+        <ButtonIconOrangeWhite onClick={() => onOverlayHandler(setHolderAddress)}>
+          <Book />
+        </ButtonIconOrangeWhite>
       </div>
     </div>
   );

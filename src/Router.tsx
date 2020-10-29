@@ -6,6 +6,7 @@ import { PublishContainer } from "./components/PublishContainer";
 import { HomeContainer } from "./components/Home";
 import { NetworkBar } from "./components/UI/NetworkBar";
 import { usePersistedConfigFile } from "./common/hook/usePersistedConfigFile";
+import { Overlay } from "@govtechsg/tradetrust-ui-components";
 
 export const Router = (): ReactElement => {
   const { configFile } = usePersistedConfigFile();
@@ -29,6 +30,7 @@ export const Router = (): ReactElement => {
           </Route>
         </Switch>
       </BrowserRouter>
+      <Overlay />
     </>
   );
 };
