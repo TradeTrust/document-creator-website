@@ -1,4 +1,4 @@
-import { existsSync, unlinkSync } from "fs";
+import { unlinkSync } from "fs";
 import { ClientFunction, Selector } from "testcafe";
 import { enterPassword, loadConfigFile } from "./helper";
 

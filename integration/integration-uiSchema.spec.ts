@@ -125,8 +125,13 @@ test("Upload configuration file, choose form, form renders correctly according t
 
   // We expect the contents of the second doc to contain the uiSchema key,
   // one at the root level, the other nested in `misc`
-  const docContents2 = readFileSync(filePath2, "utf8");
-  const docContentsUnwrapped2 = getData({ data: docContents2 });
-  console.log(docContentsUnwrapped2);
-  // await t.expect(docContentsUnwrapped2).contains( )
+  const docContents2 = JSON.parse(readFileSync(filePath2, "utf8"));
+  // Need stringify first, then parse. Without it, getData() alone's return type is never.
+  const docContentsUnwrapped2 = JSON.parse(JSON.stringify(getData({ data: docContents2.data })));
+  await t.expect(docContentsUnwrapped2.misc.uiSchema.remarks).contains({
+    "ui:widget": "textarea",
+  });
+  await t.expect(docContentsUnwrapped2.uiSchema.remarks).contains({
+    "ui:widget": "textarea",
+  });
 });
