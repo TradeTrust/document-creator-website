@@ -1,4 +1,4 @@
-=import { ClientFunction, Selector } from "testcafe";
+import { ClientFunction, Selector } from "testcafe";
 import { enterPassword, loadConfigFile } from "./helper";
 
 fixture("Document Creator").page`http://localhost:3000`;
