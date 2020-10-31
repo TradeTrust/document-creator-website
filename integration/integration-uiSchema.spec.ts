@@ -14,7 +14,6 @@ const SubmitButton = Selector("[data-testid='form-submit-button']");
 const DocumentTitleField = Selector("#root_title");
 const DocumentRemarksField = Selector("#root_remarks");
 const goBack = ClientFunction(() => window.history.back());
-const DownloadLink = Selector("[data-testid='download-file-button']");
 
 test("Upload configuration file, choose form, form renders correctly according to uiSchema, publishes correctly", async (t) => {
   // Check go to doc button
