@@ -1,5 +1,3 @@
-import { getData } from "@govtechsg/open-attestation";
-import { existsSync, readFileSync } from "fs";
 import { ClientFunction, Selector } from "testcafe";
 import { enterPassword, loadConfigFile } from "./helper";
 
