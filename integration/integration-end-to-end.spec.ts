@@ -1,5 +1,4 @@
 import { existsSync, unlinkSync } from "fs";
-import downloadsFolder from "downloads-folder";
 import { ClientFunction, Selector } from "testcafe";
 import { enterPassword, loadConfigFile } from "./helper";
 
@@ -31,17 +30,6 @@ const previousDocumentButton = Selector("[data-testid='previous-document-button'
 const nextDocumentButton = Selector("[data-testid='next-document-button']");
 const fileNameField = Selector("[data-testid='file-name-input']");
 const goBack = ClientFunction(() => window.history.back());
-const downloadLink = Selector("[data-testid='download-file-button']");
-
-// From https://stackoverflow.com/a/57624660/950462
-const waitForFileDownload = async (t: TestController, filePath: string): Promise<boolean> => {
-  // Timeout after 10 seconds
-  for (let i = 0; i < 100; i++) {
-    if (existsSync(filePath)) return true;
-    await t.wait(100);
-  }
-  return existsSync(filePath);
-};
 
 test("Upload configuration file, choose form, fill form, submit form correctly", async (t) => {
   // Check go to doc button

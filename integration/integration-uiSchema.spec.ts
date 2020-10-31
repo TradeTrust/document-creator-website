@@ -3,6 +3,7 @@ import { ClientFunction, Selector } from "testcafe";
 import { enterPassword, loadConfigFile } from "./helper";
 import { join } from "path";
 import { homedir } from "os";
+import { getData } from "@govtechsg/open-attestation";
 
 fixture("Document Creator").page`http://localhost:3000`;
 
@@ -125,8 +126,7 @@ test("Upload configuration file, choose form, form renders correctly according t
   // We expect the contents of the second doc to contain the uiSchema key,
   // one at the root level, the other nested in `misc`
   const docContents2 = readFileSync(filePath2, "utf8");
-  await t.expect(docContents2).contains("uiSchema");
-  await t.expect(docContents2).contains("remarks");
-  await t.expect(docContents2).contains("ui:widget");
-  await t.expect(docContents2).contains("textarea");
+  const docContentsUnwrapped2 = getData({ data: docContents2 });
+  console.log(docContentsUnwrapped2);
+  // await t.expect(docContentsUnwrapped2).contains( )
 });
