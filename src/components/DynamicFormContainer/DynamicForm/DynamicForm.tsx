@@ -28,7 +28,7 @@ export interface DynamicFormProps {
 
 export const DynamicFormRaw: FunctionComponent<DynamicFormProps> = ({
   schema,
-  uiSchema = {},
+  uiSchema,
   form,
   setFormData,
   setOwnership,

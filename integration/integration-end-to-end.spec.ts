@@ -154,10 +154,4 @@ test("Upload configuration file, choose form, fill form, submit form correctly",
   await t.expect(Title.textContent).contains("Document(s) issued successfully");
   await t.expect(Selector("div").withText(fileName).exists).ok();
   await t.expect(Selector("div").withText("Download").exists).ok();
-
-  // Check that the file has been downloaded successfully
-  await t.click(downloadLink);
-  const filePath = `${downloadsFolder()}/${fileName}`;
-  t.ctx.filePath = filePath; // For use in cleanup
-  await t.expect(await waitForFileDownload(t, filePath)).eql(true);
 });
