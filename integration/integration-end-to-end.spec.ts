@@ -1,12 +1,7 @@
-import { unlinkSync } from "fs";
-import { ClientFunction, Selector } from "testcafe";
+=import { ClientFunction, Selector } from "testcafe";
 import { enterPassword, loadConfigFile } from "./helper";
 
-fixture("Document Creator").page`http://localhost:3000`.afterEach(async (t) => {
-  // Clean up files after each test
-  const filePath = t.ctx.filePath;
-  await unlinkSync(filePath);
-});
+fixture("Document Creator").page`http://localhost:3000`;
 
 const Config = "./../src/test/fixtures/sample-local-config.json";
 const AttachmentSample = "./../src/test/fixtures/sample.pdf";
