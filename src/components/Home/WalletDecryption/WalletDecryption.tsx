@@ -38,7 +38,7 @@ export const WalletDecryption: FunctionComponent<WalletDecryption> = ({
         </div>
         <input
           data-testid="password-field"
-          placeholder="Enter metawallet password"
+          placeholder="Enter password"
           className={`
               ${inputBorderCSS}
               ${isDecrypting && "bg-grey-lighter"}

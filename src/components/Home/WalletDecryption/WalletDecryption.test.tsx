@@ -70,14 +70,14 @@ describe("walletDecryption", () => {
     expect.assertions(2);
     render(
       <WalletDecryption
+        decryptProgress={0}
         isIncorrectPassword={false}
-        isDecrypting={false}
         onDecryptConfigFile={() => {}}
         onResetConfigFile={() => {}}
       />
     );
 
     expect(screen.queryAllByText(/Create Document/)).toHaveLength(1);
-    expect(screen.queryAllByPlaceholderText(/Enter metawallet password/)).toHaveLength(1);
+    expect(screen.queryAllByPlaceholderText(/Enter password/)).toHaveLength(1);
   });
 });
