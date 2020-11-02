@@ -19,7 +19,7 @@ interface ExtensionIconProps {
 }
 
 const ExtensionIcon: FunctionComponent<ExtensionIconProps> = ({ ...props }) => {
-  return <img {...props} className="flex items-center justify-center mr-2" />;
+  return <img {...props} className="flex items-center justify-center mr-2" alt="" />;
 };
 
 export const getExtension = (mimeType: string | undefined): React.ReactNode => {
