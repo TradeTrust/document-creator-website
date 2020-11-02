@@ -5,7 +5,7 @@ import { BrowserRouter, Route } from "react-router-dom";
 import rinkebyConfig from "../../test/fixtures/sample-rinkeby-config.json";
 import ropstenConfig from "../../test/fixtures/sample-config.json";
 
-const mockMainnet = {
+const mockMainnetConfig = {
   network: "homestead",
 };
 
@@ -27,7 +27,7 @@ describe("navigationBar", () => {
     expect(screen.queryByTestId("settings-icon")).not.toBeNull();
   });
 
-  it("should go to default verify documents page without config", () => {
+  it("should render href to default verify documents page without config", () => {
     render(
       <BrowserRouter>
         <Route exact path="/">
@@ -42,7 +42,7 @@ describe("navigationBar", () => {
     );
   });
 
-  it("should go to rinkeby verify documents page with rinkeby config", () => {
+  it("should render href to rinkeby verify documents page with rinkeby config", () => {
     window.localStorage.setItem("CONFIG_FILE", JSON.stringify(rinkebyConfig));
     render(
       <BrowserRouter>
@@ -58,7 +58,7 @@ describe("navigationBar", () => {
     );
   });
 
-  it("should go to ropsten verify documents page with ropsten config", () => {
+  it("should render href to ropsten verify documents page with ropsten config", () => {
     window.localStorage.setItem("CONFIG_FILE", JSON.stringify(ropstenConfig));
     render(
       <BrowserRouter>
@@ -74,8 +74,8 @@ describe("navigationBar", () => {
     );
   });
 
-  it("should go to mainnet verify documents page with homestead config", () => {
-    window.localStorage.setItem("CONFIG_FILE", JSON.stringify(mockMainnet));
+  it("should render href to mainnet verify documents page with homestead config", () => {
+    window.localStorage.setItem("CONFIG_FILE", JSON.stringify(mockMainnetConfig));
     render(
       <BrowserRouter>
         <Route path="/">

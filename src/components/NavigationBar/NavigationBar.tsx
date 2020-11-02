@@ -3,10 +3,17 @@ import { Link } from "react-router-dom";
 import { Settings } from "react-feather";
 import logo from "./logo.svg";
 import { usePersistedConfigFile } from "../../common/hook/usePersistedConfigFile";
+import { Network } from "../../types";
 
 const homesteadUrlPath = "https://tradetrust.io";
 
-const navItems = [
+interface NavItemsProps {
+  id: string;
+  label: string;
+  path: string;
+}
+
+const navItems: NavItemsProps[] = [
   {
     id: "verify-documents",
     label: "Verify Documents",
@@ -39,10 +46,10 @@ const navItems = [
   },
 ];
 
-const getVerifyPath = (network: string): string => {
+const getVerifyPath = (network: Network): string => {
   if (network === "ropsten") {
     return "https://dev.tradetrust.io";
-  } else if (network === "homestead") {
+  } else if (network === "homestead" || network === "local") {
     return homesteadUrlPath;
   } else {
     return `https://${network}.tradetrust.io`;
