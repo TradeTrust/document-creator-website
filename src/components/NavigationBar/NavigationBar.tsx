@@ -2,14 +2,22 @@ import React, { FunctionComponent } from "react";
 import { Link } from "react-router-dom";
 import { Settings } from "react-feather";
 import logo from "./logo.svg";
+import { usePersistedConfigFile } from "../../common/hook/usePersistedConfigFile";
+import { Network } from "../../types";
 
-const urlPath = "https://tradetrust.io";
+const homesteadUrlPath = "https://tradetrust.io";
 
-const navItems = [
+interface NavItemsProps {
+  id: string;
+  label: string;
+  path: string;
+}
+
+const navItems: NavItemsProps[] = [
   {
     id: "verify-documents",
     label: "Verify Documents",
-    path: urlPath + "/#verify-documents",
+    path: "/#verify-documents",
   },
   {
     id: "create-documents",
@@ -19,30 +27,41 @@ const navItems = [
   {
     id: "resources",
     label: "Resources",
-    path: urlPath + "/resources",
+    path: homesteadUrlPath + "/resources",
   },
   {
     id: "faq",
     label: "FAQ",
-    path: urlPath + "/faq",
+    path: homesteadUrlPath + "/faq",
   },
   {
     id: "contact",
     label: "Contact",
-    path: urlPath + "/#contact",
+    path: homesteadUrlPath + "/#contact",
   },
   {
     id: "settings",
     label: "Settings",
-    path: urlPath + "/settings",
+    path: homesteadUrlPath + "/settings",
   },
 ];
+
+const getVerifyPath = (network: Network): string => {
+  if (network === "ropsten") {
+    return "https://dev.tradetrust.io";
+  } else if (network === "homestead" || network === "local") {
+    return homesteadUrlPath;
+  } else {
+    return `https://${network}.tradetrust.io`;
+  }
+};
 
 interface NavigationBar {
   logout?: () => void;
 }
 
 export const NavigationBar: FunctionComponent<NavigationBar> = ({ logout }) => {
+  const { configFile } = usePersistedConfigFile();
   return (
     <div className="bg-navy py-6">
       <div className="container mx-auto">
@@ -67,12 +86,29 @@ export const NavigationBar: FunctionComponent<NavigationBar> = ({ logout }) => {
                   >
                     {item.label}
                   </Link>
+                ) : item.id === "verify-documents" ? (
+                  configFile ? ( // with config file, will redirect to network's verify page
+                    <a
+                      href={`${getVerifyPath(configFile.network)}${item.path}`}
+                      className="transition-colors duration-200 ease-out text-greyblue hover:text-white"
+                    >
+                      {item.label}
+                    </a>
+                  ) : (
+                    // without config file, will default to homestead's verify page
+                    <a
+                      href={`${homesteadUrlPath}${item.path}`}
+                      className="transition-colors duration-200 ease-out text-greyblue hover:text-white"
+                    >
+                      {item.label}
+                    </a>
+                  )
                 ) : (
                   <a
                     href={item.path}
                     className="transition-colors duration-200 ease-out text-greyblue hover:text-white"
                   >
-                    {item.id === "settings" ? <Settings /> : item.label}
+                    {item.id === "settings" ? <Settings data-testid="settings-icon" /> : item.label}
                   </a>
                 )}
               </div>
