@@ -36,8 +36,7 @@ describe("navigationBar", () => {
       </BrowserRouter>
     );
 
-    expect(screen.getByText("Verify Documents").closest("a")).toHaveAttribute(
-      "href",
+    expect(screen.getByText("Verify Documents").getAttribute("href")).toBe(
       "https://tradetrust.io/#verify-documents"
     );
   });
@@ -52,8 +51,7 @@ describe("navigationBar", () => {
       </BrowserRouter>
     );
 
-    expect(screen.getByText("Verify Documents").closest("a")).toHaveAttribute(
-      "href",
+    expect(screen.getByText("Verify Documents").getAttribute("href")).toBe(
       "https://rinkeby.tradetrust.io/#verify-documents"
     );
   });
@@ -68,8 +66,7 @@ describe("navigationBar", () => {
       </BrowserRouter>
     );
 
-    expect(screen.getByText("Verify Documents").closest("a")).toHaveAttribute(
-      "href",
+    expect(screen.getByText("Verify Documents").getAttribute("href")).toBe(
       "https://dev.tradetrust.io/#verify-documents"
     );
   });
@@ -84,8 +81,7 @@ describe("navigationBar", () => {
       </BrowserRouter>
     );
 
-    expect(screen.getByText("Verify Documents").closest("a")).toHaveAttribute(
-      "href",
+    expect(screen.getByText("Verify Documents").getAttribute("href")).toBe(
       "https://tradetrust.io/#verify-documents"
     );
   });
