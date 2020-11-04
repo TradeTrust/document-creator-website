@@ -7,13 +7,16 @@ import { App } from "./App";
 import { ConfigContextProvider } from "./common/context/config";
 import { FormsContextProvider } from "./common/context/forms";
 import { ErrorBoundary } from "./components/ErrorBoundary";
+import { OverlayContextProvider } from "@govtechsg/tradetrust-ui-components";
 
 ReactDOM.render(
   <React.StrictMode>
     <ErrorBoundary>
       <ConfigContextProvider>
         <FormsContextProvider>
-          <App />
+          <OverlayContextProvider>
+            <App />
+          </OverlayContextProvider>
         </FormsContextProvider>
       </ConfigContextProvider>
     </ErrorBoundary>

@@ -4,8 +4,10 @@ import { FormSelectionContainer } from "./components/FormSelectionContainer";
 import { DynamicFormContainer } from "./components/DynamicFormContainer";
 import { PublishContainer } from "./components/PublishContainer";
 import { HomeContainer } from "./components/Home";
-import { NetworkBar } from "./components/UI/NetworkBar";
+import { NetworkBar } from "@govtechsg/tradetrust-ui-components";
 import { usePersistedConfigFile } from "./common/hook/usePersistedConfigFile";
+import { Overlay } from "@govtechsg/tradetrust-ui-components";
+import { AddressResolverContainer } from "./components/AddressResolverContainter/AddressResolverContainer";
 
 export const Router = (): ReactElement => {
   const { configFile } = usePersistedConfigFile();
@@ -27,8 +29,12 @@ export const Router = (): ReactElement => {
           <Route path="/publish">
             <PublishContainer />
           </Route>
+          <Route path="/settings">
+            <AddressResolverContainer />
+          </Route>
         </Switch>
       </BrowserRouter>
+      <Overlay />
     </>
   );
 };

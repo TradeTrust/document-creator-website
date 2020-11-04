@@ -42,7 +42,7 @@ const navItems: NavItemsProps[] = [
   {
     id: "settings",
     label: "Settings",
-    path: homesteadUrlPath + "/settings",
+    path: "/settings",
   },
 ];
 
@@ -79,12 +79,12 @@ export const NavigationBar: FunctionComponent<NavigationBar> = ({ logout }) => {
                 } ${index === navItems.length ? "ml-auto" : "pr-0"}`}
                 key={index}
               >
-                {item.id === "create-documents" ? (
+                {["create-documents", "settings"].includes(item.id) ? (
                   <Link
                     className="transition-colors duration-200 ease-out text-greyblue hover:text-white"
                     to={item.path}
                   >
-                    {item.label}
+                    {item.id === "settings" ? <Settings data-testid="settings-icon" /> : item.label}
                   </Link>
                 ) : item.id === "verify-documents" ? (
                   configFile ? ( // with config file, will redirect to network's verify page
@@ -108,7 +108,7 @@ export const NavigationBar: FunctionComponent<NavigationBar> = ({ logout }) => {
                     href={item.path}
                     className="transition-colors duration-200 ease-out text-greyblue hover:text-white"
                   >
-                    {item.id === "settings" ? <Settings data-testid="settings-icon" /> : item.label}
+                    {item.label}
                   </a>
                 )}
               </div>
