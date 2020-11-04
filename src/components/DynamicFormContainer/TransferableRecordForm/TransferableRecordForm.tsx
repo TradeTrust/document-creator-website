@@ -45,33 +45,39 @@ export const TransferableRecordForm: FunctionComponent<TransferableRecordForm> =
       className="border border-solid border-grey-lighter p-3  rounded bg-lightgrey-lighter mb-8"
     >
       <div className="text-grey-dark font-bold text-xl pb-4">Transferable Record Owner</div>
-      <div className="flex my-4 items-center">
-        <div className="w-full sm:w-3/12 px-0 sm:px-4 sm:text-right text-grey-dark">
+      <div className="flex my-4 items-center sm:flex-row flex-col">
+        <div className="w-full sm:w-3/12 px-0 sm:px-4 sm:text-right text-grey-dark mb-2 sm:mb-0">
           Beneficiary
         </div>
-        <input
-          data-testid="transferable-record-beneficiary-input"
-          className="w-full sm:w-8/12 px-0 sm:px-2 h-10 rounded-none border border-solid border-grey-lighter"
-          value={beneficiaryAddress}
-          type="text"
-          onChange={(e) => setBeneficiaryAddress(e.target.value)}
-        />
-        <ButtonIconOrangeWhite onClick={() => onOverlayHandler(setBeneficiaryAddress)}>
-          <Book />
-        </ButtonIconOrangeWhite>
+        <div className="w-full flex sm:w-8/12">
+          <input
+            data-testid="transferable-record-beneficiary-input"
+            className="w-full h-10 rounded-none border border-solid border-grey-lighter mr-2"
+            value={beneficiaryAddress}
+            type="text"
+            onChange={(e) => setBeneficiaryAddress(e.target.value)}
+          />
+          <ButtonIconOrangeWhite onClick={() => onOverlayHandler(setBeneficiaryAddress)}>
+            <Book />
+          </ButtonIconOrangeWhite>
+        </div>
       </div>
-      <div className="flex my-4 items-center">
-        <div className="w-full sm:w-3/12 px-0 sm:px-4 sm:text-right text-grey-dark">Holder</div>
-        <input
-          data-testid="transferable-record-holder-input"
-          className="w-full sm:w-8/12 px-0 sm:px-2 h-10 rounded-none border border-solid border-grey-lighter"
-          value={holderAddress}
-          type="text"
-          onChange={(e) => setHolderAddress(e.target.value)}
-        />
-        <ButtonIconOrangeWhite onClick={() => onOverlayHandler(setHolderAddress)}>
-          <Book />
-        </ButtonIconOrangeWhite>
+      <div className="flex my-4 items-center sm:flex-row flex-col">
+        <div className="w-full sm:w-3/12 px-0 sm:px-4 sm:text-right text-grey-dark mb-2 sm:mb-0">
+          Holder
+        </div>
+        <div className="w-full flex sm:w-8/12">
+          <input
+            data-testid="transferable-record-holder-input"
+            className="w-full  h-10 rounded-none border border-solid border-grey-lighter mr-2"
+            value={holderAddress}
+            type="text"
+            onChange={(e) => setHolderAddress(e.target.value)}
+          />
+          <ButtonIconOrangeWhite onClick={() => onOverlayHandler(setHolderAddress)}>
+            <Book />
+          </ButtonIconOrangeWhite>
+        </div>
       </div>
     </div>
   );
