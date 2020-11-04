@@ -5,7 +5,7 @@ import {
   AddressBook,
 } from "@govtechsg/tradetrust-ui-components";
 import { Book } from "react-feather";
-import { useAddressBook, useThirdPartyAPIEndpoints } from "@govtechsg/address-identity-resolver";
+import { useThirdPartyAPIEndpoints } from "@govtechsg/address-identity-resolver";
 import { usePersistedConfigFile } from "../../../common/hook/usePersistedConfigFile";
 
 interface TransferableRecordForm {
@@ -22,7 +22,6 @@ export const TransferableRecordForm: FunctionComponent<TransferableRecordForm> =
   setHolderAddress,
 }) => {
   const { showOverlay } = useOverlayContext();
-  const { addressBook, handleLocalAddressBookCsv } = useAddressBook();
   const { thirdPartyAPIEndpoints } = useThirdPartyAPIEndpoints();
   const { configFile } = usePersistedConfigFile();
 
@@ -32,8 +31,6 @@ export const TransferableRecordForm: FunctionComponent<TransferableRecordForm> =
         title="Address Book"
         onAddressSelected={onAddressSelected}
         thirdPartyAPIEndpoints={thirdPartyAPIEndpoints}
-        addressBook={addressBook}
-        handleLocalAddressBookCsv={handleLocalAddressBookCsv}
         network={configFile?.network ?? "local"}
       />
     );
