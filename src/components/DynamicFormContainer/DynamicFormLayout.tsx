@@ -77,7 +77,7 @@ export const DynamicFormLayout: FunctionComponent = () => {
   };
 
   const closePreviewMode = (): void => {
-    setIsPreviewMode(false);
+    if (isPreviewMode) setIsPreviewMode(false);
   };
 
   const deleteAllForms = (): void => {
