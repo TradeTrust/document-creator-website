@@ -1,12 +1,16 @@
 import React, { FunctionComponent } from "react";
-import { useFormsContext } from "../../../common/context/forms";
 import { ChevronLeft, ChevronRight } from "react-feather";
+import { useFormsContext } from "../../../common/context/forms";
 
 interface DocumentSelector {
   validateCurrentForm: () => boolean;
+  closePreviewMode: () => void;
 }
 
-export const DocumentSelector: FunctionComponent<DocumentSelector> = ({ validateCurrentForm }) => {
+export const DocumentSelector: FunctionComponent<DocumentSelector> = ({
+  validateCurrentForm,
+  closePreviewMode,
+}) => {
   const {
     forms,
     setActiveFormIndex,
@@ -18,11 +22,13 @@ export const DocumentSelector: FunctionComponent<DocumentSelector> = ({ validate
   const previousDocument = (): void => {
     if (activeFormIndex === undefined || activeFormIndex === 0) return;
     if (validateCurrentForm()) setActiveFormIndex(activeFormIndex - 1);
+    closePreviewMode();
   };
 
   const nextDocument = (): void => {
     if (activeFormIndex === undefined || activeFormIndex === forms.length - 1) return;
     if (validateCurrentForm()) setActiveFormIndex(activeFormIndex + 1);
+    closePreviewMode();
   };
   return (
     <div className="flex items-center mt-2">
