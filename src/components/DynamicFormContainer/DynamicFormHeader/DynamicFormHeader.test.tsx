@@ -8,6 +8,7 @@ jest.mock("../../../common/context/forms");
 const mockUseFormsContext = useFormsContext as jest.Mock;
 const mockSetActiveFormIndex = jest.fn();
 const mockSetForms = jest.fn();
+const mockClosePreviewMode = jest.fn();
 
 const whenActiveFormsAreAvailable = (): void => {
   mockUseFormsContext.mockReturnValue({
@@ -53,6 +54,7 @@ describe("dynamicFormHeader", () => {
   beforeEach(() => {
     mockSetActiveFormIndex.mockReset();
     mockSetForms.mockReset();
+    mockClosePreviewMode.mockReset();
   });
 
   it("should display the header UI correctly", () => {
@@ -63,6 +65,7 @@ describe("dynamicFormHeader", () => {
         onFormSubmit={() => {}}
         onNewForm={() => {}}
         validateCurrentForm={() => false}
+        closePreviewMode={mockClosePreviewMode}
       />
     );
 
@@ -81,6 +84,7 @@ describe("dynamicFormHeader", () => {
         onFormSubmit={() => {}}
         onNewForm={mockOnNewForm}
         validateCurrentForm={() => false}
+        closePreviewMode={mockClosePreviewMode}
       />
     );
 
@@ -97,6 +101,7 @@ describe("dynamicFormHeader", () => {
         onFormSubmit={() => {}}
         onNewForm={() => {}}
         validateCurrentForm={() => false}
+        closePreviewMode={mockClosePreviewMode}
       />
     );
 
@@ -113,6 +118,7 @@ describe("dynamicFormHeader", () => {
         onFormSubmit={mockonFormSubmit}
         onNewForm={() => {}}
         validateCurrentForm={() => false}
+        closePreviewMode={mockClosePreviewMode}
       />
     );
 
@@ -129,6 +135,7 @@ describe("dynamicFormHeader", () => {
         onFormSubmit={() => {}}
         onNewForm={() => {}}
         validateCurrentForm={mockValidateCurrentForm}
+        closePreviewMode={mockClosePreviewMode}
       />
     );
 
@@ -144,6 +151,7 @@ describe("dynamicFormHeader", () => {
         onFormSubmit={() => {}}
         onNewForm={() => {}}
         validateCurrentForm={mockValidateCurrentForm}
+        closePreviewMode={mockClosePreviewMode}
       />
     );
 
@@ -163,6 +171,7 @@ describe("dynamicFormHeader", () => {
         onFormSubmit={() => {}}
         onNewForm={() => {}}
         validateCurrentForm={mockValidateCurrentForm}
+        closePreviewMode={mockClosePreviewMode}
       />
     );
 
@@ -171,5 +180,25 @@ describe("dynamicFormHeader", () => {
 
     fireEvent.click(screen.getByTestId("next-document-button"));
     expect(mockSetActiveFormIndex).toHaveBeenCalledTimes(1);
+  });
+
+  it("should close preview mode when switching documents", () => {
+    whenActiveFormsAreAvailable();
+    const mockValidateCurrentForm = jest.fn().mockReturnValue(true);
+    render(
+      <DynamicFormHeader
+        onBackToFormSelection={() => {}}
+        onFormSubmit={() => {}}
+        onNewForm={() => {}}
+        validateCurrentForm={mockValidateCurrentForm}
+        closePreviewMode={mockClosePreviewMode}
+      />
+    );
+
+    fireEvent.click(screen.getByTestId("previous-document-button"));
+    expect(mockClosePreviewMode).toHaveBeenCalledTimes(1);
+
+    fireEvent.click(screen.getByTestId("next-document-button"));
+    expect(mockClosePreviewMode).toHaveBeenCalledTimes(1);
   });
 });
