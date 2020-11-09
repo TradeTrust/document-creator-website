@@ -9,4 +9,6 @@ export default {
   },
 };
 
-export const Default = () => <DocumentSelector validateCurrentForm={() => true} />;
+export const Default = () => (
+  <DocumentSelector validateCurrentForm={() => true} closePreviewMode={() => true} />
+);

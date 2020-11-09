@@ -1,11 +1,11 @@
 import Ajv from "ajv";
 import { defaultsDeep } from "lodash";
 import React, { FunctionComponent, useState } from "react";
+import { Trash2 } from "react-feather";
 import { Redirect } from "react-router";
 import { useFormsContext } from "../../common/context/forms";
 import { Container } from "../Container";
 import { Button } from "../UI/Button";
-import { Trash2 } from "react-feather";
 import { ToggleSwitch } from "../UI/ToggleSwitch";
 import { BackModal } from "./BackModal";
 import { DeleteModal } from "./DeleteModal";
@@ -76,6 +76,10 @@ export const DynamicFormLayout: FunctionComponent = () => {
     setShowBackModal(false);
   };
 
+  const closePreviewMode = (): void => {
+    if (isPreviewMode) setIsPreviewMode(false);
+  };
+
   const deleteAllForms = (): void => {
     setActiveFormIndex(undefined);
     setForms([]);
@@ -105,6 +109,7 @@ export const DynamicFormLayout: FunctionComponent = () => {
         onNewForm={onNewForm}
         onFormSubmit={onFormSubmit}
         validateCurrentForm={validateCurrentForm}
+        closePreviewMode={closePreviewMode}
       />
       <div className="bg-lightgrey-lighter p-6">
         <div className="bg-white container mx-auto p-4">

@@ -1,8 +1,8 @@
 import React, { FunctionComponent } from "react";
+import { ArrowLeft } from "react-feather";
 import { useFormsContext } from "../../../common/context/forms";
 import { ProgressBar } from "../../ProgressBar";
 import { Button } from "../../UI/Button";
-import { ArrowLeft } from "react-feather";
 import { Title } from "../../UI/Title";
 import { DocumentSelector } from "../DocumentSelector";
 
@@ -11,6 +11,7 @@ interface DynamicFormHeaderProps {
   onNewForm: () => void;
   onFormSubmit: () => void;
   validateCurrentForm: () => boolean;
+  closePreviewMode: () => void;
 }
 
 export const DynamicFormHeader: FunctionComponent<DynamicFormHeaderProps> = ({
@@ -18,6 +19,7 @@ export const DynamicFormHeader: FunctionComponent<DynamicFormHeaderProps> = ({
   onNewForm,
   onFormSubmit,
   validateCurrentForm,
+  closePreviewMode,
 }) => {
   const { forms, activeFormIndex } = useFormsContext();
 
@@ -38,7 +40,10 @@ export const DynamicFormHeader: FunctionComponent<DynamicFormHeaderProps> = ({
           <div className="text-grey-dark text-lg">
             {`${(activeFormIndex || 0) + 1} of ${forms.length} document(s)`}
           </div>
-          <DocumentSelector validateCurrentForm={validateCurrentForm} />
+          <DocumentSelector
+            validateCurrentForm={validateCurrentForm}
+            closePreviewMode={closePreviewMode}
+          />
         </div>
         <div>
           <Button
