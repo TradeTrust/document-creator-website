@@ -20,7 +20,7 @@ describe("attachmentDropzone", () => {
   let atobSpy: jest.SpyInstance;
   /* eslint-disable jest/no-hooks */
   beforeEach(() => {
-    atobSpy = jest.spyOn(global, "atob");
+    atobSpy = jest.spyOn(window, "atob");
   });
 
   afterEach(() => {
