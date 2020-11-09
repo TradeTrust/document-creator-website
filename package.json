@@ -101,6 +101,7 @@
     "integration:internal:headless": "testcafe -c 4 chrome:headless integration/**/*.spec.ts --ts-config-path ./tsconfig.testcafe.json --app \"npm run start\" --app-init-delay 35000",
     "integration:concurrently:headless": "concurrently -k -s first \"npm:blockchain\" \"npm:integration:headless\"",
     "lint": "eslint . --ext .ts,.tsx --max-warnings 0",
+    "lint:type": "npx --no-install tsc --noEmit --sourceMap false",
     "lint:fix": "npm run lint -- --fix",
     "start": "npm-run-all -p start:*",
     "start:css": "postcss src/tailwind.css -o src/index.css --watch",
