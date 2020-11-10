@@ -1,18 +1,21 @@
 import { PublishingJob } from "../../types";
-import { Wallet } from "ethers";
+import { Wallet, providers } from "ethers";
 import { DocumentStoreFactory } from "@govtechsg/document-store";
 import { DocumentStore } from "@govtechsg/document-store/src/contracts/DocumentStore";
 import { TitleEscrowCreatorFactory, TradeTrustERC721Factory } from "@govtechsg/token-registry";
 import { TitleEscrowCreator } from "@govtechsg/token-registry/types/TitleEscrowCreator";
 
-const assertAddressIsSmartContract = async (address: string, wallet: Wallet): Promise<void> => {
+const assertAddressIsSmartContract = async (
+  address: string,
+  wallet: Wallet | providers.JsonRpcSigner
+): Promise<void> => {
   const code = await wallet.provider.getCode(address);
   if (code === "0x") throw new Error("Address is not a smart contract");
 };
 
 export const publishVerifiableDocumentJob = async (
   job: PublishingJob,
-  wallet: Wallet
+  wallet: Wallet | providers.JsonRpcSigner
 ): Promise<string> => {
   const { contractAddress, merkleRoot, nonce } = job;
   await assertAddressIsSmartContract(contractAddress, wallet);
@@ -35,7 +38,9 @@ const CREATOR_CONTRACTS: CreatorContract = {
   unknown: "0x4Bf7E4777a8D1b6EdD5F2d9b8582e2817F0B0953",
 };
 
-export const getTitleEscrowCreator = async (wallet: Wallet): Promise<TitleEscrowCreator> => {
+export const getTitleEscrowCreator = async (
+  wallet: Wallet | providers.JsonRpcSigner
+): Promise<TitleEscrowCreator> => {
   const { name } = await wallet.provider.getNetwork();
   const creatorContractAddress = CREATOR_CONTRACTS[name];
   if (!creatorContractAddress)
@@ -45,7 +50,7 @@ export const getTitleEscrowCreator = async (wallet: Wallet): Promise<TitleEscrow
 
 export const publishTransferableRecordJob = async (
   job: PublishingJob,
-  wallet: Wallet
+  wallet: Wallet | providers.JsonRpcSigner
 ): Promise<string> => {
   const { payload, contractAddress, nonce, merkleRoot } = job;
   if (!payload.ownership) throw new Error("Ownership data is not provided");
@@ -86,7 +91,10 @@ export const publishTransferableRecordJob = async (
   return mintingTx.transactionHash;
 };
 
-export const publishJob = async (job: PublishingJob, wallet: Wallet): Promise<string> => {
+export const publishJob = async (
+  job: PublishingJob,
+  wallet: Wallet | providers.JsonRpcSigner
+): Promise<string> => {
   if (job.type === "VERIFIABLE_DOCUMENT") return publishVerifiableDocumentJob(job, wallet);
   if (job.type === "TRANSFERABLE_RECORD") return publishTransferableRecordJob(job, wallet);
   throw new Error("Job type is not supported");

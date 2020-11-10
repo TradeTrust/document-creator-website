@@ -103,6 +103,7 @@ describe("publishing", () => {
           documents: [],
           merkleRoot: "9999",
           payload: {},
+          gsnCapable: false,
         },
         wallet
       );
@@ -125,6 +126,7 @@ describe("publishing", () => {
             documents: [],
             merkleRoot: "9999",
             payload: {},
+            gsnCapable: false,
           },
           wallet
         )
@@ -145,6 +147,7 @@ describe("publishing", () => {
             documents: [],
             merkleRoot: "9999",
             payload: {},
+            gsnCapable: false,
           },
           wallet
         )
@@ -170,6 +173,7 @@ describe("publishing", () => {
               holderAddress: "0x2222",
             },
           },
+          gsnCapable: false,
         },
         wallet
       );
@@ -205,6 +209,7 @@ describe("publishing", () => {
                 holderAddress: "0x2222",
               },
             },
+            gsnCapable: false,
           },
           wallet
         )
@@ -228,6 +233,7 @@ describe("publishing", () => {
                 holderAddress: "0x2222",
               },
             },
+            gsnCapable: false,
           },
           wallet
         )

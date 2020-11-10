@@ -22,7 +22,8 @@
       "name": "CHAFTA Certificate of Origin"
     },
     "fileName": "Document-1.tt",
-    "payload": {}
+    "payload": {},
+    "gsnCapable": false
   },
   {
     "type": "TRANSFERABLE_RECORD",
@@ -52,7 +53,8 @@
         "beneficiaryAddress": "0x81b7e08f65bdf5648606c89998a9cc8164397647",
         "holderAddress": "0x06e96617ef41a609b70d0c6dfc47f6082e6400f3"
       }
-    }
+    },
+    "gsnCapable": false
   },
   {
     "type": "VERIFIABLE_DOCUMENT",
@@ -77,7 +79,8 @@
       "name": "CHAFTA Certificate of Origin"
     },
     "fileName": "Document-3.tt",
-    "payload": {}
+    "payload": {},
+    "gsnCapable": false
   },
   {
     "type": "TRANSFERABLE_RECORD",
@@ -107,6 +110,7 @@
         "beneficiaryAddress": "0x06e96617ef41a609b70d0c6dfc47f6082e6400f3",
         "holderAddress": "0x81b7e08f65bdf5648606c89998a9cc8164397647"
       }
-    }
+    },
+    "gsnCapable": false
   }
 ]
