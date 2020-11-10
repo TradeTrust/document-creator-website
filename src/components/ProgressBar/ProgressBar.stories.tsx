@@ -1,4 +1,4 @@
-import React from "react";
+import React, { FunctionComponent } from "react";
 import { ProgressBar } from "./ProgressBar";
 
 export default {
@@ -9,6 +9,6 @@ export default {
   },
 };
 
-export const Step1 = () => <ProgressBar step={1} />;
-export const Step2 = () => <ProgressBar step={2} />;
-export const Step3 = () => <ProgressBar step={3} />;
+export const Step1: FunctionComponent = () => <ProgressBar step={1} />;
+export const Step2: FunctionComponent = () => <ProgressBar step={2} />;
+export const Step3: FunctionComponent = () => <ProgressBar step={3} />;

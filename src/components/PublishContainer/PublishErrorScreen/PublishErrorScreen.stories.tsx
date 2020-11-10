@@ -1,4 +1,4 @@
-import React from "react";
+import React, { FunctionComponent } from "react";
 import { PublishErrorScreen } from "./PublishErrorScreen";
 
 export default {
@@ -9,7 +9,7 @@ export default {
   },
 };
 
-export const Default = () => {
+export const Default: FunctionComponent = () => {
   const error = new Error("some Error");
   return <PublishErrorScreen error={error} />;
 };

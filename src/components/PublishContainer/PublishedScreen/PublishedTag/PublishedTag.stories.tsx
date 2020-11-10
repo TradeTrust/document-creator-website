@@ -1,4 +1,4 @@
-import React from "react";
+import React, { FunctionComponent } from "react";
 import { WrappedDocument } from "../../../../types";
 import { PublishedTag } from "./PublishedTag";
 
@@ -19,10 +19,10 @@ const mockDoc = {
   wrappedDocument: { data: "test document" },
 } as WrappedDocument;
 
-export const Loading = () => {
+export const Loading: FunctionComponent = () => {
   return <PublishedTag doc={mockDoc} isPending={true} />;
 };
 
-export const Default = () => {
+export const Default: FunctionComponent = () => {
   return <PublishedTag doc={mockDoc} isPending={false} />;
 };

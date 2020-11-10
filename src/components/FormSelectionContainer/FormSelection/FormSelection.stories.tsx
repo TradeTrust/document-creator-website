@@ -1,4 +1,4 @@
-import React from "react";
+import React, { FunctionComponent } from "react";
 import { Config } from "../../../types/";
 import { FormSelection } from "./FormSelection";
 
@@ -10,7 +10,7 @@ export default {
   },
 };
 
-export const Default = () => (
+export const Default: FunctionComponent = () => (
   <FormSelection
     config={
       {

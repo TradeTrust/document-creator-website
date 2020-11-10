@@ -1,4 +1,4 @@
-import React from "react";
+import React, { FunctionComponent } from "react";
 import { FailedJobErrors, WrappedDocument } from "../../../types";
 import { PublishedScreen } from "./PublishedScreen";
 
@@ -45,7 +45,7 @@ const mockFailPublishedDocuments = [
   },
 ] as FailedJobErrors[];
 
-export const Initialized = () => {
+export const Initialized: FunctionComponent = () => {
   return (
     <PublishedScreen
       publishedDocuments={[]}
@@ -56,7 +56,7 @@ export const Initialized = () => {
   );
 };
 
-export const Pending = () => {
+export const Pending: FunctionComponent = () => {
   return (
     <PublishedScreen
       publishedDocuments={mockPublishedDocuments}
@@ -67,7 +67,7 @@ export const Pending = () => {
   );
 };
 
-export const Confirmed = () => {
+export const Confirmed: FunctionComponent = () => {
   return (
     <PublishedScreen
       publishedDocuments={mockPublishedDocuments}
@@ -78,7 +78,7 @@ export const Confirmed = () => {
   );
 };
 
-export const Failed = () => {
+export const Failed: FunctionComponent = () => {
   return (
     <PublishedScreen
       publishedDocuments={[]}

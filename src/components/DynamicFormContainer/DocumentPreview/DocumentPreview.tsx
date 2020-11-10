@@ -4,20 +4,21 @@ import {
   HostActions,
   renderDocument,
   FrameActions,
-  Document,
+  v2,
 } from "@govtechsg/decentralized-renderer-react-components";
 
 type Dispatch = (action: HostActions) => void;
 
 interface DocumentPreview {
-  document: Document;
+  document: v2.OpenAttestationDocument;
 }
 
 export const DocumentPreview: FunctionComponent<DocumentPreview> = ({ document }) => {
   const toFrame = useRef<Dispatch>();
   const [height, setHeight] = useState(0);
 
-  const rendererUrl = document["$template"]?.url;
+  const rendererTemplate = document["$template"] as v2.TemplateObject;
+  const rendererUrl = rendererTemplate?.url;
   const onConnected = useCallback(
     (frame) => {
       toFrame.current = frame;

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, FunctionComponent } from "react";
 import sample from "../../../test/fixtures/sample-config.json";
 import { ConfigFile, FormTemplate } from "../../../types";
 import { DynamicForm } from "./DynamicForm";
@@ -53,7 +53,7 @@ export default {
 };
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-export const Default = () => {
+export const Default: FunctionComponent = () => {
   const [formData, setFormData] = useState<any>({
     fileName: "document-1",
     data: { formData: {} },

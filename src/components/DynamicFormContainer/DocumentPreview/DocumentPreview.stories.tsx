@@ -1,8 +1,8 @@
-import React from "react";
+import React, { FunctionComponent } from "react";
 import { Container } from "../../Container";
 import { DocumentPreview } from "./DocumentPreview";
 import SampleCnm from "../../../test/fixtures/unwrapped-cnm.json";
-import { Document } from "@govtechsg/decentralized-renderer-react-components";
+import { v2 } from "@govtechsg/decentralized-renderer-react-components";
 
 export default {
   title: "|DynamicForm|DocumentPreview",
@@ -12,8 +12,8 @@ export default {
   },
 };
 
-export const TitleAndMessage = () => (
+export const TitleAndMessage: FunctionComponent = () => (
   <Container>
-    <DocumentPreview document={SampleCnm as Document} />
+    <DocumentPreview document={SampleCnm as v2.OpenAttestationDocument} />
   </Container>
 );

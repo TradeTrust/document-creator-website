@@ -1,4 +1,4 @@
-import React from "react";
+import React, { FunctionComponent } from "react";
 import { Container } from "../../Container";
 import { WalletDecryption } from "./WalletDecryption";
 export default {
@@ -9,7 +9,7 @@ export default {
   },
 };
 
-export const Default = () => (
+export const Default: FunctionComponent = () => (
   <Container>
     <WalletDecryption
       decryptProgress={0}
@@ -20,7 +20,7 @@ export const Default = () => (
   </Container>
 );
 
-export const Decrypting = () => (
+export const Decrypting: FunctionComponent = () => (
   <Container>
     <WalletDecryption
       decryptProgress={0.75}
@@ -31,7 +31,7 @@ export const Decrypting = () => (
   </Container>
 );
 
-export const Error = () => (
+export const Error: FunctionComponent = () => (
   <Container>
     <WalletDecryption
       decryptProgress={0}

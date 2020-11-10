@@ -1,4 +1,4 @@
-import React from "react";
+import React, { FunctionComponent } from "react";
 import { DeleteModal } from "./DeleteModal";
 
 export default {
@@ -9,6 +9,6 @@ export default {
   },
 };
 
-export const Default = () => (
+export const Default: FunctionComponent = () => (
   <DeleteModal deleteForm={() => true} show={true} closeDeleteModal={() => false} />
 );

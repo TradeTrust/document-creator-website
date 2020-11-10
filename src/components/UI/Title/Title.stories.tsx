@@ -1,4 +1,4 @@
-import React from "react";
+import React, { FunctionComponent } from "react";
 import { Title } from "./Title";
 
 export default {
@@ -9,4 +9,4 @@ export default {
   },
 };
 
-export const Default = () => <Title>This is the title</Title>;
+export const Default: FunctionComponent = () => <Title>This is the title</Title>;
