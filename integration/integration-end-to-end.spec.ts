@@ -25,7 +25,7 @@ const EblNumberField = Selector("input#root_blNumber");
 const previousDocumentButton = Selector("[data-testid='previous-document-button']");
 const nextDocumentButton = Selector("[data-testid='next-document-button']");
 const fileNameField = Selector("[data-testid='file-name-input']");
-const goBack = ClientFunction(() => window.history.back());
+const goBack = ClientFunction(() => window.close());
 
 test("Upload configuration file, choose form, fill form, submit form correctly", async (t) => {
   // Check go to doc button
