@@ -46,7 +46,7 @@ const navItems: NavItemsProps[] = [
   },
 ];
 
-const getVerifyPath = (network: Network): string => {
+const getNetworkPath = (network: Network): string => {
   if (network === "ropsten") {
     return "https://dev.tradetrust.io";
   } else if (network === "homestead" || network === "local") {
@@ -88,7 +88,7 @@ export const NavigationBar: FunctionComponent<NavigationBar> = ({ logout }) => {
                   </Link>
                 ) : configFile ? ( // with config file, will redirect to the relevant network's url
                   <a
-                    href={`${getVerifyPath(configFile.network)}${item.path}`}
+                    href={`${getNetworkPath(configFile.network)}${item.path}`}
                     className="transition-colors duration-200 ease-out text-greyblue hover:text-white"
                   >
                     {item.label}
