@@ -27,17 +27,17 @@ const navItems: NavItemsProps[] = [
   {
     id: "resources",
     label: "Resources",
-    path: homesteadUrlPath + "/resources",
+    path: "/resources",
   },
   {
     id: "faq",
     label: "FAQ",
-    path: homesteadUrlPath + "/faq",
+    path: "/faq",
   },
   {
     id: "contact",
     label: "Contact",
-    path: homesteadUrlPath + "/#contact",
+    path: "/#contact",
   },
   {
     id: "settings",
@@ -86,26 +86,17 @@ export const NavigationBar: FunctionComponent<NavigationBar> = ({ logout }) => {
                   >
                     {item.id === "settings" ? <Settings data-testid="settings-icon" /> : item.label}
                   </Link>
-                ) : item.id === "verify-documents" ? (
-                  configFile ? ( // with config file, will redirect to network's verify page
-                    <a
-                      href={`${getVerifyPath(configFile.network)}${item.path}`}
-                      className="transition-colors duration-200 ease-out text-greyblue hover:text-white"
-                    >
-                      {item.label}
-                    </a>
-                  ) : (
-                    // without config file, will default to homestead's verify page
-                    <a
-                      href={`${homesteadUrlPath}${item.path}`}
-                      className="transition-colors duration-200 ease-out text-greyblue hover:text-white"
-                    >
-                      {item.label}
-                    </a>
-                  )
-                ) : (
+                ) : configFile ? ( // with config file, will redirect to the relevant network's url
                   <a
-                    href={item.path}
+                    href={`${getVerifyPath(configFile.network)}${item.path}`}
+                    className="transition-colors duration-200 ease-out text-greyblue hover:text-white"
+                  >
+                    {item.label}
+                  </a>
+                ) : (
+                  // without config file, will default to homestead's url
+                  <a
+                    href={`${homesteadUrlPath}${item.path}`}
                     className="transition-colors duration-200 ease-out text-greyblue hover:text-white"
                   >
                     {item.label}
