@@ -4,8 +4,8 @@ import {
   HostActions,
   renderDocument,
   FrameActions,
-  v2,
 } from "@govtechsg/decentralized-renderer-react-components";
+import { v2 } from "@govtechsg/open-attestation";
 
 type Dispatch = (action: HostActions) => void;
 

@@ -2,7 +2,7 @@ import React, { FunctionComponent } from "react";
 import { Container } from "../../Container";
 import { DocumentPreview } from "./DocumentPreview";
 import SampleCnm from "../../../test/fixtures/unwrapped-cnm.json";
-import { v2 } from "@govtechsg/decentralized-renderer-react-components";
+import { v2 } from "@govtechsg/open-attestation";
 
 export default {
   title: "|DynamicForm|DocumentPreview",

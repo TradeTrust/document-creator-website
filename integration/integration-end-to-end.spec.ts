@@ -25,13 +25,13 @@ const EblNumberField = Selector("input#root_blNumber");
 const previousDocumentButton = Selector("[data-testid='previous-document-button']");
 const nextDocumentButton = Selector("[data-testid='next-document-button']");
 const fileNameField = Selector("[data-testid='file-name-input']");
-const goBack = ClientFunction(() => window.close());
+const closeTab = ClientFunction(() => window.close());
 
 test("Upload configuration file, choose form, fill form, submit form correctly", async (t) => {
   // Check go to doc button
   await t.click(Selector("[data-testid='config-file-docs-button']"));
   await t.expect(Title.textContent).contains("Using TradeTrust Document Creator");
-  await goBack();
+  await closeTab();
 
   // Upload config file
   await loadConfigFile(Config);
