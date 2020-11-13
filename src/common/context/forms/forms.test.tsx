@@ -12,7 +12,7 @@ const wrapper: FunctionComponent = ({ children }) => (
 );
 
 describe("useFormsContext", () => {
-  beforeAll(() => {
+  beforeEach(() => {
     mockUseConfigContext.mockReturnValue({
       config: {
         forms: [{ schema: "FORM_1_SCHEMA" }, { defaults: { foo: "bar" }, schema: "FORM_2_SCHEMA" }],

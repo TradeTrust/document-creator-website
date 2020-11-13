@@ -1,4 +1,4 @@
-import React from "react";
+import React, { FunctionComponent } from "react";
 import { Container } from "./Container";
 
 export default {
@@ -9,7 +9,7 @@ export default {
   },
 };
 
-export const Default = () => (
+export const Default: FunctionComponent = () => (
   <Container>
     <h1>Some Title Here</h1>
     <p>

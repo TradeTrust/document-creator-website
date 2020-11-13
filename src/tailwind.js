@@ -12,14 +12,14 @@ module.exports = {
       bold: 700,
     },
     minWidth: {
-      "0": "0",
+      0: "0",
       xs: "18rem",
     },
     extend: {
       spacing: {
-        "72": "18rem",
-        "84": "21rem",
-        "96": "24rem",
+        72: "18rem",
+        84: "21rem",
+        96: "24rem",
       },
       colors: {
         primary: {

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { FunctionComponent } from "react";
 import { BackModal } from "./BackModal";
 
 export default {
@@ -9,6 +9,6 @@ export default {
   },
 };
 
-export const Default = () => (
+export const Default: FunctionComponent = () => (
   <BackModal backToFormSelection={() => true} show={true} closeBackModal={() => false} />
 );

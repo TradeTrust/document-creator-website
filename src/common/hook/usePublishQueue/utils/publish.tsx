@@ -11,11 +11,6 @@ import {
 import { getQueueNumber } from "../../../API/storageAPI";
 import { encodeQrCode } from "../../../utils";
 
-interface QueueNumberTypes {
-  id: string;
-  key: string;
-}
-
 interface NetworkUrl {
   homestead: string;
   ropsten: string;

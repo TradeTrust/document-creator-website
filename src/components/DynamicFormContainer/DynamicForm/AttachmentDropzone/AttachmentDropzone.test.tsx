@@ -1,4 +1,4 @@
-import { act, fireEvent, render, screen, wait } from "@testing-library/react";
+import { act, fireEvent, render, screen, waitFor } from "@testing-library/react";
 import React from "react";
 import { AttachmentDropzone, fileInfo } from "./AttachmentDropzone";
 
@@ -68,7 +68,7 @@ describe("attachmentDropzone", () => {
 
     await act(async () => {
       fireEvent(dropzone, event);
-      await wait(() => expect(mockOnUploadFn).toHaveBeenCalledTimes(1));
+      await waitFor(() => expect(mockOnUploadFn).toHaveBeenCalledTimes(1));
     });
   });
 
@@ -92,7 +92,7 @@ describe("attachmentDropzone", () => {
 
     await act(async () => {
       fireEvent(dropzone, event);
-      await wait(() => expect(screen.getByTestId("invalid-file-error")).not.toBeUndefined());
+      await waitFor(() => expect(screen.getByTestId("invalid-file-error")).not.toBeUndefined());
     });
   });
 
@@ -124,7 +124,7 @@ describe("attachmentDropzone", () => {
 
     await act(async () => {
       fireEvent(dropzone, event);
-      await wait(() => expect(screen.getByTestId("file-size-error")).not.toBeUndefined());
+      await waitFor(() => expect(screen.getByTestId("file-size-error")).not.toBeUndefined());
     });
   });
 });

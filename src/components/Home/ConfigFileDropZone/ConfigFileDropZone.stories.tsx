@@ -1,4 +1,4 @@
-import React from "react";
+import React, { FunctionComponent } from "react";
 import { Container } from "../../Container";
 import { ConfigFileDropZone } from "./ConfigFileDropZone";
 export default {
@@ -9,7 +9,7 @@ export default {
   },
 };
 
-export const Default = () => (
+export const Default: FunctionComponent = () => (
   <Container>
     <ConfigFileDropZone
       onConfigFile={(configFile) => console.log(JSON.stringify(configFile, null, 2))}
@@ -17,7 +17,7 @@ export const Default = () => (
   </Container>
 );
 
-export const WithError = () => (
+export const WithError: FunctionComponent = () => (
   <Container>
     <ConfigFileDropZone
       errorMessage="Config file is malformed"

@@ -1,5 +1,5 @@
 import React from "react";
-import { fireEvent, render, screen, act, wait } from "@testing-library/react";
+import { fireEvent, render, screen, act, waitFor } from "@testing-library/react";
 import { DataFileButton } from "./DataFileButton";
 
 const mockData = (files: File[]): any => {
@@ -36,7 +36,7 @@ describe("dataFileButton", () => {
 
     await act(async () => {
       fireEvent(dropzone, event);
-      await wait(() => expect(onDataFile).toHaveBeenCalledWith({ foo: "bar" }));
+      await waitFor(() => expect(onDataFile).toHaveBeenCalledWith({ foo: "bar" }));
     });
   });
 
@@ -54,7 +54,7 @@ describe("dataFileButton", () => {
 
     await act(async () => {
       fireEvent(dropzone, event);
-      await wait(() => expect(screen.getByTestId("file-read-error")).not.toBeUndefined());
+      await waitFor(() => expect(screen.getByTestId("file-read-error")).not.toBeUndefined());
     });
   });
 });

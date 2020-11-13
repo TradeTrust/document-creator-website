@@ -1,4 +1,4 @@
-import React from "react";
+import React, { FunctionComponent } from "react";
 import { Button } from "./Button";
 
 export default {
@@ -9,7 +9,7 @@ export default {
   },
 };
 
-export const Default = () => (
+export const Default: FunctionComponent = () => (
   <Button onClick={() => alert("clicked! You clicked the button!")}>
     okay! This is the button!
   </Button>

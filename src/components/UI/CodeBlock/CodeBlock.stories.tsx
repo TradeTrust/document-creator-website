@@ -1,4 +1,4 @@
-import React from "react";
+import React, { FunctionComponent } from "react";
 import { CodeBlock } from "./CodeBlock";
 
 export default {
@@ -9,4 +9,4 @@ export default {
   },
 };
 
-export const Default = () => <CodeBlock code="Error Trace Stack!" />;
+export const Default: FunctionComponent = () => <CodeBlock code="Error Trace Stack!" />;

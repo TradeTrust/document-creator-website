@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any, @typescript-eslint/no-empty-function */
-import { act, fireEvent, render, screen, wait } from "@testing-library/react";
+import { act, fireEvent, render, screen, waitFor } from "@testing-library/react";
 import React from "react";
 import { ConfigFileDropZone } from "./ConfigFileDropZone";
 
@@ -38,7 +38,7 @@ describe("configFileDropZone", () => {
       const event = new Event("drop", { bubbles: true });
       Object.assign(event, data);
       fireEvent(screen.getByTestId("config-file-drop-zone"), event);
-      await wait(() => expect(onConfigFile).toHaveBeenCalledWith(configContent));
+      await waitFor(() => expect(onConfigFile).toHaveBeenCalledWith(configContent));
     });
   });
 });
