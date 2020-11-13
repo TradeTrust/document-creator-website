@@ -14,6 +14,7 @@ declare module "web3-providers-http" {
     constructor(host?: string, options?: HttpProviderOptions);
 
     send(
+      // eslint-disable-next-line @typescript-eslint/ban-types
       payload: object,
       callback?: (error: Error | null, result: JsonRpcResponse | undefined) => void
     ): void;
