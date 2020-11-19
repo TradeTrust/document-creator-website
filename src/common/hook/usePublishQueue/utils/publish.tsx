@@ -77,7 +77,6 @@ export const getRawDocuments = async (
         rawDocument: formData,
         fileName,
         payload,
-        gsnCapable: formConfig?.gsnCapable ?? false,
       };
     })
   );
@@ -115,7 +114,6 @@ export const groupDocumentsIntoJobs = (
       })),
       merkleRoot: firstWrappedDocument.signature?.merkleRoot,
       payload: {},
-      gsnCapable: firstRawDocument.gsnCapable,
     });
     nonce += TX_NEEDED_FOR_VERIFIABLE_DOCUMENTS;
   });
@@ -131,7 +129,6 @@ export const groupDocumentsIntoJobs = (
       documents: [{ ...transferableRecord, wrappedDocument: documents[0] }],
       merkleRoot: documents[0].signature?.merkleRoot,
       payload,
-      gsnCapable: false,
     });
     nonce += TX_NEEDED_FOR_TRANSFERABLE_RECORDS;
   });

@@ -3,7 +3,6 @@ export const INFURA_PROJECT_ID =
 
 // Addresses retrieved from https://docs.opengsn.org/gsn-provider/networks.html
 interface GsnRelayConfig {
-  paymaster: string;
   relayHub: string;
   stakeManager: string;
   forwarder: string;
@@ -11,7 +10,6 @@ interface GsnRelayConfig {
 }
 
 const ropstenGsnRelayConfig = {
-  paymaster: "0xf30f39F18efD6680c27A7A84c3c27B76E91116b9",
   relayHub: "0x29e41C2b329fF4921d8AC654CEc909a0B575df20",
   stakeManager: "0x762A4D5F51d8b2F9bA1B0412B45687cE0EfFD92B",
   forwarder: "0x25CEd1955423BA34332Ec1B60154967750a0297D",
@@ -19,7 +17,6 @@ const ropstenGsnRelayConfig = {
 };
 
 const homesteadGsnRelayConfig = {
-  paymaster: "0xf30f39F18efD6680c27A7A84c3c27B76E91116b9", // TODO update when mainnet paymaster created
   relayHub: " 0x515e39f12590a94B102903363336AF9761ebF621",
   stakeManager: "0xcAA46E3a5D2c3c07A0C4F7723c7977c3e643C2B1",
   forwarder: "0xa530F85085C6FE2f866E7FdB716849714a89f4CD",

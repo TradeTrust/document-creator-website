@@ -1,25 +1,39 @@
 import { PublishingJob } from "../../types";
 import { Wallet, providers } from "ethers";
-import { DocumentStoreFactory } from "@govtechsg/document-store";
+import { DocumentStoreFactory, GsnCapableDocumentStoreFactory } from "@govtechsg/document-store";
 import { DocumentStore } from "@govtechsg/document-store/src/contracts/DocumentStore";
 import { TitleEscrowCreatorFactory, TradeTrustERC721Factory } from "@govtechsg/token-registry";
 import { TitleEscrowCreator } from "@govtechsg/token-registry/types/TitleEscrowCreator";
+import { supportsInterface } from "./utils";
+import { getGsnRelaySigner } from "../../common/config/decrypt";
 
-const assertAddressIsSmartContract = async (
-  address: string,
-  wallet: Wallet | providers.JsonRpcSigner
-): Promise<void> => {
+const assertAddressIsSmartContract = async (address: string, wallet: Wallet): Promise<void> => {
   const code = await wallet.provider.getCode(address);
   if (code === "0x") throw new Error("Address is not a smart contract");
 };
 
+const getConnectedDocumentStore = async (
+  wallet: Wallet,
+  contractAddress: string
+): Promise<DocumentStore> => {
+  const documentStore = GsnCapableDocumentStoreFactory.connect(contractAddress, wallet);
+  // Determine if contract is gsn capable
+  const isGsnCapable = await supportsInterface(documentStore, "0xa5a23640");
+  if (!isGsnCapable) return DocumentStoreFactory.connect(contractAddress, wallet);
+  // Get paymaster address and the relevant gsnProvider
+  const paymasterAddress = await documentStore.getPaymaster();
+  const signer = await getGsnRelaySigner(wallet, paymasterAddress);
+  const gsnDocumentStore = GsnCapableDocumentStoreFactory.connect(contractAddress, signer);
+  return gsnDocumentStore;
+};
+
 export const publishVerifiableDocumentJob = async (
   job: PublishingJob,
-  wallet: Wallet | providers.JsonRpcSigner
+  wallet: Wallet
 ): Promise<string> => {
   const { contractAddress, merkleRoot, nonce } = job;
   await assertAddressIsSmartContract(contractAddress, wallet);
-  const documentStore: DocumentStore = DocumentStoreFactory.connect(contractAddress, wallet);
+  const documentStore = await getConnectedDocumentStore(wallet, contractAddress);
   const receipt = await documentStore.issue(`0x${merkleRoot}`, { nonce });
   const tx = await receipt.wait();
   if (!tx.transactionHash) throw new Error(`Tx hash not available: ${JSON.stringify(tx)}`);
@@ -50,7 +64,7 @@ export const getTitleEscrowCreator = async (
 
 export const publishTransferableRecordJob = async (
   job: PublishingJob,
-  wallet: Wallet | providers.JsonRpcSigner
+  wallet: Wallet
 ): Promise<string> => {
   const { payload, contractAddress, nonce, merkleRoot } = job;
   if (!payload.ownership) throw new Error("Ownership data is not provided");
@@ -91,10 +105,7 @@ export const publishTransferableRecordJob = async (
   return mintingTx.transactionHash;
 };
 
-export const publishJob = async (
-  job: PublishingJob,
-  wallet: Wallet | providers.JsonRpcSigner
-): Promise<string> => {
+export const publishJob = async (job: PublishingJob, wallet: Wallet): Promise<string> => {
   if (job.type === "VERIFIABLE_DOCUMENT") return publishVerifiableDocumentJob(job, wallet);
   if (job.type === "TRANSFERABLE_RECORD") return publishTransferableRecordJob(job, wallet);
   throw new Error("Job type is not supported");

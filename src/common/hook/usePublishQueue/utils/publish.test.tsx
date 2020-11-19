@@ -18,15 +18,6 @@ const configWithoutDocumentStorage = {
   wallet: "FAKE_WALLET" as any,
 } as Config;
 
-const configWithGsnEnabled = {
-  ...sampleConfigFile,
-  wallet: "FAKE_WALLET" as any,
-  forms: [
-    { ...sampleConfigFile.forms[0], gsnCapable: true },
-    { ...sampleConfigFile.forms[1], gsnCapable: true },
-  ],
-} as Config;
-
 jest.mock("../../../API/storageAPI");
 const mockGetQueueNumber = getQueueNumber as jest.Mock;
 
@@ -39,13 +30,6 @@ describe("getRawDocuments", () => {
   it("should not have any qr url when no documentStorage is present in config file", async () => {
     expect(await getRawDocuments(sampleForms, configWithoutDocumentStorage)).toStrictEqual(
       sampleFormattedWithoutQrUrl
-    );
-  });
-
-  it("should get raw documents with gsnCapable field as true", async () => {
-    mockGetQueueNumber.mockResolvedValue({ data: { id: "123", key: "123" } });
-    expect(await getRawDocuments(sampleForms, configWithGsnEnabled)).toStrictEqual(
-      sampleFormattedWithGsnEnabled
     );
   });
 });

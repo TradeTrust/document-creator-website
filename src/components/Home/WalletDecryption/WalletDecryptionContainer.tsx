@@ -1,5 +1,5 @@
 import React, { FunctionComponent, useState } from "react";
-import { decryptConfig } from "../../../common/config/decrypt";
+import { decryptWallet } from "../../../common/config/decrypt";
 import { useConfigContext } from "../../../common/context/config";
 import { usePersistedConfigFile } from "../../../common/hook/usePersistedConfigFile";
 import { WalletDecryption } from "./WalletDecryption";
@@ -18,13 +18,12 @@ export const WalletDecryptionContainer: FunctionComponent = () => {
     if (!configFile) return;
     try {
       setIsIncorrectPassword(false);
-      const { wallet, gsnRelayProvider } = await decryptConfig(configFile, password, (progress) => {
+      const wallet = await decryptWallet(configFile, password, (progress) => {
         setDecryptProgress(progress);
       });
       setConfig({
         network: configFile.network,
         wallet,
-        gsnRelayProvider,
         forms: configFile.forms,
         documentStorage: configFile.documentStorage,
       });

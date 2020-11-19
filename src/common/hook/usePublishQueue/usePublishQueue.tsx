@@ -62,7 +62,7 @@ export const usePublishQueue = (
       setPendingJobIndex(Array.from(pendingJobs));
       const deferredJobs = publishingJobs.map(async (job, index) => {
         try {
-          const signer = job.gsnCapable ? config.gsnRelayProvider : config.wallet;
+          const signer = config.wallet;
           await publishJob(job, signer);
           const uploadDocuments = job.documents.map(async (doc) => {
             if (config.documentStorage === undefined) return;

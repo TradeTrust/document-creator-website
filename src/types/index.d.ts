@@ -1,4 +1,4 @@
-import { Wallet, providers } from "ethers";
+import { Wallet } from "ethers";
 
 type Network = "homestead" | "ropsten" | "rinkeby" | "local";
 type FormType = "TRANSFERABLE_RECORD" | "VERIFIABLE_DOCUMENT";
@@ -10,7 +10,6 @@ export interface FormTemplate {
   defaults: any; // eslint-disable-line @typescript-eslint/no-explicit-any
   schema: any; // eslint-disable-line @typescript-eslint/no-explicit-any
   attachments?: Attachments;
-  gsnCapable?: boolean;
 }
 
 export interface DocumentStorage {
@@ -28,7 +27,6 @@ export interface ConfigFile {
 export interface Config {
   network: Network;
   wallet: Wallet;
-  gsnRelayProvider: providers.JsonRpcSigner;
   forms: FormTemplate[];
   documentStorage?: DocumentStorage;
 }
@@ -74,7 +72,6 @@ export interface RawDocument {
   rawDocument: any; // eslint-disable-line @typescript-eslint/no-explicit-any
   fileName: string;
   payload: { ownership?: Ownership };
-  gsnCapable: boolean;
 }
 
 export interface WrappedDocument extends RawDocument {
@@ -88,7 +85,6 @@ export interface PublishingJob {
   documents: WrappedDocument[];
   merkleRoot: string;
   payload: { ownership?: Ownership };
-  gsnCapable: boolean;
 }
 
 export interface FailedJobErrors {
