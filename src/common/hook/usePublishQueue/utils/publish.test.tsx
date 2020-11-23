@@ -4,7 +4,6 @@ import { getRawDocuments, groupDocumentsIntoJobs } from "./publish";
 import sampleConfigFile from "./sample-config.json";
 import sampleFormattedWithoutQrUrl from "./sample-formatted-without-qr-url.json";
 import sampleFormatted from "./sample-formatted.json";
-import sampleFormattedWithGsnEnabled from "./sample-formatted-with-gsn-enabled.json";
 import sampleForms from "./sample-forms.json";
 
 const sampleConfig = {
