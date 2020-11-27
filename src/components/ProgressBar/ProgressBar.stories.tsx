@@ -2,7 +2,7 @@ import React, { FunctionComponent } from "react";
 import { ProgressBar } from "./ProgressBar";
 
 export default {
-  title: "ProgressBar|ProgressBar",
+  title: "Progress/ProgressBar",
   component: ProgressBar,
   parameters: {
     info: { inline: true, header: false },

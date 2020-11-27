@@ -2,7 +2,7 @@ import React, { FunctionComponent } from "react";
 import { ErrorBoundaryContent } from "./ErrorBoundaryContent";
 
 export default {
-  title: "ErrorBoundaryContent",
+  title: "Error/ErrorBoundaryContent",
   component: ErrorBoundaryContent,
   parameters: {
     info: { inline: true, header: false },

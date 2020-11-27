@@ -2,7 +2,7 @@ import React, { useState, FunctionComponent } from "react";
 import { ToggleSwitch } from "./ToggleSwitch";
 
 export default {
-  title: "ToggleSwitch|ToggleSwitch",
+  title: "UI/ToggleSwitch",
   component: ToggleSwitch,
   parameters: {
     info: { inline: true, header: false },

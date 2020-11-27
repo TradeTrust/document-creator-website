@@ -2,7 +2,7 @@ import React, { FunctionComponent } from "react";
 import { Container } from "../../Container";
 import { ConfigFileDropZone } from "./ConfigFileDropZone";
 export default {
-  title: "Home|ConfigFileDropZone",
+  title: "Home/ConfigFileDropZone",
   component: ConfigFileDropZone,
   parameters: {
     info: { inline: true, header: false },

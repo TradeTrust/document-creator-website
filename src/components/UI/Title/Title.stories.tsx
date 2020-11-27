@@ -2,7 +2,7 @@ import React, { FunctionComponent } from "react";
 import { Title } from "./Title";
 
 export default {
-  title: "Title|Title",
+  title: "UI/Title",
   component: Title,
   parameters: {
     info: { inline: true, header: false },

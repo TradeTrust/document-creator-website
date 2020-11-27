@@ -3,7 +3,7 @@ import { Config } from "../../../types/";
 import { FormSelection } from "./FormSelection";
 
 export default {
-  title: "FormSelection|FormSelection",
+  title: "DynamicForm/FormSelection",
   component: FormSelection,
   parameters: {
     info: { inline: true, header: false },

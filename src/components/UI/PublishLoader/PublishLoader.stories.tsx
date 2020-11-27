@@ -2,7 +2,7 @@ import React, { FunctionComponent } from "react";
 import { PublishLoader } from "./PublishLoader";
 
 export default {
-  title: "UI|Publish Loader",
+  title: "UI/Publish Loader",
   component: PublishLoader,
   paremeters: {
     info: { inline: true, header: false },

@@ -3,7 +3,7 @@ import { Container } from "../Container";
 import { ErrorAlert } from "./Alert";
 
 export default {
-  title: "|Alert|ErrorAlert",
+  title: "Error/ErrorAlert",
   component: ErrorAlert,
   parameters: {
     info: { inline: true, header: false },

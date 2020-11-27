@@ -2,7 +2,7 @@ import React, { FunctionComponent } from "react";
 import { Container } from "../../Container";
 import { WalletDecryption } from "./WalletDecryption";
 export default {
-  title: "Home|WalletDecryption",
+  title: "Home/WalletDecryption",
   component: WalletDecryption,
   parameters: {
     info: { inline: true, header: false },
