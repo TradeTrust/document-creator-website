@@ -2,10 +2,10 @@ import React, { FunctionComponent } from "react";
 import { Container } from "./Container";
 
 export default {
-  title: "Container",
+  title: "Common/Container",
   component: Container,
   parameters: {
-    info: { inline: true, header: false },
+    componentSubtitle: "Container.",
   },
 };
 

@@ -2,10 +2,10 @@ import React, { FunctionComponent } from "react";
 import { PublishErrorScreen } from "./PublishErrorScreen";
 
 export default {
-  title: "PublishPage|PublishErrorScreen",
+  title: "PublishPage/PublishErrorScreen",
   component: PublishErrorScreen,
   parameters: {
-    info: { inline: true, header: false },
+    componentSubtitle: "PublishErrorScreen.",
   },
 };
 

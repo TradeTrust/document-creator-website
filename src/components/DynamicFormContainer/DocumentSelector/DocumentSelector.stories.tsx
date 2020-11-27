@@ -2,10 +2,10 @@ import React, { FunctionComponent } from "react";
 import { DocumentSelector } from "./DocumentSelector";
 
 export default {
-  title: "DynamicForm|DocumentSelector",
+  title: "DynamicForm/DocumentSelector",
   component: DocumentSelector,
   parameters: {
-    info: { inline: true, header: false },
+    componentSubtitle: "DocumentSelector.",
   },
 };
 

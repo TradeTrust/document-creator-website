@@ -3,10 +3,10 @@ import { WrappedDocument } from "../../../../types";
 import { PublishTitle } from "./PublishTitle";
 
 export default {
-  title: "PublishPage|PublishedTitle",
+  title: "PublishPage/PublishedTitle",
   component: PublishTitle,
   parameters: {
-    info: { inline: true, header: false },
+    componentSubtitle: "PublishedTitle.",
   },
 };
 

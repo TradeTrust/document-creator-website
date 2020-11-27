@@ -2,10 +2,10 @@ import React, { FunctionComponent } from "react";
 import { BackModal } from "./BackModal";
 
 export default {
-  title: "DynamicForm|BackModal",
+  title: "DynamicForm/BackModal",
   component: BackModal,
   parameters: {
-    info: { inline: true, header: false },
+    componentSubtitle: "BackModal.",
   },
 };
 

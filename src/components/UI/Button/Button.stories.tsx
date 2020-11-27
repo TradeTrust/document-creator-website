@@ -2,10 +2,10 @@ import React, { FunctionComponent } from "react";
 import { Button } from "./Button";
 
 export default {
-  title: "Button|Button",
+  title: "UI/Button",
   component: Button,
   parameters: {
-    info: { inline: true, header: false },
+    componentSubtitle: "Button.",
   },
 };
 

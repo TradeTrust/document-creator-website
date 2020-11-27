@@ -3,10 +3,10 @@ import { FailedJobErrors, WrappedDocument } from "../../../types";
 import { PublishedScreen } from "./PublishedScreen";
 
 export default {
-  title: "PublishPage|PublishedScreen",
+  title: "PublishPage/PublishedScreen",
   component: PublishedScreen,
   parameters: {
-    info: { inline: true, header: false },
+    componentSubtitle: "PublishedScreen.",
   },
 };
 

@@ -3,10 +3,10 @@ import { WrappedDocument } from "../../../../types";
 import { PublishedTag } from "./PublishedTag";
 
 export default {
-  title: "PublishPage|PublishedTag",
+  title: "PublishPage/PublishedTag",
   component: PublishedTag,
   parameters: {
-    info: { inline: true, header: false },
+    componentSubtitle: "PublishedTag.",
   },
 };
 

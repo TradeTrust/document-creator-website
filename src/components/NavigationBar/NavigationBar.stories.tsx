@@ -3,10 +3,10 @@ import { MemoryRouter } from "react-router-dom";
 import { NavigationBar } from "./NavigationBar";
 
 export default {
-  title: "NavigationBar",
+  title: "Common/NavigationBar",
   component: NavigationBar,
   parameters: {
-    info: { inline: true, header: false },
+    componentSubtitle: "NavigationBar.",
   },
 };
 

@@ -5,10 +5,10 @@ import SampleCnm from "../../../test/fixtures/unwrapped-cnm.json";
 import { v2 } from "@govtechsg/open-attestation";
 
 export default {
-  title: "|DynamicForm|DocumentPreview",
+  title: "DynamicForm/DocumentPreview",
   component: DocumentPreview,
   parameters: {
-    info: { inline: true, header: false },
+    componentSubtitle: "DocumentPreview.",
   },
 };
 
