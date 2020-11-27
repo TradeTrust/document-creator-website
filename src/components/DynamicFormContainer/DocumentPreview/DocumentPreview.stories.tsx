@@ -8,7 +8,7 @@ export default {
   title: "DynamicForm/DocumentPreview",
   component: DocumentPreview,
   parameters: {
-    info: { inline: true, header: false },
+    componentSubtitle: "DocumentPreview.",
   },
 };
 

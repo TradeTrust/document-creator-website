@@ -5,7 +5,7 @@ export default {
   title: "DynamicForm/BackModal",
   component: BackModal,
   parameters: {
-    info: { inline: true, header: false },
+    componentSubtitle: "BackModal.",
   },
 };
 

@@ -48,7 +48,7 @@ export default {
   title: "DynamicForm/DynamicForm",
   component: DynamicForm,
   parameters: {
-    info: { inline: true, header: false },
+    componentSubtitle: "DynamicForm.",
   },
 };
 

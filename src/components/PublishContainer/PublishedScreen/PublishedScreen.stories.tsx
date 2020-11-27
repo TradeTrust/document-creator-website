@@ -6,7 +6,7 @@ export default {
   title: "PublishPage/PublishedScreen",
   component: PublishedScreen,
   parameters: {
-    info: { inline: true, header: false },
+    componentSubtitle: "PublishedScreen.",
   },
 };
 

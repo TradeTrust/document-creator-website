@@ -5,7 +5,7 @@ export default {
   title: "Common/Container",
   component: Container,
   parameters: {
-    info: { inline: true, header: false },
+    componentSubtitle: "Container.",
   },
 };
 

@@ -6,7 +6,7 @@ export default {
   title: "Error/ErrorAlert",
   component: ErrorAlert,
   parameters: {
-    info: { inline: true, header: false },
+    componentSubtitle: "ErrorAlert.",
   },
 };
 

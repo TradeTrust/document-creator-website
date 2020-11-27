@@ -5,7 +5,7 @@ export default {
   title: "DynamicForm/DocumentSelector",
   component: DocumentSelector,
   parameters: {
-    info: { inline: true, header: false },
+    componentSubtitle: "DocumentSelector.",
   },
 };
 

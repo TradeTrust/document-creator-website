@@ -5,7 +5,7 @@ export default {
   title: "UI/Button",
   component: Button,
   parameters: {
-    info: { inline: true, header: false },
+    componentSubtitle: "Button.",
   },
 };
 

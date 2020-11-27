@@ -5,7 +5,7 @@ export default {
   title: "Progress/ProgressBar",
   component: ProgressBar,
   parameters: {
-    info: { inline: true, header: false },
+    componentSubtitle: "ProgressBar.",
   },
 };
 

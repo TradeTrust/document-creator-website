@@ -5,7 +5,7 @@ export default {
   title: "PublishPage/PublishErrorScreen",
   component: PublishErrorScreen,
   parameters: {
-    info: { inline: true, header: false },
+    componentSubtitle: "PublishErrorScreen.",
   },
 };
 

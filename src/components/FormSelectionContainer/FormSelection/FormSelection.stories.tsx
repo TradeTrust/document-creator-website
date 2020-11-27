@@ -6,7 +6,7 @@ export default {
   title: "DynamicForm/FormSelection",
   component: FormSelection,
   parameters: {
-    info: { inline: true, header: false },
+    componentSubtitle: "FormSelection.",
   },
 };
 

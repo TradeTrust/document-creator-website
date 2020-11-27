@@ -5,7 +5,7 @@ export default {
   title: "Home/WalletDecryption",
   component: WalletDecryption,
   parameters: {
-    info: { inline: true, header: false },
+    componentSubtitle: "WalletDecryption.",
   },
 };
 

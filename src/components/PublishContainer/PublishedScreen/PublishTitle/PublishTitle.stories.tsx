@@ -6,7 +6,7 @@ export default {
   title: "PublishPage/PublishedTitle",
   component: PublishTitle,
   parameters: {
-    info: { inline: true, header: false },
+    componentSubtitle: "PublishedTitle.",
   },
 };
 

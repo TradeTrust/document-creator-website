@@ -5,7 +5,7 @@ export default {
   title: "DynamicForm/DeleteModal",
   component: DeleteModal,
   parameters: {
-    info: { inline: true, header: false },
+    componentSubtitle: "DeleteModal.",
   },
 };
 

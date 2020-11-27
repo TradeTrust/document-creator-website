@@ -5,7 +5,7 @@ export default {
   title: "Error/ErrorBoundaryContent",
   component: ErrorBoundaryContent,
   parameters: {
-    info: { inline: true, header: false },
+    componentSubtitle: "ErrorBoundaryContent.",
   },
 };
 

@@ -5,7 +5,7 @@ export default {
   title: "Home/ConfigFileDropZone",
   component: ConfigFileDropZone,
   parameters: {
-    info: { inline: true, header: false },
+    componentSubtitle: "ConfigFileDropZone.",
   },
 };
 

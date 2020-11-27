@@ -5,7 +5,7 @@ export default {
   title: "UI/Title",
   component: Title,
   parameters: {
-    info: { inline: true, header: false },
+    componentSubtitle: "Title.",
   },
 };
 

@@ -6,7 +6,7 @@ export default {
   title: "Common/NavigationBar",
   component: NavigationBar,
   parameters: {
-    info: { inline: true, header: false },
+    componentSubtitle: "NavigationBar.",
   },
 };
 

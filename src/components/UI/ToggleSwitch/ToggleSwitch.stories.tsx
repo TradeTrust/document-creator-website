@@ -5,7 +5,7 @@ export default {
   title: "UI/ToggleSwitch",
   component: ToggleSwitch,
   parameters: {
-    info: { inline: true, header: false },
+    componentSubtitle: "ToggleSwitch.",
   },
 };
 
