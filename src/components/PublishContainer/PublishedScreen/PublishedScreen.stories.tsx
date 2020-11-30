@@ -1,6 +1,7 @@
 import React, { FunctionComponent } from "react";
 import { FailedJobErrors, WrappedDocument } from "../../../types";
 import { PublishedScreen } from "./PublishedScreen";
+import { ConfigContextProvider, useConfigContext } from "../../../common/context/config";
 
 export default {
   title: "PublishPage/PublishedScreen",
@@ -45,46 +46,82 @@ const mockFailPublishedDocuments = [
   },
 ] as FailedJobErrors[];
 
+const LoadConfig: FunctionComponent = () => {
+  const { setConfig } = useConfigContext();
+  setConfig({
+    network: "rinkeby",
+    wallet: "" as any,
+    forms: [],
+    documentStorage: {
+      apiKey: "",
+      url: "",
+    },
+  });
+  return <></>;
+};
+
+const App: FunctionComponent = ({ children }) => {
+  const { config } = useConfigContext();
+  return <>{config ? <>{children}</> : <LoadConfig />}</>;
+};
+
+const Root: FunctionComponent = ({ children }) => {
+  // Root / App / LoadConfig is to mock how application is setup, so config context will work
+  return (
+    <ConfigContextProvider>
+      <App>{children}</App>
+    </ConfigContextProvider>
+  );
+};
+
 export const Initialized: FunctionComponent = () => {
   return (
-    <PublishedScreen
-      publishedDocuments={[]}
-      failedPublishedDocuments={[]}
-      pendingPublishDocuments={[]}
-      publishState={"INITIALIZED"}
-    />
+    <Root>
+      <PublishedScreen
+        publishedDocuments={[]}
+        failedPublishedDocuments={[]}
+        pendingPublishDocuments={[]}
+        publishState={"INITIALIZED"}
+      />
+    </Root>
   );
 };
 
 export const Pending: FunctionComponent = () => {
   return (
-    <PublishedScreen
-      publishedDocuments={mockPublishedDocuments}
-      failedPublishedDocuments={[]}
-      pendingPublishDocuments={mockPublishedDocuments}
-      publishState={"PENDING_CONFIRMATION"}
-    />
+    <Root>
+      <PublishedScreen
+        publishedDocuments={mockPublishedDocuments}
+        failedPublishedDocuments={[]}
+        pendingPublishDocuments={mockPublishedDocuments}
+        publishState={"PENDING_CONFIRMATION"}
+      />
+    </Root>
   );
 };
 
 export const Confirmed: FunctionComponent = () => {
   return (
-    <PublishedScreen
-      publishedDocuments={mockPublishedDocuments}
-      failedPublishedDocuments={mockFailPublishedDocuments}
-      pendingPublishDocuments={[]}
-      publishState={"CONFIRMED"}
-    />
+    <Root>
+      <PublishedScreen
+        publishedDocuments={mockPublishedDocuments}
+        failedPublishedDocuments={mockFailPublishedDocuments}
+        pendingPublishDocuments={[]}
+        publishState={"CONFIRMED"}
+      />
+    </Root>
   );
 };
 
 export const Failed: FunctionComponent = () => {
   return (
-    <PublishedScreen
-      publishedDocuments={[]}
-      failedPublishedDocuments={mockFailPublishedDocuments}
-      pendingPublishDocuments={mockPublishedDocuments}
-      publishState={"CONFIRMED"}
-    />
+    <Root>
+      <PublishedScreen
+        publishedDocuments={[]}
+        failedPublishedDocuments={mockFailPublishedDocuments}
+        pendingPublishDocuments={mockPublishedDocuments}
+        publishState={"CONFIRMED"}
+      />
+    </Root>
   );
 };
