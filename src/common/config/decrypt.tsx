@@ -1,8 +1,7 @@
 import { Wallet, getDefaultProvider, providers } from "ethers";
 import { ConfigFile } from "../../types";
-import { RelayProvider } from "@opengsn/gsn/dist/src/relayclient/RelayProvider";
+import { RelayProvider, configureGSN } from "@opengsn/gsn";
 import { getGSNRelayConfig, getHttpProviderUri } from "../../config";
-import { configureGSN } from "@opengsn/gsn/dist/src/relayclient/GSNConfigurator";
 import Web3HttpProvider from "web3-providers-http";
 
 export const getGsnRelaySigner = async (

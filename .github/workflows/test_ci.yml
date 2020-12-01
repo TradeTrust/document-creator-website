@@ -34,4 +34,5 @@ jobs:
       - name: Build
         run: npm run build
       - name: Integration Test
+        # run build before integration as we are static serving build file for integration testing
         run: npm run integration:concurrently:headless
