@@ -2,7 +2,7 @@ import React, { FunctionComponent } from "react";
 import { Download, XCircle } from "react-feather";
 import { useConfigContext } from "../../../common/context/config";
 import { useFormsContext } from "../../../common/context/forms";
-import { generateFileName, generateErrorLogFileName } from "../../../utils/fileName";
+import { generateFileName } from "../../../utils/fileName";
 import { Container } from "../../Container";
 import { ProgressBar } from "../../ProgressBar";
 import { Button } from "../../UI/Button";
@@ -56,8 +56,9 @@ export const PublishErrorScreen: FunctionComponent<PublishErrorScreen> = ({ erro
                 <a
                   download={generateFileName({
                     network: config?.network,
-                    fileName: generateErrorLogFileName(),
+                    fileName: "error-log",
                     extension: "txt",
+                    hasTimestamp: true,
                   })}
                   href={`data:text/plain;charset=UTF-8,${JSON.stringify(error, null, 2)}`}
                 >

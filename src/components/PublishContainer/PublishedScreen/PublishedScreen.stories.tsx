@@ -57,7 +57,7 @@ const LoadConfig: FunctionComponent = () => {
       url: "",
     },
   });
-  return <></>;
+  return <>loading config...</>;
 };
 
 const App: FunctionComponent = ({ children }) => {

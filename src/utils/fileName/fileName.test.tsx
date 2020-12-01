@@ -1,14 +1,9 @@
-import { decryptWallet } from "../../common/config/decrypt";
-import sampleConfig from "../../test/fixtures/sample-config.json";
-import { Config, ConfigFile } from "../../types";
-import { generateFileName, generateErrorLogFileName } from "./fileName";
+import { generateFileName } from "./fileName";
 
 describe("generateFileName", () => {
   it("should generate the file name correctly with the given config and file name", async () => {
-    const wallet = await decryptWallet(sampleConfig as ConfigFile, "password", () => {});
-    const config = { ...sampleConfig, wallet } as Config;
     const fileName = generateFileName({
-      network: config.network,
+      network: "ropsten",
       fileName: "document-1",
       extension: "tt",
     });
@@ -17,10 +12,8 @@ describe("generateFileName", () => {
   });
 
   it("should generate the file name correctly when config.network is 'homestead'", async () => {
-    const wallet = await decryptWallet(sampleConfig as ConfigFile, "password", () => {});
-    const config = { ...sampleConfig, network: "homestead", wallet } as Config;
     const fileName = generateFileName({
-      network: config.network,
+      network: "homestead",
       fileName: "document-1",
       extension: "tt",
     });
@@ -29,10 +22,8 @@ describe("generateFileName", () => {
   });
 
   it("should generate the extension correctly", async () => {
-    const wallet = await decryptWallet(sampleConfig as ConfigFile, "password", () => {});
-    const config = { ...sampleConfig, network: "homestead", wallet } as Config;
     const fileName = generateFileName({
-      network: config.network,
+      network: "homestead",
       fileName: "document-1",
       extension: "txt",
     });
@@ -52,7 +43,14 @@ describe("generateErrorLogFileName", () => {
       }
     };
 
-    expect(generateErrorLogFileName()).toStrictEqual("error-log_2019-10-30T00:00:00.000Z");
+    const fileName = generateFileName({
+      network: "ropsten",
+      fileName: "error-log",
+      extension: "tt",
+      hasTimestamp: true,
+    });
+
+    expect(fileName).toStrictEqual("error-log-ropsten-2019-10-30T00:00:00.000Z.tt");
 
     global.Date = RealDate;
   });

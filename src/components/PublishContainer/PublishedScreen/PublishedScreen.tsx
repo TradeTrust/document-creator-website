@@ -5,7 +5,7 @@ import React, { FunctionComponent } from "react";
 import { Download, XCircle } from "react-feather";
 import { useConfigContext } from "../../../common/context/config";
 import { FailedJobErrors, WrappedDocument } from "../../../types";
-import { generateFileName, generateErrorLogFileName } from "../../../utils/fileName";
+import { generateFileName } from "../../../utils/fileName";
 import { Container } from "../../Container";
 import { ProgressBar } from "../../ProgressBar";
 import { Button } from "../../UI/Button";
@@ -61,16 +61,13 @@ export const PublishedScreen: FunctionComponent<PublishScreen> = ({
     });
 
     zip.generateAsync({ type: "blob" }).then((content) => {
-      const date = new Date();
-      const timestamp = date.toISOString();
-
       saveAs(
         content,
         generateFileName({
           network: config?.network,
           fileName: "Documents",
           extension: "zip",
-          timestamp,
+          hasTimestamp: true,
         })
       );
     });
@@ -130,8 +127,9 @@ export const PublishedScreen: FunctionComponent<PublishScreen> = ({
                   <a
                     download={generateFileName({
                       network: config?.network,
-                      fileName: generateErrorLogFileName(),
+                      fileName: "error-log",
                       extension: "txt",
+                      hasTimestamp: true,
                     })}
                     href={`data:text/plain;charset=UTF-8,${JSON.stringify(
                       formattedErrorLog,

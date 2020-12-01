@@ -2,21 +2,17 @@ interface generateFileNameI {
   network?: string;
   fileName: string;
   extension: string;
-  timestamp?: string;
+  hasTimestamp?: boolean;
 }
 
 export const generateFileName = ({
   network,
   fileName,
   extension,
-  timestamp,
+  hasTimestamp,
 }: generateFileNameI): string => {
+  const timestamp = new Date().toISOString();
   const fileNetwork = network === "homestead" ? "" : `-${network}`;
-  const fileTimestamp = timestamp ? `-${timestamp}` : "";
+  const fileTimestamp = hasTimestamp ? `-${timestamp}` : "";
   return `${fileName}${fileNetwork}${fileTimestamp}.${extension}`;
-};
-
-export const generateErrorLogFileName = (): string => {
-  const dateFormat = new Date().toISOString();
-  return `error-log_${dateFormat}`;
 };
