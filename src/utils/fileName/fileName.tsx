@@ -1,14 +1,18 @@
-import { Config } from "../../types";
+interface generateFileNameI {
+  network?: string;
+  fileName: string;
+  extension: string;
+  hasTimestamp?: boolean;
+}
 
-export const generateFileName = (
-  config: Config | undefined,
-  fileName: string,
-  extension: string
-): string => {
-  return `${fileName}${config?.network === "homestead" ? "" : `-${config?.network}`}.${extension}`;
-};
-
-export const generateErrorLogFileName = (): string => {
-  const dateFormat = new Date().toISOString();
-  return `error-log_${dateFormat}`;
+export const generateFileName = ({
+  network,
+  fileName,
+  extension,
+  hasTimestamp,
+}: generateFileNameI): string => {
+  const timestamp = new Date().toISOString();
+  const fileNetwork = network === "homestead" ? "" : `-${network}`;
+  const fileTimestamp = hasTimestamp ? `-${timestamp}` : "";
+  return `${fileName}${fileNetwork}${fileTimestamp}.${extension}`;
 };

@@ -5,7 +5,7 @@ import React, { FunctionComponent } from "react";
 import { Download, XCircle } from "react-feather";
 import { useConfigContext } from "../../../common/context/config";
 import { FailedJobErrors, WrappedDocument } from "../../../types";
-import { generateFileName, generateErrorLogFileName } from "../../../utils/fileName";
+import { generateFileName } from "../../../utils/fileName";
 import { Container } from "../../Container";
 import { ProgressBar } from "../../ProgressBar";
 import { Button } from "../../UI/Button";
@@ -49,11 +49,27 @@ export const PublishedScreen: FunctionComponent<PublishScreen> = ({
     publishedDocuments.forEach((document) => {
       const file = JSON.stringify(document.wrappedDocument, null, 2);
       const blob = new Blob([file], { type: "text/json;charset=utf-8" });
-      zip.file(generateFileName(config, document.fileName, "tt"), blob);
+
+      zip.file(
+        generateFileName({
+          network: config?.network,
+          fileName: document.fileName,
+          extension: "tt",
+        }),
+        blob
+      );
     });
 
     zip.generateAsync({ type: "blob" }).then((content) => {
-      saveAs(content, generateFileName(config, "Documents", "zip"));
+      saveAs(
+        content,
+        generateFileName({
+          network: config?.network,
+          fileName: "Documents",
+          extension: "zip",
+          hasTimestamp: true,
+        })
+      );
     });
   };
 
@@ -109,7 +125,12 @@ export const PublishedScreen: FunctionComponent<PublishScreen> = ({
                 </div>
                 <Button className="bg-white text-red px-4 py-3">
                   <a
-                    download={generateFileName(config, generateErrorLogFileName(), "txt")}
+                    download={generateFileName({
+                      network: config?.network,
+                      fileName: "error-log",
+                      extension: "txt",
+                      hasTimestamp: true,
+                    })}
                     href={`data:text/plain;charset=UTF-8,${JSON.stringify(
                       formattedErrorLog,
                       null,
@@ -128,7 +149,11 @@ export const PublishedScreen: FunctionComponent<PublishScreen> = ({
                 return (
                   <div key={index} className="flex items-center">
                     <div className="font-bold text-lightgrey-dark">
-                      {generateFileName(config, doc.fileName, "tt")}
+                      {generateFileName({
+                        network: config?.network,
+                        fileName: doc.fileName,
+                        extension: "tt",
+                      })}
                     </div>
                     <div className="text-xs text-lightgrey-dark ml-1">({size})</div>
                   </div>
