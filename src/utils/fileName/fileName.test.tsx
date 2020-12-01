@@ -7,7 +7,11 @@ describe("generateFileName", () => {
   it("should generate the file name correctly with the given config and file name", async () => {
     const wallet = await decryptWallet(sampleConfig as ConfigFile, "password", () => {});
     const config = { ...sampleConfig, wallet } as Config;
-    const fileName = generateFileName(config, "document-1", "tt");
+    const fileName = generateFileName({
+      network: config.network,
+      fileName: "document-1",
+      extension: "tt",
+    });
 
     expect(fileName).toStrictEqual("document-1-ropsten.tt");
   });
@@ -15,7 +19,11 @@ describe("generateFileName", () => {
   it("should generate the file name correctly when config.network is 'homestead'", async () => {
     const wallet = await decryptWallet(sampleConfig as ConfigFile, "password", () => {});
     const config = { ...sampleConfig, network: "homestead", wallet } as Config;
-    const fileName = generateFileName(config, "document-1", "tt");
+    const fileName = generateFileName({
+      network: config.network,
+      fileName: "document-1",
+      extension: "tt",
+    });
 
     expect(fileName).toStrictEqual("document-1.tt");
   });
@@ -23,8 +31,11 @@ describe("generateFileName", () => {
   it("should generate the extension correctly", async () => {
     const wallet = await decryptWallet(sampleConfig as ConfigFile, "password", () => {});
     const config = { ...sampleConfig, network: "homestead", wallet } as Config;
-    const extension = "txt";
-    const fileName = generateFileName(config, "document-1", extension);
+    const fileName = generateFileName({
+      network: config.network,
+      fileName: "document-1",
+      extension: "txt",
+    });
 
     expect(fileName).toStrictEqual("document-1.txt");
   });

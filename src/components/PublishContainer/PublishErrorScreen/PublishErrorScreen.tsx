@@ -54,7 +54,11 @@ export const PublishErrorScreen: FunctionComponent<PublishErrorScreen> = ({ erro
               </div>
               <Button className="bg-white text-red px-4 py-3 h-12">
                 <a
-                  download={generateFileName(config, generateErrorLogFileName(), "txt")}
+                  download={generateFileName({
+                    network: config?.network,
+                    fileName: generateErrorLogFileName(),
+                    extension: "txt",
+                  })}
                   href={`data:text/plain;charset=UTF-8,${JSON.stringify(error, null, 2)}`}
                 >
                   <div className="flex">
