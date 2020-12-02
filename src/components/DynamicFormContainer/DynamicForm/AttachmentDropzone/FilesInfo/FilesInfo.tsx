@@ -1,11 +1,11 @@
 import prettyBytes from "pretty-bytes";
 import React, { FunctionComponent } from "react";
-import { FileUploadType } from "../../../../../types";
 import { Paperclip, X } from "react-feather";
-import pdf from "./pdf.svg";
-import jpg from "./jpg.svg";
-import doc from "./doc.svg";
+import { FileUploadType } from "../../../../../types";
 import csv from "./csv.svg";
+import doc from "./doc.svg";
+import jpg from "./jpg.svg";
+import pdf from "./pdf.svg";
 import png from "./png.svg";
 import txt from "./txt.svg";
 
@@ -42,7 +42,7 @@ export const getExtension = (mimeType: string | undefined): React.ReactNode => {
     default:
       return (
         <div
-          className="rounded-full bg-grey-lighter h-12 w-12 flex items-center justify-center mr-2"
+          className="rounded-full bg-grey-300 h-12 w-12 flex items-center justify-center mr-2"
           data-testid={`attachment-icon-paperclip`}
         >
           <Paperclip />
@@ -64,10 +64,10 @@ export const FilesInfo: FunctionComponent<FilesInfoType> = ({ filesInfo, removeF
           <li
             key={key}
             data-testid={`upload-file-${key}`}
-            className="border border-grey-lighter border-solid rounded my-1 h-16 flex items-center px-4"
+            className="border border-grey-300 border-solid rounded my-1 h-16 flex items-center px-4"
           >
             {getExtension(type)}
-            <p className="font-bold text-grey-dark flex-grow break-all">
+            <p className="font-bold text-grey-800 flex-grow break-all">
               {filename}
               <span className="text-grey text-xs font-regular"> ({size})</span>
             </p>

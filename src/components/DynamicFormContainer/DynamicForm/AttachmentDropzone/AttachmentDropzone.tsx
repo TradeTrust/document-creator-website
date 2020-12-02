@@ -58,10 +58,10 @@ export const AttachmentDropzone: FunctionComponent<AttachmentDropzone> = ({
 
   const dropZoneCSS = error
     ? `border-dashed border-2 items-center border-red flex flex-col pt-16 pb-16 px-4 text-center ${
-        isDragActive ? "bg-grey-lighter" : "bg-red-lighter"
+        isDragActive ? "bg-grey-300" : "bg-red-100"
       }`
-    : `border-dashed border-2 items-center border-grey-lighter flex flex-col pt-16 pb-16 px-4 text-center ${
-        isDragActive ? "bg-grey-lighter" : "bg-white"
+    : `border-dashed border-2 items-center border-grey-300 flex flex-col pt-16 pb-16 px-4 text-center ${
+        isDragActive ? "bg-grey-300" : "bg-white"
       }`;
 
   return (
@@ -71,7 +71,7 @@ export const AttachmentDropzone: FunctionComponent<AttachmentDropzone> = ({
       data-testid="attachment-dropzone"
     >
       <legend>Attachments</legend>
-      <div className="text-grey-dark">
+      <div className="text-grey-800">
         Max. total file size: {MAX_FILE_SIZE / BYTE_CONVERTION_RATE}MB
       </div>
       <div data-testid="attachment-upload-zone" className="mt-4" {...getRootProps()}>
@@ -82,7 +82,7 @@ export const AttachmentDropzone: FunctionComponent<AttachmentDropzone> = ({
               <div className="max-w-lg text-red font-bold text-lg" data-testid="invalid-file-error">
                 Error: Incorrect file type selected
               </div>
-              <div className="text-base text-grey-dark my-4">{`Only ${acceptedFormat} are allowed`}</div>
+              <div className="text-base text-grey-800 my-4">{`Only ${acceptedFormat} are allowed`}</div>
             </>
           )}
           {fileSizeError && (
@@ -90,18 +90,18 @@ export const AttachmentDropzone: FunctionComponent<AttachmentDropzone> = ({
               <div className="max-w-lg text-red font-bold text-lg" data-testid="file-size-error">
                 Error: Total attachment file size exceeds {MAX_FILE_SIZE / BYTE_CONVERTION_RATE}MB
               </div>
-              <div className="text-base text-grey-dark my-4">
+              <div className="text-base text-grey-800 my-4">
                 Please try again with a smaller file size.
               </div>
             </>
           )}
           {!error && (
             <>
-              <div className="font-bold text-lg text-grey-dark">Drag and drop file here</div>
-              <div className="text-base text-grey-dark my-4">or</div>
+              <div className="font-bold text-lg text-grey-800">Drag and drop file here</div>
+              <div className="text-base text-grey-800 my-4">or</div>
             </>
           )}
-          <Button className="py-3 px-12 bg-white text-orange hover:text-orange-dark border border-solid border-grey-lighter">
+          <Button className="py-3 px-12 bg-white text-orange hover:text-orange-600 border border-solid border-grey-300">
             Browse File
           </Button>
         </div>

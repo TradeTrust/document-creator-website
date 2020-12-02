@@ -18,14 +18,14 @@ export const DeleteModal: FunctionComponent<DeleteModalProps> = ({
       {show && (
         <ModalDialog close={closeDeleteModal}>
           <div className="flex flex-col ">
-            <div className="text-2xl text-grey-dark font-bold">Delete Form</div>
-            <div className="text-grey-dark mt-4 mr-16">
+            <div className="text-2xl text-grey-800 font-bold">Delete Form</div>
+            <div className="text-grey-800 mt-4 mr-16">
               Are you sure you want to delete this form?
             </div>
             <div className="mt-16">
               <div className="flex justify-end">
                 <Button
-                  className="py-3 px-4 text-grey border border-solid border-lightgrey mr-4"
+                  className="py-3 px-4 text-grey border border-solid border-grey-400 mr-4"
                   onClick={closeDeleteModal}
                   data-testid="cancel-form-button"
                 >

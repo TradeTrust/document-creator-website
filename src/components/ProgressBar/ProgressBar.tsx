@@ -16,7 +16,7 @@ const BarFill = styled.div`
 
 export const BarTrack: FunctionComponent<BarTrackProps> = ({ className, progress }) => {
   return (
-    <div className={`w-full h-1 bg-grey-lighter ${className}`}>
+    <div className={`w-full h-1 bg-grey-300 ${className}`}>
       <BarFill
         className="h-1 w-full bg-teal transition duration-1000 ease-out"
         progress={progress}
@@ -30,7 +30,7 @@ export const ProgressBar: FunctionComponent<ProgressBarProps> = ({ className, st
 
   return (
     <div className={`max-w-sm ${className}`}>
-      <div className="text-grey-dark font-bold text-base" data-testid={"progress-bar"}>
+      <div className="text-grey-800 font-bold text-base" data-testid={"progress-bar"}>
         {`Step ${step}/3: ${description[step - 1]}`}
       </div>
       <div className="mt-3 mb-6">

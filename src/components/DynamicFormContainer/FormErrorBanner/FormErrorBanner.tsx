@@ -10,7 +10,7 @@ export const FormErrorBanner: FunctionComponent<FormErrorBanner> = ({ formError 
   return (
     <div
       data-testid="form-error-banner"
-      className="bg-red-lighter rounded max-w-screen-sm mx-auto flex items-start py-3"
+      className="bg-red-100 rounded max-w-screen-sm mx-auto flex items-start py-3"
     >
       <XCircle className="text-red mx-3 my-1" />
       <div className="text-red text-xl flex flex-col justify-center items-start">

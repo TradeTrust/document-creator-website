@@ -131,7 +131,7 @@ export const DynamicForm = styled(DynamicFormRaw)`
     ${mixin.fontRobotoBold()}
     ${mixin.fontSize(20)}
   ${tw`
-    text-grey-dark w-full mt-8 pt-6 capitalize border-t border-solid border-grey-lighter
+    text-grey-800 w-full mt-8 pt-6 capitalize border-t border-solid border-grey-300
   `}
   }
 
@@ -163,13 +163,13 @@ export const DynamicForm = styled(DynamicFormRaw)`
 
   .array-item {
     ${tw`
-    border-b border-grey-lighter border-solid pb-2 mb-4
+    border-b border-grey-300 border-solid pb-2 mb-4
   `}
   }
 
   label {
     ${tw`
-    w-full sm:w-3/12 px-0 sm:px-4 sm:text-right text-grey-dark
+    w-full sm:w-3/12 px-0 sm:px-4 sm:text-right text-grey-800
   `}
   }
 
@@ -177,7 +177,7 @@ export const DynamicForm = styled(DynamicFormRaw)`
   .field-number input,
   .field-integer input {
     ${tw`
-    w-full sm:w-8/12 px-0 sm:px-2 h-10 rounded-none border border-solid border-grey-lighter
+    w-full sm:w-8/12 px-0 sm:px-2 h-10 rounded-none border border-solid border-grey-300
   `}
   }
 

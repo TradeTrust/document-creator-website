@@ -33,10 +33,10 @@ export const ConfigFileDropZone: FunctionComponent<ConfigFileDropZone> = ({
   const dropZoneCSS =
     errorMessage || error
       ? `border-dashed border-2 items-center border-red flex flex-col pt-16 pb-16 px-4 text-center ${
-          isDragActive ? "bg-grey-lighter" : "bg-red-lighter"
+          isDragActive ? "bg-grey-300" : "bg-red-100"
         }`
-      : `border-dashed border-2 items-center border-grey-lighter flex flex-col pt-16 pb-16 px-4 text-center ${
-          isDragActive ? "bg-grey-lighter" : "bg-white"
+      : `border-dashed border-2 items-center border-grey-300 flex flex-col pt-16 pb-16 px-4 text-center ${
+          isDragActive ? "bg-grey-300" : "bg-white"
         }`;
 
   return (
@@ -59,14 +59,14 @@ export const ConfigFileDropZone: FunctionComponent<ConfigFileDropZone> = ({
             </div>
           )}
           {!errorMessage && !error && (
-            <div className="font-bold text-lg text-grey-dark" data-testid="home-description">
+            <div className="font-bold text-lg text-grey-800" data-testid="home-description">
               Drag and drop your configuration file here
             </div>
           )}
-          <div className="text-base text-grey-dark my-4">
+          <div className="text-base text-grey-800 my-4">
             {errorMessage || error ? "Please try again." : "or"}
           </div>
-          <Button className="py-3 px-12 bg-white text-orange hover:text-orange-dark border border-solid border-grey-lighter">
+          <Button className="py-3 px-12 bg-white text-orange hover:text-orange-600 border border-solid border-grey-300">
             Browse Files
           </Button>
         </div>

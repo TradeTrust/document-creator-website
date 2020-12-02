@@ -81,10 +81,10 @@ export const PublishedScreen: FunctionComponent<PublishScreen> = ({
           <PublishTitle publishState={publishState} publishedDocuments={publishedDocuments} />
         </div>
       </div>
-      <div className="bg-lightgrey-lighter p-6 h-screen">
+      <div className="bg-grey-100 p-6 h-screen">
         {(pendingPublishDocuments.length > 0 || publishedDocuments.length > 0) && (
           <div className="container mx-auto">
-            <div className="border-b border-solid border-lightgrey flex items-center">
+            <div className="border-b border-solid border-grey-100 flex items-center">
               <div className="text-grey font-medium text-lg mb-4 flex-grow py-3">
                 {publishedDocuments.length + pendingPublishDocuments.length} Document(s)
               </div>
@@ -101,7 +101,7 @@ export const PublishedScreen: FunctionComponent<PublishScreen> = ({
                 </Button>
               )}
             </div>
-            <div className="flex flex-wrap border-b border-solid border-lightgrey pb-4 mb-4">
+            <div className="flex flex-wrap border-b border-solid border-grey-100 pb-4 mb-4">
               {publishedDocuments.map((doc, index) => (
                 <PublishedTag doc={doc} key={index} isPending={false} />
               ))}
@@ -116,7 +116,7 @@ export const PublishedScreen: FunctionComponent<PublishScreen> = ({
             <div className="text-grey font-medium text-lg mb-4">
               {failPublishedDocuments.length} Document(s) Failed
             </div>
-            <div className="bg-red-lighter p-3 flex flex-col">
+            <div className="bg-red-100 p-3 flex flex-col">
               <div className="flex">
                 <XCircle className="text-red" />
                 <div className="text-red ml-2 flex-grow">
@@ -148,14 +148,14 @@ export const PublishedScreen: FunctionComponent<PublishScreen> = ({
                 const size = prettyBytes(getFileSize(JSON.stringify(doc.wrappedDocument)));
                 return (
                   <div key={index} className="flex items-center">
-                    <div className="font-bold text-lightgrey-dark">
+                    <div className="font-bold text-grey">
                       {generateFileName({
                         network: config?.network,
                         fileName: doc.fileName,
                         extension: "tt",
                       })}
                     </div>
-                    <div className="text-xs text-lightgrey-dark ml-1">({size})</div>
+                    <div className="text-xs text-grey ml-1">({size})</div>
                   </div>
                 );
               })}

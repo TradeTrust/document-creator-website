@@ -40,9 +40,9 @@ export const PublishErrorScreen: FunctionComponent<PublishErrorScreen> = ({ erro
           </Button>
         </div>
       </div>
-      <div className="bg-lightgrey-lighter p-6 h-screen">
+      <div className="bg-grey-100 p-6 h-screen">
         <div className="container mx-auto">
-          <div className="bg-red-lighter p-3 flex flex-col">
+          <div className="bg-red-100 p-3 flex flex-col">
             <div className="flex">
               <XCircle className="text-red" />
               <div className="flex flex-col flex-grow">

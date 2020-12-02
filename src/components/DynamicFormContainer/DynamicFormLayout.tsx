@@ -111,10 +111,10 @@ export const DynamicFormLayout: FunctionComponent = () => {
         validateCurrentForm={validateCurrentForm}
         closePreviewMode={closePreviewMode}
       />
-      <div className="bg-lightgrey-lighter p-6">
+      <div className="bg-grey-100 p-6">
         <div className="bg-white container mx-auto p-4">
           <div className="flex justify-between">
-            <div className="text-grey-dark flex items-center">
+            <div className="text-grey-800 flex items-center">
               <div className="align-middle">Preview mode:</div>
               <ToggleSwitch
                 isOn={isPreviewMode}
@@ -122,8 +122,8 @@ export const DynamicFormLayout: FunctionComponent = () => {
               />
             </div>
             <Button data-testid="delete-button" onClick={() => setDeleteModal(true)}>
-              <div className="rounded w-12 h-12 border border-solid border-lightgrey flex items-center justify-center">
-                <Trash2 className="text-lightgrey-dark" />
+              <div className="rounded w-12 h-12 border border-solid border-grey-400 flex items-center justify-center">
+                <Trash2 className="text-grey" />
               </div>
             </Button>
           </div>

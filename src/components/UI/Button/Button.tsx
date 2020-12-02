@@ -19,7 +19,7 @@ export const Button = styled.button`
   }
 
   &[disabled] {
-    ${tw`pointer-events-none shadow-none text-grey-lighter bg-lightgrey-lighter`}
+    ${tw`pointer-events-none shadow-none text-grey-300 bg-grey-100`}
   }
 
   p {

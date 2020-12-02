@@ -27,15 +27,15 @@ export const PublishedTag: FunctionComponent<PublishedTagProps> = ({ doc, isPend
     extension: "tt",
   });
   return (
-    <div className="mt-4 flex rounded bg-white p-3 min-w-xs max-w-xs border border-solid border-lightgrey mr-4 items-center">
+    <div className="mt-4 flex rounded bg-white p-3 min-w-xs max-w-xs border border-solid border-grey-100 mr-4 items-center">
       {isPending ? (
         <>
           <div className="h-12 w-12 mr-4" data-testid="publish-loader">
             <PublishLoader />
           </div>
-          <div className="font-bold text-lightgrey-lightest">
+          <div className="font-bold text-grey-100">
             {fileName}
-            <span className="text-lightgrey-lightest text-xs font-regular"> ({size})</span>
+            <span className="text-grey-100 text-xs font-regular"> ({size})</span>
           </div>
         </>
       ) : (
@@ -44,9 +44,9 @@ export const PublishedTag: FunctionComponent<PublishedTagProps> = ({ doc, isPend
             TT
           </div>
           <div className="flex flex-col">
-            <div className="font-bold text-lightgrey-dark">
+            <div className="font-bold text-grey">
               {fileName}
-              <span className="text-lightgrey-dark text-xs font-regular"> ({size})</span>
+              <span className="text-grey text-xs font-regular"> ({size})</span>
             </div>
             <div
               className="text-blue font-bold cursor-pointer"

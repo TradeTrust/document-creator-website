@@ -35,7 +35,7 @@ export const DocumentSelector: FunctionComponent<DocumentSelector> = ({
       <div
         data-testid="previous-document-button"
         onClick={previousDocument}
-        className="cursor-pointer border border-solid border-grey-lighter h-12 w-12 bg-lightgrey-lighter active:bg-lightgrey border-r-0 flex items-center justify-center"
+        className="cursor-pointer border border-solid border-grey-300 h-12 w-12 bg-grey-100 active:bg-grey-400 border-r-0 flex items-center justify-center"
       >
         <ChevronLeft className="flex items-center justify-center" />
       </div>
@@ -45,12 +45,12 @@ export const DocumentSelector: FunctionComponent<DocumentSelector> = ({
         aria-label="file-name-input"
         value={currentForm?.fileName}
         onChange={(e) => setCurrentFileName(e.target.value)}
-        className="h-12 border border-solid border-grey-lighter px-3 text-grey-dark text-lg"
+        className="h-12 border border-solid border-grey-300 px-3 text-grey-800 text-lg"
       />
       <div
         data-testid="next-document-button"
         onClick={nextDocument}
-        className="cursor-pointer border border-solid border-grey-lighter h-12 w-12 bg-lightgrey-lighter active:bg-lightgrey border-l-0 flex items-center justify-center"
+        className="cursor-pointer border border-solid border-grey-300 h-12 w-12 bg-grey-100 active:bg-grey-400 border-l-0 flex items-center justify-center"
       >
         <ChevronRight className="flex items-center justify-center" />
       </div>
