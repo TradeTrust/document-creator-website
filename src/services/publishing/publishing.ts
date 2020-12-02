@@ -1,5 +1,5 @@
 import { PublishingJob } from "../../types";
-import { Wallet, providers } from "ethers";
+import { Wallet, providers, Signer } from "ethers";
 import { DocumentStoreFactory, GsnCapableDocumentStoreFactory } from "@govtechsg/document-store";
 import { DocumentStore } from "@govtechsg/document-store/src/contracts/DocumentStore";
 import { TitleEscrowCreatorFactory, TradeTrustERC721Factory } from "@govtechsg/token-registry";
@@ -52,10 +52,9 @@ const CREATOR_CONTRACTS: CreatorContract = {
   unknown: "0x4Bf7E4777a8D1b6EdD5F2d9b8582e2817F0B0953",
 };
 
-export const getTitleEscrowCreator = async (
-  wallet: Wallet | providers.JsonRpcSigner
-): Promise<TitleEscrowCreator> => {
-  const { name } = await wallet.provider.getNetwork();
+export const getTitleEscrowCreator = async (wallet: Signer): Promise<TitleEscrowCreator> => {
+  const provider = wallet.provider as providers.Provider;
+  const { name } = await provider.getNetwork();
   const creatorContractAddress = CREATOR_CONTRACTS[name];
   if (!creatorContractAddress)
     throw new Error(`Title escrow contract creator is not declared for ${name} network`);

@@ -10,12 +10,16 @@ interface Erc165Contract extends Contract {
 export const supportsInterface = async (
   contractInstance: Erc165Contract,
   interfaceId: string
-): Promise<boolean> => {
-  let isSameInterfaceType = false;
+): Promise<boolean | undefined> => {
+  let isSameInterfaceType;
   try {
     isSameInterfaceType = await contractInstance.supportsInterface(interfaceId);
+    return isSameInterfaceType;
   } catch (supportsInterfaceErrorMessage) {
+    if (supportsInterfaceErrorMessage.message.includes("call revert exception")) {
+      return false;
+    }
     error(supportsInterfaceErrorMessage);
+    throw supportsInterfaceErrorMessage;
   }
-  return isSameInterfaceType;
 };
