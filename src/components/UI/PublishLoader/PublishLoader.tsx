@@ -14,7 +14,7 @@ const spin = keyframes`
 
 export const PublishLoader = styled.div`
   ${tw`rounded-full border-4 border-solid border-grey-300 w-full h-full`}
-  border-top-color: #00cbbc; // use teal from config later
+  border-top-color: #00cbbc;
   -webkit-animation: spin 2s linear infinite; /* Safari */
   animation: ${spin} 2s linear infinite;
 `;
