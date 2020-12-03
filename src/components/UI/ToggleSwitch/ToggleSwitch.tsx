@@ -31,7 +31,7 @@ export const ToggleSwitch = styled(({ className, isOn, handleToggle }: ToggleSwi
 
   .toggle-switch-label {
     ${tw`flex items-center justify-between cursor-pointer w-20 h-8 rounded-full relative -mt-6 ml-4`}
-    ${(props) => (props.isOn ? tw`bg-teal-lighter` : tw`bg-pink`)}
+    ${(props) => (props.isOn ? tw`bg-teal-300` : tw`bg-pink`)}
     transition: background-color 0.2s;
   }
 

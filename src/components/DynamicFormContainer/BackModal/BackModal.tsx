@@ -18,17 +18,17 @@ export const BackModal: FunctionComponent<BackModalProps> = ({
       {show && (
         <ModalDialog close={closeBackModal}>
           <div className="flex flex-col ">
-            <div data-testid="modal-title" className="text-2xl text-grey-dark font-bold">
+            <div data-testid="modal-title" className="text-2xl text-grey-800 font-bold">
               Back to form selection
             </div>
-            <div className="text-grey-dark mt-4 mr-16">
+            <div className="text-grey-800 mt-4 mr-16">
               Do you want to go back? This will delete <strong>ALL</strong> your current
               document(s).
             </div>
             <div className="mt-16">
               <div className="flex justify-end">
                 <Button
-                  className="py-3 px-4 text-grey border border-solid border-lightgrey mr-4"
+                  className="py-3 px-4 text-grey border border-solid border-grey-400 mr-4"
                   onClick={closeBackModal}
                   data-testid="cancel-form-button"
                 >

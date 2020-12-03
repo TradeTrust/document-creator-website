@@ -1,9 +1,9 @@
 import React, { FunctionComponent, useState } from "react";
 import { useDropzone } from "react-dropzone";
 import { readFileAsJson } from "../../../common/utils";
-import { Button } from "../../UI/Button";
-import { ErrorAlert } from "../../Alert";
 import { getLogger } from "../../../utils/logger";
+import { ErrorAlert } from "../../Alert";
+import { Button } from "../../UI/Button";
 
 const { stack } = getLogger("DataFileButton");
 interface DataFileButton {
@@ -37,7 +37,7 @@ export const DataFileButton: FunctionComponent<DataFileButton> = ({ onDataFile }
         <input data-testid="config-file-drop-zone" {...getInputProps()} />
         <Button
           data-testid="data-upload-button"
-          className={`text-center w-full p-2 bg-white text-orange border-grey-lighter border-solid border h-12`}
+          className={`text-center w-full p-2 bg-white text-orange border-grey-300 border-solid border h-12`}
         >
           Upload Data File
         </Button>

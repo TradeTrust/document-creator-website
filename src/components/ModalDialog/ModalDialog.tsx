@@ -1,9 +1,7 @@
 import styled from "@emotion/styled";
-import { rgba } from "polished";
 import React, { FunctionComponent } from "react";
 import tw from "twin.macro";
 import { useLockBodyScroll } from "../../common/hook/useLockBodyScroll";
-import { vars } from "../../styles";
 
 interface ModalDialogProps {
   className?: string;
@@ -22,7 +20,11 @@ export const ModalDialogUnStyled: FunctionComponent<ModalDialogProps> = ({
     <>
       <div className={className} data-testid="modal-dialog">
         <div className="modal-content p-6">{children}</div>
-        <div className="modal-backdrop" data-testid="modal-backdrop" onClick={() => close()} />
+        <div
+          className="modal-backdrop bg-black bg-opacity-70"
+          data-testid="modal-backdrop"
+          onClick={() => close()}
+        />
       </div>
     </>
   );
@@ -58,6 +60,5 @@ export const ModalDialog = styled(ModalDialogUnStyled)`
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: ${rgba(vars.black, 0.7)};
   }
 `;

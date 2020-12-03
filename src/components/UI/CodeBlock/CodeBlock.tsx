@@ -1,25 +1,13 @@
-import React from "react";
 import styled from "@emotion/styled";
-import { vars } from "../../../styles";
+import React from "react";
 import { Copy } from "react-feather";
 
 const CodeBlockWrap = styled.div`
-  background-color: ${vars.blueLighter};
-  color: ${vars.greyDark};
   padding: 16px;
   height: 160px;
   position: relative;
   overflow-y: scroll;
-  border-radius: ${vars.buttonRadius};
-
-  svg {
-    color: ${vars.blue};
-    cursor: pointer;
-
-    &:hover {
-      color: ${vars.blueDark};
-    }
-  }
+  border-radius: 4px;
 
   .copy-icon {
     bottom: 16px;
@@ -47,7 +35,7 @@ export const CodeBlock: React.FunctionComponent<CodeBlockProps> = ({ code }: Cod
   };
 
   return (
-    <CodeBlockWrap>
+    <CodeBlockWrap className="bg-blue-300">
       <p className="mb-0" id="copy-textarea">
         {code}
       </p>
