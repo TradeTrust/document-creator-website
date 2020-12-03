@@ -16,7 +16,10 @@ export const supportsInterface = async (
     isSameInterfaceType = await contractInstance.supportsInterface(interfaceId);
     return isSameInterfaceType;
   } catch (supportsInterfaceErrorMessage) {
-    if (supportsInterfaceErrorMessage.message.includes("call revert exception")) {
+    if (
+      supportsInterfaceErrorMessage.message.includes("call revert exception") ||
+      supportsInterfaceErrorMessage.message.includes("cannot estimate gas")
+    ) {
       return false;
     }
     error(supportsInterfaceErrorMessage);
