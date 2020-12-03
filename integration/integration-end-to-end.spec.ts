@@ -102,7 +102,7 @@ test("Upload configuration file, choose form, fill form, submit form correctly",
 
   // go to the previous document
   await t.click(previousDocumentButton);
-  await t.expect(fileNameField.value).eql("Document-1");
+  await t.expect(fileNameField.value).eql("COO-1");
 
   // go back to the other document
   await t.click(nextDocumentButton);
@@ -116,7 +116,7 @@ test("Upload configuration file, choose form, fill form, submit form correctly",
 
   // Check that download exists
   await t.expect(Title.textContent).contains("Document(s) issued successfully");
-  await t.expect(Selector("div").withText("Document-1-local.tt").exists).ok();
+  await t.expect(Selector("div").withText("COO-1-local.tt").exists).ok();
   await t.expect(Selector("div").withText("Download").exists).ok();
   await t.expect(Selector("div").withText("File-2-local.tt").exists).ok();
   await t.expect(Selector("div").withText("Download").exists).ok();
@@ -136,6 +136,6 @@ test("Upload configuration file, choose form, fill form, submit form correctly",
 
   // Check that EBL is created
   await t.expect(Title.textContent).contains("Document(s) issued successfully");
-  await t.expect(Selector("div").withText("Document-1-local.tt").exists).ok();
+  await t.expect(Selector("div").withText("Bill of Lading-1-local.tt").exists).ok();
   await t.expect(Selector("div").withText("Download").exists).ok();
 });

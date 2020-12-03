@@ -42,7 +42,7 @@ export const FormsContextProvider: FunctionComponent = ({ children }) => {
   const newForm = (templateIndex: number): void => {
     const newIndex = forms.length;
     const newFormTemplate = config?.forms[templateIndex];
-
+    const newFormName = newFormTemplate?.name ?? "Document";
     setForms([
       ...forms,
       {
@@ -51,7 +51,7 @@ export const FormsContextProvider: FunctionComponent = ({ children }) => {
           formData: newFormTemplate?.defaults || {},
           schema: newFormTemplate?.schema,
         },
-        fileName: `Document-${forms.length + 1}`,
+        fileName: `${newFormName}-${forms.length + 1}`,
         ownership: { beneficiaryAddress: "", holderAddress: "" },
       },
     ]);
