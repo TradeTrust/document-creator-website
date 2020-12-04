@@ -1,9 +1,9 @@
+import { Button } from "@govtechsg/tradetrust-ui-components";
 import React, { FunctionComponent, useState } from "react";
 import { useDropzone } from "react-dropzone";
 import { readFileAsJson } from "../../../common/utils";
 import { ConfigFile } from "../../../types";
 import { getLogger } from "../../../utils/logger";
-import { Button } from "../../UI/Button";
 import { Title } from "../../UI/Title";
 
 const { stack } = getLogger("ConfigFileDropZone");
@@ -66,7 +66,7 @@ export const ConfigFileDropZone: FunctionComponent<ConfigFileDropZone> = ({
           <div className="text-base text-grey-800 my-4">
             {errorMessage || error ? "Please try again." : "or"}
           </div>
-          <Button className="py-3 px-12 bg-white text-orange hover:text-orange-600 border border-solid border-grey-300">
+          <Button className="bg-white text-orange hover:text-orange-600 border-grey-300 px-12">
             Browse Files
           </Button>
         </div>

@@ -1,8 +1,8 @@
+import { Button } from "@govtechsg/tradetrust-ui-components";
 import React, { FunctionComponent } from "react";
 import { ArrowLeft } from "react-feather";
 import { useFormsContext } from "../../../common/context/forms";
 import { ProgressBar } from "../../ProgressBar";
-import { Button } from "../../UI/Button";
 import { Title } from "../../UI/Title";
 import { DocumentSelector } from "../DocumentSelector";
 
@@ -47,14 +47,14 @@ export const DynamicFormHeader: FunctionComponent<DynamicFormHeaderProps> = ({
         </div>
         <div>
           <Button
-            className="bg-white text-orange px-4 py-3 mr-4"
+            className="bg-white text-orange hover:bg-grey-100 mr-4"
             onClick={onNewForm}
             data-testid="add-new-button"
           >
             Add New
           </Button>
           <Button
-            className="bg-orange text-white self-end py-3 px-4"
+            className="bg-orange text-white hover:bg-orange-600"
             onClick={onFormSubmit}
             data-testid="form-submit-button"
           >

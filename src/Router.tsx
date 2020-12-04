@@ -1,13 +1,12 @@
+import { NetworkBar, Overlay } from "@govtechsg/tradetrust-ui-components";
 import React, { ReactElement } from "react";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
-import { FormSelectionContainer } from "./components/FormSelectionContainer";
-import { DynamicFormContainer } from "./components/DynamicFormContainer";
-import { PublishContainer } from "./components/PublishContainer";
-import { HomeContainer } from "./components/Home";
-import { NetworkBar } from "@govtechsg/tradetrust-ui-components";
 import { usePersistedConfigFile } from "./common/hook/usePersistedConfigFile";
-import { Overlay } from "@govtechsg/tradetrust-ui-components";
 import { AddressResolverContainer } from "./components/AddressResolverContainter/AddressResolverContainer";
+import { DynamicFormContainer } from "./components/DynamicFormContainer";
+import { FormSelectionContainer } from "./components/FormSelectionContainer";
+import { HomeContainer } from "./components/Home";
+import { PublishContainer } from "./components/PublishContainer";
 
 export const Router = (): ReactElement => {
   const { configFile } = usePersistedConfigFile();

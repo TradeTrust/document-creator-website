@@ -1,8 +1,8 @@
+import { Button } from "@govtechsg/tradetrust-ui-components";
 import React, { FunctionComponent } from "react";
 import logo from "../NavigationBar/logo.svg";
-import { Title } from "../UI/Title";
-import { Button } from "../UI/Button";
 import { CodeBlock } from "../UI/CodeBlock";
+import { Title } from "../UI/Title";
 
 export const ErrorBoundaryContent: FunctionComponent<{
   error?: string;
@@ -39,7 +39,7 @@ export const ErrorBoundaryContent: FunctionComponent<{
         </div>
       )}
       <Button
-        className="bg-orange text-white py-3 px-4"
+        className="bg-orange text-white hover:bg-orange-600"
         data-testid="form-logout-button"
         onClick={() => window.location.reload()}
       >

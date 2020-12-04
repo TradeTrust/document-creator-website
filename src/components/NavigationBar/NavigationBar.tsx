@@ -1,9 +1,9 @@
 import React, { FunctionComponent } from "react";
-import { Link } from "react-router-dom";
 import { Settings } from "react-feather";
-import logo from "./logo.svg";
+import { Link } from "react-router-dom";
 import { usePersistedConfigFile } from "../../common/hook/usePersistedConfigFile";
 import { Network } from "../../types";
+import logo from "./logo.svg";
 
 const homesteadUrlPath = "https://tradetrust.io";
 
@@ -63,7 +63,7 @@ interface NavigationBar {
 export const NavigationBar: FunctionComponent<NavigationBar> = ({ logout }) => {
   const { configFile } = usePersistedConfigFile();
   return (
-    <div className="bg-navy py-6">
+    <nav className="bg-navy py-6">
       <div className="container mx-auto">
         <div className="flex flex-wrap items-center justify-between">
           <div className="w-full lg:w-auto">
@@ -117,6 +117,6 @@ export const NavigationBar: FunctionComponent<NavigationBar> = ({ logout }) => {
           )}
         </div>
       </div>
-    </div>
+    </nav>
   );
 };

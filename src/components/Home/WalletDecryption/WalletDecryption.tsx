@@ -1,6 +1,6 @@
+import { Button } from "@govtechsg/tradetrust-ui-components";
 import React, { FunctionComponent, useState } from "react";
 import { BarTrack } from "../../ProgressBar";
-import { Button } from "../../UI/Button";
 import { Title } from "../../UI/Title";
 import { Wrapper } from "../../UI/Wrapper";
 
@@ -61,14 +61,16 @@ export const WalletDecryption: FunctionComponent<WalletDecryption> = ({
         >
           Upload new Config file
         </div>
-        <Button
-          data-testid="login-button"
-          className="bg-orange text-white self-end py-3 px-4 mt-4"
-          onClick={onLogin}
-          disabled={isDecrypting}
-        >
-          Login
-        </Button>
+        <div className="ml-auto w-auto">
+          <Button
+            data-testid="login-button"
+            className="bg-orange text-white hover:bg-orange-600 mt-4"
+            onClick={onLogin}
+            disabled={isDecrypting}
+          >
+            Login
+          </Button>
+        </div>
       </form>
     </Wrapper>
   );

@@ -1,3 +1,4 @@
+import { ButtonIcon } from "@govtechsg/tradetrust-ui-components";
 import Ajv from "ajv";
 import { defaultsDeep } from "lodash";
 import React, { FunctionComponent, useState } from "react";
@@ -5,7 +6,6 @@ import { Trash2 } from "react-feather";
 import { Redirect } from "react-router";
 import { useFormsContext } from "../../common/context/forms";
 import { Container } from "../Container";
-import { Button } from "../UI/Button";
 import { ToggleSwitch } from "../UI/ToggleSwitch";
 import { BackModal } from "./BackModal";
 import { DeleteModal } from "./DeleteModal";
@@ -121,11 +121,13 @@ export const DynamicFormLayout: FunctionComponent = () => {
                 handleToggle={() => setIsPreviewMode(!isPreviewMode)}
               />
             </div>
-            <Button data-testid="delete-button" onClick={() => setDeleteModal(true)}>
-              <div className="rounded w-12 h-12 border border-solid border-grey-400 flex items-center justify-center">
-                <Trash2 className="text-grey" />
-              </div>
-            </Button>
+            <ButtonIcon
+              className="bg-white hover:bg-grey-100 border-grey-400"
+              data-testid="delete-button"
+              onClick={() => setDeleteModal(true)}
+            >
+              <Trash2 className="text-grey" />
+            </ButtonIcon>
           </div>
           <FormErrorBanner formError={formError} />
           {isPreviewMode ? (

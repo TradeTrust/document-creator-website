@@ -1,6 +1,6 @@
+import { Button } from "@govtechsg/tradetrust-ui-components";
 import React, { FunctionComponent } from "react";
 import { ModalDialog } from "../../ModalDialog";
-import { Button } from "../../UI/Button";
 
 interface DeleteModalProps {
   deleteForm: () => void;
@@ -25,7 +25,7 @@ export const DeleteModal: FunctionComponent<DeleteModalProps> = ({
             <div className="mt-16">
               <div className="flex justify-end">
                 <Button
-                  className="py-3 px-4 text-grey border border-solid border-grey-400 mr-4"
+                  className="text-grey border-grey-400 hover:bg-grey-100 mr-4"
                   onClick={closeDeleteModal}
                   data-testid="cancel-form-button"
                 >
@@ -33,7 +33,7 @@ export const DeleteModal: FunctionComponent<DeleteModalProps> = ({
                 </Button>
                 <Button
                   data-testid="delete-button"
-                  className="py-3 px-4 text-white bg-red"
+                  className="text-white bg-red hover:bg-red-600"
                   onClick={deleteForm}
                 >
                   Delete

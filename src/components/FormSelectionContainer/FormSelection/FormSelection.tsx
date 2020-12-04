@@ -1,10 +1,10 @@
+import { Button } from "@govtechsg/tradetrust-ui-components";
 import React, { FunctionComponent } from "react";
 import { Redirect } from "react-router-dom";
 import { useFormsContext } from "../../../common/context/forms";
 import { Config, FormTemplate } from "../../../types";
 import { Container } from "../../Container";
 import { ProgressBar } from "../../ProgressBar";
-import { Button } from "../../UI/Button";
 import { Title } from "../../UI/Title";
 import { Wrapper } from "../../UI/Wrapper";
 
@@ -33,8 +33,7 @@ export const FormSelection: FunctionComponent<FormSelection> = ({ className, con
             {config.forms.map((form: FormTemplate, index: number) => {
               return (
                 <Button
-                  className="bg-white text-grey-800 hover:text-blue w-40 p-4 mb-4 mr-4"
-                  role="button"
+                  className="bg-white text-grey-800 hover:text-blue hover:bg-grey-100 w-40 mb-4 mr-4"
                   key={index}
                   onClick={() => selectedForm(index)}
                 >

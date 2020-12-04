@@ -1,7 +1,7 @@
+import { Button } from "@govtechsg/tradetrust-ui-components";
 import React, { FunctionComponent, useCallback, useState } from "react";
 import { useDropzone } from "react-dropzone";
 import { FileUploadType } from "../../../../types";
-import { Button } from "../../../UI/Button";
 import { FilesInfo } from "./FilesInfo";
 
 // 5MB is 5242880 bytes as 1MB is 1048576 bytes
@@ -101,7 +101,7 @@ export const AttachmentDropzone: FunctionComponent<AttachmentDropzone> = ({
               <div className="text-base text-grey-800 my-4">or</div>
             </>
           )}
-          <Button className="py-3 px-12 bg-white text-orange hover:text-orange-600 border border-solid border-grey-300">
+          <Button className="bg-white text-orange border-grey-400 hover:bg-grey-100 px-12">
             Browse File
           </Button>
         </div>

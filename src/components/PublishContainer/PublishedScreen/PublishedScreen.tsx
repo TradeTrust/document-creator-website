@@ -1,3 +1,4 @@
+import { Button } from "@govtechsg/tradetrust-ui-components";
 import { saveAs } from "file-saver";
 import JSZip from "jszip";
 import prettyBytes from "pretty-bytes";
@@ -8,7 +9,6 @@ import { FailedJobErrors, WrappedDocument } from "../../../types";
 import { generateFileName } from "../../../utils/fileName";
 import { Container } from "../../Container";
 import { ProgressBar } from "../../ProgressBar";
-import { Button } from "../../UI/Button";
 import { PublishedTag } from "../PublishedScreen/PublishedTag";
 import { PublishTitle } from "./PublishTitle";
 
@@ -90,7 +90,7 @@ export const PublishedScreen: FunctionComponent<PublishScreen> = ({
               </div>
               {publishState === "CONFIRMED" && (
                 <Button
-                  className="bg-white text-blue px-4 py-3 mb-4"
+                  className="bg-white text-blue hover:bg-grey-100 mb-4"
                   data-testid="download-all-button"
                   onClick={generateZipFile}
                 >
@@ -123,7 +123,7 @@ export const PublishedScreen: FunctionComponent<PublishScreen> = ({
                   These documents failed to publish due to some errors. Kindly rectify and try
                   publishing again.
                 </div>
-                <Button className="bg-white text-red px-4 py-3">
+                <Button className="bg-white text-red hover:bg-grey-100">
                   <a
                     download={generateFileName({
                       network: config?.network,

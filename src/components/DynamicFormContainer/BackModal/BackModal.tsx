@@ -1,6 +1,6 @@
+import { Button } from "@govtechsg/tradetrust-ui-components";
 import React, { FunctionComponent } from "react";
 import { ModalDialog } from "../../ModalDialog";
-import { Button } from "../../UI/Button";
 
 interface BackModalProps {
   backToFormSelection: () => void;
@@ -28,7 +28,7 @@ export const BackModal: FunctionComponent<BackModalProps> = ({
             <div className="mt-16">
               <div className="flex justify-end">
                 <Button
-                  className="py-3 px-4 text-grey border border-solid border-grey-400 mr-4"
+                  className="bg-white text-grey border-grey-400 hover:bg-grey-100 mr-4"
                   onClick={closeBackModal}
                   data-testid="cancel-form-button"
                 >
@@ -36,7 +36,7 @@ export const BackModal: FunctionComponent<BackModalProps> = ({
                 </Button>
                 <Button
                   data-testid="red-back-button"
-                  className="py-3 px-4 text-white bg-red"
+                  className="bg-red text-white hover:bg-red-600"
                   onClick={backToFormSelection}
                 >
                   Back

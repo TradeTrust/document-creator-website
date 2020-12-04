@@ -1,5 +1,5 @@
 import { useThirdPartyAPIEndpoints } from "@govtechsg/address-identity-resolver";
-import { AddressBook, Button, useOverlayContext } from "@govtechsg/tradetrust-ui-components";
+import { AddressBook, ButtonIcon, useOverlayContext } from "@govtechsg/tradetrust-ui-components";
 import React, { FunctionComponent } from "react";
 import { Book } from "react-feather";
 import { usePersistedConfigFile } from "../../../common/hook/usePersistedConfigFile";
@@ -50,12 +50,12 @@ export const TransferableRecordForm: FunctionComponent<TransferableRecordForm> =
             type="text"
             onChange={(e) => setBeneficiaryAddress(e.target.value)}
           />
-          <Button
+          <ButtonIcon
             className="bg-orange text-white hover:bg-orange-600"
             onClick={() => onOverlayHandler(setBeneficiaryAddress)}
           >
             <Book />
-          </Button>
+          </ButtonIcon>
         </div>
       </div>
       <div className="flex my-4 items-center sm:flex-row flex-col">
@@ -70,12 +70,12 @@ export const TransferableRecordForm: FunctionComponent<TransferableRecordForm> =
             type="text"
             onChange={(e) => setHolderAddress(e.target.value)}
           />
-          <Button
+          <ButtonIcon
             className="bg-orange text-white hover:bg-orange-600"
             onClick={() => onOverlayHandler(setHolderAddress)}
           >
             <Book />
-          </Button>
+          </ButtonIcon>
         </div>
       </div>
     </div>
