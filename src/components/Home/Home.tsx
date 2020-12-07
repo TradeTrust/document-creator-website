@@ -2,7 +2,6 @@ import React, { FunctionComponent } from "react";
 import { Redirect } from "react-router-dom";
 import { useConfigContext } from "../../common/context/config";
 import { usePersistedConfigFile } from "../../common/hook/usePersistedConfigFile";
-import { Container } from "../Container";
 import { NavigationBar } from "../NavigationBar";
 import { ConfigFileDropZoneContainer } from "./ConfigFileDropZone";
 import { WalletDecryptionContainer } from "./WalletDecryption/WalletDecryptionContainer";
@@ -17,9 +16,7 @@ export const HomeContainer: FunctionComponent = () => {
   return (
     <>
       <NavigationBar />
-      <Container>
-        {configFile ? <WalletDecryptionContainer /> : <ConfigFileDropZoneContainer />}
-      </Container>
+      {configFile ? <WalletDecryptionContainer /> : <ConfigFileDropZoneContainer />}
     </>
   );
 };

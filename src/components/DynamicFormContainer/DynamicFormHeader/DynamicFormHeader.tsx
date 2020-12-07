@@ -4,6 +4,7 @@ import { ArrowLeft } from "react-feather";
 import { useFormsContext } from "../../../common/context/forms";
 import { ProgressBar } from "../../ProgressBar";
 import { Title } from "../../UI/Title";
+import { Wrapper } from "../../UI/Wrapper";
 import { DocumentSelector } from "../DocumentSelector";
 
 interface DynamicFormHeaderProps {
@@ -24,7 +25,7 @@ export const DynamicFormHeader: FunctionComponent<DynamicFormHeaderProps> = ({
   const { forms, activeFormIndex } = useFormsContext();
 
   return (
-    <div className="container mx-auto mb-6">
+    <Wrapper className="mb-8">
       <div
         onClick={onBackToFormSelection}
         className="text-grey flex cursor-pointer py-4 w-20"
@@ -62,6 +63,6 @@ export const DynamicFormHeader: FunctionComponent<DynamicFormHeaderProps> = ({
           </Button>
         </div>
       </div>
-    </div>
+    </Wrapper>
   );
 };

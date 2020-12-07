@@ -4,9 +4,9 @@ import { Download, XCircle } from "react-feather";
 import { useConfigContext } from "../../../common/context/config";
 import { useFormsContext } from "../../../common/context/forms";
 import { generateFileName } from "../../../utils/fileName";
-import { Container } from "../../Container";
 import { ProgressBar } from "../../ProgressBar";
 import { Title } from "../../UI/Title";
+import { Wrapper } from "../../UI/Wrapper";
 
 interface PublishErrorScreen {
   error?: Error;
@@ -23,25 +23,23 @@ export const PublishErrorScreen: FunctionComponent<PublishErrorScreen> = ({ erro
   };
 
   return (
-    <Container>
-      <div className="container mx-auto pt-8">
-        <ProgressBar step={3} />
-        <div className="flex justify-between items-end">
-          <Title className="flex items-center mb-8">
-            <XCircle className="mr-2 text-red" />
-            Document(s) failed to issue
-          </Title>
-          <Button
-            className="bg-orange text-white hover:bg-orange-600 mb-6"
-            data-testid="form-logout-button"
-            onClick={onDone}
-          >
-            Logout
-          </Button>
-        </div>
+    <Wrapper>
+      <ProgressBar step={3} />
+      <div className="flex justify-between items-end">
+        <Title className="flex items-center mb-8">
+          <XCircle className="mr-2 text-red" />
+          Document(s) failed to issue
+        </Title>
+        <Button
+          className="bg-orange text-white hover:bg-orange-600 mb-6"
+          data-testid="form-logout-button"
+          onClick={onDone}
+        >
+          Logout
+        </Button>
       </div>
-      <div className="bg-grey-100 p-6 h-screen">
-        <div className="container mx-auto">
+      <div className="bg-grey-100 py-6 h-screen">
+        <div className="container">
           <div className="bg-red-100 p-3 flex flex-col">
             <div className="flex">
               <XCircle className="text-red" />
@@ -72,6 +70,6 @@ export const PublishErrorScreen: FunctionComponent<PublishErrorScreen> = ({ erro
           </div>
         </div>
       </div>
-    </Container>
+    </Wrapper>
   );
 };

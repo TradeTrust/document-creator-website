@@ -1,12 +1,15 @@
-import React, { FunctionComponent } from "react";
 import { AddressResolver } from "@govtechsg/tradetrust-ui-components";
+import React, { FunctionComponent } from "react";
 import { NavigationBar } from "../NavigationBar";
+import { Wrapper } from "../UI/Wrapper";
 
 export const AddressResolverContainer: FunctionComponent = () => {
   return (
     <>
       <NavigationBar />
-      <AddressResolver />
+      <Wrapper>
+        <AddressResolver />
+      </Wrapper>
     </>
   );
 };

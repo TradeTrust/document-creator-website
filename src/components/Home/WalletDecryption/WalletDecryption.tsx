@@ -29,7 +29,7 @@ export const WalletDecryption: FunctionComponent<WalletDecryption> = ({
     : "w-full border-solid border border-grey-300 h-10 p-3";
 
   return (
-    <Wrapper>
+    <Wrapper isMaxW={true}>
       <Title className="mb-8">Create Document</Title>
       <form className="relative bg-white flex flex-col rounded pt-5 pl-5 pr-4 pb-6">
         {isDecrypting && <BarTrack progress={decryptProgress} className="absolute top-0 left-0" />}

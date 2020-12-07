@@ -77,7 +77,7 @@ export const DynamicFormRaw: FunctionComponent<DynamicFormProps> = ({
   };
 
   return (
-    <div className={`${className} max-w-screen-sm mx-auto mt-6`}>
+    <div className={`w-full max-w-screen-sm mx-auto mt-6 ${className}`}>
       {isTransferableRecord && (
         <TransferableRecordForm
           beneficiaryAddress={ownership.beneficiaryAddress}

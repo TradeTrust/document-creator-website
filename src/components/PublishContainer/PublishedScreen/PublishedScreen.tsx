@@ -7,8 +7,8 @@ import { Download, XCircle } from "react-feather";
 import { useConfigContext } from "../../../common/context/config";
 import { FailedJobErrors, WrappedDocument } from "../../../types";
 import { generateFileName } from "../../../utils/fileName";
-import { Container } from "../../Container";
 import { ProgressBar } from "../../ProgressBar";
+import { Wrapper } from "../../UI/Wrapper";
 import { PublishedTag } from "../PublishedScreen/PublishedTag";
 import { PublishTitle } from "./PublishTitle";
 
@@ -74,17 +74,15 @@ export const PublishedScreen: FunctionComponent<PublishScreen> = ({
   };
 
   return (
-    <Container>
-      <div className="container mx-auto pt-8">
-        <ProgressBar step={3} />
-        <div className="flex justify-between items-end">
-          <PublishTitle publishState={publishState} publishedDocuments={publishedDocuments} />
-        </div>
+    <Wrapper>
+      <ProgressBar step={3} />
+      <div className="flex justify-between items-end">
+        <PublishTitle publishState={publishState} publishedDocuments={publishedDocuments} />
       </div>
-      <div className="bg-grey-100 p-6 h-screen">
+      <div className="bg-grey-100 py-6 h-screen">
         {(pendingPublishDocuments.length > 0 || publishedDocuments.length > 0) && (
-          <div className="container mx-auto">
-            <div className="border-b border-solid border-grey-100 flex items-center">
+          <div className="container">
+            <div className="border-b border-solid border-grey-200 flex items-center">
               <div className="text-grey font-medium text-lg mb-4 flex-grow py-3">
                 {publishedDocuments.length + pendingPublishDocuments.length} Document(s)
               </div>
@@ -101,7 +99,7 @@ export const PublishedScreen: FunctionComponent<PublishScreen> = ({
                 </Button>
               )}
             </div>
-            <div className="flex flex-wrap border-b border-solid border-grey-100 pb-4 mb-4">
+            <div className="flex flex-wrap border-b border-solid border-grey-200 pb-4 mb-4">
               {publishedDocuments.map((doc, index) => (
                 <PublishedTag doc={doc} key={index} isPending={false} />
               ))}
@@ -112,8 +110,8 @@ export const PublishedScreen: FunctionComponent<PublishScreen> = ({
           </div>
         )}
         {failPublishedDocuments && failPublishedDocuments.length > 0 && (
-          <div className="container mx-auto">
-            <div className="text-grey font-medium text-lg mb-4">
+          <div className="container">
+            <div className="text-grey font-medium text-lg my-6">
               {failPublishedDocuments.length} Document(s) Failed
             </div>
             <div className="bg-red-100 p-3 flex flex-col">
@@ -163,6 +161,6 @@ export const PublishedScreen: FunctionComponent<PublishScreen> = ({
           </div>
         )}
       </div>
-    </Container>
+    </Wrapper>
   );
 };

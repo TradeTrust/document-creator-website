@@ -64,7 +64,7 @@ export const NavigationBar: FunctionComponent<NavigationBar> = ({ logout }) => {
   const { configFile } = usePersistedConfigFile();
   return (
     <nav className="bg-navy py-6">
-      <div className="container mx-auto">
+      <div className="container">
         <div className="flex flex-wrap items-center justify-between">
           <div className="w-full lg:w-auto">
             <Link to="/">
