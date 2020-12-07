@@ -4,11 +4,13 @@ import {
   publishVerifiableDocumentJob,
   publishTransferableRecordJob,
 } from "./index";
+import { supportsInterface } from "./utils";
 import { TitleEscrowCreatorFactory, TradeTrustERC721Factory } from "@govtechsg/token-registry";
 import { DocumentStoreFactory } from "@govtechsg/document-store";
 
 jest.mock("@govtechsg/token-registry");
 jest.mock("@govtechsg/document-store");
+jest.mock("./utils");
 
 const mockTitleEscrowCreatorFactoryConnect = TitleEscrowCreatorFactory.connect as jest.Mock;
 const mockDocumentStoreFactoryConnect = DocumentStoreFactory.connect as jest.Mock;
@@ -17,6 +19,7 @@ const mockDocumentStoreIssue = jest.fn();
 const mockTokenRegistrySafeMint = jest.fn();
 const mockTitleEscrowDeployNewTitleEscrow = jest.fn();
 const mockTxWait = jest.fn();
+const mockSupportsInterface = supportsInterface as jest.Mock;
 
 const mockDocumentStore = {
   issue: mockDocumentStoreIssue,
@@ -95,6 +98,7 @@ describe("publishing", () => {
     it("should return transaction hash when publishing succeed", async () => {
       whenDocumentStoreExist();
       const wallet = mockWallet();
+      mockSupportsInterface.mockResolvedValueOnce(false);
       const hash = await publishVerifiableDocumentJob(
         {
           nonce: 1234,
@@ -133,6 +137,7 @@ describe("publishing", () => {
 
     it("should throw when transaction fails", async () => {
       whenDocumentStoreExist();
+      mockSupportsInterface.mockResolvedValueOnce(false);
       mockTxWait.mockRejectedValueOnce(new Error("Some error"));
       const wallet = mockWallet();
 
