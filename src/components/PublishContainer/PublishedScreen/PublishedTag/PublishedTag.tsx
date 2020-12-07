@@ -33,9 +33,9 @@ export const PublishedTag: FunctionComponent<PublishedTagProps> = ({ doc, isPend
           <div className="h-12 w-12 mr-4" data-testid="publish-loader">
             <PublishLoader />
           </div>
-          <div className="font-bold text-grey-100">
+          <div className="font-bold text-grey">
             {fileName}
-            <span className="text-grey-100 text-xs font-regular"> ({size})</span>
+            <span className="text-grey-400 text-xs font-regular"> ({size})</span>
           </div>
         </>
       ) : (
@@ -46,7 +46,7 @@ export const PublishedTag: FunctionComponent<PublishedTagProps> = ({ doc, isPend
           <div className="flex flex-col">
             <div className="font-bold text-grey">
               {fileName}
-              <span className="text-grey text-xs font-regular"> ({size})</span>
+              <span className="text-grey-400 text-xs font-regular"> ({size})</span>
             </div>
             <div
               className="text-blue font-bold cursor-pointer"
