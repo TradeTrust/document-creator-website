@@ -77,7 +77,7 @@ export const DynamicFormRaw: FunctionComponent<DynamicFormProps> = ({
   };
 
   return (
-    <div className={`${className} max-w-screen-sm mx-auto mt-6`}>
+    <div className={`w-full max-w-screen-sm mx-auto mt-6 ${className}`}>
       {isTransferableRecord && (
         <TransferableRecordForm
           beneficiaryAddress={ownership.beneficiaryAddress}
@@ -183,17 +183,8 @@ export const DynamicForm = styled(DynamicFormRaw)`
 
   .btn {
     ${tw`
-    border border-solid border-orange bg-orange rounded py-2 px-4 text-white m-2 shadow-md inline-block align-middle
-  `}
-
-    &:not(:disabled):not(.disabled):active,
-  &:focus,
-  &.focus,
-  &:hover,
-  &:active,
-  &.active {
-      box-shadow: -10px -10px 20px rgba(255, 255, 255, 0.2), 2px 2px 5px rgba(0, 0, 0, 0.4);
-    }
+      transition-colors duration-200 ease-out cursor-pointer font-bold p-2 rounded shadow-md border border-transparent bg-orange text-white hover:bg-orange-600 m-2
+    `}
 
     :first-of-type {
       ${tw`ml-0`}

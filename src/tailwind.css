@@ -24,3 +24,18 @@
     transform: rotate(360deg);
   }
 }
+
+/* https://philipwalton.com/articles/normalizing-cross-browser-flexbox-bugs/ */
+#root {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+
+#root > nav {
+  flex-shrink: 0;
+}
+
+#root > main {
+  flex: 1 0 auto;
+}

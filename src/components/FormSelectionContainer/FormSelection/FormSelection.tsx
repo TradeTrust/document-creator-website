@@ -1,19 +1,17 @@
+import { Button } from "@govtechsg/tradetrust-ui-components";
 import React, { FunctionComponent } from "react";
 import { Redirect } from "react-router-dom";
 import { useFormsContext } from "../../../common/context/forms";
 import { Config, FormTemplate } from "../../../types";
-import { Container } from "../../Container";
 import { ProgressBar } from "../../ProgressBar";
-import { Button } from "../../UI/Button";
 import { Title } from "../../UI/Title";
 import { Wrapper } from "../../UI/Wrapper";
 
 interface FormSelection {
   config: Config;
-  className?: string;
 }
 
-export const FormSelection: FunctionComponent<FormSelection> = ({ className, config }) => {
+export const FormSelection: FunctionComponent<FormSelection> = ({ config }) => {
   const { activeFormIndex, newForm } = useFormsContext();
   const selectedForm = (templateIndex: number): void => {
     newForm(templateIndex);
@@ -24,27 +22,22 @@ export const FormSelection: FunctionComponent<FormSelection> = ({ className, con
   if (activeFormIndex !== undefined) return <Redirect to="/form" />;
 
   return (
-    <Container>
-      <div className={className}>
-        <Wrapper>
-          <ProgressBar step={1} />
-          <Title className="mb-8">Choose Document Type to Issue</Title>
-          <div className="flex flex-wrap justify-start">
-            {config.forms.map((form: FormTemplate, index: number) => {
-              return (
-                <Button
-                  className="bg-white text-grey-800 hover:text-blue w-40 p-4 mb-4 mr-4"
-                  role="button"
-                  key={index}
-                  onClick={() => selectedForm(index)}
-                >
-                  {form.name}
-                </Button>
-              );
-            })}
-          </div>
-        </Wrapper>
+    <Wrapper isMaxW={true}>
+      <ProgressBar step={1} />
+      <Title className="mb-8">Choose Document Type to Issue</Title>
+      <div className="flex flex-wrap justify-start">
+        {config.forms.map((form: FormTemplate, index: number) => {
+          return (
+            <Button
+              className="bg-white text-grey-800 hover:text-blue hover:bg-grey-100 w-40 mb-4 mr-4"
+              key={index}
+              onClick={() => selectedForm(index)}
+            >
+              {form.name}
+            </Button>
+          );
+        })}
       </div>
-    </Container>
+    </Wrapper>
   );
 };

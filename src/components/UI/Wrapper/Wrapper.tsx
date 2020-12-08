@@ -1,9 +1,19 @@
-import styled from "@emotion/styled";
+import React from "react";
 
-export const Wrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  max-width: 600px;
-  margin: auto;
-  padding-top: 32px;
-`;
+interface WrapperProps {
+  className?: string;
+  children: React.ReactNode;
+  isMaxW?: boolean;
+}
+
+export const Wrapper: React.FunctionComponent<WrapperProps> = ({
+  className,
+  children,
+  isMaxW,
+}: WrapperProps) => {
+  return (
+    <div className={`container mt-8 ${isMaxW ? "max-w-2xl" : ""} ${className ? className : ""}`}>
+      {children}
+    </div>
+  );
+};

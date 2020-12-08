@@ -1,8 +1,7 @@
-import React, { FunctionComponent } from "react";
-import { Container } from "../../Container";
-import { DocumentPreview } from "./DocumentPreview";
-import SampleCnm from "../../../test/fixtures/unwrapped-cnm.json";
 import { v2 } from "@govtechsg/open-attestation";
+import React, { FunctionComponent } from "react";
+import SampleCnm from "../../../test/fixtures/unwrapped-cnm.json";
+import { DocumentPreview } from "./DocumentPreview";
 
 export default {
   title: "DynamicForm/DocumentPreview",
@@ -13,7 +12,5 @@ export default {
 };
 
 export const TitleAndMessage: FunctionComponent = () => (
-  <Container>
-    <DocumentPreview document={SampleCnm as v2.OpenAttestationDocument} />
-  </Container>
+  <DocumentPreview document={SampleCnm as v2.OpenAttestationDocument} />
 );
