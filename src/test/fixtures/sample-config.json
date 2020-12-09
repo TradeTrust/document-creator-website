@@ -8,8 +8,8 @@
       "defaults": {
         "$template": {
           "type": "EMBEDDED_RENDERER",
-          "name": "custom",
-          "url": "https://chafta.tradetrust.io"
+          "name": "CHAFTA_COO",
+          "url": "https://generic-templates.tradetrust.io"
         },
         "issuers": [
           {
@@ -431,7 +431,7 @@
         "$template": {
           "type": "EMBEDDED_RENDERER",
           "name": "BILL_OF_LADING",
-          "url": "https://demo-cnm.openattestation.com"
+          "url": "https://generic-templates.tradetrust.io"
         },
         "issuers": [
           {
@@ -447,9 +447,7 @@
       },
       "schema": {
         "type": "object",
-        "required": [
-          "blNumber"
-        ],
+        "required": ["blNumber"],
         "properties": {
           "blNumber": {
             "type": "string",
@@ -635,62 +633,13 @@
       }
     },
     {
-      "name": "Covering Letter (ERROR)",
-      "type": "VERIFIABLE_DOCUMENT",
-      "defaults": {
-        "$template": {
-          "type": "COVERING_LETTER",
-          "name": "custom",
-          "url": "https://generic-templates.tradetrust.io"
-        },
-        "issuers": [
-          {
-            "name": "Demo Issuer",
-            "documentStore": "0x8bA63EAB43342AAc3AdBB4B827b68Cf4aAE5Caca",
-            "identityProof": {
-              "type": "DNS-TXT",
-              "location": "demo-tradetrust.openattestation.com"
-            }
-          }
-        ],
-        "name": "Covering Letter",
-        "logo": "https://pluspng.com/img-png/logo-dbs-png-file-dbs-bank-logo-svg-1280.png",
-        "backgroundColor": "black",
-        "titleColor": "white",
-        "remarksColor": "white",
-        "title": "Documents Bundle",
-        "remarks": "Some very important documents in here for some submission",
-        "uiSchema": {
-          "remarks": {
-            "ui:widget": "textarea"
-          }
-        }
-      },
-      "schema": {
-        "type": "object",
-        "properties": {
-          "title": {
-            "type": "string",
-            "title": "Title"
-          },
-          "remarks": {
-            "type": "string",
-            "title": "Remarks"
-          }
-        }
-      },
-      "attachments": {
-        "allow": true
-      }
-    },
-    {
       "name": "Invoice (IMDA)",
       "type": "VERIFIABLE_DOCUMENT",
       "defaults": {
         "$template": {
           "type": "EMBEDDED_RENDERER",
           "name": "INVOICE",
-          "url": "https://generic-templates.openattestation.com"
+          "url": "https://generic-templates.tradetrust.io"
         },
         "issuers": [
           {
