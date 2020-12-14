@@ -1,16 +1,20 @@
 {
+  "ownership": {
+    "beneficiaryAddress": "0xa61b056da0084a5f391ec137583073096880c2e3",
+    "holderAddress": "0xa61b056da0084a5f391ec137583073096880c2e3"
+  },
   "blNumber": "123",
-  "shipper":{
+  "shipper": {
     "name": "Demo Shipper",
-    "address":{
+    "address": {
       "street": "One North",
       "country": "Singapore"
     }
   },
-  "consignee":{
+  "consignee": {
     "name": "Demo Consignee"
   },
-  "notifyParty":{
+  "notifyParty": {
     "name": "Demo Notify"
   },
   "vessel": "1",

@@ -36,16 +36,19 @@ export const DynamicFormRaw: FunctionComponent<DynamicFormProps> = ({
   attachmentAcceptedFormat = "",
 }) => {
   const { data, ownership } = form;
+  const isTransferableRecord = type === "TRANSFERABLE_RECORD";
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const mergeFormValue = (value: any): void => {
     // Avoid using spread which will lazy copy the object
     // See discussion: https://github.com/rjsf-team/react-jsonschema-form/issues/306
     const nextFormData = cloneDeep(data.formData);
+    if (isTransferableRecord) {
+      form.ownership = value?.ownership;
+    }
     setFormData({ ...data, formData: defaultsDeep(value, nextFormData) });
   };
 
-  const isTransferableRecord = type === "TRANSFERABLE_RECORD";
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const setAttachments = (attachments: any): void => {
     const currentFormData = cloneDeep(data.formData);
