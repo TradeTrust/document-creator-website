@@ -16,22 +16,6 @@ const localConfig = {
       display: ["Roboto", "sans-serif"],
       body: ["Roboto", "sans-serif"],
     },
-    extend: {
-      colors: {
-        blue: {
-          300: "#f3f8fc",
-        },
-        red: {
-          100: "#fbeae9",
-        },
-        pink: {
-          default: "#ffe8e8",
-        },
-        greyblue: {
-          default: "#c1c9d1",
-        },
-      },
-    },
   },
 };
 const finalConfig = _.merge(commonUiConfig, localConfig); // deep merge
