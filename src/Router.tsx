@@ -13,7 +13,10 @@ export const Router = (): ReactElement => {
 
   return (
     <>
-      <NetworkBar network={configFile?.network} />
+      <NetworkBar network={configFile?.network}>
+        You are currently on <span className="capitalize">{configFile?.network}</span> network. To
+        change it, please upload a new config file.
+      </NetworkBar>
       <main className="bg-blue-300">
         <BrowserRouter>
           <Switch>
