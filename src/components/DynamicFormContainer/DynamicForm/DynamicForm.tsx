@@ -46,7 +46,7 @@ export const DynamicFormRaw: FunctionComponent<DynamicFormProps> = ({
     if (isTransferableRecord) {
       form.ownership = value?.ownership;
     }
-    setFormData({ ...data, formData: defaultsDeep(value, nextFormData) });
+    setFormData({ ...data, formData: defaultsDeep(value.data, nextFormData) });
   };
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any

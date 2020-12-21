@@ -220,7 +220,9 @@ describe("dynamicFormLayout", () => {
     const file = new File(
       [
         JSON.stringify({
-          cow: "moo",
+          data: {
+            cow: "moo",
+          },
         }),
       ],
       "sample.json",
