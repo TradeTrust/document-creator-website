@@ -8,6 +8,7 @@ const form = sampleConfig.forms[0] as FormTemplate;
 
 const mockSetFormData = jest.fn();
 const mockSetOwnership = jest.fn();
+const mockSetCurrentForm = jest.fn();
 
 const commonProps = {
   type: "TRANSFERABLE_RECORD" as FormType,
@@ -20,6 +21,7 @@ const commonProps = {
   },
   setFormData: mockSetFormData,
   setOwnership: mockSetOwnership,
+  setCurrentForm: mockSetCurrentForm,
   attachmentAccepted: false,
 };
 

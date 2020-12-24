@@ -26,6 +26,7 @@ export const DynamicFormLayout: FunctionComponent = () => {
     currentFormTemplate,
     setCurrentFormData,
     setCurrentFormOwnership,
+    setCurrentForm,
   } = useFormsContext();
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [formError, setFormError] = useState<Ajv.ErrorObject[] | null | undefined>(null);
@@ -142,6 +143,7 @@ export const DynamicFormLayout: FunctionComponent = () => {
                   type={currentFormTemplate.type}
                   setFormData={setCurrentFormData}
                   setOwnership={setCurrentFormOwnership}
+                  setCurrentForm={setCurrentForm}
                   attachmentAccepted={attachmentAccepted}
                   attachmentAcceptedFormat={attachmentAcceptedFormat}
                 />

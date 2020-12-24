@@ -68,6 +68,8 @@ export const Default: FunctionComponent = () => {
       setFormData={setFormData}
       // eslint-disable-next-line @typescript-eslint/no-empty-function
       setOwnership={() => {}}
+      // eslint-disable-next-line @typescript-eslint/no-empty-function
+      setCurrentForm={() => {}}
       attachmentAccepted={true}
       type="VERIFIABLE_DOCUMENT"
     />

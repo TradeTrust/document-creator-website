@@ -23,6 +23,7 @@ export interface DynamicFormProps {
   type: FormType;
   setFormData: (formData: any) => void; // eslint-disable-line @typescript-eslint/no-explicit-any
   setOwnership: (ownership: Ownership) => void;
+  setCurrentForm: (formData: any, ownership: Ownership) => void; // eslint-disable-line @typescript-eslint/no-explicit-any
 }
 
 export const DynamicFormRaw: FunctionComponent<DynamicFormProps> = ({
@@ -30,6 +31,7 @@ export const DynamicFormRaw: FunctionComponent<DynamicFormProps> = ({
   form,
   setFormData,
   setOwnership,
+  setCurrentForm,
   className,
   attachmentAccepted,
   type,
@@ -43,10 +45,11 @@ export const DynamicFormRaw: FunctionComponent<DynamicFormProps> = ({
     // Avoid using spread which will lazy copy the object
     // See discussion: https://github.com/rjsf-team/react-jsonschema-form/issues/306
     const nextFormData = cloneDeep(data.formData);
-    if (isTransferableRecord) {
-      form.ownership = value?.ownership;
-    }
-    setFormData({ ...data, formData: defaultsDeep(value.data, nextFormData) });
+
+    setCurrentForm(
+      { ...data, formData: defaultsDeep(value?.data, nextFormData) },
+      value?.ownership
+    );
   };
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
