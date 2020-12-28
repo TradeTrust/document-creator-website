@@ -89,14 +89,12 @@ export const FormsContextProvider: FunctionComponent = ({ children }) => {
   };
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const setCurrentForm = (data: any, updatedOwnership?: Ownership): void => {
+  const setCurrentForm = (currentForm: any, updatedOwnership?: Ownership): void => {
     if (activeFormIndex === undefined) return;
-    const currentForm = forms[activeFormIndex];
     const nextForms = [...forms];
     const updatedCurrentForm = {
       ...currentForm,
-      data,
-      ...updatedOwnership,
+      ownership: updatedOwnership,
     } as FormEntry;
     nextForms.splice(activeFormIndex, 1, updatedCurrentForm);
     setForms(nextForms);

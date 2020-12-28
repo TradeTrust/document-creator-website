@@ -10,6 +10,7 @@ const mockUseFormsContext = useFormsContext as jest.Mock;
 const mockSetActiveFormIndex = jest.fn();
 const mockSetForms = jest.fn();
 const mockSetCurrentFormData = jest.fn();
+const mockSetCurrentForm = jest.fn();
 
 const whenActiveFormIsAvailable = (): void => {
   mockUseFormsContext.mockReturnValue({
@@ -17,6 +18,7 @@ const whenActiveFormIsAvailable = (): void => {
     setForms: mockSetForms,
     setActiveFormIndex: mockSetActiveFormIndex,
     setCurrentFormData: mockSetCurrentFormData,
+    setCurrentForm: mockSetCurrentForm,
     forms: [
       {
         fileName: "document-1",
@@ -52,6 +54,7 @@ const whenIsTransferableRecord = (): void => {
     setForms: mockSetForms,
     setActiveFormIndex: mockSetActiveFormIndex,
     setCurrentFormData: mockSetCurrentFormData,
+    setCurrentForm: mockSetCurrentForm,
     forms: [
       {
         fileName: "document-1",
@@ -238,11 +241,15 @@ describe("dynamicFormLayout", () => {
       await fireEvent(dropzone, event);
     });
     await waitFor(() =>
-      expect(mockSetCurrentFormData).toHaveBeenCalledWith({
-        formData: {
-          cow: "moo",
+      expect(mockSetCurrentForm).toHaveBeenCalledWith(
+        {
+          formData: {
+            cow: "moo",
+          },
+          undefined, //no ownership set
         },
-      })
+        undefined //no ownership set
+      )
     );
   });
 
