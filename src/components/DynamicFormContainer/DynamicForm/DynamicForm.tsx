@@ -45,9 +45,8 @@ export const DynamicFormRaw: FunctionComponent<DynamicFormProps> = ({
     // Avoid using spread which will lazy copy the object
     // See discussion: https://github.com/rjsf-team/react-jsonschema-form/issues/306
     const nextFormData = cloneDeep(data.formData);
-
     setCurrentForm(
-      { ...data, formData: defaultsDeep(value?.data, nextFormData) },
+      { ...data, formData: defaultsDeep(nextFormData, value?.data) },
       value?.ownership
     );
   };

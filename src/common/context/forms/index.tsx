@@ -73,8 +73,14 @@ export const FormsContextProvider: FunctionComponent = ({ children }) => {
   const setCurrentFormOwnership = ({ beneficiaryAddress, holderAddress }: Ownership): void => {
     if (activeFormIndex === undefined)
       throw new Error("Trying to set form when there is no activeFormIndex");
+    const nextForms = [...forms];
     const currentForm = forms[activeFormIndex];
-    setCurrentForm(currentForm, { beneficiaryAddress, holderAddress });
+    nextForms.splice(activeFormIndex, 1, {
+      ...currentForm,
+      ownership: { beneficiaryAddress, holderAddress },
+    });
+    setForms(nextForms);
+    // setCurrentForm(currentForm, { beneficiaryAddress, holderAddress });
   };
 
   const setCurrentFileName = (fileName: string): void => {
@@ -89,12 +95,14 @@ export const FormsContextProvider: FunctionComponent = ({ children }) => {
   };
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const setCurrentForm = (currentForm: any, updatedOwnership?: Ownership): void => {
+  const setCurrentForm = (data: any, updatedOwnership?: Ownership): void => {
     if (activeFormIndex === undefined) return;
+    const currentForm = forms[activeFormIndex];
     const nextForms = [...forms];
     const updatedCurrentForm = {
       ...currentForm,
-      ownership: updatedOwnership,
+      data: { ...data },
+      ownership: { ...updatedOwnership },
     } as FormEntry;
     nextForms.splice(activeFormIndex, 1, updatedCurrentForm);
     setForms(nextForms);
