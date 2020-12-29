@@ -80,7 +80,6 @@ export const FormsContextProvider: FunctionComponent = ({ children }) => {
       ownership: { beneficiaryAddress, holderAddress },
     });
     setForms(nextForms);
-    // setCurrentForm(currentForm, { beneficiaryAddress, holderAddress });
   };
 
   const setCurrentFileName = (fileName: string): void => {
@@ -99,10 +98,13 @@ export const FormsContextProvider: FunctionComponent = ({ children }) => {
     if (activeFormIndex === undefined) return;
     const currentForm = forms[activeFormIndex];
     const nextForms = [...forms];
+    if (updatedOwnership === undefined) {
+      updatedOwnership = { beneficiaryAddress: "", holderAddress: "" };
+    }
     const updatedCurrentForm = {
       ...currentForm,
       data: { ...data },
-      ownership: { ...updatedOwnership },
+      ownership: updatedOwnership,
     } as FormEntry;
     nextForms.splice(activeFormIndex, 1, updatedCurrentForm);
     setForms(nextForms);
