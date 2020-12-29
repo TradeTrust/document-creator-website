@@ -1,5 +1,5 @@
 import styled from "@emotion/styled";
-import { cloneDeep, defaultsDeep } from "lodash";
+import { cloneDeep } from "lodash";
 import React, { FunctionComponent } from "react";
 import JsonForm from "react-jsonschema-form";
 import tw from "twin.macro";
@@ -42,13 +42,7 @@ export const DynamicFormRaw: FunctionComponent<DynamicFormProps> = ({
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const mergeFormValue = (value: any): void => {
-    // Avoid using spread which will lazy copy the object
-    // See discussion: https://github.com/rjsf-team/react-jsonschema-form/issues/306
-    const nextFormData = cloneDeep(data.formData);
-    setCurrentForm(
-      { ...data, formData: defaultsDeep(nextFormData, value?.data) },
-      value?.ownership
-    );
+    setCurrentForm({ ...data, formData: value?.data }, value?.ownership);
   };
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
