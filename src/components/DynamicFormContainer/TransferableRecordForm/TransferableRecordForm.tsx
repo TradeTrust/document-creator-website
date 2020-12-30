@@ -40,7 +40,7 @@ export const TransferableRecordForm: FunctionComponent<TransferableRecordForm> =
       <div className="text-grey-800 font-bold text-xl pb-4">Transferable Record Owner</div>
       <div className="flex my-4 items-center sm:flex-row flex-col">
         <div className="w-full sm:w-3/12 px-0 sm:px-4 sm:text-right text-grey-800 mb-2 sm:mb-0">
-          Beneficiary
+          Owner
         </div>
         <div className="w-full flex sm:w-8/12">
           <input

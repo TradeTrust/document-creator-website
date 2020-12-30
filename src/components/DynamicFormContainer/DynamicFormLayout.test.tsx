@@ -252,7 +252,7 @@ describe("dynamicFormLayout", () => {
       </MemoryRouter>
     );
 
-    expect(screen.queryAllByText("Beneficiary")).toHaveLength(1);
+    expect(screen.queryAllByText("Owner")).toHaveLength(1);
     expect(screen.queryAllByText("Holder")).toHaveLength(1);
   });
 });
