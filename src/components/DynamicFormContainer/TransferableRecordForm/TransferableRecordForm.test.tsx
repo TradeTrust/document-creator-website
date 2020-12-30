@@ -13,7 +13,7 @@ describe("transferableRecordForm", () => {
       />
     );
 
-    expect(screen.queryAllByText("Beneficiary")).toHaveLength(1);
+    expect(screen.queryAllByText("Owner")).toHaveLength(1);
     expect(screen.queryAllByTestId("transferable-record-beneficiary-input")).not.toBeNull();
     expect(screen.queryAllByText("Holder")).toHaveLength(1);
     expect(screen.queryAllByTestId("transferable-record-holder-input")).not.toBeNull();
