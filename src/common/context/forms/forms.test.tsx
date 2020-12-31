@@ -91,7 +91,7 @@ describe("useFormsContext", () => {
       },
       {
         templateIndex: 0,
-        data: { formData: { foo: "bar" } },
+        data: { formData: {}, schema: "FORM_1_SCHEMA" },
         fileName: "Document-2",
         ownership: { holderAddress: "", beneficiaryAddress: "" },
       },

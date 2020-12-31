@@ -241,15 +241,14 @@ describe("dynamicFormLayout", () => {
       await fireEvent(dropzone, event);
     });
     await waitFor(() =>
-      expect(mockSetCurrentForm).toHaveBeenCalledWith(
-        {
+      expect(mockSetCurrentForm).toHaveBeenCalledWith({
+        data: {
           formData: {
             cow: "moo",
           },
-          undefined, //no ownership set
+          undefined: undefined, //no ownership set
         },
-        undefined //no ownership set
-      )
+      })
     );
   });
 
