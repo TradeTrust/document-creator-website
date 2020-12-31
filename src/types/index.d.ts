@@ -66,6 +66,12 @@ export interface FormEntry {
   ownership: Ownership;
 }
 
+export interface SetFormParams {
+  data?: FormData;
+  updatedOwnership?: Ownership;
+  fileName?: string;
+}
+
 export interface RawDocument {
   type: FormType;
   contractAddress: string;

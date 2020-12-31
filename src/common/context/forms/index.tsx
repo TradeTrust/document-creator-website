@@ -1,5 +1,5 @@
 import React, { createContext, FunctionComponent, useContext, useState } from "react";
-import { FormData, FormEntry, FormTemplate, Ownership } from "../../../types";
+import { FormData, FormEntry, FormTemplate, Ownership, SetFormParams } from "../../../types";
 import { useConfigContext } from "../config";
 
 interface FormsContext {
@@ -15,7 +15,7 @@ interface FormsContext {
   setCurrentFormData: (formData: FormData) => void;
   setCurrentFormOwnership: (ownership: Ownership) => void;
   setCurrentFileName: (fileName: string) => void;
-  setCurrentForm: (data?: FormData, ownership?: Ownership, fileName?: string) => void;
+  setCurrentForm: (arg: SetFormParams) => void;
 }
 
 export const FormsContext = createContext<FormsContext>({
@@ -70,20 +70,16 @@ export const FormsContextProvider: FunctionComponent = ({ children }) => {
   const setCurrentFormOwnership = ({ beneficiaryAddress, holderAddress }: Ownership): void => {
     if (activeFormIndex === undefined)
       throw new Error("Trying to set form when there is no activeFormIndex");
-    setCurrentForm(undefined, { beneficiaryAddress, holderAddress });
+    setCurrentForm({ data: undefined, updatedOwnership: { beneficiaryAddress, holderAddress } });
   };
 
   const setCurrentFileName = (fileName: string): void => {
     if (activeFormIndex === undefined) return;
-    setCurrentForm(undefined, undefined, fileName);
+    setCurrentForm({ data: undefined, updatedOwnership: undefined, fileName });
   };
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const setCurrentForm = (
-    data?: FormData,
-    updatedOwnership?: Ownership,
-    fileName?: string
-  ): void => {
+  const setCurrentForm = ({ data, updatedOwnership, fileName }: SetFormParams): void => {
     if (activeFormIndex === undefined) return;
     const currentForm = forms[activeFormIndex];
     const nextForms = [...forms];
