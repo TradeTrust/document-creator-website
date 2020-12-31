@@ -42,7 +42,7 @@ export const DynamicFormRaw: FunctionComponent<DynamicFormProps> = ({
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const mergeFormValue = (value: any): void => {
-    setCurrentForm({ ...data, formData: value?.data }, value?.ownership);
+    setCurrentForm({ ...data, formData: value?.data || data.formData }, value?.ownership);
   };
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any

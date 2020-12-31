@@ -15,7 +15,7 @@ interface FormsContext {
   setCurrentFormData: (formData: FormData) => void;
   setCurrentFormOwnership: (ownership: Ownership) => void;
   setCurrentFileName: (fileName: string) => void;
-  setCurrentForm: (formData: FormData, ownership: Ownership) => void;
+  setCurrentForm: (data?: FormData, ownership?: Ownership, fileName?: string) => void;
 }
 
 export const FormsContext = createContext<FormsContext>({
@@ -64,47 +64,34 @@ export const FormsContextProvider: FunctionComponent = ({ children }) => {
   const setCurrentFormData = (data: any): void => {
     if (activeFormIndex === undefined)
       throw new Error("Trying to set form when there is no activeFormIndex");
-    const nextForms = [...forms];
-    const currentForm = forms[activeFormIndex];
-    nextForms.splice(activeFormIndex, 1, { ...currentForm, data });
-    setForms(nextForms);
+    setCurrentForm(data);
   };
 
   const setCurrentFormOwnership = ({ beneficiaryAddress, holderAddress }: Ownership): void => {
     if (activeFormIndex === undefined)
       throw new Error("Trying to set form when there is no activeFormIndex");
-    const nextForms = [...forms];
-    const currentForm = forms[activeFormIndex];
-    nextForms.splice(activeFormIndex, 1, {
-      ...currentForm,
-      ownership: { beneficiaryAddress, holderAddress },
-    });
-    setForms(nextForms);
+    setCurrentForm(undefined, { beneficiaryAddress, holderAddress });
   };
 
   const setCurrentFileName = (fileName: string): void => {
     if (activeFormIndex === undefined) return;
-    const updatedCurrentForm = {
-      ...currentForm,
-      fileName: fileName,
-    } as FormEntry;
-    const nextForms = [...forms];
-    nextForms.splice(activeFormIndex, 1, { ...updatedCurrentForm });
-    setForms(nextForms);
+    setCurrentForm(undefined, undefined, fileName);
   };
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const setCurrentForm = (data: any, updatedOwnership?: Ownership): void => {
+  const setCurrentForm = (
+    data?: FormData,
+    updatedOwnership?: Ownership,
+    fileName?: string
+  ): void => {
     if (activeFormIndex === undefined) return;
     const currentForm = forms[activeFormIndex];
     const nextForms = [...forms];
-    if (updatedOwnership === undefined) {
-      updatedOwnership = { beneficiaryAddress: "", holderAddress: "" };
-    }
     const updatedCurrentForm = {
       ...currentForm,
-      data: { ...data },
-      ownership: updatedOwnership,
+      data: data || currentForm.data,
+      ownership: updatedOwnership || currentForm.ownership,
+      fileName: fileName || currentForm.fileName,
     } as FormEntry;
     nextForms.splice(activeFormIndex, 1, updatedCurrentForm);
     setForms(nextForms);
