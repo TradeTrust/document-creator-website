@@ -64,7 +64,7 @@ export const FormsContextProvider: FunctionComponent = ({ children }) => {
   const setCurrentFormData = (data: any): void => {
     if (activeFormIndex === undefined)
       throw new Error("Trying to set form when there is no activeFormIndex");
-    setCurrentForm(data);
+    setCurrentForm({ data });
   };
 
   const setCurrentFormOwnership = ({ beneficiaryAddress, holderAddress }: Ownership): void => {
