@@ -1,5 +1,8 @@
-import { useThirdPartyAPIEndpoints } from "@govtechsg/address-identity-resolver";
-import { AddressBook, ButtonIcon, useOverlayContext } from "@govtechsg/tradetrust-ui-components";
+import {
+  OverlayAddressBook,
+  ButtonIcon,
+  useOverlayContext,
+} from "@govtechsg/tradetrust-ui-components";
 import React, { FunctionComponent } from "react";
 import { Book } from "react-feather";
 import { usePersistedConfigFile } from "../../../common/hook/usePersistedConfigFile";
@@ -18,15 +21,13 @@ export const TransferableRecordForm: FunctionComponent<TransferableRecordForm> =
   setHolderAddress,
 }) => {
   const { showOverlay } = useOverlayContext();
-  const { thirdPartyAPIEndpoints } = useThirdPartyAPIEndpoints();
   const { configFile } = usePersistedConfigFile();
 
   const onOverlayHandler = (onAddressSelected: (address: string) => void): void => {
     showOverlay(
-      <AddressBook
+      <OverlayAddressBook
         title="Address Book"
         onAddressSelected={onAddressSelected}
-        thirdPartyAPIEndpoints={thirdPartyAPIEndpoints}
         network={configFile?.network ?? "local"}
       />
     );

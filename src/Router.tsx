@@ -2,11 +2,13 @@ import { NetworkBar, Overlay } from "@govtechsg/tradetrust-ui-components";
 import React, { ReactElement } from "react";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 import { usePersistedConfigFile } from "./common/hook/usePersistedConfigFile";
-import { AddressResolverContainer } from "./components/AddressResolverContainer";
+import { SettingsContainer } from "./components/SettingsContainer";
 import { DynamicFormContainer } from "./components/DynamicFormContainer";
 import { FormSelectionContainer } from "./components/FormSelectionContainer";
 import { HomeContainer } from "./components/Home";
 import { PublishContainer } from "./components/PublishContainer";
+import { AddressBookContainer } from "./components/AddressBookContainer";
+import { AddressResolverContainer } from "./components/AddressResolverContainer";
 
 export const Router = (): ReactElement => {
   const { configFile } = usePersistedConfigFile();
@@ -32,8 +34,14 @@ export const Router = (): ReactElement => {
             <Route path="/publish">
               <PublishContainer />
             </Route>
-            <Route path="/settings">
+            <Route path="/settings/address-book">
+              <AddressBookContainer />
+            </Route>
+            <Route path="/settings/address-resolver">
               <AddressResolverContainer />
+            </Route>
+            <Route path="/settings">
+              <SettingsContainer />
             </Route>
           </Switch>
         </BrowserRouter>
