@@ -28,18 +28,14 @@ export const PublishPage: FunctionComponent<PublishPage> = ({ config }) => {
   if (!config) return <Redirect to="/" />;
   if (!currentForm) return <Redirect to="/forms-selection" />;
 
-  return (
-    <>
-      {publishState === "ERROR" ? (
-        <PublishErrorScreen error={error} />
-      ) : (
-        <PublishedScreen
-          publishedDocuments={publishedDocuments}
-          failedPublishedDocuments={failedPublishedDocuments}
-          pendingPublishDocuments={pendingPublishDocuments}
-          publishState={publishState}
-        />
-      )}
-    </>
+  return publishState === "ERROR" ? (
+    <PublishErrorScreen error={error} />
+  ) : (
+    <PublishedScreen
+      publishedDocuments={publishedDocuments}
+      failedPublishedDocuments={failedPublishedDocuments}
+      pendingPublishDocuments={pendingPublishDocuments}
+      publishState={publishState}
+    />
   );
 };

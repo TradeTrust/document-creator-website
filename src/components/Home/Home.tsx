@@ -12,5 +12,5 @@ export const HomeContainer: FunctionComponent = () => {
   // If wallet has been decrypted, redirect to forms
   if (config) return <Redirect to="/forms-selection" />;
 
-  return <>{configFile ? <WalletDecryptionContainer /> : <ConfigFileDropZoneContainer />}</>;
+  return configFile ? <WalletDecryptionContainer /> : <ConfigFileDropZoneContainer />;
 };

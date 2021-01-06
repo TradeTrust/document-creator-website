@@ -10,9 +10,5 @@ export const FormSelectionContainer: FunctionComponent = () => {
     return <Redirect to="/" />;
   }
 
-  return (
-    <>
-      <FormSelection config={config} />
-    </>
-  );
+  return <FormSelection config={config} />;
 };

@@ -9,9 +9,5 @@ export const DynamicFormContainer: FunctionComponent = () => {
   if (!config) {
     return <Redirect to="/" />;
   }
-  return (
-    <>
-      <DynamicFormLayout />
-    </>
-  );
+  return <DynamicFormLayout />;
 };

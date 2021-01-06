@@ -4,13 +4,11 @@ import React, { FunctionComponent } from "react";
 
 export const AddressResolverContainer: FunctionComponent = () => {
   return (
-    <>
-      <div className="container py-8">
-        <Link to="/settings">
-          <BackArrow />
-        </Link>
-        <AddressResolver />
-      </div>
-    </>
+    <div className="container py-8">
+      <Link to="/settings">
+        <BackArrow />
+      </Link>
+      <AddressResolver />
+    </div>
   );
 };

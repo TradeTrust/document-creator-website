@@ -9,11 +9,9 @@ import { HomeContainer } from "./components/Home";
 import { PublishContainer } from "./components/PublishContainer";
 import { AddressBookContainer } from "./components/AddressBookContainer";
 import { AddressResolverContainer } from "./components/AddressResolverContainer";
-import { NavigationBar, NavigationBarProps } from "./components/NavigationBar";
+import { NavigationBar } from "./components/NavigationBar";
 import { useConfigContext } from "./common/context/config";
 import { useFormsContext } from "./common/context/forms";
-
-const navigationBarProps: NavigationBarProps = {};
 
 export const Router = (): ReactElement => {
   const { configFile } = usePersistedConfigFile();
@@ -26,10 +24,6 @@ export const Router = (): ReactElement => {
     setConfig(undefined);
   };
 
-  if (config) {
-    navigationBarProps.logout = logout;
-  }
-
   return (
     <>
       <NetworkBar network={configFile?.network}>
@@ -37,7 +31,7 @@ export const Router = (): ReactElement => {
         change it, please upload a new config file.
       </NetworkBar>
       <BrowserRouter>
-        <NavigationBar {...navigationBarProps} />
+        <NavigationBar logout={config ? logout : undefined} />
         <main className="bg-blue-300">
           <Switch>
             <Route exact path="/">
