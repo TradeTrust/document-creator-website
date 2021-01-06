@@ -56,11 +56,11 @@ const getNetworkPath = (network: Network): string => {
   }
 };
 
-interface NavigationBar {
+export interface NavigationBarProps {
   logout?: () => void;
 }
 
-export const NavigationBar: FunctionComponent<NavigationBar> = ({ logout }) => {
+export const NavigationBar: FunctionComponent<NavigationBarProps> = ({ logout }) => {
   const { configFile } = usePersistedConfigFile();
   return (
     <nav className="bg-navy py-6">

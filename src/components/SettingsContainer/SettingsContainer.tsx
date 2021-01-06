@@ -1,12 +1,10 @@
 import { TileInfo } from "@govtechsg/tradetrust-ui-components";
 import { Link } from "react-router-dom";
 import React, { FunctionComponent } from "react";
-import { NavigationBar } from "../NavigationBar";
 
 export const SettingsContainer: FunctionComponent = () => {
   return (
     <>
-      <NavigationBar />
       <div className="container py-8">
         <h3>Settings</h3>
         <div className="my-4">

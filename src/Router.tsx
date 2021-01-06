@@ -9,9 +9,26 @@ import { HomeContainer } from "./components/Home";
 import { PublishContainer } from "./components/PublishContainer";
 import { AddressBookContainer } from "./components/AddressBookContainer";
 import { AddressResolverContainer } from "./components/AddressResolverContainer";
+import { NavigationBar, NavigationBarProps } from "./components/NavigationBar";
+import { useConfigContext } from "./common/context/config";
+import { useFormsContext } from "./common/context/forms";
+
+const navigationBarProps: NavigationBarProps = {};
 
 export const Router = (): ReactElement => {
   const { configFile } = usePersistedConfigFile();
+  const { setConfig, config } = useConfigContext();
+  const { setForms, setActiveFormIndex } = useFormsContext();
+
+  const logout = (): void => {
+    setForms([]);
+    setActiveFormIndex(undefined);
+    setConfig(undefined);
+  };
+
+  if (config) {
+    navigationBarProps.logout = logout;
+  }
 
   return (
     <>
@@ -19,8 +36,9 @@ export const Router = (): ReactElement => {
         You are currently on <span className="capitalize">{configFile?.network}</span> network. To
         change it, please upload a new config file.
       </NetworkBar>
-      <main className="bg-blue-300">
-        <BrowserRouter>
+      <BrowserRouter>
+        <NavigationBar {...navigationBarProps} />
+        <main className="bg-blue-300">
           <Switch>
             <Route exact path="/">
               <HomeContainer />
@@ -44,8 +62,8 @@ export const Router = (): ReactElement => {
               <SettingsContainer />
             </Route>
           </Switch>
-        </BrowserRouter>
-      </main>
+        </main>
+      </BrowserRouter>
       <Overlay />
     </>
   );
