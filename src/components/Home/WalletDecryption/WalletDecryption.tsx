@@ -48,6 +48,7 @@ export const WalletDecryption: FunctionComponent<WalletDecryption> = ({
           value={password}
           onChange={(evt) => setPassword(evt.target.value)}
           disabled={isDecrypting}
+          autoComplete="off"
         />
         {isIncorrectPassword && (
           <div data-testid="password-field-msg" className="text-red text-sm mt-2">
