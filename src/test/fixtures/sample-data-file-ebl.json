@@ -1,29 +1,35 @@
 {
-  "blNumber": "123",
-  "shipper":{
-    "name": "Demo Shipper",
-    "address":{
-      "street": "One North",
-      "country": "Singapore"
-    }
+  "data": {
+    "blNumber": "123",
+    "shipper": {
+      "name": "Demo Shipper",
+      "address": {
+        "street": "One North",
+        "country": "Singapore"
+      }
+    },
+    "consignee": {
+      "name": "Demo Consignee"
+    },
+    "notifyParty": {
+      "name": "Demo Notify"
+    },
+    "vessel": "1",
+    "voyageNo": "100",
+    "portOfLoading": "Singapore Port",
+    "portOfDischarge": "China Port",
+    "placeOfReceipt": "Beijing",
+    "placeOfDelivery": "Singapore",
+    "packages": [
+      {
+        "description": "Green Apples",
+        "weight": "20",
+        "measurement": "100"
+      }
+    ]
   },
-  "consignee":{
-    "name": "Demo Consignee"
-  },
-  "notifyParty":{
-    "name": "Demo Notify"
-  },
-  "vessel": "1",
-  "voyageNo": "100",
-  "portOfLoading": "Singapore Port",
-  "portOfDischarge": "China Port",
-  "placeOfReceipt": "Beijing",
-  "placeOfDelivery": "Singapore",
-  "packages": [
-    {
-      "description": "Green Apples",
-      "weight": "20",
-      "measurement": "100"
-    }
-  ]
+  "ownership": {
+    "beneficiaryAddress": "0xa61b056da0084a5f391ec137583073096880c2e3",
+    "holderAddress": "0xa61b056da0084a5f391ec137583073096880c2e3"
+  }
 }

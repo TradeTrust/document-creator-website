@@ -1,10 +1,17 @@
 import styled from "@emotion/styled";
-import { cloneDeep, defaultsDeep } from "lodash";
+import { cloneDeep } from "lodash";
 import React, { FunctionComponent } from "react";
 import JsonForm from "react-jsonschema-form";
 import tw from "twin.macro";
 import { mixin } from "../../../styles";
-import { FileUploadType, FormEntry, FormTemplate, FormType, Ownership } from "../../../types";
+import {
+  FileUploadType,
+  FormEntry,
+  FormTemplate,
+  FormType,
+  Ownership,
+  SetFormParams,
+} from "../../../types";
 import { DataFileButton } from "../DataFileButton";
 import { TransferableRecordForm } from "../TransferableRecordForm";
 import { AttachmentDropzone } from "./AttachmentDropzone";
@@ -23,6 +30,7 @@ export interface DynamicFormProps {
   type: FormType;
   setFormData: (formData: any) => void; // eslint-disable-line @typescript-eslint/no-explicit-any
   setOwnership: (ownership: Ownership) => void;
+  setCurrentForm: (arg: SetFormParams) => void; // eslint-disable-line @typescript-eslint/no-explicit-any
 }
 
 export const DynamicFormRaw: FunctionComponent<DynamicFormProps> = ({
@@ -30,22 +38,23 @@ export const DynamicFormRaw: FunctionComponent<DynamicFormProps> = ({
   form,
   setFormData,
   setOwnership,
+  setCurrentForm,
   className,
   attachmentAccepted,
   type,
   attachmentAcceptedFormat = "",
 }) => {
   const { data, ownership } = form;
+  const isTransferableRecord = type === "TRANSFERABLE_RECORD";
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const mergeFormValue = (value: any): void => {
-    // Avoid using spread which will lazy copy the object
-    // See discussion: https://github.com/rjsf-team/react-jsonschema-form/issues/306
-    const nextFormData = cloneDeep(data.formData);
-    setFormData({ ...data, formData: defaultsDeep(value, nextFormData) });
+    setCurrentForm({
+      data: { ...data, formData: value?.data || data.formData },
+      updatedOwnership: value?.ownership,
+    });
   };
 
-  const isTransferableRecord = type === "TRANSFERABLE_RECORD";
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const setAttachments = (attachments: any): void => {
     const currentFormData = cloneDeep(data.formData);

@@ -1,5 +1,5 @@
 import React, { createContext, FunctionComponent, useContext, useState } from "react";
-import { FormData, FormEntry, FormTemplate, Ownership } from "../../../types";
+import { FormData, FormEntry, FormTemplate, Ownership, SetFormParams } from "../../../types";
 import { useConfigContext } from "../config";
 
 interface FormsContext {
@@ -15,6 +15,7 @@ interface FormsContext {
   setCurrentFormData: (formData: FormData) => void;
   setCurrentFormOwnership: (ownership: Ownership) => void;
   setCurrentFileName: (fileName: string) => void;
+  setCurrentForm: (arg: SetFormParams) => void;
 }
 
 export const FormsContext = createContext<FormsContext>({
@@ -25,6 +26,7 @@ export const FormsContext = createContext<FormsContext>({
   setCurrentFormData: () => {}, // eslint-disable-line @typescript-eslint/no-empty-function
   setCurrentFormOwnership: () => {}, // eslint-disable-line @typescript-eslint/no-empty-function
   setCurrentFileName: () => {}, // eslint-disable-line @typescript-eslint/no-empty-function
+  setCurrentForm: () => {}, // eslint-disable-line @typescript-eslint/no-empty-function
 });
 
 export const useFormsContext = (): FormsContext => useContext<FormsContext>(FormsContext);
@@ -62,32 +64,32 @@ export const FormsContextProvider: FunctionComponent = ({ children }) => {
   const setCurrentFormData = (data: any): void => {
     if (activeFormIndex === undefined)
       throw new Error("Trying to set form when there is no activeFormIndex");
-    const nextForms = [...forms];
-    const currentForm = forms[activeFormIndex];
-    nextForms.splice(activeFormIndex, 1, { ...currentForm, data });
-    setForms(nextForms);
+    setCurrentForm({ data });
   };
 
   const setCurrentFormOwnership = ({ beneficiaryAddress, holderAddress }: Ownership): void => {
     if (activeFormIndex === undefined)
       throw new Error("Trying to set form when there is no activeFormIndex");
-    const nextForms = [...forms];
-    const currentForm = forms[activeFormIndex];
-    nextForms.splice(activeFormIndex, 1, {
-      ...currentForm,
-      ownership: { beneficiaryAddress, holderAddress },
-    });
-    setForms(nextForms);
+    setCurrentForm({ data: undefined, updatedOwnership: { beneficiaryAddress, holderAddress } });
   };
 
   const setCurrentFileName = (fileName: string): void => {
     if (activeFormIndex === undefined) return;
+    setCurrentForm({ data: undefined, updatedOwnership: undefined, fileName });
+  };
+
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const setCurrentForm = ({ data, updatedOwnership, fileName }: SetFormParams): void => {
+    if (activeFormIndex === undefined) return;
+    const currentForm = forms[activeFormIndex];
+    const nextForms = [...forms];
     const updatedCurrentForm = {
       ...currentForm,
-      fileName: fileName,
+      data: data || currentForm.data,
+      ownership: updatedOwnership || currentForm.ownership,
+      fileName: fileName || currentForm.fileName,
     } as FormEntry;
-    const nextForms = [...forms];
-    nextForms.splice(activeFormIndex, 1, { ...updatedCurrentForm });
+    nextForms.splice(activeFormIndex, 1, updatedCurrentForm);
     setForms(nextForms);
   };
 
@@ -106,6 +108,7 @@ export const FormsContextProvider: FunctionComponent = ({ children }) => {
         setActiveFormIndex,
         setForms,
         setCurrentFileName,
+        setCurrentForm,
       }}
     >
       {children}

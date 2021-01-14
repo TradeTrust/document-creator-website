@@ -6,6 +6,7 @@ fixture("Document Creator").page`http://localhost:3000`;
 const Config = "./../src/test/fixtures/sample-local-config.json";
 const AttachmentSample = "./../src/test/fixtures/sample.pdf";
 const DataFile = "./../src/test/fixtures/sample-data-file.json";
+const DataFileEbl = "./../src/test/fixtures/sample-data-file-ebl.json";
 
 const Title = Selector("h1");
 const Button = Selector("button");
@@ -130,6 +131,14 @@ test("Upload configuration file, choose form, fill form, submit form correctly",
   await t.typeText(EblBeneficiaryField, "0x6FFeD6E6591b808130a9b248fEA32101b5220eca");
   await t.typeText(EblHolderField, "0x8e87c7cEc2D4464119C937bfef3398ebb1d9452e");
   await t.typeText(EblNumberField, "MY-BL-NUMBER");
+
+  // Test data upload file
+  await t.setFilesToUpload("input[type=file][data-testid=config-file-drop-zone]", [DataFileEbl]);
+
+  // Validate the content is overwritten by the data file
+  await t.expect(EblBeneficiaryField.value).eql("0xa61b056da0084a5f391ec137583073096880c2e3");
+  await t.expect(EblHolderField.value).eql("0xa61b056da0084a5f391ec137583073096880c2e3");
+  await t.expect(EblNumberField.value).eql("123");
 
   // Submit
   await t.click(SubmitButton);
