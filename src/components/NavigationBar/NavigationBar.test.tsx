@@ -2,8 +2,8 @@ import { render, screen } from "@testing-library/react";
 import React from "react";
 import { NavigationBar } from "./NavigationBar";
 import { BrowserRouter, Route } from "react-router-dom";
-import rinkebyConfig from "../../test/fixtures/sample-rinkeby-config.json";
-import ropstenConfig from "../../test/fixtures/sample-config.json";
+import rinkebyConfig from "../../test/fixtures/sample-config-rinkeby.json";
+import ropstenConfig from "../../test/fixtures/sample-config-ropsten.json";
 
 const mockMainnetConfig = {
   network: "homestead",

@@ -1,7 +1,7 @@
 import { act, renderHook } from "@testing-library/react-hooks";
 import { getDefaultProvider, Wallet } from "ethers";
 import { publishJob } from "../../../services/publishing";
-import sampleConfig from "../../../test/fixtures/sample-config.json";
+import sampleConfig from "../../../test/fixtures/sample-config-ropsten.json";
 import sampleJobs from "../../../test/fixtures/sample-jobs.json";
 import { Config, FormEntry } from "../../../types";
 import { uploadToStorage } from "../../API/storageAPI";

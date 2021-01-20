@@ -1,5 +1,5 @@
 import React, { useState, FunctionComponent } from "react";
-import sample from "../../../test/fixtures/sample-config.json";
+import sample from "../../../test/fixtures/sample-config-ropsten.json";
 import { ConfigFile, FormTemplate } from "../../../types";
 import { DynamicForm } from "./DynamicForm";
 

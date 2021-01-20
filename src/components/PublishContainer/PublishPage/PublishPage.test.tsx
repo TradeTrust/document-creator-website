@@ -4,7 +4,7 @@ import { MemoryRouter } from "react-router";
 import { useConfigContext } from "../../../common/context/config";
 import { useFormsContext } from "../../../common/context/forms";
 import { usePublishQueue } from "../../../common/hook/usePublishQueue";
-import sampleConfig from "../../../test/fixtures/sample-config.json";
+import sampleConfig from "../../../test/fixtures/sample-config-ropsten.json";
 import { PublishContainer } from "../PublishContainer";
 
 jest.mock("../../../common/context/forms");
