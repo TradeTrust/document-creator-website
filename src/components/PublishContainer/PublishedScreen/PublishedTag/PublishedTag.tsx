@@ -1,10 +1,10 @@
 import { saveAs } from "file-saver";
 import prettyBytes from "pretty-bytes";
 import React, { FunctionComponent } from "react";
+import { LoaderSpinner } from "@govtechsg/tradetrust-ui-components";
 import { useConfigContext } from "../../../../common/context/config";
 import { WrappedDocument } from "../../../../types";
 import { generateFileName } from "../../../../utils/fileName";
-import { PublishLoader } from "../../../UI/PublishLoader";
 
 interface PublishedTagProps {
   doc: WrappedDocument;
@@ -30,9 +30,13 @@ export const PublishedTag: FunctionComponent<PublishedTagProps> = ({ doc, isPend
     <div className="mt-4 flex rounded bg-white p-3 min-w-xs max-w-xs border border-solid border-grey-200 mr-4 items-center">
       {isPending ? (
         <>
-          <div className="h-12 w-12 mr-4" data-testid="publish-loader">
-            <PublishLoader />
-          </div>
+          <LoaderSpinner
+            className="mr-4"
+            data-testid="publish-loader"
+            width="48px"
+            primary="#00cbbc"
+            secondary="#e2e8f0"
+          />
           <div className="font-bold text-grey">
             {fileName}
             <span className="text-grey-400 text-xs font-regular"> ({size})</span>
