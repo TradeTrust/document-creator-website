@@ -31,7 +31,7 @@ export const PublishedTag: FunctionComponent<PublishedTagProps> = ({ doc, isPend
       {isPending ? (
         <>
           <LoaderSpinner
-            className="mr-4"
+            className="mr-4 flex-shrink-0"
             data-testid="publish-loader"
             width="48px"
             primary="#00cbbc"
@@ -46,7 +46,7 @@ export const PublishedTag: FunctionComponent<PublishedTagProps> = ({ doc, isPend
         </>
       ) : (
         <>
-          <div className="bg-blue w-12 h-12 rounded-full mr-4">
+          <div className="bg-blue w-12 h-12 rounded-full mr-4 flex-shrink-0">
             <div className="flex justify-center items-center h-full text-white font-bold">TT</div>
           </div>
           <div className="w-auto">
