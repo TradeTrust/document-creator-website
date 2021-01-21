@@ -1,5 +1,5 @@
 /* eslint-disable  @typescript-eslint/no-explicit-any */
-import sample from "../../test/fixtures/sample-config.json";
+import sample from "../../test/fixtures/sample-config-ropsten.json";
 import { assertConfigFile } from "./validate";
 
 describe("configFileSchema", () => {

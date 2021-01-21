@@ -4,7 +4,7 @@ import { CheckCircle, XCircle } from "react-feather";
 import { useConfigContext } from "../../../../common/context/config";
 import { useFormsContext } from "../../../../common/context/forms";
 import { WrappedDocument } from "../../../../types";
-import { PublishLoader } from "../../../UI/PublishLoader";
+import { LoaderSpinner } from "@govtechsg/tradetrust-ui-components";
 import { Title } from "../../../UI/Title";
 
 interface PublishTitle {
@@ -35,9 +35,7 @@ export const PublishTitle: FunctionComponent<PublishTitle> = ({
       case "PENDING_CONFIRMATION":
         return (
           <>
-            <div className="h-6 w-6 mr-2">
-              <PublishLoader />
-            </div>
+            <LoaderSpinner className="mr-2" width="24px" primary="#00cbbc" secondary="#e2e8f0" />
             Publishing document(s)...
           </>
         );
