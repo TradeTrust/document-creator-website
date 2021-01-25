@@ -23,10 +23,6 @@ jobs:
             ${{ runner.os }}-build-${{ env.cache-name }}-	
             ${{ runner.os }}-build-	
             ${{ runner.os }}-
-
-      - uses: webfactory/ssh-agent@v0.4.1
-        with:
-          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
       - name: Install Packages
         run: npm ci
       - name: Check Lint
