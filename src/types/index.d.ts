@@ -10,6 +10,7 @@ export interface FormTemplate {
   defaults: any; // eslint-disable-line @typescript-eslint/no-explicit-any
   schema: any; // eslint-disable-line @typescript-eslint/no-explicit-any
   attachments?: Attachments;
+  headers?: string[];
 }
 
 export interface DocumentStorage {

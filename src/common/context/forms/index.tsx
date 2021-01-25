@@ -12,6 +12,8 @@ interface FormsContext {
   setActiveFormIndex: (index?: number) => void;
   setForms: (forms: FormEntry[]) => void;
   newForm: (templateIndex: number) => void;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  newPopulatedForm: (templateIndex: number, formData: any) => void;
   setCurrentFormData: (formData: FormData) => void;
   setCurrentFormOwnership: (ownership: Ownership) => void;
   setCurrentFileName: (fileName: string) => void;
@@ -23,6 +25,7 @@ export const FormsContext = createContext<FormsContext>({
   setActiveFormIndex: () => {}, // eslint-disable-line @typescript-eslint/no-empty-function
   setForms: () => {}, // eslint-disable-line @typescript-eslint/no-empty-function
   newForm: () => {}, // eslint-disable-line @typescript-eslint/no-empty-function
+  newPopulatedForm: () => {}, // eslint-disable-line @typescript-eslint/no-empty-function
   setCurrentFormData: () => {}, // eslint-disable-line @typescript-eslint/no-empty-function
   setCurrentFormOwnership: () => {}, // eslint-disable-line @typescript-eslint/no-empty-function
   setCurrentFileName: () => {}, // eslint-disable-line @typescript-eslint/no-empty-function
@@ -57,7 +60,28 @@ export const FormsContextProvider: FunctionComponent = ({ children }) => {
         ownership: { beneficiaryAddress: "", holderAddress: "" },
       },
     ]);
+
     setActiveFormIndex(newIndex);
+  };
+
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const newPopulatedForm = (templateIndex: number, formData: any): void => {
+    const newFormTemplate = config?.forms[templateIndex];
+    const newFormName = newFormTemplate?.name ?? "Document";
+
+    const formsEntries = [];
+    for (let i = 0; i < formData.length; i++) {
+      formsEntries.push({
+        templateIndex,
+        data: {
+          formData: formData[i],
+          schema: newFormTemplate?.schema,
+        },
+        fileName: `${newFormName}-${i + 1}`,
+        ownership: { beneficiaryAddress: "", holderAddress: "" },
+      });
+    }
+    setForms([...formsEntries]);
   };
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -105,6 +129,7 @@ export const FormsContextProvider: FunctionComponent = ({ children }) => {
         setCurrentFormData,
         setCurrentFormOwnership,
         newForm,
+        newPopulatedForm,
         setActiveFormIndex,
         setForms,
         setCurrentFileName,
