@@ -24,6 +24,9 @@ jobs:
             ${{ runner.os }}-build-	
             ${{ runner.os }}-
       - name: Install Packages
+        uses: webfactory/ssh-agent@v0.4.1
+        with:
+          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
         run: npm ci
       - name: Check Lint
         run: npm run lint
