@@ -1,9 +1,10 @@
 import { Button } from "@govtechsg/tradetrust-ui-components";
 import React, { FunctionComponent, useState } from "react";
 import { useDropzone } from "react-dropzone";
-import { readFileAsJson } from "../../../common/utils";
+import { readFileAsJson, readFileAsCsv } from "../../../common/utils";
 import { getLogger } from "../../../utils/logger";
 import { ErrorAlert } from "../../Alert";
+import { useFormsContext } from "../../../common/context/forms";
 
 const { stack } = getLogger("DataFileButton");
 interface DataFileButton {
@@ -11,14 +12,20 @@ interface DataFileButton {
 }
 
 export const DataFileButton: FunctionComponent<DataFileButton> = ({ onDataFile }) => {
+  const { currentFormTemplate } = useFormsContext();
   const [error, setError] = useState(false);
   const onDrop = async (files: File[]): Promise<void> => {
     try {
       const file = files[0];
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      const config = await readFileAsJson<any>(file);
+      let data = null;
+      if (file.name.indexOf(".csv") > 0) {
+        data = await readFileAsCsv(file, currentFormTemplate?.headers);
+      } else {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        data = await readFileAsJson<any>(file);
+      }
       setError(false);
-      onDataFile(config);
+      onDataFile(data);
     } catch (e) {
       stack(e);
       setError(true);

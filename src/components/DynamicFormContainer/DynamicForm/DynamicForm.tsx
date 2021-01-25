@@ -12,6 +12,8 @@ import {
   Ownership,
   SetFormParams,
 } from "../../../types";
+
+import { useFormsContext } from "../../../common/context/forms";
 import { DataFileButton } from "../DataFileButton";
 import { TransferableRecordForm } from "../TransferableRecordForm";
 import { AttachmentDropzone } from "./AttachmentDropzone";
@@ -44,15 +46,24 @@ export const DynamicFormRaw: FunctionComponent<DynamicFormProps> = ({
   type,
   attachmentAcceptedFormat = "",
 }) => {
-  const { data, ownership } = form;
+  const { templateIndex, data, ownership } = form;
+  const { newPopulatedForm } = useFormsContext();
   const isTransferableRecord = type === "TRANSFERABLE_RECORD";
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const mergeFormValue = (value: any): void => {
-    setCurrentForm({
-      data: { ...data, formData: value?.data || data.formData },
-      updatedOwnership: value?.ownership,
-    });
+    // If value is an array, call function from forms index to append
+    // multiple docs of the current form's templateIndex
+    if (Array.isArray(value)) {
+      newPopulatedForm(templateIndex, value);
+    } else {
+      // But if it's just one object, we'll replace the values of the existing form (i.e. original behaviour)
+      // setFormData({ ...data, formData: defaultsDeep(value, nextFormData) });
+      setCurrentForm({
+        data: { ...data, formData: value?.data || data.formData },
+        updatedOwnership: value?.ownership,
+      });
+    }
   };
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
