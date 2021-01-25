@@ -24,7 +24,11 @@ jobs:
             ${{ runner.os }}-build-	
             ${{ runner.os }}-
       - name: Install Packages
-        run: npm install
+        run: |
+          git config --global url."https://".insteadOf git://
+          git config --global url."https://".insteadOf git+https://
+          git config --global url."https://".insteadOf ssh://git
+          npm ci
       - name: Check Lint
         run: npm run lint
       - name: Check Type
