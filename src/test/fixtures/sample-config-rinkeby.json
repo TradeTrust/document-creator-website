@@ -1,6 +1,6 @@
 {
   "network": "rinkeby",
-  "wallet": "{\"address\":\"123b86fc8fce13c4a0f452cd0a8ab5b6b3e3a4f3\",\"id\":\"397a0415-a378-4c2c-a520-a6e51df657d0\",\"version\":3,\"Crypto\":{\"cipher\":\"aes-128-ctr\",\"cipherparams\":{\"iv\":\"0e0251406497d3374e8164fac7785d0f\"},\"ciphertext\":\"26ab259b452d62e2934101caefeb56ff7887fd5a7c87734060116574952e1ced\",\"kdf\":\"scrypt\",\"kdfparams\":{\"salt\":\"16afd1641fa766695171b2d563af62f578bd3e06606cd6f6677ec57c30019c9c\",\"n\":131072,\"dklen\":32,\"p\":1,\"r\":8},\"mac\":\"d61f53c25df73b68df8cf6e6be354ea41443d7471fe56897f95f1269a28a9cd1\"}}",
+  "wallet": "{\"address\":\"1245e5b64d785b25057f7438f715f4aa5d965733\",\"id\":\"bf069d1b-4e88-487c-b695-f2e03ed7c1ff\",\"version\":3,\"Crypto\":{\"cipher\":\"aes-128-ctr\",\"cipherparams\":{\"iv\":\"1f34e7bfdaee4b0778ecea4c8d12a543\"},\"ciphertext\":\"4f6cee88b4776f4f6f8eedf3da11c6a13542aa4bb65d46a5c1bc44c100a96f54\",\"kdf\":\"scrypt\",\"kdfparams\":{\"salt\":\"d931e0ea13032fd70060e40054c5a76c0571f4d840ec91eeda1bf68bdcad84db\",\"n\":1,\"dklen\":32,\"p\":1,\"r\":8},\"mac\":\"06c7897e3ff04245bf4f0765d8b6a8482c1c9981cb46ae88f636f9c83cd0b891\"},\"x-ethers\":{\"client\":\"ethers.js\",\"gethFilename\":\"UTC--2020-05-15T09-03-13.0Z--1245e5b64d785b25057f7438f715f4aa5d965733\",\"mnemonicCounter\":\"99b7f5b6897dcfe22fc7aa00d8e3cf5e\",\"mnemonicCiphertext\":\"6e7c1d38f162e54050b125f1f51b43ca\",\"path\":\"m/44'/60'/0'/0/0\",\"version\":\"0.1\"}}",
   "forms": [
     {
       "name": "COO",
@@ -8,16 +8,16 @@
       "defaults": {
         "$template": {
           "type": "EMBEDDED_RENDERER",
-          "name": "custom",
-          "url": "https://chafta.tradetrust.io"
+          "name": "CHAFTA_COO",
+          "url": "https://generic-templates.tradetrust.io"
         },
         "issuers": [
           {
             "name": "Demo Issuer",
-            "documentStore": "0x0C8b2128598eb731C85cdb5514251AaD4E819F52",
+            "documentStore": "0x8bA63EAB43342AAc3AdBB4B827b68Cf4aAE5Caca",
             "identityProof": {
               "type": "DNS-TXT",
-              "location": "demo.tradetrust.io"
+              "location": "demo-tradetrust.openattestation.com"
             }
           }
         ],
@@ -431,7 +431,7 @@
         "$template": {
           "type": "EMBEDDED_RENDERER",
           "name": "BILL_OF_LADING",
-          "url": "https://demo-cnm.openattestation.com"
+          "url": "https://generic-templates.tradetrust.io"
         },
         "issuers": [
           {
@@ -440,16 +440,14 @@
               "location": "demo-tradetrust.openattestation.com"
             },
             "name": "DEMO STORE",
-            "tokenRegistry": "0x13249BA1Ec6B957Eb35D34D7b9fE5D91dF225B5B"
+            "tokenRegistry": "0x49b2969bF0E4aa822023a9eA2293b24E4518C1DD"
           }
         ],
         "name": "Maersk Bill of Lading"
       },
       "schema": {
         "type": "object",
-        "required": [
-          "blNumber"
-        ],
+        "required": ["blNumber"],
         "properties": {
           "blNumber": {
             "type": "string",
@@ -546,22 +544,27 @@
         "$template": {
           "type": "EMBEDDED_RENDERER",
           "name": "COVERING_LETTER",
-          "url": "https://generic-templates.openattestation.com"
+          "url": "https://generic-templates.tradetrust.io"
         },
         "issuers": [
           {
             "name": "Demo Issuer",
-            "documentStore": "0x0C8b2128598eb731C85cdb5514251AaD4E819F52",
+            "documentStore": "0x8bA63EAB43342AAc3AdBB4B827b68Cf4aAE5Caca",
             "identityProof": {
               "type": "DNS-TXT",
-              "location": "demo.tradetrust.io"
+              "location": "demo-tradetrust.openattestation.com"
             }
           }
         ],
         "name": "Covering Letter",
         "logo": "https://www.aretese.com/images/govtech-animated-logo.gif",
         "title": "Documents Bundle",
-        "description": "Some very important documents in here for some submission"
+        "remarks": "Some very important documents in here for some submission",
+        "uiSchema": {
+          "remarks": {
+            "ui:widget": "textarea"
+          }
+        }
       },
       "schema": {
         "type": "object",
@@ -570,9 +573,9 @@
             "type": "string",
             "title": "Document Title"
           },
-          "description": {
+          "remarks": {
             "type": "string",
-            "title": "Document Description"
+            "title": "Remarks"
           }
         }
       },
@@ -587,15 +590,15 @@
         "$template": {
           "type": "EMBEDDED_RENDERER",
           "name": "COVERING_LETTER",
-          "url": "https://generic-templates.openattestation.com"
+          "url": "https://generic-templates.tradetrust.io"
         },
         "issuers": [
           {
             "name": "Demo Issuer",
-            "documentStore": "0x0C8b2128598eb731C85cdb5514251AaD4E819F52",
+            "documentStore": "0x8bA63EAB43342AAc3AdBB4B827b68Cf4aAE5Caca",
             "identityProof": {
               "type": "DNS-TXT",
-              "location": "demo.tradetrust.io"
+              "location": "demo-tradetrust.openattestation.com"
             }
           }
         ],
@@ -603,9 +606,14 @@
         "logo": "https://pluspng.com/img-png/logo-dbs-png-file-dbs-bank-logo-svg-1280.png",
         "backgroundColor": "black",
         "titleColor": "white",
-        "descriptionColor": "white",
+        "remarksColor": "white",
         "title": "Documents Bundle",
-        "description": "Some very important documents in here for some submission"
+        "remarks": "Some very important documents in here for some submission",
+        "uiSchema": {
+          "remarks": {
+            "ui:widget": "textarea"
+          }
+        }
       },
       "schema": {
         "type": "object",
@@ -614,9 +622,9 @@
             "type": "string",
             "title": "Document Title"
           },
-          "description": {
+          "remarks": {
             "type": "string",
-            "title": "Document Description"
+            "title": "Remarks"
           }
         }
       },
@@ -625,48 +633,158 @@
       }
     },
     {
-      "name": "Covering Letter (ERROR)",
+      "name": "Invoice (IMDA)",
       "type": "VERIFIABLE_DOCUMENT",
       "defaults": {
         "$template": {
-          "type": "COVERING_LETTER",
-          "name": "custom",
-          "url": "https://generic-templates.openattestation.com"
+          "type": "EMBEDDED_RENDERER",
+          "name": "INVOICE",
+          "url": "https://generic-templates.tradetrust.io"
         },
         "issuers": [
           {
             "name": "Demo Issuer",
-            "documentStore": "0x0C8b2128598eb731C85cdb5514251AaD4E819F52",
+            "documentStore": "0x8bA63EAB43342AAc3AdBB4B827b68Cf4aAE5Caca",
             "identityProof": {
               "type": "DNS-TXT",
-              "location": "demo.tradetrust.io"
+              "location": "demo-tradetrust.openattestation.com"
             }
           }
         ],
-        "name": "Covering Letter",
-        "logo": "https://pluspng.com/img-png/logo-dbs-png-file-dbs-bank-logo-svg-1280.png",
-        "backgroundColor": "black",
-        "titleColor": "white",
-        "descriptionColor": "white",
-        "title": "Documents Bundle",
-        "description": "Some very important documents in here for some submission"
+        "name": "Invoice (IMDA)"
       },
       "schema": {
         "type": "object",
         "properties": {
-          "title": {
+          "id": {
             "type": "string",
-            "title": "Document Title"
+            "title": "Invoice ID"
           },
-          "description": {
+          "date": {
             "type": "string",
-            "title": "Document Description"
+            "title": "Date"
+          },
+          "customerId": {
+            "type": "string",
+            "title": "Customer ID"
+          },
+          "terms": {
+            "type": "string",
+            "title": "Terms"
+          },
+          "billFrom": {
+            "type": "object",
+            "title": "Bill From",
+            "properties": {
+              "name": {
+                "type": "string",
+                "title": "Name"
+              },
+              "streetAddress": {
+                "type": "string",
+                "title": "Street Address"
+              },
+              "city": {
+                "type": "string",
+                "title": "City"
+              },
+              "postalCode": {
+                "type": "string",
+                "title": "Postal Code"
+              },
+              "phoneNumber": {
+                "type": "string",
+                "title": "Phone Number"
+              }
+            }
+          },
+          "billTo": {
+            "type": "object",
+            "title": "Bill To",
+            "properties": {
+              "name": {
+                "type": "string",
+                "title": "Name"
+              },
+              "email": {
+                "type": "string",
+                "title": "Email"
+              },
+              "company": {
+                "type": "object",
+                "title": "Bill To Company",
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "title": "Name"
+                  },
+                  "streetAddress": {
+                    "type": "string",
+                    "title": "Street Address"
+                  },
+                  "city": {
+                    "type": "string",
+                    "title": "City"
+                  },
+                  "postalCode": {
+                    "type": "string",
+                    "title": "Postal Code"
+                  },
+                  "phoneNumber": {
+                    "type": "string",
+                    "title": "Phone Number"
+                  }
+                }
+              }
+            }
+          },
+          "billableItems": {
+            "type": "array",
+            "title": "Billable Items",
+            "items": {
+              "type": "object",
+              "properties": {
+                "description": {
+                  "type": "string",
+                  "title": "Description"
+                },
+                "quantity": {
+                  "type": "string",
+                  "title": "Quantity"
+                },
+                "unitPrice": {
+                  "type": "string",
+                  "title": "Unit Price"
+                },
+                "amount": {
+                  "type": "string",
+                  "title": "Amount"
+                }
+              }
+            }
+          },
+          "subtotal": {
+            "type": "string",
+            "title": "Subtotal"
+          },
+          "tax": {
+            "type": "string",
+            "title": "Tax (%)"
+          },
+          "taxTotal": {
+            "type": "string",
+            "title": "Tax Total"
+          },
+          "total": {
+            "type": "string",
+            "title": "Total"
           }
         }
-      },
-      "attachments": {
-        "allow": true
       }
     }
-  ]
+  ],
+  "documentStorage": {
+    "apiKey": "randomKey",
+    "url": "https://api-rinkeby.tradetrust.io/storage"
+  }
 }

@@ -2,7 +2,7 @@ import { fireEvent, render, screen } from "@testing-library/react";
 import { saveAs } from "file-saver";
 import React from "react";
 import { useConfigContext } from "../../../../common/context/config";
-import sampleConfig from "../../../../test/fixtures/sample-config.json";
+import sampleConfig from "../../../../test/fixtures/sample-config-ropsten.json";
 import { WrappedDocument } from "../../../../types";
 import { PublishedTag } from "./PublishedTag";
 

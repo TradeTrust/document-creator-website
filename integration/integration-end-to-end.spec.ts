@@ -31,7 +31,7 @@ const closeTab = ClientFunction(() => window.close());
 test("Upload configuration file, choose form, fill form, submit form correctly", async (t) => {
   // Check go to doc button
   await t.click(Selector("[data-testid='config-file-docs-button']"));
-  await t.expect(Title.textContent).contains("Using TradeTrust Document Creator");
+  await t.expect(Title.textContent).contains("Document Creator");
   await closeTab();
 
   // Upload config file
