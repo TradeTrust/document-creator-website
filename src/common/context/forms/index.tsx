@@ -12,8 +12,7 @@ interface FormsContext {
   setActiveFormIndex: (index?: number) => void;
   setForms: (forms: FormEntry[]) => void;
   newForm: (templateIndex: number) => void;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  newPopulatedForm: (templateIndex: number, formData: any) => void;
+  newPopulatedForm: (templateIndex: number, formData: Array<FormEntry>) => void;
   setCurrentFormData: (formData: FormData) => void;
   setCurrentFormOwnership: (ownership: Ownership) => void;
   setCurrentFileName: (fileName: string) => void;
@@ -64,11 +63,9 @@ export const FormsContextProvider: FunctionComponent = ({ children }) => {
     setActiveFormIndex(newIndex);
   };
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const newPopulatedForm = (templateIndex: number, formData: any): void => {
+  const newPopulatedForm = (templateIndex: number, formData: Array<FormEntry>): void => {
     const newFormTemplate = config?.forms[templateIndex];
     const newFormName = newFormTemplate?.name ?? "Document";
-
     const formsEntries = [];
     for (let i = 0; i < formData.length; i++) {
       formsEntries.push({
