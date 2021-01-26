@@ -7,7 +7,7 @@ const Config = "./../src/test/fixtures/sample-local-config.json";
 const AttachmentSample = "./../src/test/fixtures/sample.pdf";
 const DataFile = "./../src/test/fixtures/sample-data-file.json";
 const DataFileEbl = "./../src/test/fixtures/sample-data-file-ebl.json";
-// const DataFileCsv = "./../src/test/fixtures/sample-data-file-csv.csv";
+const DataFileCsv = "./../src/test/fixtures/sample-data-file-csv.csv";
 
 const Title = Selector("h1");
 const Button = Selector("button");
@@ -19,8 +19,8 @@ const AddNewButton = Selector("[data-testid='add-new-button']");
 const SubmitButton = Selector("[data-testid='form-submit-button']");
 const DownloadAllButton = Selector("[data-testid='download-all-button']");
 const FormIdField = Selector("#root_iD");
-// const FormTitleField = Selector("#root_title");
-// const FormRemarksField = Selector("#root_remarks");
+const FormTitleField = Selector("#root_title");
+const FormRemarksField = Selector("#root_remarks");
 const FormAttachmentField = Selector("[data-testid='upload-file-0']");
 const FormExporterNameField = Selector("#root_supplyChainConsignment_exporter_name");
 const EblBeneficiaryField = Selector("[data-testid='transferable-record-beneficiary-input']");
@@ -50,6 +50,31 @@ test("Upload configuration file, choose form, fill form, submit form correctly",
   await t.expect(Title.textContent).contains("Choose Document Type to Issue");
   await t.expect(ProgressBar.textContent).contains("Step 1/3");
 
+  // Navigate to form and fill form
+  await t.click(Button.withText("Covering Letter"));
+
+  // Test data upload file
+  await t.setFilesToUpload("input[type=file][data-testid=config-file-drop-zone]", [DataFileCsv]);
+
+  // Validated the content is overwritten by the data file
+  await t.expect(FormTitleField.value).eql("Testing1");
+  await t.expect(FormRemarksField.value).eql("Testing1");
+
+  // Check next document
+  await t.click(nextDocumentButton);
+  await t.expect(fileNameField.value).eql("Covering Letter-2");
+
+  // Validated the content is overwritten by the data file
+  await t.expect(FormTitleField.value).eql("Testing2");
+  await t.expect(FormRemarksField.value).eql("Testing2");
+
+  // Check previous document
+  await t.click(previousDocumentButton);
+  await t.expect(fileNameField.value).eql("Covering Letter-1");
+
+  // Add new form
+  await t.click(AddNewButton);
+  
   // Navigate to form
   await t.click(Button.withText("COO"));
   await t.expect(Title.textContent).contains("Fill and Preview Form");
@@ -106,7 +131,7 @@ test("Upload configuration file, choose form, fill form, submit form correctly",
 
   // go to the previous document
   await t.click(previousDocumentButton);
-  await t.expect(fileNameField.value).eql("COO-1");
+  await t.expect(fileNameField.value).eql("COO-3");
 
   // go back to the other document
   await t.click(nextDocumentButton);
