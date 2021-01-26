@@ -131,7 +131,7 @@ test("Upload configuration file, choose form, fill form, submit form correctly",
 
   // go to the previous document
   await t.click(previousDocumentButton);
-  await t.expect(fileNameField.value).eql("COO-3");
+  await t.expect(fileNameField.value).eql("COO-1");
 
   // go back to the other document
   await t.click(nextDocumentButton);
