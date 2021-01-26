@@ -24,6 +24,8 @@ jobs:
             ${{ runner.os }}-build-	
             ${{ runner.os }}-
       - name: Install Packages
+        # Solution to solve the problem with older version package 
+        # that fails on git checkout with ssh
         run: |
           git config --global url."https://".insteadOf git://
           git config --global url."https://".insteadOf git+https://
