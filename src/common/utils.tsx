@@ -28,17 +28,18 @@ interface QrCode {
   };
 }
 
-export function readFileAsCsv<T>(file: File, headers?: string[]): Promise<Array<T>> {
+export function readFileAsCsv(file: File, headers?: string[]): Promise<Array<JSON>> {
   return new Promise((resolve, reject) => {
     const reader: FileReader = new FileReader();
     if (reader.error) {
       reject(reader.error);
     }
     reader.onload = async () => {
-      const data: T[] = await csv({
+      const data: JSON[] = await csv({
         noheader: false,
         headers,
       }).fromString(reader.result as string);
+      console.log(data);
       resolve(data);
     };
     reader.readAsText(file);
