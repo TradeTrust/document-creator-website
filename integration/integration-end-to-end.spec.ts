@@ -19,8 +19,8 @@ const AddNewButton = Selector("[data-testid='add-new-button']");
 const SubmitButton = Selector("[data-testid='form-submit-button']");
 const DownloadAllButton = Selector("[data-testid='download-all-button']");
 const FormIdField = Selector("#root_iD");
-// const FormTitleField = Selector("#root_title");
-// const FormRemarksField = Selector("#root_remarks");
+const FormTitleField = Selector("#root_title");
+const FormRemarksField = Selector("#root_remarks");
 const FormAttachmentField = Selector("[data-testid='upload-file-0']");
 const FormExporterNameField = Selector("#root_supplyChainConsignment_exporter_name");
 const EblBeneficiaryField = Selector("[data-testid='transferable-record-beneficiary-input']");
@@ -56,21 +56,21 @@ test("Upload configuration file, choose form, fill form, submit form correctly",
   // Test data upload file
   await t.setFilesToUpload("input[type=file][data-testid=config-file-drop-zone]", [DataFileCsv]);
 
-  // // Validated the content is overwritten by the data file
-  // await t.expect(FormTitleField.value).eql("Testing1");
-  // await t.expect(FormRemarksField.value).eql("Testing1");
+  // Validated the content is overwritten by the data file
+  await t.expect(FormTitleField.value).eql("Testing1");
+  await t.expect(FormRemarksField.value).eql("Testing1");
 
-  // // Check next document
-  // await t.click(nextDocumentButton);
-  // await t.expect(fileNameField.value).eql("Covering Letter-2");
+  // Check next document
+  await t.click(nextDocumentButton);
+  await t.expect(fileNameField.value).eql("Covering Letter-2");
 
-  // // Validated the content is overwritten by the data file
-  // await t.expect(FormTitleField.value).eql("Testing2");
-  // await t.expect(FormRemarksField.value).eql("Testing2");
+  // Validated the content is overwritten by the data file
+  await t.expect(FormTitleField.value).eql("Testing2");
+  await t.expect(FormRemarksField.value).eql("Testing2");
 
   // Check previous document
-  // await t.click(previousDocumentButton);
-  // await t.expect(fileNameField.value).eql("Covering Letter-1");
+  await t.click(previousDocumentButton);
+  await t.expect(fileNameField.value).eql("Covering Letter-1");
 
   // Add new form
   await t.click(AddNewButton);
