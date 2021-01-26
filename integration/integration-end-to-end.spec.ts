@@ -72,31 +72,6 @@ test("Upload configuration file, choose form, fill form, submit form correctly",
   await t.expect(Title.textContent).contains("Choose Document Type to Issue");
 
   // Navigate to form and fill form
-  await t.click(Button.withText("Covering Letter"));
-
-  // Test data upload file
-  await t.setFilesToUpload("input[type=file][data-testid=config-file-drop-zone]", [DataFileCsv]);
-
-  // Validated the content is overwritten by the data file
-  await t.expect(FormTitleField.value).eql("Testing1");
-  await t.expect(FormRemarksField.value).eql("Testing1");
-
-  // Check next document
-  await t.click(nextDocumentButton);
-  await t.expect(fileNameField.value).eql("Covering Letter-2");
-
-  // Validated the content is overwritten by the data file
-  await t.expect(FormTitleField.value).eql("Testing2");
-  await t.expect(FormRemarksField.value).eql("Testing2");
-
-  // Check previous document
-  await t.click(previousDocumentButton);
-  await t.expect(fileNameField.value).eql("Covering Letter-1");
-
-  // Add new form
-  await t.click(AddNewButton);
-
-  // Navigate to form and fill form
   await t.click(Button.withText("COO"));
   await t.typeText(FormIdField, "COO-ID");
 
@@ -131,7 +106,7 @@ test("Upload configuration file, choose form, fill form, submit form correctly",
 
   // go to the previous document
   await t.click(previousDocumentButton);
-  await t.expect(fileNameField.value).eql("COO-3");
+  await t.expect(fileNameField.value).eql("COO-1");
 
   // go back to the other document
   await t.click(nextDocumentButton);
