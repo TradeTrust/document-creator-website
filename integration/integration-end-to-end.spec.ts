@@ -74,7 +74,7 @@ test("Upload configuration file, choose form, fill form, submit form correctly",
 
   // Add new form
   await t.click(AddNewButton);
-  
+
   // Navigate to form
   await t.click(Button.withText("COO"));
   await t.expect(Title.textContent).contains("Fill and Preview Form");
