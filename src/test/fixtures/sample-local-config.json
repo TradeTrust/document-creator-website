@@ -549,7 +549,7 @@
         "issuers": [
           {
             "name": "Demo Issuer",
-            "documentStore": "0x8bA63EAB43342AAc3AdBB4B827b68Cf4aAE5Caca",
+            "documentStore": "0x63a223e025256790e88778a01f480eba77731d04",
             "identityProof": {
               "type": "DNS-TXT",
               "location": "demo-tradetrust.openattestation.com"
