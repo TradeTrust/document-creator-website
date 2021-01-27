@@ -50,8 +50,7 @@ export const DynamicFormRaw: FunctionComponent<DynamicFormProps> = ({
   const { newPopulatedForm } = useFormsContext();
   const isTransferableRecord = type === "TRANSFERABLE_RECORD";
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const mergeFormValue = (value: any): void => {
+  const mergeFormValue = (value: JSON | JSON[]): void => {
     // If value is an array, call function from forms index to append
     // multiple docs of the current form's templateIndex
     if (Array.isArray(value)) {

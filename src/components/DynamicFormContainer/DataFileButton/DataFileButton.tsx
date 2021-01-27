@@ -8,7 +8,7 @@ import { useFormsContext } from "../../../common/context/forms";
 
 const { stack } = getLogger("DataFileButton");
 interface DataFileButton {
-  onDataFile: (dataFile: any) => void; // eslint-disable-line @typescript-eslint/no-explicit-any
+  onDataFile: (dataFile: JSON | JSON[]) => void; // eslint-disable-line @typescript-eslint/no-explicit-any
 }
 
 export const DataFileButton: FunctionComponent<DataFileButton> = ({ onDataFile }) => {
@@ -17,12 +17,11 @@ export const DataFileButton: FunctionComponent<DataFileButton> = ({ onDataFile }
   const onDrop = async (files: File[]): Promise<void> => {
     try {
       const file = files[0];
-      let data = null;
+      let data;
       if (file.name.indexOf(".csv") > 0) {
         data = await readFileAsCsv(file, currentFormTemplate?.headers);
       } else {
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        data = await readFileAsJson<any>(file);
+        data = await readFileAsJson<JSON>(file);
       }
       setError(false);
       onDataFile(data);
