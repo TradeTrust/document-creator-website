@@ -1,28 +1,31 @@
 import { Selector } from "testcafe";
 import { enterPassword, loadConfigFile } from "./helper";
 
-fixture("Document Creator").page`http://localhost:3000`;
+fixture("Error document issue").page`http://localhost:3000`;
 
-const ConfigFailPublishDocument = "./../src/test/fixtures/sample-config-fail-publish-document.json";
+const ConfigFailPublishDocument = "./../src/test/fixtures/sample-config-error-document-issue.json";
 const Title = Selector("h1");
 const Button = Selector("button");
 const SubmitButton = Selector("[data-testid='form-submit-button']");
+const ProgressBar = Selector("[data-testid='progress-bar']");
 
-test("Upload configuration file, choose form, submit form, encounter failed published document", async (t) => {
-  // upload configuration file
+test("should show failed published document(s) errors", async (t) => {
+  // Upload config file
   await loadConfigFile(ConfigFailPublishDocument);
+  await t.expect(Title.textContent).contains("Create Document");
 
-  // enter password
+  // Login to step 1
   await enterPassword("password");
-
-  // choose form
   await t.expect(Title.textContent).contains("Choose Document Type to Issue");
+  await t.expect(ProgressBar.textContent).contains("Step 1/3");
+
+  // Navigate to form
   await t.click(Button.withText("Covering Letter (GT)"));
 
-  // submit form
+  // Submit form
   await t.click(SubmitButton);
 
-  // encounter failed published document
+  // Failed published document
   await t.expect(Title.textContent).contains("Document(s) failed to issue");
   await t.expect(Selector("div").withText("1 Document(s) Failed").exists).ok();
   await t
