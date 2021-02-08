@@ -24,7 +24,7 @@ test("should be added and removed correctly", async (t) => {
   await t.expect(ProgressBar.textContent).contains("Step 1/3");
 
   // Navigate to form
-  await t.click(Button.withText("COO"));
+  await t.click(Button.withText("Covering Letter"));
   await t.expect(Title.textContent).contains("Fill and Preview Form");
   await t.expect(ProgressBar.textContent).contains("Step 2/3");
 
@@ -35,10 +35,4 @@ test("should be added and removed correctly", async (t) => {
 
   // Remove attachment
   await t.click(AttachmentXButton);
-
-  // Add 2 attachments
-  await t.setFilesToUpload("input[data-testid='attachment-file-drop-zone']", [AttachmentSample]);
-  await t.setFilesToUpload("input[data-testid='attachment-file-drop-zone']", [AttachmentSample]);
-  await t.expect(FormAttachmentField.textContent).contains("sample.pdf");
-  await t.expect(FormAttachmentFields.count).eql(2);
 });
