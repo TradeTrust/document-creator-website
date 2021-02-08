@@ -61,5 +61,6 @@ test("should be added and removed correctly", async (t) => {
   // Add 2 attachments
   await t.setFilesToUpload("input[data-testid=attachment-file-drop-zone]", [AttachmentSample]);
   await t.setFilesToUpload("input[data-testid=attachment-file-drop-zone]", [AttachmentSample]);
+  await t.expect(FormAttachmentField.textContent).contains("sample.pdf");
   await t.expect(Attachments.count).eql(2);
 });
