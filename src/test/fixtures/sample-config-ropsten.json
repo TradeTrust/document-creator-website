@@ -456,7 +456,7 @@
           },
           "scac": {
             "type": "string",
-            "title": "SCAC"
+            "title": "Standard Carrier Alpha Code (SCAC)"
           },
           "carrierName": {
             "title": "Signed for the Carrier",
