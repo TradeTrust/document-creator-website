@@ -439,12 +439,10 @@
               "type": "DNS-TXT",
               "location": "demo-tradetrust.openattestation.com"
             },
-            "name": "DEMO STORE",
-            "tokenRegistry": "0x49b2969bF0E4aa822023a9eA2293b24E4518C1DD"
+            "name": "DEMO TOKEN REGISTRY",
+            "tokenRegistry": "0xfD9d76e5ee73F59E4FbE19100f7Ef64CD4b9E81C"
           }
-        ],
-        "name": "Maersk Bill of Lading",
-        "scac": "SGPU"
+        ]
       },
       "schema": {
         "type": "object",
