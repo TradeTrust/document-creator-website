@@ -442,9 +442,7 @@
             "name": "DEMO TOKEN REGISTRY",
             "tokenRegistry": "0xfD9d76e5ee73F59E4FbE19100f7Ef64CD4b9E81C"
           }
-        ],
-        "name": "Maersk Bill of Lading",
-        "scac": "SGPU"
+        ]
       },
       "schema": {
         "type": "object",
