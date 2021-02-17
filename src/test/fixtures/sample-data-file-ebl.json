@@ -1,6 +1,8 @@
 {
   "data": {
     "blNumber": "123",
+    "scac": "987",
+    "carrierName": "Demo Carrier",
     "shipper": {
       "name": "Demo Shipper",
       "address": {
