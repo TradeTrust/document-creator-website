@@ -59,7 +59,7 @@ export const DataFileButton: FunctionComponent<DataFileButton> = ({ onDataFile, 
   };
 
   const validateDataFile = (schema: Schema, data: unknown): ValidateDataFile => {
-    const ajv = new Ajv();
+    const ajv = new Ajv({ allErrors: true });
     const isValidated = ajv.validate(schema, data) as boolean;
     return { isValidated, errors: ajv.errors };
   };
