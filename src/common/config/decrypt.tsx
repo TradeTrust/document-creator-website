@@ -1,6 +1,6 @@
 import { Wallet, getDefaultProvider, providers } from "ethers";
 import { ConfigFile } from "../../types";
-import { RelayProvider, configureGSN } from "@opengsn/gsn";
+import { RelayProvider } from "@opengsn/gsn";
 import { getGSNRelayConfig, getHttpProviderUri } from "../../config";
 import Web3HttpProvider from "web3-providers-http";
 
@@ -18,7 +18,7 @@ export const getGsnRelaySigner = async (
   /* Configure GsnProvider to use correct relay and contracts
   Note: unsure why stakeManagerAddress not needed, according to type */
   const gsnRelayConfig = getGSNRelayConfig(network);
-  const gsnConfig = configureGSN({
+  const gsnConfig = {
     relayHubAddress: gsnRelayConfig.relayHub,
     paymasterAddress,
     forwarderAddress: gsnRelayConfig.forwarder,
@@ -27,7 +27,7 @@ export const getGsnRelaySigner = async (
     jsonStringifyRequest: true,
     chainId,
     relayLookupWindowBlocks: 1e5,
-  });
+  };
 
   /* Wrap GsnProvider with a eth node provider
   However, Gsn does not support ethers provider vice versa hence we will need to use metamask provider
@@ -39,14 +39,15 @@ export const getGsnRelaySigner = async (
   Using Web3HttpProvider from web3 to solve problem for now
   */
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const gsnProvider = new RelayProvider(origProvider, gsnConfig) as any;
+  const gsnProvider = RelayProvider.newProvider({
+    provider: origProvider,
+    config: gsnConfig,
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  }) as any; // the types are a bit fucked up for now; not worth fixing until opengsn stabilises
+  await gsnProvider.init();
 
   // Decrypt wallet to use wallet account as signer
-  gsnProvider.addAccount({
-    address: account.address,
-    privateKey: Buffer.from(account.privateKey.replace("0x", ""), "hex"),
-  });
+  gsnProvider.addAccount(account.privateKey);
   const from = account.address;
 
   // GsnProvider is now an rpc provider with GSN support. make it an ethers provider:
