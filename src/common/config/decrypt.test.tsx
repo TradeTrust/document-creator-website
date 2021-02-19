@@ -1,8 +1,10 @@
 import { ConfigFile } from "../../types";
 import { decryptWallet, getGsnRelaySigner } from "./decrypt";
 import sample from "../../test/fixtures/sample-config-ropsten.json";
+import { getGSNRelayConfig } from "../../config";
 
 const configFile = sample as ConfigFile;
+const gsnConfig = getGSNRelayConfig("ropsten");
 
 describe("decryptWallet", () => {
   it("should return wallet when decryption is successful", async () => {
@@ -22,24 +24,22 @@ describe("decryptWallet", () => {
 
 describe("getGsnRelayProvider", () => {
   it("should return gsn provider", async () => {
+    const DEFAULT_PAYMASTER = "0x8057c0fb7089BB646f824fF4A4f5a18A8d978ecC";
     const wallet = await decryptWallet(configFile, "password", () => {});
-    const gsnProvider = await getGsnRelaySigner(
-      wallet,
-      "0xf30f39F18efD6680c27A7A84c3c27B76E91116b9"
-    );
+    const gsnProvider = await getGsnRelaySigner(wallet, DEFAULT_PAYMASTER);
     expect(gsnProvider).toHaveProperty("_address", "0x1245e5B64D785b25057f7438F715f4aA5D965733");
     expect(gsnProvider).toHaveProperty("provider.provider.relayClient.config.chainId", 3);
     expect(gsnProvider).toHaveProperty(
       "provider.provider.relayClient.config.forwarderAddress",
-      "0x25CEd1955423BA34332Ec1B60154967750a0297D"
+      gsnConfig.forwarder
     );
     expect(gsnProvider).toHaveProperty(
       "provider.provider.relayClient.config.paymasterAddress",
-      "0xf30f39F18efD6680c27A7A84c3c27B76E91116b9"
+      DEFAULT_PAYMASTER
     );
     expect(gsnProvider).toHaveProperty(
       "provider.provider.relayClient.config.relayHubAddress",
-      "0x29e41C2b329fF4921d8AC654CEc909a0B575df20"
+      gsnConfig.relayHub
     );
-  });
+  }, 20000); // long timeout because getGsnRelaySigner takes awhile due to contract init
 });

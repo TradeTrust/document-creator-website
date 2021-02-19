@@ -17,7 +17,7 @@ const ropstenGsnRelayConfig = {
 };
 
 const homesteadGsnRelayConfig = {
-  relayHub: " 0x515e39f12590a94B102903363336AF9761ebF621",
+  relayHub: "0xB1E47968aD4909b9eb693c212feA22D0419D2D56",
   stakeManager: "0xcAA46E3a5D2c3c07A0C4F7723c7977c3e643C2B1",
   forwarder: "0xa530F85085C6FE2f866E7FdB716849714a89f4CD",
   gasPrice: 20000000000, // 20 Gwei
