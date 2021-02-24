@@ -14,14 +14,19 @@ const errors = [
 
 describe("formErrorBanner", () => {
   it("should show errors when there are any", () => {
-    render(<FormErrorBanner formError={errors} />);
+    render(<FormErrorBanner formErrorTitle="" formError={errors} />);
     expect(screen.getByTestId("form-error-banner")).toHaveTextContent(
       "should have required property 'blNumber'"
     );
   });
 
   it("should not display when there are no errors", () => {
-    render(<FormErrorBanner formError={undefined} />);
+    render(<FormErrorBanner formErrorTitle="" formError={undefined} />);
     expect(screen.queryByTestId("form-error-banner")).toBeNull();
+  });
+
+  it("should display formErrorTitle correctly", () => {
+    render(<FormErrorBanner formErrorTitle="Some error occurred" formError={errors} />);
+    expect(screen.getByText("Some error occurred")).not.toBeNull();
   });
 });

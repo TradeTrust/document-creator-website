@@ -2,10 +2,16 @@ import Ajv from "ajv";
 import React, { FunctionComponent } from "react";
 import { XCircle } from "react-feather";
 
+export type FormError = Ajv.ErrorObject[] | null | undefined;
+
 interface FormErrorBanner {
-  formError: Ajv.ErrorObject[] | null | undefined;
+  formErrorTitle: string | null | undefined;
+  formError: FormError;
 }
-export const FormErrorBanner: FunctionComponent<FormErrorBanner> = ({ formError }) => {
+export const FormErrorBanner: FunctionComponent<FormErrorBanner> = ({
+  formErrorTitle,
+  formError,
+}) => {
   if (!formError || !(formError.length > 0)) return null;
   return (
     <div
@@ -14,7 +20,7 @@ export const FormErrorBanner: FunctionComponent<FormErrorBanner> = ({ formError 
     >
       <XCircle className="text-red mx-3 my-1" />
       <div className="text-red text-xl flex flex-col justify-center items-start">
-        <div>This form has errors. Please fix the errors to proceed.</div>
+        <div>{formErrorTitle}</div>
         <ul className="list-disc pl-5">
           {formError &&
             formError.map((error, index: number) => {

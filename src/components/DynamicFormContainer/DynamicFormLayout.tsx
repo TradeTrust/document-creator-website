@@ -130,7 +130,10 @@ export const DynamicFormLayout: FunctionComponent = () => {
                 <Trash2 className="text-grey" />
               </ButtonIcon>
             </div>
-            <FormErrorBanner formError={formError} />
+            <FormErrorBanner
+              formErrorTitle="This form has errors. Please fix the errors to proceed."
+              formError={formError}
+            />
             {isPreviewMode ? (
               <div className="max-w-screen-xl mx-auto mt-6">
                 <DocumentPreview document={currentUnwrappedData} />

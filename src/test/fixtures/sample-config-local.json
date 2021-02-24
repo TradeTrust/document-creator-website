@@ -431,7 +431,7 @@
         "$template": {
           "type": "EMBEDDED_RENDERER",
           "name": "BILL_OF_LADING",
-          "url": "https://demo-cnm.openattestation.com"
+          "url": "https://generic-templates.tradetrust.io"
         },
         "issuers": [
           {
@@ -447,11 +447,19 @@
       },
       "schema": {
         "type": "object",
-        "required": ["blNumber"],
+        "required": ["blNumber", "scac"],
         "properties": {
           "blNumber": {
             "type": "string",
             "title": "BL Number"
+          },
+          "scac": {
+            "type": "string",
+            "title": "Standard Carrier Alpha Code (SCAC)"
+          },
+          "carrierName": {
+            "title": "Signed for the Carrier",
+            "type": "string"
           },
           "shipper": {
             "type": "object",
