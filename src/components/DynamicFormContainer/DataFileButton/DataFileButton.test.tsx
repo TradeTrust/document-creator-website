@@ -80,7 +80,7 @@ describe("dataFileButton", () => {
     });
   });
 
-  it("should not validate against schema", async () => {
+  it("should display error when data file schema validation fails", async () => {
     render(<DataFileButton onDataFile={onDataFile} schema={mockSchema} />);
 
     const dropzone = screen.getByTestId("data-upload-zone");
