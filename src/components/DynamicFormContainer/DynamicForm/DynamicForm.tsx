@@ -58,7 +58,6 @@ export const DynamicFormRaw: FunctionComponent<DynamicFormProps> = ({
       newPopulatedForm(templateIndex, value);
     } else {
       // But if it's just one object, we'll replace the values of the existing form (i.e. original behaviour)
-      // setFormData({ ...data, formData: defaultsDeep(value, nextFormData) });
       setCurrentForm({
         data: { ...data, formData: value?.data || data.formData },
         updatedOwnership: value?.ownership,
