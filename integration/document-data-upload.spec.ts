@@ -12,7 +12,6 @@ const Button = Selector("button");
 const FormTitleField = Selector("#root_title");
 const FormRemarksField = Selector("#root_remarks");
 const nextDocumentButton = Selector("[data-testid='next-document-button']");
-const previousDocumentButton = Selector("[data-testid='previous-document-button']");
 const fileNameField = Selector("[data-testid='file-name-input']");
 
 test("should upload populate data fields correctly", async (t) => {
@@ -34,18 +33,13 @@ test("should upload populate data fields correctly", async (t) => {
   await t.setFilesToUpload("input[type=file][data-testid=config-file-drop-zone]", [DataFileCsv]);
 
   // Validated the content is overwritten by the data file
+  await t.expect(fileNameField.value).eql("Covering Letter-2");
   await t.expect(FormTitleField.value).eql("Testing1");
   await t.expect(FormRemarksField.value).eql("Testing1");
 
   // Check next document
   await t.click(nextDocumentButton);
-  await t.expect(fileNameField.value).eql("Covering Letter-2");
-
-  // Validated the content is overwritten by the data file
+  await t.expect(fileNameField.value).eql("Covering Letter-3");
   await t.expect(FormTitleField.value).eql("Testing2");
   await t.expect(FormRemarksField.value).eql("Testing2");
-
-  // Check previous document
-  await t.click(previousDocumentButton);
-  await t.expect(fileNameField.value).eql("Covering Letter-1");
 });
