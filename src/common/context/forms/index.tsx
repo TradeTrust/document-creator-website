@@ -70,7 +70,7 @@ export const FormsContextProvider: FunctionComponent = ({ children }) => {
       formEntries.push({
         templateIndex,
         data: {
-          formData: data[index] || {},
+          formData: data[index],
           schema: newFormTemplate?.schema,
         },
         fileName: `${newFormName}-${forms.length + 1 + index}`,
