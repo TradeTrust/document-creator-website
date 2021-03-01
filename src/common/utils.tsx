@@ -39,7 +39,6 @@ export function readFileAsCsv(file: File, headers?: string[]): Promise<Array<JSO
         noheader: false,
         headers,
       }).fromString(reader.result as string);
-      console.log(data);
       resolve(data);
     };
     reader.readAsText(file);

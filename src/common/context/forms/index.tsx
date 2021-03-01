@@ -59,26 +59,26 @@ export const FormsContextProvider: FunctionComponent = ({ children }) => {
         ownership: { beneficiaryAddress: "", holderAddress: "" },
       },
     ]);
-
     setActiveFormIndex(newIndex);
   };
 
-  const newPopulatedForm = (templateIndex: number, formData: Array<FormEntry>): void => {
+  const newPopulatedForm = (templateIndex: number, data: Array<FormEntry>): void => {
     const newFormTemplate = config?.forms[templateIndex];
     const newFormName = newFormTemplate?.name ?? "Document";
-    const formsEntries = [];
-    for (let i = 0; i < formData.length; i++) {
-      formsEntries.push({
+    const formEntries: FormEntry[] = [];
+    for (let index = 0; index < data.length; index++) {
+      formEntries.push({
         templateIndex,
         data: {
-          formData: formData[i],
+          formData: data[index],
           schema: newFormTemplate?.schema,
         },
-        fileName: `${newFormName}-${i + 1}`,
+        fileName: `${newFormName}-${forms.length + 1 + index}`,
         ownership: { beneficiaryAddress: "", holderAddress: "" },
       });
     }
-    setForms([...formsEntries]);
+    setForms([...forms, ...formEntries]);
+    setActiveFormIndex(forms.length);
   };
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
