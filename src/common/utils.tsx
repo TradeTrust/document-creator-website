@@ -36,31 +36,6 @@ export function readFileAsCsv(file: File, headers?: string[]): Promise<Array<JSO
   });
 }
 
-export function getHeaders(inputSchema: string, headers: string[], parentHeader = ""): void {
-  const jsonKey = Object.keys(inputSchema);
-  const objectJson = eval(inputSchema);
-  jsonKey.forEach((key) => {
-    switch (objectJson[key]["type"]) {
-      case "object":
-        getHeaders(
-          objectJson[key]["properties"],
-          headers,
-          parentHeader === "" ? key : `${parentHeader}.${key}`
-        );
-        break;
-      case "array":
-        getHeaders(
-          objectJson[key]["items"]["properties"],
-          headers,
-          parentHeader === "" ? `${key}.0` : `${parentHeader}.${key}.0`
-        );
-        break;
-      default:
-        headers.push(parentHeader === "" ? key : parentHeader + "." + key);
-    }
-  });
-}
-
 interface QrCode {
   type: string;
   payload: {
