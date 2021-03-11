@@ -48,9 +48,8 @@ export const DataFileButton: FunctionComponent<DataFileButton> = ({ onDataFile, 
     let dataFile;
     let dataToValidate;
     if (file.name.indexOf(".csv") > 0) {
-      const CsvData = await readFileAsCsv(file, currentFormTemplate?.headers);
-      dataFile = CsvData;
-      dataToValidate = CsvData[0]; // use 1 item for fields validation
+      dataFile = await readFileAsCsv(file, currentFormTemplate?.headers);
+      dataToValidate = dataFile[0]; // use 1 item for fields validation
     } else {
       dataFile = await readFileAsJson<DataFileDefault>(file);
       dataToValidate = dataFile.data;
