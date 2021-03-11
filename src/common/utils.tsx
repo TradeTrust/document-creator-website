@@ -36,25 +36,6 @@ export function readFileAsCsv(file: File, headers?: string[]): Promise<Array<JSO
   });
 }
 
-export function readOwnership(file: File, headers: RegExp): Promise<Array<JSON>> {
-  return new Promise((resolve, reject) => {
-    const reader: FileReader = new FileReader();
-    if (reader.error) {
-      reject(reader.error);
-    }
-
-    reader.onload = async () => {
-      const data: JSON[] = await csv({
-        noheader: false,
-        includeColumns: headers,
-        ignoreEmpty: true,
-      }).fromString(reader.result as string);
-      resolve(data);
-    };
-    reader.readAsText(file);
-  });
-}
-
 export function getHeaders(inputSchema: string, headers: string[], parentHeader = ""): void {
   const jsonKey = Object.keys(inputSchema);
   const objectJson = eval(inputSchema);
