@@ -15,7 +15,7 @@ const ProgressBar = Selector("[data-testid='progress-bar']");
 test("should lead to pages correctly", async (t) => {
   // Check documentation button open in tab
   await t.click(Selector("[data-testid='config-file-docs-button']"));
-  await t.expect(Title.textContent).contains("Document Creator");
+  await t.expect(Title.textContent).contains("Config File");
   await CloseTab();
 
   // Upload config file
