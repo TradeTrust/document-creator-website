@@ -12,7 +12,7 @@ const Title = Selector("h1");
 const Button = Selector("button");
 const ProgressBar = Selector("[data-testid='progress-bar']");
 const SubmitButton = Selector("[data-testid='form-submit-button']");
-const NextDocumentButton = Selector("[data-test-id='next-document-button']");
+const NextDocumentButton = Selector("[data-testid='next-document-button']");
 const DownloadAllButton = Selector("[data-testid='download-all-button']");
 const FormIdField = Selector("#root_iD");
 const FormExporterNameField = Selector("#root_supplyChainConsignment_exporter_name");
