@@ -164,6 +164,7 @@ export const PublishedScreen: FunctionComponent<PublishScreen> = ({
               <div className="col-auto ml-auto">
                 <Button
                   className="bg-white text-blue hover:bg-grey-100 mb-4"
+                  data-testid="download-fail-button"
                   onClick={() => {
                     generateZipFile(failedPublishedDocuments[0].documents);
                   }}
