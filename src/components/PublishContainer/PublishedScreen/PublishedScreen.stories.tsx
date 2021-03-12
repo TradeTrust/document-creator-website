@@ -129,7 +129,7 @@ export const Confirmed: FunctionComponent = () => {
     <Root>
       <PublishedScreen
         publishedDocuments={mockPublishedDocuments}
-        failedPublishedDocuments={mockFailPublishedDocuments}
+        failedPublishedDocuments={[]}
         pendingPublishDocuments={[]}
         publishState={"CONFIRMED"}
       />
@@ -143,7 +143,7 @@ export const Failed: FunctionComponent = () => {
       <PublishedScreen
         publishedDocuments={[]}
         failedPublishedDocuments={mockFailPublishedDocuments}
-        pendingPublishDocuments={mockPublishedDocuments}
+        pendingPublishDocuments={[]}
         publishState={"CONFIRMED"}
       />
     </Root>
