@@ -32,6 +32,30 @@ const mockFailPublishedDocuments = [
     documents: [
       {
         contractAddress: "",
+        fileName: "Document-1",
+        payload: {},
+        type: "VERIFIABLE_DOCUMENT",
+        rawDocument: {},
+        wrappedDocument: {
+          data: {},
+          signature: {},
+          version: "",
+        },
+      },
+      {
+        contractAddress: "",
+        fileName: "Document-2",
+        payload: {},
+        type: "VERIFIABLE_DOCUMENT",
+        rawDocument: {},
+        wrappedDocument: {
+          data: {},
+          signature: {},
+          version: "",
+        },
+      },
+      {
+        contractAddress: "",
         fileName: "Document-3",
         payload: {},
         type: "VERIFIABLE_DOCUMENT",

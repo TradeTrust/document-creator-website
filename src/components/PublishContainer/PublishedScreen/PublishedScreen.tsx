@@ -73,6 +73,35 @@ export const PublishedScreen: FunctionComponent<PublishScreen> = ({
     });
   };
 
+  const generateFailedZipFile = (): void => {
+    const zip = new JSZip();
+    failedPublishedDocuments[0].documents.forEach((document) => {
+      const file = JSON.stringify(document.wrappedDocument, null, 2);
+      const blob = new Blob([file], { type: "text/json;charset=utf-8" });
+
+      zip.file(
+        generateFileName({
+          network: config?.network,
+          fileName: document.fileName,
+          extension: "tt",
+        }),
+        blob
+      );
+    });
+
+    zip.generateAsync({ type: "blob" }).then((content) => {
+      saveAs(
+        content,
+        generateFileName({
+          network: config?.network,
+          fileName: "Documents",
+          extension: "zip",
+          hasTimestamp: true,
+        })
+      );
+    });
+  };
+
   return (
     <Wrapper>
       <ProgressBar step={3} />
@@ -157,6 +186,19 @@ export const PublishedScreen: FunctionComponent<PublishScreen> = ({
                   </div>
                 );
               })}
+            </div>
+            <div className="flex py-4">
+              <div className="col-auto ml-auto">
+                <Button
+                  className="bg-white text-blue hover:bg-grey-100 mb-4"
+                  onClick={generateFailedZipFile}
+                >
+                  <div className="flex">
+                    <Download />
+                    <div className="text-blue ml-2">Download failed files</div>
+                  </div>
+                </Button>
+              </div>
             </div>
           </div>
         )}
