@@ -27,6 +27,30 @@ const mockFailPublishedDocuments = [
     documents: [
       {
         contractAddress: "",
+        fileName: "Document-1",
+        payload: {},
+        type: "VERIFIABLE_DOCUMENT",
+        rawDocument: {},
+        wrappedDocument: {
+          data: {},
+          signature: {},
+          version: "",
+        },
+      },
+      {
+        contractAddress: "",
+        fileName: "Document-2",
+        payload: {},
+        type: "VERIFIABLE_DOCUMENT",
+        rawDocument: {},
+        wrappedDocument: {
+          data: {},
+          signature: {},
+          version: "",
+        },
+      },
+      {
+        contractAddress: "",
         fileName: "Document-3",
         payload: {},
         type: "VERIFIABLE_DOCUMENT",
@@ -97,7 +121,7 @@ describe("publishedScreen", () => {
       />
     );
 
-    expect(screen.queryAllByText("1 Document(s) Failed")).toHaveLength(1);
+    expect(screen.queryAllByText("3 Document(s) Failed")).toHaveLength(1);
     expect(screen.queryAllByText(/Publishing document/)).toHaveLength(1);
     expect(screen.queryAllByTestId("publish-loader")).toHaveLength(1);
   });
@@ -161,7 +185,7 @@ describe("publishedScreen", () => {
     expect(screen.queryAllByTestId("publish-loader")).toHaveLength(0);
   });
 
-  it("should download the file correctly when generateZipFile method is called", async () => {
+  it("should called generateZipFile method for download all button", async () => {
     render(
       <PublishedScreen
         publishedDocuments={mockPublishedDocuments}
@@ -175,6 +199,27 @@ describe("publishedScreen", () => {
 
     await act(async () => {
       await fireEvent.click(screen.getByTestId("download-all-button"));
+    });
+
+    await waitFor(() => {
+      expect(FileSaver.saveAs).toHaveBeenCalledTimes(1);
+    });
+  });
+
+  it("should called generateZipFile method for download failed files button", async () => {
+    render(
+      <PublishedScreen
+        publishedDocuments={[]}
+        failedPublishedDocuments={mockFailPublishedDocuments}
+        pendingPublishDocuments={[]}
+        publishState={"CONFIRMED"}
+      />
+    );
+
+    expect(screen.queryAllByTestId("download-fail-button")).toHaveLength(1);
+
+    await act(async () => {
+      await fireEvent.click(screen.getByTestId("download-fail-button"));
     });
 
     await waitFor(() => {
