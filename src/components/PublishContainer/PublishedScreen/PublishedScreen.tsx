@@ -44,9 +44,9 @@ export const PublishedScreen: FunctionComponent<PublishScreen> = ({
     };
   });
 
-  const generateZipFile = (): void => {
+  const generateZipFile = (documents: WrappedDocument[]): void => {
     const zip = new JSZip();
-    publishedDocuments.forEach((document) => {
+    documents.forEach((document) => {
       const file = JSON.stringify(document.wrappedDocument, null, 2);
       const blob = new Blob([file], { type: "text/json;charset=utf-8" });
 
@@ -90,7 +90,9 @@ export const PublishedScreen: FunctionComponent<PublishScreen> = ({
                 <Button
                   className="bg-white text-blue hover:bg-grey-100 mb-4"
                   data-testid="download-all-button"
-                  onClick={generateZipFile}
+                  onClick={() => {
+                    generateZipFile(publishedDocuments);
+                  }}
                 >
                   <div className="flex">
                     <Download />
@@ -157,6 +159,22 @@ export const PublishedScreen: FunctionComponent<PublishScreen> = ({
                   </div>
                 );
               })}
+            </div>
+            <div className="flex py-4">
+              <div className="col-auto ml-auto">
+                <Button
+                  className="bg-white text-blue hover:bg-grey-100 mb-4"
+                  data-testid="download-fail-button"
+                  onClick={() => {
+                    generateZipFile(failedPublishedDocuments[0].documents);
+                  }}
+                >
+                  <div className="flex">
+                    <Download />
+                    <div className="text-blue ml-2">Download Failed Files</div>
+                  </div>
+                </Button>
+              </div>
             </div>
           </div>
         )}

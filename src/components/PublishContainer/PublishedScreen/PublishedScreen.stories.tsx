@@ -32,6 +32,30 @@ const mockFailPublishedDocuments = [
     documents: [
       {
         contractAddress: "",
+        fileName: "Document-1",
+        payload: {},
+        type: "VERIFIABLE_DOCUMENT",
+        rawDocument: {},
+        wrappedDocument: {
+          data: {},
+          signature: {},
+          version: "",
+        },
+      },
+      {
+        contractAddress: "",
+        fileName: "Document-2",
+        payload: {},
+        type: "VERIFIABLE_DOCUMENT",
+        rawDocument: {},
+        wrappedDocument: {
+          data: {},
+          signature: {},
+          version: "",
+        },
+      },
+      {
+        contractAddress: "",
         fileName: "Document-3",
         payload: {},
         type: "VERIFIABLE_DOCUMENT",
@@ -105,7 +129,7 @@ export const Confirmed: FunctionComponent = () => {
     <Root>
       <PublishedScreen
         publishedDocuments={mockPublishedDocuments}
-        failedPublishedDocuments={mockFailPublishedDocuments}
+        failedPublishedDocuments={[]}
         pendingPublishDocuments={[]}
         publishState={"CONFIRMED"}
       />
@@ -119,7 +143,7 @@ export const Failed: FunctionComponent = () => {
       <PublishedScreen
         publishedDocuments={[]}
         failedPublishedDocuments={mockFailPublishedDocuments}
-        pendingPublishDocuments={mockPublishedDocuments}
+        pendingPublishDocuments={[]}
         publishState={"CONFIRMED"}
       />
     </Root>
