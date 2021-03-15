@@ -1,0 +1,44 @@
+{
+  "data": {
+    "id": "<Invoice ID1>",
+    "date": "<Date 1>",
+    "customerId": "<Customer ID 1>",
+    "terms": "<Terms 1>",
+    "billFrom": {
+      "name": "<Bills Name 1>",
+      "streetAddress": "<Bills Street 1>",
+      "city": "<Bills City 1>",
+      "postalCode": "<Bills Postal Code 1>",
+      "phoneNumber": "<Bills PN 1>"
+    },
+    "billTo": {
+      "name": "<Bills Name 1>",
+      "email": "<Bills Email 1>",
+      "company": {
+        "name": "<Bills Company Name 1>",
+        "streetAddress": "<Bills Street 1>",
+        "city": "<Bills City 1>",
+        "postalCode": "<Bills PC 1>",
+        "phoneNumber": "<Bills PN 1>"
+      }
+    },
+    "subtotal": "<Subtotal 1>",
+    "tax": "<Tax 1>",
+    "taxTotal": "<Tax Total 1>",
+    "total": "<Total 1>",
+    "billableItems": [
+      {
+        "description": "<Description 1>",
+        "quantity": "<Quality 1>",
+        "unitPrice": "<UnitPrice 1>",
+        "amount": "<Amount 1>"
+      },
+      {
+        "description": "<1Description 1>",
+        "quantity": "<1Quality 1>",
+        "unitPrice": "<1UnitPrice 1>",
+        "amount": "<1Amount 1>"
+      }
+    ]
+  }
+}

@@ -74,7 +74,7 @@ export const FormsContextProvider: FunctionComponent = ({ children }) => {
           schema: newFormTemplate?.schema,
         },
         fileName: `${newFormName}-${forms.length + 1 + index}`,
-        ownership: { beneficiaryAddress: "", holderAddress: "" },
+        ownership: data[index].ownership ?? { beneficiaryAddress: "", holderAddress: "" },
       });
     }
     setForms([...forms, ...formEntries]);

@@ -18,16 +18,6 @@ export function readFileAsJson<T>(file: File): Promise<T> {
   });
 }
 
-interface QrCode {
-  type: string;
-  payload: {
-    uri: string;
-    key: string;
-    permittedActions: string[];
-    redirect: string;
-  };
-}
-
 export function readFileAsCsv(file: File, headers?: string[]): Promise<Array<JSON>> {
   return new Promise((resolve, reject) => {
     const reader: FileReader = new FileReader();
@@ -37,12 +27,23 @@ export function readFileAsCsv(file: File, headers?: string[]): Promise<Array<JSO
     reader.onload = async () => {
       const data: JSON[] = await csv({
         noheader: false,
-        headers,
+        headers: headers,
+        ignoreEmpty: true,
       }).fromString(reader.result as string);
       resolve(data);
     };
     reader.readAsText(file);
   });
+}
+
+interface QrCode {
+  type: string;
+  payload: {
+    uri: string;
+    key: string;
+    permittedActions: string[];
+    redirect: string;
+  };
 }
 
 export const encodeQrCode = (payload: QrCode): string =>
