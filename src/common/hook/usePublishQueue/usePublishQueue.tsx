@@ -1,10 +1,10 @@
-import { ContractFunctionState } from "@govtechsg/ethers-contract-hook";
 import { useState } from "react";
 import { publishJob } from "../../../services/publishing";
 import { Config, FailedJobErrors, FormEntry, PublishingJob, WrappedDocument } from "../../../types";
 import { getLogger } from "../../../utils/logger";
 import { uploadToStorage } from "../../API/storageAPI";
 import { getPublishingJobs } from "./utils/publish";
+import { PublishState } from "../../../constants/PublishState";
 
 const { stack } = getLogger("usePublishQueue");
 
@@ -18,14 +18,14 @@ export const usePublishQueue = (
   formEntries: FormEntry[]
 ): {
   error?: Error;
-  publishState: string;
+  publishState: PublishState;
   publish: () => void;
   publishedDocuments: WrappedDocument[];
   failedPublishedDocuments: FailedJobErrors[];
   pendingPublishDocuments: WrappedDocument[];
 } => {
   const [error, setError] = useState<Error>();
-  const [publishState, setPublishState] = useState<ContractFunctionState>("UNINITIALIZED");
+  const [publishState, setPublishState] = useState<PublishState>(PublishState.UNINITIALIZED);
   const [jobs, setJobs] = useState<PublishingJob[]>([]);
   const [completedJobIndex, setCompletedJobIndex] = useState<number[]>([]);
   const [failedJob, setFailedJob] = useState<FailedJob[]>([]);
@@ -54,7 +54,7 @@ export const usePublishQueue = (
       const completedJobs: number[] = [];
       const failedJobs: FailedJob[] = [];
 
-      setPublishState("INITIALIZED");
+      setPublishState(PublishState.INITIALIZED);
       const nonce = await config.wallet.getTransactionCount();
       const publishingJobs = await getPublishingJobs(formEntries, config, nonce);
       setJobs(publishingJobs);
@@ -84,15 +84,15 @@ export const usePublishQueue = (
           setPendingJobIndex(Array.from(pendingJobs));
         }
       });
-      setPublishState("PENDING_CONFIRMATION");
+      setPublishState(PublishState.PENDING);
       await Promise.allSettled(deferredJobs);
       setCompletedJobIndex(completedJobs);
       setFailedJob(failedJobs);
-      setPublishState("CONFIRMED");
+      setPublishState(PublishState.CONFIRMED);
     } catch (e) {
       stack(e);
       setError(e);
-      setPublishState("ERROR");
+      setPublishState(PublishState.ERROR);
     }
   };
 

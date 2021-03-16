@@ -11,12 +11,13 @@ import { ProgressBar } from "../../ProgressBar";
 import { Wrapper } from "../../UI/Wrapper";
 import { PublishedTag } from "../PublishedScreen/PublishedTag";
 import { PublishTitle } from "./PublishTitle";
+import { PublishState } from "../../../constants/PublishState";
 
 interface PublishScreen {
   publishedDocuments: WrappedDocument[];
   failedPublishedDocuments: FailedJobErrors[];
   pendingPublishDocuments: WrappedDocument[];
-  publishState: string;
+  publishState: PublishState;
 }
 
 export const PublishedScreen: FunctionComponent<PublishScreen> = ({
@@ -86,7 +87,7 @@ export const PublishedScreen: FunctionComponent<PublishScreen> = ({
               <div className="text-grey font-medium text-lg mb-4 flex-grow py-3">
                 {publishedDocuments.length + pendingPublishDocuments.length} Document(s)
               </div>
-              {publishState === "CONFIRMED" && (
+              {publishState === PublishState.CONFIRMED && (
                 <Button
                   className="bg-white text-blue hover:bg-grey-100 mb-4"
                   data-testid="download-all-button"

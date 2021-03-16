@@ -6,9 +6,10 @@ import { useFormsContext } from "../../../../common/context/forms";
 import { WrappedDocument } from "../../../../types";
 import { LoaderSpinner } from "@govtechsg/tradetrust-ui-components";
 import { Title } from "../../../UI/Title";
+import { PublishState } from "../../../../constants/PublishState";
 
 interface PublishTitle {
-  publishState: string;
+  publishState: PublishState;
   publishedDocuments: WrappedDocument[];
 }
 
@@ -32,7 +33,7 @@ export const PublishTitle: FunctionComponent<PublishTitle> = ({
 
   const getDisplayTitle = (): ReactElement => {
     switch (publishState) {
-      case "PENDING_CONFIRMATION":
+      case PublishState.PENDING:
         return (
           <>
             <LoaderSpinner className="mr-2" width="24px" primary="#00cbbc" secondary="#e2e8f0" />
@@ -40,7 +41,7 @@ export const PublishTitle: FunctionComponent<PublishTitle> = ({
           </>
         );
 
-      case "CONFIRMED":
+      case PublishState.CONFIRMED:
         if (publishedDocuments.length > 0) {
           return (
             <>
@@ -65,7 +66,7 @@ export const PublishTitle: FunctionComponent<PublishTitle> = ({
   return (
     <>
       <Title className="flex items-center mb-8">{getDisplayTitle()}</Title>
-      {publishState === "CONFIRMED" && (
+      {publishState === PublishState.CONFIRMED && (
         <div>
           <Button
             className="bg-white text-orange hover:bg-grey-100 mb-6 mr-4"

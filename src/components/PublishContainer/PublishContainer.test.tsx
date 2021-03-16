@@ -6,6 +6,7 @@ import { useFormsContext } from "../../common/context/forms";
 import { usePublishQueue } from "../../common/hook/usePublishQueue";
 import sampleConfig from "../../test/fixtures/sample-config-ropsten.json";
 import { PublishContainer } from "./PublishContainer";
+import { PublishState } from "./../../constants/PublishState";
 
 jest.mock("../../common/context/forms");
 jest.mock("../../common/context/config");
@@ -43,7 +44,7 @@ const whenPublishStateIsNotConfirmed = (): void => {
   });
   mockUsePublishQueue.mockReturnValue({
     publish: mockPublish,
-    publishState: "INITIALIZED",
+    publishState: PublishState.INITIALIZED,
     publishedDocuments: [],
     failedPublishedDocuments: [],
     pendingPublishDocuments: [],

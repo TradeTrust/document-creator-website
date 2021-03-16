@@ -2,6 +2,7 @@ import { render, screen } from "@testing-library/react";
 import React from "react";
 import { WrappedDocument } from "../../../../types";
 import { PublishTitle } from "./PublishTitle";
+import { PublishState } from "../../../../constants/PublishState";
 
 const mockPublishedDocuments = [
   {
@@ -19,10 +20,10 @@ const mockPublishedDocuments = [
 ] as WrappedDocument[];
 
 describe("publishTitle", () => {
-  it("should display 'publishing' when publishState is 'PENDING_CONFIRMATION'", () => {
+  it("should display 'publishing' when publishState is 'PENDING'", () => {
     render(
       <PublishTitle
-        publishState={"PENDING_CONFIRMATION"}
+        publishState={PublishState.PENDING}
         publishedDocuments={mockPublishedDocuments}
       />
     );
@@ -31,19 +32,24 @@ describe("publishTitle", () => {
   });
 
   it("should display 'success' when publishState is 'CONFIRMED' and there are publish documents", () => {
-    render(<PublishTitle publishState={"CONFIRMED"} publishedDocuments={mockPublishedDocuments} />);
+    render(
+      <PublishTitle
+        publishState={PublishState.CONFIRMED}
+        publishedDocuments={mockPublishedDocuments}
+      />
+    );
 
     expect(screen.queryAllByText("Document(s) issued successfully")).toHaveLength(1);
   });
 
   it("should display 'fail' when publishState is 'CONFIRMED' and there are no publish documents", () => {
-    render(<PublishTitle publishState={"CONFIRMED"} publishedDocuments={[]} />);
+    render(<PublishTitle publishState={PublishState.CONFIRMED} publishedDocuments={[]} />);
 
     expect(screen.queryAllByText("Document(s) failed to issue")).toHaveLength(1);
   });
 
   it("should display 'preparing' when publishState is 'INITIALIZED'", () => {
-    render(<PublishTitle publishState={"INITIALIZED"} publishedDocuments={[]} />);
+    render(<PublishTitle publishState={PublishState.INITIALIZED} publishedDocuments={[]} />);
 
     expect(screen.queryAllByText("Please wait while we prepare your document(s)")).toHaveLength(1);
   });

@@ -5,6 +5,7 @@ import { usePublishQueue } from "../../../common/hook/usePublishQueue";
 import { Config } from "../../../types";
 import { PublishedScreen } from "../PublishedScreen";
 import { PublishErrorScreen } from "../PublishErrorScreen";
+import { PublishState } from "../../../constants/PublishState";
 
 interface PublishPage {
   config: Config;
@@ -28,7 +29,7 @@ export const PublishPage: FunctionComponent<PublishPage> = ({ config }) => {
   if (!config) return <Redirect to="/" />;
   if (!currentForm) return <Redirect to="/forms-selection" />;
 
-  return publishState === "ERROR" ? (
+  return publishState === PublishState.ERROR ? (
     <PublishErrorScreen error={error} />
   ) : (
     <PublishedScreen
