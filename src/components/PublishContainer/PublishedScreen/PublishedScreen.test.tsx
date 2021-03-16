@@ -3,6 +3,7 @@ import FileSaver from "file-saver";
 import React from "react";
 import { FailedJobErrors, WrappedDocument } from "../../../types";
 import { PublishedScreen } from "./PublishedScreen";
+import { PublishState } from "../../../constants/PublishState";
 
 jest.mock("file-saver", () => ({ saveAs: jest.fn() }));
 
@@ -72,7 +73,7 @@ describe("publishedScreen", () => {
         publishedDocuments={mockPublishedDocuments}
         failedPublishedDocuments={mockFailPublishedDocuments}
         pendingPublishDocuments={[]}
-        publishState={"CONFIRMED"}
+        publishState={PublishState.CONFIRMED}
       />
     );
 
@@ -87,7 +88,7 @@ describe("publishedScreen", () => {
         publishedDocuments={mockPublishedDocuments}
         failedPublishedDocuments={mockFailPublishedDocuments}
         pendingPublishDocuments={mockPublishedDocuments}
-        publishState={"PENDING_CONFIRMATION"}
+        publishState={PublishState.PENDING}
       />
     );
 
@@ -102,7 +103,7 @@ describe("publishedScreen", () => {
         publishedDocuments={[]}
         failedPublishedDocuments={mockFailPublishedDocuments}
         pendingPublishDocuments={[]}
-        publishState={"PENDING_CONFIRMATION"}
+        publishState={PublishState.PENDING}
       />
     );
 
@@ -117,7 +118,7 @@ describe("publishedScreen", () => {
         publishedDocuments={mockPublishedDocuments}
         failedPublishedDocuments={mockFailPublishedDocuments}
         pendingPublishDocuments={mockPublishedDocuments}
-        publishState={"PENDING_CONFIRMATION"}
+        publishState={PublishState.PENDING}
       />
     );
 
@@ -132,7 +133,7 @@ describe("publishedScreen", () => {
         publishedDocuments={mockPublishedDocuments}
         failedPublishedDocuments={[]}
         pendingPublishDocuments={mockPublishedDocuments}
-        publishState={"PENDING_CONFIRMATION"}
+        publishState={PublishState.PENDING}
       />
     );
 
@@ -147,7 +148,7 @@ describe("publishedScreen", () => {
         publishedDocuments={mockPublishedDocuments}
         failedPublishedDocuments={[]}
         pendingPublishDocuments={[]}
-        publishState={"CONFIRMED"}
+        publishState={PublishState.CONFIRMED}
       />
     );
 
@@ -162,7 +163,7 @@ describe("publishedScreen", () => {
         publishedDocuments={[]}
         failedPublishedDocuments={mockFailPublishedDocuments}
         pendingPublishDocuments={[]}
-        publishState={"CONFIRMED"}
+        publishState={PublishState.CONFIRMED}
       />
     );
 
@@ -177,7 +178,7 @@ describe("publishedScreen", () => {
         publishedDocuments={[]}
         failedPublishedDocuments={[]}
         pendingPublishDocuments={[]}
-        publishState={"INITIALIZED"}
+        publishState={PublishState.INITIALIZED}
       />
     );
 
@@ -191,7 +192,7 @@ describe("publishedScreen", () => {
         publishedDocuments={mockPublishedDocuments}
         failedPublishedDocuments={[]}
         pendingPublishDocuments={[]}
-        publishState={"CONFIRMED"}
+        publishState={PublishState.CONFIRMED}
       />
     );
 
@@ -212,7 +213,7 @@ describe("publishedScreen", () => {
         publishedDocuments={[]}
         failedPublishedDocuments={mockFailPublishedDocuments}
         pendingPublishDocuments={[]}
-        publishState={"CONFIRMED"}
+        publishState={PublishState.CONFIRMED}
       />
     );
 

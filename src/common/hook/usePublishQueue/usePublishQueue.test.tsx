@@ -7,6 +7,7 @@ import { Config, FormEntry } from "../../../types";
 import { uploadToStorage } from "../../API/storageAPI";
 import { usePublishQueue } from "./usePublishQueue";
 import { getPublishingJobs } from "./utils/publish";
+import { PublishState } from "../../../constants/PublishState";
 
 jest.mock("../../../services/publishing");
 jest.mock("./utils/publish");
@@ -48,7 +49,7 @@ const uploadSuccess = {
 describe("usePublishQueue", () => {
   it("should have the correct initial state", () => {
     const { result } = renderHook(() => usePublishQueue(config, formEntires));
-    expect(result.current.publishState).toBe("UNINITIALIZED");
+    expect(result.current.publishState).toBe(PublishState.UNINITIALIZED);
     expect(result.current.publishedDocuments).toStrictEqual([]);
   });
 
@@ -60,7 +61,7 @@ describe("usePublishQueue", () => {
     await act(async () => {
       await result.current.publish();
     });
-    expect(result.current.publishState).toBe("CONFIRMED");
+    expect(result.current.publishState).toBe(PublishState.CONFIRMED);
     expect(result.current.publishedDocuments).toHaveLength(3);
   });
 

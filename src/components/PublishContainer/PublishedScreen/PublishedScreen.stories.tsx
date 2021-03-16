@@ -2,6 +2,7 @@ import React, { FunctionComponent } from "react";
 import { FailedJobErrors, WrappedDocument } from "../../../types";
 import { PublishedScreen } from "./PublishedScreen";
 import { ConfigContextProvider, useConfigContext } from "../../../common/context/config";
+import { PublishState } from "../../../constants/PublishState";
 
 export default {
   title: "PublishPage/PublishedScreen",
@@ -105,7 +106,7 @@ export const Initialized: FunctionComponent = () => {
         publishedDocuments={[]}
         failedPublishedDocuments={[]}
         pendingPublishDocuments={[]}
-        publishState={"INITIALIZED"}
+        publishState={PublishState.INITIALIZED}
       />
     </Root>
   );
@@ -118,7 +119,7 @@ export const Pending: FunctionComponent = () => {
         publishedDocuments={mockPublishedDocuments}
         failedPublishedDocuments={[]}
         pendingPublishDocuments={mockPublishedDocuments}
-        publishState={"PENDING_CONFIRMATION"}
+        publishState={PublishState.PENDING}
       />
     </Root>
   );
@@ -131,7 +132,7 @@ export const Confirmed: FunctionComponent = () => {
         publishedDocuments={mockPublishedDocuments}
         failedPublishedDocuments={[]}
         pendingPublishDocuments={[]}
-        publishState={"CONFIRMED"}
+        publishState={PublishState.CONFIRMED}
       />
     </Root>
   );
@@ -144,7 +145,7 @@ export const Failed: FunctionComponent = () => {
         publishedDocuments={[]}
         failedPublishedDocuments={mockFailPublishedDocuments}
         pendingPublishDocuments={[]}
-        publishState={"CONFIRMED"}
+        publishState={PublishState.CONFIRMED}
       />
     </Root>
   );
