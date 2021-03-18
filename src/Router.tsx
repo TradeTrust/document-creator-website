@@ -1,17 +1,18 @@
 import { NetworkBar, Overlay } from "@govtechsg/tradetrust-ui-components";
 import React, { ReactElement } from "react";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
+import { useConfigContext } from "./common/context/config";
+import { useFormsContext } from "./common/context/forms";
 import { usePersistedConfigFile } from "./common/hook/usePersistedConfigFile";
-import { SettingsContainer } from "./components/SettingsContainer";
+import { AddressBookContainer } from "./components/AddressBookContainer";
+import { AddressResolverContainer } from "./components/AddressResolverContainer";
 import { DynamicFormContainer } from "./components/DynamicFormContainer";
 import { FormSelectionContainer } from "./components/FormSelectionContainer";
 import { HomeContainer } from "./components/Home";
-import { PublishContainer } from "./components/PublishContainer";
-import { AddressBookContainer } from "./components/AddressBookContainer";
-import { AddressResolverContainer } from "./components/AddressResolverContainer";
 import { NavigationBar } from "./components/NavigationBar";
-import { useConfigContext } from "./common/context/config";
-import { useFormsContext } from "./common/context/forms";
+import { PublishContainer } from "./components/PublishContainer";
+import { SettingsContainer } from "./components/SettingsContainer";
+import { PageNotFound } from "./pages/pageNotFound";
 
 export const Router = (): ReactElement => {
   const { configFile } = usePersistedConfigFile();
@@ -54,6 +55,9 @@ export const Router = (): ReactElement => {
             </Route>
             <Route path="/settings">
               <SettingsContainer />
+            </Route>
+            <Route path="*">
+              <PageNotFound />
             </Route>
           </Switch>
         </main>
