@@ -5,13 +5,13 @@ import prettyBytes from "pretty-bytes";
 import React, { FunctionComponent } from "react";
 import { Download, XCircle } from "react-feather";
 import { useConfigContext } from "../../../common/context/config";
+import { PublishState } from "../../../constants/PublishState";
 import { FailedJobErrors, WrappedDocument } from "../../../types";
 import { generateFileName } from "../../../utils/fileName";
 import { ProgressBar } from "../../ProgressBar";
 import { Wrapper } from "../../UI/Wrapper";
 import { PublishedTag } from "../PublishedScreen/PublishedTag";
 import { PublishTitle } from "./PublishTitle";
-import { PublishState } from "../../../constants/PublishState";
 
 interface PublishScreen {
   publishedDocuments: WrappedDocument[];
@@ -55,7 +55,7 @@ export const PublishedScreen: FunctionComponent<PublishScreen> = ({
         generateFileName({
           network: config?.network,
           fileName: document.fileName,
-          extension: "tt",
+          extension: document.extension,
         }),
         blob
       );
@@ -153,7 +153,7 @@ export const PublishedScreen: FunctionComponent<PublishScreen> = ({
                       {generateFileName({
                         network: config?.network,
                         fileName: doc.fileName,
-                        extension: "tt",
+                        extension: doc.extension,
                       })}
                     </div>
                     <div className="text-xs text-grey ml-1">({size})</div>

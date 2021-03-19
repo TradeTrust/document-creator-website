@@ -1,4 +1,4 @@
-import React, { useState, FunctionComponent } from "react";
+import React, { FunctionComponent, useState } from "react";
 import sample from "../../../test/fixtures/sample-config-ropsten.json";
 import { ConfigFile, FormTemplate } from "../../../types";
 import { DynamicForm } from "./DynamicForm";
@@ -24,17 +24,14 @@ const defaults = {
   logo: "https://www.aretese.com/images/govtech-animated-logo.gif",
   title: "Documents Bundle",
   remarks: "Some very important documents in here for some submission",
-  uiSchema: {
-    remarks: {
-      "ui:widget": "textarea",
-    },
-  },
 };
 
 // Form values that the admin staff will be changing
 const configFile = sample as ConfigFile;
 const schema = configFile.forms[2].schema;
 const attachments = configFile.forms[2].attachments;
+const uiSchema = configFile.forms[2].uiSchema;
+const extension = configFile.forms[2].extension;
 
 const form: FormTemplate = {
   name: "Covering Letter",
@@ -42,6 +39,8 @@ const form: FormTemplate = {
   defaults,
   schema,
   attachments,
+  uiSchema,
+  extension,
 };
 
 export default {
@@ -64,6 +63,7 @@ export const Default: FunctionComponent = () => {
   return (
     <DynamicForm
       schema={form.schema}
+      uiSchema={form.uiSchema}
       form={formData}
       setFormData={setFormData}
       // eslint-disable-next-line @typescript-eslint/no-empty-function

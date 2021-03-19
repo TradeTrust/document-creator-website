@@ -47,6 +47,7 @@ export const FormsContextProvider: FunctionComponent = ({ children }) => {
     const newIndex = forms.length;
     const newFormTemplate = config?.forms[templateIndex];
     const newFormName = newFormTemplate?.name ?? "Document";
+    const extension = config?.forms[templateIndex]?.extension ?? "tt";
     setForms([
       ...forms,
       {
@@ -57,6 +58,7 @@ export const FormsContextProvider: FunctionComponent = ({ children }) => {
         },
         fileName: `${newFormName}-${forms.length + 1}`,
         ownership: { beneficiaryAddress: "", holderAddress: "" },
+        extension: extension,
       },
     ]);
     setActiveFormIndex(newIndex);
@@ -66,6 +68,7 @@ export const FormsContextProvider: FunctionComponent = ({ children }) => {
     const newFormTemplate = config?.forms[templateIndex];
     const newFormName = newFormTemplate?.name ?? "Document";
     const formEntries: FormEntry[] = [];
+    const extension = config?.forms[templateIndex]?.extension ?? "tt";
     for (let index = 0; index < data.length; index++) {
       formEntries.push({
         templateIndex,
@@ -75,6 +78,7 @@ export const FormsContextProvider: FunctionComponent = ({ children }) => {
         },
         fileName: data[index].fileName ?? `${newFormName}-${forms.length + 1 + index}`,
         ownership: data[index].ownership ?? { beneficiaryAddress: "", holderAddress: "" },
+        extension: extension,
       });
     }
     setForms([...forms, ...formEntries]);

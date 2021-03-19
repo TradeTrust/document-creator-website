@@ -422,7 +422,8 @@
       "attachments": {
         "allow": true,
         "accept": ".pdf"
-      }
+      },
+      "extension": "test"
     },
     {
       "name": "Bill of Lading",
@@ -542,7 +543,8 @@
       "attachments": {
         "allow": true,
         "accept": ".pdf, .json"
-      }
+      },
+      "extension": "test"
     },
     {
       "name": "Covering Letter (GT)",
@@ -566,12 +568,7 @@
         "name": "Covering Letter",
         "logo": "https://www.aretese.com/images/govtech-animated-logo.gif",
         "title": "Documents Bundle",
-        "remarks": "Some very important documents in here for some submission",
-        "uiSchema": {
-          "remarks": {
-            "ui:widget": "textarea"
-          }
-        }
+        "remarks": "Some very important documents in here for some submission"
       },
       "schema": {
         "type": "object",
@@ -588,7 +585,13 @@
       },
       "attachments": {
         "allow": true
-      }
+      },
+      "uiSchema": {
+        "remarks": {
+          "ui:widget": "textarea"
+        }
+      },
+      "extension": "test"
     },
     {
       "name": "Covering Letter (DBS)",
@@ -615,12 +618,7 @@
         "titleColor": "white",
         "remarksColor": "white",
         "title": "Documents Bundle",
-        "remarks": "Some very important documents in here for some submission",
-        "uiSchema": {
-          "remarks": {
-            "ui:widget": "textarea"
-          }
-        }
+        "remarks": "Some very important documents in here for some submission"
       },
       "schema": {
         "type": "object",
@@ -637,6 +635,11 @@
       },
       "attachments": {
         "allow": true
+      },
+      "uiSchema": {
+        "remarks": {
+          "ui:widget": "textarea"
+        }
       }
     },
     {
@@ -787,7 +790,8 @@
             "title": "Total"
           }
         }
-      }
+      },
+      "extension": "test"
     }
   ],
   "documentStorage": {
