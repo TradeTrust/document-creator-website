@@ -73,7 +73,7 @@ export const FormsContextProvider: FunctionComponent = ({ children }) => {
           formData: data[index],
           schema: newFormTemplate?.schema,
         },
-        fileName: `${newFormName}-${forms.length + 1 + index}`,
+        fileName: data[index].fileName ?? `${newFormName}-${forms.length + 1 + index}`,
         ownership: data[index].ownership ?? { beneficiaryAddress: "", holderAddress: "" },
       });
     }
