@@ -61,6 +61,7 @@ export const DynamicFormRaw: FunctionComponent<DynamicFormProps> = ({
       setCurrentForm({
         data: { ...data, formData: value?.data || data.formData },
         updatedOwnership: value?.ownership,
+        fileName: value?.fileName,
       });
     }
   };

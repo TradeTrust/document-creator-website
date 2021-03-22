@@ -33,5 +33,6 @@
   "ownership": {
     "beneficiaryAddress": "0xa61b056da0084a5f391ec137583073096880c2e3",
     "holderAddress": "0xa61b056da0084a5f391ec137583073096880c2e3"
-  }
+  },
+  "fileName":"file name 1"
 }
