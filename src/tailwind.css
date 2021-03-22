@@ -16,15 +16,6 @@
 
 @tailwind utilities;
 
-@keyframes spinning {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
-
 /* https://philipwalton.com/articles/normalizing-cross-browser-flexbox-bugs/ */
 #root {
   display: flex;
