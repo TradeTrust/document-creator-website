@@ -11,8 +11,8 @@ export interface FormTemplate {
   schema: any; // eslint-disable-line @typescript-eslint/no-explicit-any
   attachments?: Attachments;
   headers?: string[];
-  uiSchema: any; // eslint-disable-line @typescript-eslint/no-explicit-any
-  extension: string;
+  uiSchema?: any; // eslint-disable-line @typescript-eslint/no-explicit-any
+  extension?: string;
 }
 
 export interface DocumentStorage {
@@ -67,7 +67,7 @@ export interface FormEntry {
   data: FormData;
   templateIndex: number;
   ownership: Ownership;
-  extension: string;
+  extension?: string;
 }
 
 export interface SetFormParams {
@@ -82,7 +82,7 @@ export interface RawDocument {
   rawDocument: any; // eslint-disable-line @typescript-eslint/no-explicit-any
   fileName: string;
   payload: { ownership?: Ownership };
-  extension: string;
+  extension?: string;
 }
 
 export interface WrappedDocument extends RawDocument {

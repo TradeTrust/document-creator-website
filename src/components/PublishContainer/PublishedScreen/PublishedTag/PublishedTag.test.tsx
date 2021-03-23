@@ -23,6 +23,7 @@ const mockDoc = {
   payload: {},
   rawDocument: {},
   wrappedDocument: { data: "test document" },
+  extension: "tt",
 } as WrappedDocument;
 
 describe("publishedTag", () => {
