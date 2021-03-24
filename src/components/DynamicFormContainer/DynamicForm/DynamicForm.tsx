@@ -32,7 +32,7 @@ export interface DynamicFormProps {
   setFormData: (formData: any) => void; // eslint-disable-line @typescript-eslint/no-explicit-any
   setOwnership: (ownership: Ownership) => void;
   setCurrentForm: (arg: SetFormParams) => void; // eslint-disable-line @typescript-eslint/no-explicit-any
-  uiSchema: any; // eslint-disable-line @typescript-eslint/no-explicit-any
+  uiSchema?: any; // eslint-disable-line @typescript-eslint/no-explicit-any
 }
 
 export const DynamicFormRaw: FunctionComponent<DynamicFormProps> = ({
