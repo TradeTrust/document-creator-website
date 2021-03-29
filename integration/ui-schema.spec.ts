@@ -52,7 +52,7 @@ test("form should render correctly according to uiSchema", async (t) => {
   await t.expect(Title.textContent).contains("Fill and Preview Form");
   await t.expect(ProgressBar.textContent).contains("Step 2/3");
 
-  // // Validate that default values is populated
+  // Validate that default values is populated
   await t.expect(DocumentTitleField.value).contains("Documents Bundle");
   await t
     .expect(DocumentRemarksField.value)
@@ -63,21 +63,21 @@ test("form should render correctly according to uiSchema", async (t) => {
     .expect(Form.find("textarea#root_remarks").value)
     .contains("Some very important documents in here for some submission");
 
-  // // Add new form
+  // Add new form
   await t.click(AddNewButton);
 
-  // /*
-  //  * This test case is here in the event that users really
-  //  * want to have a `uiSchema` attribute present in their
-  //  * TradeTrust document.
-  //  */
+  /*
+   * This test case is here in the event that users really
+   * want to have a `uiSchema` attribute present in their
+   * TradeTrust document.
+   */
 
-  // // Navigate to form
+  // Navigate to form
   await t.click(Button.withText("Covering Letter (DBS, Nested UISchema)"));
   await t.expect(Title.textContent).contains("Fill and Preview Form");
   await t.expect(ProgressBar.textContent).contains("Step 2/3");
 
-  // // Validate that default values is populated
+  // Validate that default values is populated
   await t.expect(DocumentTitleField.value).contains("Documents Bundle");
   await t
     .expect(DocumentRemarksField.value)
