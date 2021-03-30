@@ -36,6 +36,49 @@ export function readFileAsCsv(file: File, headers?: string[]): Promise<Array<JSO
   });
 }
 
+export function getJsonSchema(inputSchemaProperties: string): Promise<JSON> {
+  return new Promise((resolve, reject) => {
+    const headers = Array<string>();
+    getCsvHeaders(inputSchemaProperties, headers);
+    if (headers.length === 0) {
+      reject("Header not found");
+    }
+    csv({
+      noheader: true,
+      headers: headers,
+    })
+      .fromString(headers.join(","))
+      .then((jsonObjArray) => {
+        resolve(jsonObjArray[0]);
+      });
+  });
+}
+
+export function getCsvHeaders(inputSchema: string, headers: string[], parentHeader = ""): void {
+  const jsonKey = Object.keys(inputSchema);
+  const objectJson = eval(inputSchema);
+  jsonKey.forEach((key) => {
+    switch (objectJson[key]["type"]) {
+      case "object":
+        getCsvHeaders(
+          objectJson[key]["properties"],
+          headers,
+          parentHeader === "" ? key : `${parentHeader}.${key}`
+        );
+        break;
+      case "array":
+        getCsvHeaders(
+          objectJson[key]["items"]["properties"],
+          headers,
+          parentHeader === "" ? `${key}.0` : `${parentHeader}.${key}.0`
+        );
+        break;
+      default:
+        headers.push(parentHeader === "" ? key : parentHeader + "." + key);
+    }
+  });
+}
+
 interface QrCode {
   type: string;
   payload: {

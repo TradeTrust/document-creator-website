@@ -15,6 +15,7 @@ import {
 
 import { useFormsContext } from "../../../common/context/forms";
 import { DataFileButton } from "../DataFileButton";
+import { DataSchemaButton } from "../DataSchemaButton";
 import { TransferableRecordForm } from "../TransferableRecordForm";
 import { AttachmentDropzone } from "./AttachmentDropzone";
 import {
@@ -116,6 +117,9 @@ export const DynamicFormRaw: FunctionComponent<DynamicFormProps> = ({
           }
         />
       )}
+      <div className="mb-5">
+        <DataSchemaButton isTransferableRecord={isTransferableRecord} />
+      </div>
       <div className="mb-10">
         <DataFileButton onDataFile={mergeFormValue} schema={schema} />
       </div>
