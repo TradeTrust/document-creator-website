@@ -1,5 +1,6 @@
 import { act, renderHook } from "@testing-library/react-hooks";
 import { getDefaultProvider, Wallet } from "ethers";
+import { PublishState } from "../../../constants/PublishState";
 import { publishJob } from "../../../services/publishing";
 import sampleConfig from "../../../test/fixtures/sample-config-ropsten.json";
 import sampleJobs from "../../../test/fixtures/sample-jobs.json";
@@ -7,7 +8,6 @@ import { Config, FormEntry } from "../../../types";
 import { uploadToStorage } from "../../API/storageAPI";
 import { usePublishQueue } from "./usePublishQueue";
 import { getPublishingJobs } from "./utils/publish";
-import { PublishState } from "../../../constants/PublishState";
 
 jest.mock("../../../services/publishing");
 jest.mock("./utils/publish");
@@ -30,6 +30,7 @@ const formEntires: FormEntry[] = [
       formData: { foo: "bar" },
     },
     ownership: { holderAddress: "", beneficiaryAddress: "" },
+    extension: "tt",
   },
   {
     fileName: "document-2",
@@ -38,6 +39,7 @@ const formEntires: FormEntry[] = [
       formData: { foo: "bar" },
     },
     ownership: { holderAddress: "", beneficiaryAddress: "" },
+    extension: "tt",
   },
 ];
 

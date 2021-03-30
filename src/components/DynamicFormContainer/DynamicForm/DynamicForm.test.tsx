@@ -18,6 +18,7 @@ const commonProps = {
     data: { formData: {} },
     templateIndex: 0,
     ownership: { beneficiaryAddress: "", holderAddress: "" },
+    extension: "tt",
   },
   setFormData: mockSetFormData,
   setOwnership: mockSetOwnership,

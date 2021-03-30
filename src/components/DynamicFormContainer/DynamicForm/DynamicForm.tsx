@@ -3,6 +3,7 @@ import { cloneDeep } from "lodash";
 import React, { FunctionComponent } from "react";
 import JsonForm from "react-jsonschema-form";
 import tw from "twin.macro";
+import { useFormsContext } from "../../../common/context/forms";
 import { mixin } from "../../../styles";
 import {
   FileUploadType,
@@ -12,8 +13,6 @@ import {
   Ownership,
   SetFormParams,
 } from "../../../types";
-
-import { useFormsContext } from "../../../common/context/forms";
 import { DataFileButton } from "../DataFileButton";
 import { TransferableRecordForm } from "../TransferableRecordForm";
 import { AttachmentDropzone } from "./AttachmentDropzone";
@@ -33,10 +32,12 @@ export interface DynamicFormProps {
   setFormData: (formData: any) => void; // eslint-disable-line @typescript-eslint/no-explicit-any
   setOwnership: (ownership: Ownership) => void;
   setCurrentForm: (arg: SetFormParams) => void; // eslint-disable-line @typescript-eslint/no-explicit-any
+  uiSchema?: any; // eslint-disable-line @typescript-eslint/no-explicit-any
 }
 
 export const DynamicFormRaw: FunctionComponent<DynamicFormProps> = ({
   schema,
+  uiSchema,
   form,
   setFormData,
   setOwnership,
@@ -89,8 +90,6 @@ export const DynamicFormRaw: FunctionComponent<DynamicFormProps> = ({
 
     setAttachments(nextAttachment);
   };
-
-  const uiSchema = data.formData.uiSchema || {};
 
   const widgets = {
     TextareaWidget: CustomTextareaWidget,

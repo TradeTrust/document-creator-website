@@ -54,7 +54,7 @@ export const getRawDocuments = async (
   config: Config
 ): Promise<RawDocument[]> => {
   return Promise.all(
-    forms.map(async ({ data, templateIndex, fileName, ownership }) => {
+    forms.map(async ({ data, templateIndex, fileName, ownership, extension }) => {
       let qrUrl = {};
 
       if (config.network !== "local") {
@@ -77,6 +77,7 @@ export const getRawDocuments = async (
         rawDocument: formData,
         fileName,
         payload,
+        extension,
       };
     })
   );

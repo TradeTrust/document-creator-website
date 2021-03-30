@@ -45,6 +45,7 @@ describe("useFormsContext", () => {
         schema: "FORM_2_SCHEMA",
       },
       fileName: "Document-1",
+      extension: "tt",
       ownership: { holderAddress: "", beneficiaryAddress: "" },
     };
 
@@ -88,11 +89,13 @@ describe("useFormsContext", () => {
         },
         fileName: "Document-1",
         ownership: { holderAddress: "", beneficiaryAddress: "" },
+        extension: "tt",
       },
       {
         templateIndex: 0,
         data: { formData: { foo: "bar" } },
         fileName: "Document-2",
+        extension: "tt",
         ownership: { holderAddress: "", beneficiaryAddress: "" },
       },
       {
@@ -105,6 +108,7 @@ describe("useFormsContext", () => {
         },
         fileName: "Document-3",
         ownership: { holderAddress: "", beneficiaryAddress: "" },
+        extension: "tt",
       },
     ];
 
@@ -138,6 +142,7 @@ describe("useFormsContext", () => {
         },
         fileName: "Document-1",
         ownership: { holderAddress: "0x0Bar", beneficiaryAddress: "0x0Foo" },
+        extension: "tt",
       },
     ];
 

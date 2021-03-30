@@ -1,7 +1,7 @@
+import { LoaderSpinner } from "@govtechsg/tradetrust-ui-components";
 import { saveAs } from "file-saver";
 import prettyBytes from "pretty-bytes";
 import React, { FunctionComponent } from "react";
-import { LoaderSpinner } from "@govtechsg/tradetrust-ui-components";
 import { useConfigContext } from "../../../../common/context/config";
 import { WrappedDocument } from "../../../../types";
 import { generateFileName } from "../../../../utils/fileName";
@@ -24,7 +24,7 @@ export const PublishedTag: FunctionComponent<PublishedTagProps> = ({ doc, isPend
   const fileName = generateFileName({
     network: config?.network,
     fileName: doc.fileName,
-    extension: "tt",
+    extension: doc.extension,
   });
   return (
     <div className="mt-4 flex rounded bg-white p-3 min-w-xs max-w-xs border border-solid border-grey-200 mr-4 items-center">

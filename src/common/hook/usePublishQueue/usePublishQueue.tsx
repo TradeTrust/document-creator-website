@@ -1,10 +1,10 @@
 import { useState } from "react";
+import { PublishState } from "../../../constants/PublishState";
 import { publishJob } from "../../../services/publishing";
 import { Config, FailedJobErrors, FormEntry, PublishingJob, WrappedDocument } from "../../../types";
 import { getLogger } from "../../../utils/logger";
 import { uploadToStorage } from "../../API/storageAPI";
 import { getPublishingJobs } from "./utils/publish";
-import { PublishState } from "../../../constants/PublishState";
 
 const { stack } = getLogger("usePublishQueue");
 
@@ -31,10 +31,10 @@ export const usePublishQueue = (
   const [failedJob, setFailedJob] = useState<FailedJob[]>([]);
   const [pendingJobIndex, setPendingJobIndex] = useState<number[]>([]);
 
-  const publishedDocuments = completedJobIndex.reduce((acc, curr) => {
-    const documentsIssuesInJob = jobs[curr].documents;
-    return [...acc, ...documentsIssuesInJob];
-  }, [] as WrappedDocument[]);
+  const publishedDocuments = completedJobIndex.reduce(
+    (acc, curr) => [...acc, ...jobs[curr].documents],
+    [] as WrappedDocument[]
+  );
 
   const failedPublishedDocuments = failedJob.map((job) => {
     return {

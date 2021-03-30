@@ -28,12 +28,14 @@ const whenPublishStateIsConfirmed = (): void => {
     forms: [
       {
         fileName: "document-1",
+        extension: "tt",
         data: { formData: {} },
         templateIndex: 0,
       },
     ],
     currentForm: {
       fileName: "document-1",
+      extension: "tt",
       data: { formData: {} },
       templateIndex: 0,
     },
@@ -53,6 +55,7 @@ const whenPublishStateIsConfirmed = (): void => {
           signature: {},
           version: "",
         },
+        extension: "tt",
       },
     ],
     failedPublishedDocuments: [],
@@ -69,12 +72,14 @@ const whenPublishStateIsError = (): void => {
     forms: [
       {
         fileName: "document-1",
+        extension: "tt",
         data: { formData: {} },
         templateIndex: 0,
       },
     ],
     currentForm: {
       fileName: "document-1",
+      extension: "tt",
       data: { formData: {} },
       templateIndex: 0,
     },
@@ -101,12 +106,14 @@ const whenPublishStateIsPending = (): void => {
     forms: [
       {
         fileName: "document-1",
+        extension: "tt",
         data: { formData: {} },
         templateIndex: 0,
       },
     ],
     currentForm: {
       fileName: "document-1",
+      extension: "tt",
       data: { formData: {} },
       templateIndex: 0,
     },
