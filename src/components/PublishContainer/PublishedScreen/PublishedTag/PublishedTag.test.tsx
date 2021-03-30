@@ -11,7 +11,6 @@ jest.mock("../../../../common/context/config");
 
 const mockSaveAs = saveAs as jest.Mock;
 const mockUseConfigContext = useConfigContext as jest.Mock;
-
 const withConfigFile = (): void => {
   mockUseConfigContext.mockReturnValue({ config: sampleConfig });
 };

@@ -118,7 +118,7 @@ export const DynamicFormRaw: FunctionComponent<DynamicFormProps> = ({
         />
       )}
       <div className="mb-5">
-        <DataSchemaButton isTransferableRecord={isTransferableRecord} />
+        <DataSchemaButton formSchema={schema} isTransferableRecord={isTransferableRecord} />
       </div>
       <div className="mb-10">
         <DataFileButton onDataFile={mergeFormValue} schema={schema} />

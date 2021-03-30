@@ -1,13 +1,14 @@
 import { Button } from "@govtechsg/tradetrust-ui-components";
 import React, { FunctionComponent } from "react";
+import { saveAs } from "file-saver";
 import { getCsvHeaders, getJsonSchema } from "../../../common/utils";
 import { getLogger } from "../../../utils/logger";
-import { useFormsContext } from "../../../common/context/forms";
 
 const { stack } = getLogger("DataSchemaButton");
 
 interface DataSchemaButton {
   isTransferableRecord: boolean;
+  formSchema: any;
 }
 
 type DataFileDefault = {
@@ -19,17 +20,13 @@ type DataFileDefault = {
   fileName: string;
 };
 
-export const DataSchemaButton: FunctionComponent<DataSchemaButton> = ({ isTransferableRecord }) => {
-  const { currentFormTemplate } = useFormsContext();
-
+export const DataSchemaButton: FunctionComponent<DataSchemaButton> = ({
+  formSchema,
+  isTransferableRecord,
+}) => {
   function downloader(data: string, type: string, name: string): void {
     const blob = new Blob([data], { type });
-    const uri = window.URL.createObjectURL(blob);
-    const link = document.createElement("a");
-    link.download = name;
-    link.href = uri;
-    link.click();
-    window.URL.revokeObjectURL(uri);
+    saveAs(blob, name);
   }
 
   const generateCsvFile = (inputSchemaProperties: string, fileName: string): void => {
@@ -68,25 +65,15 @@ export const DataSchemaButton: FunctionComponent<DataSchemaButton> = ({ isTransf
   return (
     <div data-testid="data-download-zone" className="flex mt-5">
       <Button
-        data-testid="data-schema-download-button"
-        onClick={() =>
-          generateJsonFile(
-            currentFormTemplate?.schema.properties,
-            `${currentFormTemplate?.name}-data-schema` ?? "Data Schema"
-          )
-        }
+        data-testid="data-json-download-button"
+        onClick={() => generateJsonFile(formSchema.properties, "Data Schema.json")}
         className="flex-1 mr-5 bg-white text-orange border-grey-400 hover:bg-grey-100"
       >
         Download .JSON Data Schema
       </Button>
       <Button
-        data-testid="data-schema-download-button"
-        onClick={() =>
-          generateCsvFile(
-            currentFormTemplate?.schema.properties,
-            `${currentFormTemplate?.name}-data-schema` ?? "Data Schema"
-          )
-        }
+        data-testid="data-csv-download-button"
+        onClick={() => generateCsvFile(formSchema.properties, `Data Schema.csv`)}
         className="flex-1 ml-5 bg-white text-orange border-grey-400 hover:bg-grey-100"
       >
         Download .CSV Data Schema
