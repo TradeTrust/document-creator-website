@@ -8,7 +8,7 @@ const { stack } = getLogger("DataSchemaButton");
 
 interface DataSchemaButton {
   isTransferableRecord: boolean;
-  formSchema: any;
+  formSchema: any; // eslint-disable-line @typescript-eslint/no-explicit-any
 }
 
 type DataFileDefault = {
