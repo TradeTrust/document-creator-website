@@ -69,7 +69,9 @@ export const getRawDocuments = async (
       const formData = { ...data.formData, ...qrUrl };
       defaultsDeep(formData, formDefaults);
       const contractAddress =
-        formData.issuers[0]?.documentStore || formData.issuers[0]?.tokenRegistry;
+        formData.issuers[0]?.identityProof?.type === "DNS-DID"
+          ? "DNS-DID"
+          : formData.issuers[0]?.documentStore || formData.issuers[0]?.tokenRegistry;
       const payload = formConfig.type === "TRANSFERABLE_RECORD" ? { ownership } : {};
       return {
         type: formConfig.type,
@@ -94,22 +96,30 @@ export const groupDocumentsIntoJobs = (
   const transferableRecords = rawDocuments.filter((doc) => doc.type === "TRANSFERABLE_RECORD");
   const verifiableDocuments = rawDocuments.filter((doc) => doc.type === "VERIFIABLE_DOCUMENT");
   const groupedVerifiableDocuments = groupBy(verifiableDocuments, "contractAddress");
-  const documentStoreAddresses = Object.keys(groupedVerifiableDocuments);
+  const verifiableDocumentsWithDocumentStore = { ...groupedVerifiableDocuments };
+  delete verifiableDocumentsWithDocumentStore["DNS-DID"];
+  const verifiableDocumentsWithDID =
+    Object.keys(groupedVerifiableDocuments).indexOf("DNS-DID") >= 0
+      ? [...groupedVerifiableDocuments["DNS-DID"]]
+      : [];
+  const documentStoreAddresses = Object.keys(verifiableDocumentsWithDocumentStore);
   let nonce = currentNonce;
 
   const jobs: PublishingJob[] = [];
 
-  // Process all verifiable documents first
+  // Process all verifiable documents with document store first
   documentStoreAddresses.forEach((contractAddress) => {
-    const firstRawDocument = groupedVerifiableDocuments[contractAddress][0];
-    const rawDocuments = groupedVerifiableDocuments[contractAddress].map((doc) => doc.rawDocument);
+    const firstRawDocument = verifiableDocumentsWithDocumentStore[contractAddress][0];
+    const rawDocuments = verifiableDocumentsWithDocumentStore[contractAddress].map(
+      (doc) => doc.rawDocument
+    );
     const wrappedDocuments = wrapDocuments(rawDocuments);
     const firstWrappedDocument = wrappedDocuments[0];
     jobs.push({
       type: firstRawDocument.type,
       nonce,
       contractAddress,
-      documents: groupedVerifiableDocuments[contractAddress].map((doc, index) => ({
+      documents: verifiableDocumentsWithDocumentStore[contractAddress].map((doc, index) => ({
         ...doc,
         wrappedDocument: wrappedDocuments[index],
       })),
@@ -118,6 +128,26 @@ export const groupDocumentsIntoJobs = (
     });
     nonce += TX_NEEDED_FOR_VERIFIABLE_DOCUMENTS;
   });
+
+  // Process all verifiable document with DID next
+  if (verifiableDocumentsWithDID.length > 0) {
+    const firstDidRawDocument = verifiableDocumentsWithDID[0];
+    const didRawDocuments = verifiableDocumentsWithDID.map((doc) => doc.rawDocument);
+    const wrappedDidDocuments = wrapDocuments(didRawDocuments);
+    const firstWrappedDidDocument = wrappedDidDocuments[0];
+    jobs.push({
+      type: firstDidRawDocument.type,
+      nonce,
+      contractAddress: "DNS-DID",
+      documents: verifiableDocumentsWithDID.map((doc, index) => ({
+        ...doc,
+        wrappedDocument: wrappedDidDocuments[index],
+      })),
+      merkleRoot: firstWrappedDidDocument.signature?.merkleRoot,
+      payload: {},
+    });
+    nonce += TX_NEEDED_FOR_VERIFIABLE_DOCUMENTS;
+  }
 
   // Process all transferable records next
   transferableRecords.forEach((transferableRecord) => {

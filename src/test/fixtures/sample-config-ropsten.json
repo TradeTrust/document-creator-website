@@ -594,7 +594,7 @@
       "extension": "tt"
     },
     {
-      "name": "Covering Letter (DBS)",
+      "name": "Covering Letter (DNS-DID)",
       "type": "VERIFIABLE_DOCUMENT",
       "defaults": {
         "$template": {
@@ -604,10 +604,14 @@
         },
         "issuers": [
           {
+            "id": "did:ethr:0x1245e5b64d785b25057f7438f715f4aa5d965733",
             "name": "Demo Issuer",
-            "documentStore": "0x8bA63EAB43342AAc3AdBB4B827b68Cf4aAE5Caca",
+            "revocation": {
+              "type": "NONE"
+            },
             "identityProof": {
-              "type": "DNS-TXT",
+              "type": "DNS-DID",
+              "key": "did:ethr:0x1245e5b64d785b25057f7438f715f4aa5d965733#controller",
               "location": "demo-tradetrust.openattestation.com"
             }
           }
