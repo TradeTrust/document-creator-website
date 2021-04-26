@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { PublishState } from "../../../constants/PublishState";
-import { publishDidJob, publishJob } from "../../../services/publishing";
+import { publishDnsDidJob, publishJob } from "../../../services/publishing";
 import { Config, FailedJobErrors, FormEntry, PublishingJob, WrappedDocument } from "../../../types";
 import { getLogger } from "../../../utils/logger";
 import { uploadToStorage } from "../../API/storageAPI";
@@ -63,37 +63,23 @@ export const usePublishQueue = (
       const deferredJobs = publishingJobs.map(async (job, index) => {
         try {
           const signer = config.wallet;
-          // publish DID verifiable documents first
           if (job.contractAddress === "DNS-DID") {
-            const publishedDidJobs = await publishDidJob(job, signer);
+            // publish DID verifiable documents first
+            const publishedDnsDidJobs = await publishDnsDidJob(job, signer);
             // update wrappedDocument with the signed documents
             job.documents.forEach((document, index) => {
-              document.wrappedDocument = publishedDidJobs[index];
+              document.wrappedDocument = publishedDnsDidJobs[index];
             });
-
-            const uploadDocuments = job.documents.map(async (doc) => {
-              if (config.documentStorage === undefined) return;
-              await uploadToStorage(doc, config.documentStorage);
-            });
-            await Promise.all(uploadDocuments);
           } else {
             // publish verifiable documents and transferable records with doc store and token registry
             await publishJob(job, signer);
-
-            // upload all the docs to document storage
-            const uploadDocuments = job.documents.map(async (doc) => {
-              if (config.documentStorage === undefined) return;
-              console.log("normal", doc);
-              await uploadToStorage(doc, config.documentStorage);
-            });
-            await Promise.all(uploadDocuments);
           }
-          // const uploadDocuments = job.documents.map(async (doc) => {
-          //   if (config.documentStorage === undefined) return;
-          //   console.log("doc", doc);
-          //   await uploadToStorage(doc, config.documentStorage);
-          // });
-          // await Promise.all(uploadDocuments);
+          // upload all the docs to document storage
+          const uploadDocuments = job.documents.map(async (doc) => {
+            if (config.documentStorage === undefined) return;
+            await uploadToStorage(doc, config.documentStorage);
+          });
+          await Promise.all(uploadDocuments);
           completedJobsIndexes.push(index);
           setCompletedJobIndex(completedJobsIndexes);
         } catch (e) {

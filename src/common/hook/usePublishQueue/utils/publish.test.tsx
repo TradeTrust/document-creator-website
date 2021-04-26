@@ -2,7 +2,7 @@ import { Config, RawDocument } from "../../../../types";
 import { getQueueNumber } from "../../../API/storageAPI";
 import { getRawDocuments, groupDocumentsIntoJobs } from "./publish";
 import sampleConfigFile from "./sample-config.json";
-import sampleFormattedWithDID from "./sample-formatted-with-dns-did.json";
+import sampleFormattedWithDnsDid from "./sample-formatted-with-dns-did.json";
 import sampleFormattedWithoutQrUrl from "./sample-formatted-without-qr-url.json";
 import sampleFormatted from "./sample-formatted.json";
 import sampleForms from "./sample-forms.json";
@@ -35,7 +35,7 @@ describe("getRawDocuments", () => {
 });
 
 describe("groupDocumentsIntoJobs", () => {
-  it("should batch transactions accordingly and return the jobs without DID", () => {
+  it("should batch transactions accordingly and return the jobs without DNS-DID", () => {
     const publishingJobs = groupDocumentsIntoJobs(sampleFormatted as RawDocument[], 0);
 
     // One tx with 2 verifiable document
@@ -59,8 +59,8 @@ describe("groupDocumentsIntoJobs", () => {
     expect(publishingJobs[2].nonce).toBe(3);
   });
 
-  it("should batch transactions accordingly and return the jobs with DID", () => {
-    const publishingJobs = groupDocumentsIntoJobs(sampleFormattedWithDID as RawDocument[], 0);
+  it("should batch transactions accordingly and return the jobs with DNS-DID", () => {
+    const publishingJobs = groupDocumentsIntoJobs(sampleFormattedWithDnsDid as RawDocument[], 0);
 
     // One tx with 1 verifiable document
     // One tx with 1 verifiable DID document

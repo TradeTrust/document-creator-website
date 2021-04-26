@@ -98,7 +98,7 @@ export const groupDocumentsIntoJobs = (
   const groupedVerifiableDocuments = groupBy(verifiableDocuments, "contractAddress");
   const verifiableDocumentsWithDocumentStore = { ...groupedVerifiableDocuments };
   delete verifiableDocumentsWithDocumentStore["DNS-DID"];
-  const verifiableDocumentsWithDID =
+  const verifiableDocumentsWithDnsDid =
     Object.keys(groupedVerifiableDocuments).indexOf("DNS-DID") >= 0
       ? [...groupedVerifiableDocuments["DNS-DID"]]
       : [];
@@ -129,21 +129,21 @@ export const groupDocumentsIntoJobs = (
     nonce += TX_NEEDED_FOR_VERIFIABLE_DOCUMENTS;
   });
 
-  // Process all verifiable document with DID next
-  if (verifiableDocumentsWithDID.length > 0) {
-    const firstDidRawDocument = verifiableDocumentsWithDID[0];
-    const didRawDocuments = verifiableDocumentsWithDID.map((doc) => doc.rawDocument);
-    const wrappedDidDocuments = wrapDocuments(didRawDocuments);
-    const firstWrappedDidDocument = wrappedDidDocuments[0];
+  // Process all verifiable document with DNS-DID next
+  if (verifiableDocumentsWithDnsDid.length > 0) {
+    const firstDnsDidRawDocument = verifiableDocumentsWithDnsDid[0];
+    const didRawDocuments = verifiableDocumentsWithDnsDid.map((doc) => doc.rawDocument);
+    const wrappedDnsDidDocuments = wrapDocuments(didRawDocuments);
+    const firstWrappedDnsDidDocument = wrappedDnsDidDocuments[0];
     jobs.push({
-      type: firstDidRawDocument.type,
+      type: firstDnsDidRawDocument.type,
       nonce,
       contractAddress: "DNS-DID",
-      documents: verifiableDocumentsWithDID.map((doc, index) => ({
+      documents: verifiableDocumentsWithDnsDid.map((doc, index) => ({
         ...doc,
-        wrappedDocument: wrappedDidDocuments[index],
+        wrappedDocument: wrappedDnsDidDocuments[index],
       })),
-      merkleRoot: firstWrappedDidDocument.signature?.merkleRoot,
+      merkleRoot: firstWrappedDnsDidDocument.signature?.merkleRoot,
       payload: {},
     });
     nonce += TX_NEEDED_FOR_VERIFIABLE_DOCUMENTS;

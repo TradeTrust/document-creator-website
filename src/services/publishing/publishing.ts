@@ -41,7 +41,7 @@ export const publishVerifiableDocumentJob = async (
   return tx.transactionHash;
 };
 
-export const publishDidVerifiableDocumentJob = async (
+export const publishDnsDidVerifiableDocumentJob = async (
   job: PublishingJob,
   wallet: Wallet
 ): Promise<WrappedDocument[]> => {
@@ -136,10 +136,10 @@ export const publishJob = async (job: PublishingJob, wallet: Wallet): Promise<st
   throw new Error("Job type is not supported");
 };
 
-export const publishDidJob = async (
+export const publishDnsDidJob = async (
   job: PublishingJob,
   wallet: Wallet
 ): Promise<WrappedDocument[]> => {
-  if (job.type === "VERIFIABLE_DOCUMENT") return publishDidVerifiableDocumentJob(job, wallet);
+  if (job.type === "VERIFIABLE_DOCUMENT") return publishDnsDidVerifiableDocumentJob(job, wallet);
   throw new Error("Job type is not supported");
 };
