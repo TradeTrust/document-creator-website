@@ -121,7 +121,8 @@ test("form should render correctly according to uiSchema", async (t) => {
   // one at the root level, the other nested in `misc`
   const docContents2 = JSON.parse(readFileSync(filePath2, "utf8"));
   // Need stringify first, then parse. Without it, getData() alone's return type is never.
-  const docContentsUnwrapped2 = JSON.parse(JSON.stringify(getData(docContents2)));
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const docContentsUnwrapped2 = getData(docContents2) as any;
   await t.expect(docContentsUnwrapped2.misc.uiSchema.remarks).contains({
     "ui:widget": "textarea",
   });
