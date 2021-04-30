@@ -1,4 +1,5 @@
 import { Config, RawDocument } from "../../../../types";
+import { identifyProofType } from "../../../../constants/PublishState";
 import { getQueueNumber } from "../../../API/storageAPI";
 import { getRawDocuments, groupDocumentsIntoJobs } from "./publish";
 import sampleConfigFile from "./sample-config.json";
@@ -72,7 +73,7 @@ describe("groupDocumentsIntoJobs", () => {
     expect(publishingJobs[0].documents).toHaveLength(1);
     expect(publishingJobs[0].nonce).toBe(0);
 
-    expect(publishingJobs[1].contractAddress).toBe("DNS-DID");
+    expect(publishingJobs[1].contractAddress).toBe(identifyProofType.dnsDid);
     expect(publishingJobs[1].merkleRoot).toBeTruthy(); // eslint-disable-line jest/no-truthy-falsy
     expect(publishingJobs[1].documents).toHaveLength(1);
     expect(publishingJobs[1].nonce).toBe(1);

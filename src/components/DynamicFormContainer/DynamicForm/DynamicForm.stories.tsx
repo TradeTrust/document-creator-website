@@ -1,6 +1,7 @@
 import React, { FunctionComponent, useState } from "react";
 import sample from "../../../test/fixtures/sample-config-ropsten.json";
 import { ConfigFile, FormTemplate } from "../../../types";
+import { identifyProofType } from "../../../constants/PublishState";
 import { DynamicForm } from "./DynamicForm";
 
 // Default values in the document we do not want the admin staff to change
@@ -15,7 +16,7 @@ const defaults = {
       name: "Demo Issuer",
       documentStore: "0x8bA63EAB43342AAc3AdBB4B827b68Cf4aAE5Caca",
       identityProof: {
-        type: "DNS-TXT",
+        type: identifyProofType.dnsTxt,
         location: "demo-tradetrust.openattestation.com",
       },
     },

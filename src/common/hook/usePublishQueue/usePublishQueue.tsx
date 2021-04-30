@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { PublishState } from "../../../constants/PublishState";
+import { PublishState, identifyProofType } from "../../../constants/PublishState";
 import { publishDnsDidJob, publishJob } from "../../../services/publishing";
 import { Config, FailedJobErrors, FormEntry, PublishingJob, WrappedDocument } from "../../../types";
 import { getLogger } from "../../../utils/logger";
@@ -60,10 +60,10 @@ export const usePublishQueue = (
       setJobs(publishingJobs);
       const pendingJobs = new Set(publishingJobs.map((job, index) => index));
       setPendingJobIndex(Array.from(pendingJobs));
-      const deferredJobs = publishingJobs.map(async (job, index) => {
+      const allJobs = publishingJobs.map(async (job, index) => {
         try {
           const signer = config.wallet;
-          if (job.contractAddress === "DNS-DID") {
+          if (job.contractAddress === identifyProofType.dnsDid) {
             // publish DID verifiable documents first
             const publishedDnsDidJobs = await publishDnsDidJob(job, signer);
             // update wrappedDocument with the signed documents
@@ -96,7 +96,7 @@ export const usePublishQueue = (
         }
       });
       setPublishState(PublishState.PENDING);
-      await Promise.allSettled(deferredJobs);
+      await Promise.allSettled(allJobs);
       setCompletedJobIndex(completedJobsIndexes);
       setFailedJob(failedJobs);
       setPublishState(PublishState.CONFIRMED);
