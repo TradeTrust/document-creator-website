@@ -19,7 +19,7 @@ See the section about [running tests](https://facebook.github.io/create-react-ap
 
 ### `npm run test:ci`
 
-Launches the test runner in CI mode.<br />
+Launches the test runner in CI mode.
 
 ### `npm run prep`
 
