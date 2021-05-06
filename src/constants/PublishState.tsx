@@ -7,6 +7,6 @@ export enum PublishState {
 }
 
 export enum identifyProofType {
-  dnsTxt = "DNS-TXT",
-  dnsDid = "DNS-DID",
+  DnsTxt = "DNS-TXT",
+  DnsDid = "DNS-DID",
 }

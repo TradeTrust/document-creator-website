@@ -70,8 +70,8 @@ export const getRawDocuments = async (
       const formData = { ...data.formData, ...qrUrl };
       defaultsDeep(formData, formDefaults);
       const contractAddress =
-        formData.issuers[0]?.identityProof?.type === identifyProofType.dnsDid
-          ? identifyProofType.dnsDid
+        formData.issuers[0]?.identityProof?.type === identifyProofType.DnsDid
+          ? identifyProofType.DnsDid
           : formData.issuers[0]?.documentStore || formData.issuers[0]?.tokenRegistry;
       const payload = formConfig.type === "TRANSFERABLE_RECORD" ? { ownership } : {};
       return {
@@ -98,10 +98,10 @@ export const groupDocumentsIntoJobs = (
   const verifiableDocuments = rawDocuments.filter((doc) => doc.type === "VERIFIABLE_DOCUMENT");
   const groupedVerifiableDocuments = groupBy(verifiableDocuments, "contractAddress");
   const verifiableDocumentsWithDocumentStore = { ...groupedVerifiableDocuments };
-  delete verifiableDocumentsWithDocumentStore[identifyProofType.dnsDid];
+  delete verifiableDocumentsWithDocumentStore[identifyProofType.DnsDid];
   const verifiableDocumentsWithDnsDid =
-    Object.keys(groupedVerifiableDocuments).indexOf(identifyProofType.dnsDid) >= 0
-      ? [...groupedVerifiableDocuments[identifyProofType.dnsDid]]
+    Object.keys(groupedVerifiableDocuments).indexOf(identifyProofType.DnsDid) >= 0
+      ? [...groupedVerifiableDocuments[identifyProofType.DnsDid]]
       : [];
   const documentStoreAddresses = Object.keys(verifiableDocumentsWithDocumentStore);
   let nonce = currentNonce;
@@ -139,7 +139,7 @@ export const groupDocumentsIntoJobs = (
     jobs.push({
       type: firstDnsDidRawDocument.type,
       nonce,
-      contractAddress: identifyProofType.dnsDid,
+      contractAddress: identifyProofType.DnsDid,
       documents: verifiableDocumentsWithDnsDid.map((doc, index) => ({
         ...doc,
         wrappedDocument: wrappedDnsDidDocuments[index],

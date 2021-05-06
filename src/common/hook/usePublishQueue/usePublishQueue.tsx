@@ -63,7 +63,7 @@ export const usePublishQueue = (
       const allJobs = publishingJobs.map(async (job, index) => {
         try {
           const signer = config.wallet;
-          if (job.contractAddress === identifyProofType.dnsDid) {
+          if (job.contractAddress === identifyProofType.DnsDid) {
             // publish DID verifiable documents first
             const publishedDnsDidJobs = await publishDnsDidJob(job, signer);
             // update wrappedDocument with the signed documents

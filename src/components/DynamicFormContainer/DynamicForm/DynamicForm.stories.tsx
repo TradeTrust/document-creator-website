@@ -16,7 +16,7 @@ const defaults = {
       name: "Demo Issuer",
       documentStore: "0x8bA63EAB43342AAc3AdBB4B827b68Cf4aAE5Caca",
       identityProof: {
-        type: identifyProofType.dnsTxt,
+        type: identifyProofType.DnsTxt,
         location: "demo-tradetrust.openattestation.com",
       },
     },
