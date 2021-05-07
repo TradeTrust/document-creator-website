@@ -5,3 +5,8 @@ export enum PublishState {
   CONFIRMED = "CONFIRMED",
   ERROR = "ERROR",
 }
+
+export enum identifyProofType {
+  DnsTxt = "DNS-TXT",
+  DnsDid = "DNS-DID",
+}

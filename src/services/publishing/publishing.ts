@@ -1,11 +1,12 @@
-import { PublishingJob } from "../../types";
-import { Wallet, providers, Signer } from "ethers";
 import { DocumentStoreFactory, GsnCapableDocumentStoreFactory } from "@govtechsg/document-store";
 import { DocumentStore } from "@govtechsg/document-store/src/contracts/DocumentStore";
+import { signDocument, SUPPORTED_SIGNING_ALGORITHM } from "@govtechsg/open-attestation";
 import { TitleEscrowCreatorFactory, TradeTrustERC721Factory } from "@govtechsg/token-registry";
 import { TitleEscrowCreator } from "@govtechsg/token-registry/types/TitleEscrowCreator";
-import { supportsInterface } from "./utils";
+import { providers, Signer, Wallet } from "ethers";
 import { getGsnRelaySigner } from "../../common/config/decrypt";
+import { PublishingJob, WrappedDocument } from "../../types";
+import { supportsInterface } from "./utils";
 
 const assertAddressIsSmartContract = async (address: string, wallet: Wallet): Promise<void> => {
   const code = await wallet.provider.getCode(address);
@@ -38,6 +39,31 @@ export const publishVerifiableDocumentJob = async (
   const tx = await receipt.wait();
   if (!tx.transactionHash) throw new Error(`Tx hash not available: ${JSON.stringify(tx)}`);
   return tx.transactionHash;
+};
+
+export const publishDnsDidVerifiableDocumentJob = async (
+  job: PublishingJob,
+  wallet: Wallet
+): Promise<WrappedDocument[]> => {
+  const signedDocumentsList: WrappedDocument[] = [];
+  const signingDocuments = job.documents.map(async (doc) => {
+    try {
+      const signedDocument = await signDocument(
+        doc.wrappedDocument,
+        SUPPORTED_SIGNING_ALGORITHM.Secp256k1VerificationKey2018,
+        {
+          public: doc.rawDocument.issuers[0].identityProof.key,
+          private: wallet.privateKey,
+        }
+      );
+      signedDocumentsList.push(signedDocument);
+    } catch (e) {
+      throw new Error(`Error signing document: ${doc.rawDocument.issuers[0].id}`);
+    }
+  });
+
+  await Promise.allSettled(signingDocuments);
+  return signedDocumentsList;
 };
 
 interface CreatorContract {
@@ -107,5 +133,13 @@ export const publishTransferableRecordJob = async (
 export const publishJob = async (job: PublishingJob, wallet: Wallet): Promise<string> => {
   if (job.type === "VERIFIABLE_DOCUMENT") return publishVerifiableDocumentJob(job, wallet);
   if (job.type === "TRANSFERABLE_RECORD") return publishTransferableRecordJob(job, wallet);
+  throw new Error("Job type is not supported");
+};
+
+export const publishDnsDidJob = async (
+  job: PublishingJob,
+  wallet: Wallet
+): Promise<WrappedDocument[]> => {
+  if (job.type === "VERIFIABLE_DOCUMENT") return publishDnsDidVerifiableDocumentJob(job, wallet);
   throw new Error("Job type is not supported");
 };

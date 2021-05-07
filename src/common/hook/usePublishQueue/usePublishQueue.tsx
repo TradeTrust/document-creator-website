@@ -1,6 +1,6 @@
 import { useState } from "react";
-import { PublishState } from "../../../constants/PublishState";
-import { publishJob } from "../../../services/publishing";
+import { PublishState, identifyProofType } from "../../../constants/PublishState";
+import { publishDnsDidJob, publishJob } from "../../../services/publishing";
 import { Config, FailedJobErrors, FormEntry, PublishingJob, WrappedDocument } from "../../../types";
 import { getLogger } from "../../../utils/logger";
 import { uploadToStorage } from "../../API/storageAPI";
@@ -51,7 +51,7 @@ export const usePublishQueue = (
   const publish = async (): Promise<void> => {
     try {
       // Cannot use setCompletedJobIndex here as async update does not with the promise race
-      const completedJobs: number[] = [];
+      const completedJobsIndexes: number[] = [];
       const failedJobs: FailedJob[] = [];
 
       setPublishState(PublishState.INITIALIZED);
@@ -60,17 +60,29 @@ export const usePublishQueue = (
       setJobs(publishingJobs);
       const pendingJobs = new Set(publishingJobs.map((job, index) => index));
       setPendingJobIndex(Array.from(pendingJobs));
-      const deferredJobs = publishingJobs.map(async (job, index) => {
+      const allJobs = publishingJobs.map(async (job, index) => {
         try {
           const signer = config.wallet;
-          await publishJob(job, signer);
+          if (job.contractAddress === identifyProofType.DnsDid) {
+            // publish DID verifiable documents first
+            const publishedDnsDidJobs = await publishDnsDidJob(job, signer);
+            // update wrappedDocument with the signed documents
+            job.documents.forEach((document, index) => {
+              // TODO: refactor so that we do not temper with the wrappedDocument for DnsDid
+              document.wrappedDocument = publishedDnsDidJobs[index];
+            });
+          } else {
+            // publish verifiable documents and transferable records with doc store and token registry
+            await publishJob(job, signer);
+          }
+          // upload all the docs to document storage
           const uploadDocuments = job.documents.map(async (doc) => {
             if (config.documentStorage === undefined) return;
             await uploadToStorage(doc, config.documentStorage);
           });
           await Promise.all(uploadDocuments);
-          completedJobs.push(index);
-          setCompletedJobIndex(completedJobs);
+          completedJobsIndexes.push(index);
+          setCompletedJobIndex(completedJobsIndexes);
         } catch (e) {
           failedJobs.push({
             index: index,
@@ -85,8 +97,8 @@ export const usePublishQueue = (
         }
       });
       setPublishState(PublishState.PENDING);
-      await Promise.allSettled(deferredJobs);
-      setCompletedJobIndex(completedJobs);
+      await Promise.allSettled(allJobs);
+      setCompletedJobIndex(completedJobsIndexes);
       setFailedJob(failedJobs);
       setPublishState(PublishState.CONFIRMED);
     } catch (e) {
