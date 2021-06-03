@@ -115,7 +115,7 @@
     "storybook": "npm-run-all -p start:css storybook:start",
     "storybook:start": "sleep 2 && start-storybook -p 9009 -s public",
     "storybook:build": "npm run build:css && build-storybook -s public",
-    "prep": "npm run lint:fix && npm run test:ci && npm run integration:concurrently:headless",
+    "prep": "npm run lint:fix && npm run test:ci && npm run build && npm run integration:concurrently:headless",
     "test:ci": "CI=true react-app-rewired test --env=jest-environment-jsdom-sixteen",
     "test": "react-app-rewired test --env=jest-environment-jsdom-sixteen"
   },
