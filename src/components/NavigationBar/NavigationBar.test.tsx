@@ -1,9 +1,9 @@
 import { render, screen } from "@testing-library/react";
 import React from "react";
-import { NavigationBar } from "./NavigationBar";
 import { BrowserRouter, Route } from "react-router-dom";
 import rinkebyConfig from "../../test/fixtures/sample-config-rinkeby.json";
 import ropstenConfig from "../../test/fixtures/sample-config-ropsten.json";
+import { NavigationBar } from "./NavigationBar";
 
 const mockMainnetConfig = {
   network: "homestead",
@@ -36,9 +36,7 @@ describe("navigationBar", () => {
       </BrowserRouter>
     );
 
-    expect(screen.getByText("Verify Documents").getAttribute("href")).toBe(
-      "https://tradetrust.io/#verify-documents"
-    );
+    expect(screen.getByText("Verify Documents").getAttribute("href")).toBe("https://tradetrust.io/#verify-documents");
   });
 
   it("should render href to rinkeby verify documents page with rinkeby config", () => {
@@ -81,8 +79,6 @@ describe("navigationBar", () => {
       </BrowserRouter>
     );
 
-    expect(screen.getByText("Verify Documents").getAttribute("href")).toBe(
-      "https://tradetrust.io/#verify-documents"
-    );
+    expect(screen.getByText("Verify Documents").getAttribute("href")).toBe("https://tradetrust.io/#verify-documents");
   });
 });

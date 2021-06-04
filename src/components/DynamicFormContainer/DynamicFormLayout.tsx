@@ -87,24 +87,12 @@ export const DynamicFormLayout: FunctionComponent = () => {
     closeBackModal();
   };
 
-  const currentUnwrappedData = defaultsDeep(
-    {},
-    currentForm.data.formData,
-    currentFormTemplate.defaults
-  );
+  const currentUnwrappedData = defaultsDeep({}, currentForm.data.formData, currentFormTemplate.defaults);
 
   return (
     <>
-      <DeleteModal
-        deleteForm={deleteForm}
-        show={showDeleteModal}
-        closeDeleteModal={closeDeleteModal}
-      />
-      <BackModal
-        backToFormSelection={deleteAllForms}
-        show={showBackModal}
-        closeBackModal={closeBackModal}
-      />
+      <DeleteModal deleteForm={deleteForm} show={showDeleteModal} closeDeleteModal={closeDeleteModal} />
+      <BackModal backToFormSelection={deleteAllForms} show={showBackModal} closeBackModal={closeBackModal} />
       <DynamicFormHeader
         onBackToFormSelection={() => setShowBackModal(true)}
         onNewForm={onNewForm}
@@ -118,10 +106,7 @@ export const DynamicFormLayout: FunctionComponent = () => {
             <div className="flex justify-between">
               <div className="text-grey-800 flex items-center">
                 <div className="align-middle">Preview mode:</div>
-                <ToggleSwitch
-                  isOn={isPreviewMode}
-                  handleToggle={() => setIsPreviewMode(!isPreviewMode)}
-                />
+                <ToggleSwitch isOn={isPreviewMode} handleToggle={() => setIsPreviewMode(!isPreviewMode)} />
               </div>
               <ButtonIcon
                 className="bg-white hover:bg-grey-100 border-grey-400"

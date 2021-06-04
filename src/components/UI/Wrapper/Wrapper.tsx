@@ -6,14 +6,6 @@ interface WrapperProps {
   isMaxW?: boolean;
 }
 
-export const Wrapper: React.FunctionComponent<WrapperProps> = ({
-  className,
-  children,
-  isMaxW,
-}: WrapperProps) => {
-  return (
-    <div className={`container mt-8 ${isMaxW ? "max-w-2xl" : ""} ${className ? className : ""}`}>
-      {children}
-    </div>
-  );
+export const Wrapper: React.FunctionComponent<WrapperProps> = ({ className, children, isMaxW }: WrapperProps) => {
+  return <div className={`container mt-8 ${isMaxW ? "max-w-2xl" : ""} ${className ? className : ""}`}>{children}</div>;
 };

@@ -26,10 +26,7 @@ export const AttachmentDropzone: FunctionComponent<AttachmentDropzone> = ({
   const onDrop = useCallback(
     async (files: File[]) => {
       let totalSize = uploadedFiles
-        ? uploadedFiles.reduce(
-            (acc: number, current: FileUploadType) => acc + atob(current.data).length,
-            0
-          )
+        ? uploadedFiles.reduce((acc: number, current: FileUploadType) => acc + atob(current.data).length, 0)
         : 0;
 
       files.forEach((file) => (totalSize += file.size));
@@ -65,15 +62,9 @@ export const AttachmentDropzone: FunctionComponent<AttachmentDropzone> = ({
       }`;
 
   return (
-    <div
-      className="flex flex-col max-w-screen-sm m-auto"
-      key="AttachmentDropzone"
-      data-testid="attachment-dropzone"
-    >
+    <div className="flex flex-col max-w-screen-sm m-auto" key="AttachmentDropzone" data-testid="attachment-dropzone">
       <legend>Attachments</legend>
-      <div className="text-grey-800">
-        Max. total file size: {MAX_FILE_SIZE / BYTE_CONVERTION_RATE}MB
-      </div>
+      <div className="text-grey-800">Max. total file size: {MAX_FILE_SIZE / BYTE_CONVERTION_RATE}MB</div>
       <div data-testid="attachment-upload-zone" className="mt-4" {...getRootProps()}>
         <input data-testid="attachment-file-drop-zone" {...getInputProps()} />
         <div className={dropZoneCSS}>
@@ -90,9 +81,7 @@ export const AttachmentDropzone: FunctionComponent<AttachmentDropzone> = ({
               <div className="max-w-lg text-red font-bold text-lg" data-testid="file-size-error">
                 Error: Total attachment file size exceeds {MAX_FILE_SIZE / BYTE_CONVERTION_RATE}MB
               </div>
-              <div className="text-base text-grey-800 my-4">
-                Please try again with a smaller file size.
-              </div>
+              <div className="text-base text-grey-800 my-4">Please try again with a smaller file size.</div>
             </>
           )}
           {!error && (
@@ -101,9 +90,7 @@ export const AttachmentDropzone: FunctionComponent<AttachmentDropzone> = ({
               <div className="text-base text-grey-800 my-4">or</div>
             </>
           )}
-          <Button className="bg-white text-orange border-grey-400 hover:bg-grey-100 px-12">
-            Browse File
-          </Button>
+          <Button className="bg-white text-orange border-grey-400 hover:bg-grey-100 px-12">Browse File</Button>
         </div>
       </div>
       <FilesInfo filesInfo={uploadedFiles} removeFile={removeFile} />

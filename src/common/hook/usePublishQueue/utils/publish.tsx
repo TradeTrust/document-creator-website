@@ -1,14 +1,7 @@
 import { wrapDocuments } from "@govtechsg/open-attestation";
 import { defaultsDeep, groupBy } from "lodash";
-import {
-  ActionsUrlObject,
-  Config,
-  DocumentStorage,
-  FormEntry,
-  PublishingJob,
-  RawDocument,
-} from "../../../../types";
 import { identifyProofType } from "../../../../constants/PublishState";
+import { ActionsUrlObject, Config, DocumentStorage, FormEntry, PublishingJob, RawDocument } from "../../../../types";
 import { getQueueNumber } from "../../../API/storageAPI";
 import { encodeQrCode } from "../../../utils";
 
@@ -50,10 +43,7 @@ const getReservedStorageUrl = async (
   return qrCodeObject;
 };
 
-export const getRawDocuments = async (
-  forms: FormEntry[],
-  config: Config
-): Promise<RawDocument[]> => {
+export const getRawDocuments = async (forms: FormEntry[], config: Config): Promise<RawDocument[]> => {
   return Promise.all(
     forms.map(async ({ data, templateIndex, fileName, ownership, extension }) => {
       let qrUrl = {};
@@ -90,10 +80,7 @@ const TX_NEEDED_FOR_VERIFIABLE_DOCUMENTS = 1;
 const TX_NEEDED_FOR_TRANSFERABLE_RECORDS = 2;
 
 // Given a list of documents, create a list of jobs
-export const groupDocumentsIntoJobs = (
-  rawDocuments: RawDocument[],
-  currentNonce: number
-): PublishingJob[] => {
+export const groupDocumentsIntoJobs = (rawDocuments: RawDocument[], currentNonce: number): PublishingJob[] => {
   const transferableRecords = rawDocuments.filter((doc) => doc.type === "TRANSFERABLE_RECORD");
   const verifiableDocuments = rawDocuments.filter((doc) => doc.type === "VERIFIABLE_DOCUMENT");
   const groupedVerifiableDocuments = groupBy(verifiableDocuments, "contractAddress");
@@ -111,9 +98,7 @@ export const groupDocumentsIntoJobs = (
   // Process all verifiable documents with document store first
   documentStoreAddresses.forEach((contractAddress) => {
     const firstRawDocument = verifiableDocumentsWithDocumentStore[contractAddress][0];
-    const rawDocuments = verifiableDocumentsWithDocumentStore[contractAddress].map(
-      (doc) => doc.rawDocument
-    );
+    const rawDocuments = verifiableDocumentsWithDocumentStore[contractAddress].map((doc) => doc.rawDocument);
     const wrappedDocuments = wrapDocuments(rawDocuments);
     const firstWrappedDocument = wrappedDocuments[0];
     jobs.push({

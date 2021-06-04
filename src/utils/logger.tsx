@@ -5,10 +5,12 @@ const creator = debug("creator");
 const trace = creator.extend("trace");
 const error = creator.extend("error");
 
-export const stack = (namespace: string) => (err: Error): void => {
-  error.extend(namespace)(err.message);
-  error.extend(namespace)(err.stack);
-};
+export const stack =
+  (namespace: string) =>
+  (err: Error): void => {
+    error.extend(namespace)(err.message);
+    error.extend(namespace)(err.stack);
+  };
 
 export const getLogger = (
   namespace: string

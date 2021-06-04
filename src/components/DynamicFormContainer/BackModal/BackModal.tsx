@@ -8,11 +8,7 @@ interface BackModalProps {
   closeBackModal: () => void;
 }
 
-export const BackModal: FunctionComponent<BackModalProps> = ({
-  backToFormSelection,
-  show,
-  closeBackModal,
-}) => {
+export const BackModal: FunctionComponent<BackModalProps> = ({ backToFormSelection, show, closeBackModal }) => {
   return (
     <>
       {show && (
@@ -22,8 +18,7 @@ export const BackModal: FunctionComponent<BackModalProps> = ({
               Back to form selection
             </div>
             <div className="text-grey-800 mt-4 mr-16">
-              Do you want to go back? This will delete <strong>ALL</strong> your current
-              document(s).
+              Do you want to go back? This will delete <strong>ALL</strong> your current document(s).
             </div>
             <div className="mt-16">
               <div className="flex justify-end">

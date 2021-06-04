@@ -8,16 +8,11 @@ interface FormErrorBanner {
   formErrorTitle: string | null | undefined;
   formError: FormError;
 }
-export const FormErrorBanner: FunctionComponent<FormErrorBanner> = ({
-  formErrorTitle,
-  formError,
-}) => {
+export const FormErrorBanner: FunctionComponent<FormErrorBanner> = ({ formErrorTitle, formError }) => {
   if (!formError || !(formError.length > 0)) return null;
+
   return (
-    <div
-      data-testid="form-error-banner"
-      className="bg-red-100 rounded max-w-screen-sm mx-auto flex items-start py-3"
-    >
+    <div data-testid="form-error-banner" className="bg-red-100 rounded max-w-screen-sm mx-auto flex items-start py-3">
       <XCircle className="text-red mx-3 my-1" />
       <div className="text-red text-xl flex flex-col justify-center items-start">
         <div>{formErrorTitle}</div>
@@ -26,7 +21,7 @@ export const FormErrorBanner: FunctionComponent<FormErrorBanner> = ({
             formError.map((error, index: number) => {
               return (
                 <li key={index}>
-                  {error.dataPath} {error.message}
+                  {error.instancePath} {error.message}
                 </li>
               );
             })}

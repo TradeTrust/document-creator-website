@@ -7,17 +7,8 @@ interface DocumentSelector {
   closePreviewMode: () => void;
 }
 
-export const DocumentSelector: FunctionComponent<DocumentSelector> = ({
-  validateCurrentForm,
-  closePreviewMode,
-}) => {
-  const {
-    forms,
-    setActiveFormIndex,
-    currentForm,
-    activeFormIndex,
-    setCurrentFileName,
-  } = useFormsContext();
+export const DocumentSelector: FunctionComponent<DocumentSelector> = ({ validateCurrentForm, closePreviewMode }) => {
+  const { forms, setActiveFormIndex, currentForm, activeFormIndex, setCurrentFileName } = useFormsContext();
 
   const previousDocument = (): void => {
     if (activeFormIndex === undefined || activeFormIndex === 0) return;

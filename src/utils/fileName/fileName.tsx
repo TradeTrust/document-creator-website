@@ -5,12 +5,7 @@ interface generateFileNameI {
   hasTimestamp?: boolean;
 }
 
-export const generateFileName = ({
-  network,
-  fileName,
-  extension,
-  hasTimestamp,
-}: generateFileNameI): string => {
+export const generateFileName = ({ network, fileName, extension, hasTimestamp }: generateFileNameI): string => {
   const timestamp = new Date().toISOString();
   const fileNetwork = network === "homestead" ? "" : `-${network}`;
   const fileTimestamp = hasTimestamp ? `-${timestamp}` : "";

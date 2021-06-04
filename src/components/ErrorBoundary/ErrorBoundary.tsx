@@ -1,6 +1,6 @@
 import React, { Component, ReactNode } from "react";
-import { ErrorBoundaryContent } from "./ErrorBoundaryContent";
 import { getLogger } from "../../utils/logger";
+import { ErrorBoundaryContent } from "./ErrorBoundaryContent";
 
 const { stack } = getLogger("component:errorboundary");
 
@@ -19,10 +19,6 @@ export class ErrorBoundary extends Component<unknown, State> {
 
   render(): ReactNode {
     const error = this.state.error;
-    return this.state.hasError ? (
-      <ErrorBoundaryContent error={error?.stack} />
-    ) : (
-      this.props.children
-    );
+    return this.state.hasError ? <ErrorBoundaryContent error={error?.stack} /> : this.props.children;
   }
 }

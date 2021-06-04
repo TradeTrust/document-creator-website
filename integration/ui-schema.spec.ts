@@ -54,9 +54,7 @@ test("form should render correctly according to uiSchema", async (t) => {
 
   // Validate that default values is populated
   await t.expect(DocumentTitleField.value).contains("Documents Bundle");
-  await t
-    .expect(DocumentRemarksField.value)
-    .contains("Some very important documents in here for some submission");
+  await t.expect(DocumentRemarksField.value).contains("Some very important documents in here for some submission");
 
   // Expect uiSchema to be working, i.e. it renders the remarks field to be a textarea
   await t
@@ -79,9 +77,7 @@ test("form should render correctly according to uiSchema", async (t) => {
 
   // Validate that default values is populated
   await t.expect(DocumentTitleField.value).contains("Documents Bundle");
-  await t
-    .expect(DocumentRemarksField.value)
-    .contains("Some very important documents in here for some submission");
+  await t.expect(DocumentRemarksField.value).contains("Some very important documents in here for some submission");
 
   // Expect remarks field to be a normal input field (because uiSchema does not exist at the form template's root level)
   await t
@@ -97,6 +93,7 @@ test("form should render correctly according to uiSchema", async (t) => {
   // Check that the two Covering Letters are created
   const fileName1 = "Covering Letter (DBS)-1-local.tt";
   const fileName2 = "Covering Letter (DBS, Nested UISchema)-2-local.tt";
+  await t.wait(3000);
   await t.expect(Title.textContent).contains("Document(s) issued successfully");
   await t.expect(Selector("div").withText(fileName1).exists).ok();
   await t.expect(Selector("div").withText(fileName2).exists).ok();

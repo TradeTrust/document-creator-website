@@ -1,12 +1,8 @@
-import { Wallet, getDefaultProvider } from "ethers";
-import {
-  getTitleEscrowCreator,
-  publishVerifiableDocumentJob,
-  publishTransferableRecordJob,
-} from "./index";
-import { supportsInterface } from "./utils";
-import { TitleEscrowCreatorFactory, TradeTrustERC721Factory } from "@govtechsg/token-registry";
 import { DocumentStoreFactory } from "@govtechsg/document-store";
+import { TitleEscrowCreatorFactory, TradeTrustERC721Factory } from "@govtechsg/token-registry";
+import { getDefaultProvider, Wallet } from "ethers";
+import { getTitleEscrowCreator, publishTransferableRecordJob, publishVerifiableDocumentJob } from "./index";
+import { supportsInterface } from "./utils";
 
 jest.mock("@govtechsg/token-registry");
 jest.mock("@govtechsg/document-store");
@@ -59,8 +55,7 @@ const resetMocks = (mocks: jest.Mock[]): void => mocks.forEach((mock) => mock.mo
 
 const mockWallet = ({ code = "0x1234" } = {}): Wallet =>
   ({ provider: { getCode: () => code, getNetwork: () => ({ name: "ropsten" }) } } as any);
-const randomWallet = (network = "ropsten"): Wallet =>
-  Wallet.createRandom().connect(getDefaultProvider(network));
+const randomWallet = (network = "ropsten"): Wallet => Wallet.createRandom().connect(getDefaultProvider(network));
 
 describe("publishing", () => {
   beforeEach(() => {

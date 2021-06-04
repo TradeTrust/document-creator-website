@@ -7,9 +7,7 @@ jest.mock("../config");
 
 const mockUseConfigContext = useConfigContext as jest.Mock;
 
-const wrapper: FunctionComponent = ({ children }) => (
-  <FormsContextProvider>{children}</FormsContextProvider>
-);
+const wrapper: FunctionComponent = ({ children }) => <FormsContextProvider>{children}</FormsContextProvider>;
 
 describe("useFormsContext", () => {
   beforeEach(() => {

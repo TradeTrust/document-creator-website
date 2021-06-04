@@ -12,10 +12,7 @@ interface ConfigFileDropZone {
   onConfigFile: (configFile: ConfigFile) => void;
 }
 
-export const ConfigFileDropZone: FunctionComponent<ConfigFileDropZone> = ({
-  onConfigFile,
-  errorMessage,
-}) => {
+export const ConfigFileDropZone: FunctionComponent<ConfigFileDropZone> = ({ onConfigFile, errorMessage }) => {
   const [error, setError] = useState(false);
   const onDrop = async (files: File[]): Promise<void> => {
     try {
@@ -46,10 +43,7 @@ export const ConfigFileDropZone: FunctionComponent<ConfigFileDropZone> = ({
         <input data-testid="config-file-drop-zone" {...getInputProps()} />
         <div className={dropZoneCSS}>
           {error && (
-            <div
-              className="max-w-lg text-red font-bold text-lg"
-              data-testid={"error-cannot-read-file"}
-            >
+            <div className="max-w-lg text-red font-bold text-lg" data-testid={"error-cannot-read-file"}>
               Error: File cannot be read
             </div>
           )}
@@ -63,12 +57,8 @@ export const ConfigFileDropZone: FunctionComponent<ConfigFileDropZone> = ({
               Drag and drop your configuration file here
             </div>
           )}
-          <div className="text-base text-grey-800 my-4">
-            {errorMessage || error ? "Please try again." : "or"}
-          </div>
-          <Button className="bg-white text-orange hover:text-orange-600 border-grey-300 px-12">
-            Browse Files
-          </Button>
+          <div className="text-base text-grey-800 my-4">{errorMessage || error ? "Please try again." : "or"}</div>
+          <Button className="bg-white text-orange hover:text-orange-600 border-grey-300 px-12">Browse Files</Button>
         </div>
       </div>
     </>

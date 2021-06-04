@@ -1,5 +1,4 @@
-export const INFURA_PROJECT_ID =
-  process.env.INFURA_PROJECT_ID || "6028cd7708c54c91a90df6cefd9bf1a9"; // TODO: inject project id into env variable
+export const INFURA_PROJECT_ID = process.env.INFURA_PROJECT_ID || "6028cd7708c54c91a90df6cefd9bf1a9"; // TODO: inject project id into env variable
 
 // Addresses retrieved from https://docs.opengsn.org/gsn-provider/networks.html
 interface GsnRelayConfig {

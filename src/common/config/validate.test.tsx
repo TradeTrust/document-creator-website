@@ -11,19 +11,13 @@ describe("configFileSchema", () => {
   it("throws when wallet is malformed", () => {
     expect.assertions(6);
     expect(() => assertConfigFile({ ...sample, wallet: undefined } as any)).toThrow(/missing/);
-    expect(() => assertConfigFile({ ...sample, wallet: "" } as any)).toThrow(
-      /not allowed to be empty/
-    );
+    expect(() => assertConfigFile({ ...sample, wallet: "" } as any)).toThrow(/not allowed to be empty/);
     expect(() => assertConfigFile({ ...sample, forms: undefined } as any)).toThrow(/missing/);
-    expect(() =>
-      assertConfigFile({ ...sample, forms: [{ name: undefined, type: "abc" }] } as any)
-    ).toThrow(/missing/);
-    expect(() =>
-      assertConfigFile({ ...sample, forms: [{ name: "abc", type: undefined }] } as any)
-    ).toThrow(/missing/);
-    expect(() =>
-      assertConfigFile({ ...sample, forms: [{ name: "abc", type: "abc" }] } as any)
-    ).toThrow(/must be one of/);
+    expect(() => assertConfigFile({ ...sample, forms: [{ name: undefined, type: "abc" }] } as any)).toThrow(/missing/);
+    expect(() => assertConfigFile({ ...sample, forms: [{ name: "abc", type: undefined }] } as any)).toThrow(/missing/);
+    expect(() => assertConfigFile({ ...sample, forms: [{ name: "abc", type: "abc" }] } as any)).toThrow(
+      /must be one of/
+    );
   });
 
   describe("wallet", () => {
@@ -39,19 +33,19 @@ describe("configFileSchema", () => {
       ).toThrow(/missing/);
     });
     it("should throw when schema is missing", () => {
-      expect(() =>
-        assertConfigFile({ ...sample, forms: [{ ...sample.forms[0], schema: undefined }] } as any)
-      ).toThrow(/missing/);
+      expect(() => assertConfigFile({ ...sample, forms: [{ ...sample.forms[0], schema: undefined }] } as any)).toThrow(
+        /missing/
+      );
     });
     it("should throw when type is malformed", () => {
-      expect(() =>
-        assertConfigFile({ ...sample, forms: [{ ...sample.forms[0], type: "FOO_BAR" }] } as any)
-      ).toThrow(/must be one of/);
+      expect(() => assertConfigFile({ ...sample, forms: [{ ...sample.forms[0], type: "FOO_BAR" }] } as any)).toThrow(
+        /must be one of/
+      );
     });
     it("should throw when name is missing", () => {
-      expect(() =>
-        assertConfigFile({ ...sample, forms: [{ ...sample.forms[0], name: undefined }] } as any)
-      ).toThrow(/missing/);
+      expect(() => assertConfigFile({ ...sample, forms: [{ ...sample.forms[0], name: undefined }] } as any)).toThrow(
+        /missing/
+      );
     });
   });
 

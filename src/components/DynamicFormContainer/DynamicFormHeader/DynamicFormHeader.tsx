@@ -38,13 +38,8 @@ export const DynamicFormHeader: FunctionComponent<DynamicFormHeaderProps> = ({
       <div className="flex justify-between items-end">
         <div className="flex flex-col">
           <Title className="mb-4">Fill and Preview Form</Title>
-          <div className="text-grey-800 text-lg">
-            {`${(activeFormIndex || 0) + 1} of ${forms.length} document(s)`}
-          </div>
-          <DocumentSelector
-            validateCurrentForm={validateCurrentForm}
-            closePreviewMode={closePreviewMode}
-          />
+          <div className="text-grey-800 text-lg">{`${(activeFormIndex || 0) + 1} of ${forms.length} document(s)`}</div>
+          <DocumentSelector validateCurrentForm={validateCurrentForm} closePreviewMode={closePreviewMode} />
         </div>
         <div>
           <Button

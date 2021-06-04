@@ -1,22 +1,18 @@
-import { Button } from "@govtechsg/tradetrust-ui-components";
+import { Button, LoaderSpinner } from "@govtechsg/tradetrust-ui-components";
 import React, { FunctionComponent, ReactElement } from "react";
 import { CheckCircle, XCircle } from "react-feather";
 import { useConfigContext } from "../../../../common/context/config";
 import { useFormsContext } from "../../../../common/context/forms";
-import { WrappedDocument } from "../../../../types";
-import { LoaderSpinner } from "@govtechsg/tradetrust-ui-components";
-import { Title } from "../../../UI/Title";
 import { PublishState } from "../../../../constants/PublishState";
+import { WrappedDocument } from "../../../../types";
+import { Title } from "../../../UI/Title";
 
 interface PublishTitle {
   publishState: PublishState;
   publishedDocuments: WrappedDocument[];
 }
 
-export const PublishTitle: FunctionComponent<PublishTitle> = ({
-  publishState,
-  publishedDocuments,
-}) => {
+export const PublishTitle: FunctionComponent<PublishTitle> = ({ publishState, publishedDocuments }) => {
   const { setConfig } = useConfigContext();
   const { setForms, setActiveFormIndex } = useFormsContext();
 
@@ -68,10 +64,7 @@ export const PublishTitle: FunctionComponent<PublishTitle> = ({
       <Title className="flex items-center mb-8">{getDisplayTitle()}</Title>
       {publishState === PublishState.CONFIRMED && (
         <div>
-          <Button
-            className="bg-white text-orange hover:bg-grey-100 mb-6 mr-4"
-            onClick={createAnotherDoc}
-          >
+          <Button className="bg-white text-orange hover:bg-grey-100 mb-6 mr-4" onClick={createAnotherDoc}>
             Create another Document
           </Button>
           <Button

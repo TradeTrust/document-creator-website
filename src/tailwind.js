@@ -4,11 +4,7 @@ const commonUiConfig = require("@govtechsg/tradetrust-ui-components/build/tailwi
 // https://tailwindcss.com/docs/theme
 const localConfig = {
   purge: {
-    content: [
-      "./src/**/*.ts",
-      "./src/**/*.tsx",
-      "./node_modules/@govtechsg/tradetrust-ui-components/src/**/*.tsx",
-    ],
+    content: ["./src/**/*.ts", "./src/**/*.tsx", "./node_modules/@govtechsg/tradetrust-ui-components/src/**/*.tsx"],
   },
   theme: {
     fontFamily: {
