@@ -4,8 +4,8 @@
   "private": true,
   "dependencies": {
     "@emotion/core": "^11.0.0",
-    "@emotion/styled": "^11.3.0",
     "@emotion/react": "^11.4.0",
+    "@emotion/styled": "^11.3.0",
     "@govtechsg/address-identity-resolver": "^1.4.1",
     "@govtechsg/decentralized-renderer-react-components": "^3.5.0",
     "@govtechsg/document-store": "^2.2.1",
@@ -15,7 +15,7 @@
     "@govtechsg/tradetrust-ui-components": "^1.10.1",
     "@hapi/joi": "^17.1.1",
     "@opengsn/gsn": "^2.1.0",
-    "ajv": "^6.12.2",
+    "ajv": "^8.5.0",
     "axios": "^0.21.1",
     "csvtojson": "^2.0.10",
     "debug": "^4.3.1",

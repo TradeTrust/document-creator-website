@@ -1,5 +1,5 @@
 import { ButtonIcon } from "@govtechsg/tradetrust-ui-components";
-import Ajv from "ajv";
+import Ajv, { ErrorObject } from "ajv";
 import { defaultsDeep } from "lodash";
 import React, { FunctionComponent, useState } from "react";
 import { Trash2 } from "react-feather";
@@ -29,7 +29,7 @@ export const DynamicFormLayout: FunctionComponent = () => {
     setCurrentForm,
   } = useFormsContext();
   const [isSubmitted, setIsSubmitted] = useState(false);
-  const [formError, setFormError] = useState<Ajv.ErrorObject[] | null | undefined>(null);
+  const [formError, setFormError] = useState<ErrorObject[] | null | undefined>(null);
   if (!currentForm) return <Redirect to="/forms-selection" />;
   if (!currentFormTemplate) return <Redirect to="/forms-selection" />;
   if (isSubmitted) return <Redirect to="/publish" />;

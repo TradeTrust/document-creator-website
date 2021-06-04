@@ -1,8 +1,8 @@
-import Ajv from "ajv";
+import { ErrorObject } from "ajv";
 import React, { FunctionComponent } from "react";
 import { XCircle } from "react-feather";
 
-export type FormError = Ajv.ErrorObject[] | null | undefined;
+export type FormError = ErrorObject[] | null | undefined;
 
 interface FormErrorBanner {
   formErrorTitle: string | null | undefined;

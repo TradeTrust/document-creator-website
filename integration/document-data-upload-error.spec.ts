@@ -33,6 +33,6 @@ test("should show validation error messages correctly", async (t) => {
   ]);
 
   // Assert validation error messages
-  await t.expect(ErrorItem1.textContent).contains("should have required property 'blNumber'");
-  await t.expect(ErrorItem2.textContent).contains("should have required property 'scac'");
+  await t.expect(ErrorItem1.textContent).contains("must have required property 'blNumber'");
+  await t.expect(ErrorItem2.textContent).contains("must have required property 'scac'");
 });
