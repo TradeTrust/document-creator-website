@@ -1,7 +1,7 @@
 import { DocumentStoreFactory, GsnCapableDocumentStoreFactory } from "@govtechsg/document-store";
 import { DocumentStore } from "@govtechsg/document-store/src/contracts/DocumentStore";
 import { signDocument, SUPPORTED_SIGNING_ALGORITHM } from "@govtechsg/open-attestation";
-import { TitleEscrowCreatorFactory, TradeTrustERC721Factory } from "@govtechsg/token-registry";
+import { TitleEscrowCreatorFactory, TradeTrustErc721Factory } from "@govtechsg/token-registry";
 import { TitleEscrowCreator } from "@govtechsg/token-registry/types/TitleEscrowCreator";
 import { providers, Signer, Wallet } from "ethers";
 import { getGsnRelaySigner } from "../../common/config/decrypt";
@@ -101,7 +101,7 @@ export const publishTransferableRecordJob = async (job: PublishingJob, wallet: W
   if (!deployedTitleEscrowArgs || !deployedTitleEscrowArgs[0])
     throw new Error(`Address for deployed title escrow cannot be found. Tx: ${JSON.stringify(escrowDeploymentTx)}`);
   const deployedTitleEscrowAddress = deployedTitleEscrowArgs[0];
-  const tokenRegistryContract = TradeTrustERC721Factory.connect(contractAddress, wallet);
+  const tokenRegistryContract = TradeTrustErc721Factory.connect(contractAddress, wallet);
 
   // Using explicit safeMint function which exist but not typed by typechain due to
   // overloads

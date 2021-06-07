@@ -93,7 +93,6 @@ test("form should render correctly according to uiSchema", async (t) => {
   // Check that the two Covering Letters are created
   const fileName1 = "Covering Letter (DBS)-1-local.tt";
   const fileName2 = "Covering Letter (DBS, Nested UISchema)-2-local.tt";
-  await t.wait(3000);
   await t.expect(Title.textContent).contains("Document(s) issued successfully");
   await t.expect(Selector("div").withText(fileName1).exists).ok();
   await t.expect(Selector("div").withText(fileName2).exists).ok();

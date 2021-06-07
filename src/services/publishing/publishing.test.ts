@@ -1,5 +1,5 @@
 import { DocumentStoreFactory } from "@govtechsg/document-store";
-import { TitleEscrowCreatorFactory, TradeTrustERC721Factory } from "@govtechsg/token-registry";
+import { TitleEscrowCreatorFactory, TradeTrustErc721Factory } from "@govtechsg/token-registry";
 import { getDefaultProvider, Wallet } from "ethers";
 import { getTitleEscrowCreator, publishTransferableRecordJob, publishVerifiableDocumentJob } from "./index";
 import { supportsInterface } from "./utils";
@@ -10,7 +10,7 @@ jest.mock("./utils");
 
 const mockTitleEscrowCreatorFactoryConnect = TitleEscrowCreatorFactory.connect as jest.Mock;
 const mockDocumentStoreFactoryConnect = DocumentStoreFactory.connect as jest.Mock;
-const mockTradeTrustERC721FactoryConnect = TradeTrustERC721Factory.connect as jest.Mock;
+const mockTradeTrustErc721FactoryConnect = TradeTrustErc721Factory.connect as jest.Mock;
 const mockDocumentStoreIssue = jest.fn();
 const mockTokenRegistrySafeMint = jest.fn();
 const mockTitleEscrowDeployNewTitleEscrow = jest.fn();
@@ -48,7 +48,7 @@ const whenTokenRegistryExist = (): void => {
   mockTokenRegistrySafeMint.mockResolvedValue(mockTransactionReceipt);
   mockTitleEscrowDeployNewTitleEscrow.mockResolvedValue(mockTransactionReceipt);
   mockTitleEscrowCreatorFactoryConnect.mockReturnValue(mockTitleEscrowCreator);
-  mockTradeTrustERC721FactoryConnect.mockReturnValue(mockTokenRegistry);
+  mockTradeTrustErc721FactoryConnect.mockReturnValue(mockTokenRegistry);
 };
 
 const resetMocks = (mocks: jest.Mock[]): void => mocks.forEach((mock) => mock.mockReset());
