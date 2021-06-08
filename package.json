@@ -3,7 +3,6 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@emotion/core": "^11.0.0",
     "@emotion/react": "^11.4.0",
     "@emotion/styled": "^11.3.0",
     "@govtechsg/address-identity-resolver": "^1.4.1",
@@ -15,7 +14,7 @@
     "@govtechsg/tradetrust-ui-components": "^1.10.1",
     "@hapi/joi": "^17.1.1",
     "@opengsn/gsn": "^2.1.0",
-    "ajv": "^8.5.0",
+    "ajv": "^8.6.0",
     "axios": "^0.21.1",
     "csvtojson": "^2.0.10",
     "debug": "^4.3.1",
@@ -61,11 +60,11 @@
     "@types/react-jsonschema-form": "^1.7.5",
     "@types/react-router-dom": "^5.1.7",
     "@types/use-persisted-state": "^0.3.0",
-    "@typescript-eslint/eslint-plugin": "^4.7.0",
-    "@typescript-eslint/parser": "^4.7.0",
+    "@typescript-eslint/eslint-plugin": "^4.26.0",
+    "@typescript-eslint/parser": "^4.26.0",
     "commitizen": "^4.0.4",
     "concurrently": "^5.2.0",
-    "eslint": "^7.27.0",
+    "eslint": "^7.28.0",
     "eslint-config-prettier": "^8.3.0",
     "eslint-plugin-import": "^2.23.4",
     "eslint-plugin-jest": "^23.8.2",
@@ -101,7 +100,7 @@
     "integration:single": "./scripts/integration-single.sh",
     "integration:headless": "HEADLESS=true ./scripts/integration.sh",
     "integration:internal": "testcafe chrome integration/**/*.spec.ts --compiler-options typescript.configPath=./tsconfig.testcafe.json --app \"BROWSER=none npm run serve-static\"",
-    "integration:internal:single": "testcafe chrome -L --ts-config-path ./tsconfig.testcafe.json --app \"npm run serve-static\"",
+    "integration:internal:single": "testcafe chrome -L --compiler-options typescript.configPath=./tsconfig.testcafe.json --app \"npm run serve-static\"",
     "integration:internal:headless": "testcafe -c 4 chrome:headless integration/**/*.spec.ts --compiler-options typescript.configPath=./tsconfig.testcafe.json --app \"npm run serve-static\" --app-init-delay 70000",
     "integration:concurrently:headless": "concurrently -k -s first \"npm:blockchain\" \"npm:integration:headless\"",
     "lint": "eslint . --ext .ts,.tsx --max-warnings 0",
@@ -115,7 +114,7 @@
     "storybook": "npm-run-all -p start:css storybook:start",
     "storybook:start": "sleep 2 && start-storybook -p 9009 -s public",
     "storybook:build": "npm run build:css && build-storybook -s public",
-    "prep": "npm run lint:fix && npm run test:ci && npm run build && npm run integration:concurrently:headless",
+    "prep": "npm-run-all -s lint lint:type lint:fix test:ci build integration:concurrently:headless",
     "test:ci": "CI=true react-app-rewired test --env=jest-environment-jsdom-sixteen",
     "test": "react-app-rewired test --env=jest-environment-jsdom-sixteen"
   },
@@ -149,6 +148,14 @@
       "testing-library"
     ],
     "rules": {
+      "react/prop-types": "off",
+      "react/self-closing-comp": "error",
+      "array-callback-return": "error",
+      "react-hooks/rules-of-hooks": "error",
+      "react-hooks/exhaustive-deps": "error",
+      "no-unused-expressions": "off",
+      "jest/no-disabled-tests": "error",
+      "no-shadow": "off",
       "@typescript-eslint/explicit-function-return-type": [
         "warn",
         {
@@ -157,31 +164,7 @@
         }
       ],
       "@typescript-eslint/explicit-member-accessibility": 0,
-      "@typescript-eslint/no-use-before-define": 0,
-      "array-callback-return": "warn",
-      "import/no-default-export": "error",
-      "import/no-unresolved": 2,
-      "jest/no-hooks": 0,
-      "no-unused-vars": [
-        "error",
-        {
-          "argsIgnorePattern": "^_"
-        }
-      ],
-      "react/no-unescaped-entities": [
-        "error",
-        {
-          "forbid": [
-            ">",
-            "}",
-            "\""
-          ]
-        }
-      ],
-      "react/prop-types": "off",
-      "react/self-closing-comp": "error",
-      "react-hooks/exhaustive-deps": "error",
-      "react-hooks/rules-of-hooks": "error"
+      "@typescript-eslint/no-use-before-define": 0
     },
     "overrides": [
       {
