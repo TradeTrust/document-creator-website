@@ -1,5 +1,5 @@
 {
-  "name": "react-template",
+  "name": "document-creator-website",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -79,7 +79,8 @@
     "jest-environment-jsdom-sixteen": "^1.0.3",
     "npm-run-all": "^4.1.5",
     "patch-package": "^6.4.7",
-    "postcss-cli": "^7.1.1",
+    "postcss": "^8.3.0",
+    "postcss-cli": "^8.3.1",
     "prettier": "^2.3.1",
     "react-app-rewired": "^2.1.8",
     "react-scripts": "4.0.3",
