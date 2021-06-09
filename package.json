@@ -45,14 +45,14 @@
     "@storybook/addons": "^6.2.9",
     "@storybook/preset-create-react-app": "^3.1.7",
     "@storybook/react": "^6.2.9",
-    "@testing-library/jest-dom": "^4.2.4",
-    "@testing-library/react": "^10.4.3",
-    "@testing-library/react-hooks": "^3.3.0",
-    "@testing-library/user-event": "^7.2.1",
+    "@testing-library/jest-dom": "^5.13.0",
+    "@testing-library/react": "^11.2.7",
+    "@testing-library/react-hooks": "^7.0.0",
+    "@testing-library/user-event": "^13.1.9",
     "@types/debug": "^4.1.5",
     "@types/file-saver": "^2.0.2",
     "@types/hapi__joi": "^17.1.6",
-    "@types/jest": "^24.0.0",
+    "@types/jest": "^26.0.23",
     "@types/mocha": "file:./src/types/empty-type",
     "@types/node": "^15.12.2",
     "@types/react": "^17.0.10",
@@ -67,16 +67,16 @@
     "eslint": "^7.28.0",
     "eslint-config-prettier": "^8.3.0",
     "eslint-plugin-import": "^2.23.4",
-    "eslint-plugin-jest": "^23.8.2",
+    "eslint-plugin-jest": "^24.3.6",
     "eslint-plugin-prettier": "^3.4.0",
     "eslint-plugin-react": "^7.24.0",
     "eslint-plugin-react-hooks": "^4.2.0",
     "eslint-plugin-testcafe": "^0.2.1",
-    "eslint-plugin-testing-library": "^3.1.2",
+    "eslint-plugin-testing-library": "^4.6.0",
     "ganache-cli": "^6.9.1",
     "git-cz": "^4.3.1",
     "http-server": "^0.12.3",
-    "jest-environment-jsdom-sixteen": "^1.0.3",
+    "jest-environment-jsdom-sixteen": "^2.0.0",
     "npm-run-all": "^4.1.5",
     "patch-package": "^6.4.7",
     "postcss": "^8.3.0",
@@ -157,6 +157,16 @@
       "no-unused-expressions": "off",
       "jest/no-disabled-tests": "error",
       "no-shadow": "off",
+      "testing-library/no-debug": [
+        "error",
+        {
+          "utilsToCheckFor": {
+            "debug": false,
+            "logRoles": true,
+            "logDOM": true
+          }
+        }
+      ],
       "@typescript-eslint/explicit-function-return-type": [
         "warn",
         {
@@ -197,6 +207,8 @@
         "rules": {
           "jest/prefer-expect-assertions": "off",
           "jest/no-hooks": "off",
+          "jest/unbound-method": "off",
+          "@typescript-eslint/unbound-method": "off",
           "@typescript-eslint/no-empty-function": "off",
           "@typescript-eslint/no-explicit-any": "off"
         }

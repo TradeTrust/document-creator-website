@@ -139,12 +139,8 @@ describe("documentSelector", () => {
   it("should set the file name when there is a change in the file name", () => {
     whenActiveFormsAreAvailable();
     const mockValidateCurrentForm = jest.fn();
-    const utils = render(
-      <DocumentSelector validateCurrentForm={mockValidateCurrentForm} closePreviewMode={mockClosePreviewMode} />
-    );
-    const input = utils.getByLabelText("file-name-input");
-
-    fireEvent.change(input, { target: { value: "CCO-1" } });
+    render(<DocumentSelector validateCurrentForm={mockValidateCurrentForm} closePreviewMode={mockClosePreviewMode} />);
+    fireEvent.change(screen.getByLabelText("file-name-input"), { target: { value: "CCO-1" } });
     expect(mockCurrentFileName).toHaveBeenCalledTimes(1);
   });
 });
