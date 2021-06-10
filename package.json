@@ -76,7 +76,6 @@
     "ganache-cli": "^6.12.2",
     "git-cz": "^4.7.6",
     "http-server": "^0.12.3",
-    "jest-environment-jsdom-sixteen": "^2.0.0",
     "npm-run-all": "^4.1.5",
     "patch-package": "^6.4.7",
     "postcss": "^8.3.0",
@@ -116,8 +115,8 @@
     "storybook:start": "sleep 2 && start-storybook -p 9009 -s public",
     "storybook:build": "npm run build:css && build-storybook -s public",
     "prep": "npm-run-all -s lint lint:type lint:fix test:ci build integration:concurrently:headless",
-    "test:ci": "CI=true react-app-rewired test --env=jest-environment-jsdom-sixteen",
-    "test": "react-app-rewired test --env=jest-environment-jsdom-sixteen"
+    "test:ci": "CI=true react-app-rewired test",
+    "test": "react-app-rewired test"
   },
   "config": {
     "commitizen": {
@@ -239,6 +238,9 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "jestConfig": {
+    "testEnvironment": "jest-environment-jsdom"
   },
   "repository": {
     "type": "git",
