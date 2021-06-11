@@ -22,6 +22,7 @@
   },
   "include": [
     "src",
-    "integration"
+    "integration",
+    "**/*.config.js"
   ]
 }
