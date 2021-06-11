@@ -1,5 +1,5 @@
 import { ButtonIcon } from "@govtechsg/tradetrust-ui-components";
-import Ajv from "ajv";
+import Ajv, { ErrorObject } from "ajv";
 import { defaultsDeep } from "lodash";
 import React, { FunctionComponent, useState } from "react";
 import { Trash2 } from "react-feather";
@@ -29,7 +29,7 @@ export const DynamicFormLayout: FunctionComponent = () => {
     setCurrentForm,
   } = useFormsContext();
   const [isSubmitted, setIsSubmitted] = useState(false);
-  const [formError, setFormError] = useState<Ajv.ErrorObject[] | null | undefined>(null);
+  const [formError, setFormError] = useState<ErrorObject[] | null | undefined>(null);
   if (!currentForm) return <Redirect to="/forms-selection" />;
   if (!currentFormTemplate) return <Redirect to="/forms-selection" />;
   if (isSubmitted) return <Redirect to="/publish" />;
@@ -87,24 +87,12 @@ export const DynamicFormLayout: FunctionComponent = () => {
     closeBackModal();
   };
 
-  const currentUnwrappedData = defaultsDeep(
-    {},
-    currentForm.data.formData,
-    currentFormTemplate.defaults
-  );
+  const currentUnwrappedData = defaultsDeep({}, currentForm.data.formData, currentFormTemplate.defaults);
 
   return (
     <>
-      <DeleteModal
-        deleteForm={deleteForm}
-        show={showDeleteModal}
-        closeDeleteModal={closeDeleteModal}
-      />
-      <BackModal
-        backToFormSelection={deleteAllForms}
-        show={showBackModal}
-        closeBackModal={closeBackModal}
-      />
+      <DeleteModal deleteForm={deleteForm} show={showDeleteModal} closeDeleteModal={closeDeleteModal} />
+      <BackModal backToFormSelection={deleteAllForms} show={showBackModal} closeBackModal={closeBackModal} />
       <DynamicFormHeader
         onBackToFormSelection={() => setShowBackModal(true)}
         onNewForm={onNewForm}
@@ -118,10 +106,7 @@ export const DynamicFormLayout: FunctionComponent = () => {
             <div className="flex justify-between">
               <div className="text-grey-800 flex items-center">
                 <div className="align-middle">Preview mode:</div>
-                <ToggleSwitch
-                  isOn={isPreviewMode}
-                  handleToggle={() => setIsPreviewMode(!isPreviewMode)}
-                />
+                <ToggleSwitch isOn={isPreviewMode} handleToggle={() => setIsPreviewMode(!isPreviewMode)} />
               </div>
               <ButtonIcon
                 className="bg-white hover:bg-grey-100 border-grey-400"

@@ -1,5 +1,5 @@
-import { Config, RawDocument } from "../../../../types";
 import { identifyProofType } from "../../../../constants/PublishState";
+import { Config, RawDocument } from "../../../../types";
 import { getQueueNumber } from "../../../API/storageAPI";
 import { getRawDocuments, groupDocumentsIntoJobs } from "./publish";
 import sampleConfigFile from "./sample-config.json";
@@ -29,9 +29,7 @@ describe("getRawDocuments", () => {
   });
 
   it("should not have any qr url when no documentStorage is present in config file", async () => {
-    expect(await getRawDocuments(sampleForms, configWithoutDocumentStorage)).toStrictEqual(
-      sampleFormattedWithoutQrUrl
-    );
+    expect(await getRawDocuments(sampleForms, configWithoutDocumentStorage)).toStrictEqual(sampleFormattedWithoutQrUrl);
   });
 });
 

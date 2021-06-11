@@ -26,9 +26,7 @@ describe("deleteModal", () => {
 
   it("should fire 'closeDeleteModal' function when clicked cancel button", () => {
     const mockCloseDeleteModal = jest.fn();
-    render(
-      <DeleteModal deleteForm={() => {}} show={true} closeDeleteModal={mockCloseDeleteModal} />
-    );
+    render(<DeleteModal deleteForm={() => {}} show={true} closeDeleteModal={mockCloseDeleteModal} />);
 
     fireEvent.click(screen.getByTestId("cancel-form-button"));
 

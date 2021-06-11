@@ -14,15 +14,12 @@ export const CustomFieldTemplate = ({
 }: FieldTemplateProps): ReactElement => {
   return (
     <div className={classNames} data-testid={classNames}>
-      {!schema.format &&
-        schema.type !== "object" &&
-        schema.type !== "array" &&
-        schema.type !== "boolean" && (
-          <label htmlFor={id}>
-            {label}
-            {required ? "*" : null}
-          </label>
-        )}
+      {!schema.format && schema.type !== "object" && schema.type !== "array" && schema.type !== "boolean" && (
+        <label htmlFor={id}>
+          {label}
+          {required ? "*" : null}
+        </label>
+      )}
       {schema.format && <legend>{schema.title}</legend>}
       {description}
       {children}

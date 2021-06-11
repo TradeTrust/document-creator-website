@@ -1,8 +1,8 @@
 import { render, screen } from "@testing-library/react";
 import React from "react";
+import { PublishState } from "../../../../constants/PublishState";
 import { WrappedDocument } from "../../../../types";
 import { PublishTitle } from "./PublishTitle";
-import { PublishState } from "../../../../constants/PublishState";
 
 const mockPublishedDocuments = [
   {
@@ -21,23 +21,13 @@ const mockPublishedDocuments = [
 
 describe("publishTitle", () => {
   it("should display 'publishing' when publishState is 'PENDING'", () => {
-    render(
-      <PublishTitle
-        publishState={PublishState.PENDING}
-        publishedDocuments={mockPublishedDocuments}
-      />
-    );
+    render(<PublishTitle publishState={PublishState.PENDING} publishedDocuments={mockPublishedDocuments} />);
 
     expect(screen.queryAllByText("Publishing document(s)...")).toHaveLength(1);
   });
 
   it("should display 'success' when publishState is 'CONFIRMED' and there are publish documents", () => {
-    render(
-      <PublishTitle
-        publishState={PublishState.CONFIRMED}
-        publishedDocuments={mockPublishedDocuments}
-      />
-    );
+    render(<PublishTitle publishState={PublishState.CONFIRMED} publishedDocuments={mockPublishedDocuments} />);
 
     expect(screen.queryAllByText("Document(s) issued successfully")).toHaveLength(1);
   });

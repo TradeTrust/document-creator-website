@@ -1,11 +1,11 @@
-import React from "react";
 import { render, screen } from "@testing-library/react";
+import React from "react";
 import { FormErrorBanner } from "./FormErrorBanner";
 
 const errors = [
   {
     keyword: "required",
-    dataPath: "",
+    instancePath: "",
     schemaPath: "#/required",
     params: { missingProperty: "blNumber" },
     message: "should have required property 'blNumber'",
@@ -15,9 +15,7 @@ const errors = [
 describe("formErrorBanner", () => {
   it("should show errors when there are any", () => {
     render(<FormErrorBanner formErrorTitle="" formError={errors} />);
-    expect(screen.getByTestId("form-error-banner")).toHaveTextContent(
-      "should have required property 'blNumber'"
-    );
+    expect(screen.getByTestId("form-error-banner")).toHaveTextContent("should have required property 'blNumber'");
   });
 
   it("should not display when there are no errors", () => {

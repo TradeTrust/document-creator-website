@@ -33,9 +33,7 @@ export const PublishedScreen: FunctionComponent<PublishScreen> = ({
     return jsonString.length + (m ? m.length : 0);
   };
 
-  const failPublishedDocuments = failedPublishedDocuments
-    .map((failedJob) => failedJob.documents)
-    .flat();
+  const failPublishedDocuments = failedPublishedDocuments.map((failedJob) => failedJob.documents).flat();
 
   const formattedErrorLog = failedPublishedDocuments.map((failedJob) => {
     const fileNames = failedJob.documents.map((document) => document.fileName).join(", ");
@@ -114,15 +112,12 @@ export const PublishedScreen: FunctionComponent<PublishScreen> = ({
         )}
         {failPublishedDocuments && failPublishedDocuments.length > 0 && (
           <div className="container">
-            <div className="text-grey font-medium text-lg my-6">
-              {failPublishedDocuments.length} Document(s) Failed
-            </div>
+            <div className="text-grey font-medium text-lg my-6">{failPublishedDocuments.length} Document(s) Failed</div>
             <div className="bg-red-100 p-3 flex flex-col">
               <div className="flex">
                 <XCircle className="text-red" />
                 <div className="text-red ml-2 flex-grow">
-                  These documents failed to publish due to some errors. Kindly rectify and try
-                  publishing again.
+                  These documents failed to publish due to some errors. Kindly rectify and try publishing again.
                 </div>
                 <Button className="bg-white text-red hover:bg-grey-100">
                   <a
@@ -132,11 +127,7 @@ export const PublishedScreen: FunctionComponent<PublishScreen> = ({
                       extension: "txt",
                       hasTimestamp: true,
                     })}
-                    href={`data:text/plain;charset=UTF-8,${JSON.stringify(
-                      formattedErrorLog,
-                      null,
-                      2
-                    )}`}
+                    href={`data:text/plain;charset=UTF-8,${JSON.stringify(formattedErrorLog, null, 2)}`}
                   >
                     <div className="flex">
                       <Download />

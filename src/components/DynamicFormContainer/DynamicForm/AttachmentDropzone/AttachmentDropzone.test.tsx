@@ -73,14 +73,7 @@ describe("attachmentDropzone", () => {
   });
 
   it("should show error when a file cannot be read", async () => {
-    render(
-      <AttachmentDropzone
-        acceptedFormat=".pdf"
-        onUpload={() => {}}
-        onRemove={() => {}}
-        uploadedFiles={[]}
-      />
-    );
+    render(<AttachmentDropzone acceptedFormat=".pdf" onUpload={() => {}} onRemove={() => {}} uploadedFiles={[]} />);
 
     const dropzone = screen.getByTestId("attachment-upload-zone");
     const file = new File(["RANDOM_BINARY_FILE"], "sample.json", {
@@ -149,8 +142,6 @@ describe("fileInfo", () => {
     });
   });
   it("should throw for malformed file data", () => {
-    expect(() => fileInfo("data:application/octet-stream:base64:ewogICJzY2hlb")).toThrow(
-      /File data cannot be read/
-    );
+    expect(() => fileInfo("data:application/octet-stream:base64:ewogICJzY2hlb")).toThrow(/File data cannot be read/);
   });
 });

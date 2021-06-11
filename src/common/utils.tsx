@@ -51,9 +51,9 @@ export const encodeQrCode = (payload: QrCode): string =>
 
 export const decodeQrCode = (qrCode: string): QrCode => {
   const ttRegex = /https:\/\/action.openattestation.com\/?\?q=(.*)/;
-  if (!ttRegex.test(qrCode))
-    throw new Error("QR Code is not formatted to TradeTrust specifications");
-  const [, encodedPayload] = ttRegex.exec(qrCode);
+  if (!ttRegex.test(qrCode)) throw new Error("QR Code is not formatted to TradeTrust specifications");
+  const matchedArray = ttRegex.exec(qrCode) as RegExpExecArray;
+  const encodedPayload = matchedArray[1];
   const decodedPayload = JSON.parse(decodeURIComponent(encodedPayload));
   return decodedPayload;
 };

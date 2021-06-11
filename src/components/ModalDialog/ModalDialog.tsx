@@ -9,22 +9,14 @@ interface ModalDialogProps {
   children?: React.ReactNode;
 }
 
-export const ModalDialogUnStyled: FunctionComponent<ModalDialogProps> = ({
-  className,
-  close,
-  children,
-}) => {
+export const ModalDialogUnStyled: FunctionComponent<ModalDialogProps> = ({ className, close, children }) => {
   useLockBodyScroll();
 
   return (
     <>
       <div className={className} data-testid="modal-dialog">
         <div className="modal-content p-6">{children}</div>
-        <div
-          className="modal-backdrop bg-black bg-opacity-70"
-          data-testid="modal-backdrop"
-          onClick={() => close()}
-        />
+        <div className="modal-backdrop bg-black bg-opacity-70" data-testid="modal-backdrop" onClick={() => close()} />
       </div>
     </>
   );

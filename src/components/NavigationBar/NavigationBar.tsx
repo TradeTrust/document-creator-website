@@ -74,9 +74,9 @@ export const NavigationBar: FunctionComponent<NavigationBarProps> = ({ logout })
           {navItems.map((item, index) => {
             return (
               <div
-                className={`w-auto ml-0 pr-4 pt-4 lg:pl-8 lg:pr-0 lg:py-0 ${
-                  index === 0 ? "lg:ml-auto" : ""
-                } ${index === navItems.length ? "ml-auto" : "pr-0"}`}
+                className={`w-auto ml-0 pr-4 pt-4 lg:pl-8 lg:pr-0 lg:py-0 ${index === 0 ? "lg:ml-auto" : ""} ${
+                  index === navItems.length ? "ml-auto" : "pr-0"
+                }`}
                 key={index}
               >
                 {["create-documents", "settings"].includes(item.id) ? (

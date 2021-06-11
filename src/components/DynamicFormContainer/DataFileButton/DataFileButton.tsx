@@ -1,11 +1,11 @@
 import { Button } from "@govtechsg/tradetrust-ui-components";
+import Ajv from "ajv";
 import React, { FunctionComponent, useState } from "react";
 import { useDropzone } from "react-dropzone";
-import { readFileAsJson, readFileAsCsv } from "../../../common/utils";
-import { getLogger } from "../../../utils/logger";
-import { FormErrorBanner, FormError } from "./../FormErrorBanner";
 import { useFormsContext } from "../../../common/context/forms";
-import Ajv from "ajv";
+import { readFileAsCsv, readFileAsJson } from "../../../common/utils";
+import { getLogger } from "../../../utils/logger";
+import { FormError, FormErrorBanner } from "./../FormErrorBanner";
 
 const { stack } = getLogger("DataFileButton");
 
@@ -86,7 +86,7 @@ export const DataFileButton: FunctionComponent<DataFileButton> = ({ onDataFile, 
       setDataFileError([
         // ajv set error manually, printing out error message on UI
         {
-          dataPath: "",
+          instancePath: "",
           keyword: "type",
           message: e.message,
           params: {},
@@ -101,10 +101,7 @@ export const DataFileButton: FunctionComponent<DataFileButton> = ({ onDataFile, 
     <>
       {error && (
         <div className="my-2" data-testid="file-read-error">
-          <FormErrorBanner
-            formErrorTitle="Uploaded data file format has errors."
-            formError={dataFileError}
-          />
+          <FormErrorBanner formErrorTitle="Uploaded data file format has errors." formError={dataFileError} />
         </div>
       )}
       <div data-testid="data-upload-zone" {...getRootProps()}>

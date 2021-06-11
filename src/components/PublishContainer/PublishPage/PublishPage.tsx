@@ -2,10 +2,10 @@ import React, { FunctionComponent, useEffect } from "react";
 import { Redirect } from "react-router-dom";
 import { useFormsContext } from "../../../common/context/forms";
 import { usePublishQueue } from "../../../common/hook/usePublishQueue";
+import { PublishState } from "../../../constants/PublishState";
 import { Config } from "../../../types";
 import { PublishedScreen } from "../PublishedScreen";
 import { PublishErrorScreen } from "../PublishErrorScreen";
-import { PublishState } from "../../../constants/PublishState";
 
 interface PublishPage {
   config: Config;
@@ -13,14 +13,8 @@ interface PublishPage {
 
 export const PublishPage: FunctionComponent<PublishPage> = ({ config }) => {
   const { forms, currentForm } = useFormsContext();
-  const {
-    publish,
-    publishState,
-    publishedDocuments,
-    failedPublishedDocuments,
-    pendingPublishDocuments,
-    error,
-  } = usePublishQueue(config, forms);
+  const { publish, publishState, publishedDocuments, failedPublishedDocuments, pendingPublishDocuments, error } =
+    usePublishQueue(config, forms);
 
   useEffect(() => {
     publish();

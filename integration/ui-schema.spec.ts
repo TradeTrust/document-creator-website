@@ -54,9 +54,7 @@ test("form should render correctly according to uiSchema", async (t) => {
 
   // Validate that default values is populated
   await t.expect(DocumentTitleField.value).contains("Documents Bundle");
-  await t
-    .expect(DocumentRemarksField.value)
-    .contains("Some very important documents in here for some submission");
+  await t.expect(DocumentRemarksField.value).contains("Some very important documents in here for some submission");
 
   // Expect uiSchema to be working, i.e. it renders the remarks field to be a textarea
   await t
@@ -79,9 +77,7 @@ test("form should render correctly according to uiSchema", async (t) => {
 
   // Validate that default values is populated
   await t.expect(DocumentTitleField.value).contains("Documents Bundle");
-  await t
-    .expect(DocumentRemarksField.value)
-    .contains("Some very important documents in here for some submission");
+  await t.expect(DocumentRemarksField.value).contains("Some very important documents in here for some submission");
 
   // Expect remarks field to be a normal input field (because uiSchema does not exist at the form template's root level)
   await t

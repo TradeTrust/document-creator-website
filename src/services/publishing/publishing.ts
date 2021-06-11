@@ -1,7 +1,7 @@
 import { DocumentStoreFactory, GsnCapableDocumentStoreFactory } from "@govtechsg/document-store";
 import { DocumentStore } from "@govtechsg/document-store/src/contracts/DocumentStore";
 import { signDocument, SUPPORTED_SIGNING_ALGORITHM } from "@govtechsg/open-attestation";
-import { TitleEscrowCreatorFactory, TradeTrustERC721Factory } from "@govtechsg/token-registry";
+import { TitleEscrowCreatorFactory, TradeTrustErc721Factory } from "@govtechsg/token-registry";
 import { TitleEscrowCreator } from "@govtechsg/token-registry/types/TitleEscrowCreator";
 import { providers, Signer, Wallet } from "ethers";
 import { getGsnRelaySigner } from "../../common/config/decrypt";
@@ -13,10 +13,7 @@ const assertAddressIsSmartContract = async (address: string, wallet: Wallet): Pr
   if (code === "0x") throw new Error("Address is not a smart contract");
 };
 
-const getConnectedDocumentStore = async (
-  wallet: Wallet,
-  contractAddress: string
-): Promise<DocumentStore> => {
+const getConnectedDocumentStore = async (wallet: Wallet, contractAddress: string): Promise<DocumentStore> => {
   const documentStore = GsnCapableDocumentStoreFactory.connect(contractAddress, wallet);
   // Determine if contract is gsn capable
   const isGsnCapable = await supportsInterface(documentStore, "0xa5a23640");
@@ -28,10 +25,7 @@ const getConnectedDocumentStore = async (
   return gsnDocumentStore;
 };
 
-export const publishVerifiableDocumentJob = async (
-  job: PublishingJob,
-  wallet: Wallet
-): Promise<string> => {
+export const publishVerifiableDocumentJob = async (job: PublishingJob, wallet: Wallet): Promise<string> => {
   const { contractAddress, merkleRoot, nonce } = job;
   await assertAddressIsSmartContract(contractAddress, wallet);
   const documentStore = await getConnectedDocumentStore(wallet, contractAddress);
@@ -82,15 +76,11 @@ export const getTitleEscrowCreator = async (wallet: Signer): Promise<TitleEscrow
   const provider = wallet.provider as providers.Provider;
   const { name } = await provider.getNetwork();
   const creatorContractAddress = CREATOR_CONTRACTS[name];
-  if (!creatorContractAddress)
-    throw new Error(`Title escrow contract creator is not declared for ${name} network`);
+  if (!creatorContractAddress) throw new Error(`Title escrow contract creator is not declared for ${name} network`);
   return TitleEscrowCreatorFactory.connect(creatorContractAddress, wallet);
 };
 
-export const publishTransferableRecordJob = async (
-  job: PublishingJob,
-  wallet: Wallet
-): Promise<string> => {
+export const publishTransferableRecordJob = async (job: PublishingJob, wallet: Wallet): Promise<string> => {
   const { payload, contractAddress, nonce, merkleRoot } = job;
   if (!payload.ownership) throw new Error("Ownership data is not provided");
   const { beneficiaryAddress, holderAddress } = payload.ownership;
@@ -109,11 +99,9 @@ export const publishTransferableRecordJob = async (
     (event) => event.event === "TitleEscrowDeployed"
   )?.args;
   if (!deployedTitleEscrowArgs || !deployedTitleEscrowArgs[0])
-    throw new Error(
-      `Address for deployed title escrow cannot be found. Tx: ${JSON.stringify(escrowDeploymentTx)}`
-    );
+    throw new Error(`Address for deployed title escrow cannot be found. Tx: ${JSON.stringify(escrowDeploymentTx)}`);
   const deployedTitleEscrowAddress = deployedTitleEscrowArgs[0];
-  const tokenRegistryContract = TradeTrustERC721Factory.connect(contractAddress, wallet);
+  const tokenRegistryContract = TradeTrustErc721Factory.connect(contractAddress, wallet);
 
   // Using explicit safeMint function which exist but not typed by typechain due to
   // overloads
@@ -125,8 +113,7 @@ export const publishTransferableRecordJob = async (
     }
   );
   const mintingTx = await mintingReceipt.wait();
-  if (!mintingTx.transactionHash)
-    throw new Error(`Tx hash not available: ${JSON.stringify(mintingTx)}`);
+  if (!mintingTx.transactionHash) throw new Error(`Tx hash not available: ${JSON.stringify(mintingTx)}`);
   return mintingTx.transactionHash;
 };
 
@@ -136,10 +123,7 @@ export const publishJob = async (job: PublishingJob, wallet: Wallet): Promise<st
   throw new Error("Job type is not supported");
 };
 
-export const publishDnsDidJob = async (
-  job: PublishingJob,
-  wallet: Wallet
-): Promise<WrappedDocument[]> => {
+export const publishDnsDidJob = async (job: PublishingJob, wallet: Wallet): Promise<WrappedDocument[]> => {
   if (job.type === "VERIFIABLE_DOCUMENT") return publishDnsDidVerifiableDocumentJob(job, wallet);
   throw new Error("Job type is not supported");
 };

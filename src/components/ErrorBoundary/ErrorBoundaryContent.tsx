@@ -7,17 +7,9 @@ import { Title } from "../UI/Title";
 export const ErrorBoundaryContent: FunctionComponent<{
   error?: string;
 }> = ({ error }) => (
-  <div
-    className="flex min-h-screen min-w-screen items-center justify-center"
-    data-testid="error-boundary-content"
-  >
+  <div className="flex min-h-screen min-w-screen items-center justify-center" data-testid="error-boundary-content">
     <div className="container max-w-screen-sm">
-      <img
-        style={{ width: 120, height: "auto" }}
-        className="mb-6"
-        src={logo}
-        alt="TradeTrust Logo"
-      />
+      <img style={{ width: 120, height: "auto" }} className="mb-6" src={logo} alt="TradeTrust Logo" />
       <Title className="mb-6">Oops...something went wrong</Title>
       <div className="mb-2">TradeTrust has encountered an issue.</div>
       <div>We are sorry, please</div>

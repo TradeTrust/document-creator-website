@@ -8,20 +8,14 @@ interface DeleteModalProps {
   closeDeleteModal: () => void;
 }
 
-export const DeleteModal: FunctionComponent<DeleteModalProps> = ({
-  deleteForm,
-  show,
-  closeDeleteModal,
-}) => {
+export const DeleteModal: FunctionComponent<DeleteModalProps> = ({ deleteForm, show, closeDeleteModal }) => {
   return (
     <>
       {show && (
         <ModalDialog close={closeDeleteModal}>
           <div className="flex flex-col ">
             <div className="text-2xl text-grey-800 font-bold">Delete Form</div>
-            <div className="text-grey-800 mt-4 mr-16">
-              Are you sure you want to delete this form?
-            </div>
+            <div className="text-grey-800 mt-4 mr-16">Are you sure you want to delete this form?</div>
             <div className="mt-16">
               <div className="flex justify-end">
                 <Button
@@ -31,11 +25,7 @@ export const DeleteModal: FunctionComponent<DeleteModalProps> = ({
                 >
                   Cancel
                 </Button>
-                <Button
-                  data-testid="delete-button"
-                  className="text-white bg-red hover:bg-red-400"
-                  onClick={deleteForm}
-                >
+                <Button data-testid="delete-button" className="text-white bg-red hover:bg-red-400" onClick={deleteForm}>
                   Delete
                 </Button>
               </div>

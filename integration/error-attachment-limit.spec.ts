@@ -29,12 +29,8 @@ test("should show file limit warning when over 6mb", async (t) => {
   await t.typeText(FormIdField, "COO-ID");
 
   // Upload a attachment (over file limit)
-  await t.setFilesToUpload("input[data-testid=attachment-file-drop-zone]", [
-    AttachmentSampleThatIs6Mb,
-  ]);
-  await t
-    .expect(FileSizeError.textContent)
-    .contains("Error: Total attachment file size exceeds 5MB");
+  await t.setFilesToUpload("input[data-testid=attachment-file-drop-zone]", [AttachmentSampleThatIs6Mb]);
+  await t.expect(FileSizeError.textContent).contains("Error: Total attachment file size exceeds 5MB");
 
   // Upload a attachment (below file limit)
   await t.setFilesToUpload("input[data-testid=attachment-file-drop-zone]", [AttachmentSample]);

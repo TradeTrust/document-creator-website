@@ -5,22 +5,11 @@ import JsonForm from "react-jsonschema-form";
 import tw from "twin.macro";
 import { useFormsContext } from "../../../common/context/forms";
 import { mixin } from "../../../styles";
-import {
-  FileUploadType,
-  FormEntry,
-  FormTemplate,
-  FormType,
-  Ownership,
-  SetFormParams,
-} from "../../../types";
+import { FileUploadType, FormEntry, FormTemplate, FormType, Ownership, SetFormParams } from "../../../types";
 import { DataFileButton } from "../DataFileButton";
 import { TransferableRecordForm } from "../TransferableRecordForm";
 import { AttachmentDropzone } from "./AttachmentDropzone";
-import {
-  CustomFieldTemplate,
-  CustomObjectFieldTemplate,
-  CustomTextareaWidget,
-} from "./CustomTemplates";
+import { CustomFieldTemplate, CustomObjectFieldTemplate, CustomTextareaWidget } from "./CustomTemplates";
 
 export interface DynamicFormProps {
   schema: FormTemplate["schema"];

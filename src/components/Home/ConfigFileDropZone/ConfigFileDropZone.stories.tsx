@@ -9,9 +9,7 @@ export default {
 };
 
 export const Default: FunctionComponent = () => (
-  <ConfigFileDropZone
-    onConfigFile={(configFile) => console.log(JSON.stringify(configFile, null, 2))}
-  />
+  <ConfigFileDropZone onConfigFile={(configFile) => console.log(JSON.stringify(configFile, null, 2))} />
 );
 
 export const WithError: FunctionComponent = () => (

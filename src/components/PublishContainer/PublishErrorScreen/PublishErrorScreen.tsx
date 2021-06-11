@@ -46,9 +46,7 @@ export const PublishErrorScreen: FunctionComponent<PublishErrorScreen> = ({ erro
               <div className="flex flex-col flex-grow">
                 <div className="text-red ml-2 flex-grow">Failed to publish due to:</div>
                 <div className="text-red ml-2 flex-grow">- {error?.message}</div>
-                <div className="text-red ml-2 flex-grow">
-                  Kindly rectify and try publishing again.
-                </div>
+                <div className="text-red ml-2 flex-grow">Kindly rectify and try publishing again.</div>
               </div>
               <Button className="bg-white text-red hover:bg-grey-100 h-12">
                 <a
