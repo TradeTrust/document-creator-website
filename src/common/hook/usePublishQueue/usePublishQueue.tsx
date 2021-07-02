@@ -67,6 +67,7 @@ export const usePublishQueue = (
             // publish DID verifiable documents first
             const publishedDnsDidJobs = await publishDnsDidJob(job, signer);
             // update wrappedDocument with the signed documents
+            // eslint-disable-next-line @typescript-eslint/no-shadow
             job.documents.forEach((document, index) => {
               // TODO: refactor so that we do not temper with the wrappedDocument for DnsDid
               document.wrappedDocument = publishedDnsDidJobs[index];

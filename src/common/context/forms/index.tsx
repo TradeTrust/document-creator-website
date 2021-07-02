@@ -104,6 +104,7 @@ export const FormsContextProvider: FunctionComponent = ({ children }) => {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const setCurrentForm = ({ data, updatedOwnership, fileName }: SetFormParams): void => {
     if (activeFormIndex === undefined) return;
+    // eslint-disable-next-line @typescript-eslint/no-shadow
     const currentForm = forms[activeFormIndex];
     const nextForms = [...forms];
     const updatedCurrentForm = {

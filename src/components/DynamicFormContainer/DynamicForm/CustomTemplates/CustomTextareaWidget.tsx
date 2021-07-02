@@ -16,6 +16,7 @@ export const CustomTextareaWidget: FunctionComponent<WidgetProps> = ({
   onBlur,
   onFocus,
 }) => {
+  // eslint-disable-next-line @typescript-eslint/no-shadow
   const _onChange: (event: ChangeEvent<HTMLTextAreaElement>) => void = ({ target: { value } }) => {
     return onChange(value === "" ? options.emptyValue : value);
   };
