@@ -1,15 +1,21 @@
 import { Button } from "@govtechsg/tradetrust-ui-components";
-import Ajv from "ajv";
+import Ajv, { AnySchema } from "ajv";
 import React, { FunctionComponent, useState } from "react";
 import { useDropzone } from "react-dropzone";
 import { useFormsContext } from "../../../common/context/forms";
 import { readFileAsCsv, readFileAsJson } from "../../../common/utils";
 import { getLogger } from "../../../utils/logger";
 import { FormError, FormErrorBanner } from "./../FormErrorBanner";
+import { HelpCircle } from "react-feather";
 
 const { stack } = getLogger("DataFileButton");
 
-type Schema = boolean | Record<string, unknown>;
+const text = {
+  header: "You can either upload data file(.JSON or .CSV) to pre-fill fields on this form or enter the fields manually",
+  buttonText: "Upload Data File",
+  downloadJson: "Download .JSON Data Schema",
+  downloadCsv: "Download .CSV Data Schema",
+};
 
 type DataFileDefault = {
   data: unknown;
@@ -25,7 +31,7 @@ type DataFileUpload = DataFileDefault | DataFileCsv;
 
 interface DataFileButton {
   onDataFile: (dataFile: unknown) => void;
-  schema: Schema;
+  schema: AnySchema;
 }
 
 interface ValidateDataFile {
@@ -58,7 +64,7 @@ export const DataFileButton: FunctionComponent<DataFileButton> = ({ onDataFile, 
   };
 
   // eslint-disable-next-line @typescript-eslint/no-shadow
-  const validateDataFile = (schema: Schema, data: unknown): ValidateDataFile => {
+  const validateDataFile = (schema: AnySchema, data: unknown): ValidateDataFile => {
     const ajv = new Ajv({ allErrors: true });
     const isValidated = ajv.validate(schema, data) as boolean;
     return { isValidated, errors: ajv.errors };
@@ -98,6 +104,13 @@ export const DataFileButton: FunctionComponent<DataFileButton> = ({ onDataFile, 
   };
   const { getRootProps, getInputProps } = useDropzone({ onDrop, multiple: false });
 
+  console.log("schema: ", schema);
+
+  // const JsonData = ()
+
+  // console.log("Data: ", JsonData);
+
+  // TODO: when change to Tailwindcss v2 for ui Update please update the background color, or use a color that is closes to this color.
   return (
     <>
       {error && (
@@ -105,14 +118,31 @@ export const DataFileButton: FunctionComponent<DataFileButton> = ({ onDataFile, 
           <FormErrorBanner formErrorTitle="Uploaded data file format has errors." formError={dataFileError} />
         </div>
       )}
-      <div data-testid="data-upload-zone" {...getRootProps()}>
-        <input data-testid="config-file-drop-zone" {...getInputProps()} />
-        <Button
-          data-testid="data-upload-button"
-          className="w-full bg-white text-orange border-grey-400 hover:bg-grey-100"
-        >
-          Upload Data File
-        </Button>
+      <div className="p-8 font-light" style={{ backgroundColor: "#FFECA7" }}>
+        <p className="text-sm font-hairline mb-4">{text.header}</p>
+        <div className="mb-4" data-testid="data-upload-zone" {...getRootProps()}>
+          <input data-testid="config-file-drop-zone" {...getInputProps()} />
+          <Button
+            data-testid="data-upload-button"
+            className="w-full bg-white text-orange border-grey-400 hover:bg-grey-100"
+          >
+            {text.buttonText}
+          </Button>
+        </div>
+        <div className="flex text-sm justify-between text-grey-800">
+          <div className="flex items-end">
+            <HelpCircle className="h-5 w-5" />
+            <a href="/downloads/sample-data.json" className="underline ml-2 cursor-pointer" download="sample-data.json">
+              {text.downloadJson}
+            </a>
+          </div>
+          <div className="flex items-end">
+            <HelpCircle className="h-5 w-5" />
+            <a href="/downloads/sample-data.csv" className="underline ml-2 cursor-pointer" download="sample-data.csv">
+              {text.downloadCsv}
+            </a>
+          </div>
+        </div>
       </div>
     </>
   );
