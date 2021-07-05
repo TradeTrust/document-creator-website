@@ -19,8 +19,6 @@
     "build": "NODE_OPTIONS='--max-old-space-size=4096' CI=false npm-run-all -s build:css build:js",
     "build:css": "NODE_ENV=production postcss src/tailwind.css -o src/index.css",
     "build:js": "NODE_ENV=production react-app-rewired build",
-    "commit": "git-cz",
-    "commit:retry": "npm run commit -- --retry",
     "eject": "react-scripts eject",
     "blockchain": "ganache-cli --mnemonic \"indicate swing place chair flight used hammer soon photo region volume shuffle\"",
     "integration": "./scripts/integration.sh",
