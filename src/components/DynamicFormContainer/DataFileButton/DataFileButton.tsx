@@ -162,7 +162,7 @@ export const DataFileButton: FunctionComponent<DataFileButton> = ({ onDataFile, 
             <HelpCircle className="h-5 w-5" />
             <div
               className="underline ml-2 cursor-pointer"
-              data-testid="download-json-data-schema-button"
+              data-testid="download-csv-data-schema-button"
               onClick={downloadCsvDataFile}
             >
               {text.downloadCsv}
