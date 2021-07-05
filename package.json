@@ -1,7 +1,48 @@
 {
   "name": "document-creator-website",
   "version": "0.1.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/TradeTrust/document-creator-website.git"
+  },
   "private": true,
+  "license": "ISC",
+  "browserslist": [
+    "last 2 Chrome versions",
+    "last 2 Opera versions",
+    "last 2 Firefox versions",
+    "last 2 Edge versions",
+    "last 1 Safari version",
+    "IE >= 11"
+  ],
+  "scripts": {
+    "build": "NODE_OPTIONS='--max-old-space-size=4096' CI=false npm-run-all -s build:css build:js",
+    "build:css": "NODE_ENV=production postcss src/tailwind.css -o src/index.css",
+    "build:js": "NODE_ENV=production react-app-rewired build",
+    "eject": "react-scripts eject",
+    "blockchain": "ganache-cli --mnemonic \"indicate swing place chair flight used hammer soon photo region volume shuffle\"",
+    "integration": "./scripts/integration.sh",
+    "integration:single": "./scripts/integration-single.sh",
+    "integration:headless": "HEADLESS=true ./scripts/integration.sh",
+    "integration:internal": "testcafe chrome integration/**/*.spec.ts --app \"BROWSER=none npm run serve-static\"",
+    "integration:internal:single": "testcafe chrome -L --app \"npm run serve-static\"",
+    "integration:internal:headless": "testcafe -c 4 chrome:headless integration/**/*.spec.ts --app \"npm run serve-static\" --app-init-delay 70000",
+    "integration:concurrently:headless": "concurrently -k -s first \"npm:blockchain\" \"npm:integration:headless\"",
+    "lint": "eslint . --ext .ts,.tsx --max-warnings 0",
+    "lint:type": "npx --no-install tsc --noEmit --sourceMap false",
+    "lint:fix": "npm run lint -- --fix",
+    "postinstall": "patch-package",
+    "serve-static": "http-server build -s -p 3000",
+    "start": "npm-run-all -p start:*",
+    "start:css": "postcss src/tailwind.css -o src/index.css --watch",
+    "start:js": "sleep 2 && react-app-rewired start",
+    "storybook": "npm-run-all -p start:css storybook:start",
+    "storybook:start": "sleep 2 && start-storybook -p 9009 -s public",
+    "storybook:build": "npm run build:css && build-storybook -s public",
+    "prep": "npm-run-all -s lint lint:type lint:fix test:ci build integration:concurrently:headless",
+    "test:ci": "CI=true react-app-rewired test",
+    "test": "react-app-rewired test"
+  },
   "dependencies": {
     "@emotion/react": "^11.4.0",
     "@emotion/styled": "^11.3.0",
@@ -62,7 +103,6 @@
     "@types/use-persisted-state": "^0.3.0",
     "@typescript-eslint/eslint-plugin": "^4.26.1",
     "@typescript-eslint/parser": "^4.26.1",
-    "commitizen": "^4.2.4",
     "concurrently": "^6.2.0",
     "eslint": "^7.28.0",
     "eslint-config-prettier": "^8.3.0",
@@ -87,160 +127,5 @@
     "tailwindcss": "^1.9.6",
     "testcafe": "^1.14.2",
     "typescript": "^4.3.2"
-  },
-  "scripts": {
-    "build": "NODE_OPTIONS='--max-old-space-size=4096' CI=false npm-run-all -s build:css build:js",
-    "build:css": "NODE_ENV=production postcss src/tailwind.css -o src/index.css",
-    "build:js": "NODE_ENV=production react-app-rewired build",
-    "commit": "git-cz",
-    "commit:retry": "npm run commit -- --retry",
-    "eject": "react-scripts eject",
-    "blockchain": "ganache-cli --mnemonic \"indicate swing place chair flight used hammer soon photo region volume shuffle\"",
-    "integration": "./scripts/integration.sh",
-    "integration:single": "./scripts/integration-single.sh",
-    "integration:headless": "HEADLESS=true ./scripts/integration.sh",
-    "integration:internal": "testcafe chrome integration/**/*.spec.ts --app \"BROWSER=none npm run serve-static\"",
-    "integration:internal:single": "testcafe chrome -L --app \"npm run serve-static\"",
-    "integration:internal:headless": "testcafe -c 4 chrome:headless integration/**/*.spec.ts --app \"npm run serve-static\" --app-init-delay 70000",
-    "integration:concurrently:headless": "concurrently -k -s first \"npm:blockchain\" \"npm:integration:headless\"",
-    "lint": "eslint . --ext .ts,.tsx --max-warnings 0",
-    "lint:type": "npx --no-install tsc --noEmit --sourceMap false",
-    "lint:fix": "npm run lint -- --fix",
-    "postinstall": "patch-package",
-    "serve-static": "http-server build -s -p 3000",
-    "start": "npm-run-all -p start:*",
-    "start:css": "postcss src/tailwind.css -o src/index.css --watch",
-    "start:js": "sleep 2 && react-app-rewired start",
-    "storybook": "npm-run-all -p start:css storybook:start",
-    "storybook:start": "sleep 2 && start-storybook -p 9009 -s public",
-    "storybook:build": "npm run build:css && build-storybook -s public",
-    "prep": "npm-run-all -s lint lint:type lint:fix test:ci build integration:concurrently:headless",
-    "test:ci": "CI=true react-app-rewired test",
-    "test": "react-app-rewired test"
-  },
-  "config": {
-    "commitizen": {
-      "path": "node_modules/@commitlint/prompt"
-    }
-  },
-  "eslintConfig": {
-    "parser": "@typescript-eslint/parser",
-    "env": {
-      "browser": true,
-      "jest": true
-    },
-    "extends": [
-      "plugin:@typescript-eslint/recommended",
-      "plugin:react/recommended",
-      "plugin:prettier/recommended",
-      "plugin:import/typescript",
-      "prettier",
-      "plugin:testing-library/react"
-    ],
-    "parserOptions": {
-      "project": "./tsconfig.json"
-    },
-    "plugins": [
-      "import",
-      "react",
-      "@typescript-eslint",
-      "react-hooks",
-      "testing-library"
-    ],
-    "rules": {
-      "react/prop-types": "off",
-      "react/self-closing-comp": "error",
-      "array-callback-return": "error",
-      "react-hooks/rules-of-hooks": "error",
-      "react-hooks/exhaustive-deps": "error",
-      "no-unused-expressions": "off",
-      "jest/no-disabled-tests": "error",
-      "no-shadow": "off",
-      "testing-library/no-debug": [
-        "error",
-        {
-          "utilsToCheckFor": {
-            "debug": false,
-            "logRoles": true,
-            "logDOM": true
-          }
-        }
-      ],
-      "@typescript-eslint/explicit-function-return-type": [
-        "warn",
-        {
-          "allowExpressions": true,
-          "allowTypedFunctionExpressions": true
-        }
-      ],
-      "@typescript-eslint/explicit-member-accessibility": 0,
-      "@typescript-eslint/no-use-before-define": 0
-    },
-    "overrides": [
-      {
-        "files": [
-          "./**/*.js"
-        ],
-        "rules": {
-          "@typescript-eslint/no-var-requires": "off"
-        }
-      },
-      {
-        "files": [
-          "./**/*.stories.tsx"
-        ],
-        "rules": {
-          "import/no-default-export": "off",
-          "@typescript-eslint/explicit-function-return-type": "off",
-          "@typescript-eslint/no-explicit-any": "off"
-        }
-      },
-      {
-        "files": [
-          "*.test.ts",
-          "*.test.tsx"
-        ],
-        "extends": [
-          "plugin:jest/all"
-        ],
-        "rules": {
-          "jest/prefer-expect-assertions": "off",
-          "jest/no-hooks": "off",
-          "jest/unbound-method": "off",
-          "@typescript-eslint/unbound-method": "off",
-          "@typescript-eslint/no-empty-function": "off",
-          "@typescript-eslint/no-explicit-any": "off"
-        }
-      },
-      {
-        "files": [
-          "*.spec.ts",
-          "*.spec.tsx"
-        ],
-        "plugins": [
-          "testcafe"
-        ],
-        "extends": "plugin:testcafe/recommended"
-      }
-    ]
-  },
-  "prettier": {
-    "printWidth": 120
-  },
-  "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
-    ],
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
-    ]
-  },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/TradeTrust/document-creator-website.git"
   }
 }

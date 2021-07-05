@@ -57,6 +57,7 @@ export const DataFileButton: FunctionComponent<DataFileButton> = ({ onDataFile, 
     return { dataFile, dataToValidate };
   };
 
+  // eslint-disable-next-line @typescript-eslint/no-shadow
   const validateDataFile = (schema: Schema, data: unknown): ValidateDataFile => {
     const ajv = new Ajv({ allErrors: true });
     const isValidated = ajv.validate(schema, data) as boolean;

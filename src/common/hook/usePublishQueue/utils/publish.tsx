@@ -98,6 +98,7 @@ export const groupDocumentsIntoJobs = (rawDocuments: RawDocument[], currentNonce
   // Process all verifiable documents with document store first
   documentStoreAddresses.forEach((contractAddress) => {
     const firstRawDocument = verifiableDocumentsWithDocumentStore[contractAddress][0];
+    // eslint-disable-next-line @typescript-eslint/no-shadow
     const rawDocuments = verifiableDocumentsWithDocumentStore[contractAddress].map((doc) => doc.rawDocument);
     const wrappedDocuments = wrapDocuments(rawDocuments);
     const firstWrappedDocument = wrappedDocuments[0];
