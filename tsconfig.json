@@ -14,7 +14,6 @@
     "moduleResolution": "node",
     "resolveJsonModule": true,
     "jsx": "react-jsx",
-    "sourceMap": true,
     "types": [
       "jest",
       "node",
@@ -24,9 +23,12 @@
     "allowJs": true,
     "noEmit": true,
     "noFallthroughCasesInSwitch": true,
+    "downlevelIteration": true,
     "isolatedModules": true
   },
   "include": [
-    "src"
+    "src",
+    "integration",
+    "**/*.config.js"
   ]
 }
