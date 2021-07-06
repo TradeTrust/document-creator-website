@@ -1,5 +1,5 @@
 import { Button } from "@govtechsg/tradetrust-ui-components";
-import Ajv, { AnySchema } from "ajv";
+import Ajv from "ajv";
 import React, { FunctionComponent, useState } from "react";
 import { useDropzone } from "react-dropzone";
 import { readFileAsCsv, readFileAsJson, downloadCsvDataFile, downloadJsonDataFile } from "../../../common/utils";
@@ -62,7 +62,7 @@ export const DataFileButton: FunctionComponent<DataFileButton> = ({ onDataFile, 
   };
 
   // eslint-disable-next-line @typescript-eslint/no-shadow
-  const validateDataFile = (schema: AnySchema, data: unknown): ValidateDataFile => {
+  const validateDataFile = (schema: JSONSchema, data: unknown): ValidateDataFile => {
     const ajv = new Ajv({ allErrors: true });
     const isValidated = ajv.validate(schema, data) as boolean;
     return { isValidated, errors: ajv.errors };
