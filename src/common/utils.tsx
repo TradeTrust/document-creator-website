@@ -1,4 +1,4 @@
-import csv from "csvtojson";
+import { csv2jsonAsync } from "json-2-csv";
 
 export function readFileAsJson<T>(file: File): Promise<T> {
   return new Promise((resolve, reject) => {
@@ -18,18 +18,14 @@ export function readFileAsJson<T>(file: File): Promise<T> {
   });
 }
 
-export function readFileAsCsv(file: File, headers?: string[]): Promise<Array<JSON>> {
+export function readFileAsCsv(file: File): Promise<Array<JSON>> {
   return new Promise((resolve, reject) => {
     const reader: FileReader = new FileReader();
     if (reader.error) {
       reject(reader.error);
     }
     reader.onload = async () => {
-      const data: JSON[] = await csv({
-        noheader: false,
-        headers: headers,
-        ignoreEmpty: true,
-      }).fromString(reader.result as string);
+      const data: JSON[] = await csv2jsonAsync(reader.result as string);
       resolve(data);
     };
     reader.readAsText(file);

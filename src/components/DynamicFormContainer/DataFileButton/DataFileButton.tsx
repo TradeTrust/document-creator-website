@@ -2,7 +2,6 @@ import { Button } from "@govtechsg/tradetrust-ui-components";
 import Ajv, { AnySchema } from "ajv";
 import React, { FunctionComponent, useState } from "react";
 import { useDropzone } from "react-dropzone";
-import { useFormsContext } from "../../../common/context/forms";
 import { readFileAsCsv, readFileAsJson } from "../../../common/utils";
 import { getLogger } from "../../../utils/logger";
 import { FormError, FormErrorBanner } from "./../FormErrorBanner";
@@ -48,8 +47,6 @@ interface GetDataFileBasedOnExtension {
 }
 
 export const DataFileButton: FunctionComponent<DataFileButton> = ({ onDataFile, schema }) => {
-  const { currentFormTemplate } = useFormsContext();
-
   const [error, setError] = useState(false);
   const [dataFileError, setDataFileError] = useState<FormError>(null);
 
@@ -57,7 +54,7 @@ export const DataFileButton: FunctionComponent<DataFileButton> = ({ onDataFile, 
     let dataFile;
     let dataToValidate;
     if (file.name.indexOf(".csv") > 0) {
-      dataFile = await readFileAsCsv(file, currentFormTemplate?.headers);
+      dataFile = await readFileAsCsv(file);
       dataToValidate = dataFile[0]; // use 1 item for fields validation
     } else {
       dataFile = await readFileAsJson<DataFileDefault>(file);
