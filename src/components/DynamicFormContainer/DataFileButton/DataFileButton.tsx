@@ -2,13 +2,11 @@ import { Button } from "@govtechsg/tradetrust-ui-components";
 import Ajv, { AnySchema } from "ajv";
 import React, { FunctionComponent, useState } from "react";
 import { useDropzone } from "react-dropzone";
-import { readFileAsCsv, readFileAsJson } from "../../../common/utils";
+import { readFileAsCsv, readFileAsJson, downloadCsvDataFile, downloadJsonDataFile } from "../../../common/utils";
 import { getLogger } from "../../../utils/logger";
 import { FormError, FormErrorBanner } from "./../FormErrorBanner";
 import { HelpCircle } from "react-feather";
 import { Draft04 as Core, JSONSchema } from "json-schema-library";
-import { saveAs } from "file-saver";
-import converter from "json-2-csv";
 
 const { stack } = getLogger("DataFileButton");
 
@@ -106,24 +104,6 @@ export const DataFileButton: FunctionComponent<DataFileButton> = ({ onDataFile, 
 
   const core = new Core();
   const jsonTemplate = core.getTemplate({}, schema);
-  const jsonData = JSON.stringify({ data: jsonTemplate });
-
-  const jsonBlob = new Blob([jsonData], { type: "text/json;charset=utf-8" });
-
-  const downloadCsvDataFile = (): void => {
-    converter.json2csv(jsonTemplate, (err, csv) => {
-      if (err) {
-        throw err;
-      }
-      if (!csv) {
-        throw new Error("There seem to be an error in the CSV data file you are downloading, please try again later.");
-      }
-
-      const csvBlob = new Blob([csv], { type: "text/csv;charset=utf-8" });
-
-      saveAs(csvBlob, "sample-data.csv");
-    });
-  };
 
   // TODO: when change to Tailwindcss v2 for ui Update please update the background color, or use a color that is closes to this color.
   return (
@@ -150,7 +130,7 @@ export const DataFileButton: FunctionComponent<DataFileButton> = ({ onDataFile, 
             <div
               className="underline ml-2 cursor-pointer"
               data-testid="download-json-data-schema-button"
-              onClick={() => saveAs(jsonBlob, "sample-data.json")}
+              onClick={() => downloadJsonDataFile(jsonTemplate)}
             >
               {text.downloadJson}
             </div>
@@ -160,7 +140,7 @@ export const DataFileButton: FunctionComponent<DataFileButton> = ({ onDataFile, 
             <div
               className="underline ml-2 cursor-pointer"
               data-testid="download-csv-data-schema-button"
-              onClick={downloadCsvDataFile}
+              onClick={() => downloadCsvDataFile(jsonTemplate)}
             >
               {text.downloadCsv}
             </div>
