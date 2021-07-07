@@ -30,10 +30,7 @@ export const TransferableRecordForm: FunctionComponent<TransferableRecordForm> =
   };
 
   return (
-    <div
-      data-testid="transferable-record-form"
-      className="border border-solid border-grey-300 p-3  rounded bg-grey-100 mb-8"
-    >
+    <div data-testid="transferable-record-form" className="border-b border-solid border-grey-300 pb-4 rounded mb-8">
       <div className="text-grey-800 font-bold text-xl pb-4">Transferable Record Owner</div>
       <div className="flex my-4 items-center sm:flex-row flex-col">
         <div className="w-full sm:w-3/12 px-0 sm:px-4 sm:text-right text-grey-800 mb-2 sm:mb-0">Owner</div>

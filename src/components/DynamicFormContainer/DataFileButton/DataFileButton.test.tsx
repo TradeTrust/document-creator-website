@@ -1,6 +1,11 @@
 import React from "react";
 import { fireEvent, render, screen, act, waitFor } from "@testing-library/react";
 import { DataFileButton } from "./DataFileButton";
+import FileSaver from "file-saver";
+
+jest.mock("file-saver", () => ({
+  saveAs: jest.fn(),
+}));
 
 const onDataFile = jest.fn();
 const mockData = (files: File[]): any => {
@@ -95,6 +100,34 @@ describe("dataFileButton", () => {
     await act(async () => {
       fireEvent(dropzone, event);
       await waitFor(() => expect(screen.getByTestId("file-read-error")).not.toBeUndefined());
+    });
+  });
+
+  it("should call 'saveas' function when json data download button is pressed", async () => {
+    render(<DataFileButton onDataFile={onDataFile} schema={mockSchema} />);
+
+    expect(screen.queryAllByTestId("download-json-data-schema-button")).toHaveLength(1);
+
+    await act(async () => {
+      await fireEvent.click(screen.getByTestId("download-json-data-schema-button"));
+    });
+
+    await waitFor(() => {
+      expect(FileSaver.saveAs).toHaveBeenCalledTimes(1);
+    });
+  });
+
+  it("should call 'saveas' function when csv data download button is pressed", async () => {
+    render(<DataFileButton onDataFile={onDataFile} schema={mockSchema} />);
+
+    expect(screen.queryAllByTestId("download-csv-data-schema-button")).toHaveLength(1);
+
+    await act(async () => {
+      await fireEvent.click(screen.getByTestId("download-csv-data-schema-button"));
+    });
+
+    await waitFor(() => {
+      expect(FileSaver.saveAs).toHaveBeenCalledTimes(1);
     });
   });
 });

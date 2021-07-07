@@ -86,6 +86,9 @@ export const DynamicFormRaw: FunctionComponent<DynamicFormProps> = ({
 
   return (
     <div className={`w-full max-w-screen-sm mx-auto mt-6 ${className}`}>
+      <div className="mb-10">
+        <DataFileButton onDataFile={mergeFormValue} schema={schema} />
+      </div>
       {isTransferableRecord && (
         <TransferableRecordForm
           beneficiaryAddress={ownership.beneficiaryAddress}
@@ -104,9 +107,6 @@ export const DynamicFormRaw: FunctionComponent<DynamicFormProps> = ({
           }
         />
       )}
-      <div className="mb-10">
-        <DataFileButton onDataFile={mergeFormValue} schema={schema} />
-      </div>
       <JsonForm
         schema={schema}
         uiSchema={uiSchema}
