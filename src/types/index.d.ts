@@ -1,4 +1,5 @@
-import { Wallet } from "ethers";
+import { Wallet, Signer } from "ethers";
+import { Provider } from "@ethersproject/abstract-provider";
 
 type Network = "homestead" | "ropsten" | "rinkeby" | "local";
 type FormType = "TRANSFERABLE_RECORD" | "VERIFIABLE_DOCUMENT";
@@ -20,16 +21,28 @@ export interface DocumentStorage {
   url: string;
 }
 
+export type AwsKmwSignerOption = {
+  accessKeyId: string;
+  region: string;
+  kmsKeyId: string;
+};
+
 export interface ConfigFile {
   network: Network;
-  wallet: string;
+  wallet: string | AwsKmwSignerOption;
   forms: FormTemplate[];
   documentStorage?: DocumentStorage;
 }
 
+type ConnectedSigner = Signer & {
+  readonly provider: Provider;
+  readonly publicKey?: never;
+  readonly privateKey?: never;
+};
+
 export interface Config {
   network: Network;
-  wallet: Wallet;
+  wallet: Wallet | ConnectedSigner;
   forms: FormTemplate[];
   documentStorage?: DocumentStorage;
 }

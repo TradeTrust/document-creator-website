@@ -4,31 +4,38 @@ import { signDocument, SUPPORTED_SIGNING_ALGORITHM } from "@govtechsg/open-attes
 import { TitleEscrowCreatorFactory, TradeTrustErc721Factory } from "@govtechsg/token-registry";
 import { TitleEscrowCreator } from "@govtechsg/token-registry/types/TitleEscrowCreator";
 import { providers, Signer, Wallet } from "ethers";
+import { Provider } from "@ethersproject/abstract-provider";
 import { getGsnRelaySigner } from "../../common/config/decrypt";
-import { PublishingJob, WrappedDocument } from "../../types";
+import { ConnectedSigner, PublishingJob, WrappedDocument } from "../../types";
 import { supportsInterface } from "./utils";
 
-const assertAddressIsSmartContract = async (address: string, wallet: Wallet): Promise<void> => {
-  const code = await wallet.provider.getCode(address);
+const assertAddressIsSmartContract = async (address: string, provider: Provider): Promise<void> => {
+  const code = await provider.getCode(address);
   if (code === "0x") throw new Error("Address is not a smart contract");
 };
 
-const getConnectedDocumentStore = async (wallet: Wallet, contractAddress: string): Promise<DocumentStore> => {
-  const documentStore = GsnCapableDocumentStoreFactory.connect(contractAddress, wallet);
+const getConnectedDocumentStore = async (
+  account: Wallet | ConnectedSigner,
+  contractAddress: string
+): Promise<DocumentStore> => {
+  const documentStore = GsnCapableDocumentStoreFactory.connect(contractAddress, account);
   // Determine if contract is gsn capable
   const isGsnCapable = await supportsInterface(documentStore, "0xa5a23640");
-  if (!isGsnCapable) return DocumentStoreFactory.connect(contractAddress, wallet);
+  if (!isGsnCapable) return DocumentStoreFactory.connect(contractAddress, account);
   // Get paymaster address and the relevant gsnProvider
   const paymasterAddress = await documentStore.getPaymaster();
-  const signer = await getGsnRelaySigner(wallet, paymasterAddress);
-  const gsnDocumentStore = GsnCapableDocumentStoreFactory.connect(contractAddress, signer);
+  const gsnRelaySigner = await getGsnRelaySigner(account, paymasterAddress);
+  const gsnDocumentStore = GsnCapableDocumentStoreFactory.connect(contractAddress, gsnRelaySigner);
   return gsnDocumentStore;
 };
 
-export const publishVerifiableDocumentJob = async (job: PublishingJob, wallet: Wallet): Promise<string> => {
+export const publishVerifiableDocumentJob = async (
+  job: PublishingJob,
+  account: Wallet | ConnectedSigner
+): Promise<string> => {
   const { contractAddress, merkleRoot, nonce } = job;
-  await assertAddressIsSmartContract(contractAddress, wallet);
-  const documentStore = await getConnectedDocumentStore(wallet, contractAddress);
+  await assertAddressIsSmartContract(contractAddress, account.provider);
+  const documentStore = await getConnectedDocumentStore(account, contractAddress);
   const receipt = await documentStore.issue(`0x${merkleRoot}`, { nonce });
   const tx = await receipt.wait();
   if (!tx.transactionHash) throw new Error(`Tx hash not available: ${JSON.stringify(tx)}`);
@@ -37,7 +44,7 @@ export const publishVerifiableDocumentJob = async (job: PublishingJob, wallet: W
 
 export const publishDnsDidVerifiableDocumentJob = async (
   job: PublishingJob,
-  wallet: Wallet
+  signers: Signer
 ): Promise<WrappedDocument[]> => {
   const signedDocumentsList: WrappedDocument[] = [];
   const signingDocuments = job.documents.map(async (doc) => {
@@ -45,10 +52,7 @@ export const publishDnsDidVerifiableDocumentJob = async (
       const signedDocument = await signDocument(
         doc.wrappedDocument,
         SUPPORTED_SIGNING_ALGORITHM.Secp256k1VerificationKey2018,
-        {
-          public: doc.rawDocument.issuers[0].identityProof.key,
-          private: wallet.privateKey,
-        }
+        signers
       );
       signedDocumentsList.push(signedDocument);
     } catch (e) {
@@ -80,11 +84,11 @@ export const getTitleEscrowCreator = async (wallet: Signer): Promise<TitleEscrow
   return TitleEscrowCreatorFactory.connect(creatorContractAddress, wallet);
 };
 
-export const publishTransferableRecordJob = async (job: PublishingJob, wallet: Wallet): Promise<string> => {
+export const publishTransferableRecordJob = async (job: PublishingJob, signer: Signer): Promise<string> => {
   const { payload, contractAddress, nonce, merkleRoot } = job;
   if (!payload.ownership) throw new Error("Ownership data is not provided");
   const { beneficiaryAddress, holderAddress } = payload.ownership;
-  const titleEscrowCreatorContract = await getTitleEscrowCreator(wallet);
+  const titleEscrowCreatorContract = await getTitleEscrowCreator(signer);
 
   // Impossible to do contract address forecasting since the nonce at the title escrow creator
   // is non-deterministic at time of calling. May consider create2 deployment in the future.
@@ -95,13 +99,15 @@ export const publishTransferableRecordJob = async (job: PublishingJob, wallet: W
     { nonce }
   );
   const escrowDeploymentTx = await escrowDeploymentReceipt.wait();
+  // eslint-disable-next-line prettier/prettier
   const deployedTitleEscrowArgs = escrowDeploymentTx.events?.find(
     (event) => event.event === "TitleEscrowDeployed"
+    // eslint-disable-next-line prettier/prettier
   )?.args;
   if (!deployedTitleEscrowArgs || !deployedTitleEscrowArgs[0])
     throw new Error(`Address for deployed title escrow cannot be found. Tx: ${JSON.stringify(escrowDeploymentTx)}`);
   const deployedTitleEscrowAddress = deployedTitleEscrowArgs[0];
-  const tokenRegistryContract = TradeTrustErc721Factory.connect(contractAddress, wallet);
+  const tokenRegistryContract = TradeTrustErc721Factory.connect(contractAddress, signer);
 
   // Using explicit safeMint function which exist but not typed by typechain due to
   // overloads
@@ -117,13 +123,13 @@ export const publishTransferableRecordJob = async (job: PublishingJob, wallet: W
   return mintingTx.transactionHash;
 };
 
-export const publishJob = async (job: PublishingJob, wallet: Wallet): Promise<string> => {
+export const publishJob = async (job: PublishingJob, wallet: Wallet | ConnectedSigner): Promise<string> => {
   if (job.type === "VERIFIABLE_DOCUMENT") return publishVerifiableDocumentJob(job, wallet);
   if (job.type === "TRANSFERABLE_RECORD") return publishTransferableRecordJob(job, wallet);
   throw new Error("Job type is not supported");
 };
 
-export const publishDnsDidJob = async (job: PublishingJob, wallet: Wallet): Promise<WrappedDocument[]> => {
-  if (job.type === "VERIFIABLE_DOCUMENT") return publishDnsDidVerifiableDocumentJob(job, wallet);
+export const publishDnsDidJob = async (job: PublishingJob, signer: Signer): Promise<WrappedDocument[]> => {
+  if (job.type === "VERIFIABLE_DOCUMENT") return publishDnsDidVerifiableDocumentJob(job, signer);
   throw new Error("Job type is not supported");
 };

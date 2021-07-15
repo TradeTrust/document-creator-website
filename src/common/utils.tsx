@@ -1,6 +1,7 @@
 import { csv2jsonAsync } from "json-2-csv";
 import converter from "json-2-csv";
 import { saveAs } from "file-saver";
+import { AwsKmwSignerOption } from "../types";
 
 export function readFileAsJson<T>(file: File): Promise<T> {
   return new Promise((resolve, reject) => {
@@ -78,4 +79,18 @@ export const downloadJsonDataFile = (jsonTemplate: any): void => {
 
   const jsonBlob = new Blob([jsonData], { type: "text/json;charset=utf-8" });
   saveAs(jsonBlob, "sample-data.json");
+};
+
+// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
+export const isAwsKmsSignerOption = (option: any): option is AwsKmwSignerOption => {
+  return (
+    typeof option?.accessKeyId === "string" &&
+    typeof option?.region === "string" &&
+    typeof option?.kmsKeyId === "string"
+  );
+};
+
+// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
+export const isWalletOption = (option: any): option is string => {
+  return typeof option === "string";
 };
