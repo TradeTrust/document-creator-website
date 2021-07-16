@@ -12,6 +12,13 @@ const localConfig = {
       display: ["Roboto", "sans-serif"],
       body: ["Roboto", "sans-serif"],
     },
+    extend: {
+      inset: {
+        4: "1rem",
+        8: "2rem",
+        12: "3rem",
+      },
+    },
   },
 };
 const finalConfig = _.merge(commonUiConfig, localConfig); // deep merge
