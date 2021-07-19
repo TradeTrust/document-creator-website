@@ -99,10 +99,8 @@ export const publishTransferableRecordJob = async (job: PublishingJob, signer: S
     { nonce }
   );
   const escrowDeploymentTx = await escrowDeploymentReceipt.wait();
-  // eslint-disable-next-line prettier/prettier
   const deployedTitleEscrowArgs = escrowDeploymentTx.events?.find(
     (event) => event.event === "TitleEscrowDeployed"
-    // eslint-disable-next-line prettier/prettier
   )?.args;
   if (!deployedTitleEscrowArgs || !deployedTitleEscrowArgs[0])
     throw new Error(`Address for deployed title escrow cannot be found. Tx: ${JSON.stringify(escrowDeploymentTx)}`);
