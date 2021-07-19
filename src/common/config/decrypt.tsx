@@ -80,7 +80,7 @@ export const decryptWalletOrSigner = async (
     const signer = new AwsKmsSigner(kmsCredentials).connect(provider);
     try {
       const connectedSigner = signer as ConnectedSigner;
-      if ((await connectedSigner.getTransactionCount()) > -1) {
+      if (await connectedSigner.getAddress()) {
         return connectedSigner;
       }
       throw new Error("Unable to attach the provider to the kms signer");
