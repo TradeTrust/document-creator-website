@@ -82,15 +82,6 @@ export const downloadJsonDataFile = (jsonTemplate: any): void => {
 };
 
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-export const isAwsKmsSignerOption = (option: any): option is AwsKmwSignerOption => {
-  return (
-    typeof option?.accessKeyId === "string" &&
-    typeof option?.region === "string" &&
-    typeof option?.kmsKeyId === "string"
-  );
-};
-
-// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 export const isWalletOption = (option: any): option is string => {
   return typeof option === "string";
 };
