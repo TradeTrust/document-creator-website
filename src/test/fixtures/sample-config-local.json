@@ -543,7 +543,7 @@
         "allow": true,
         "accept": ".pdf, .json"
       },
-      "filename": "bill-<%= blNumber %>"
+      "fileName": "bill-<%= blNumber %>"
     },
     {
       "name": "Covering Letter",

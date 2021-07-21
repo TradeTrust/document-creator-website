@@ -65,13 +65,13 @@ export const FormsContextProvider: FunctionComponent = ({ children }) => {
     setActiveFormIndex(newIndex);
   };
 
-  const newPopulatedForm = (templateIndex: number, data: Array<FormEntry>, filename?: string): void => {
+  const newPopulatedForm = (templateIndex: number, data: Array<FormEntry>, fileName?: string): void => {
     try {
       const newFormTemplate = config?.forms[templateIndex];
       const newFormName = newFormTemplate?.name ?? "Document";
       const formEntries: FormEntry[] = [];
       const extension = config?.forms[templateIndex]?.extension ?? "tt";
-      const filenameTemplate = filename ? _.template(filename) : undefined;
+      const filenameTemplate = fileName ? _.template(fileName) : undefined;
 
       for (let index = 0; index < data.length; index++) {
         formEntries.push({
@@ -106,20 +106,20 @@ export const FormsContextProvider: FunctionComponent = ({ children }) => {
     setCurrentForm({ data: undefined, updatedOwnership: { beneficiaryAddress, holderAddress } });
   };
 
-  const setCurrentFileName = (filename: string): void => {
+  const setCurrentFileName = (fileName: string): void => {
     if (activeFormIndex === undefined) return;
-    setCurrentForm({ data: undefined, updatedOwnership: undefined, filename });
+    setCurrentForm({ data: undefined, updatedOwnership: undefined, fileName });
   };
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const setCurrentForm = ({ data, updatedOwnership, filename }: SetFormParams): void => {
+  const setCurrentForm = ({ data, updatedOwnership, fileName }: SetFormParams): void => {
     try {
       if (activeFormIndex === undefined) return;
       // eslint-disable-next-line @typescript-eslint/no-shadow
       const currentForm = forms[activeFormIndex];
       const nextForms = [...forms];
 
-      const filenameTemplate = filename ? _.template(filename) : undefined;
+      const filenameTemplate = fileName ? _.template(fileName) : undefined;
 
       const updatedCurrentForm = {
         ...currentForm,

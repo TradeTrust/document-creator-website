@@ -22,7 +22,7 @@ export interface DynamicFormProps {
   setOwnership: (ownership: Ownership) => void;
   setCurrentForm: (arg: SetFormParams) => void; // eslint-disable-line @typescript-eslint/no-explicit-any
   uiSchema?: any; // eslint-disable-line @typescript-eslint/no-explicit-any
-  filename?: string;
+  fileName?: string;
 }
 
 export const DynamicFormRaw: FunctionComponent<DynamicFormProps> = ({
@@ -35,7 +35,7 @@ export const DynamicFormRaw: FunctionComponent<DynamicFormProps> = ({
   className,
   attachmentAccepted,
   type,
-  filename,
+  fileName,
   attachmentAcceptedFormat = "",
 }) => {
   const { templateIndex, data, ownership } = form;
@@ -47,13 +47,13 @@ export const DynamicFormRaw: FunctionComponent<DynamicFormProps> = ({
     // If value is an array, call function from forms index to append
     // multiple docs of the current form's templateIndex
     if (Array.isArray(value)) {
-      newPopulatedForm(templateIndex, value, filename);
+      newPopulatedForm(templateIndex, value, fileName);
     } else {
       // But if it's just one object, we'll replace the values of the existing form (i.e. original behaviour)
       setCurrentForm({
         data: { ...data, formData: value?.data || data.formData },
         updatedOwnership: value?.ownership,
-        filename,
+        fileName,
       });
     }
   };
