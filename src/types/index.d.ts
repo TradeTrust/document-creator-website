@@ -13,6 +13,7 @@ export interface FormTemplate {
   headers?: string[];
   uiSchema?: any; // eslint-disable-line @typescript-eslint/no-explicit-any
   extension?: string;
+  filename?: string;
 }
 
 export interface DocumentStorage {
@@ -73,7 +74,7 @@ export interface FormEntry {
 export interface SetFormParams {
   data?: FormData;
   updatedOwnership?: Ownership;
-  fileName?: string;
+  filename?: string;
 }
 
 export interface RawDocument {

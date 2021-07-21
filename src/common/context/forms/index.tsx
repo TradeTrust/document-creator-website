@@ -1,3 +1,4 @@
+import _ from "lodash";
 import React, { createContext, FunctionComponent, useContext, useState } from "react";
 import { FormData, FormEntry, FormTemplate, Ownership, SetFormParams } from "../../../types";
 import { useConfigContext } from "../config";
@@ -12,10 +13,10 @@ interface FormsContext {
   setActiveFormIndex: (index?: number) => void;
   setForms: (forms: FormEntry[]) => void;
   newForm: (templateIndex: number) => void;
-  newPopulatedForm: (templateIndex: number, formData: Array<FormEntry>) => void;
+  newPopulatedForm: (templateIndex: number, formData: Array<FormEntry>, filename?: string) => void;
   setCurrentFormData: (formData: FormData) => void;
   setCurrentFormOwnership: (ownership: Ownership) => void;
-  setCurrentFileName: (fileName: string) => void;
+  setCurrentFileName: (filename: string) => void;
   setCurrentForm: (arg: SetFormParams) => void;
 }
 
@@ -64,25 +65,34 @@ export const FormsContextProvider: FunctionComponent = ({ children }) => {
     setActiveFormIndex(newIndex);
   };
 
-  const newPopulatedForm = (templateIndex: number, data: Array<FormEntry>): void => {
-    const newFormTemplate = config?.forms[templateIndex];
-    const newFormName = newFormTemplate?.name ?? "Document";
-    const formEntries: FormEntry[] = [];
-    const extension = config?.forms[templateIndex]?.extension ?? "tt";
-    for (let index = 0; index < data.length; index++) {
-      formEntries.push({
-        templateIndex,
-        data: {
-          formData: data[index],
-          schema: newFormTemplate?.schema,
-        },
-        fileName: data[index].fileName ?? `${newFormName}-${forms.length + 1 + index}`,
-        ownership: data[index].ownership ?? { beneficiaryAddress: "", holderAddress: "" },
-        extension: extension,
-      });
+  const newPopulatedForm = (templateIndex: number, data: Array<FormEntry>, filename?: string): void => {
+    try {
+      const newFormTemplate = config?.forms[templateIndex];
+      const newFormName = newFormTemplate?.name ?? "Document";
+      const formEntries: FormEntry[] = [];
+      const extension = config?.forms[templateIndex]?.extension ?? "tt";
+      const filenameTemplate = filename ? _.template(filename) : undefined;
+
+      for (let index = 0; index < data.length; index++) {
+        formEntries.push({
+          templateIndex,
+          data: {
+            formData: data[index],
+            schema: newFormTemplate?.schema,
+          },
+          fileName: filenameTemplate ? filenameTemplate(data[index]) : `${newFormName}-${forms.length + 1 + index}`,
+          ownership: data[index].ownership ?? { beneficiaryAddress: "", holderAddress: "" },
+          extension: extension,
+        });
+      }
+      setForms([...forms, ...formEntries]);
+      setActiveFormIndex(forms.length);
+    } catch (e) {
+      if (e instanceof ReferenceError) {
+        throw new Error("filename in configuration file could not be found in data");
+      }
+      throw new Error(e);
     }
-    setForms([...forms, ...formEntries]);
-    setActiveFormIndex(forms.length);
   };
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -96,25 +106,35 @@ export const FormsContextProvider: FunctionComponent = ({ children }) => {
     setCurrentForm({ data: undefined, updatedOwnership: { beneficiaryAddress, holderAddress } });
   };
 
-  const setCurrentFileName = (fileName: string): void => {
+  const setCurrentFileName = (filename: string): void => {
     if (activeFormIndex === undefined) return;
-    setCurrentForm({ data: undefined, updatedOwnership: undefined, fileName });
+    setCurrentForm({ data: undefined, updatedOwnership: undefined, filename });
   };
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const setCurrentForm = ({ data, updatedOwnership, fileName }: SetFormParams): void => {
-    if (activeFormIndex === undefined) return;
-    // eslint-disable-next-line @typescript-eslint/no-shadow
-    const currentForm = forms[activeFormIndex];
-    const nextForms = [...forms];
-    const updatedCurrentForm = {
-      ...currentForm,
-      data: data || currentForm.data,
-      ownership: updatedOwnership || currentForm.ownership,
-      fileName: fileName || currentForm.fileName,
-    } as FormEntry;
-    nextForms.splice(activeFormIndex, 1, updatedCurrentForm);
-    setForms(nextForms);
+  const setCurrentForm = ({ data, updatedOwnership, filename }: SetFormParams): void => {
+    try {
+      if (activeFormIndex === undefined) return;
+      // eslint-disable-next-line @typescript-eslint/no-shadow
+      const currentForm = forms[activeFormIndex];
+      const nextForms = [...forms];
+
+      const filenameTemplate = filename ? _.template(filename) : undefined;
+
+      const updatedCurrentForm = {
+        ...currentForm,
+        data: data ?? currentForm.data,
+        ownership: updatedOwnership ?? currentForm.ownership,
+        fileName: filenameTemplate ? filenameTemplate(data?.formData) ?? currentForm.fileName : currentForm.fileName,
+      } as FormEntry;
+      nextForms.splice(activeFormIndex, 1, updatedCurrentForm);
+      setForms(nextForms);
+    } catch (e) {
+      if (e instanceof ReferenceError) {
+        throw new Error("filename in configuration file could not be found in data");
+      }
+      throw new Error(e);
+    }
   };
 
   return (

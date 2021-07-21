@@ -544,7 +544,8 @@
         "allow": true,
         "accept": ".pdf, .json"
       },
-      "extension": "tt"
+      "extension": "tt",
+      "filename": "bill-<%= blNumber %>"
     },
     {
       "name": "Covering Letter (GT)",
