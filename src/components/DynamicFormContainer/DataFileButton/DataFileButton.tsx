@@ -5,8 +5,8 @@ import { useDropzone } from "react-dropzone";
 import { readFileAsCsv, readFileAsJson, downloadCsvDataFile, downloadJsonDataFile } from "../../../common/utils";
 import { getLogger } from "../../../utils/logger";
 import { FormError, FormErrorBanner } from "./../FormErrorBanner";
-import { HelpCircle } from "react-feather";
 import { Draft04 as Core, JSONSchema } from "json-schema-library";
+import { ToolTip } from "../../UI/ToolTip";
 
 const { stack } = getLogger("DataFileButton");
 
@@ -126,7 +126,7 @@ export const DataFileButton: FunctionComponent<DataFileButton> = ({ onDataFile, 
         </div>
         <div className="flex text-sm justify-between text-grey-800">
           <div className="flex items-end">
-            <HelpCircle className="h-5 w-5" />
+            <ToolTip toolTipText="JSON Schema is a lightweight data interchange format that generates clear, easy-to-understand documentation, making validation and testing easier. JSON Schema is used to describe the structure and validation constraints of JSON documents." />
             <div
               className="underline ml-2 cursor-pointer"
               data-testid="download-json-data-schema-button"
@@ -136,7 +136,7 @@ export const DataFileButton: FunctionComponent<DataFileButton> = ({ onDataFile, 
             </div>
           </div>
           <div className="flex items-end">
-            <HelpCircle className="h-5 w-5" />
+            <ToolTip toolTipText="CSV Schema defines a textual language which can be used to define the data structure, types and rules for CSV data formats. A CSV data file is a delimited text file that uses a comma to separate values. Each line of the file is a data record. Each record consists of one or more fields, separated by commas." />
             <div
               className="underline ml-2 cursor-pointer"
               data-testid="download-csv-data-schema-button"
