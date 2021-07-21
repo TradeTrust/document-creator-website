@@ -34,8 +34,7 @@ export const DynamicFormLayout: FunctionComponent = () => {
   if (!currentFormTemplate) return <Redirect to="/forms-selection" />;
   if (isSubmitted) return <Redirect to="/publish" />;
 
-  const { schema: formSchema } = currentFormTemplate;
-  const { uiSchema } = currentFormTemplate;
+  const { schema: formSchema, uiSchema, fileName } = currentFormTemplate;
   const attachmentAccepted = !!currentFormTemplate.attachments?.allow;
   const attachmentAcceptedFormat = currentFormTemplate.attachments?.accept;
 
@@ -136,6 +135,7 @@ export const DynamicFormLayout: FunctionComponent = () => {
                   setCurrentForm={setCurrentForm}
                   attachmentAccepted={attachmentAccepted}
                   attachmentAcceptedFormat={attachmentAcceptedFormat}
+                  fileName={fileName}
                 />
               </div>
             )}
