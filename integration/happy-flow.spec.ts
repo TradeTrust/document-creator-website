@@ -78,7 +78,7 @@ test("should issue the documents on local blockchain correctly", async (t) => {
   await t.setFilesToUpload("input[type=file][data-testid=config-file-drop-zone]", [DataFileEbl]);
 
   // Validate the content is overwritten by the data file
-  await t.expect(EblFileNameField.value).eql("file name 1");
+  await t.expect(EblFileNameField.value).eql("bill-123");
   await t.expect(EblBeneficiaryField.value).eql("0xa61b056da0084a5f391ec137583073096880c2e3");
   await t.expect(EblHolderField.value).eql("0xa61b056da0084a5f391ec137583073096880c2e3");
   await t.expect(EblNumberField.value).eql("123");
@@ -87,13 +87,13 @@ test("should issue the documents on local blockchain correctly", async (t) => {
   await t.setFilesToUpload("input[type=file][data-testid=config-file-drop-zone]", [DataFileCsvEbl]);
 
   // Validate the content is overwritten by the data file
-  await t.expect(EblFileNameField.value).eql("file name 2");
+  await t.expect(EblFileNameField.value).eql("bill-<blNumber 1>");
   await t.expect(EblBeneficiaryField.value).eql("<beneficiary address 1>");
   await t.expect(EblHolderField.value).eql("<holder address 1>");
   await t.expect(EblNumberField.value).eql("<blNumber 1>");
 
   await t.click(NextDocumentButton);
-  await t.expect(EblFileNameField.value).eql("file name 3");
+  await t.expect(EblFileNameField.value).eql("bill-<blNumber 2>");
   await t.expect(EblBeneficiaryField.value).eql("<beneficiary address 2>");
   await t.expect(EblHolderField.value).eql("<holder address 2>");
   await t.expect(EblNumberField.value).eql("<blNumber 2>");
@@ -103,8 +103,8 @@ test("should issue the documents on local blockchain correctly", async (t) => {
 
   // Check that EBL is created
   await t.expect(Title.textContent).contains("Document(s) issued successfully");
-  await t.expect(Selector("div").withText("file name 1-local.tt").exists).ok();
-  await t.expect(Selector("div").withText("file name 2-local.tt").exists).ok();
-  await t.expect(Selector("div").withText("file name 3-local.tt").exists).ok();
+  await t.expect(Selector("div").withText("bill-123-local.tt").exists).ok();
+  await t.expect(Selector("div").withText("bill-<blNumber 1>-local.tt").exists).ok();
+  await t.expect(Selector("div").withText("bill-<blNumber 2>-local.tt").exists).ok();
   await t.expect(Selector("div").withText("Download").exists).ok();
 });

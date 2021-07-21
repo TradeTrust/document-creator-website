@@ -542,7 +542,8 @@
       "attachments": {
         "allow": true,
         "accept": ".pdf, .json"
-      }
+      },
+      "filename": "bill-<%= blNumber %>"
     },
     {
       "name": "Covering Letter",
