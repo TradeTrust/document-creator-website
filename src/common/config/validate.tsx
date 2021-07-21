@@ -3,7 +3,14 @@ import { ConfigFile } from "../../types";
 
 const configFileSchema = Joi.object({
   network: Joi.string().allow("homestead", "ropsten", "rinkeby", "local").only().required(),
-  wallet: Joi.string().required(), // Using string type since it's ethers type for encrypted JSON
+  wallet: Joi.alternatives(
+    Joi.string().required(),
+    Joi.object().keys({
+      accessKeyId: Joi.string().required(),
+      region: Joi.string().required(),
+      kmsKeyId: Joi.string().required(),
+    })
+  ).required(),
   forms: Joi.array()
     .items(
       Joi.object({

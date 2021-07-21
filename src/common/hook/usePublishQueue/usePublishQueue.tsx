@@ -53,7 +53,6 @@ export const usePublishQueue = (
       // Cannot use setCompletedJobIndex here as async update does not with the promise race
       const completedJobsIndexes: number[] = [];
       const failedJobs: FailedJob[] = [];
-
       setPublishState(PublishState.INITIALIZED);
       const nonce = await config.wallet.getTransactionCount();
       const publishingJobs = await getPublishingJobs(formEntries, config, nonce);
@@ -62,10 +61,10 @@ export const usePublishQueue = (
       setPendingJobIndex(Array.from(pendingJobs));
       const allJobs = publishingJobs.map(async (job, index) => {
         try {
-          const signer = config.wallet;
+          const wallet = config.wallet;
           if (job.contractAddress === identifyProofType.DnsDid) {
             // publish DID verifiable documents first
-            const publishedDnsDidJobs = await publishDnsDidJob(job, signer);
+            const publishedDnsDidJobs = await publishDnsDidJob(job, wallet);
             // update wrappedDocument with the signed documents
             // eslint-disable-next-line @typescript-eslint/no-shadow
             job.documents.forEach((document, index) => {
@@ -74,7 +73,7 @@ export const usePublishQueue = (
             });
           } else {
             // publish verifiable documents and transferable records with doc store and token registry
-            await publishJob(job, signer);
+            await publishJob(job, wallet);
           }
           // upload all the docs to document storage
           const uploadDocuments = job.documents.map(async (doc) => {
