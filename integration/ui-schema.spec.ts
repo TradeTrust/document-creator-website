@@ -115,6 +115,7 @@ test("form should render correctly according to uiSchema", async (t) => {
   // We expect the contents of the second doc to contain the uiSchema key,
   // one at the root level, the other nested in `misc`
   const docContents2 = JSON.parse(readFileSync(filePath2, "utf8"));
+
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   await t.expect(docContents2.data.misc.uiSchema.remarks["ui:widget"]).contains("textarea");
 });

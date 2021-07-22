@@ -25,6 +25,7 @@ const configFileSchema = Joi.object({
         headers: Joi.array().optional(),
         uiSchema: Joi.object(),
         extension: Joi.string(),
+        fileName: Joi.string(),
       })
     )
     .required(),

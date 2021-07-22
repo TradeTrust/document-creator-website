@@ -14,6 +14,7 @@ export interface FormTemplate {
   headers?: string[];
   uiSchema?: any; // eslint-disable-line @typescript-eslint/no-explicit-any
   extension?: string;
+  fileName?: string;
 }
 
 export interface DocumentStorage {
