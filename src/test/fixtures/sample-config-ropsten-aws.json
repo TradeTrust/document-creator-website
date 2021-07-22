@@ -18,7 +18,7 @@
         "issuers": [
           {
             "name": "Demo Issuer",
-            "documentStore": "0x718B518565B81097b185661EBba3966Ff32A0039",
+            "documentStore": "0x6e80FD3dD1151607Ce15B98eE1e3DDd4E4DdF0B6",
             "identityProof": {
               "type": "DNS-TXT",
               "location": "example.openattestation.com"
@@ -562,7 +562,7 @@
         "issuers": [
           {
             "name": "Demo Issuer",
-            "documentStore": "0x718B518565B81097b185661EBba3966Ff32A0039",
+            "documentStore": "0x6e80FD3dD1151607Ce15B98eE1e3DDd4E4DdF0B6",
             "identityProof": {
               "type": "DNS-TXT",
               "location": "example.openattestation.com"
@@ -609,7 +609,7 @@
         "issuers": [
           {
             "name": "Demo Issuer",
-            "documentStore": "0x718B518565B81097b185661EBba3966Ff32A0039",
+            "documentStore": "0x6e80FD3dD1151607Ce15B98eE1e3DDd4E4DdF0B6",
             "identityProof": {
               "type": "DNS-TXT",
               "location": "example.openattestation.comm"
