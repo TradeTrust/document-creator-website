@@ -68,19 +68,20 @@ export const FormsContextProvider: FunctionComponent = ({ children }) => {
   const newPopulatedForm = (templateIndex: number, data: Array<FormEntry>, fileName?: string): void => {
     try {
       const newFormTemplate = config?.forms[templateIndex];
-      const newFormName = newFormTemplate?.name ?? "Document";
       const formEntries: FormEntry[] = [];
       const extension = config?.forms[templateIndex]?.extension ?? "tt";
-      const filenameTemplate = fileName ? _.template(fileName) : undefined;
 
       for (let index = 0; index < data.length; index++) {
+        const newFormName = fileName
+          ? _.template(fileName)(data[index])
+          : `${newFormTemplate?.name.replace(/\s+/g, "-") ?? "Document"}-${forms.length + 1 + index}`;
         formEntries.push({
           templateIndex,
           data: {
             formData: data[index],
             schema: newFormTemplate?.schema,
           },
-          fileName: filenameTemplate ? filenameTemplate(data[index]) : `${newFormName}-${forms.length + 1 + index}`,
+          fileName: newFormName,
           ownership: data[index].ownership ?? { beneficiaryAddress: "", holderAddress: "" },
           extension: extension,
         });
@@ -118,14 +119,11 @@ export const FormsContextProvider: FunctionComponent = ({ children }) => {
       // eslint-disable-next-line @typescript-eslint/no-shadow
       const currentForm = forms[activeFormIndex];
       const nextForms = [...forms];
-
-      const filenameTemplate = fileName ? _.template(fileName) : undefined;
-
       const updatedCurrentForm = {
         ...currentForm,
         data: data ?? currentForm.data,
         ownership: updatedOwnership ?? currentForm.ownership,
-        fileName: filenameTemplate ? filenameTemplate(data?.formData) ?? currentForm.fileName : currentForm.fileName,
+        fileName: fileName ? _.template(fileName)(data?.formData) : currentForm.fileName.replace(/\s+/g, "-"),
       } as FormEntry;
       nextForms.splice(activeFormIndex, 1, updatedCurrentForm);
       setForms(nextForms);
