@@ -66,13 +66,13 @@ test("should upload populate data fields correctly", async (t) => {
   await t.setFilesToUpload("input[type=file][data-testid=config-file-drop-zone]", [DataFileCsv]);
 
   // Validated the content is overwritten by the data file
-  await t.expect(fileNameField.value).eql("Covering Letter-2");
+  await t.expect(fileNameField.value).eql("Covering-Letter-2");
   await t.expect(FormTitleField.value).eql("Testing1");
   await t.expect(FormRemarksField.value).eql("Testing1");
 
   // Check next document
   await t.click(nextDocumentButton);
-  await t.expect(fileNameField.value).eql("Covering Letter-3");
+  await t.expect(fileNameField.value).eql("Covering-Letter-3");
   await t.expect(FormTitleField.value).eql("Testing2");
   await t.expect(FormRemarksField.value).eql("Testing2");
 });
