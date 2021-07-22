@@ -13,10 +13,10 @@ interface FormsContext {
   setActiveFormIndex: (index?: number) => void;
   setForms: (forms: FormEntry[]) => void;
   newForm: (templateIndex: number) => void;
-  newPopulatedForm: (templateIndex: number, formData: Array<FormEntry>, filename?: string) => void;
+  newPopulatedForm: (templateIndex: number, formData: Array<FormEntry>, fileName?: string) => void;
   setCurrentFormData: (formData: FormData) => void;
   setCurrentFormOwnership: (ownership: Ownership) => void;
-  setCurrentFileName: (filename: string) => void;
+  setCurrentFileName: (fileName: string) => void;
   setCurrentForm: (arg: SetFormParams) => void;
 }
 
