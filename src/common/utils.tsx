@@ -79,3 +79,8 @@ export const downloadJsonDataFile = (jsonTemplate: any): void => {
   const jsonBlob = new Blob([jsonData], { type: "text/json;charset=utf-8" });
   saveAs(jsonBlob, "sample-data.json");
 };
+
+// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
+export const isWalletOption = (option: any): option is string => {
+  return typeof option === "string";
+};

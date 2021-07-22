@@ -1,11 +1,13 @@
 import { Wallet, getDefaultProvider, providers } from "ethers";
-import { ConfigFile } from "../../types";
+import { ConfigFile, ConnectedSigner } from "../../types";
 import { RelayProvider } from "@opengsn/gsn";
 import { getGSNRelayConfig, getHttpProviderUri } from "../../config";
 import Web3HttpProvider from "web3-providers-http";
+import { isWalletOption } from "../utils";
+import { AwsKmsSigner } from "ethers-aws-kms-signer";
 
 export const getGsnRelaySigner = async (
-  account: Wallet,
+  account: Wallet | ConnectedSigner,
   paymasterAddress: string
 ): Promise<providers.JsonRpcSigner> => {
   // Get network and chainId
@@ -48,7 +50,7 @@ export const getGsnRelaySigner = async (
 
   // Decrypt wallet to use wallet account as signer
   gsnProvider.addAccount(account.privateKey);
-  const from = account.address;
+  const from = await account.getAddress();
 
   // GsnProvider is now an rpc provider with GSN support. make it an ethers provider:
   const etherProvider = new providers.Web3Provider(gsnProvider);
@@ -56,17 +58,34 @@ export const getGsnRelaySigner = async (
   return etherProvider.getSigner(from);
 };
 
-export const decryptWallet = async (
+export const decryptWalletOrSigner = async (
   config: ConfigFile,
   password: string,
   progressCallback: (progress: number) => void
-): Promise<Wallet> => {
-  const decryptedWallet = await Wallet.fromEncryptedJson(config.wallet, password, progressCallback);
-  if (config.network === "local") {
-    const provider = new providers.JsonRpcProvider();
-    return decryptedWallet.connect(provider);
-  } else {
-    const connectedWallet = await decryptedWallet.connect(getDefaultProvider(config.network));
+): Promise<Wallet | ConnectedSigner> => {
+  const provider = config.network === "local" ? new providers.JsonRpcProvider() : getDefaultProvider(config.network);
+
+  if (isWalletOption(config.wallet)) {
+    const decryptedWallet = await Wallet.fromEncryptedJson(config.wallet, password, progressCallback);
+    const connectedWallet = await decryptedWallet.connect(provider);
     return connectedWallet;
+  } else {
+    const kmsCredentials = {
+      accessKeyId: config.wallet.accessKeyId, // credentials for your IAM user with KMS access
+      secretAccessKey: password, // credentials for your IAM user with KMS access
+      region: config.wallet.region,
+      keyId: config.wallet.kmsKeyId,
+    };
+
+    const signer = new AwsKmsSigner(kmsCredentials).connect(provider);
+    try {
+      const connectedSigner = signer as ConnectedSigner;
+      if (await connectedSigner.getAddress()) {
+        return connectedSigner;
+      }
+      throw new Error("Unable to attach the provider to the kms signer");
+    } catch (e) {
+      throw new Error("Unable to attach the provider to the kms signer");
+    }
   }
 };
