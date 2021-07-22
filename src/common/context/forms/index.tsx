@@ -90,7 +90,7 @@ export const FormsContextProvider: FunctionComponent = ({ children }) => {
       setActiveFormIndex(forms.length);
     } catch (e) {
       if (e instanceof ReferenceError) {
-        throw new Error("filename in configuration file could not be found in data");
+        throw new Error("failed to interpolate data properties, could not find data properties in configuration file.");
       }
       throw new Error(e);
     }
@@ -129,7 +129,7 @@ export const FormsContextProvider: FunctionComponent = ({ children }) => {
       setForms(nextForms);
     } catch (e) {
       if (e instanceof ReferenceError) {
-        throw new Error("filename in configuration file could not be found in data");
+        throw new Error("failed to interpolate data properties, could not find data properties in configuration file.");
       }
       throw new Error(e);
     }
