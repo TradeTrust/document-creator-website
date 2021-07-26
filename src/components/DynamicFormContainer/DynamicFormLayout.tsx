@@ -51,7 +51,8 @@ export const DynamicFormLayout: FunctionComponent = () => {
     const nextForms = [...forms];
     nextForms.splice(activeFormIndex, 1);
     setForms(nextForms);
-    const nextActiveFormIndex = nextForms.length > 0 ? nextForms.length - 1 : undefined;
+    const nextActiveFormIndex =
+      nextForms.length === activeFormIndex ? nextForms.length - 1 : nextForms.length > 0 ? activeFormIndex : undefined;
     setActiveFormIndex(nextActiveFormIndex);
   };
 
