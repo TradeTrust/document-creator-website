@@ -26,6 +26,12 @@ const whenActiveFormIsAvailable = (): void => {
         templateIndex: 0,
         ownership: { holderAddress: "", beneficiaryAddress: "" },
       },
+      {
+        fileName: "document-2",
+        data: { formData: {} },
+        templateIndex: 0,
+        ownership: { holderAddress: "", beneficiaryAddress: "" },
+      },
     ],
     currentForm: {
       fileName: "document-1",
