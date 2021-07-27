@@ -19,11 +19,6 @@ describe("decryptWalletOrSigner", () => {
     await expect(decryptWalletOrSigner(configFile, "wrongPassword", () => {})).rejects.toThrow(/invalid password/);
   });
 
-  it("should return signer when AWS decryption is successful", async () => {
-    const wallet = await decryptWalletOrSigner(awsConfigFile, "5TQto/r7ebS7rZRwavyi9qhxdWdDEoNVYTduFtEA", () => {});
-    expect(await wallet.getAddress()).toBe("0x83a07367b666b7c99b59fa62a3f360f667601cf9");
-  }, 20000);
-
   it("Should throw when AWS decryption fails", async () => {
     await expect(decryptWalletOrSigner(awsConfigFile, "wrongPassword", () => {})).rejects.toThrow(
       "Unable to attach the provider to the kms signer"
