@@ -51,8 +51,7 @@ export const DynamicFormLayout: FunctionComponent = () => {
     const nextForms = [...forms];
     nextForms.splice(activeFormIndex, 1);
     setForms(nextForms);
-    const nextActiveFormIndex = nextForms.length > 0 ? nextForms.length - 1 : undefined;
-    setActiveFormIndex(nextActiveFormIndex);
+    if (nextForms.length === activeFormIndex) setActiveFormIndex(nextForms.length - 1);
   };
 
   const onNewForm = (): void => {
@@ -107,13 +106,19 @@ export const DynamicFormLayout: FunctionComponent = () => {
                 <div className="align-middle">Preview mode:</div>
                 <ToggleSwitch isOn={isPreviewMode} handleToggle={() => setIsPreviewMode(!isPreviewMode)} />
               </div>
-              <ButtonIcon
-                className="bg-white hover:bg-grey-100 border-grey-400"
-                data-testid="delete-button"
-                onClick={() => setDeleteModal(true)}
-              >
-                <Trash2 className="text-grey" />
-              </ButtonIcon>
+              {forms.length > 1 ? (
+                <ButtonIcon
+                  className="bg-white hover:bg-grey-100 border-grey-400"
+                  data-testid="delete-button"
+                  onClick={() => setDeleteModal(true)}
+                >
+                  <Trash2 className="text-grey" />
+                </ButtonIcon>
+              ) : (
+                <ButtonIcon className="bg-grey-400 border-grey-400">
+                  <Trash2 className="text-grey" />
+                </ButtonIcon>
+              )}
             </div>
             <FormErrorBanner
               formErrorTitle="This form has errors. Please fix the errors to proceed."
