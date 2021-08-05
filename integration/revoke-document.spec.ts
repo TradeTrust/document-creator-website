@@ -58,6 +58,11 @@ test("should revoke a document on local blockchain correctly", async (t) => {
   // Upload a file
   await t.setFilesToUpload("input[type=file][data-testid=revoke-document-drop-zone]", [filePath]);
 
+  // Click back button to test back flow and upload file again
+  await t.click(Selector("[data-testid='back-revoke-button']"));
+  await t.expect(Title.textContent).contains("Revoke Document");
+  await t.setFilesToUpload("input[type=file][data-testid=revoke-document-drop-zone]", [filePath]);
+
   // Revoke Document
   await t.click(Selector("[data-testid='revoke-button']"));
   await t.expect(Selector("[data-testid='modal-title']").textContent).contains("Revoke Document");

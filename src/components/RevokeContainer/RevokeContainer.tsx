@@ -7,7 +7,6 @@ import { utils } from "@govtechsg/open-attestation";
 import { RevokeConfirmationModal } from "./RevokeConfirmationModal";
 import { RevokedScreen } from "./RevokedScreen/RevokedScreen";
 import { verificationBuilder, isValid, VerificationFragment, openAttestationVerifiers } from "@govtechsg/oa-verify";
-import { Button } from "@govtechsg/tradetrust-ui-components";
 import { DocumentUploadState } from "../../constants/DocumentUploadState";
 
 const getNotRevokeFragment = (fragments: VerificationFragment[]): VerificationFragment[] =>
@@ -84,9 +83,6 @@ export const RevokeContainer: FunctionComponent = () => {
     setConfig(undefined);
   };
 
-  const shouldEnableRevokeButton = revokeDocuments.length > 0 && documentUploadState === DocumentUploadState.DONE;
-  const revokeButtonColor = shouldEnableRevokeButton ? "bg-red" : "bg-grey cursor-not-allowed";
-
   return (
     <>
       <RevokeConfirmationModal
@@ -96,26 +92,23 @@ export const RevokeContainer: FunctionComponent = () => {
       />
       {revokeStep === 1 && (
         <>
-          <RevokeDocumentDropZone
-            setRevokeDocuments={setRevokeDocuments}
-            errorMessage={errorMessage}
-            setFileName={setFileName}
-            documentUploadState={documentUploadState}
-            setDocumentUploadState={setDocumentUploadState}
-          />
-          {revokeDocuments && revokeDocuments.length > 0 && documentUploadState === DocumentUploadState.DONE && (
-            <RevokeDocumentTileArea revokeDocuments={revokeDocuments} fileName={fileName} />
+          {revokeDocuments && revokeDocuments.length > 0 && documentUploadState === DocumentUploadState.DONE ? (
+            <RevokeDocumentTileArea
+              revokeDocuments={revokeDocuments}
+              fileName={fileName}
+              onShowConfirmation={() => setShowConfirmationModal(true)}
+              documentUploadState={documentUploadState}
+              onBack={revokeAnotherDocument}
+            />
+          ) : (
+            <RevokeDocumentDropZone
+              setRevokeDocuments={setRevokeDocuments}
+              errorMessage={errorMessage}
+              setFileName={setFileName}
+              documentUploadState={documentUploadState}
+              setDocumentUploadState={setDocumentUploadState}
+            />
           )}
-          <div className="flex justify-center mt-16">
-            <Button
-              onClick={() => setShowConfirmationModal(true)}
-              data-testid="revoke-button"
-              className={`w-auto px-8 text-white mb-8 ${revokeButtonColor}`}
-              disabled={!shouldEnableRevokeButton}
-            >
-              Revoke
-            </Button>
-          </div>
         </>
       )}
       {revokeStep === 2 && (

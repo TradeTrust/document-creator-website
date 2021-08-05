@@ -59,8 +59,9 @@ export const RevokeDocumentDropZone: FunctionComponent<RevokeDocumentDropZone> =
         <input data-testid="revoke-document-drop-zone" {...getInputProps()} />
         <div className={dropZoneCSS}>
           {documentUploadState === DocumentUploadState.LOADING ? (
-            <div className="py-12" data-testid="dropzone-loader">
+            <div className="py-8 flex flex-col items-center" data-testid="dropzone-loader">
               <LoaderSpinner />
+              <div className="mt-4 text-blue">Verifying Document</div>
             </div>
           ) : (
             <>
