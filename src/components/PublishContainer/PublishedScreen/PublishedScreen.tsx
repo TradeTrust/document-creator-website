@@ -1,13 +1,11 @@
 import { Button } from "@govtechsg/tradetrust-ui-components";
-import { saveAs } from "file-saver";
-import JSZip from "jszip";
 import prettyBytes from "pretty-bytes";
 import React, { FunctionComponent } from "react";
 import { Download, XCircle } from "react-feather";
 import { useConfigContext } from "../../../common/context/config";
 import { PublishState } from "../../../constants/PublishState";
 import { FailedJobErrors, WrappedDocument } from "../../../types";
-import { generateFileName } from "../../../utils/fileName";
+import { generateFileName, generateZipFile, getFileSize } from "../../../utils";
 import { ProgressBar } from "../../ProgressBar";
 import { Wrapper } from "../../UI/Wrapper";
 import { PublishedTag } from "../PublishedScreen/PublishedTag";
@@ -28,11 +26,6 @@ export const PublishedScreen: FunctionComponent<PublishScreen> = ({
 }) => {
   const { config } = useConfigContext();
 
-  const getFileSize = (jsonString: string): number => {
-    const m = encodeURIComponent(jsonString).match(/%[89ABab]/g);
-    return jsonString.length + (m ? m.length : 0);
-  };
-
   const failPublishedDocuments = failedPublishedDocuments.map((failedJob) => failedJob.documents).flat();
 
   const formattedErrorLog = failedPublishedDocuments.map((failedJob) => {
@@ -43,42 +36,13 @@ export const PublishedScreen: FunctionComponent<PublishScreen> = ({
     };
   });
 
-  const generateZipFile = (documents: WrappedDocument[]): void => {
-    const zip = new JSZip();
-    documents.forEach((document) => {
-      const file = JSON.stringify(document.wrappedDocument, null, 2);
-      const blob = new Blob([file], { type: "text/json;charset=utf-8" });
-
-      zip.file(
-        generateFileName({
-          network: config?.network,
-          fileName: document.fileName,
-          extension: document.extension,
-        }),
-        blob
-      );
-    });
-
-    zip.generateAsync({ type: "blob" }).then((content) => {
-      saveAs(
-        content,
-        generateFileName({
-          network: config?.network,
-          fileName: "Documents",
-          extension: "zip",
-          hasTimestamp: true,
-        })
-      );
-    });
-  };
-
   return (
     <Wrapper>
-      <ProgressBar step={3} />
+      <ProgressBar step={3} totalSteps={3} title="Issue Document(s)" />
       <div className="flex justify-between items-end">
         <PublishTitle publishState={publishState} publishedDocuments={publishedDocuments} />
       </div>
-      <div className="bg-grey-100 py-6 h-screen">
+      <div className="bg-grey-100 py-6 h-full">
         {(pendingPublishDocuments.length > 0 || publishedDocuments.length > 0) && (
           <div className="container">
             <div className="border-b border-solid border-grey-200 flex items-center">
@@ -90,7 +54,7 @@ export const PublishedScreen: FunctionComponent<PublishScreen> = ({
                   className="bg-white text-blue hover:bg-grey-100 mb-4"
                   data-testid="download-all-button"
                   onClick={() => {
-                    generateZipFile(publishedDocuments);
+                    generateZipFile(publishedDocuments, config?.network);
                   }}
                 >
                   <div className="flex">

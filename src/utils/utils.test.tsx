@@ -1,4 +1,4 @@
-import { generateFileName } from "./fileName";
+import { generateFileName } from "./utils";
 
 describe("generateFileName", () => {
   it("should generate the file name correctly with the given config and file name", async () => {

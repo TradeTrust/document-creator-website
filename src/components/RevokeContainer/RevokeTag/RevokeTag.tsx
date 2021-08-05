@@ -1,14 +1,11 @@
 import { LoaderSpinner } from "@govtechsg/tradetrust-ui-components";
-import { saveAs } from "file-saver";
 import prettyBytes from "pretty-bytes";
-import React, { FunctionComponent } from "react";
-import { useConfigContext } from "../../../../common/context/config";
-import { WrappedDocument } from "../../../../types";
-import { generateFileName } from "../../../../utils";
+import { FunctionComponent } from "react";
 
-interface PublishedTagProps {
-  doc: WrappedDocument;
+interface RevokeTagProps {
+  doc: any;
   isPending: boolean;
+  fileName: string;
 }
 
 const getFileSize = (jsonString: string): number => {
@@ -16,29 +13,22 @@ const getFileSize = (jsonString: string): number => {
   return jsonString.length + (m ? m.length : 0);
 };
 
-export const PublishedTag: FunctionComponent<PublishedTagProps> = ({ doc, isPending }) => {
-  const { config } = useConfigContext();
-  const file = JSON.stringify(doc.wrappedDocument);
+export const RevokeTag: FunctionComponent<RevokeTagProps> = ({ doc, isPending, fileName }) => {
+  const file = JSON.stringify(doc);
   const size = prettyBytes(getFileSize(file));
-  const blob = new Blob([file], { type: "text/json;charset=utf-8" });
-  const fileName = generateFileName({
-    network: config?.network,
-    fileName: doc.fileName,
-    extension: doc.extension,
-  });
   return (
     <div className="mt-4 flex rounded bg-white p-3 min-w-xs max-w-xs border border-solid border-grey-200 mr-4 items-center">
       {isPending ? (
         <>
           <LoaderSpinner
             className="mr-4 flex-shrink-0"
-            data-testid="publish-loader"
+            data-testid="loader-spinner"
             width="48px"
             primary="#00cbbc"
             secondary="#e2e8f0"
           />
           <div className="w-auto">
-            <div className="font-bold text-grey">
+            <div className="font-bold text-grey" data-testid="file-name">
               {fileName}
               <span className="text-grey-400 text-xs font-regular"> ({size})</span>
             </div>
@@ -50,16 +40,9 @@ export const PublishedTag: FunctionComponent<PublishedTagProps> = ({ doc, isPend
             <div className="flex justify-center items-center h-full text-white font-bold">TT</div>
           </div>
           <div className="w-auto">
-            <div className="font-bold text-grey">
+            <div className="font-bold text-grey" data-testid="file-name">
               {fileName}
               <span className="text-grey-400 text-xs font-regular"> ({size})</span>
-            </div>
-            <div
-              className="text-blue font-bold cursor-pointer"
-              data-testid="download-file-button"
-              onClick={() => saveAs(blob, fileName)}
-            >
-              Download
             </div>
           </div>
         </>

@@ -3,7 +3,7 @@ import React, { FunctionComponent } from "react";
 import { Download, XCircle } from "react-feather";
 import { useConfigContext } from "../../../common/context/config";
 import { useFormsContext } from "../../../common/context/forms";
-import { generateFileName } from "../../../utils/fileName";
+import { generateFileName } from "../../../utils";
 import { ProgressBar } from "../../ProgressBar";
 import { Title } from "../../UI/Title";
 import { Wrapper } from "../../UI/Wrapper";
@@ -24,7 +24,7 @@ export const PublishErrorScreen: FunctionComponent<PublishErrorScreen> = ({ erro
 
   return (
     <Wrapper>
-      <ProgressBar step={3} />
+      <ProgressBar step={3} totalSteps={3} title="Issue Document(s)" />
       <div className="flex justify-between items-end">
         <Title className="flex items-center mb-8">
           <XCircle className="mr-2 text-red" />
