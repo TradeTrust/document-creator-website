@@ -1,5 +1,5 @@
 import { Wallet, getDefaultProvider, providers } from "ethers";
-import { ConfigFile, ConnectedSigner } from "../../types";
+import { AwsKmsAlgorithmType, AwsKmwSignerOption, ConfigFile, ConnectedSigner } from "../../types";
 import { RelayProvider } from "@opengsn/gsn";
 import { getGSNRelayConfig, getHttpProviderUri } from "../../config";
 import Web3HttpProvider from "web3-providers-http";
@@ -70,22 +70,31 @@ export const decryptWalletOrSigner = async (
     const connectedWallet = await decryptedWallet.connect(provider);
     return connectedWallet;
   } else {
-    const kmsCredentials = {
-      accessKeyId: config.wallet.accessKeyId, // credentials for your IAM user with KMS access
-      secretAccessKey: password, // credentials for your IAM user with KMS access
-      region: config.wallet.region,
-      keyId: config.wallet.kmsKeyId,
-    };
-
-    const signer = new AwsKmsSigner(kmsCredentials).connect(provider);
-    try {
-      const connectedSigner = signer as ConnectedSigner;
-      if (await connectedSigner.getAddress()) {
-        return connectedSigner;
-      }
-      throw new Error("Unable to attach the provider to the kms signer");
-    } catch (e) {
-      throw new Error("Unable to attach the provider to the kms signer");
+    switch (config.wallet.type) {
+      case "ECC_SECG_P256K1":
+        return await decryptECGSECGP256K1(config.wallet, password, provider);
+      default:
+        throw new Error("AWS KMS type not supported.");
     }
+  }
+};
+
+const decryptECGSECGP256K1 = async (wallet: AwsKmwSignerOption, password: string, provider: providers.BaseProvider) => {
+  const kmsCredentials = {
+    accessKeyId: wallet.accessKeyId, // credentials for your IAM user with KMS access
+    secretAccessKey: password, // credentials for your IAM user with KMS access
+    region: wallet.region,
+    keyId: wallet.kmsKeyId,
+  };
+
+  const signer = new AwsKmsSigner(kmsCredentials).connect(provider);
+  try {
+    const connectedSigner = signer as ConnectedSigner;
+    if (await connectedSigner.getAddress()) {
+      return connectedSigner;
+    }
+    throw new Error("Unable to attach the provider to the kms signer");
+  } catch (e) {
+    throw new Error("Unable to attach the provider to the kms signer");
   }
 };

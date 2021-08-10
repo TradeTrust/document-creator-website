@@ -6,6 +6,7 @@ const configFileSchema = Joi.object({
   wallet: Joi.alternatives(
     Joi.string().required(),
     Joi.object().keys({
+      type: Joi.string().valid("ECC_SECG_P256K1").required,
       accessKeyId: Joi.string().required(),
       region: Joi.string().required(),
       kmsKeyId: Joi.string().required(),

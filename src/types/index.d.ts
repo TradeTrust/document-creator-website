@@ -3,6 +3,7 @@ import { Provider } from "@ethersproject/abstract-provider";
 
 type Network = "homestead" | "ropsten" | "rinkeby" | "local";
 type FormType = "TRANSFERABLE_RECORD" | "VERIFIABLE_DOCUMENT";
+type AwsKmsAlgorithmType = "ECC_SECG_P256K1";
 
 // FormTemplate is defined in configuration file
 export interface FormTemplate {
@@ -23,6 +24,7 @@ export interface DocumentStorage {
 }
 
 export type AwsKmwSignerOption = {
+  type: AwsKmsAlgorithmType;
   accessKeyId: string;
   region: string;
   kmsKeyId: string;

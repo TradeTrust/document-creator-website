@@ -1,9 +1,10 @@
 {
   "network": "ropsten",
   "wallet": {
-    "accessKeyId": "<access key id>",
-    "region": "<region>",
-    "kmsKeyId": "<kms key id>"
+    "type": "ECC_SECG_P256K1",
+    "accessKeyId": "AKIAXTJ7ZOXXNOKYUSUU",
+    "region": "ap-southeast-1",
+    "kmsKeyId": "arn:aws:kms:ap-southeast-1:522509186542:key/237caa94-84d2-4f7d-9403-a119a82f54e2"
   },
   "forms": [
     {
@@ -18,10 +19,10 @@
         "issuers": [
           {
             "name": "Demo Issuer",
-            "documentStore": "0x6e80FD3dD1151607Ce15B98eE1e3DDd4E4DdF0B6",
+            "documentStore": "0xAa2BaF74bD975526025Ae5EfAF08798Dd2856107",
             "identityProof": {
               "type": "DNS-TXT",
-              "location": "example.openattestation.com"
+              "location": "siachenren.mywork.business"
             }
           }
         ],
@@ -442,10 +443,10 @@
           {
             "identityProof": {
               "type": "DNS-TXT",
-              "location": "example.tradetrust.io"
+              "location": "siachenren.mywork.business"
             },
             "name": "DEMO TOKEN REGISTRY",
-            "tokenRegistry": "0x039F02729e64fa77128C334F3685AFbd1f22DB96"
+            "tokenRegistry": "0x8a09d9860C7259009242b66F42849f137b5ab209"
           }
         ]
       },
@@ -562,10 +563,10 @@
         "issuers": [
           {
             "name": "Demo Issuer",
-            "documentStore": "0x6e80FD3dD1151607Ce15B98eE1e3DDd4E4DdF0B6",
+            "documentStore": "0xAa2BaF74bD975526025Ae5EfAF08798Dd2856107",
             "identityProof": {
               "type": "DNS-TXT",
-              "location": "example.openattestation.com"
+              "location": "siachenren.mywork.business"
             }
           }
         ],
@@ -609,10 +610,10 @@
         "issuers": [
           {
             "name": "Demo Issuer",
-            "documentStore": "0x6e80FD3dD1151607Ce15B98eE1e3DDd4E4DdF0B6",
+            "documentStore": "0xAa2BaF74bD975526025Ae5EfAF08798Dd2856107",
             "identityProof": {
               "type": "DNS-TXT",
-              "location": "example.openattestation.comm"
+              "location": "siachenren.mywork.business"
             }
           }
         ],
