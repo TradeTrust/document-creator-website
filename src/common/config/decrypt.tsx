@@ -1,5 +1,5 @@
 import { Wallet, getDefaultProvider, providers } from "ethers";
-import { AwsKmsAlgorithmType, AwsKmwSignerOption, ConfigFile, ConnectedSigner } from "../../types";
+import { AwsKmwSignerOption, ConfigFile, ConnectedSigner } from "../../types";
 import { RelayProvider } from "@opengsn/gsn";
 import { getGSNRelayConfig, getHttpProviderUri } from "../../config";
 import Web3HttpProvider from "web3-providers-http";
