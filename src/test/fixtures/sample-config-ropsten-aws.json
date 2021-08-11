@@ -19,10 +19,10 @@
         "issuers": [
           {
             "name": "Demo Issuer",
-            "documentStore": "0x8bA63EAB43342AAc3AdBB4B827b68Cf4aAE5Caca",
+            "documentStore": "0x6e80FD3dD1151607Ce15B98eE1e3DDd4E4DdF0B6",
             "identityProof": {
               "type": "DNS-TXT",
-              "location": "demo-tradetrust.openattestation.com"
+              "location": "example.openattestation.com"
             }
           }
         ],
@@ -443,10 +443,10 @@
           {
             "identityProof": {
               "type": "DNS-TXT",
-              "location": "demo-tradetrust.openattestation.com"
+              "location": "example.tradetrust.io"
             },
             "name": "DEMO TOKEN REGISTRY",
-            "tokenRegistry": "0x72d9a82203Ef9177239A5E3cB7A8FB9a78D04f17"
+            "tokenRegistry": "0x039F02729e64fa77128C334F3685AFbd1f22DB96"
           }
         ]
       },
@@ -549,8 +549,7 @@
         "allow": true,
         "accept": ".pdf, .json"
       },
-      "extension": "tt",
-      "fileName": "bill-<%= blNumber %>"
+      "extension": "tt"
     },
     {
       "name": "Covering Letter (GT)",
@@ -564,10 +563,10 @@
         "issuers": [
           {
             "name": "Demo Issuer",
-            "documentStore": "0x8bA63EAB43342AAc3AdBB4B827b68Cf4aAE5Caca",
+            "documentStore": "0x6e80FD3dD1151607Ce15B98eE1e3DDd4E4DdF0B6",
             "identityProof": {
               "type": "DNS-TXT",
-              "location": "demo-tradetrust.openattestation.com"
+              "location": "example.openattestation.com"
             }
           }
         ],
@@ -664,10 +663,10 @@
         "issuers": [
           {
             "name": "Demo Issuer",
-            "documentStore": "0x8bA63EAB43342AAc3AdBB4B827b68Cf4aAE5Caca",
+            "documentStore": "0x6e80FD3dD1151607Ce15B98eE1e3DDd4E4DdF0B6",
             "identityProof": {
               "type": "DNS-TXT",
-              "location": "demo-tradetrust.openattestation.com"
+              "location": "example.openattestation.com"
             }
           }
         ],
