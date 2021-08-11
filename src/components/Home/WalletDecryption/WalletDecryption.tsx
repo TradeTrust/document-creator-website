@@ -40,7 +40,7 @@ export const WalletDecryption: FunctionComponent<WalletDecryption> = ({
         <div className="text-grey-800 mr-4 mb-4 font-bold text-lg" data-testid="login-title">
           Login
         </div>
-        {configFile && requirePassword(configFile.wallet) ? (
+        {requirePassword(configFile?.wallet) ? (
           <input
             data-testid="password-field"
             placeholder="Enter password"
@@ -74,7 +74,7 @@ export const WalletDecryption: FunctionComponent<WalletDecryption> = ({
         <div data-testid="reset-button" className="text-blue font-bold mt-4 cursor-pointer" onClick={onResetConfigFile}>
           Upload new Config file
         </div>
-        {configFile && requirePassword(configFile.wallet) && (
+        {requirePassword(configFile?.wallet) && (
           <div className="ml-auto w-auto">
             <Button
               data-testid="login-button"
