@@ -3,7 +3,6 @@ import { Provider } from "@ethersproject/abstract-provider";
 
 type Network = "homestead" | "ropsten" | "rinkeby" | "local";
 type FormType = "TRANSFERABLE_RECORD" | "VERIFIABLE_DOCUMENT";
-type AwsKmsAlgorithmType = "ECC_SECG_P256K1";
 
 // FormTemplate is defined in configuration file
 export interface FormTemplate {
@@ -24,15 +23,32 @@ export interface DocumentStorage {
 }
 
 export type AwsKmwSignerOption = {
-  type: AwsKmsAlgorithmType;
+  type: "AWS-KMS";
   accessKeyId: string;
   region: string;
   kmsKeyId: string;
 };
 
+export type EncryptedJsonOption = {
+  type: "ENCRYPTED-JSON";
+  encryptedJson: string;
+};
+
+export type MnemonicOption = {
+  type: "MNEMONIC";
+  mnemonic: string;
+};
+
+export type PrivateKeyOption = {
+  type: "PRIVATE-KEY";
+  privateKey: string;
+};
+
+export type WalletOptions = AwsKmwSignerOption | EncryptedJsonOption | MnemonicOption | PrivateKeyOption;
+
 export interface ConfigFile {
   network: Network;
-  wallet: string | AwsKmwSignerOption;
+  wallet: string | WalletOptions;
   forms: FormTemplate[];
   documentStorage?: DocumentStorage;
 }
