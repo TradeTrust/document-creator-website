@@ -34,6 +34,7 @@ export const WalletDecryptionContainer: FunctionComponent = () => {
 
   return (
     <WalletDecryption
+      configFile={configFile}
       decryptProgress={decryptProgress}
       isIncorrectPassword={isIncorrectPassword}
       onDecryptConfigFile={onDecryptConfigFile}

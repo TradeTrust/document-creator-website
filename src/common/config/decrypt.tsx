@@ -64,22 +64,33 @@ export const decryptWalletOrSigner = async (
   progressCallback: (progress: number) => void
 ): Promise<Wallet | ConnectedSigner> => {
   const provider = config.network === "local" ? new providers.JsonRpcProvider() : getDefaultProvider(config.network);
-
   if (isWalletOption(config.wallet)) {
     const decryptedWallet = await Wallet.fromEncryptedJson(config.wallet, password, progressCallback);
     const connectedWallet = await decryptedWallet.connect(provider);
     return connectedWallet;
   } else {
     switch (config.wallet.type) {
-      case "ECC_SECG_P256K1":
-        return await decryptECGSECGP256K1(config.wallet, password, provider);
+      case "ENCRYPTED-JSON":
+        return (await Wallet.fromEncryptedJson(config.wallet.encryptedJson, password, progressCallback)).connect(
+          provider
+        );
+
+      case "MNEMONIC":
+        return Wallet.fromMnemonic(config.wallet.mnemonic).connect(provider);
+
+      case "PRIVATE-KEY":
+        return new Wallet(config.wallet.privateKey, provider);
+
+      case "AWS-KMS":
+        return decryptAWSKMS(config.wallet, password, provider);
+
       default:
-        throw new Error("AWS KMS type not supported.");
+        throw new Error("Wallet type not supported.");
     }
   }
 };
 
-const decryptECGSECGP256K1 = async (wallet: AwsKmwSignerOption, password: string, provider: providers.BaseProvider) => {
+const decryptAWSKMS = async (wallet: AwsKmwSignerOption, password: string, provider: providers.BaseProvider) => {
   const kmsCredentials = {
     accessKeyId: wallet.accessKeyId, // credentials for your IAM user with KMS access
     secretAccessKey: password, // credentials for your IAM user with KMS access

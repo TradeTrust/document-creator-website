@@ -84,3 +84,14 @@ export const downloadJsonDataFile = (jsonTemplate: any): void => {
 export const isWalletOption = (option: any): option is string => {
   return typeof option === "string";
 };
+
+// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
+export const requirePassword = (walletOption: any): boolean => {
+  if (isWalletOption(walletOption)) {
+    return true;
+  } else if (walletOption.type == "MNEMONIC" || walletOption.type == "PRIVATE-KEY") {
+    return false;
+  } else {
+    return true;
+  }
+};

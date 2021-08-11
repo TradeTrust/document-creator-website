@@ -1,10 +1,10 @@
 {
   "network": "ropsten",
   "wallet": {
-    "type": "ECC_SECG_P256K1",
-    "accessKeyId": "AKIAXTJ7ZOXXNOKYUSUU",
-    "region": "ap-southeast-1",
-    "kmsKeyId": "arn:aws:kms:ap-southeast-1:522509186542:key/237caa94-84d2-4f7d-9403-a119a82f54e2"
+    "type": "AWS_KMS",
+    "accessKeyId": "<access key id>",
+    "region": "<region>",
+    "kmsKeyId": "<kms key id>"
   },
   "forms": [
     {
@@ -19,10 +19,10 @@
         "issuers": [
           {
             "name": "Demo Issuer",
-            "documentStore": "0xAa2BaF74bD975526025Ae5EfAF08798Dd2856107",
+            "documentStore": "0x8bA63EAB43342AAc3AdBB4B827b68Cf4aAE5Caca",
             "identityProof": {
               "type": "DNS-TXT",
-              "location": "siachenren.mywork.business"
+              "location": "demo-tradetrust.openattestation.com"
             }
           }
         ],
@@ -443,10 +443,10 @@
           {
             "identityProof": {
               "type": "DNS-TXT",
-              "location": "siachenren.mywork.business"
+              "location": "demo-tradetrust.openattestation.com"
             },
             "name": "DEMO TOKEN REGISTRY",
-            "tokenRegistry": "0x8a09d9860C7259009242b66F42849f137b5ab209"
+            "tokenRegistry": "0x72d9a82203Ef9177239A5E3cB7A8FB9a78D04f17"
           }
         ]
       },
@@ -549,7 +549,8 @@
         "allow": true,
         "accept": ".pdf, .json"
       },
-      "extension": "tt"
+      "extension": "tt",
+      "fileName": "bill-<%= blNumber %>"
     },
     {
       "name": "Covering Letter (GT)",
@@ -563,10 +564,10 @@
         "issuers": [
           {
             "name": "Demo Issuer",
-            "documentStore": "0xAa2BaF74bD975526025Ae5EfAF08798Dd2856107",
+            "documentStore": "0x8bA63EAB43342AAc3AdBB4B827b68Cf4aAE5Caca",
             "identityProof": {
               "type": "DNS-TXT",
-              "location": "siachenren.mywork.business"
+              "location": "demo-tradetrust.openattestation.com"
             }
           }
         ],
@@ -599,6 +600,59 @@
       "extension": "tt"
     },
     {
+      "name": "Covering Letter (DNS-DID)",
+      "type": "VERIFIABLE_DOCUMENT",
+      "defaults": {
+        "$template": {
+          "type": "EMBEDDED_RENDERER",
+          "name": "COVERING_LETTER",
+          "url": "https://generic-templates.tradetrust.io"
+        },
+        "issuers": [
+          {
+            "id": "did:ethr:0x1245e5b64d785b25057f7438f715f4aa5d965733",
+            "name": "Demo Issuer",
+            "revocation": {
+              "type": "NONE"
+            },
+            "identityProof": {
+              "type": "DNS-DID",
+              "key": "did:ethr:0x1245e5b64d785b25057f7438f715f4aa5d965733#controller",
+              "location": "demo-tradetrust.openattestation.com"
+            }
+          }
+        ],
+        "name": "Covering Letter",
+        "logo": "https://pluspng.com/img-png/logo-dbs-png-file-dbs-bank-logo-svg-1280.png",
+        "backgroundColor": "black",
+        "titleColor": "white",
+        "remarksColor": "white",
+        "title": "Documents Bundle",
+        "remarks": "Some very important documents in here for some submission"
+      },
+      "schema": {
+        "type": "object",
+        "properties": {
+          "title": {
+            "type": "string",
+            "title": "Document Title"
+          },
+          "remarks": {
+            "type": "string",
+            "title": "Remarks"
+          }
+        }
+      },
+      "attachments": {
+        "allow": true
+      },
+      "uiSchema": {
+        "remarks": {
+          "ui:widget": "textarea"
+        }
+      }
+    },
+    {
       "name": "Invoice (IMDA)",
       "type": "VERIFIABLE_DOCUMENT",
       "defaults": {
@@ -610,10 +664,10 @@
         "issuers": [
           {
             "name": "Demo Issuer",
-            "documentStore": "0xAa2BaF74bD975526025Ae5EfAF08798Dd2856107",
+            "documentStore": "0x8bA63EAB43342AAc3AdBB4B827b68Cf4aAE5Caca",
             "identityProof": {
               "type": "DNS-TXT",
-              "location": "siachenren.mywork.business"
+              "location": "demo-tradetrust.openattestation.com"
             }
           }
         ],

@@ -1,10 +1,13 @@
 import { Button } from "@govtechsg/tradetrust-ui-components";
 import React, { FunctionComponent, useState } from "react";
+import { requirePassword } from "../../../common/utils";
+import { ConfigFile } from "../../../types";
 import { BarTrack } from "../../ProgressBar";
 import { Title } from "../../UI/Title";
 import { Wrapper } from "../../UI/Wrapper";
 
 interface WalletDecryption {
+  configFile?: ConfigFile;
   decryptProgress: number;
   onDecryptConfigFile: (password: string) => void;
   onResetConfigFile: () => void;
@@ -12,6 +15,7 @@ interface WalletDecryption {
 }
 
 export const WalletDecryption: FunctionComponent<WalletDecryption> = ({
+  configFile,
   decryptProgress,
   isIncorrectPassword,
   onDecryptConfigFile,
@@ -36,20 +40,32 @@ export const WalletDecryption: FunctionComponent<WalletDecryption> = ({
         <div className="text-grey-800 mr-4 mb-4 font-bold text-lg" data-testid="login-title">
           Login
         </div>
-        <input
-          data-testid="password-field"
-          placeholder="Enter password"
-          className={`
+        {configFile && requirePassword(configFile.wallet) ? (
+          <input
+            data-testid="password-field"
+            placeholder="Enter password"
+            className={`
               ${inputBorderCSS}
               ${isDecrypting && "bg-grey-300"}
               ${!password && "italic"}
             `}
-          type="password"
-          value={password}
-          onChange={(evt) => setPassword(evt.target.value)}
-          disabled={isDecrypting}
-          autoComplete="off"
-        />
+            type="password"
+            value={password}
+            onChange={(evt) => setPassword(evt.target.value)}
+            disabled={isDecrypting}
+            autoComplete="off"
+          />
+        ) : (
+          <Button
+            data-testid="login-button"
+            className="bg-orange text-white hover:bg-orange-600"
+            onClick={onLogin}
+            disabled={isDecrypting}
+          >
+            Login Wallet
+          </Button>
+        )}
+
         {isIncorrectPassword && (
           <div data-testid="password-field-msg" className="text-red text-sm mt-2">
             Invalid password. Please try again.
@@ -58,16 +74,18 @@ export const WalletDecryption: FunctionComponent<WalletDecryption> = ({
         <div data-testid="reset-button" className="text-blue font-bold mt-4 cursor-pointer" onClick={onResetConfigFile}>
           Upload new Config file
         </div>
-        <div className="ml-auto w-auto">
-          <Button
-            data-testid="login-button"
-            className="bg-orange text-white hover:bg-orange-600 mt-4"
-            onClick={onLogin}
-            disabled={isDecrypting}
-          >
-            Login
-          </Button>
-        </div>
+        {configFile && requirePassword(configFile.wallet) && (
+          <div className="ml-auto w-auto">
+            <Button
+              data-testid="login-button"
+              className="bg-orange text-white hover:bg-orange-600 mt-4"
+              onClick={onLogin}
+              disabled={isDecrypting}
+            >
+              Login
+            </Button>
+          </div>
+        )}
       </form>
     </Wrapper>
   );
