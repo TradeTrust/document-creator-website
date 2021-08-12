@@ -34,17 +34,7 @@ export type EncryptedJsonOption = {
   encryptedJson: string;
 };
 
-export type MnemonicOption = {
-  type: "MNEMONIC";
-  mnemonic: string;
-};
-
-export type PrivateKeyOption = {
-  type: "PRIVATE-KEY";
-  privateKey: string;
-};
-
-export type WalletOptions = AwsKmwSignerOption | EncryptedJsonOption | MnemonicOption | PrivateKeyOption;
+export type WalletOptions = AwsKmwSignerOption | EncryptedJsonOption;
 
 export interface ConfigFile {
   network: Network;

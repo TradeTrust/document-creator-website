@@ -74,16 +74,8 @@ export const decryptWalletOrSigner = async (
         return (await Wallet.fromEncryptedJson(config.wallet.encryptedJson, password, progressCallback)).connect(
           provider
         );
-
-      case "MNEMONIC":
-        return Wallet.fromMnemonic(config.wallet.mnemonic).connect(provider);
-
-      case "PRIVATE-KEY":
-        return new Wallet(config.wallet.privateKey, provider);
-
       case "AWS-KMS":
         return decryptAWSKMS(config.wallet, password, provider);
-
       default:
         throw new Error("Wallet type not supported.");
     }

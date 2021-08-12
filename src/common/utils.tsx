@@ -84,14 +84,3 @@ export const downloadJsonDataFile = (jsonTemplate: any): void => {
 export const isWalletOption = (option: string | WalletOptions): option is string => {
   return typeof option === "string";
 };
-
-export const requirePassword = (walletOption: string | WalletOptions | undefined): boolean => {
-  if (!walletOption) return true;
-  if (isWalletOption(walletOption)) {
-    return true;
-  } else if (walletOption.type == "MNEMONIC" || walletOption.type == "PRIVATE-KEY") {
-    return false;
-  } else {
-    return true;
-  }
-};
