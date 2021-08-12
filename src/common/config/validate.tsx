@@ -14,14 +14,6 @@ const configFileSchema = Joi.object({
     Joi.object().keys({
       type: Joi.string().valid("ENCRYPTED-JSON").required(),
       encryptedJson: Joi.string().required(),
-    }),
-    Joi.object().keys({
-      type: Joi.string().valid("MNEMONIC").required(),
-      mnemonic: Joi.string().required(),
-    }),
-    Joi.object().keys({
-      type: Joi.string().valid("PRIVATE-KEY").required(),
-      privateKey: Joi.string().required(),
     })
   ).required(),
   forms: Joi.array()
