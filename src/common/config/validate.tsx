@@ -12,7 +12,7 @@ const configFileSchema = Joi.object({
       kmsKeyId: Joi.string().required(),
     }),
     Joi.object().keys({
-      type: Joi.string().valid("ENCRYPTED-JSON").required(),
+      type: Joi.string().allow("ENCRYPTED-JSON").required(),
       encryptedJson: Joi.string().required(),
     })
   ).required(),
