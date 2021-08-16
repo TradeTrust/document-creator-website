@@ -6,16 +6,11 @@ import { RevokeDocumentTileArea } from "./RevokeDocumentTileArea/RevokeDocumentT
 import { utils } from "@govtechsg/open-attestation";
 import { RevokeConfirmationModal } from "./RevokeConfirmationModal";
 import { RevokedScreen } from "./RevokedScreen/RevokedScreen";
-import { verificationBuilder, isValid, VerificationFragment, openAttestationVerifiers } from "@govtechsg/oa-verify";
+import { verificationBuilder, isValid, openAttestationVerifiers } from "@govtechsg/oa-verify";
 import { DocumentUploadState } from "../../constants/DocumentUploadState";
 
-const getNotRevokeFragment = (fragments: VerificationFragment[]): VerificationFragment[] =>
-  fragments.filter(
-    (status) => status.name !== "OpenAttestationEthereumDocumentStoreRevoked" && status.status !== "SKIPPED"
-  );
-
 export const RevokeContainer: FunctionComponent = () => {
-  const { config, setConfig } = useConfigContext();
+  const { config } = useConfigContext();
   const [revokeDocuments, setRevokeDocuments] = useState([]);
   const [fileName, setFileName] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
@@ -29,25 +24,21 @@ export const RevokeContainer: FunctionComponent = () => {
 
       const validateDocument = async () => {
         const network = config?.network || "homestead";
+        let isDocumentValid = true;
+
         if (network !== "local") {
           const verify = verificationBuilder(openAttestationVerifiers, { network: network });
           const fragments = await verify(revokeDocuments[0]);
-          const notRevokeFragments = getNotRevokeFragment(fragments);
-          const hashValid = isValid(fragments, ["DOCUMENT_INTEGRITY"]);
-          const issuedValid = isValid(notRevokeFragments, ["DOCUMENT_STATUS"]);
-          const identityValid = isValid(fragments, ["ISSUER_IDENTITY"]);
-          const isDocumentValid = hashValid && issuedValid && identityValid;
+          isDocumentValid = isValid(fragments);
+        }
 
-          if (!isDocumentValid) {
-            setErrorMessage("Error: Document is not valid, please use a valid document.");
-            setRevokeDocuments([]);
-            setDocumentUploadState(DocumentUploadState.ERROR);
-          } else {
-            setErrorMessage("");
-            setDocumentUploadState(DocumentUploadState.DONE);
-          }
+        if (!isDocumentValid) {
+          setErrorMessage("Error: Document is not valid, please use a valid document.");
+          setRevokeDocuments([]);
+          setDocumentUploadState(DocumentUploadState.ERROR);
         } else {
           setErrorMessage("");
+          setRevokeStep(2);
           setDocumentUploadState(DocumentUploadState.DONE);
         }
       };
@@ -67,7 +58,7 @@ export const RevokeContainer: FunctionComponent = () => {
   }
 
   const revokingDocument = () => {
-    setRevokeStep(2);
+    setRevokeStep(3);
     setShowConfirmationModal(false);
   };
   const revokeAnotherDocument = () => {
@@ -76,11 +67,7 @@ export const RevokeContainer: FunctionComponent = () => {
     setFileName("");
     setErrorMessage("");
     setShowConfirmationModal(false);
-  };
-
-  const onLogout = () => {
-    revokeAnotherDocument();
-    setConfig(undefined);
+    setDocumentUploadState(DocumentUploadState.INITIALIZED);
   };
 
   return (
@@ -91,32 +78,28 @@ export const RevokeContainer: FunctionComponent = () => {
         closeRevokeConfirmationModal={() => setShowConfirmationModal(false)}
       />
       {revokeStep === 1 && (
-        <>
-          {revokeDocuments && revokeDocuments.length > 0 && documentUploadState === DocumentUploadState.DONE ? (
-            <RevokeDocumentTileArea
-              revokeDocuments={revokeDocuments}
-              fileName={fileName}
-              onShowConfirmation={() => setShowConfirmationModal(true)}
-              documentUploadState={documentUploadState}
-              onBack={revokeAnotherDocument}
-            />
-          ) : (
-            <RevokeDocumentDropZone
-              setRevokeDocuments={setRevokeDocuments}
-              errorMessage={errorMessage}
-              setFileName={setFileName}
-              documentUploadState={documentUploadState}
-              setDocumentUploadState={setDocumentUploadState}
-            />
-          )}
-        </>
+        <RevokeDocumentDropZone
+          setRevokeDocuments={setRevokeDocuments}
+          errorMessage={errorMessage}
+          setFileName={setFileName}
+          documentUploadState={documentUploadState}
+          setDocumentUploadState={setDocumentUploadState}
+        />
       )}
       {revokeStep === 2 && (
+        <RevokeDocumentTileArea
+          revokeDocuments={revokeDocuments}
+          fileName={fileName}
+          onShowConfirmation={() => setShowConfirmationModal(true)}
+          documentUploadState={documentUploadState}
+          onBack={revokeAnotherDocument}
+        />
+      )}
+      {revokeStep === 3 && (
         <RevokedScreen
           config={config}
           revokeDocuments={revokeDocuments}
           revokeAnotherDocument={revokeAnotherDocument}
-          onLogout={onLogout}
           fileName={fileName}
         />
       )}

@@ -6,7 +6,7 @@ import { getLogger } from "../../../utils/logger";
 import { Title } from "../../UI/Title";
 import { Wrapper } from "../../UI/Wrapper";
 import { ProgressBar } from "../../ProgressBar";
-import { ChooseIssueOrRevoke } from "../../ChooseIssueOrRevoke";
+import { IssueOrRevokeSelector } from "../../UI/IssueOrRevokeSelector";
 import { DocumentUploadState } from "../../../constants/DocumentUploadState";
 
 const { stack } = getLogger("RevokeDocumentDropZone");
@@ -39,7 +39,7 @@ export const RevokeDocumentDropZone: FunctionComponent<RevokeDocumentDropZone> =
     }
   };
 
-  const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop });
+  const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop, maxFiles: 1 });
 
   const dropZoneCSS =
     errorMessage || documentUploadState === DocumentUploadState.ERROR
@@ -52,35 +52,37 @@ export const RevokeDocumentDropZone: FunctionComponent<RevokeDocumentDropZone> =
 
   return (
     <Wrapper isMaxW={true}>
-      <ChooseIssueOrRevoke />
-      <ProgressBar step={1} totalSteps={2} title="Upload Document" />
+      <IssueOrRevokeSelector />
+      <ProgressBar step={1} totalSteps={3} title="Upload Document" />
       <Title className="mb-8">Revoke Document</Title>
       <div {...getRootProps()} data-testid="revoke-dropzone">
         <input data-testid="revoke-document-drop-zone" {...getInputProps()} />
         <div className={dropZoneCSS}>
-          {documentUploadState === DocumentUploadState.LOADING ? (
+          {documentUploadState === DocumentUploadState.LOADING && (
             <div className="py-8 flex flex-col items-center" data-testid="dropzone-loader">
               <LoaderSpinner />
               <div className="mt-4 text-blue">Verifying Document</div>
             </div>
-          ) : (
-            <>
-              {documentUploadState === DocumentUploadState.ERROR && (
-                <div className="max-w-lg text-red font-bold text-lg" data-testid="error-message">
-                  {errorMessage ? errorMessage : "Error: File cannot be read"}
-                </div>
-              )}
-              {!errorMessage && documentUploadState !== DocumentUploadState.ERROR && (
+          )}
+          <>
+            {documentUploadState === DocumentUploadState.ERROR && (
+              <div className="max-w-lg text-red font-bold text-lg" data-testid="error-message">
+                <p>{errorMessage ? errorMessage : "Error: File cannot be read"}</p>
+                <p className="text-base text-grey-800 my-4 font-normal">Please try again</p>
+              </div>
+            )}
+            {documentUploadState === DocumentUploadState.INITIALIZED && (
+              <>
                 <div className="font-bold text-lg text-grey-800" data-testid="dropzone-description">
                   Drag and drop file here
                 </div>
-              )}
-              <div className="text-base text-grey-800 my-4">
-                {documentUploadState === DocumentUploadState.ERROR ? "Please try again." : "or"}
-              </div>
+                <div className="text-base text-grey-800 my-4">or</div>
+              </>
+            )}
+            {documentUploadState !== DocumentUploadState.LOADING && (
               <Button className="bg-white text-orange hover:text-orange-600 border-grey-300 px-12">Browse Files</Button>
-            </>
-          )}
+            )}
+          </>
         </div>
       </div>
     </Wrapper>

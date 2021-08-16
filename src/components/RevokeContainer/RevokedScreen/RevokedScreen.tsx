@@ -15,7 +15,6 @@ interface RevokeScreenProps {
   config: Config;
   revokeDocuments: any[];
   revokeAnotherDocument: () => void;
-  onLogout: () => void;
   fileName: string;
 }
 
@@ -23,7 +22,6 @@ export const RevokedScreen: FunctionComponent<RevokeScreenProps> = ({
   config,
   revokeDocuments,
   revokeAnotherDocument,
-  onLogout,
   fileName,
 }) => {
   const { revoke, revokeState, revokedDocuments, failedRevokedDocuments, pendingRevokeDocuments } = useRevokeQueue(
@@ -79,28 +77,19 @@ export const RevokedScreen: FunctionComponent<RevokeScreenProps> = ({
 
   return (
     <Wrapper>
-      <ProgressBar step={2} totalSteps={2} title="Revoked Document" />
+      <ProgressBar step={3} totalSteps={3} title="Revoked Document" />
       <div className="flex justify-between items-end" data-testid="revoke-screen">
         <Title className="flex items-center mb-8" data-testid="title">
           {getDisplayTitle()}
         </Title>
         {revokeState === RevokeState.CONFIRMED && (
-          <div>
-            <Button
-              className="bg-white text-orange hover:bg-grey-100 mb-6 mr-4"
-              data-testid="revoke-another-button"
-              onClick={revokeAnotherDocument}
-            >
-              Revoke another document
-            </Button>
-            <Button
-              className="bg-orange text-white hover:bg-orange-600 mb-6"
-              data-testid="logout-button"
-              onClick={onLogout}
-            >
-              Logout
-            </Button>
-          </div>
+          <Button
+            className="bg-white text-orange hover:bg-grey-100 mb-6 mr-4"
+            data-testid="revoke-another-button"
+            onClick={revokeAnotherDocument}
+          >
+            Revoke another document
+          </Button>
         )}
       </div>
       <div className="bg-grey-100 py-6 h-full">

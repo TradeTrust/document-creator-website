@@ -31,7 +31,6 @@ describe("RevokedScreen", () => {
         config={config}
         revokeDocuments={[sampleRevokableDocument]}
         revokeAnotherDocument={() => {}}
-        onLogout={() => {}}
         fileName="doc-1.tt"
       />
     );
@@ -50,7 +49,6 @@ describe("RevokedScreen", () => {
         config={config}
         revokeDocuments={[sampleRevokableDocument]}
         revokeAnotherDocument={() => {}}
-        onLogout={() => {}}
         fileName="doc-1.tt"
       />
     );
@@ -69,7 +67,6 @@ describe("RevokedScreen", () => {
         config={config}
         revokeDocuments={[sampleRevokableDocument]}
         revokeAnotherDocument={() => {}}
-        onLogout={() => {}}
         fileName="doc-1.tt"
       />
     );
@@ -88,14 +85,13 @@ describe("RevokedScreen", () => {
         config={config}
         revokeDocuments={[sampleRevokableDocument]}
         revokeAnotherDocument={() => {}}
-        onLogout={() => {}}
         fileName="doc-1.tt"
       />
     );
     expect(screen.queryByTestId("title")?.textContent).toStrictEqual("Document(s) failed to revoke");
   });
 
-  it("should render logout and revoke another document button when revoke state is CONFIRMED", () => {
+  it("should render revoke another document button when revoke state is CONFIRMED", () => {
     mockUseRevokeQueue.mockReturnValue({
       revoke: mockRevoke,
       revokeState: RevokeState.CONFIRMED,
@@ -108,12 +104,10 @@ describe("RevokedScreen", () => {
         config={config}
         revokeDocuments={[sampleRevokableDocument]}
         revokeAnotherDocument={() => {}}
-        onLogout={() => {}}
         fileName="doc-1.tt"
       />
     );
     expect(screen.queryAllByTestId("revoke-another-button")).toHaveLength(1);
-    expect(screen.queryAllByTestId("logout-button")).toHaveLength(1);
   });
 
   it("should display revokedDocument correctly for pendingRevokeDocuments and revokedDocuments", () => {
@@ -129,7 +123,6 @@ describe("RevokedScreen", () => {
         config={config}
         revokeDocuments={[sampleRevokableDocument]}
         revokeAnotherDocument={() => {}}
-        onLogout={() => {}}
         fileName="doc-1.tt"
       />
     );
@@ -151,34 +144,12 @@ describe("RevokedScreen", () => {
         config={config}
         revokeDocuments={[sampleRevokableDocument]}
         revokeAnotherDocument={() => {}}
-        onLogout={() => {}}
         fileName="doc-1.tt"
       />
     );
     expect(screen.queryAllByTestId("failed-document")).toHaveLength(1);
   });
 
-  it("should fire the correct function when logout button is pressed", () => {
-    const logout = jest.fn();
-    mockUseRevokeQueue.mockReturnValue({
-      revoke: mockRevoke,
-      revokeState: RevokeState.CONFIRMED,
-      revokedDocuments: [sampleRevokableDocument],
-      failedRevokedDocuments: [],
-      pendingRevokeDocuments: [],
-    });
-    render(
-      <RevokedScreen
-        config={config}
-        revokeDocuments={[sampleRevokableDocument]}
-        revokeAnotherDocument={() => {}}
-        onLogout={logout}
-        fileName="doc-1.tt"
-      />
-    );
-    fireEvent.click(screen.getByTestId("logout-button"));
-    expect(logout).toHaveBeenCalledTimes(1);
-  });
   it("should fire the correct function when revoke another document button is pressed", () => {
     const revokeAnother = jest.fn();
     mockUseRevokeQueue.mockReturnValue({
@@ -193,7 +164,6 @@ describe("RevokedScreen", () => {
         config={config}
         revokeDocuments={[sampleRevokableDocument]}
         revokeAnotherDocument={revokeAnother}
-        onLogout={() => {}}
         fileName="doc-1.tt"
       />
     );

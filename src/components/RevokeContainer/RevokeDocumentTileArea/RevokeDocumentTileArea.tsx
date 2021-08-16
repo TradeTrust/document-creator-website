@@ -4,7 +4,7 @@ import { Title } from "../../UI/Title";
 import { RevokeTag } from "../RevokeTag/RevokeTag";
 import { Button } from "@govtechsg/tradetrust-ui-components";
 import { DocumentUploadState } from "../../../constants/DocumentUploadState";
-import { ChooseIssueOrRevoke } from "../../ChooseIssueOrRevoke";
+import { IssueOrRevokeSelector } from "../../UI/IssueOrRevokeSelector";
 import { ProgressBar } from "../../ProgressBar";
 
 interface RevokeDocumentTileArea {
@@ -22,12 +22,12 @@ export const RevokeDocumentTileArea: FunctionComponent<RevokeDocumentTileArea> =
   documentUploadState,
   onBack,
 }) => {
-  const shouldEnableRevokeButton = revokeDocuments.length > 0 && documentUploadState === DocumentUploadState.DONE;
-  const revokeButtonColor = shouldEnableRevokeButton ? "bg-red" : "bg-grey cursor-not-allowed";
+  const isDisabled = revokeDocuments.length <= 0 && documentUploadState !== DocumentUploadState.DONE;
+  const revokeButtonColor = isDisabled ? "bg-grey cursor-not-allowed" : "bg-red";
   return (
     <Wrapper isMaxW={true}>
-      <ChooseIssueOrRevoke />
-      <ProgressBar step={1} totalSteps={2} title="Upload Document" />
+      <IssueOrRevokeSelector />
+      <ProgressBar step={2} totalSteps={3} title="Confirm Document" />
       <Title className="mb-8">Confirm File</Title>
       <RevokeTag doc={revokeDocuments[0]} isPending={false} fileName={fileName} />
       <div className="flex justify-center mt-16">
@@ -35,7 +35,6 @@ export const RevokeDocumentTileArea: FunctionComponent<RevokeDocumentTileArea> =
           onClick={onBack}
           data-testid="back-revoke-button"
           className={`w-auto px-8 text-blue mb-8 bg-white mr-4`}
-          disabled={!shouldEnableRevokeButton}
         >
           Back
         </Button>
@@ -43,7 +42,7 @@ export const RevokeDocumentTileArea: FunctionComponent<RevokeDocumentTileArea> =
           onClick={() => onShowConfirmation()}
           data-testid="revoke-button"
           className={`w-auto px-8 text-white mb-8 ${revokeButtonColor}`}
-          disabled={!shouldEnableRevokeButton}
+          disabled={isDisabled}
         >
           Revoke
         </Button>

@@ -2,8 +2,6 @@ import { Selector } from "testcafe";
 import { enterPassword, loadConfigFile } from "./helper";
 import { homedir } from "os";
 import { join } from "path";
-import { existsSync, readFileSync } from "fs";
-import { file } from "jszip";
 
 fixture("Revoke flow").page`http://localhost:3000`;
 
@@ -17,16 +15,6 @@ const DownloadLink = Selector("[data-testid='download-file-button']");
 function getFileDownloadPath(fileName: string): string {
   return join(homedir(), "Downloads", fileName);
 }
-
-// From https://stackoverflow.com/a/57624660/950462
-const waitForFileDownload = async (t: TestController, filePath: string): Promise<boolean> => {
-  // Timeout after 10 seconds
-  for (let i = 0; i < 100; i++) {
-    if (existsSync(filePath)) return true;
-    await t.wait(100);
-  }
-  return existsSync(filePath);
-};
 
 test("should revoke a document on local blockchain correctly", async (t) => {
   // Upload config file

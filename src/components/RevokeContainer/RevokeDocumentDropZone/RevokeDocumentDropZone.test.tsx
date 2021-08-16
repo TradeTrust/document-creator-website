@@ -3,22 +3,7 @@ import { BrowserRouter } from "react-router-dom";
 import { RevokeDocumentDropZone } from "./RevokeDocumentDropZone";
 import sampleRevokableDocument from "../../../test/fixtures/sample-wrapped-document.json";
 import { DocumentUploadState } from "../../../constants/DocumentUploadState";
-
-// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
-const createFileTransferEvent = (files: File[]) => {
-  return {
-    dataTransfer: {
-      files,
-      items: files.map((file: File) => ({
-        kind: "file",
-        size: file.size,
-        type: file.type,
-        getAsFile: () => file,
-      })),
-      types: ["Files"],
-    },
-  };
-};
+import { createFileTransferEvent } from "../../../utils/utils";
 
 describe("RevokeDocumentDropZone", () => {
   it("should fire setRevokeDocument, setFileName and setDocumentUploadState when a file is dropped", async () => {
@@ -116,6 +101,6 @@ describe("RevokeDocumentDropZone", () => {
         />
       </BrowserRouter>
     );
-    expect(screen.getAllByTestId("dropzone-description")).toHaveLength(1);
+    expect(screen.queryAllByTestId("dropzone-loader")).toHaveLength(0);
   });
 });

@@ -4,17 +4,12 @@ import prettyBytes from "pretty-bytes";
 import React, { FunctionComponent } from "react";
 import { useConfigContext } from "../../../../common/context/config";
 import { WrappedDocument } from "../../../../types";
-import { generateFileName } from "../../../../utils";
+import { generateFileName, getFileSize } from "../../../../utils";
 
 interface PublishedTagProps {
   doc: WrappedDocument;
   isPending: boolean;
 }
-
-const getFileSize = (jsonString: string): number => {
-  const m = encodeURIComponent(jsonString).match(/%[89ABab]/g);
-  return jsonString.length + (m ? m.length : 0);
-};
 
 export const PublishedTag: FunctionComponent<PublishedTagProps> = ({ doc, isPending }) => {
   const { config } = useConfigContext();

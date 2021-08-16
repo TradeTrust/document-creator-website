@@ -1,8 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { render, screen } from "@testing-library/react";
-import React from "react";
 import { FormSelection } from "./FormSelection";
-import { BrowserRouter } from "react-router-dom";
+import { MemoryRouter } from "react-router-dom";
 
 jest.mock("react-router-dom", () => ({
   ...jest.requireActual("react-router-dom"),
@@ -29,9 +28,9 @@ describe("formSelection", () => {
     };
 
     render(
-      <BrowserRouter>
+      <MemoryRouter initialEntries={["/forms-selection"]}>
         <FormSelection config={configFile as any} />
-      </BrowserRouter>
+      </MemoryRouter>
     );
 
     const buttons = screen.getAllByRole("button");
