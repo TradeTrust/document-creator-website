@@ -1,6 +1,9 @@
 {
   "network": "local",
-  "wallet": "{\"address\":\"e0a71284ef59483795053266cb796b65e48b5124\",\"id\":\"04c746c3-fbef-453a-8c63-5e915021f57a\",\"version\":3,\"Crypto\":{\"cipher\":\"aes-128-ctr\",\"cipherparams\":{\"iv\":\"0f6963939595d04cb27a4d4abe689e32\"},\"ciphertext\":\"c80c8ca9acb96cf2f87279fef71508a06d4cf166e46e06a8beecd1420f2f525f\",\"kdf\":\"scrypt\",\"kdfparams\":{\"salt\":\"bf52c3386a9235e74a075c533ec1febd6e9221b57d649a2e156775fce984a58e\",\"n\":1,\"dklen\":32,\"p\":1,\"r\":8},\"mac\":\"5014d1d53e9294028eb808fbc9dd36394ebec22381946724111b9ee5ab46fd06\"}}",
+  "wallet": {
+    "type": "ENCRYPTED-JSON",
+    "encryptedJson": "{\"address\":\"e0a71284ef59483795053266cb796b65e48b5124\",\"id\":\"04c746c3-fbef-453a-8c63-5e915021f57a\",\"version\":3,\"Crypto\":{\"cipher\":\"aes-128-ctr\",\"cipherparams\":{\"iv\":\"0f6963939595d04cb27a4d4abe689e32\"},\"ciphertext\":\"c80c8ca9acb96cf2f87279fef71508a06d4cf166e46e06a8beecd1420f2f525f\",\"kdf\":\"scrypt\",\"kdfparams\":{\"salt\":\"bf52c3386a9235e74a075c533ec1febd6e9221b57d649a2e156775fce984a58e\",\"n\":1,\"dklen\":32,\"p\":1,\"r\":8},\"mac\":\"5014d1d53e9294028eb808fbc9dd36394ebec22381946724111b9ee5ab46fd06\"}}"
+  },
   "forms": [
     {
       "name": "Bill of Lading",
