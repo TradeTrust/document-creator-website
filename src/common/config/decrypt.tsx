@@ -75,14 +75,14 @@ export const decryptWalletOrSigner = async (
           provider
         );
       case "AWS_KMS":
-        return decryptAWSKMS(config.wallet, password, provider);
+        return decryptAwsKms(config.wallet, password, provider);
       default:
         throw new Error("Wallet type not supported.");
     }
   }
 };
 
-const decryptAWSKMS = async (wallet: AwsKmwSignerOption, password: string, provider: providers.BaseProvider) => {
+const decryptAwsKms = async (wallet: AwsKmwSignerOption, password: string, provider: providers.BaseProvider) => {
   const kmsCredentials = {
     accessKeyId: wallet.accessKeyId, // credentials for your IAM user with KMS access
     secretAccessKey: password, // credentials for your IAM user with KMS access
