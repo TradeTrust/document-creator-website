@@ -70,11 +70,11 @@ export const decryptWalletOrSigner = async (
     return connectedWallet;
   } else {
     switch (config.wallet.type) {
-      case "ENCRYPTED-JSON":
+      case "ENCRYPTED_JSON":
         return (await Wallet.fromEncryptedJson(config.wallet.encryptedJson, password, progressCallback)).connect(
           provider
         );
-      case "AWS-KMS":
+      case "AWS_KMS":
         return decryptAWSKMS(config.wallet, password, provider);
       default:
         throw new Error("Wallet type not supported.");

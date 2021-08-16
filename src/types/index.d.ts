@@ -23,14 +23,14 @@ export interface DocumentStorage {
 }
 
 export type AwsKmwSignerOption = {
-  type: "AWS-KMS";
+  type: "AWS_KMS";
   accessKeyId: string;
   region: string;
   kmsKeyId: string;
 };
 
 export type EncryptedJsonOption = {
-  type: "ENCRYPTED-JSON";
+  type: "ENCRYPTED_JSON";
   encryptedJson: string;
 };
 
