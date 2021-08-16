@@ -65,15 +65,12 @@ export const decryptWalletOrSigner = async (
 ): Promise<Wallet | ConnectedSigner> => {
   const provider = config.network === "local" ? new providers.JsonRpcProvider() : getDefaultProvider(config.network);
   if (isWalletOption(config.wallet)) {
-    const decryptedWallet = await Wallet.fromEncryptedJson(config.wallet, password, progressCallback);
-    const connectedWallet = await decryptedWallet.connect(provider);
-    return connectedWallet;
+    // For backward compatibility when the wallet is still string
+    return decryptEncryptedJson(config.wallet, password, progressCallback, provider);
   } else {
     switch (config.wallet.type) {
       case "ENCRYPTED_JSON":
-        return (await Wallet.fromEncryptedJson(config.wallet.encryptedJson, password, progressCallback)).connect(
-          provider
-        );
+        return decryptEncryptedJson(config.wallet.encryptedJson, password, progressCallback, provider);
       case "AWS_KMS":
         return decryptAwsKms(config.wallet, password, provider);
       default:
@@ -100,4 +97,13 @@ const decryptAwsKms = async (wallet: AwsKmwSignerOption, password: string, provi
   } catch (e) {
     throw new Error("Unable to attach the provider to the kms signer");
   }
+};
+
+const decryptEncryptedJson = async (
+  encryptedJson: string,
+  password: string,
+  progressCallback: (progress: number) => void,
+  provider: providers.BaseProvider
+) => {
+  return (await Wallet.fromEncryptedJson(encryptedJson, password, progressCallback)).connect(provider);
 };
