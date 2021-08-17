@@ -1,26 +1,42 @@
 import { render, screen } from "@testing-library/react";
-import React from "react";
 import { MemoryRouter } from "react-router";
 import { useConfigContext } from "../../common/context/config";
 import { useFormsContext } from "../../common/context/forms";
-import { usePublishQueue } from "../../common/hook/usePublishQueue";
+import { useQueue } from "../../common/hook/useQueue";
 import sampleConfig from "../../test/fixtures/sample-config-ropsten.json";
 import { PublishContainer } from "./PublishContainer";
-import { PublishState } from "./../../constants/PublishState";
+import { QueueState } from "./../../constants/QueueState";
 
 jest.mock("../../common/context/forms");
 jest.mock("../../common/context/config");
-jest.mock("../../common/hook/usePublishQueue");
+jest.mock("../../common/hook/useQueue");
 
 const mockUseFormsContext = useFormsContext as jest.Mock;
 const mockUseConfigContext = useConfigContext as jest.Mock;
-const mockUsePublishQueue = usePublishQueue as jest.Mock;
+const mockUseQueue = useQueue as jest.Mock;
 const mockSetActiveFormIndex = jest.fn();
 const mockSetForms = jest.fn();
-const mockPublish = jest.fn();
+const mockProcessDocuments = jest.fn();
 
 const whenNoConfig = (): void => {
   mockUseConfigContext.mockReturnValue({ config: undefined });
+  mockUseFormsContext.mockReturnValue({
+    activeFormIndex: 0,
+    setForms: mockSetForms,
+    setActiveFormIndex: mockSetActiveFormIndex,
+    forms: [
+      {
+        fileName: "document-1",
+        data: { formData: {} },
+        templateIndex: 0,
+      },
+    ],
+    currentForm: {
+      fileName: "document-1",
+      data: { formData: {} },
+      templateIndex: 0,
+    },
+  });
 };
 
 const whenPublishStateIsNotConfirmed = (): void => {
@@ -42,12 +58,12 @@ const whenPublishStateIsNotConfirmed = (): void => {
       templateIndex: 0,
     },
   });
-  mockUsePublishQueue.mockReturnValue({
-    publish: mockPublish,
-    publishState: PublishState.INITIALIZED,
-    publishedDocuments: [],
-    failedPublishedDocuments: [],
-    pendingPublishDocuments: [],
+  mockUseQueue.mockReturnValue({
+    processDocuments: mockProcessDocuments,
+    queueState: QueueState.INITIALIZED,
+    successfulProcessedDocuments: [],
+    failedProcessedDocuments: [],
+    pendingProcessDocuments: [],
   });
 };
 

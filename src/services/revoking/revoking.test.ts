@@ -43,7 +43,6 @@ describe("revokeDocumentJob", () => {
     mockSupportsInterface.mockResolvedValueOnce(false);
     const hash = await revokeDocumentJob(
       {
-        nonce: 1234,
         contractAddress: "0x154fcc3c953057c9527eb180cad321b906412b5d",
         documents: [],
         targetHash: "9999",
@@ -53,7 +52,7 @@ describe("revokeDocumentJob", () => {
 
     expect(hash).toBe("TX_HASH");
     expect(mockTxWait).toHaveBeenCalledTimes(1);
-    expect(mockDocumentStoreRevoke).toHaveBeenCalledWith("0x9999", { nonce: 1234 });
+    expect(mockDocumentStoreRevoke).toHaveBeenCalledWith("0x9999");
   });
 
   it("should throw an Error when document store address is not a smart contract", async () => {
@@ -63,7 +62,6 @@ describe("revokeDocumentJob", () => {
     await expect(
       revokeDocumentJob(
         {
-          nonce: 1234,
           contractAddress: "0x154fcc3c953057c9527eb180cad321b906412b5d",
           documents: [],
           targetHash: "9999",
@@ -82,7 +80,6 @@ describe("revokeDocumentJob", () => {
     await expect(
       revokeDocumentJob(
         {
-          nonce: 1234,
           contractAddress: "0x154fcc3c953057c9527eb180cad321b906412b5d",
           documents: [],
           targetHash: "9999",

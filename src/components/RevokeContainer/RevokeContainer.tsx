@@ -5,9 +5,10 @@ import { RevokeDocumentDropZone } from "./RevokeDocumentDropZone/RevokeDocumentD
 import { RevokeDocumentTileArea } from "./RevokeDocumentTileArea/RevokeDocumentTileArea";
 import { utils } from "@govtechsg/open-attestation";
 import { RevokeConfirmationModal } from "./RevokeConfirmationModal";
-import { RevokedScreen } from "./RevokedScreen/RevokedScreen";
 import { verificationBuilder, isValid, openAttestationVerifiers } from "@govtechsg/oa-verify";
 import { DocumentUploadState } from "../../constants/DocumentUploadState";
+import { ProcessDocumentScreen } from "../ProcessDocumentScreen";
+import { QueueType } from "../../constants/QueueState";
 
 export const RevokeContainer: FunctionComponent = () => {
   const { config } = useConfigContext();
@@ -96,11 +97,12 @@ export const RevokeContainer: FunctionComponent = () => {
         />
       )}
       {revokeStep === 3 && (
-        <RevokedScreen
+        <ProcessDocumentScreen
           config={config}
           revokeDocuments={revokeDocuments}
-          revokeAnotherDocument={revokeAnotherDocument}
+          processAnotherDocument={revokeAnotherDocument}
           fileName={fileName}
+          type={QueueType.REVOKE}
         />
       )}
     </>

@@ -121,7 +121,6 @@ export interface PublishingJob {
 }
 
 export interface RevokingJob {
-  nonce: number;
   contractAddress: string;
   targetHash: string;
   documents: WrappedDocument[];

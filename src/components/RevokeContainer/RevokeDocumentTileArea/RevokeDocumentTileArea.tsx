@@ -1,11 +1,12 @@
 import { FunctionComponent } from "react";
 import { Wrapper } from "../../UI/Wrapper";
 import { Title } from "../../UI/Title";
-import { RevokeTag } from "../RevokeTag/RevokeTag";
+import { ProcessedDocumentTag } from "../../ProcessDocumentScreen/ProcessedDocumentTag";
 import { Button } from "@govtechsg/tradetrust-ui-components";
 import { DocumentUploadState } from "../../../constants/DocumentUploadState";
 import { IssueOrRevokeSelector } from "../../UI/IssueOrRevokeSelector";
 import { ProgressBar } from "../../ProgressBar";
+import { QueueType } from "../../../constants/QueueState";
 
 interface RevokeDocumentTileArea {
   revokeDocuments: any[];
@@ -29,7 +30,7 @@ export const RevokeDocumentTileArea: FunctionComponent<RevokeDocumentTileArea> =
       <IssueOrRevokeSelector />
       <ProgressBar step={2} totalSteps={3} title="Confirm Document" />
       <Title className="mb-8">Confirm File</Title>
-      <RevokeTag doc={revokeDocuments[0]} isPending={false} fileName={fileName} />
+      <ProcessedDocumentTag doc={revokeDocuments[0]} isPending={false} fileName={fileName} type={QueueType.REVOKE} />
       <div className="flex justify-center mt-16">
         <Button
           onClick={onBack}
