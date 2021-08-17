@@ -1,11 +1,9 @@
 import { getGSNRelayConfig } from "../../config";
 import sample from "../../test/fixtures/sample-config-ropsten.json";
-import awsSample from "../../test/fixtures/sample-config-ropsten-aws.json";
 import { ConfigFile } from "../../types";
 import { decryptWalletOrSigner, getGsnRelaySigner } from "./decrypt";
 
 const configFile = sample as ConfigFile;
-const awsConfigFile = awsSample as ConfigFile;
 const gsnConfig = getGSNRelayConfig("ropsten");
 
 describe("decryptWalletOrSigner", () => {
@@ -17,12 +15,6 @@ describe("decryptWalletOrSigner", () => {
 
   it("should throw when decryption fails", async () => {
     await expect(decryptWalletOrSigner(configFile, "wrongPassword", () => {})).rejects.toThrow(/invalid password/);
-  });
-
-  it("Should throw when AWS decryption fails", async () => {
-    await expect(decryptWalletOrSigner(awsConfigFile, "wrongPassword", () => {})).rejects.toThrow(
-      "Unable to attach the provider to the kms signer"
-    );
   });
 });
 

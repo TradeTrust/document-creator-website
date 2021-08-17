@@ -6,9 +6,14 @@ const configFileSchema = Joi.object({
   wallet: Joi.alternatives(
     Joi.string().required(),
     Joi.object().keys({
+      type: Joi.string().allow("AWS_KMS").required(),
       accessKeyId: Joi.string().required(),
       region: Joi.string().required(),
       kmsKeyId: Joi.string().required(),
+    }),
+    Joi.object().keys({
+      type: Joi.string().allow("ENCRYPTED_JSON").required(),
+      encryptedJson: Joi.string().required(),
     })
   ).required(),
   forms: Joi.array()

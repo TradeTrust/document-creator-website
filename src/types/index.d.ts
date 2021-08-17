@@ -23,14 +23,22 @@ export interface DocumentStorage {
 }
 
 export type AwsKmwSignerOption = {
+  type: "AWS_KMS";
   accessKeyId: string;
   region: string;
   kmsKeyId: string;
 };
 
+export type EncryptedJsonOption = {
+  type: "ENCRYPTED_JSON";
+  encryptedJson: string;
+};
+
+export type WalletOptions = AwsKmwSignerOption | EncryptedJsonOption;
+
 export interface ConfigFile {
   network: Network;
-  wallet: string | AwsKmwSignerOption;
+  wallet: string | WalletOptions;
   forms: FormTemplate[];
   documentStorage?: DocumentStorage;
 }

@@ -1,5 +1,5 @@
 import { Wallet, getDefaultProvider, providers } from "ethers";
-import { ConfigFile, ConnectedSigner } from "../../types";
+import { AwsKmwSignerOption, ConfigFile, ConnectedSigner } from "../../types";
 import { RelayProvider } from "@opengsn/gsn";
 import { getGSNRelayConfig, getHttpProviderUri } from "../../config";
 import Web3HttpProvider from "web3-providers-http";
@@ -64,28 +64,46 @@ export const decryptWalletOrSigner = async (
   progressCallback: (progress: number) => void
 ): Promise<Wallet | ConnectedSigner> => {
   const provider = config.network === "local" ? new providers.JsonRpcProvider() : getDefaultProvider(config.network);
-
   if (isWalletOption(config.wallet)) {
-    const decryptedWallet = await Wallet.fromEncryptedJson(config.wallet, password, progressCallback);
-    const connectedWallet = await decryptedWallet.connect(provider);
-    return connectedWallet;
+    // For backward compatibility when the wallet is still string
+    return decryptEncryptedJson(config.wallet, password, progressCallback, provider);
   } else {
-    const kmsCredentials = {
-      accessKeyId: config.wallet.accessKeyId, // credentials for your IAM user with KMS access
-      secretAccessKey: password, // credentials for your IAM user with KMS access
-      region: config.wallet.region,
-      keyId: config.wallet.kmsKeyId,
-    };
-
-    const signer = new AwsKmsSigner(kmsCredentials).connect(provider);
-    try {
-      const connectedSigner = signer as ConnectedSigner;
-      if (await connectedSigner.getAddress()) {
-        return connectedSigner;
-      }
-      throw new Error("Unable to attach the provider to the kms signer");
-    } catch (e) {
-      throw new Error("Unable to attach the provider to the kms signer");
+    switch (config.wallet.type) {
+      case "ENCRYPTED_JSON":
+        return decryptEncryptedJson(config.wallet.encryptedJson, password, progressCallback, provider);
+      case "AWS_KMS":
+        return decryptAwsKms(config.wallet, password, provider);
+      default:
+        throw new Error("Wallet type not supported.");
     }
   }
+};
+
+const decryptAwsKms = async (wallet: AwsKmwSignerOption, password: string, provider: providers.BaseProvider) => {
+  const kmsCredentials = {
+    accessKeyId: wallet.accessKeyId, // credentials for your IAM user with KMS access
+    secretAccessKey: password, // credentials for your IAM user with KMS access
+    region: wallet.region,
+    keyId: wallet.kmsKeyId,
+  };
+
+  const signer = new AwsKmsSigner(kmsCredentials).connect(provider);
+  try {
+    const connectedSigner = signer as ConnectedSigner;
+    if (await connectedSigner.getAddress()) {
+      return connectedSigner;
+    }
+    throw new Error("Unable to attach the provider to the kms signer");
+  } catch (e) {
+    throw new Error("Unable to attach the provider to the kms signer");
+  }
+};
+
+const decryptEncryptedJson = async (
+  encryptedJson: string,
+  password: string,
+  progressCallback: (progress: number) => void,
+  provider: providers.BaseProvider
+) => {
+  return (await Wallet.fromEncryptedJson(encryptedJson, password, progressCallback)).connect(provider);
 };

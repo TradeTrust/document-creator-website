@@ -1,6 +1,7 @@
 import { csv2jsonAsync } from "json-2-csv";
 import converter from "json-2-csv";
 import { saveAs } from "file-saver";
+import { WalletOptions } from "../types";
 
 export function readFileAsJson<T>(file: File): Promise<T> {
   return new Promise((resolve, reject) => {
@@ -80,7 +81,6 @@ export const downloadJsonDataFile = (jsonTemplate: any): void => {
   saveAs(jsonBlob, "sample-data.json");
 };
 
-// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-export const isWalletOption = (option: any): option is string => {
+export const isWalletOption = (option: string | WalletOptions): option is string => {
   return typeof option === "string";
 };
