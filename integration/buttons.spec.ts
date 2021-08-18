@@ -1,4 +1,4 @@
-import { ClientFunction, Selector } from "testcafe";
+import { Selector } from "testcafe";
 import { enterPassword, loadConfigFile } from "./helper";
 
 fixture("Buttons").page`http://localhost:3000`;
@@ -9,15 +9,9 @@ const Title = Selector("h1");
 const Button = Selector("button");
 const ButtonBack = Selector("[data-testid='back-button']");
 const ButtonBackRed = Selector("[data-testid='red-back-button']");
-const CloseTab = ClientFunction(() => window.close());
 const ProgressBar = Selector("[data-testid='progress-bar']");
 
 test("should lead to pages correctly", async (t) => {
-  // Check documentation button open in tab
-  await t.click(Selector("[data-testid='config-file-docs-button']"));
-  await t.expect(Title.textContent).contains("Config File");
-  await CloseTab();
-
   // Upload config file
   await loadConfigFile(Config);
   await t.expect(Title.textContent).contains("Create Document");

@@ -20,11 +20,11 @@ jobs:
           path: ~/.npm
           key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json', '**/*.patch') }}
           restore-keys: |
-            ${{ runner.os }}-build-${{ env.cache-name }}-	
-            ${{ runner.os }}-build-	
+            ${{ runner.os }}-build-${{ env.cache-name }}-
+            ${{ runner.os }}-build-
             ${{ runner.os }}-
       - name: Install Packages
-        # Solution to solve the problem with older version package 
+        # Solution to solve the problem with older version package
         # that fails on git checkout with ssh
         run: |
           git config --global url."https://".insteadOf git://
@@ -40,5 +40,4 @@ jobs:
       - name: Build
         run: npm run build
       - name: Integration Test
-        # run build before integration as we are static serving build file for integration testing
-        run: npm run integration:concurrently:headless
+        run: npm run integration:ci

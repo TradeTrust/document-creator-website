@@ -28,7 +28,6 @@ export const ConfigFileDropZoneContainer: FunctionComponent = () => {
         href="https://docs.tradetrust.io/docs/document-creator/config-file"
         target="_blank"
         rel="noopener noreferrer"
-        data-testid="config-file-docs-button"
       >
         Don’t have a config file? Learn how to create one
         <ArrowRight />

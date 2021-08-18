@@ -1,7 +1,7 @@
 import { Selector } from "testcafe";
 import { enterPassword, loadConfigFile } from "./helper";
 
-fixture("uiSchema").page`http://localhost:3000`;
+fixture("Document extension").page`http://localhost:3000`;
 
 const Config = "./../src/test/fixtures/sample-config-local.json";
 
@@ -11,7 +11,7 @@ const AddNewButton = Selector("[data-testid='add-new-button']");
 const ProgressBar = Selector("[data-testid='progress-bar']");
 const SubmitButton = Selector("[data-testid='form-submit-button']");
 
-test("document should have the correct extension if specified", async (t) => {
+test("should have the correct extension if specified", async (t) => {
   // Upload config file
   await loadConfigFile(Config);
   await t.expect(Title.textContent).contains("Create Document");
