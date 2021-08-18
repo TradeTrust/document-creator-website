@@ -15,6 +15,7 @@ export const Default: FunctionComponent = () => {
   const [revokeDocument, setRevokeDocument] = useState();
   const [fileName, setFileName] = useState("");
   const [documentUploadState, setDocumentUploadState] = useState(DocumentUploadState.INITIALIZED);
+  console.info(revokeDocument, fileName);
 
   return (
     <MemoryRouter>
