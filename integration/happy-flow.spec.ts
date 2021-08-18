@@ -57,7 +57,7 @@ test("should issue the documents on local blockchain correctly", async (t) => {
   await t.click(SubmitButton);
 
   // Pending confirmation of issued documents
-  await t.expect(Selector("[data-testid='publish-loader']").exists).ok();
+  await t.expect(Selector("[data-testid='processing-loader']").exists).ok();
 
   // Check that download exists
   await t.expect(Title.textContent).contains("Document(s) issued successfully");

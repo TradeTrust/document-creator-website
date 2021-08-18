@@ -87,7 +87,7 @@ test("form should render correctly according to uiSchema", async (t) => {
   await t.click(SubmitButton);
 
   // pending confirmation of issued documents
-  await t.expect(Selector("[data-testid='publish-loader']").exists).ok();
+  await t.expect(Selector("[data-testid='processing-loader']").exists).ok();
 
   // Check that the two Covering Letters are created
   const fileName1 = "Covering Letter (DBS)-1-local.tt";
