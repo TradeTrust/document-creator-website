@@ -54,3 +54,9 @@ To learn React, check out the [React documentation](https://reactjs.org/).
 ## Integration test flow (locally)
 
 - run 2 instances concurrently, 1 = `npm run blockchain`, 1 = `npm run integration`
+
+## Windows Gotchas
+
+[cross-env](https://www.npmjs.com/package/cross-env) is required to run the npm scripts. It should be installed when running `npm install`
+
+Encountered _File name differs from already included file name only in casing_ error? Ensure that the absolute paths specified in the error are *exactly* the same and that the casings match. 
