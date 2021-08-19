@@ -120,6 +120,7 @@ export const groupDocumentsIntoJobs = (rawDocuments: RawDocument[], currentNonce
   if (verifiableDocumentsWithDnsDid.length > 0) {
     const firstDnsDidRawDocument = verifiableDocumentsWithDnsDid[0];
     const didRawDocuments = verifiableDocumentsWithDnsDid.map((doc) => doc.rawDocument);
+    // TODO: Sign(Issue) of document should be done here, instead at useQueue.
     const wrappedDnsDidDocuments = wrapDocuments(didRawDocuments);
     const firstWrappedDnsDidDocument = wrappedDnsDidDocuments[0];
     jobs.push({

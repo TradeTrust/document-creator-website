@@ -42,6 +42,7 @@ export const publishVerifiableDocumentJob = async (
   return tx.transactionHash;
 };
 
+//TODO: Move this to publish.tsx file.
 export const publishDnsDidVerifiableDocumentJob = async (
   job: PublishingJob,
   signers: Signer
