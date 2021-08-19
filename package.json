@@ -16,9 +16,9 @@
     "IE >= 11"
   ],
   "scripts": {
-    "build": "NODE_OPTIONS='--max-old-space-size=4096' CI=false npm-run-all -s build:css build:js",
-    "build:css": "NODE_ENV=production postcss src/tailwind.css -o src/index.css",
-    "build:js": "NODE_ENV=production react-app-rewired build",
+    "build": "cross-env NODE_OPTIONS='--max-old-space-size=4096' CI=false npm-run-all -s build:css build:js",
+    "build:css": "cross-env NODE_ENV=production postcss src/tailwind.css -o src/index.css",
+    "build:js": "cross-env NODE_ENV=production react-app-rewired build",
     "eject": "react-scripts eject",
     "blockchain": "run-p blockchain:start blockchain:setup",
     "blockchain:contracts": "node ./scripts/setup-contracts.js",
@@ -39,8 +39,8 @@
     "storybook": "npm-run-all -p start:css storybook:start",
     "storybook:start": "sleep 2 && start-storybook -p 9009 -s public",
     "storybook:build": "npm run build:css && build-storybook -s public",
-    "prep": "npm-run-all -s lint lint:type lint:fix test:ci build integration:ci",
-    "test:ci": "CI=true react-app-rewired test",
+    "prep": "cross-env npm-run-all -s lint lint:type lint:fix test:ci build integration:ci",
+    "test:ci": "cross-env CI=true react-app-rewired test",
     "test": "react-app-rewired test",
     "wait:blockchain": "wait-on -l -i 1000 tcp:8545"
   },
@@ -58,6 +58,7 @@
     "@opengsn/gsn": "^2.1.0",
     "ajv": "^8.6.0",
     "axios": "^0.21.1",
+    "cross-env": "^7.0.3",
     "debug": "^4.3.1",
     "ethers": "^5.3.1",
     "ethers-aws-kms-signer": "^1.3.1",
