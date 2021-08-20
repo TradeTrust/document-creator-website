@@ -327,5 +327,4 @@ describe("ProcessDocumentScreen", () => {
       expect(processAnotherDocumentFn).toHaveBeenCalledTimes(1);
     });
   });
-  // it("should ")
 });
