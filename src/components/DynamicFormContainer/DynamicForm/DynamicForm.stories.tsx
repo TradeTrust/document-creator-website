@@ -1,7 +1,7 @@
-import React, { FunctionComponent, useState } from "react";
+import { FunctionComponent, useState } from "react";
 import sample from "../../../test/fixtures/sample-config-ropsten.json";
 import { ConfigFile, FormTemplate } from "../../../types";
-import { identifyProofType } from "../../../constants/PublishState";
+import { identifyProofType } from "../../../constants/QueueState";
 import { DynamicForm } from "./DynamicForm";
 
 // Default values in the document we do not want the admin staff to change

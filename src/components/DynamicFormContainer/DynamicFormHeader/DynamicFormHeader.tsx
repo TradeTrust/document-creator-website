@@ -34,7 +34,7 @@ export const DynamicFormHeader: FunctionComponent<DynamicFormHeaderProps> = ({
         <ArrowLeft />
         <div className="pl-2">Back</div>
       </div>
-      <ProgressBar step={2} />
+      <ProgressBar step={2} totalSteps={3} title="Fill Form" />
       <div className="flex justify-between items-end">
         <div className="flex flex-col">
           <Title className="mb-4">Fill and Preview Form</Title>

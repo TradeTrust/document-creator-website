@@ -2,22 +2,7 @@
 import { act, fireEvent, render, screen, waitFor } from "@testing-library/react";
 import React from "react";
 import { ConfigFileDropZone } from "./ConfigFileDropZone";
-
-// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
-const createFileTransferEvent = (files: File[]) => {
-  return {
-    dataTransfer: {
-      files,
-      items: files.map((file: File) => ({
-        kind: "file",
-        size: file.size,
-        type: file.type,
-        getAsFile: () => file,
-      })),
-      types: ["Files"],
-    },
-  };
-};
+import { createFileTransferEvent } from "../../../utils/utils";
 
 describe("configFileDropZone", () => {
   it("should have the right text", () => {

@@ -9,12 +9,12 @@ import { getGsnRelaySigner } from "../../common/config/decrypt";
 import { ConnectedSigner, PublishingJob, WrappedDocument } from "../../types";
 import { supportsInterface } from "./utils";
 
-const assertAddressIsSmartContract = async (address: string, provider: Provider): Promise<void> => {
+export const assertAddressIsSmartContract = async (address: string, provider: Provider): Promise<void> => {
   const code = await provider.getCode(address);
   if (code === "0x") throw new Error("Address is not a smart contract");
 };
 
-const getConnectedDocumentStore = async (
+export const getConnectedDocumentStore = async (
   account: Wallet | ConnectedSigner,
   contractAddress: string
 ): Promise<DocumentStore> => {
@@ -42,6 +42,7 @@ export const publishVerifiableDocumentJob = async (
   return tx.transactionHash;
 };
 
+//TODO: Move this to publish.tsx file.
 export const publishDnsDidVerifiableDocumentJob = async (
   job: PublishingJob,
   signers: Signer

@@ -120,6 +120,12 @@ export interface PublishingJob {
   payload: { ownership?: Ownership };
 }
 
+export interface RevokingJob {
+  contractAddress: string;
+  targetHash: string;
+  documents: WrappedDocument[];
+}
+
 export interface FailedJobErrors {
   documents: WrappedDocument[];
   error: Error;

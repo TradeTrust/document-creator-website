@@ -3,6 +3,8 @@ import React, { FunctionComponent } from "react";
 
 interface ProgressBarProps {
   step: number;
+  totalSteps: number;
+  title: string;
   className?: string;
 }
 interface BarTrackProps {
@@ -22,16 +24,14 @@ export const BarTrack: FunctionComponent<BarTrackProps> = ({ className, progress
   );
 };
 
-export const ProgressBar: FunctionComponent<ProgressBarProps> = ({ className, step }) => {
-  const description = ["Choose Type", "Fill Form", "Issue Document(s)"];
-
+export const ProgressBar: FunctionComponent<ProgressBarProps> = ({ className, step, totalSteps, title }) => {
   return (
     <div className={`max-w-sm ${className}`}>
       <div className="text-grey-800 font-bold text-base" data-testid={"progress-bar"}>
-        {`Step ${step}/3: ${description[step - 1]}`}
+        {`Step ${step}/${totalSteps}: ${title}`}
       </div>
       <div className="mt-3 mb-6">
-        <BarTrack progress={step / 3} />
+        <BarTrack progress={step / totalSteps} />
       </div>
     </div>
   );
