@@ -46,12 +46,12 @@ export const ToggleSwitch = styled(({ className, isOn, handleToggle }: ToggleSwi
 
   .toggle-switch-label:before {
     content: "On";
-    ${tw`text-teal font-bold pl-3 opacity-0 uppercase`}
+    ${tw`text-turquoise-300 font-bold pl-3 opacity-0 uppercase`}
   }
 
   .toggle-switch-label:after {
     content: "Off";
-    ${tw`text-red font-bold pr-3 uppercase`}
+    ${tw`text-red-500 font-bold pr-3 uppercase`}
   }
 
   .toggle-switch-checkbox:checked ~ .toggle-switch-label:after {

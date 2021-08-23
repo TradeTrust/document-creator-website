@@ -55,42 +55,42 @@ export const AttachmentDropzone: FunctionComponent<AttachmentDropzone> = ({
 
   const dropZoneCSS = error
     ? `border-dashed border-2 items-center border-red flex flex-col pt-16 pb-16 px-4 text-center ${
-        isDragActive ? "bg-grey-300" : "bg-red-100"
+        isDragActive ? "bg-gray-300" : "bg-red-100"
       }`
-    : `border-dashed border-2 items-center border-grey-300 flex flex-col pt-16 pb-16 px-4 text-center ${
-        isDragActive ? "bg-grey-300" : "bg-white"
+    : `border-dashed border-2 items-center border-gray-300 flex flex-col pt-16 pb-16 px-4 text-center ${
+        isDragActive ? "bg-gray-300" : "bg-white"
       }`;
 
   return (
     <div className="flex flex-col max-w-screen-sm m-auto" key="AttachmentDropzone" data-testid="attachment-dropzone">
       <legend>Attachments</legend>
-      <div className="text-grey-800">Max. total file size: {MAX_FILE_SIZE / BYTE_CONVERTION_RATE}MB</div>
+      <div className="text-gray-800">Max. total file size: {MAX_FILE_SIZE / BYTE_CONVERTION_RATE}MB</div>
       <div data-testid="attachment-upload-zone" className="mt-4" {...getRootProps()}>
         <input data-testid="attachment-file-drop-zone" {...getInputProps()} />
         <div className={dropZoneCSS}>
           {isFileRejected && (
             <>
-              <div className="max-w-lg text-red font-bold text-lg" data-testid="invalid-file-error">
+              <div className="max-w-lg text-red-500 font-bold text-lg" data-testid="invalid-file-error">
                 Error: Incorrect file type selected
               </div>
-              <div className="text-base text-grey-800 my-4">{`Only ${acceptedFormat} are allowed`}</div>
+              <div className="text-base text-gray-800 my-4">{`Only ${acceptedFormat} are allowed`}</div>
             </>
           )}
           {fileSizeError && (
             <>
-              <div className="max-w-lg text-red font-bold text-lg" data-testid="file-size-error">
+              <div className="max-w-lg text-red-500 font-bold text-lg" data-testid="file-size-error">
                 Error: Total attachment file size exceeds {MAX_FILE_SIZE / BYTE_CONVERTION_RATE}MB
               </div>
-              <div className="text-base text-grey-800 my-4">Please try again with a smaller file size.</div>
+              <div className="text-base text-gray-800 my-4">Please try again with a smaller file size.</div>
             </>
           )}
           {!error && (
             <>
-              <div className="font-bold text-lg text-grey-800">Drag and drop file here</div>
-              <div className="text-base text-grey-800 my-4">or</div>
+              <div className="font-bold text-lg text-gray-800">Drag and drop file here</div>
+              <div className="text-base text-gray-800 my-4">or</div>
             </>
           )}
-          <Button className="bg-white text-orange border-grey-400 hover:bg-grey-100 px-12">Browse File</Button>
+          <Button className="bg-white text-orange border-gray-400 hover:bg-gray-100 px-12">Browse File</Button>
         </div>
       </div>
       <FilesInfo filesInfo={uploadedFiles} removeFile={removeFile} />

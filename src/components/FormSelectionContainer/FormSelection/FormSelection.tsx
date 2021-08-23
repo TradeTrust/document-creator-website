@@ -31,7 +31,7 @@ export const FormSelection: FunctionComponent<FormSelection> = ({ config }) => {
         {config.forms.map((form: FormTemplate, index: number) => {
           return (
             <Button
-              className="bg-white text-grey-800 hover:text-blue hover:bg-grey-100 w-40 mb-4 mr-4"
+              className="bg-white text-gray-800 hover:text-blue hover:bg-gray-100 w-40 mb-4 mr-4"
               key={index}
               onClick={() => selectedForm(index)}
             >

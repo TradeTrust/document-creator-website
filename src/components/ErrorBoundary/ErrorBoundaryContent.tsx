@@ -31,7 +31,7 @@ export const ErrorBoundaryContent: FunctionComponent<{
         </div>
       )}
       <Button
-        className="bg-orange text-white hover:bg-orange-600"
+        className="bg-orange-100 text-white hover:bg-orange-600"
         data-testid="form-logout-button"
         onClick={() => window.location.reload()}
       >

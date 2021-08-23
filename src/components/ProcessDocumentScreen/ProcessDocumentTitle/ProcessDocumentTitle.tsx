@@ -27,14 +27,14 @@ export const ProcessDocumentTitle: FunctionComponent<ProcessDocumentTitle> = ({ 
         if (documents.length > 0) {
           return (
             <>
-              <CheckCircle className="mr-2 text-teal" />
+              <CheckCircle className="mr-2 text-turquoise-300" />
               {`Document(s) ${isIssuingFlow ? "issued" : "revoked"} successfully`}
             </>
           );
         } else {
           return (
             <>
-              <XCircle className="mr-2 text-red" />
+              <XCircle className="mr-2 text-red-500" />
               {`Document(s) failed to ${isIssuingFlow ? "issue" : "revoke"}`}
             </>
           );

@@ -44,10 +44,10 @@ export const RevokeDocumentDropZone: FunctionComponent<RevokeDocumentDropZone> =
   const dropZoneCSS =
     errorMessage || documentUploadState === DocumentUploadState.ERROR
       ? `border-dashed border-2 items-center border-red flex flex-col pt-16 pb-16 px-4 text-center ${
-          isDragActive ? "bg-grey-300" : "bg-red-100"
+          isDragActive ? "bg-gray-300" : "bg-red-100"
         }`
-      : `border-dashed border-2 items-center border-grey-300 flex flex-col pt-16 pb-16 px-4 text-center ${
-          isDragActive ? "bg-grey-300" : "bg-white"
+      : `border-dashed border-2 items-center border-gray-300 flex flex-col pt-16 pb-16 px-4 text-center ${
+          isDragActive ? "bg-gray-300" : "bg-white"
         }`;
 
   return (
@@ -66,21 +66,21 @@ export const RevokeDocumentDropZone: FunctionComponent<RevokeDocumentDropZone> =
           )}
           <>
             {documentUploadState === DocumentUploadState.ERROR && (
-              <div className="max-w-lg text-red font-bold text-lg" data-testid="error-message">
+              <div className="max-w-lg text-red-500 font-bold text-lg" data-testid="error-message">
                 <p>{errorMessage ? errorMessage : "Error: File cannot be read"}</p>
-                <p className="text-base text-grey-800 my-4 font-normal">Please try again</p>
+                <p className="text-base text-gray-800 my-4 font-normal">Please try again</p>
               </div>
             )}
             {documentUploadState === DocumentUploadState.INITIALIZED && (
               <>
-                <div className="font-bold text-lg text-grey-800" data-testid="dropzone-description">
+                <div className="font-bold text-lg text-gray-800" data-testid="dropzone-description">
                   Drag and drop file here
                 </div>
-                <div className="text-base text-grey-800 my-4">or</div>
+                <div className="text-base text-gray-800 my-4">or</div>
               </>
             )}
             {documentUploadState !== DocumentUploadState.LOADING && (
-              <Button className="bg-white text-orange hover:text-orange-600 border-grey-300 px-12">Browse Files</Button>
+              <Button className="bg-white text-orange hover:text-orange-600 border-gray-300 px-12">Browse Files</Button>
             )}
           </>
         </div>

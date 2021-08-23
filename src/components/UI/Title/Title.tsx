@@ -5,5 +5,5 @@ import { mixin } from "../../../styles";
 export const Title = styled.h1`
   ${mixin.fontRobotoBold}
   ${mixin.fontSize(28)}
-  ${tw`text-grey-800`}
+  ${tw`text-gray-800`}
 `;

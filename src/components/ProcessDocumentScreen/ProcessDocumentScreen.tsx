@@ -62,7 +62,7 @@ export const ProcessDocumentScreen: FunctionComponent<ProcessDocumentScreen> = (
         <ProcessDocumentTitle queueState={queueState} documents={successfulProcessedDocuments} type={type} />
         {queueState === QueueState.CONFIRMED && (
           <Button
-            className="bg-white text-orange hover:bg-grey-100 mb-6 mr-4"
+            className="bg-white text-orange hover:bg-gray-100 mb-6 mr-4"
             data-testid="process-another-document-button"
             onClick={processAnotherDocument}
           >
@@ -70,7 +70,7 @@ export const ProcessDocumentScreen: FunctionComponent<ProcessDocumentScreen> = (
           </Button>
         )}
       </div>
-      <div className="bg-grey-100 py-6 h-full">
+      <div className="bg-gray-100 py-6 h-full">
         {queueState === QueueState.INITIALIZED && (
           <div className="flex items-center justify-center">
             <LoaderSpinner
@@ -85,16 +85,16 @@ export const ProcessDocumentScreen: FunctionComponent<ProcessDocumentScreen> = (
         {(pendingProcessDocuments.length > 0 || successfulProcessedDocuments.length > 0) &&
           queueState !== QueueState.ERROR && (
             <div className="container">
-              <div className="border-b border-solid border-grey-200 flex items-center">
+              <div className="border-b border-solid border-gray-200 flex items-center">
                 <div
-                  className="text-grey font-medium text-lg mb-4 flex-grow py-3"
+                  className="text-gray font-medium text-lg mb-4 flex-grow py-3"
                   data-testid="total-number-of-documents"
                 >
                   {successfulProcessedDocuments.length + pendingProcessDocuments.length} Document(s)
                 </div>
                 {queueState === QueueState.CONFIRMED && isIssuingFlow && (
                   <Button
-                    className="bg-white text-blue hover:bg-grey-100 mb-4"
+                    className="bg-white text-blue hover:bg-gray-100 mb-4"
                     data-testid="download-all-button"
                     onClick={() => {
                       generateZipFile(successfulProcessedDocuments, config?.network);
@@ -107,7 +107,7 @@ export const ProcessDocumentScreen: FunctionComponent<ProcessDocumentScreen> = (
                   </Button>
                 )}
               </div>
-              <div className="flex flex-wrap border-b border-solid border-grey-200 pb-4 mb-4">
+              <div className="flex flex-wrap border-b border-solid border-gray-200 pb-4 mb-4">
                 {successfulProcessedDocuments.map((doc, index) => (
                   <ProcessedDocumentTag doc={doc} key={index} isPending={false} type={type} fileName={fileName} />
                 ))}
@@ -119,14 +119,14 @@ export const ProcessDocumentScreen: FunctionComponent<ProcessDocumentScreen> = (
           )}
         {failPublishedDocuments && failPublishedDocuments.length > 0 && queueState !== QueueState.ERROR && (
           <div className="container">
-            <div className="text-grey font-medium text-lg my-6">{failPublishedDocuments.length} Document(s) Failed</div>
+            <div className="text-gray font-medium text-lg my-6">{failPublishedDocuments.length} Document(s) Failed</div>
             <div className="bg-red-100 p-3 flex flex-col">
               <div className="flex">
-                <XCircle className="text-red" />
-                <div className="text-red ml-2 flex-grow" data-testid="error-message">
+                <XCircle className="text-red-500" />
+                <div className="text-red-500 ml-2 flex-grow" data-testid="error-message">
                   These documents failed to publish due to some errors. Kindly rectify and try publishing again.
                 </div>
-                <Button className="bg-white text-red hover:bg-grey-100">
+                <Button className="bg-white text-red-500 hover:bg-gray-100">
                   <a
                     download={generateFileName({
                       network: config?.network,
@@ -138,7 +138,7 @@ export const ProcessDocumentScreen: FunctionComponent<ProcessDocumentScreen> = (
                   >
                     <div className="flex">
                       <Download />
-                      <div className="text-red ml-2">Download Error Log</div>
+                      <div className="text-red-500 ml-2">Download Error Log</div>
                     </div>
                   </a>
                 </Button>
@@ -147,14 +147,14 @@ export const ProcessDocumentScreen: FunctionComponent<ProcessDocumentScreen> = (
                 const size = prettyBytes(getFileSize(JSON.stringify(doc.wrappedDocument)));
                 return (
                   <div key={index} className="flex items-center">
-                    <div className="font-bold text-grey">
+                    <div className="font-bold text-gray">
                       {generateFileName({
                         network: config?.network,
                         fileName: doc.fileName,
                         extension: doc.extension,
                       })}
                     </div>
-                    <div className="text-xs text-grey ml-1">({size})</div>
+                    <div className="text-xs text-gray ml-1">({size})</div>
                   </div>
                 );
               })}
@@ -162,7 +162,7 @@ export const ProcessDocumentScreen: FunctionComponent<ProcessDocumentScreen> = (
             <div className="flex py-4">
               <div className="col-auto ml-auto">
                 <Button
-                  className="bg-white text-blue hover:bg-grey-100 mb-4"
+                  className="bg-white text-blue hover:bg-gray-100 mb-4"
                   data-testid="download-fail-button"
                   onClick={() => {
                     generateZipFile(failedProcessedDocuments[0].documents);
@@ -181,17 +181,17 @@ export const ProcessDocumentScreen: FunctionComponent<ProcessDocumentScreen> = (
           <div className="container">
             <div className="bg-red-100 p-3 flex flex-col">
               <div className="flex">
-                <XCircle className="text-red" />
+                <XCircle className="text-red-500" />
                 <div className="flex flex-col flex-grow">
-                  <div className="text-red ml-2 flex-grow" data-testid="error-title">
+                  <div className="text-red-500 ml-2 flex-grow" data-testid="error-title">
                     {`Failed to ${isIssuingFlow ? "publish" : "revoke"} due to:`}
                   </div>
-                  <div className="text-red ml-2 flex-grow">- {error?.message}</div>
-                  <div className="text-red ml-2 flex-grow">
+                  <div className="text-red-500 ml-2 flex-grow">- {error?.message}</div>
+                  <div className="text-red-500 ml-2 flex-grow">
                     {`Kindly rectify and try ${isIssuingFlow ? "publishing" : "revoking"} again.`}
                   </div>
                 </div>
-                <Button className="bg-white text-red hover:bg-grey-100 h-12">
+                <Button className="bg-white text-red-500 hover:bg-gray-100 h-12">
                   <a
                     download={generateFileName({
                       network: config?.network,
@@ -203,7 +203,7 @@ export const ProcessDocumentScreen: FunctionComponent<ProcessDocumentScreen> = (
                   >
                     <div className="flex">
                       <Download />
-                      <div className="text-red ml-2">Download Error Log</div>
+                      <div className="text-red-500 ml-2">Download Error Log</div>
                     </div>
                   </a>
                 </Button>

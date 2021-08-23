@@ -30,10 +30,10 @@ export const ConfigFileDropZone: FunctionComponent<ConfigFileDropZone> = ({ onCo
   const dropZoneCSS =
     errorMessage || error
       ? `border-dashed border-2 items-center border-red flex flex-col pt-16 pb-16 px-4 text-center ${
-          isDragActive ? "bg-grey-300" : "bg-red-100"
+          isDragActive ? "bg-gray-300" : "bg-red-100"
         }`
-      : `border-dashed border-2 items-center border-grey-300 flex flex-col pt-16 pb-16 px-4 text-center ${
-          isDragActive ? "bg-grey-300" : "bg-white"
+      : `border-dashed border-2 items-center border-gray-300 flex flex-col pt-16 pb-16 px-4 text-center ${
+          isDragActive ? "bg-gray-300" : "bg-white"
         }`;
 
   return (
@@ -43,22 +43,22 @@ export const ConfigFileDropZone: FunctionComponent<ConfigFileDropZone> = ({ onCo
         <input data-testid="config-file-drop-zone" {...getInputProps()} />
         <div className={dropZoneCSS}>
           {error && (
-            <div className="max-w-lg text-red font-bold text-lg" data-testid={"error-cannot-read-file"}>
+            <div className="max-w-lg text-red-500 font-bold text-lg" data-testid={"error-cannot-read-file"}>
               Error: File cannot be read
             </div>
           )}
           {errorMessage && !error && (
-            <div className="max-w-lg text-red font-bold text-lg" data-testid={"config-error"}>
+            <div className="max-w-lg text-red-500 font-bold text-lg" data-testid={"config-error"}>
               {errorMessage}
             </div>
           )}
           {!errorMessage && !error && (
-            <div className="font-bold text-lg text-grey-800" data-testid="home-description">
+            <div className="font-bold text-lg text-gray-800" data-testid="home-description">
               Drag and drop your configuration file here
             </div>
           )}
-          <div className="text-base text-grey-800 my-4">{errorMessage || error ? "Please try again." : "or"}</div>
-          <Button className="bg-white text-orange hover:text-orange-600 border-grey-300 px-12">Browse Files</Button>
+          <div className="text-base text-gray-800 my-4">{errorMessage || error ? "Please try again." : "or"}</div>
+          <Button className="bg-white text-orange hover:text-orange-600 border-gray-300 px-12">Browse Files</Button>
         </div>
       </div>
     </>
