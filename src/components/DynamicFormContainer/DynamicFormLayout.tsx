@@ -115,7 +115,7 @@ export const DynamicFormLayout: FunctionComponent = () => {
                   <Trash2 className="text-gray" />
                 </ButtonIcon>
               ) : (
-                <ButtonIcon className="bg-gray-400 border-gray-400">
+                <ButtonIcon className="text-cerulean-200 border-none">
                   <Trash2 className="text-gray" />
                 </ButtonIcon>
               )}

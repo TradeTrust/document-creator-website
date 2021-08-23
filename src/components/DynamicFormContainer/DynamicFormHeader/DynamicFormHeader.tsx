@@ -43,14 +43,14 @@ export const DynamicFormHeader: FunctionComponent<DynamicFormHeaderProps> = ({
         </div>
         <div>
           <Button
-            className="bg-white text-orange hover:bg-gray-100 mr-4"
+            className="bg-white text-blue-500 border border-none hover:bg-gray-100 mr-4"
             onClick={onNewForm}
             data-testid="add-new-button"
           >
             Add New
           </Button>
           <Button
-            className="bg-orange-100 text-white hover:bg-orange-600"
+            className="bg-blue-500 text-white hover:bg-blue-600"
             onClick={onFormSubmit}
             data-testid="form-submit-button"
           >

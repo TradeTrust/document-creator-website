@@ -25,13 +25,17 @@ export const RevokeConfirmationModal: FunctionComponent<RevokeConfirmationModalP
             <div className="mt-16">
               <div className="flex justify-end">
                 <Button
-                  className="bg-white text-gray border-gray-400 hover:bg-gray-100 mr-4"
+                  className="bg-white text-blue-500 border-gray-300 hover:bg-gray-100 mr-4"
                   onClick={closeRevokeConfirmationModal}
                   data-testid="cancel-button"
                 >
                   Cancel
                 </Button>
-                <Button data-testid="modal-revoke-button" className="bg-red text-white" onClick={revokingDocument}>
+                <Button
+                  data-testid="modal-revoke-button"
+                  className="bg-red-600 hover:bg-red-500 text-white"
+                  onClick={revokingDocument}
+                >
                   Revoke
                 </Button>
               </div>

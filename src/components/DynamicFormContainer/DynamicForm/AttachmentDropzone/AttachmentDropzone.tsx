@@ -90,7 +90,7 @@ export const AttachmentDropzone: FunctionComponent<AttachmentDropzone> = ({
               <div className="text-base text-gray-800 my-4">or</div>
             </>
           )}
-          <Button className="bg-white text-orange border-gray-400 hover:bg-gray-100 px-12">Browse File</Button>
+          <Button className="bg-blue-500 text-white border-gray-400 hover:bg-blue-600 px-12">Browse File</Button>
         </div>
       </div>
       <FilesInfo filesInfo={uploadedFiles} removeFile={removeFile} />

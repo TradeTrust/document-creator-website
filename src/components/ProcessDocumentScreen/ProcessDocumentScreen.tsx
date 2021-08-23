@@ -62,7 +62,7 @@ export const ProcessDocumentScreen: FunctionComponent<ProcessDocumentScreen> = (
         <ProcessDocumentTitle queueState={queueState} documents={successfulProcessedDocuments} type={type} />
         {queueState === QueueState.CONFIRMED && (
           <Button
-            className="bg-white text-orange hover:bg-gray-100 mb-6 mr-4"
+            className="bg-blue-500 text-white hover:bg-blue-600 mb-6 mr-4"
             data-testid="process-another-document-button"
             onClick={processAnotherDocument}
           >
