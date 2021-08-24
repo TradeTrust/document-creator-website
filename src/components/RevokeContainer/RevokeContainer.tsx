@@ -24,7 +24,7 @@ export const RevokeContainer: FunctionComponent = () => {
       const isDocumentRevokable = utils.isDocumentRevokable(revokeDocuments[0]);
 
       const validateDocument = async () => {
-        const network = config?.network || "homestead";
+        const network = config?.network || "";
         let isDocumentValid = true;
 
         if (network !== "local") {
