@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { QueueState, identifyProofType, QueueType } from "../../../constants/QueueState";
-import { publishDnsDidJob, publishJob } from "../../../services/publishing";
+import { publishJob } from "../../../services/publishing";
 import { revokeDocumentJob } from "../../../services/revoking";
 import { Config, FailedJobErrors, FormEntry, PublishingJob, RevokingJob, WrappedDocument } from "../../../types";
 import { getLogger } from "../../../utils/logger";
@@ -66,7 +66,7 @@ export const useQueue = ({
       const nonce = await config.wallet.getTransactionCount();
       const processingJobs =
         queueType === QueueType.ISSUE
-          ? await getPublishingJobs(formEntries as FormEntry[], config, nonce)
+          ? await getPublishingJobs(formEntries as FormEntry[], config, nonce, wallet)
           : await getRevokingJobs(documents as any[]);
       setJobs(processingJobs);
       const pendingJobs = new Set(processingJobs.map((job, index) => index));
@@ -75,16 +75,7 @@ export const useQueue = ({
       const allJobs = processingJobs.map(async (job, index) => {
         try {
           if (queueType === QueueType.ISSUE) {
-            if (job.contractAddress === identifyProofType.DnsDid) {
-              // publish DID verifiable documents first
-              const publishedDnsDidJobs = await publishDnsDidJob(job as PublishingJob, wallet);
-              // update wrappedDocument with the signed documents
-              // eslint-disable-next-line @typescript-eslint/no-shadow
-              job.documents.forEach((document, index) => {
-                // TODO: refactor so that we do not temper with the wrappedDocument for DnsDid
-                document.wrappedDocument = publishedDnsDidJobs[index];
-              });
-            } else {
+            if (job.contractAddress !== identifyProofType.DnsDid) {
               // publish verifiable documents and transferable records with doc store and token registry
               await publishJob(job as PublishingJob, wallet);
             }

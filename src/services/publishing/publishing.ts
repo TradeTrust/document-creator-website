@@ -42,19 +42,14 @@ export const publishVerifiableDocumentJob = async (
   return tx.transactionHash;
 };
 
-//TODO: Move this to publish.tsx file.
 export const publishDnsDidVerifiableDocumentJob = async (
-  job: PublishingJob,
+  wrappedDocuments: any[],
   signers: Signer
 ): Promise<WrappedDocument[]> => {
   const signedDocumentsList: WrappedDocument[] = [];
-  const signingDocuments = job.documents.map(async (doc) => {
+  const signingDocuments = wrappedDocuments.map(async (doc) => {
     try {
-      const signedDocument = await signDocument(
-        doc.wrappedDocument,
-        SUPPORTED_SIGNING_ALGORITHM.Secp256k1VerificationKey2018,
-        signers
-      );
+      const signedDocument = await signDocument(doc, SUPPORTED_SIGNING_ALGORITHM.Secp256k1VerificationKey2018, signers);
       signedDocumentsList.push(signedDocument);
     } catch (e) {
       throw new Error(`Error signing document: ${doc.rawDocument.issuers[0].id}`);
@@ -125,10 +120,5 @@ export const publishTransferableRecordJob = async (job: PublishingJob, signer: S
 export const publishJob = async (job: PublishingJob, wallet: Wallet | ConnectedSigner): Promise<string> => {
   if (job.type === "VERIFIABLE_DOCUMENT") return publishVerifiableDocumentJob(job, wallet);
   if (job.type === "TRANSFERABLE_RECORD") return publishTransferableRecordJob(job, wallet);
-  throw new Error("Job type is not supported");
-};
-
-export const publishDnsDidJob = async (job: PublishingJob, signer: Signer): Promise<WrappedDocument[]> => {
-  if (job.type === "VERIFIABLE_DOCUMENT") return publishDnsDidVerifiableDocumentJob(job, signer);
   throw new Error("Job type is not supported");
 };

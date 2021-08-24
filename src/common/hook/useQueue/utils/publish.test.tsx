@@ -1,5 +1,6 @@
 import { identifyProofType } from "../../../../constants/QueueState";
 import { Config, RawDocument } from "../../../../types";
+import { getDefaultProvider, Wallet } from "ethers";
 import { getQueueNumber } from "../../../API/storageAPI";
 import { getRawDocuments, groupDocumentsIntoJobs } from "./publish";
 import sampleConfigFile from "./sample-config.json";
@@ -19,6 +20,8 @@ const configWithoutDocumentStorage = {
   wallet: "FAKE_WALLET" as any,
 } as Config;
 
+const wallet = Wallet.createRandom().connect(getDefaultProvider("ropsten"));
+
 jest.mock("../../../API/storageAPI");
 const mockGetQueueNumber = getQueueNumber as jest.Mock;
 
@@ -34,8 +37,8 @@ describe("getRawDocuments", () => {
 });
 
 describe("groupDocumentsIntoJobs", () => {
-  it("should batch transactions accordingly and return the jobs without DNS-DID", () => {
-    const publishingJobs = groupDocumentsIntoJobs(sampleFormatted as RawDocument[], 0);
+  it("should batch transactions accordingly and return the jobs without DNS-DID", async () => {
+    const publishingJobs = await groupDocumentsIntoJobs(sampleFormatted as RawDocument[], 0, wallet);
 
     // One tx with 2 verifiable document
     // Two tx with 1 transferable records each
@@ -58,8 +61,8 @@ describe("groupDocumentsIntoJobs", () => {
     expect(publishingJobs[2].nonce).toBe(3);
   });
 
-  it("should batch transactions accordingly and return the jobs with DNS-DID", () => {
-    const publishingJobs = groupDocumentsIntoJobs(sampleFormattedWithDnsDid as RawDocument[], 0);
+  it("should batch transactions accordingly and return the jobs with DNS-DID", async () => {
+    const publishingJobs = await groupDocumentsIntoJobs(sampleFormattedWithDnsDid as RawDocument[], 0, wallet);
 
     // One tx with 1 verifiable document
     // One tx with 1 verifiable DID document

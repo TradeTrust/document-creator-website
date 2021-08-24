@@ -4,6 +4,8 @@ import { identifyProofType } from "../../../../constants/QueueState";
 import { ActionsUrlObject, Config, DocumentStorage, FormEntry, PublishingJob, RawDocument } from "../../../../types";
 import { getQueueNumber } from "../../../API/storageAPI";
 import { encodeQrCode } from "../../../utils";
+import { Signer } from "ethers";
+import { publishDnsDidVerifiableDocumentJob } from "../../../../services/publishing";
 
 interface NetworkUrl {
   homestead: string;
@@ -80,7 +82,11 @@ const TX_NEEDED_FOR_VERIFIABLE_DOCUMENTS = 1;
 const TX_NEEDED_FOR_TRANSFERABLE_RECORDS = 2;
 
 // Given a list of documents, create a list of jobs
-export const groupDocumentsIntoJobs = (rawDocuments: RawDocument[], currentNonce: number): PublishingJob[] => {
+export const groupDocumentsIntoJobs = async (
+  rawDocuments: RawDocument[],
+  currentNonce: number,
+  signer: Signer
+): Promise<PublishingJob[]> => {
   const transferableRecords = rawDocuments.filter((doc) => doc.type === "TRANSFERABLE_RECORD");
   const verifiableDocuments = rawDocuments.filter((doc) => doc.type === "VERIFIABLE_DOCUMENT");
   const groupedVerifiableDocuments = groupBy(verifiableDocuments, "contractAddress");
@@ -118,20 +124,19 @@ export const groupDocumentsIntoJobs = (rawDocuments: RawDocument[], currentNonce
 
   // Process all verifiable document with DNS-DID next
   if (verifiableDocumentsWithDnsDid.length > 0) {
-    const firstDnsDidRawDocument = verifiableDocumentsWithDnsDid[0];
     const didRawDocuments = verifiableDocumentsWithDnsDid.map((doc) => doc.rawDocument);
-    // TODO: Sign(Issue) of document should be done here, instead at useQueue.
     const wrappedDnsDidDocuments = wrapDocuments(didRawDocuments);
-    const firstWrappedDnsDidDocument = wrappedDnsDidDocuments[0];
+    // Sign DNS-DID document here as we preparing the jobs
+    const signedDnsDidDocument = await publishDnsDidVerifiableDocumentJob(wrappedDnsDidDocuments, signer);
     jobs.push({
-      type: firstDnsDidRawDocument.type,
+      type: verifiableDocumentsWithDnsDid[0].type,
       nonce,
       contractAddress: identifyProofType.DnsDid,
       documents: verifiableDocumentsWithDnsDid.map((doc, index) => ({
         ...doc,
-        wrappedDocument: wrappedDnsDidDocuments[index],
+        wrappedDocument: signedDnsDidDocument[index],
       })),
-      merkleRoot: firstWrappedDnsDidDocument.signature?.merkleRoot,
+      merkleRoot: wrappedDnsDidDocuments[0].signature?.merkleRoot,
       payload: {},
     });
     nonce += TX_NEEDED_FOR_VERIFIABLE_DOCUMENTS;
@@ -158,9 +163,10 @@ export const groupDocumentsIntoJobs = (rawDocuments: RawDocument[], currentNonce
 export const getPublishingJobs = async (
   forms: FormEntry[],
   config: Config,
-  nonce: number
+  nonce: number,
+  signer: Signer
 ): Promise<PublishingJob[]> => {
   // Currently works for only multiple verifiable document issuance:
   const rawDocuments = await getRawDocuments(forms, config);
-  return groupDocumentsIntoJobs(rawDocuments, nonce);
+  return groupDocumentsIntoJobs(rawDocuments, nonce, signer);
 };
