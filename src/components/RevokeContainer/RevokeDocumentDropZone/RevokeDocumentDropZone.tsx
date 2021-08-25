@@ -44,10 +44,10 @@ export const RevokeDocumentDropZone: FunctionComponent<RevokeDocumentDropZone> =
   const dropZoneCSS =
     errorMessage || documentUploadState === DocumentUploadState.ERROR
       ? `border-dashed border-2 items-center border-red flex flex-col pt-16 pb-16 px-4 text-center ${
-          isDragActive ? "bg-grey-300" : "bg-red-100"
+          isDragActive ? "bg-gray-300" : "bg-red-100"
         }`
       : `border-dashed border-2 items-center border-gray-300 flex flex-col pt-16 pb-16 px-4 text-center ${
-          isDragActive ? "bg-grey-300" : "bg-white"
+          isDragActive ? "bg-gray-300" : "bg-white"
         }`;
 
   return (

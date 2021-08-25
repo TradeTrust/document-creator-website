@@ -119,7 +119,7 @@ export const DataFileButton: FunctionComponent<DataFileButton> = ({ onDataFile, 
           <input data-testid="config-file-drop-zone" {...getInputProps()} />
           <Button
             data-testid="data-upload-button"
-            className="w-full bg-white text-orange border-gray-400 hover:bg-grey-100"
+            className="w-full bg-white text-orange border-gray-400 hover:bg-gray-100"
           >
             {text.buttonText}
           </Button>

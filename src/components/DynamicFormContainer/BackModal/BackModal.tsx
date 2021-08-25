@@ -23,7 +23,7 @@ export const BackModal: FunctionComponent<BackModalProps> = ({ backToFormSelecti
             <div className="mt-16">
               <div className="flex justify-end">
                 <Button
-                  className="bg-white text-gray border-gray-400 hover:bg-grey-100 mr-4"
+                  className="bg-white text-gray border-gray-400 hover:bg-gray-100 mr-4"
                   onClick={closeBackModal}
                   data-testid="cancel-form-button"
                 >

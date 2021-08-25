@@ -41,7 +41,7 @@ export const WalletDecryption: FunctionComponent<WalletDecryption> = ({
           placeholder="Enter password"
           className={`
               ${inputBorderCSS}
-              ${isDecrypting && "bg-grey-300"}
+              ${isDecrypting && "bg-gray-300"}
               ${!password && "italic"}
             `}
           type="password"

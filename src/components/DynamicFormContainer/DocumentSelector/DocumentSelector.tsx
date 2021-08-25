@@ -26,7 +26,7 @@ export const DocumentSelector: FunctionComponent<DocumentSelector> = ({ validate
       <div
         data-testid="previous-document-button"
         onClick={previousDocument}
-        className="cursor-pointer border border-solid border-gray-300 h-12 w-12 bg-grey-100 active:bg-grey-400 border-r-0 flex items-center justify-center"
+        className="cursor-pointer border border-solid border-gray-300 h-12 w-12 bg-gray-100 active:bg-gray-400 border-r-0 flex items-center justify-center"
       >
         <ChevronLeft className="flex items-center justify-center" />
       </div>
@@ -41,7 +41,7 @@ export const DocumentSelector: FunctionComponent<DocumentSelector> = ({ validate
       <div
         data-testid="next-document-button"
         onClick={nextDocument}
-        className="cursor-pointer border border-solid border-gray-300 h-12 w-12 bg-grey-100 active:bg-grey-400 border-l-0 flex items-center justify-center"
+        className="cursor-pointer border border-solid border-gray-300 h-12 w-12 bg-gray-100 active:bg-gray-400 border-l-0 flex items-center justify-center"
       >
         <ChevronRight className="flex items-center justify-center" />
       </div>

@@ -98,7 +98,7 @@ export const DynamicFormLayout: FunctionComponent = () => {
         validateCurrentForm={validateCurrentForm}
         closePreviewMode={closePreviewMode}
       />
-      <div className="bg-grey-100 py-6">
+      <div className="bg-gray-100 py-6">
         <div className="container">
           <div className="bg-white p-4">
             <div className="flex justify-between">
@@ -108,14 +108,14 @@ export const DynamicFormLayout: FunctionComponent = () => {
               </div>
               {forms.length > 1 ? (
                 <ButtonIcon
-                  className="bg-white hover:bg-grey-100 border-gray-400"
+                  className="bg-white hover:bg-gray-100 border-gray-400"
                   data-testid="delete-button"
                   onClick={() => setDeleteModal(true)}
                 >
                   <Trash2 className="text-gray" />
                 </ButtonIcon>
               ) : (
-                <ButtonIcon className="bg-grey-400 border-gray-400">
+                <ButtonIcon className="bg-gray-400 border-gray-400">
                   <Trash2 className="text-gray" />
                 </ButtonIcon>
               )}

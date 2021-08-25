@@ -42,7 +42,7 @@ export const getExtension = (mimeType: string | undefined): React.ReactNode => {
     default:
       return (
         <div
-          className="rounded-full bg-grey-300 h-12 w-12 flex items-center justify-center mr-2"
+          className="rounded-full bg-gray-300 h-12 w-12 flex items-center justify-center mr-2"
           data-testid={`attachment-icon-paperclip`}
         >
           <Paperclip />

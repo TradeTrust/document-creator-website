@@ -18,8 +18,8 @@ const BarFill = styled.div`
 
 export const BarTrack: FunctionComponent<BarTrackProps> = ({ className, progress }) => {
   return (
-    <div className={`w-full h-1 bg-grey-300 ${className}`}>
-      <BarFill className="h-1 w-full bg-teal-300 transition duration-1000 ease-out" progress={progress} />
+    <div className={`w-full h-1 bg-gray-300 ${className}`}>
+      <BarFill className="h-1 w-full bg-cerulean transition duration-1000 ease-out" progress={progress} />
     </div>
   );
 };

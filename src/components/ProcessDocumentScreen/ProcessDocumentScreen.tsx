@@ -62,7 +62,7 @@ export const ProcessDocumentScreen: FunctionComponent<ProcessDocumentScreen> = (
         <ProcessDocumentTitle queueState={queueState} documents={successfulProcessedDocuments} type={type} />
         {queueState === QueueState.CONFIRMED && (
           <Button
-            className="bg-white text-orange hover:bg-grey-100 mb-6 mr-4"
+            className="bg-white text-orange hover:bg-gray-100 mb-6 mr-4"
             data-testid="process-another-document-button"
             onClick={processAnotherDocument}
           >
@@ -70,7 +70,7 @@ export const ProcessDocumentScreen: FunctionComponent<ProcessDocumentScreen> = (
           </Button>
         )}
       </div>
-      <div className="bg-grey-100 py-6 h-full">
+      <div className="bg-gray-100 py-6 h-full">
         {queueState === QueueState.INITIALIZED && (
           <div className="flex items-center justify-center">
             <LoaderSpinner
@@ -94,7 +94,7 @@ export const ProcessDocumentScreen: FunctionComponent<ProcessDocumentScreen> = (
                 </div>
                 {queueState === QueueState.CONFIRMED && isIssuingFlow && (
                   <Button
-                    className="bg-white text-blue hover:bg-grey-100 mb-4"
+                    className="bg-white text-blue hover:bg-gray-100 mb-4"
                     data-testid="download-all-button"
                     onClick={() => {
                       generateZipFile(successfulProcessedDocuments, config?.network);
@@ -126,7 +126,7 @@ export const ProcessDocumentScreen: FunctionComponent<ProcessDocumentScreen> = (
                 <div className="text-rose ml-2 flex-grow" data-testid="error-message">
                   These documents failed to publish due to some errors. Kindly rectify and try publishing again.
                 </div>
-                <Button className="bg-white text-rose hover:bg-grey-100">
+                <Button className="bg-white text-rose hover:bg-gray-100">
                   <a
                     download={generateFileName({
                       network: config?.network,
@@ -162,7 +162,7 @@ export const ProcessDocumentScreen: FunctionComponent<ProcessDocumentScreen> = (
             <div className="flex py-4">
               <div className="col-auto ml-auto">
                 <Button
-                  className="bg-white text-blue hover:bg-grey-100 mb-4"
+                  className="bg-white text-blue hover:bg-gray-100 mb-4"
                   data-testid="download-fail-button"
                   onClick={() => {
                     generateZipFile(failedProcessedDocuments[0].documents);
@@ -191,7 +191,7 @@ export const ProcessDocumentScreen: FunctionComponent<ProcessDocumentScreen> = (
                     {`Kindly rectify and try ${isIssuingFlow ? "publishing" : "revoking"} again.`}
                   </div>
                 </div>
-                <Button className="bg-white text-rose hover:bg-grey-100 h-12">
+                <Button className="bg-white text-rose hover:bg-gray-100 h-12">
                   <a
                     download={generateFileName({
                       network: config?.network,
