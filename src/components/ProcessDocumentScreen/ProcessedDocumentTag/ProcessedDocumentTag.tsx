@@ -28,7 +28,7 @@ export const ProcessedDocumentTag: FunctionComponent<PublishedTagProps> = ({ doc
       })
     : fileName;
   return (
-    <div className="mt-4 flex rounded bg-white p-3 min-w-xs max-w-xs border border-solid border-grey-200 mr-4 items-center">
+    <div className="mt-4 flex rounded bg-white p-3 min-w-xs max-w-xs border border-solid border-gray-200 mr-4 items-center">
       <>
         {isPending ? (
           <LoaderSpinner
@@ -39,14 +39,14 @@ export const ProcessedDocumentTag: FunctionComponent<PublishedTagProps> = ({ doc
             secondary="#e2e8f0"
           />
         ) : (
-          <div className="bg-blue w-12 h-12 rounded-full mr-4 flex-shrink-0">
+          <div className="bg-cerulean w-12 h-12 rounded-full mr-4 flex-shrink-0">
             <div className="flex justify-center items-center h-full text-white font-bold">TT</div>
           </div>
         )}
         <div className="w-auto">
-          <div className="font-bold text-grey" data-testid="file-name">
+          <div className="font-bold text-gray" data-testid="file-name">
             {documentName}
-            <span className="text-grey-400 text-xs font-regular"> ({size})</span>
+            <span className="text-gray-400 text-xs font-regular"> ({size})</span>
           </div>
           {isIssuingFlow && !isPending && (
             <div

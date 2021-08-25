@@ -24,7 +24,7 @@ export const RevokeDocumentTileArea: FunctionComponent<RevokeDocumentTileArea> =
   onBack,
 }) => {
   const isDisabled = revokeDocuments.length <= 0 && documentUploadState !== DocumentUploadState.DONE;
-  const revokeButtonColor = isDisabled ? "bg-grey cursor-not-allowed" : "bg-red";
+  const revokeButtonColor = isDisabled ? "bg-gray cursor-not-allowed" : "bg-red";
   return (
     <Wrapper isMaxW={true}>
       <IssueOrRevokeSelector />

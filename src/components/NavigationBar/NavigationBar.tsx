@@ -63,7 +63,7 @@ export interface NavigationBarProps {
 export const NavigationBar: FunctionComponent<NavigationBarProps> = ({ logout }) => {
   const { configFile } = usePersistedConfigFile();
   return (
-    <nav className="bg-navy py-6">
+    <nav className="bg-cerulean-50 py-6">
       <div className="container">
         <div className="flex flex-wrap items-center justify-between">
           <div className="w-full lg:w-auto">
@@ -81,7 +81,7 @@ export const NavigationBar: FunctionComponent<NavigationBarProps> = ({ logout })
               >
                 {["create-documents", "settings"].includes(item.id) ? (
                   <Link
-                    className="transition-colors duration-200 ease-out text-greyblue hover:text-white"
+                    className="transition-colors duration-200 ease-out text-grayblue hover:text-cerulean"
                     to={item.path}
                   >
                     {item.id === "settings" ? <Settings data-testid="settings-icon" /> : item.label}
@@ -89,7 +89,7 @@ export const NavigationBar: FunctionComponent<NavigationBarProps> = ({ logout })
                 ) : configFile ? ( // with config file, will redirect to the relevant network's url
                   <a
                     href={`${getNetworkPath(configFile.network)}${item.path}`}
-                    className="transition-colors duration-200 ease-out text-greyblue hover:text-white"
+                    className="transition-colors duration-200 ease-out text-grayblue hover:text-cerulean"
                   >
                     {item.label}
                   </a>
@@ -97,7 +97,7 @@ export const NavigationBar: FunctionComponent<NavigationBarProps> = ({ logout })
                   // without config file, will default to homestead's url
                   <a
                     href={`${homesteadUrlPath}${item.path}`}
-                    className="transition-colors duration-200 ease-out text-greyblue hover:text-white"
+                    className="transition-colors duration-200 ease-out text-grayblue hover:text-cerulean"
                   >
                     {item.label}
                   </a>
@@ -108,7 +108,7 @@ export const NavigationBar: FunctionComponent<NavigationBarProps> = ({ logout })
           {logout && (
             <div className={`w-auto ml-0 pr-4 pt-4 lg:pl-8 lg:pr-0 lg:py-0`}>
               <div
-                className="transition-colors duration-200 ease-out text-greyblue cursor-pointer border-solid border-2 border-gray-100 rounded px-2 py-1 hover:bg-white hover:text-navy"
+                className="transition-colors duration-200 ease-out text-grayblue cursor-pointer border-solid border-2 border-gray-100 rounded px-2 py-1 hover:bg-white hover:text-navy"
                 onClick={logout}
               >
                 Logout
