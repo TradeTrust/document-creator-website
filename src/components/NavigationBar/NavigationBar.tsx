@@ -81,7 +81,7 @@ export const NavigationBar: FunctionComponent<NavigationBarProps> = ({ logout })
               >
                 {["create-documents", "settings"].includes(item.id) ? (
                   <Link
-                    className="transition-colors duration-200 ease-out text-grayblue hover:text-white"
+                    className="transition-colors duration-200 ease-out text-grayblue hover:text-cerulean"
                     to={item.path}
                   >
                     {item.id === "settings" ? <Settings data-testid="settings-icon" /> : item.label}
@@ -89,7 +89,7 @@ export const NavigationBar: FunctionComponent<NavigationBarProps> = ({ logout })
                 ) : configFile ? ( // with config file, will redirect to the relevant network's url
                   <a
                     href={`${getNetworkPath(configFile.network)}${item.path}`}
-                    className="transition-colors duration-200 ease-out text-grayblue hover:text-white"
+                    className="transition-colors duration-200 ease-out text-grayblue hover:text-cerulean"
                   >
                     {item.label}
                   </a>
@@ -97,7 +97,7 @@ export const NavigationBar: FunctionComponent<NavigationBarProps> = ({ logout })
                   // without config file, will default to homestead's url
                   <a
                     href={`${homesteadUrlPath}${item.path}`}
-                    className="transition-colors duration-200 ease-out text-grayblue hover:text-white"
+                    className="transition-colors duration-200 ease-out text-grayblue hover:text-cerulean"
                   >
                     {item.label}
                   </a>
