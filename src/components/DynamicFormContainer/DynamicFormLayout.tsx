@@ -102,21 +102,21 @@ export const DynamicFormLayout: FunctionComponent = () => {
         <div className="container">
           <div className="bg-white p-4">
             <div className="flex justify-between">
-              <div className="text-grey-800 flex items-center">
+              <div className="text-gray-800 flex items-center">
                 <div className="align-middle">Preview mode:</div>
                 <ToggleSwitch isOn={isPreviewMode} handleToggle={() => setIsPreviewMode(!isPreviewMode)} />
               </div>
               {forms.length > 1 ? (
                 <ButtonIcon
-                  className="bg-white hover:bg-grey-100 border-grey-400"
+                  className="bg-white hover:bg-grey-100 border-gray-400"
                   data-testid="delete-button"
                   onClick={() => setDeleteModal(true)}
                 >
-                  <Trash2 className="text-grey" />
+                  <Trash2 className="text-gray" />
                 </ButtonIcon>
               ) : (
-                <ButtonIcon className="bg-grey-400 border-grey-400">
-                  <Trash2 className="text-grey" />
+                <ButtonIcon className="bg-grey-400 border-gray-400">
+                  <Trash2 className="text-gray" />
                 </ButtonIcon>
               )}
             </div>

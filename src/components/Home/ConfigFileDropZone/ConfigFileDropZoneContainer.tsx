@@ -24,7 +24,7 @@ export const ConfigFileDropZoneContainer: FunctionComponent = () => {
     <Wrapper isMaxW={true}>
       <ConfigFileDropZone errorMessage={configValidationError} onConfigFile={onConfigFile} />
       <a
-        className="w-full h-12 bg-white mt-4 text-grey-800 px-3 flex items-center justify-between font-bold shadow-md rounded hover:shadow-lg"
+        className="w-full h-12 bg-white mt-4 text-gray-800 px-3 flex items-center justify-between font-bold shadow-md rounded hover:shadow-lg"
         href="https://docs.tradetrust.io/docs/document-creator/config-file"
         target="_blank"
         rel="noopener noreferrer"

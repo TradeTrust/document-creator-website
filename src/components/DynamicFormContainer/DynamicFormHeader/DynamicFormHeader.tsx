@@ -28,7 +28,7 @@ export const DynamicFormHeader: FunctionComponent<DynamicFormHeaderProps> = ({
     <Wrapper className="mb-8">
       <div
         onClick={onBackToFormSelection}
-        className="text-grey flex cursor-pointer py-4 w-20"
+        className="text-gray flex cursor-pointer py-4 w-20"
         data-testid="back-button"
       >
         <ArrowLeft />
@@ -38,7 +38,7 @@ export const DynamicFormHeader: FunctionComponent<DynamicFormHeaderProps> = ({
       <div className="flex justify-between items-end">
         <div className="flex flex-col">
           <Title className="mb-4">Fill and Preview Form</Title>
-          <div className="text-grey-800 text-lg">{`${(activeFormIndex || 0) + 1} of ${forms.length} document(s)`}</div>
+          <div className="text-gray-800 text-lg">{`${(activeFormIndex || 0) + 1} of ${forms.length} document(s)`}</div>
           <DocumentSelector validateCurrentForm={validateCurrentForm} closePreviewMode={closePreviewMode} />
         </div>
         <div>
@@ -50,7 +50,7 @@ export const DynamicFormHeader: FunctionComponent<DynamicFormHeaderProps> = ({
             Add New
           </Button>
           <Button
-            className="bg-orange text-white hover:bg-orange-600"
+            className="bg-orange-300 text-white hover:bg-orange-600"
             onClick={onFormSubmit}
             data-testid="form-submit-button"
           >

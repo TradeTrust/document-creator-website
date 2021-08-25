@@ -119,12 +119,12 @@ export const DataFileButton: FunctionComponent<DataFileButton> = ({ onDataFile, 
           <input data-testid="config-file-drop-zone" {...getInputProps()} />
           <Button
             data-testid="data-upload-button"
-            className="w-full bg-white text-orange border-grey-400 hover:bg-grey-100"
+            className="w-full bg-white text-orange border-gray-400 hover:bg-grey-100"
           >
             {text.buttonText}
           </Button>
         </div>
-        <div className="flex text-sm justify-between text-grey-800">
+        <div className="flex text-sm justify-between text-gray-800">
           <div className="flex items-end">
             <ToolTip toolTipText="JSON Schema is a lightweight data interchange format that generates clear, easy-to-understand documentation, making validation and testing easier. JSON Schema is used to describe the structure and validation constraints of JSON documents." />
             <div
