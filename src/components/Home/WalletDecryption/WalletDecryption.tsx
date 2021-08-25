@@ -55,13 +55,17 @@ export const WalletDecryption: FunctionComponent<WalletDecryption> = ({
             Invalid password. Please try again.
           </div>
         )}
-        <div data-testid="reset-button" className="text-blue font-bold mt-4 cursor-pointer" onClick={onResetConfigFile}>
+        <div
+          data-testid="reset-button"
+          className="text-cerulean-200 font-bold mt-4 cursor-pointer"
+          onClick={onResetConfigFile}
+        >
           Upload new Config file
         </div>
         <div className="ml-auto w-auto">
           <Button
             data-testid="login-button"
-            className="bg-orange-300 text-white hover:bg-orange-600 mt-4"
+            className="bg-cerulean text-white hover:bg-cerulean-500 mt-4"
             onClick={onLogin}
             disabled={isDecrypting}
           >

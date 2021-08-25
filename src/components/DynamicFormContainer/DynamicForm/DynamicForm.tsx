@@ -193,7 +193,7 @@ export const DynamicForm = styled(DynamicFormRaw)`
 
   .btn {
     ${tw`
-      transition-colors duration-200 ease-out cursor-pointer font-bold p-2 rounded shadow-md border border-transparent bg-orange-300 text-white hover:bg-orange-600 m-2
+      transition-colors duration-200 ease-out cursor-pointer font-bold p-2 rounded shadow-md border border-transparent bg-white text-cerulean-DEFAULT hover:bg-gray-100 m-2
     `}
 
     :first-of-type {
