@@ -87,7 +87,7 @@ export const DynamicFormRaw: FunctionComponent<DynamicFormProps> = ({
   };
 
   return (
-    <div className={`w-full max-w-screen-sm mx-auto mt-6 ${className}`}>
+    <div className={`w-full mt-6 ${className}`}>
       <div className="mb-10">
         <DataFileButton onDataFile={mergeFormValue} schema={schema} />
       </div>
@@ -213,7 +213,7 @@ export const DynamicForm = styled(DynamicFormRaw)`
     ${tw`hidden`}
   }
   .btn-add::after {
-    content: "Add";
+    content: "Add Item";
   }
   .array-item-move-up::after {
     content: "Move Up";

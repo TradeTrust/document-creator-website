@@ -30,13 +30,13 @@ export const ToggleSwitch = styled(({ className, isOn, handleToggle }: ToggleSwi
   }
 
   .toggle-switch-label {
-    ${tw`flex items-center justify-between cursor-pointer w-20 h-8 rounded-full relative -mt-6 ml-4`}
-    ${(props) => (props.isOn ? tw`bg-blue-500` : tw`bg-gray-300`)}
+    ${tw`flex items-center justify-between cursor-pointer w-20 h-8 rounded-xl relative -mt-6 ml-4`}
+    ${(props) => (props.isOn ? tw`bg-cerulean-DEFAULT` : tw`bg-cloud-200`)}
     transition: background-color 0.2s;
   }
 
   .toggle-switch-label .toggle-switch-button {
-    ${tw`absolute w-6 h-6 rounded-full bg-white`}
+    ${tw`absolute w-6 h-6 rounded-xl bg-white`}
     content: "";
     top: 4px;
     left: 4px;
@@ -46,12 +46,12 @@ export const ToggleSwitch = styled(({ className, isOn, handleToggle }: ToggleSwi
 
   .toggle-switch-label:before {
     content: "On";
-    ${tw`text-white font-bold pl-3 opacity-0 uppercase`}
+    ${tw`text-white  pl-3 opacity-0 uppercase`}
   }
 
   .toggle-switch-label:after {
     content: "Off";
-    ${tw`text-white font-bold pr-3 uppercase`}
+    ${tw`text-white pr-3 uppercase`}
   }
 
   .toggle-switch-checkbox:checked ~ .toggle-switch-label:after {

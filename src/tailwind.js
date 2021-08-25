@@ -18,9 +18,11 @@ const localConfig = {
         8: "2rem",
         12: "3rem",
       },
+      backgroundImage: (theme) => ({
+        "wave-lines": "url('./img/wave-lines.png')",
+      }),
     },
   },
 };
 const finalConfig = _.merge(commonUiConfig, localConfig); // deep merge
-
 module.exports = finalConfig;

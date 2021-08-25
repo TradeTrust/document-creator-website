@@ -1,10 +1,12 @@
-import { ButtonIcon } from "@govtechsg/tradetrust-ui-components";
+import { ButtonIcon, ButtonSize } from "@govtechsg/tradetrust-ui-components";
 import Ajv, { ErrorObject } from "ajv";
 import { defaultsDeep } from "lodash";
 import React, { FunctionComponent, useState } from "react";
 import { Trash2 } from "react-feather";
 import { Redirect } from "react-router";
 import { useFormsContext } from "../../common/context/forms";
+import { Card } from "../UI/Card";
+import { Frame } from "../UI/Frame";
 import { ToggleSwitch } from "../UI/ToggleSwitch";
 import { BackModal } from "./BackModal";
 import { DeleteModal } from "./DeleteModal";
@@ -87,10 +89,13 @@ export const DynamicFormLayout: FunctionComponent = () => {
 
   const currentUnwrappedData = defaultsDeep({}, currentForm.data.formData, currentFormTemplate.defaults);
 
+  const trashIcon = <Trash2 className="text-gray max-w-none" />;
+
   return (
     <>
       <DeleteModal deleteForm={deleteForm} show={showDeleteModal} closeDeleteModal={closeDeleteModal} />
       <BackModal backToFormSelection={deleteAllForms} show={showBackModal} closeBackModal={closeBackModal} />
+
       <DynamicFormHeader
         onBackToFormSelection={() => setShowBackModal(true)}
         onNewForm={onNewForm}
@@ -98,55 +103,51 @@ export const DynamicFormLayout: FunctionComponent = () => {
         validateCurrentForm={validateCurrentForm}
         closePreviewMode={closePreviewMode}
       />
-      <div className="bg-gray-100 py-6">
-        <div className="container">
-          <div className="bg-white p-4">
-            <div className="flex justify-between">
-              <div className="text-gray-800 flex items-center">
-                <div className="align-middle">Preview mode:</div>
-                <ToggleSwitch isOn={isPreviewMode} handleToggle={() => setIsPreviewMode(!isPreviewMode)} />
-              </div>
-              {forms.length > 1 ? (
-                <ButtonIcon
-                  className="bg-white hover:bg-gray-100 border-gray-400"
-                  data-testid="delete-button"
-                  onClick={() => setDeleteModal(true)}
-                >
-                  <Trash2 className="text-gray" />
-                </ButtonIcon>
-              ) : (
-                <ButtonIcon className="text-cerulean-200 border-none">
-                  <Trash2 className="text-gray" />
-                </ButtonIcon>
-              )}
+      <Frame>
+        <Card>
+          <div className="flex justify-between">
+            <div className="text-gray-800 flex items-center">
+              <div className="align-middle">Preview mode:</div>
+              <ToggleSwitch isOn={isPreviewMode} handleToggle={() => setIsPreviewMode(!isPreviewMode)} />
             </div>
-            <FormErrorBanner
-              formErrorTitle="This form has errors. Please fix the errors to proceed."
-              formError={formError}
-            />
-            {isPreviewMode ? (
-              <div className="max-w-screen-xl mx-auto mt-6">
-                <DocumentPreview document={currentUnwrappedData} />
-              </div>
+            {forms.length > 1 ? (
+              <ButtonIcon
+                className="bg-white hover:bg-gray-100 border-gray-400"
+                data-testid="delete-button"
+                onClick={() => setDeleteModal(true)}
+              >
+                {trashIcon}
+              </ButtonIcon>
             ) : (
-              <div className="max-w-screen-sm mx-auto mt-6">
-                <DynamicForm
-                  schema={formSchema}
-                  uiSchema={uiSchema}
-                  form={currentForm}
-                  type={currentFormTemplate.type}
-                  setFormData={setCurrentFormData}
-                  setOwnership={setCurrentFormOwnership}
-                  setCurrentForm={setCurrentForm}
-                  attachmentAccepted={attachmentAccepted}
-                  attachmentAcceptedFormat={attachmentAcceptedFormat}
-                  fileName={fileName}
-                />
-              </div>
+              <ButtonIcon className="text-cerulean-200 border-none">{trashIcon}</ButtonIcon>
             )}
           </div>
-        </div>
-      </div>
+          <FormErrorBanner
+            formErrorTitle="This form has errors. Please fix the errors to proceed."
+            formError={formError}
+          />
+          {isPreviewMode ? (
+            <div className="max-w-screen-xl mx-auto mt-6">
+              <DocumentPreview document={currentUnwrappedData} />
+            </div>
+          ) : (
+            <div className="mt-6">
+              <DynamicForm
+                schema={formSchema}
+                uiSchema={uiSchema}
+                form={currentForm}
+                type={currentFormTemplate.type}
+                setFormData={setCurrentFormData}
+                setOwnership={setCurrentFormOwnership}
+                setCurrentForm={setCurrentForm}
+                attachmentAccepted={attachmentAccepted}
+                attachmentAcceptedFormat={attachmentAcceptedFormat}
+                fileName={fileName}
+              />
+            </div>
+          )}
+        </Card>
+      </Frame>
     </>
   );
 };

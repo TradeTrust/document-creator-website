@@ -2,12 +2,15 @@ import React, { FunctionComponent } from "react";
 import { ChevronLeft, ChevronRight } from "react-feather";
 import { useFormsContext } from "../../../common/context/forms";
 
-interface DocumentSelector {
+interface DocumentSelectorProps {
   validateCurrentForm: () => boolean;
   closePreviewMode: () => void;
 }
 
-export const DocumentSelector: FunctionComponent<DocumentSelector> = ({ validateCurrentForm, closePreviewMode }) => {
+export const DocumentSelector: FunctionComponent<DocumentSelectorProps> = ({
+  validateCurrentForm,
+  closePreviewMode,
+}) => {
   const { forms, setActiveFormIndex, currentForm, activeFormIndex, setCurrentFileName } = useFormsContext();
 
   const previousDocument = (): void => {
@@ -21,6 +24,28 @@ export const DocumentSelector: FunctionComponent<DocumentSelector> = ({ validate
     if (validateCurrentForm()) setActiveFormIndex(activeFormIndex + 1);
     closePreviewMode();
   };
+
+  const selectDocument = (formIndex: number): void => {
+    if (isNaN(formIndex)) return;
+    if (activeFormIndex === undefined || formIndex > forms.length) return;
+    if (validateCurrentForm()) setActiveFormIndex(formIndex - 1);
+    closePreviewMode();
+  };
+
+  return (
+    <div className="flex items-center">
+      <input
+        value={activeFormIndex ? activeFormIndex + 1 : 1}
+        onChange={(e) => {
+          selectDocument(parseInt(e.target.value));
+        }}
+        type="text"
+        className="flex rounded border border-solid border-gray-300 h-10 w-10 text-center"
+      />
+      <div>&nbsp;of {forms.length} document(s)</div>
+    </div>
+  );
+
   return (
     <div className="flex items-center mt-2">
       <div

@@ -1,10 +1,11 @@
-import { Button } from "@govtechsg/tradetrust-ui-components";
-import React, { FunctionComponent } from "react";
-import { ArrowLeft } from "react-feather";
-import { useFormsContext } from "../../../common/context/forms";
+import { Button, ButtonSize } from "@govtechsg/tradetrust-ui-components";
+import { FunctionComponent } from "react";
 import { ProgressBar } from "../../ProgressBar";
-import { Title } from "../../UI/Title";
+import { Card } from "../../UI/Card";
+import { Frame } from "../../UI/Frame";
+import { IssueOrRevokeSelector } from "../../UI/IssueOrRevokeSelector";
 import { Wrapper } from "../../UI/Wrapper";
+import { DocumentCarousel } from "../DocumentCarousel";
 import { DocumentSelector } from "../DocumentSelector";
 
 interface DynamicFormHeaderProps {
@@ -22,42 +23,48 @@ export const DynamicFormHeader: FunctionComponent<DynamicFormHeaderProps> = ({
   validateCurrentForm,
   closePreviewMode,
 }) => {
-  const { forms, activeFormIndex } = useFormsContext();
-
   return (
     <Wrapper className="mb-8">
-      <div
-        onClick={onBackToFormSelection}
-        className="text-gray flex cursor-pointer py-4 w-20"
-        data-testid="back-button"
+      <Card
+        title={
+          <div className="flex justify-between items-center">
+            <IssueOrRevokeSelector createLink={"/form"} />
+            <Button
+              size={ButtonSize.SM}
+              onClick={onBackToFormSelection}
+              className="text-cerulean bg-white hover:bg-gray-50"
+              data-testid="back-button"
+            >
+              Clear All
+            </Button>
+          </div>
+        }
       >
-        <ArrowLeft />
-        <div className="pl-2">Back</div>
-      </div>
-      <ProgressBar step={2} totalSteps={3} title="Fill Form" />
-      <div className="flex justify-between items-end">
-        <div className="flex flex-col">
-          <Title className="mb-4">Fill and Preview Form</Title>
-          <div className="text-gray-800 text-lg">{`${(activeFormIndex || 0) + 1} of ${forms.length} document(s)`}</div>
-          <DocumentSelector validateCurrentForm={validateCurrentForm} closePreviewMode={closePreviewMode} />
+        <ProgressBar step={2} totalSteps={3} title="Fill Form" />
+        <div className="flex justify-between items-end mb-6">
+          <div className="flex flex-col">
+            <div className="pt-6 pb-8 text-2xl">Fill and Preview Form</div>
+            <DocumentSelector validateCurrentForm={validateCurrentForm} closePreviewMode={closePreviewMode} />
+          </div>
+          <div>
+            <Button
+              className="text-cerulean bg-white mr-4 hover:bg-gray-50"
+              onClick={onNewForm}
+              data-testid="add-new-button"
+            >
+              Add New
+            </Button>
+            <Button
+              className="bg-cerulean text-white hover:bg-cerulean-500"
+              onClick={onFormSubmit}
+              data-testid="form-submit-button"
+            >
+              Issue Document(s)
+            </Button>
+          </div>
         </div>
-        <div>
-          <Button
-            className="bg-white text-blue-500 border border-none hover:bg-gray-100 mr-4"
-            onClick={onNewForm}
-            data-testid="add-new-button"
-          >
-            Add New
-          </Button>
-          <Button
-            className="bg-blue-500 text-white hover:bg-blue-600"
-            onClick={onFormSubmit}
-            data-testid="form-submit-button"
-          >
-            Issue Document
-          </Button>
-        </div>
-      </div>
+        <DocumentCarousel validateCurrentForm={validateCurrentForm} closePreviewMode={closePreviewMode} />
+      </Card>
     </Wrapper>
   );
 };

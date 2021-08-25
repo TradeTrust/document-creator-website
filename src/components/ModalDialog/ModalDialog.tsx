@@ -3,19 +3,33 @@ import React, { FunctionComponent } from "react";
 import tw from "twin.macro";
 import { useLockBodyScroll } from "../../common/hook/useLockBodyScroll";
 
+export enum ModalSize {
+  SM = "sm",
+  MD = "md",
+  LG = "lg",
+}
+
 interface ModalDialogProps {
   className?: string;
   close: () => void;
   children?: React.ReactNode;
+  size?: ModalSize;
+  rounded?: boolean;
 }
 
-export const ModalDialogUnStyled: FunctionComponent<ModalDialogProps> = ({ className, close, children }) => {
+export const ModalDialogUnStyled: FunctionComponent<ModalDialogProps> = ({
+  className,
+  close,
+  children,
+  size = ModalSize.SM,
+  rounded,
+}) => {
   useLockBodyScroll();
 
   return (
     <>
       <div className={className} data-testid="modal-dialog">
-        <div className="modal-content p-6">{children}</div>
+        <div className={`modal-content ${size} p-6${rounded ? ` rounded-lg` : ``}`}>{children}</div>
         <div className="modal-backdrop bg-black bg-opacity-70" data-testid="modal-backdrop" onClick={() => close()} />
       </div>
     </>
@@ -37,8 +51,19 @@ export const ModalDialog = styled(ModalDialogUnStyled)`
   .modal-content {
     position: relative;
     z-index: 15;
-    max-width: 500px;
     ${tw`bg-white`}
+  }
+
+  .modal-content.sm {
+    max-width: 500px;
+  }
+
+  .modal-content.md {
+    max-width: 650px;
+  }
+
+  .modal-content.lg {
+    max-width: 800px;
   }
 
   .modal-cross {

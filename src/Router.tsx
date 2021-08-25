@@ -1,5 +1,5 @@
 import { NetworkBar, Overlay } from "@govtechsg/tradetrust-ui-components";
-import React, { ReactElement } from "react";
+import { ReactElement } from "react";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 import { useConfigContext } from "./common/context/config";
 import { useFormsContext } from "./common/context/forms";
@@ -14,6 +14,7 @@ import { PublishContainer } from "./components/PublishContainer";
 import { SettingsContainer } from "./components/SettingsContainer";
 import { PageNotFound } from "./pages/pageNotFound";
 import { RevokeContainer } from "./components/RevokeContainer";
+import { Footer } from "./components/Footer";
 
 export const Router = (): ReactElement => {
   const { configFile } = usePersistedConfigFile();
@@ -27,46 +28,55 @@ export const Router = (): ReactElement => {
   };
 
   return (
-    <>
-      <NetworkBar network={configFile?.network}>
-        You are currently on <span className="capitalize">{configFile?.network}</span> network. To change it, please
-        upload a new config file.
-      </NetworkBar>
+    <div className="flex flex-col min-h-screen">
       <BrowserRouter>
-        <NavigationBar logout={config ? logout : undefined} />
-        <main className="bg-gray-200">
-          <Switch>
-            <Route exact path="/">
-              <HomeContainer />
-            </Route>
-            <Route path="/forms-selection">
-              <FormSelectionContainer />
-            </Route>
-            <Route path="/form">
-              <DynamicFormContainer />
-            </Route>
-            <Route path="/publish">
-              <PublishContainer />
-            </Route>
-            <Route path="/settings/address-book">
-              <AddressBookContainer />
-            </Route>
-            <Route path="/settings/address-resolver">
-              <AddressResolverContainer />
-            </Route>
-            <Route path="/settings">
-              <SettingsContainer />
-            </Route>
-            <Route path="/revoke">
-              <RevokeContainer />
-            </Route>
-            <Route path="*">
-              <PageNotFound />
-            </Route>
-          </Switch>
+        <NetworkBar network={configFile?.network}>
+          You are currently on <span className="capitalize">{configFile?.network}</span> network. To change it, please
+          upload a new config file.
+        </NetworkBar>
+        <main className="flex-grow pb-16 bg-cerulean-50">
+          <div className="bg-wave-lines">
+            <header className="bg-white">
+              <NavigationBar logout={config ? logout : undefined} />
+            </header>
+            <div className="container">
+              <Switch>
+                <Route exact path="/">
+                  <HomeContainer />
+                </Route>
+                <Route path="/forms-selection">
+                  <FormSelectionContainer />
+                </Route>
+                <Route path="/form">
+                  <DynamicFormContainer />
+                </Route>
+                <Route path="/publish">
+                  <PublishContainer />
+                </Route>
+                <Route path="/settings/address-book">
+                  <AddressBookContainer />
+                </Route>
+                <Route path="/settings/address-resolver">
+                  <AddressResolverContainer />
+                </Route>
+                <Route path="/settings">
+                  <SettingsContainer />
+                </Route>
+                <Route path="/revoke">
+                  <RevokeContainer />
+                </Route>
+                <Route path="*">
+                  <PageNotFound />
+                </Route>
+              </Switch>
+            </div>
+          </div>
+          <Overlay />
         </main>
+        <footer className="bg-white">
+          <Footer isLoggedIn={Boolean(config && logout)} />
+        </footer>
       </BrowserRouter>
-      <Overlay />
-    </>
+    </div>
   );
 };
