@@ -31,7 +31,7 @@ export const BackModal: FunctionComponent<BackModalProps> = ({ backToFormSelecti
                 </Button>
                 <Button
                   data-testid="red-back-button"
-                  className="bg-red text-white hover:bg-red-400"
+                  className="bg-rose text-white hover:bg-red-400"
                   onClick={backToFormSelection}
                 >
                   Back

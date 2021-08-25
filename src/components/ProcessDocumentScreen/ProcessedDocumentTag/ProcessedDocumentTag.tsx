@@ -39,7 +39,7 @@ export const ProcessedDocumentTag: FunctionComponent<PublishedTagProps> = ({ doc
             secondary="#e2e8f0"
           />
         ) : (
-          <div className="bg-blue w-12 h-12 rounded-full mr-4 flex-shrink-0">
+          <div className="bg-cerulean w-12 h-12 rounded-full mr-4 flex-shrink-0">
             <div className="flex justify-center items-center h-full text-white font-bold">TT</div>
           </div>
         )}

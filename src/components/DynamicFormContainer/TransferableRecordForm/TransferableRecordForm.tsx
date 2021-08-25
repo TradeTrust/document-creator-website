@@ -43,7 +43,7 @@ export const TransferableRecordForm: FunctionComponent<TransferableRecordForm> =
             onChange={(e) => setBeneficiaryAddress(e.target.value)}
           />
           <ButtonIcon
-            className="bg-orange-300 text-white hover:bg-orange-600"
+            className="bg-cerulean text-white hover:bg-cerulean-500"
             onClick={() => onOverlayHandler(setBeneficiaryAddress)}
           >
             <Book />
@@ -61,7 +61,7 @@ export const TransferableRecordForm: FunctionComponent<TransferableRecordForm> =
             onChange={(e) => setHolderAddress(e.target.value)}
           />
           <ButtonIcon
-            className="bg-orange-300 text-white hover:bg-orange-600"
+            className="bg-cerulean text-white hover:bg-cerulean-500"
             onClick={() => onOverlayHandler(setHolderAddress)}
           >
             <Book />
