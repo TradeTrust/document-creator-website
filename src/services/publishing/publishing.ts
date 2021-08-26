@@ -1,11 +1,11 @@
 import { DocumentStoreFactory, GsnCapableDocumentStoreFactory } from "@govtechsg/document-store";
 import { DocumentStore } from "@govtechsg/document-store/src/contracts/DocumentStore";
 import {
-  OpenAttestationDocument,
+  getData,
   signDocument,
   SignedWrappedDocument,
   SUPPORTED_SIGNING_ALGORITHM,
-  WrappedDocument,
+  v2,
 } from "@govtechsg/open-attestation";
 import { TitleEscrowCreatorFactory, TradeTrustErc721Factory } from "@govtechsg/token-registry";
 import { TitleEscrowCreator } from "@govtechsg/token-registry/types/TitleEscrowCreator";
@@ -49,16 +49,17 @@ export const publishVerifiableDocumentJob = async (
 };
 
 export const publishDnsDidVerifiableDocumentJob = async (
-  wrappedDocuments: WrappedDocument<any>[],
+  wrappedDocuments: v2.WrappedDocument[],
   signers: Signer
-): Promise<WrappedDocument<any>[]> => {
-  const signedDocumentsList: SignedWrappedDocument<OpenAttestationDocument>[] = [];
+): Promise<v2.WrappedDocument[]> => {
+  const signedDocumentsList: SignedWrappedDocument<v2.OpenAttestationDocument>[] = [];
   const signingDocuments = wrappedDocuments.map(async (doc) => {
+    const rawDocumentData = getData(doc);
     try {
       const signedDocument = await signDocument(doc, SUPPORTED_SIGNING_ALGORITHM.Secp256k1VerificationKey2018, signers);
       signedDocumentsList.push(signedDocument);
     } catch (e) {
-      throw new Error(`Error signing document: ${doc.rawDocument.issuers[0].id}`);
+      throw new Error(`Error signing document: ${rawDocumentData.issuers[0].id}`);
     }
   });
 
