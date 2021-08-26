@@ -47,7 +47,7 @@ export const ProcessDocumentTitle: FunctionComponent<ProcessDocumentTitle> = ({ 
   };
 
   return (
-    <Title className="flex items-center mb-8" data-testid="title">
+    <Title className="flex items-center mb-8" data-testid="process-title">
       {getDisplayTitle()}
     </Title>
   );
