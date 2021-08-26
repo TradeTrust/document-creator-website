@@ -1,12 +1,18 @@
 import { DocumentStoreFactory, GsnCapableDocumentStoreFactory } from "@govtechsg/document-store";
 import { DocumentStore } from "@govtechsg/document-store/src/contracts/DocumentStore";
-import { signDocument, SUPPORTED_SIGNING_ALGORITHM } from "@govtechsg/open-attestation";
+import {
+  OpenAttestationDocument,
+  signDocument,
+  SignedWrappedDocument,
+  SUPPORTED_SIGNING_ALGORITHM,
+  WrappedDocument,
+} from "@govtechsg/open-attestation";
 import { TitleEscrowCreatorFactory, TradeTrustErc721Factory } from "@govtechsg/token-registry";
 import { TitleEscrowCreator } from "@govtechsg/token-registry/types/TitleEscrowCreator";
 import { providers, Signer, Wallet } from "ethers";
 import { Provider } from "@ethersproject/abstract-provider";
 import { getGsnRelaySigner } from "../../common/config/decrypt";
-import { ConnectedSigner, PublishingJob, WrappedDocument } from "../../types";
+import { ConnectedSigner, PublishingJob } from "../../types";
 import { supportsInterface } from "./utils";
 
 export const assertAddressIsSmartContract = async (address: string, provider: Provider): Promise<void> => {
@@ -43,10 +49,10 @@ export const publishVerifiableDocumentJob = async (
 };
 
 export const publishDnsDidVerifiableDocumentJob = async (
-  wrappedDocuments: any[],
+  wrappedDocuments: WrappedDocument<any>[],
   signers: Signer
-): Promise<WrappedDocument[]> => {
-  const signedDocumentsList: WrappedDocument[] = [];
+): Promise<WrappedDocument<any>[]> => {
+  const signedDocumentsList: SignedWrappedDocument<OpenAttestationDocument>[] = [];
   const signingDocuments = wrappedDocuments.map(async (doc) => {
     try {
       const signedDocument = await signDocument(doc, SUPPORTED_SIGNING_ALGORITHM.Secp256k1VerificationKey2018, signers);
