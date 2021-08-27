@@ -14,6 +14,7 @@ import { PublishContainer } from "./components/PublishContainer";
 import { SettingsContainer } from "./components/SettingsContainer";
 import { PageNotFound } from "./pages/pageNotFound";
 import { RevokeContainer } from "./components/RevokeContainer";
+import { FooterBar } from "./components/FooterBar";
 
 export const Router = (): ReactElement => {
   const { configFile } = usePersistedConfigFile();
@@ -65,6 +66,7 @@ export const Router = (): ReactElement => {
             </Route>
           </Switch>
         </main>
+        <FooterBar config={config} />
       </BrowserRouter>
       <Overlay />
     </>
