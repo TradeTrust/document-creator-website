@@ -95,13 +95,8 @@ const getData = (config?: Config) => {
   return data;
 };
 
-<<<<<<< HEAD
 export const FooterBar: FunctionComponent<FooterBarProps> = ({ config }) => {
   const data = getData(config);
-=======
-export const FooterBar: FunctionComponent<FooterBarProps> = ({ isLoggedIn }) => {
-  const data = getData(isLoggedIn);
->>>>>>> 0d1ed495627e14c0d819bc9f3ca8ef0984373ae2
 
   return (
     <div className="bg-cerulean-50 pt-8">
