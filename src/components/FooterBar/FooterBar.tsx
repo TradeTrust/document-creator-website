@@ -3,17 +3,16 @@ import { FunctionComponent } from "react";
 import { ExternalLink } from "react-feather";
 import { NavLink } from "react-router-dom";
 import { URLS } from "../../constants/Urls";
-import { Config } from "../../types";
 
 interface FooterBarProps {
-  config?: Config;
+  isLoggedIn?: boolean;
 }
 
 const sharedStyles = `text-sm text-cloud-500`;
 
 const renderNavLink = ({ label, to }: FooterColumnItemProps) => {
   return (
-    <NavLink className={sharedStyles} to={to}>
+    <NavLink color={"#89969F"} className={sharedStyles} to={to}>
       {label}
     </NavLink>
   );
@@ -38,25 +37,8 @@ const renderExternalLink = ({ label, to }: FooterColumnItemProps) => {
   );
 };
 
-const getData = (config?: Config) => {
-  let tradeTrustUrl = `${URLS.MAIN}`;
-
-  if (config) {
-    const { network } = config;
-
-    switch (network) {
-      case "local":
-        break;
-      case "rinkeby":
-        tradeTrustUrl = `https://rinkeby.tradetrust.io`;
-        break;
-      case "ropsten":
-        tradeTrustUrl = `https://dev.tradetrust.io`;
-        break;
-      default:
-        console.log("Network not supported!");
-    }
-  }
+const getData = (isLoggedIn?: boolean) => {
+  const tradeTrustUrl = isLoggedIn ? URLS.DEV : URLS.MAIN;
 
   const data = [
     {
@@ -95,8 +77,8 @@ const getData = (config?: Config) => {
   return data;
 };
 
-export const FooterBar: FunctionComponent<FooterBarProps> = ({ config }) => {
-  const data = getData(config);
+export const FooterBar: FunctionComponent<FooterBarProps> = ({ isLoggedIn }) => {
+  const data = getData(isLoggedIn);
 
   return (
     <div className="bg-cerulean-50 pt-8">
