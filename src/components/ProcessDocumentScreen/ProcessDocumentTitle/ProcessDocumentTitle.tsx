@@ -27,7 +27,7 @@ export const ProcessDocumentTitle: FunctionComponent<ProcessDocumentTitle> = ({ 
         if (documents.length > 0) {
           return (
             <>
-              <CheckCircle className="mr-2 text-teal-300" />
+              <CheckCircle className="mr-2 text-emerald" />
               {`Document(s) ${isIssuingFlow ? "issued" : "revoked"} successfully`}
             </>
           );
