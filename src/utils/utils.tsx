@@ -1,4 +1,4 @@
-import { WrappedDocument } from "../types";
+import { Network, WrappedDocument } from "../types";
 import { saveAs } from "file-saver";
 import JSZip from "jszip";
 
@@ -64,4 +64,20 @@ export const createFileTransferEvent = (files: File[]) => {
       types: ["Files"],
     },
   };
+};
+
+export const getNetworkPath = (network?: Network): string => {
+  const homesteadUrlPath = "https://tradetrust.io";
+
+  if (!network) {
+    return homesteadUrlPath;
+  }
+
+  if (network === "ropsten") {
+    return "https://dev.tradetrust.io";
+  } else if (network === "homestead" || network === "local") {
+    return homesteadUrlPath;
+  } else {
+    return `https://${network}.tradetrust.io`;
+  }
 };
