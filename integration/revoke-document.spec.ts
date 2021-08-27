@@ -17,7 +17,7 @@ test("should revoke a document on local blockchain correctly", async (t) => {
   // Login to step 1
   await enterPassword("password");
   await t.expect(Title.textContent).contains("Choose Document Type to Issue");
-  await t.expect(ProgressBar.textContent).contains("Step 1/3");
+  await t.expect(ProgressBar.textContent).contains("1");
 
   // Go to Revoke document page
   await t.click(Selector("[data-testid='choose-revoke-button']"));

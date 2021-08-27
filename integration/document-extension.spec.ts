@@ -20,12 +20,12 @@ test("should have the correct extension if specified", async (t) => {
   // login
   await enterPassword("password");
   await t.expect(Title.textContent).contains("Choose Document Type to Issue");
-  await t.expect(ProgressBar.textContent).contains("Step 1/3");
+  await t.expect(ProgressBar.textContent).contains("1");
 
   // Navigate to form
   await t.click(Button.withText("Covering Letter (DBS)"));
   await t.expect(Title.textContent).contains("Fill and Preview Form");
-  await t.expect(ProgressBar.textContent).contains("Step 2/3");
+  await t.expect(ProgressBar.textContent).contains("2");
 
   // Add new form
   await t.click(AddNewButton);
@@ -33,7 +33,7 @@ test("should have the correct extension if specified", async (t) => {
   // Navigate to form
   await t.click(Button.withText("Covering Letter (extension)"));
   await t.expect(Title.textContent).contains("Fill and Preview Form");
-  await t.expect(ProgressBar.textContent).contains("Step 2/3");
+  await t.expect(ProgressBar.textContent).contains("2");
 
   // Submit
   await t.click(SubmitButton);

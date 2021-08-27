@@ -41,12 +41,12 @@ test("should upload populate data fields correctly", async (t) => {
   // Login to step 1
   await enterPassword("password");
   await t.expect(Title.textContent).contains("Choose Document Type to Issue");
-  await t.expect(ProgressBar.textContent).contains("Step 1/3");
+  await t.expect(ProgressBar.textContent).contains("1");
 
   // Navigate to form
   await t.click(Button.withText("Covering Letter"));
   await t.expect(Title.textContent).contains("Fill and Preview Form");
-  await t.expect(ProgressBar.textContent).contains("Step 2/3");
+  await t.expect(ProgressBar.textContent).contains("2");
 
   // download csv data sample file
   await t.click(downloadCsvDataFileButton);
