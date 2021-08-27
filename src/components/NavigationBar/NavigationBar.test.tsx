@@ -19,12 +19,21 @@ describe("navigationBar", () => {
       </BrowserRouter>
     );
 
-    expect(screen.queryAllByText("Verify Documents")).not.toBeNull();
-    expect(screen.queryAllByText("Create Documents")).not.toBeNull();
     expect(screen.queryAllByText("Resources")).not.toBeNull();
-    expect(screen.queryAllByText("FAQ")).not.toBeNull();
+    expect(screen.queryAllByTestId("navbar-learn")).not.toBeNull();
+    expect(screen.queryAllByTestId("navbar-faq")).not.toBeNull();
+    expect(screen.queryAllByTestId("navbar-eta")).not.toBeNull();
+
+    expect(screen.queryAllByText("News & Events")).not.toBeNull();
+    expect(screen.queryAllByTestId("navbar-news")).not.toBeNull();
+    expect(screen.queryAllByTestId("navbar-event")).not.toBeNull();
+
     expect(screen.queryAllByText("Contact")).not.toBeNull();
-    expect(screen.queryByTestId("settings-icon")).not.toBeNull();
+    expect(screen.queryAllByTestId("navbar-contact")).not.toBeNull();
+
+    expect(screen.queryAllByTestId("navbar-create-doc")).not.toBeNull();
+    expect(screen.queryAllByTestId("navbar-verify-doc")).not.toBeNull();
+    expect(screen.queryAllByTestId("settings-icon")).not.toBeNull();
   });
 
   it("should render href to default verify documents page without config", () => {
@@ -35,8 +44,8 @@ describe("navigationBar", () => {
         </Route>
       </BrowserRouter>
     );
-
-    expect(screen.getByText("Verify Documents").getAttribute("href")).toBe("https://tradetrust.io/#verify-documents");
+    expect(screen.getAllByTestId("navbar-verify-doc")[0]).not.toBeNull;
+    expect(screen.getAllByTestId("navbar-verify-doc")[0].getAttribute("href")).toBe(`https://tradetrust.io/verify`);
   });
 
   it("should render href to rinkeby verify documents page with rinkeby config", () => {
@@ -48,9 +57,9 @@ describe("navigationBar", () => {
         </Route>
       </BrowserRouter>
     );
-
-    expect(screen.getByText("Verify Documents").getAttribute("href")).toBe(
-      "https://rinkeby.tradetrust.io/#verify-documents"
+    expect(screen.getAllByTestId("navbar-verify-doc")[0]).not.toBeNull;
+    expect(screen.getAllByTestId("navbar-verify-doc")[0].getAttribute("href")).toBe(
+      `https://rinkeby.tradetrust.io/verify`
     );
   });
 
@@ -63,10 +72,8 @@ describe("navigationBar", () => {
         </Route>
       </BrowserRouter>
     );
-
-    expect(screen.getByText("Verify Documents").getAttribute("href")).toBe(
-      "https://dev.tradetrust.io/#verify-documents"
-    );
+    expect(screen.getAllByTestId("navbar-verify-doc")[0]).not.toBeNull;
+    expect(screen.getAllByTestId("navbar-verify-doc")[0].getAttribute("href")).toBe(`https://dev.tradetrust.io/verify`);
   });
 
   it("should render href to mainnet verify documents page with homestead config", () => {
@@ -78,7 +85,7 @@ describe("navigationBar", () => {
         </Route>
       </BrowserRouter>
     );
-
-    expect(screen.getByText("Verify Documents").getAttribute("href")).toBe("https://tradetrust.io/#verify-documents");
+    expect(screen.getAllByTestId("navbar-verify-doc")[0]).not.toBeNull;
+    expect(screen.getAllByTestId("navbar-verify-doc")[0].getAttribute("href")).toBe(`https://tradetrust.io/verify`);
   });
 });

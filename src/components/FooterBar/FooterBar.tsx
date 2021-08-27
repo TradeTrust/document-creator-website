@@ -2,12 +2,10 @@ import { Footer, FooterColumnItemProps } from "@govtechsg/tradetrust-ui-componen
 import { FunctionComponent } from "react";
 import { ExternalLink } from "react-feather";
 import { NavLink } from "react-router-dom";
+import { usePersistedConfigFile } from "../../common/hook/usePersistedConfigFile";
 import { URLS } from "../../constants/Urls";
-import { Config } from "../../types";
-
-interface FooterBarProps {
-  config?: Config;
-}
+import { ConfigFile } from "../../types";
+import { getNetworkPath } from "../../utils";
 
 const sharedStyles = `text-sm text-cloud-500`;
 
@@ -38,40 +36,23 @@ const renderExternalLink = ({ label, to }: FooterColumnItemProps) => {
   );
 };
 
-const getData = (config?: Config) => {
-  let tradeTrustUrl = `${URLS.MAIN}`;
-
-  if (config) {
-    const { network } = config;
-
-    switch (network) {
-      case "local":
-        break;
-      case "rinkeby":
-        tradeTrustUrl = `https://rinkeby.tradetrust.io`;
-        break;
-      case "ropsten":
-        tradeTrustUrl = `https://dev.tradetrust.io`;
-        break;
-      default:
-        console.log("Network not supported!");
-    }
-  }
+const getData = (configFile?: ConfigFile) => {
+  const networkPath = getNetworkPath(configFile?.network);
 
   const data = [
     {
       category: "Utilities",
       items: [
-        { label: "Verify Documents", to: `${tradeTrustUrl}/verify`, render: renderExternalLinkWithoutIcon },
+        { label: "Verify Documents", to: `${networkPath}/verify`, render: renderExternalLinkWithoutIcon },
         { label: "Create Documents", to: "/", render: renderNavLink },
       ],
     },
     {
       category: "Resources",
       items: [
-        { label: "Webinars", to: `${tradeTrustUrl}/learn`, render: renderExternalLinkWithoutIcon },
-        { label: "News", to: `${tradeTrustUrl}/news`, render: renderExternalLinkWithoutIcon },
-        { label: "Events", to: `${tradeTrustUrl}/events`, render: renderExternalLinkWithoutIcon },
+        { label: "Webinars", to: `${networkPath}/learn`, render: renderExternalLinkWithoutIcon },
+        { label: "News", to: `${networkPath}/news`, render: renderExternalLinkWithoutIcon },
+        { label: "Events", to: `${networkPath}/events`, render: renderExternalLinkWithoutIcon },
       ],
     },
     {
@@ -79,8 +60,8 @@ const getData = (config?: Config) => {
       items: [
         { label: "Github", to: URLS.GITHUB, render: renderExternalLink },
         { label: "Documentation", to: URLS.DOCS, render: renderExternalLink },
-        { label: "Contact", to: `${tradeTrustUrl}/contact`, render: renderExternalLinkWithoutIcon },
-        { label: "FAQ", to: `${tradeTrustUrl}/faq`, render: renderExternalLinkWithoutIcon },
+        { label: "Contact", to: `${networkPath}/contact`, render: renderExternalLinkWithoutIcon },
+        { label: "FAQ", to: `${networkPath}/faq`, render: renderExternalLinkWithoutIcon },
       ],
     },
     {
@@ -95,8 +76,9 @@ const getData = (config?: Config) => {
   return data;
 };
 
-export const FooterBar: FunctionComponent<FooterBarProps> = ({ config }) => {
-  const data = getData(config);
+export const FooterBar: FunctionComponent = () => {
+  const { configFile } = usePersistedConfigFile();
+  const data = getData(configFile);
 
   return (
     <div className="bg-cerulean-50 pt-8">

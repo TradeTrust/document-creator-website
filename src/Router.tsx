@@ -1,5 +1,5 @@
 import { NetworkBar, Overlay } from "@govtechsg/tradetrust-ui-components";
-import React, { ReactElement } from "react";
+import { ReactElement } from "react";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 import { useConfigContext } from "./common/context/config";
 import { useFormsContext } from "./common/context/forms";
@@ -66,7 +66,7 @@ export const Router = (): ReactElement => {
             </Route>
           </Switch>
         </main>
-        <FooterBar config={config} />
+        <FooterBar />
       </BrowserRouter>
       <Overlay />
     </>
