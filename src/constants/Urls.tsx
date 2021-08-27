@@ -3,5 +3,4 @@ export enum URLS {
   GITHUB = "https://github.com/TradeTrust/tradetrust-website",
   DOCS = "https://docs.tradetrust.io/",
   MAIN = "https://tradetrust.io",
-  DEV = "https://dev.tradetrust.io",
 }
