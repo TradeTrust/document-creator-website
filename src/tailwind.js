@@ -20,6 +20,11 @@ const localConfig = {
       },
     },
   },
+  variants: {
+    extend: {
+      margin: ["last"],
+    },
+  },
 };
 const finalConfig = _.merge(commonUiConfig, localConfig); // deep merge
 
