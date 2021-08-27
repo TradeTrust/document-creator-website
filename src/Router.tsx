@@ -66,7 +66,7 @@ export const Router = (): ReactElement => {
             </Route>
           </Switch>
         </main>
-        <FooterBar isLoggedIn={Boolean(config && logout)} />
+        <FooterBar config={config} />
       </BrowserRouter>
       <Overlay />
     </>
