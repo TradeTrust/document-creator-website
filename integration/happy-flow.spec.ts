@@ -61,8 +61,7 @@ test("should issue the documents on local blockchain correctly", async (t) => {
   await t.expect(Selector("[data-testid='processing-loader']").exists).ok();
 
   // Check that download exists
-  await processTitle.with({ visibilityCheck: true })();
-  await t.expect(processTitle.textContent).contains("Document(s) issued successfully");
+  await t.expect(processTitle.withText("Document(s) issued successfully").exists).ok();
   await t.expect(Selector("div").withText("COO-1-local.tt").exists).ok();
   await t.expect(Selector("div").withText("Download").exists).ok();
   await t.expect(DownloadAllButton.exists).ok();
@@ -104,8 +103,7 @@ test("should issue the documents on local blockchain correctly", async (t) => {
   await t.click(SubmitButton);
 
   // Check that EBL is created
-  await processTitle.with({ visibilityCheck: true })();
-  await t.expect(processTitle.textContent).contains("Document(s) issued successfully");
+  await t.expect(processTitle.withText("Document(s) issued successfully").exists).ok();
   await t.expect(Selector("div").withText("bill-123-local.tt").exists).ok();
   await t.expect(Selector("div").withText("bill-<blNumber 1>-local.tt").exists).ok();
   await t.expect(Selector("div").withText("bill-<blNumber 2>-local.tt").exists).ok();
