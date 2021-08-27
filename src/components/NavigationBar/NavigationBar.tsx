@@ -15,14 +15,18 @@ export interface NavigationBarProps {
   logout?: () => void;
 }
 
+interface NavBarLink {
+  path: string;
+  label: string | ReactElement;
+  testid: string;
+}
+
 export const NavigationBar: FunctionComponent<NavigationBarProps> = ({ logout }) => {
   const { configFile } = usePersistedConfigFile();
 
   const networkPath = getNetworkPath(configFile?.network);
 
-  const [toggleNavBar, setToggleNavBar] = useState(false);
-
-  const renderDropDownLink = (path: string, label: string | ReactElement, testid: string) => {
+  const DropDownLink: FunctionComponent<NavBarLink> = ({ path, label, testid }) => {
     return (
       <a data-testid={testid} className="block w-full px-4 py-3" href={`${networkPath}${path}`}>
         {label}
@@ -30,13 +34,15 @@ export const NavigationBar: FunctionComponent<NavigationBarProps> = ({ logout })
     );
   };
 
-  const renderLink = (path: string, label: string | ReactElement, testid: string) => {
+  const NavBarLink: FunctionComponent<NavBarLink> = ({ path, label, testid }) => {
     return (
       <a data-testid={testid} className="block w-full" href={`${networkPath}${path}`}>
         {label}
       </a>
     );
   };
+
+  const [toggleNavBar, setToggleNavBar] = useState(false);
 
   const leftNavItems: NavigationItem[] = [
     {
@@ -49,19 +55,19 @@ export const NavigationBar: FunctionComponent<NavigationBarProps> = ({ logout })
           id: "learn",
           label: "Learn",
           path: "/learn",
-          customLink: renderDropDownLink("/learn", "Learn", "navbar-learn"),
+          customLink: <DropDownLink path={"/learn"} label={"Learn"} testid={"navbar-learn"} />,
         },
         {
           id: "faq",
           label: "FAQ",
           path: "/faq",
-          customLink: renderDropDownLink("/faq", "FAQ", "navbar-faq"),
+          customLink: <DropDownLink path={"/faq"} label={"FAQ"} testid={"navbar-faq"} />,
         },
         {
           id: "eta",
           label: "ETA",
           path: "/eta",
-          customLink: renderDropDownLink("/eta", "ETA", "navbar-eta"),
+          customLink: <DropDownLink path={"/eta"} label={"ETA"} testid={"navbar-eta"} />,
         },
       ],
     },
@@ -75,13 +81,13 @@ export const NavigationBar: FunctionComponent<NavigationBarProps> = ({ logout })
           id: "news",
           label: "News",
           path: "/news",
-          customLink: renderDropDownLink("/news", "News", "navbar-news"),
+          customLink: <DropDownLink path={"/news"} label={"News"} testid={"navbar-news"} />,
         },
         {
           id: "event",
           label: "Event",
           path: "/event",
-          customLink: renderDropDownLink("/event", "Event", "navbar-event"),
+          customLink: <DropDownLink path={"/event"} label={"Event"} testid={"navbar-event"} />,
         },
       ],
     },
@@ -90,7 +96,7 @@ export const NavigationBar: FunctionComponent<NavigationBarProps> = ({ logout })
       id: "contact",
       label: "Contact",
       path: "/contact",
-      customLink: renderLink("/contact", "Contact", "navbar-contact"),
+      customLink: <NavBarLink path={"/contact"} label="Contact" testid="navbar-contact" />,
     },
   ];
 
@@ -101,10 +107,12 @@ export const NavigationBar: FunctionComponent<NavigationBarProps> = ({ logout })
       label: "Settings",
       path: "/settings",
       icon: Settings,
-      customLink: renderLink(
-        "/settings",
-        <Settings data-testid="settings-icon" className="stroke-current" />,
-        "navbar-settings"
+      customLink: (
+        <NavBarLink
+          path={"/settings"}
+          label={<Settings data-testid="settings-icon" className="stroke-current" />}
+          testid="navbar-settings"
+        />
       ),
     },
     {
@@ -129,12 +137,16 @@ export const NavigationBar: FunctionComponent<NavigationBarProps> = ({ logout })
       id: "verify",
       label: "Verify Doc",
       path: "/verify",
-      customLink: renderLink(
-        "/verify",
-        <Button className="bg-cerulean text-white hover:bg-cerulean-500" size={ButtonSize.SM}>
-          Verify Doc
-        </Button>,
-        "navbar-verify-doc"
+      customLink: (
+        <NavBarLink
+          path={"/verify"}
+          label={
+            <Button className="bg-cerulean text-white hover:bg-cerulean-500" size={ButtonSize.SM}>
+              Verify Doc
+            </Button>
+          }
+          testid="navbar-verify-doc"
+        />
       ),
     },
   ];
