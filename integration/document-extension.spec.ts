@@ -6,7 +6,6 @@ fixture("Document extension").page`http://localhost:3000`;
 const Config = "./../src/test/fixtures/sample-config-local.json";
 
 const Title = Selector("h1");
-const processTitle = Selector("[data-testid='process-title']");
 const Button = Selector("button");
 const AddNewButton = Selector("[data-testid='add-new-button']");
 const ProgressBar = Selector("[data-testid='progress-bar']");
@@ -42,7 +41,6 @@ test("should have the correct extension if specified", async (t) => {
   // Check that the two Covering Letters are created with the correct document extensions
   const fileName1 = "Covering Letter (DBS)-1-local.tt";
   const fileName2 = "Covering Letter (extension)-2-local.docTest";
-  await t.expect(processTitle.withText("Document(s) issued successfully").exists).ok();
   await t.expect(Selector("div").withText(fileName1).exists).ok();
   await t.expect(Selector("div").withText(fileName2).exists).ok();
 });
