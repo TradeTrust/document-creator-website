@@ -8,6 +8,7 @@ import { Title } from "../../UI/Title";
 import { Wrapper } from "../../UI/Wrapper";
 import { IssueOrRevokeSelector } from "../../UI/IssueOrRevokeSelector";
 import { Card } from "../../UI/Card";
+import { ContentFrame } from "../../UI/ContentFrame";
 
 interface FormSelection {
   config: Config;
@@ -24,25 +25,27 @@ export const FormSelection: FunctionComponent<FormSelection> = ({ config }) => {
   if (activeFormIndex !== undefined) return <Redirect to="/form" />;
 
   return (
-    <Wrapper isMaxW={true}>
+    <Wrapper>
       <IssueOrRevokeSelector />
-      <Card>
-        <ProgressBar step={1} totalSteps={3} title="Choose Type" />
-        <Title className="mb-8">Choose Document Type to Issue</Title>
-        <div className="flex flex-wrap justify-start">
-          {config.forms.map((form: FormTemplate, index: number) => {
-            return (
-              <Button
-                className="bg-white text-cerulean hover:bg-gray-50 w-40 mb-4 mr-4"
-                key={index}
-                onClick={() => selectedForm(index)}
-              >
-                {form.name}
-              </Button>
-            );
-          })}
-        </div>
-      </Card>
+      <ContentFrame>
+        <Card>
+          <ProgressBar step={1} totalSteps={3} title="Choose Type" />
+          <Title className="mb-8">Choose Document Type to Issue</Title>
+          <div className="flex flex-wrap justify-start">
+            {config.forms.map((form: FormTemplate, index: number) => {
+              return (
+                <Button
+                  className="bg-white text-cerulean hover:bg-gray-50 w-40 mb-4 mr-4"
+                  key={index}
+                  onClick={() => selectedForm(index)}
+                >
+                  {form.name}
+                </Button>
+              );
+            })}
+          </div>
+        </Card>
+      </ContentFrame>
     </Wrapper>
   );
 };
