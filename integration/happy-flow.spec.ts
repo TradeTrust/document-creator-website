@@ -9,6 +9,7 @@ const DataFileEbl = "./../src/test/fixtures/sample-data-file-ebl.json";
 const DataFileCsvEbl = "./../src/test/fixtures/sample-data-file-ebl.csv";
 
 const Title = Selector("h1");
+const processTitle = Selector("[data-testid='process-title']");
 const Button = Selector("button");
 const ProgressBar = Selector("[data-testid='progress-bar']");
 const SubmitButton = Selector("[data-testid='form-submit-button']");
@@ -60,7 +61,7 @@ test("should issue the documents on local blockchain correctly", async (t) => {
   await t.expect(Selector("[data-testid='processing-loader']").exists).ok();
 
   // Check that download exists
-  await t.expect(Title.textContent).contains("Document(s) issued successfully");
+  await t.expect(processTitle.withText("Document(s) issued successfully").exists).ok();
   await t.expect(Selector("div").withText("COO-1-local.tt").exists).ok();
   await t.expect(Selector("div").withText("Download").exists).ok();
   await t.expect(DownloadAllButton.exists).ok();
@@ -102,7 +103,7 @@ test("should issue the documents on local blockchain correctly", async (t) => {
   await t.click(SubmitButton);
 
   // Check that EBL is created
-  await t.expect(Title.textContent).contains("Document(s) issued successfully");
+  await t.expect(processTitle.withText("Document(s) issued successfully").exists).ok();
   await t.expect(Selector("div").withText("bill-123-local.tt").exists).ok();
   await t.expect(Selector("div").withText("bill-<blNumber 1>-local.tt").exists).ok();
   await t.expect(Selector("div").withText("bill-<blNumber 2>-local.tt").exists).ok();

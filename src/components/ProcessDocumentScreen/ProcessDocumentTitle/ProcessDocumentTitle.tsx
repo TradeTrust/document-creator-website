@@ -13,13 +13,18 @@ interface ProcessDocumentTitle {
 
 export const ProcessDocumentTitle: FunctionComponent<ProcessDocumentTitle> = ({ queueState, documents, type }) => {
   const isIssuingFlow = type === QueueType.ISSUE;
+
+  const titleText = (message: string): ReactElement => {
+    return <span data-testid="process-title">{message}</span>;
+  };
+
   const getDisplayTitle = (): ReactElement => {
     switch (queueState) {
       case QueueState.PENDING:
         return (
           <>
             <LoaderSpinner className="mr-2" width="24px" primary="#00cbbc" secondary="#e2e8f0" />
-            {`${isIssuingFlow ? "Publishing " : "Revoking"} document(s)...`}
+            {titleText(`${isIssuingFlow ? "Publishing " : "Revoking"} document(s)...`)}
           </>
         );
 
@@ -27,28 +32,24 @@ export const ProcessDocumentTitle: FunctionComponent<ProcessDocumentTitle> = ({ 
         if (documents.length > 0) {
           return (
             <>
-              <CheckCircle className="mr-2 text-emerald" />
-              {`Document(s) ${isIssuingFlow ? "issued" : "revoked"} successfully`}
+              <CheckCircle className="mr-2 text-teal-300" />
+              {titleText(`Document(s) ${isIssuingFlow ? "issued" : "revoked"} successfully`)}
             </>
           );
         } else {
           return (
             <>
               <XCircle className="mr-2 text-rose" />
-              {`Document(s) failed to ${isIssuingFlow ? "issue" : "revoke"}`}
+              {titleText(`Document(s) failed to ${isIssuingFlow ? "issue" : "revoke"}`)}
             </>
           );
         }
 
       case QueueState.INITIALIZED:
       default:
-        return <>Please wait while we prepare your document(s)</>;
+        return titleText(`Please wait while we prepare your document(s)`);
     }
   };
 
-  return (
-    <Title className="flex items-center mb-8" data-testid="title">
-      {getDisplayTitle()}
-    </Title>
-  );
+  return <Title className="flex items-center mb-8">{getDisplayTitle()}</Title>;
 };
