@@ -1,5 +1,4 @@
 import React, { FunctionComponent, useState } from "react";
-import { ArrowRight } from "react-feather";
 import { assertConfigFile } from "../../../common/config/validate";
 import { usePersistedConfigFile } from "../../../common/hook/usePersistedConfigFile";
 import { ConfigFile } from "../../../types";

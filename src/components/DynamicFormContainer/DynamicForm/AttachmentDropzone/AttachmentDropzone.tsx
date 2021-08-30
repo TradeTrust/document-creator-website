@@ -54,14 +54,6 @@ export const AttachmentDropzone: FunctionComponent<AttachmentDropzone> = ({
   const isFileRejected = fileRejections.length > 0;
   const error = isFileRejected || fileSizeError;
 
-  const dropZoneCSS = error
-    ? `border-dashed border-2 items-center border-red flex flex-col pt-16 pb-16 px-4 text-center ${
-        isDragActive ? "bg-gray-300" : "bg-red-100"
-      }`
-    : `border-dashed border-2 items-center border-gray-300 flex flex-col pt-16 pb-16 px-4 text-center ${
-        isDragActive ? "bg-gray-300" : "bg-white"
-      }`;
-
   return (
     <div className="flex flex-col max-w-screen-sm m-auto" key="AttachmentDropzone" data-testid="attachment-dropzone">
       <legend>Attachments</legend>

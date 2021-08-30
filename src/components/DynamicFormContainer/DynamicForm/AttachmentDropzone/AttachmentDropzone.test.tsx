@@ -43,7 +43,7 @@ describe("attachmentDropzone", () => {
       />
     );
 
-    expect(screen.getByText("Drag and drop file here")).not.toBeNull();
+    expect(screen.getByText("Drag and drop your file(s) here")).not.toBeNull();
     expect(screen.getByText("or")).not.toBeNull();
     expect(screen.getByText("Browse File")).not.toBeNull();
   });
