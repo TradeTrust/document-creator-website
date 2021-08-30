@@ -22,7 +22,7 @@ test("should show file limit warning when over 6mb", async (t) => {
   // Login to step 1
   await enterPassword("password");
   await t.expect(Title.textContent).contains("Choose Document Type to Issue");
-  await t.expect(ProgressBar.textContent).contains("Step 1/3");
+  await t.expect(ProgressBar.textContent).contains("1");
 
   // Navigate to form
   await t.click(Button.withText("COO"));

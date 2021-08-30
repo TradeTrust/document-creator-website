@@ -44,7 +44,7 @@ describe("navigationBar", () => {
         </Route>
       </BrowserRouter>
     );
-    expect(screen.getAllByTestId("navbar-verify-doc")[0]).not.toBeNull;
+    expect(screen.getAllByTestId("navbar-verify-doc")[0]).not.toBeNull();
     expect(screen.getAllByTestId("navbar-verify-doc")[0].getAttribute("href")).toBe(`https://tradetrust.io/verify`);
   });
 
@@ -57,7 +57,7 @@ describe("navigationBar", () => {
         </Route>
       </BrowserRouter>
     );
-    expect(screen.getAllByTestId("navbar-verify-doc")[0]).not.toBeNull;
+    expect(screen.getAllByTestId("navbar-verify-doc")[0]).not.toBeNull();
     expect(screen.getAllByTestId("navbar-verify-doc")[0].getAttribute("href")).toBe(
       `https://rinkeby.tradetrust.io/verify`
     );
@@ -72,7 +72,7 @@ describe("navigationBar", () => {
         </Route>
       </BrowserRouter>
     );
-    expect(screen.getAllByTestId("navbar-verify-doc")[0]).not.toBeNull;
+    expect(screen.getAllByTestId("navbar-verify-doc")[0]).not.toBeNull();
     expect(screen.getAllByTestId("navbar-verify-doc")[0].getAttribute("href")).toBe(`https://dev.tradetrust.io/verify`);
   });
 
@@ -85,7 +85,7 @@ describe("navigationBar", () => {
         </Route>
       </BrowserRouter>
     );
-    expect(screen.getAllByTestId("navbar-verify-doc")[0]).not.toBeNull;
+    expect(screen.getAllByTestId("navbar-verify-doc")[0]).not.toBeNull();
     expect(screen.getAllByTestId("navbar-verify-doc")[0].getAttribute("href")).toBe(`https://tradetrust.io/verify`);
   });
 });

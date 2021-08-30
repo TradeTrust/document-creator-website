@@ -5,16 +5,16 @@ import { ProgressBar } from "./ProgressBar";
 describe("progressBar", () => {
   it("should display progress correctly when step is 1", () => {
     render(<ProgressBar step={1} totalSteps={3} title="Choose Type" />);
-    expect(screen.getByTestId("progress-bar").innerHTML).toBe("Step 1/3: Choose Type");
+    expect(screen.getByTestId("progress-bar-step-1")).not.toBeNull();
   });
 
   it("should display progress correctly when step is 2", () => {
     render(<ProgressBar step={2} totalSteps={3} title="Fill Form" />);
-    expect(screen.getByTestId("progress-bar").innerHTML).toBe("Step 2/3: Fill Form");
+    expect(screen.getByTestId("progress-bar-step-2")).not.toBeNull();
   });
 
   it("should display progress correctly when step is 3", () => {
     render(<ProgressBar step={3} totalSteps={3} title="Issue Document(s)" />);
-    expect(screen.getByTestId("progress-bar").innerHTML).toBe("Step 3/3: Issue Document(s)");
+    expect(screen.getByTestId("progress-bar-step-3")).not.toBeNull();
   });
 });

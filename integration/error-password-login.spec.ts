@@ -27,5 +27,5 @@ test("should handle no password, wrong password errors correctly", async (t) => 
   await deletePassword();
   await enterPassword("password");
   await t.expect(Title.textContent).contains("Choose Document Type to Issue");
-  await t.expect(ProgressBar.textContent).contains("Step 1/3");
+  await t.expect(ProgressBar.textContent).contains("1");
 });
