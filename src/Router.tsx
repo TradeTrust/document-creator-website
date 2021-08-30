@@ -35,7 +35,7 @@ export const Router = (): ReactElement => {
       </NetworkBar>
       <BrowserRouter>
         <NavigationBar logout={config ? logout : undefined} />
-        <main className="bg-cerulean-50">
+        <main className="bg-cerulean-50 bg-wave-lines bg-cover">
           <Switch>
             <Route exact path="/">
               <HomeContainer />

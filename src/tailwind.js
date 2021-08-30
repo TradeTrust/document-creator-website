@@ -19,6 +19,9 @@ const localConfig = {
         12: "3rem",
       },
     },
+    backgroundImage: (theme) => ({
+      "wave-lines": "url('./img/wave-lines.png')",
+    }),
   },
   variants: {
     extend: {

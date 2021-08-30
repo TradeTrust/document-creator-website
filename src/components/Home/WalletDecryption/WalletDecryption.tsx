@@ -1,6 +1,7 @@
 import { Button } from "@govtechsg/tradetrust-ui-components";
 import React, { FunctionComponent, useState } from "react";
 import { BarTrack } from "../../ProgressBar";
+import { Card } from "../../UI/Card";
 import { Title } from "../../UI/Title";
 import { Wrapper } from "../../UI/Wrapper";
 
@@ -31,48 +32,50 @@ export const WalletDecryption: FunctionComponent<WalletDecryption> = ({
   return (
     <Wrapper isMaxW={true}>
       <Title className="mb-8">Create Document</Title>
-      <form className="relative bg-white flex flex-col rounded pt-5 pl-5 pr-4 pb-6">
-        {isDecrypting && <BarTrack progress={decryptProgress} className="absolute top-0 left-0" />}
-        <div className="text-gray-800 mr-4 mb-4 font-bold text-lg" data-testid="login-title">
-          Login
-        </div>
-        <input
-          data-testid="password-field"
-          placeholder="Enter password"
-          className={`
-              ${inputBorderCSS}
-              ${isDecrypting && "bg-gray-300"}
-              ${!password && "italic"}
-            `}
-          type="password"
-          value={password}
-          onChange={(evt) => setPassword(evt.target.value)}
-          disabled={isDecrypting}
-          autoComplete="off"
-        />
-        {isIncorrectPassword && (
-          <div data-testid="password-field-msg" className="text-rose text-sm mt-2">
-            Invalid password. Please try again.
-          </div>
-        )}
-        <div
-          data-testid="reset-button"
-          className="text-cerulean-200 font-bold mt-4 cursor-pointer"
-          onClick={onResetConfigFile}
-        >
-          Upload new Config file
-        </div>
-        <div className="ml-auto w-auto">
-          <Button
-            data-testid="login-button"
-            className="bg-cerulean text-white hover:bg-cerulean-500 mt-4"
-            onClick={onLogin}
-            disabled={isDecrypting}
-          >
+      <Card>
+        <form className="relative flex flex-col rounded">
+          {isDecrypting && <BarTrack progress={decryptProgress} className="absolute top-0 left-0" />}
+          <div className="text-gray-800 mr-4 mb-4 font-bold text-lg" data-testid="login-title">
             Login
-          </Button>
-        </div>
-      </form>
+          </div>
+          <input
+            data-testid="password-field"
+            placeholder="Enter password"
+            className={`
+                ${inputBorderCSS}
+                ${isDecrypting && "bg-gray-300"}
+                ${!password && "italic"}
+              `}
+            type="password"
+            value={password}
+            onChange={(evt) => setPassword(evt.target.value)}
+            disabled={isDecrypting}
+            autoComplete="off"
+          />
+          {isIncorrectPassword && (
+            <div data-testid="password-field-msg" className="text-rose text-sm mt-2">
+              Invalid password. Please try again.
+            </div>
+          )}
+          <div
+            data-testid="reset-button"
+            className="text-cerulean-200 font-bold mt-4 cursor-pointer"
+            onClick={onResetConfigFile}
+          >
+            Upload new Config file
+          </div>
+          <div className="ml-auto w-auto">
+            <Button
+              data-testid="login-button"
+              className="bg-cerulean text-white hover:bg-cerulean-500 mt-4"
+              onClick={onLogin}
+              disabled={isDecrypting}
+            >
+              Login
+            </Button>
+          </div>
+        </form>
+      </Card>
     </Wrapper>
   );
 };
