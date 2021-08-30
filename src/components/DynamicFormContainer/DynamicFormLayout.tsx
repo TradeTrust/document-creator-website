@@ -5,6 +5,8 @@ import React, { FunctionComponent, useState } from "react";
 import { Trash2 } from "react-feather";
 import { Redirect } from "react-router";
 import { useFormsContext } from "../../common/context/forms";
+import { Card } from "../UI/Card";
+import { ContentFrame } from "../UI/ContentFrame";
 import { ToggleSwitch } from "../UI/ToggleSwitch";
 import { BackModal } from "./BackModal";
 import { DeleteModal } from "./DeleteModal";
@@ -98,9 +100,9 @@ export const DynamicFormLayout: FunctionComponent = () => {
         validateCurrentForm={validateCurrentForm}
         closePreviewMode={closePreviewMode}
       />
-      <div className="bg-gray-100 py-6">
-        <div className="container">
-          <div className="bg-white p-4">
+      <div className="container">
+        <ContentFrame>
+          <Card>
             <div className="flex justify-between">
               <div className="text-gray-800 flex items-center">
                 <div className="align-middle">Preview mode:</div>
@@ -144,8 +146,8 @@ export const DynamicFormLayout: FunctionComponent = () => {
                 />
               </div>
             )}
-          </div>
-        </div>
+          </Card>
+        </ContentFrame>
       </div>
     </>
   );
