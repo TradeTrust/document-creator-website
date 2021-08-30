@@ -7,7 +7,7 @@ interface CardProps {
 
 export const Card: React.FunctionComponent<CardProps> = ({ title, children }: CardProps) => {
   return (
-    <div className="flex flex-col max-w-3xl">
+    <div className="max-w-3xl">
       {title && <div className="mb-4">{title}</div>}
       <div className="rounded-lg shadow-md bg-white p-6">{children}</div>
     </div>
