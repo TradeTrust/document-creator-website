@@ -9,7 +9,6 @@ fixture("uiSchema").page`http://localhost:3000`;
 const Config = "./../src/test/fixtures/sample-config-local.json";
 
 const Title = Selector("h1");
-const processTitle = Selector("[data-testid='process-title']");
 const Button = Selector("button");
 const Form = Selector("[data-testid='form-group field field-object']");
 const AddNewButton = Selector("[data-testid='add-new-button']");
@@ -93,7 +92,6 @@ test("form should render correctly according to uiSchema", async (t) => {
   // Check that the two Covering Letters are created
   const fileName1 = "Covering Letter (DBS)-1-local.tt";
   const fileName2 = "Covering Letter (DBS, Nested UISchema)-2-local.tt";
-  await t.expect(processTitle.withText("Document(s) issued successfully").exists).ok();
   await t.expect(Selector("div").withText(fileName1).exists).ok();
   await t.expect(Selector("div").withText(fileName2).exists).ok();
   await t.expect(Selector("div").withText("Download").exists).ok();
