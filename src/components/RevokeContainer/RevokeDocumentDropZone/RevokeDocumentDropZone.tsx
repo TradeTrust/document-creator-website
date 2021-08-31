@@ -51,7 +51,7 @@ export const RevokeDocumentDropZone: FunctionComponent<RevokeDocumentDropZone> =
         <Title className="mb-8">Revoke Document</Title>
         <Card>
           <ProgressBar step={1} totalSteps={3} title="Upload Document" />
-          <div className="my-6 text-2xl">Upload File</div>
+          <div className="my-6 text-2xl">Upload Document</div>
           <div {...getRootProps()} data-testid="revoke-dropzone">
             <input data-testid="revoke-document-drop-zone" {...getInputProps()} />
             <DropZone
@@ -82,7 +82,7 @@ export const RevokeDocumentDropZone: FunctionComponent<RevokeDocumentDropZone> =
                 )}
                 {documentUploadState !== DocumentUploadState.LOADING && (
                   <Button className="bg-cerulean text-white hover:bg-cerulean-500 border-gray-300 px-12 mt-4">
-                    Browse Files
+                    Browse Documents
                   </Button>
                 )}
               </>
