@@ -8,6 +8,9 @@ import { Wrapper } from "../../UI/Wrapper";
 import { ProgressBar } from "../../ProgressBar";
 import { IssueOrRevokeSelector } from "../../UI/IssueOrRevokeSelector";
 import { DocumentUploadState } from "../../../constants/DocumentUploadState";
+import { DropZone } from "../../UI/DropZone";
+import { ContentFrame } from "../../UI/ContentFrame";
+import { Card } from "../../UI/Card";
 
 const { stack } = getLogger("RevokeDocumentDropZone");
 
@@ -41,52 +44,52 @@ export const RevokeDocumentDropZone: FunctionComponent<RevokeDocumentDropZone> =
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop, maxFiles: 1 });
 
-  const dropZoneCSS =
-    errorMessage || documentUploadState === DocumentUploadState.ERROR
-      ? `border-dashed border-2 items-center border-red flex flex-col pt-16 pb-16 px-4 text-center ${
-          isDragActive ? "bg-gray-300" : "bg-red-100"
-        }`
-      : `border-dashed border-2 items-center border-gray-300 flex flex-col pt-16 pb-16 px-4 text-center ${
-          isDragActive ? "bg-gray-300" : "bg-white"
-        }`;
-
   return (
-    <Wrapper isMaxW={true}>
+    <Wrapper>
       <IssueOrRevokeSelector />
-      <ProgressBar step={1} totalSteps={3} title="Upload Document" />
-      <Title className="mb-8">Revoke Document</Title>
-      <div {...getRootProps()} data-testid="revoke-dropzone">
-        <input data-testid="revoke-document-drop-zone" {...getInputProps()} />
-        <div className={dropZoneCSS}>
-          {documentUploadState === DocumentUploadState.LOADING && (
-            <div className="py-8 flex flex-col items-center" data-testid="dropzone-loader">
-              <LoaderSpinner />
-              <div className="mt-4 text-blue">Verifying Document</div>
-            </div>
-          )}
-          <>
-            {documentUploadState === DocumentUploadState.ERROR && (
-              <div className="max-w-lg text-rose font-bold text-lg" data-testid="error-message">
-                <p>{errorMessage ? errorMessage : "Error: File cannot be read"}</p>
-                <p className="text-base text-gray-800 my-4 font-normal">Please try again</p>
-              </div>
-            )}
-            {documentUploadState === DocumentUploadState.INITIALIZED && (
-              <>
-                <div className="font-bold text-lg text-gray-800" data-testid="dropzone-description">
-                  Drag and drop file here
+      <ContentFrame>
+        <Title className="mb-8">Revoke Document</Title>
+        <Card>
+          <ProgressBar step={1} totalSteps={3} title="Upload Document" />
+          <div className="my-6 text-2xl">Upload File</div>
+          <div {...getRootProps()} data-testid="revoke-dropzone">
+            <input data-testid="revoke-document-drop-zone" {...getInputProps()} />
+            <DropZone
+              isDragActive={isDragActive}
+              error={Boolean(errorMessage || documentUploadState === DocumentUploadState.ERROR)}
+            >
+              <img className="mb-12" src={"/dropzone-graphic.png"} />
+              {documentUploadState === DocumentUploadState.LOADING && (
+                <div className="py-8 flex flex-col items-center" data-testid="dropzone-loader">
+                  <LoaderSpinner />
+                  <div className="mt-4 text-blue">Verifying Document</div>
                 </div>
-                <div className="text-base text-gray-800 my-4">or</div>
+              )}
+              <>
+                {documentUploadState === DocumentUploadState.ERROR && (
+                  <div className="max-w-lg text-rose font-bold text-lg" data-testid="error-message">
+                    <p>{errorMessage ? errorMessage : "Error: File cannot be read"}</p>
+                    <p className="text-base text-gray-800 my-4 font-normal">Please try again</p>
+                  </div>
+                )}
+                {documentUploadState === DocumentUploadState.INITIALIZED && (
+                  <>
+                    <div className="font-bold text-lg text-gray-800" data-testid="dropzone-description">
+                      Drop your TradeTrust file to revoke the document
+                    </div>
+                    <div className="mt-4">or</div>
+                  </>
+                )}
+                {documentUploadState !== DocumentUploadState.LOADING && (
+                  <Button className="bg-cerulean text-white hover:bg-cerulean-500 border-gray-300 px-12 mt-4">
+                    Browse Files
+                  </Button>
+                )}
               </>
-            )}
-            {documentUploadState !== DocumentUploadState.LOADING && (
-              <Button className="bg-cerulean text-white hover:bg-cerulean-500 border-gray-300 px-12">
-                Browse Files
-              </Button>
-            )}
-          </>
-        </div>
-      </div>
+            </DropZone>
+          </div>
+        </Card>
+      </ContentFrame>
     </Wrapper>
   );
 };

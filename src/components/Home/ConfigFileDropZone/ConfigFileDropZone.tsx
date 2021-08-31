@@ -4,6 +4,7 @@ import { useDropzone } from "react-dropzone";
 import { readFileAsJson } from "../../../common/utils";
 import { ConfigFile } from "../../../types";
 import { getLogger } from "../../../utils/logger";
+import { DropZone } from "../../UI/DropZone";
 import { Title } from "../../UI/Title";
 
 const { stack } = getLogger("ConfigFileDropZone");
@@ -27,21 +28,13 @@ export const ConfigFileDropZone: FunctionComponent<ConfigFileDropZone> = ({ onCo
   };
   const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop });
 
-  const dropZoneCSS =
-    errorMessage || error
-      ? `border-dashed border-2 items-center border-red flex flex-col pt-16 pb-16 px-4 text-center ${
-          isDragActive ? "bg-gray-300" : "bg-red-100"
-        }`
-      : `border-dashed border-2 items-center border-gray-300 flex flex-col pt-16 pb-16 px-4 text-center ${
-          isDragActive ? "bg-gray-300" : "bg-white"
-        }`;
-
   return (
     <>
       <Title className="mb-8">Create Document</Title>
       <div {...getRootProps()}>
         <input data-testid="config-file-drop-zone" {...getInputProps()} />
-        <div className={dropZoneCSS}>
+        <DropZone isDragActive={isDragActive} error={Boolean(errorMessage || error)}>
+          <img className="mb-12" src={"/dropzone-graphic.png"} />
           {error && (
             <div className="max-w-lg text-rose font-bold text-lg" data-testid={"error-cannot-read-file"}>
               Error: File cannot be read
@@ -59,7 +52,16 @@ export const ConfigFileDropZone: FunctionComponent<ConfigFileDropZone> = ({ onCo
           )}
           <div className="text-base text-gray-800 my-4">{errorMessage || error ? "Please try again." : "or"}</div>
           <Button className="bg-cerulean text-white hover:bg-cerulean-500 border-gray-300 px-12">Browse Files</Button>
-        </div>
+          <a
+            onClick={(e) => e.stopPropagation()}
+            className="text-cerulean-200 font-bold mt-8"
+            href="https://docs.tradetrust.io/docs/document-creator/config-file"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Don’t have a config file? Learn how to create one
+          </a>
+        </DropZone>
       </div>
     </>
   );

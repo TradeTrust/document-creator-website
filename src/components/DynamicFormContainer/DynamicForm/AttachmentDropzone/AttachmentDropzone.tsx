@@ -2,6 +2,7 @@ import { Button } from "@govtechsg/tradetrust-ui-components";
 import React, { FunctionComponent, useCallback, useState } from "react";
 import { useDropzone } from "react-dropzone";
 import { FileUploadType } from "../../../../types";
+import { DropZone } from "../../../UI/DropZone";
 import { FilesInfo } from "./FilesInfo";
 
 // 5MB is 5242880 bytes as 1MB is 1048576 bytes
@@ -53,21 +54,14 @@ export const AttachmentDropzone: FunctionComponent<AttachmentDropzone> = ({
   const isFileRejected = fileRejections.length > 0;
   const error = isFileRejected || fileSizeError;
 
-  const dropZoneCSS = error
-    ? `border-dashed border-2 items-center border-red flex flex-col pt-16 pb-16 px-4 text-center ${
-        isDragActive ? "bg-gray-300" : "bg-red-100"
-      }`
-    : `border-dashed border-2 items-center border-gray-300 flex flex-col pt-16 pb-16 px-4 text-center ${
-        isDragActive ? "bg-gray-300" : "bg-white"
-      }`;
-
   return (
     <div className="flex flex-col max-w-screen-sm m-auto" key="AttachmentDropzone" data-testid="attachment-dropzone">
       <legend>Attachments</legend>
       <div className="text-gray-800">Max. total file size: {MAX_FILE_SIZE / BYTE_CONVERTION_RATE}MB</div>
       <div data-testid="attachment-upload-zone" className="mt-4" {...getRootProps()}>
         <input data-testid="attachment-file-drop-zone" {...getInputProps()} />
-        <div className={dropZoneCSS}>
+        <DropZone error={error} isDragActive={isDragActive}>
+          <img className="mb-4" src={"/upload-icon.png"} />
           {isFileRejected && (
             <>
               <div className="max-w-lg text-rose font-bold text-lg" data-testid="invalid-file-error">
@@ -86,12 +80,14 @@ export const AttachmentDropzone: FunctionComponent<AttachmentDropzone> = ({
           )}
           {!error && (
             <>
-              <div className="font-bold text-lg text-gray-800">Drag and drop file here</div>
-              <div className="text-base text-gray-800 my-4">or</div>
+              <div className="font-bold text-lg text-gray-800">Drag and drop your file(s) here</div>
+              <div className="mt-4">or</div>
             </>
           )}
-          <Button className="bg-cerulean text-white border-gray-400 hover:bg-cerulean-500 px-12">Browse File</Button>
-        </div>
+          <Button className="bg-cerulean text-white border-gray-400 hover:bg-cerulean-500 px-12 mt-4">
+            Browse File
+          </Button>
+        </DropZone>
       </div>
       <FilesInfo filesInfo={uploadedFiles} removeFile={removeFile} />
     </div>
