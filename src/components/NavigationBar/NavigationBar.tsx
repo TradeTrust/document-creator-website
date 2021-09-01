@@ -108,11 +108,9 @@ export const NavigationBar: FunctionComponent<NavigationBarProps> = ({ logout })
       path: "/settings",
       icon: Settings,
       customLink: (
-        <NavBarLink
-          path={"/settings"}
-          label={<Settings data-testid="settings-icon" className="stroke-current" />}
-          testid="navbar-settings"
-        />
+        <NavLink to={"/settings"} data-testid="navbar-settings">
+          <Settings data-testid="settings-icon" className="stroke-current" />
+        </NavLink>
       ),
     },
     {
