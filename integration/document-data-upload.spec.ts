@@ -36,7 +36,7 @@ const waitForFileDownload = async (t: TestController, filePath: string): Promise
 test("should upload populate data fields correctly", async (t) => {
   // Upload config file
   await loadConfigFile(Config);
-  await t.expect(Title.textContent).contains("Create Document");
+  await t.expect(Title.textContent).contains("Create and Revoke Document");
 
   // Login to step 1
   await enterPassword("password");

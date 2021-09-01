@@ -17,7 +17,7 @@ const FormAttachmentField = Selector("[data-testid='upload-file-0']");
 test("should show file limit warning when over 6mb", async (t) => {
   // Upload config file
   await loadConfigFile(Config);
-  await t.expect(Title.textContent).contains("Create Document");
+  await t.expect(Title.textContent).contains("Create and Revoke Document");
 
   // Login to step 1
   await enterPassword("password");

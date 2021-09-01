@@ -11,7 +11,7 @@ const ProgressBar = Selector("[data-testid='progress-bar']");
 test("should revoke a document on local blockchain correctly", async (t) => {
   // Upload config file
   await loadConfigFile(Config);
-  await t.expect(Title.textContent).contains("Create Document");
+  await t.expect(Title.textContent).contains("Create and Revoke Document");
   await t.expect(Selector("[data-testid='login-title']").textContent).contains("Login");
 
   // Login to step 1

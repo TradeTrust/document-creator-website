@@ -15,7 +15,7 @@ const IframeRoot = Selector("#root");
 test("should be able to preview form with data", async (t) => {
   // Upload config file
   await loadConfigFile(Config);
-  await t.expect(Title.textContent).contains("Create Document");
+  await t.expect(Title.textContent).contains("Create and Revoke Document");
 
   // Login to step 1
   await enterPassword("password");

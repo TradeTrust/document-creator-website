@@ -26,28 +26,25 @@ export const WalletDecryption: FunctionComponent<WalletDecryption> = ({
   };
   const isDecrypting = decryptProgress > 0 && decryptProgress < 1;
 
-  const inputBorderCSS = isIncorrectPassword
-    ? "w-full border-solid border border-red h-10 p-3"
-    : "w-full border-solid border border-gray-300 h-10 p-3";
+  let inputBorderCSS = `w-full border-solid border h-10 p-3 rounded-lg`;
+
+  inputBorderCSS += isIncorrectPassword ? ` border-rose` : ` border-cloud-200`;
+  inputBorderCSS += isDecrypting ? ` bg-cloud-200` : ``;
 
   return (
     <Wrapper>
-      <Title className="mb-8">Create Document</Title>
+      <Title className="mb-8">Create and Revoke Document</Title>
       <ContentFrame>
         <Card>
           <form className="relative flex flex-col rounded">
             {isDecrypting && <BarTrack progress={decryptProgress} className="absolute top-0 left-0" />}
-            <div className="text-gray-800 mr-4 mb-4 font-bold text-lg" data-testid="login-title">
+            <div className="text-cloud-900 mr-4 mb-4 text-2xl" data-testid="login-title">
               Login
             </div>
             <input
               data-testid="password-field"
-              placeholder="Enter password"
-              className={`
-                  ${inputBorderCSS}
-                  ${isDecrypting && "bg-gray-300"}
-                  ${!password && "italic"}
-                `}
+              placeholder="Password"
+              className={inputBorderCSS}
               type="password"
               value={password}
               onChange={(evt) => setPassword(evt.target.value)}
@@ -64,9 +61,9 @@ export const WalletDecryption: FunctionComponent<WalletDecryption> = ({
               className="text-cerulean-200 font-bold mt-4 cursor-pointer"
               onClick={onResetConfigFile}
             >
-              Upload new Config file
+              Upload a new config file
             </div>
-            <div className="ml-auto w-auto">
+            <div className="my-8 w-auto">
               <Button
                 data-testid="login-button"
                 className="bg-cerulean text-white hover:bg-cerulean-500 mt-4"

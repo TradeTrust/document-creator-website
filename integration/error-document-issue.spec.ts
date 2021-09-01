@@ -12,7 +12,7 @@ const ProgressBar = Selector("[data-testid='progress-bar']");
 test("should show failed published document(s) errors", async (t) => {
   // Upload config file
   await loadConfigFile(ConfigFailPublishDocument);
-  await t.expect(Title.textContent).contains("Create Document");
+  await t.expect(Title.textContent).contains("Create and Revoke Document");
 
   // Login to step 1
   await enterPassword("password");

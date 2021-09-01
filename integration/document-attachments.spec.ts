@@ -16,7 +16,7 @@ const FormAttachmentFields = Selector("[data-testid*='upload-file-']");
 test("should be added and removed correctly", async (t) => {
   // Upload config file
   await loadConfigFile(Config);
-  await t.expect(Title.textContent).contains("Create Document");
+  await t.expect(Title.textContent).contains("Create and Revoke Document");
 
   // Login to step 1
   await enterPassword("password");

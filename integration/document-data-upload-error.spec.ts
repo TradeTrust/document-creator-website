@@ -15,7 +15,7 @@ const ErrorItem2 = Selector("[data-testid='form-error-banner'] li").nth(1);
 test("should show validation error messages correctly", async (t) => {
   // Upload config file
   await loadConfigFile(Config);
-  await t.expect(Title.textContent).contains("Create Document");
+  await t.expect(Title.textContent).contains("Create and Revoke Document");
 
   // Login to step 1
   await enterPassword("password");
