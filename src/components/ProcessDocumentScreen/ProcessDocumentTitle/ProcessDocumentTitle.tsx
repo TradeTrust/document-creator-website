@@ -24,7 +24,7 @@ export const ProcessDocumentTitle: FunctionComponent<ProcessDocumentTitle> = ({ 
         return (
           <>
             <LoaderSpinner className="mr-2" width="24px" primary="#00cbbc" secondary="#e2e8f0" />
-            {titleText(`${isIssuingFlow ? "Publishing " : "Revoking"} document(s)...`)}
+            {titleText(`${isIssuingFlow ? "Publishing document(s)..." : "Revoking document..."}`)}
           </>
         );
 
@@ -33,21 +33,21 @@ export const ProcessDocumentTitle: FunctionComponent<ProcessDocumentTitle> = ({ 
           return (
             <>
               <CheckCircle className="mr-2 text-teal-300" />
-              {titleText(`Document(s) ${isIssuingFlow ? "issued" : "revoked"} successfully`)}
+              {titleText(`${isIssuingFlow ? "Document(s) issued" : "Document revoked"} successfully`)}
             </>
           );
         } else {
           return (
             <>
               <XCircle className="mr-2 text-rose" />
-              {titleText(`Document(s) failed to ${isIssuingFlow ? "issue" : "revoke"}`)}
+              {titleText(`${isIssuingFlow ? "Document(s) failed to issue" : "Document failed to revoke"}`)}
             </>
           );
         }
 
       case QueueState.INITIALIZED:
       default:
-        return titleText(`Please wait while we prepare your document(s)`);
+        return titleText(`Please wait while we prepare your ${isIssuingFlow ? "document(s)" : "document"}`);
     }
   };
 

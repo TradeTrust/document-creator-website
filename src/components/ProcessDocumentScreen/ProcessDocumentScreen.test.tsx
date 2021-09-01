@@ -149,7 +149,7 @@ describe("ProcessDocumentScreen", () => {
         type={QueueType.REVOKE}
       />
     );
-    expect(screen.getByTestId("process-title")).toHaveTextContent("Please wait while we prepare your document(s)");
+    expect(screen.getByTestId("process-title")).toHaveTextContent("Please wait while we prepare your document");
   });
 
   it("should display the correct title while pending issuing", () => {
@@ -176,7 +176,7 @@ describe("ProcessDocumentScreen", () => {
         type={QueueType.REVOKE}
       />
     );
-    expect(screen.getByTestId("process-title")).toHaveTextContent("Revoking document(s)...");
+    expect(screen.getByTestId("process-title")).toHaveTextContent("Revoking document...");
   });
 
   it("should display the correct title when document issue successfully", () => {
@@ -203,7 +203,7 @@ describe("ProcessDocumentScreen", () => {
         type={QueueType.REVOKE}
       />
     );
-    expect(screen.getByTestId("process-title")).toHaveTextContent("Document(s) revoked successfully");
+    expect(screen.getByTestId("process-title")).toHaveTextContent("Document revoked successfully");
   });
 
   it("should display the correct title when document has error", () => {
@@ -260,7 +260,7 @@ describe("ProcessDocumentScreen", () => {
         type={QueueType.REVOKE}
       />
     );
-    expect(screen.getByTestId("process-title")).toHaveTextContent("Document(s) failed to revoke");
+    expect(screen.getByTestId("process-title")).toHaveTextContent("Document failed to revoke");
     expect(screen.getByTestId("error-message")).toHaveTextContent(
       "These documents failed to publish due to some errors. Kindly rectify and try publishing again."
     );

@@ -30,10 +30,10 @@ describe("ProcessDocumentTitle", () => {
 
     expect(screen.queryAllByText("Publishing document(s)...")).toHaveLength(1);
   });
-  it("should display 'publishing' when queueState is 'PENDING' for revoking documents", () => {
+  it("should display 'revoking' when queueState is 'PENDING' for revoking documents", () => {
     render(<ProcessDocumentTitle queueState={QueueState.PENDING} documents={mockDocuments} type={QueueType.REVOKE} />);
 
-    expect(screen.queryAllByText("Revoking document(s)...")).toHaveLength(1);
+    expect(screen.queryAllByText("Revoking document...")).toHaveLength(1);
   });
 
   it("should display 'success' when queueState is 'CONFIRMED' and there are publish documents", () => {
@@ -46,7 +46,7 @@ describe("ProcessDocumentTitle", () => {
       <ProcessDocumentTitle queueState={QueueState.CONFIRMED} documents={mockDocuments} type={QueueType.REVOKE} />
     );
 
-    expect(screen.queryAllByText("Document(s) revoked successfully")).toHaveLength(1);
+    expect(screen.queryAllByText("Document revoked successfully")).toHaveLength(1);
   });
 
   it("should display 'fail' when queueState is 'CONFIRMED' and there are no publish documents", () => {
@@ -57,6 +57,6 @@ describe("ProcessDocumentTitle", () => {
   it("should display 'fail' when queueState is 'CONFIRMED' and there are no revoke documents", () => {
     render(<ProcessDocumentTitle queueState={QueueState.CONFIRMED} documents={[]} type={QueueType.REVOKE} />);
 
-    expect(screen.queryAllByText("Document(s) failed to revoke")).toHaveLength(1);
+    expect(screen.queryAllByText("Document failed to revoke")).toHaveLength(1);
   });
 });
