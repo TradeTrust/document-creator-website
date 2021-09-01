@@ -28,8 +28,8 @@ export const WalletDecryption: FunctionComponent<WalletDecryption> = ({
 
   let inputBorderCSS = `w-full border-solid border h-10 p-3 rounded-lg`;
 
-  inputBorderCSS += isIncorrectPassword ? ` border-red` : ` border-gray-300`;
-  inputBorderCSS += isDecrypting ? ` bg-gray-300` : ``;
+  inputBorderCSS += isIncorrectPassword ? ` border-rose` : ` border-cloud-200`;
+  inputBorderCSS += isDecrypting ? ` bg-cloud-200` : ``;
 
   return (
     <Wrapper>
@@ -38,7 +38,7 @@ export const WalletDecryption: FunctionComponent<WalletDecryption> = ({
         <Card>
           <form className="relative flex flex-col rounded">
             {isDecrypting && <BarTrack progress={decryptProgress} className="absolute top-0 left-0" />}
-            <div className="text-gray-800 mr-4 mb-4 text-2xl" data-testid="login-title">
+            <div className="text-cloud-900 mr-4 mb-4 text-2xl" data-testid="login-title">
               Login
             </div>
             <input
