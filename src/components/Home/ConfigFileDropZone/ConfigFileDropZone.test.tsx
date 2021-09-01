@@ -7,7 +7,7 @@ import { createFileTransferEvent } from "../../../utils/utils";
 describe("configFileDropZone", () => {
   it("should have the right text", () => {
     render(<ConfigFileDropZone onConfigFile={() => {}} />);
-    expect(screen.queryByText(/Create Document/)).not.toBeNull();
+    expect(screen.queryByText(/Create and Revoke Document/)).not.toBeNull();
     expect(screen.queryByText(/Drag and drop your configuration file here/)).not.toBeNull();
   });
 

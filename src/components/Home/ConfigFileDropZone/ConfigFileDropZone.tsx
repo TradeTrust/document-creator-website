@@ -4,6 +4,7 @@ import { useDropzone } from "react-dropzone";
 import { readFileAsJson } from "../../../common/utils";
 import { ConfigFile } from "../../../types";
 import { getLogger } from "../../../utils/logger";
+import { ContentFrame } from "../../UI/ContentFrame";
 import { DropZone } from "../../UI/DropZone";
 import { Title } from "../../UI/Title";
 
@@ -30,39 +31,41 @@ export const ConfigFileDropZone: FunctionComponent<ConfigFileDropZone> = ({ onCo
 
   return (
     <>
-      <Title className="mb-8">Create Document</Title>
-      <div {...getRootProps()}>
-        <input data-testid="config-file-drop-zone" {...getInputProps()} />
-        <DropZone isDragActive={isDragActive} error={Boolean(errorMessage || error)}>
-          <img className="mb-12" src={"/dropzone-graphic.png"} />
-          {error && (
-            <div className="max-w-lg text-rose font-bold text-lg" data-testid={"error-cannot-read-file"}>
-              Error: File cannot be read
-            </div>
-          )}
-          {errorMessage && !error && (
-            <div className="max-w-lg text-rose font-bold text-lg" data-testid={"config-error"}>
-              {errorMessage}
-            </div>
-          )}
-          {!errorMessage && !error && (
-            <div className="font-bold text-lg text-gray-800" data-testid="home-description">
-              Drag and drop your configuration file here
-            </div>
-          )}
-          <div className="text-base text-gray-800 my-4">{errorMessage || error ? "Please try again." : "or"}</div>
-          <Button className="bg-cerulean text-white hover:bg-cerulean-500 border-gray-300 px-12">Browse Files</Button>
-          <a
-            onClick={(e) => e.stopPropagation()}
-            className="text-cerulean-200 font-bold mt-8"
-            href="https://docs.tradetrust.io/docs/document-creator/config-file"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Don’t have a config file? Learn how to create one
-          </a>
-        </DropZone>
-      </div>
+      <Title className="mb-8">Create and Revoke Document</Title>
+      <ContentFrame>
+        <div {...getRootProps()}>
+          <input data-testid="config-file-drop-zone" {...getInputProps()} />
+          <DropZone isDragActive={isDragActive} error={Boolean(errorMessage || error)}>
+            <img className="mb-12" src={"/dropzone-graphic.png"} />
+            {error && (
+              <div className="max-w-lg text-rose font-bold text-lg" data-testid={"error-cannot-read-file"}>
+                Error: File cannot be read
+              </div>
+            )}
+            {errorMessage && !error && (
+              <div className="max-w-lg text-rose font-bold text-lg" data-testid={"config-error"}>
+                {errorMessage}
+              </div>
+            )}
+            {!errorMessage && !error && (
+              <div className="font-bold text-lg text-gray-800" data-testid="home-description">
+                Drag and drop your configuration file here
+              </div>
+            )}
+            <div className="text-base text-gray-800 my-4">{errorMessage || error ? "Please try again." : "or"}</div>
+            <Button className="bg-cerulean text-white hover:bg-cerulean-500 border-gray-300">Select File</Button>
+            <a
+              onClick={(e) => e.stopPropagation()}
+              className="text-cerulean-200 font-bold mt-8"
+              href="https://docs.tradetrust.io/docs/document-creator/config-file"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Don’t have a config file? Learn how to create one
+            </a>
+          </DropZone>
+        </div>
+      </ContentFrame>
     </>
   );
 };

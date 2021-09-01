@@ -26,7 +26,7 @@ test("should show correct error messages on various malformed configs", async (t
   await t.expect(Title.textContent).contains("Create Document");
   await t.expect(Selector("[data-testid='login-title']").textContent).contains("Login");
   await t.click(ButtonReset);
-  await t.expect(Title.textContent).contains("Create Document");
+  await t.expect(Title.textContent).contains("Create and Revoke Document");
   await t
     .expect(Selector("[data-testid='home-description']").textContent)
     .contains("Drag and drop your configuration file here");

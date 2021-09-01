@@ -2,7 +2,6 @@ import React, { FunctionComponent, useState } from "react";
 import { assertConfigFile } from "../../../common/config/validate";
 import { usePersistedConfigFile } from "../../../common/hook/usePersistedConfigFile";
 import { ConfigFile } from "../../../types";
-import { ContentFrame } from "../../UI/ContentFrame";
 import { Wrapper } from "../../UI/Wrapper";
 import { ConfigFileDropZone } from "./ConfigFileDropZone";
 
@@ -22,9 +21,7 @@ export const ConfigFileDropZoneContainer: FunctionComponent = () => {
 
   return (
     <Wrapper>
-      <ContentFrame>
-        <ConfigFileDropZone errorMessage={configValidationError} onConfigFile={onConfigFile} />
-      </ContentFrame>
+      <ConfigFileDropZone errorMessage={configValidationError} onConfigFile={onConfigFile} />
     </Wrapper>
   );
 };
