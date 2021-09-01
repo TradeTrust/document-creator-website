@@ -38,9 +38,9 @@ export const WalletDecryption: FunctionComponent<WalletDecryption> = ({
         <Card>
           <form className="relative flex flex-col rounded">
             {isDecrypting && <BarTrack progress={decryptProgress} className="absolute top-0 left-0" />}
-            <div className="text-cloud-900 mr-4 mb-4 text-2xl" data-testid="login-title">
+            <h3 className="mb-4" data-testid="login-title">
               Login
-            </div>
+            </h3>
             <input
               data-testid="password-field"
               placeholder="Password"

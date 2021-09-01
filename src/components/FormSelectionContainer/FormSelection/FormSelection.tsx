@@ -4,7 +4,6 @@ import { Redirect } from "react-router-dom";
 import { useFormsContext } from "../../../common/context/forms";
 import { Config, FormTemplate } from "../../../types";
 import { ProgressBar } from "../../ProgressBar";
-import { SecondaryTitle } from "../../UI/Title";
 import { Wrapper } from "../../UI/Wrapper";
 import { IssueOrRevokeSelector } from "../../UI/IssueOrRevokeSelector";
 import { Card } from "../../UI/Card";
@@ -30,7 +29,7 @@ export const FormSelection: FunctionComponent<FormSelection> = ({ config }) => {
       <ContentFrame>
         <Card>
           <ProgressBar step={1} totalSteps={3} title="Choose Type" />
-          <SecondaryTitle className="my-8 font-normal">Choose Document Type to Issue</SecondaryTitle>
+          <h3 className="my-8">Choose Document Type to Issue</h3>
           <div className="flex flex-wrap justify-start">
             {config.forms.map((form: FormTemplate, index: number) => {
               return (
