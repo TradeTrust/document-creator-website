@@ -24,7 +24,7 @@ export const SettingsContainer: FunctionComponent = () => {
   return (
     <div className="container py-8">
       <h2 data-testid="page-title">Settings</h2>
-      <div className="flex flex-col flex-wrap mt-4 md:flex-row">
+      <div className="flex flex-wrap mt-4">
         {settingsOptions.map((details, index) => (
           <div className="mr-4 mb-4" key={index}>
             <Link to={details.pathLink} className="inline-block">
