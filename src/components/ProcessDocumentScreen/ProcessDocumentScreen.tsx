@@ -94,7 +94,8 @@ export const ProcessDocumentScreen: FunctionComponent<ProcessDocumentScreen> = (
                       className="text-cloud-500 font-medium text-lg mb-4 flex-grow py-3"
                       data-testid="total-number-of-documents"
                     >
-                      {successfulProcessedDocuments.length + pendingProcessDocuments.length} Document(s)
+                      {successfulProcessedDocuments.length + pendingProcessDocuments.length}
+                      {isIssuingFlow ? " Document(s)" : " Document"}
                     </div>
                     {queueState === QueueState.CONFIRMED && isIssuingFlow && (
                       <Button
@@ -124,7 +125,8 @@ export const ProcessDocumentScreen: FunctionComponent<ProcessDocumentScreen> = (
             {failPublishedDocuments && failPublishedDocuments.length > 0 && queueState !== QueueState.ERROR && (
               <div className="container">
                 <div className="text-cloud-500 font-medium text-lg my-6">
-                  {failPublishedDocuments.length} Document(s) Failed
+                  {failPublishedDocuments.length}
+                  {isIssuingFlow ? " Document(s)" : " Document"} Failed
                 </div>
                 <div className="bg-rose-400 p-3 flex flex-col">
                   <div className="flex">
@@ -176,7 +178,7 @@ export const ProcessDocumentScreen: FunctionComponent<ProcessDocumentScreen> = (
                     >
                       <div className="flex">
                         <Download />
-                        <div className="text-cerulean ml-2">Download Failed Files</div>
+                        <div className="text-cerulean ml-2">Download Failed Documents</div>
                       </div>
                     </Button>
                   </div>
