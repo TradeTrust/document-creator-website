@@ -77,7 +77,7 @@ describe("walletDecryption", () => {
       />
     );
 
-    expect(screen.queryAllByText(/Create Document/)).toHaveLength(1);
-    expect(screen.queryAllByPlaceholderText(/Enter password/)).toHaveLength(1);
+    expect(screen.queryAllByText(/Create and Revoke Document/)).toHaveLength(1);
+    expect(screen.queryAllByPlaceholderText(/Password/)).toHaveLength(1);
   });
 });

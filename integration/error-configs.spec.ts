@@ -23,7 +23,7 @@ test("should show correct error messages on various malformed configs", async (t
 
   // Upload config file (working config file)
   await loadConfigFile(Config);
-  await t.expect(Title.textContent).contains("Create Document");
+  await t.expect(Title.textContent).contains("Create and Revoke Document");
   await t.expect(Selector("[data-testid='login-title']").textContent).contains("Login");
   await t.click(ButtonReset);
   await t.expect(Title.textContent).contains("Create and Revoke Document");

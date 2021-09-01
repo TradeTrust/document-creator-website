@@ -35,7 +35,7 @@ const waitForFileDownload = async (t: TestController, filePath: string): Promise
 test("form should render correctly according to uiSchema", async (t) => {
   // Upload config file
   await loadConfigFile(Config);
-  await t.expect(Title.textContent).contains("Create Document");
+  await t.expect(Title.textContent).contains("Create and Revoke Document");
   await t.expect(Selector("[data-testid='login-title']").textContent).contains("Login");
 
   // Check if on correct network

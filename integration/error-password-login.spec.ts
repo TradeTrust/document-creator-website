@@ -13,7 +13,7 @@ const ProgressBar = Selector("[data-testid='progress-bar']");
 test("should handle no password, wrong password errors correctly", async (t) => {
   // Upload config file
   await loadConfigFile(Config);
-  await t.expect(Title.textContent).contains("Create Document");
+  await t.expect(Title.textContent).contains("Create and Revoke Document");
 
   // Login (no password)
   await t.click(ButtonLogin);
