@@ -30,17 +30,18 @@ export const FormSelection: FunctionComponent<FormSelection> = ({ config }) => {
       <ContentFrame>
         <Card>
           <ProgressBar step={1} totalSteps={3} title="Choose Type" />
-          <Title className="mb-8">Choose Document Type to Issue</Title>
+          <h3 className="my-10">Choose Document Type to Issue</h3>
           <div className="flex flex-wrap justify-start">
             {config.forms.map((form: FormTemplate, index: number) => {
               return (
-                <Button
-                  className="bg-white text-cerulean hover:bg-gray-50 w-40 mb-4 mr-4"
-                  key={index}
-                  onClick={() => selectedForm(index)}
-                >
-                  {form.name}
-                </Button>
+                <div key={index} className="w-1/3 mb-4">
+                  <Button
+                    className="bg-white text-cerulean w-11/12 hover:bg-cloud-100 h-full p-4"
+                    onClick={() => selectedForm(index)}
+                  >
+                    {form.name}
+                  </Button>
+                </div>
               );
             })}
           </div>
