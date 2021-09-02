@@ -25,7 +25,11 @@ export const DeleteModal: FunctionComponent<DeleteModalProps> = ({ deleteForm, s
                 >
                   Cancel
                 </Button>
-                <Button data-testid="delete-button" className="text-white bg-red hover:bg-red-400" onClick={deleteForm}>
+                <Button
+                  data-testid="delete-button"
+                  className=" bg-rose text-white hover:bg-red-400"
+                  onClick={deleteForm}
+                >
                   Delete
                 </Button>
               </div>
