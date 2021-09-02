@@ -26,7 +26,6 @@ const localConfig = {
   variants: {
     extend: {
       margin: ["last"],
-      transform: ["hover"],
     },
   },
 };
