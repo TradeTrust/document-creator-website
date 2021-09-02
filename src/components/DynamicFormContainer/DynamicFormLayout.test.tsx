@@ -137,7 +137,7 @@ describe("dynamicFormLayout", () => {
         <DynamicFormLayout />
       </MemoryRouter>
     );
-    expect(screen.getByTestId("back-button")).not.toBeNull();
+    expect(screen.getByTestId("clear-all-button")).not.toBeNull();
   });
   it("should unset activeFormIndex on clicking back", () => {
     whenActiveFormIsAvailable();
@@ -147,7 +147,7 @@ describe("dynamicFormLayout", () => {
       </MemoryRouter>
     );
 
-    fireEvent.click(screen.getByTestId("back-button"));
+    fireEvent.click(screen.getByTestId("clear-all-button"));
     fireEvent.click(screen.getByTestId("red-back-button"));
     expect(mockSetActiveFormIndex).toHaveBeenCalled(); // eslint-disable-line jest/prefer-called-with
     expect(mockSetForms).toHaveBeenCalledWith([]);

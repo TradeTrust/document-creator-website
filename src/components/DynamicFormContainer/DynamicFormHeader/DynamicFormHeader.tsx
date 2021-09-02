@@ -1,9 +1,9 @@
 import { Button } from "@govtechsg/tradetrust-ui-components";
 import React, { FunctionComponent } from "react";
-import { ArrowLeft } from "react-feather";
 import { useFormsContext } from "../../../common/context/forms";
 import { ProgressBar } from "../../ProgressBar";
 import { Card } from "../../UI/Card";
+import { IssueOrRevokeSelector } from "../../UI/IssueOrRevokeSelector";
 import { Wrapper } from "../../UI/Wrapper";
 import { DocumentSelector } from "../DocumentSelector";
 
@@ -26,19 +26,24 @@ export const DynamicFormHeader: FunctionComponent<DynamicFormHeaderProps> = ({
 
   return (
     <Wrapper className="mb-8">
-      <div
-        onClick={onBackToFormSelection}
-        className="text-gray flex cursor-pointer py-4 w-20"
-        data-testid="back-button"
+      <Card
+        title={
+          <div className="flex justify-between items-center">
+            <IssueOrRevokeSelector createLink="/form" />
+            <Button
+              data-testid="clear-all-button"
+              className="bg-white text-cerulean hover:bg-cloud-100"
+              onClick={onBackToFormSelection}
+            >
+              Clear All
+            </Button>
+          </div>
+        }
       >
-        <ArrowLeft />
-        <div className="pl-2">Back</div>
-      </div>
-      <Card>
         <ProgressBar step={2} totalSteps={3} title="Fill Form" />
         <div className="flex justify-between items-end">
           <div className="flex flex-col">
-            <h3 data-testid="fill-form-title" className="mb-4">
+            <h3 data-testid="fill-form-title" className="my-8">
               Fill and Preview Form
             </h3>
             <div className="text-gray-800 text-lg">{`${(activeFormIndex || 0) + 1} of ${
@@ -59,7 +64,7 @@ export const DynamicFormHeader: FunctionComponent<DynamicFormHeaderProps> = ({
               onClick={onFormSubmit}
               data-testid="form-submit-button"
             >
-              Issue Document
+              Issue Document(s)
             </Button>
           </div>
         </div>

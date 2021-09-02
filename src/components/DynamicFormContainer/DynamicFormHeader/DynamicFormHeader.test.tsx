@@ -1,5 +1,6 @@
 import { fireEvent, render, screen } from "@testing-library/react";
 import React from "react";
+import { MemoryRouter } from "react-router-dom";
 import { useFormsContext } from "../../../common/context/forms";
 import { DynamicFormHeader } from "./DynamicFormHeader";
 
@@ -60,32 +61,36 @@ describe("dynamicFormHeader", () => {
   it("should display the header UI correctly", () => {
     whenActiveFormsAreAvailable();
     render(
-      <DynamicFormHeader
-        onBackToFormSelection={() => {}}
-        onFormSubmit={() => {}}
-        onNewForm={() => {}}
-        validateCurrentForm={() => false}
-        closePreviewMode={mockClosePreviewMode}
-      />
+      <MemoryRouter>
+        <DynamicFormHeader
+          onBackToFormSelection={() => {}}
+          onFormSubmit={() => {}}
+          onNewForm={() => {}}
+          validateCurrentForm={() => false}
+          closePreviewMode={mockClosePreviewMode}
+        />
+      </MemoryRouter>
     );
 
-    expect(screen.queryAllByText("Back")).toHaveLength(1);
+    expect(screen.queryAllByText("Clear All")).toHaveLength(1);
     expect(screen.queryAllByText("Fill and Preview Form")).toHaveLength(1);
     expect(screen.queryAllByText("Add New")).toHaveLength(1);
-    expect(screen.queryAllByText("Issue Document")).toHaveLength(1);
+    expect(screen.queryAllByText("Create Document")).toHaveLength(1);
   });
 
   it("should fire the 'add new' function when add new button is clicked", () => {
     whenActiveFormsAreAvailable();
     const mockOnNewForm = jest.fn();
     render(
-      <DynamicFormHeader
-        onBackToFormSelection={() => {}}
-        onFormSubmit={() => {}}
-        onNewForm={mockOnNewForm}
-        validateCurrentForm={() => false}
-        closePreviewMode={mockClosePreviewMode}
-      />
+      <MemoryRouter>
+        <DynamicFormHeader
+          onBackToFormSelection={() => {}}
+          onFormSubmit={() => {}}
+          onNewForm={mockOnNewForm}
+          validateCurrentForm={() => false}
+          closePreviewMode={mockClosePreviewMode}
+        />
+      </MemoryRouter>
     );
 
     fireEvent.click(screen.getByTestId("add-new-button"));
@@ -96,16 +101,18 @@ describe("dynamicFormHeader", () => {
     whenActiveFormsAreAvailable();
     const mockOnBackToFormSelection = jest.fn();
     render(
-      <DynamicFormHeader
-        onBackToFormSelection={mockOnBackToFormSelection}
-        onFormSubmit={() => {}}
-        onNewForm={() => {}}
-        validateCurrentForm={() => false}
-        closePreviewMode={mockClosePreviewMode}
-      />
+      <MemoryRouter>
+        <DynamicFormHeader
+          onBackToFormSelection={mockOnBackToFormSelection}
+          onFormSubmit={() => {}}
+          onNewForm={() => {}}
+          validateCurrentForm={() => false}
+          closePreviewMode={mockClosePreviewMode}
+        />
+      </MemoryRouter>
     );
 
-    fireEvent.click(screen.getByTestId("back-button"));
+    fireEvent.click(screen.getByTestId("clear-all-button"));
     expect(mockOnBackToFormSelection).toHaveBeenCalledTimes(1);
   });
 
@@ -113,13 +120,15 @@ describe("dynamicFormHeader", () => {
     whenActiveFormsAreAvailable();
     const mockonFormSubmit = jest.fn();
     render(
-      <DynamicFormHeader
-        onBackToFormSelection={() => {}}
-        onFormSubmit={mockonFormSubmit}
-        onNewForm={() => {}}
-        validateCurrentForm={() => false}
-        closePreviewMode={mockClosePreviewMode}
-      />
+      <MemoryRouter>
+        <DynamicFormHeader
+          onBackToFormSelection={() => {}}
+          onFormSubmit={mockonFormSubmit}
+          onNewForm={() => {}}
+          validateCurrentForm={() => false}
+          closePreviewMode={mockClosePreviewMode}
+        />
+      </MemoryRouter>
     );
 
     fireEvent.click(screen.getByTestId("form-submit-button"));
@@ -130,13 +139,15 @@ describe("dynamicFormHeader", () => {
     whenActiveFormsAreAvailable();
     const mockValidateCurrentForm = jest.fn().mockReturnValue(true);
     render(
-      <DynamicFormHeader
-        onBackToFormSelection={() => {}}
-        onFormSubmit={() => {}}
-        onNewForm={() => {}}
-        validateCurrentForm={mockValidateCurrentForm}
-        closePreviewMode={mockClosePreviewMode}
-      />
+      <MemoryRouter>
+        <DynamicFormHeader
+          onBackToFormSelection={() => {}}
+          onFormSubmit={() => {}}
+          onNewForm={() => {}}
+          validateCurrentForm={mockValidateCurrentForm}
+          closePreviewMode={mockClosePreviewMode}
+        />
+      </MemoryRouter>
     );
 
     expect(screen.queryAllByText("2 of 2 document(s)")).toHaveLength(1);
@@ -146,13 +157,15 @@ describe("dynamicFormHeader", () => {
     whenActiveFormsAreAvailable();
     const mockValidateCurrentForm = jest.fn().mockReturnValue(true);
     render(
-      <DynamicFormHeader
-        onBackToFormSelection={() => {}}
-        onFormSubmit={() => {}}
-        onNewForm={() => {}}
-        validateCurrentForm={mockValidateCurrentForm}
-        closePreviewMode={mockClosePreviewMode}
-      />
+      <MemoryRouter>
+        <DynamicFormHeader
+          onBackToFormSelection={() => {}}
+          onFormSubmit={() => {}}
+          onNewForm={() => {}}
+          validateCurrentForm={mockValidateCurrentForm}
+          closePreviewMode={mockClosePreviewMode}
+        />
+      </MemoryRouter>
     );
 
     fireEvent.click(screen.getByTestId("previous-document-button"));
@@ -166,13 +179,15 @@ describe("dynamicFormHeader", () => {
     whenActiveFormsAreAvailable();
     const mockValidateCurrentForm = jest.fn().mockReturnValue(true);
     render(
-      <DynamicFormHeader
-        onBackToFormSelection={() => {}}
-        onFormSubmit={() => {}}
-        onNewForm={() => {}}
-        validateCurrentForm={mockValidateCurrentForm}
-        closePreviewMode={mockClosePreviewMode}
-      />
+      <MemoryRouter>
+        <DynamicFormHeader
+          onBackToFormSelection={() => {}}
+          onFormSubmit={() => {}}
+          onNewForm={() => {}}
+          validateCurrentForm={mockValidateCurrentForm}
+          closePreviewMode={mockClosePreviewMode}
+        />
+      </MemoryRouter>
     );
 
     fireEvent.click(screen.getByTestId("previous-document-button"));
@@ -186,13 +201,15 @@ describe("dynamicFormHeader", () => {
     whenActiveFormsAreAvailable();
     const mockValidateCurrentForm = jest.fn().mockReturnValue(true);
     render(
-      <DynamicFormHeader
-        onBackToFormSelection={() => {}}
-        onFormSubmit={() => {}}
-        onNewForm={() => {}}
-        validateCurrentForm={mockValidateCurrentForm}
-        closePreviewMode={mockClosePreviewMode}
-      />
+      <MemoryRouter>
+        <DynamicFormHeader
+          onBackToFormSelection={() => {}}
+          onFormSubmit={() => {}}
+          onNewForm={() => {}}
+          validateCurrentForm={mockValidateCurrentForm}
+          closePreviewMode={mockClosePreviewMode}
+        />
+      </MemoryRouter>
     );
 
     fireEvent.click(screen.getByTestId("previous-document-button"));

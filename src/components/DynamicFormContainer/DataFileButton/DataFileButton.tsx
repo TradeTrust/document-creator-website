@@ -113,37 +113,35 @@ export const DataFileButton: FunctionComponent<DataFileButton> = ({ onDataFile, 
           <FormErrorBanner formErrorTitle="Uploaded data file format has errors." formError={dataFileError} />
         </div>
       )}
-      <div className="p-8 font-light" style={{ backgroundColor: "#FFECA7" }}>
-        <p className="text-sm font-hairline mb-4">{text.header}</p>
+      <div className="p-8 rounded-xl border-dashed border-2" style={{ backgroundColor: "#FFF7E2" }}>
+        <img className="mx-auto mb-8" src={"/upload-icon-dark.png"} />
+        <p className="text-center mb-4">{text.header}</p>
         <div className="mb-4" data-testid="data-upload-zone" {...getRootProps()}>
           <input data-testid="config-file-drop-zone" {...getInputProps()} />
-          <Button
-            data-testid="data-upload-button"
-            className="w-full bg-white text-orange border-gray-400 hover:bg-gray-100"
-          >
+          <Button data-testid="data-upload-button" className="flex mx-auto bg-white text-cerulean hover:bg-cloud-100">
             {text.buttonText}
           </Button>
         </div>
-        <div className="flex text-sm justify-between text-gray-800">
-          <div className="flex items-end">
-            <ToolTip toolTipText="JSON Schema is a lightweight data interchange format that generates clear, easy-to-understand documentation, making validation and testing easier. JSON Schema is used to describe the structure and validation constraints of JSON documents." />
-            <div
-              className="underline ml-2 cursor-pointer"
-              data-testid="download-json-data-schema-button"
-              onClick={() => downloadJsonDataFile(jsonTemplate)}
-            >
-              {text.downloadJson}
-            </div>
+      </div>
+      <div className="flex text-sm justify-between text-cerulean-200 mt-4 px-4">
+        <div className="flex items-end">
+          <ToolTip toolTipText="JSON Schema is a lightweight data interchange format that generates clear, easy-to-understand documentation, making validation and testing easier. JSON Schema is used to describe the structure and validation constraints of JSON documents." />
+          <div
+            className="ml-2 cursor-pointer hover:underline"
+            data-testid="download-json-data-schema-button"
+            onClick={() => downloadJsonDataFile(jsonTemplate)}
+          >
+            {text.downloadJson}
           </div>
-          <div className="flex items-end">
-            <ToolTip toolTipText="CSV Schema defines a textual language which can be used to define the data structure, types and rules for CSV data formats. A CSV data file is a delimited text file that uses a comma to separate values. Each line of the file is a data record. Each record consists of one or more fields, separated by commas." />
-            <div
-              className="underline ml-2 cursor-pointer"
-              data-testid="download-csv-data-schema-button"
-              onClick={() => downloadCsvDataFile(jsonTemplate)}
-            >
-              {text.downloadCsv}
-            </div>
+        </div>
+        <div className="flex items-end">
+          <ToolTip toolTipText="CSV Schema defines a textual language which can be used to define the data structure, types and rules for CSV data formats. A CSV data file is a delimited text file that uses a comma to separate values. Each line of the file is a data record. Each record consists of one or more fields, separated by commas." />
+          <div
+            className="ml-2 cursor-pointer hover:underline"
+            data-testid="download-csv-data-schema-button"
+            onClick={() => downloadCsvDataFile(jsonTemplate)}
+          >
+            {text.downloadCsv}
           </div>
         </div>
       </div>

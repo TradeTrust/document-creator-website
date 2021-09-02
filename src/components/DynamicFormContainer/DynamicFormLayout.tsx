@@ -1,4 +1,3 @@
-import { ButtonIcon } from "@govtechsg/tradetrust-ui-components";
 import Ajv, { ErrorObject } from "ajv";
 import { defaultsDeep } from "lodash";
 import React, { FunctionComponent, useState } from "react";
@@ -105,21 +104,15 @@ export const DynamicFormLayout: FunctionComponent = () => {
           <Card>
             <div className="flex justify-between">
               <div className="text-gray-800 flex items-center">
-                <div className="align-middle">Preview mode:</div>
+                <div className="align-middle mr-4">Preview mode:</div>
                 <ToggleSwitch isOn={isPreviewMode} handleToggle={() => setIsPreviewMode(!isPreviewMode)} />
               </div>
-              {forms.length > 1 ? (
-                <ButtonIcon
-                  className="bg-white hover:bg-gray-100 border-gray-400"
+              {forms.length > 1 && (
+                <Trash2
+                  className="cursor-pointer text-cerulean-200 hover:text-cerulean-500"
                   data-testid="delete-button"
                   onClick={() => setDeleteModal(true)}
-                >
-                  <Trash2 className="text-gray" />
-                </ButtonIcon>
-              ) : (
-                <ButtonIcon className="bg-gray-400 border-gray-400">
-                  <Trash2 className="text-gray" />
-                </ButtonIcon>
+                />
               )}
             </div>
             <FormErrorBanner
@@ -131,20 +124,19 @@ export const DynamicFormLayout: FunctionComponent = () => {
                 <DocumentPreview document={currentUnwrappedData} />
               </div>
             ) : (
-              <div className="max-w-screen-sm mx-auto mt-6">
-                <DynamicForm
-                  schema={formSchema}
-                  uiSchema={uiSchema}
-                  form={currentForm}
-                  type={currentFormTemplate.type}
-                  setFormData={setCurrentFormData}
-                  setOwnership={setCurrentFormOwnership}
-                  setCurrentForm={setCurrentForm}
-                  attachmentAccepted={attachmentAccepted}
-                  attachmentAcceptedFormat={attachmentAcceptedFormat}
-                  fileName={fileName}
-                />
-              </div>
+              <DynamicForm
+                className="mt-6"
+                schema={formSchema}
+                uiSchema={uiSchema}
+                form={currentForm}
+                type={currentFormTemplate.type}
+                setFormData={setCurrentFormData}
+                setOwnership={setCurrentFormOwnership}
+                setCurrentForm={setCurrentForm}
+                attachmentAccepted={attachmentAccepted}
+                attachmentAcceptedFormat={attachmentAcceptedFormat}
+                fileName={fileName}
+              />
             )}
           </Card>
         </ContentFrame>

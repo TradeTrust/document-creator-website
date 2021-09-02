@@ -25,7 +25,9 @@ export const FormSelection: FunctionComponent<FormSelection> = ({ config }) => {
 
   return (
     <Wrapper>
-      <IssueOrRevokeSelector />
+      <div className="mb-4">
+        <IssueOrRevokeSelector />
+      </div>
       <ContentFrame>
         <Card>
           <ProgressBar step={1} totalSteps={3} title="Choose Type" />

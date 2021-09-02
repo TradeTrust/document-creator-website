@@ -12,6 +12,8 @@ export default {
 
 export const Default: FunctionComponent = () => (
   <MemoryRouter initialEntries={["/forms-selection"]}>
-    <IssueOrRevokeSelector />
+    <div className="mb-4">
+      <IssueOrRevokeSelector />
+    </div>
   </MemoryRouter>
 );

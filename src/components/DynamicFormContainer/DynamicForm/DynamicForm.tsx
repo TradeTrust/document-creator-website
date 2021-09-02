@@ -87,7 +87,7 @@ export const DynamicFormRaw: FunctionComponent<DynamicFormProps> = ({
   };
 
   return (
-    <div className={`w-full max-w-screen-sm mx-auto mt-6 ${className}`}>
+    <div className={`${className}`}>
       <div className="mb-10">
         <DataFileButton onDataFile={mergeFormValue} schema={schema} />
       </div>

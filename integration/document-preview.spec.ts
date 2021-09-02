@@ -33,7 +33,7 @@ test("should be able to preview form with data", async (t) => {
   await t.setFilesToUpload("input[type=file][data-testid=config-file-drop-zone]", [DataFile]);
 
   // Set preview mode to true
-  await t.click(Selector("label.toggle-switch-label"));
+  await t.click(Selector("[data-testid='toggle-switch-label']"));
   await t.switchToIframe(Iframe);
 
   // Check that entered data is shown
