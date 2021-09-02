@@ -9,6 +9,7 @@ const DataFileEbl = "./../src/test/fixtures/sample-data-file-ebl.json";
 const DataFileCsvEbl = "./../src/test/fixtures/sample-data-file-ebl.csv";
 
 const Title = Selector("h1");
+const Title3 = Selector("h3");
 const Button = Selector("button");
 const ProgressBar = Selector("[data-testid='progress-bar']");
 const SubmitButton = Selector("[data-testid='form-submit-button']");
@@ -29,7 +30,7 @@ test("should issue the documents on local blockchain correctly", async (t) => {
 
   // Login to step 1
   await enterPassword("password");
-  await t.expect(Title.textContent).contains("Choose Document Type to Issue");
+  await t.expect(Title3.textContent).contains("Choose Document Type to Issue");
   await t.expect(ProgressBar.textContent).contains("1");
 
   // Navigate to form

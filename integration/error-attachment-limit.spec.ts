@@ -8,6 +8,7 @@ const AttachmentSampleThatIs6Mb = "./../src/test/fixtures/sample-file-6MB.pdf";
 const AttachmentSample = "./../src/test/fixtures/sample.pdf";
 
 const Title = Selector("h1");
+const Title3 = Selector("h3");
 const Button = Selector("button");
 const FormIdField = Selector("#root_iD");
 const ProgressBar = Selector("[data-testid='progress-bar']");
@@ -21,7 +22,7 @@ test("should show file limit warning when over 6mb", async (t) => {
 
   // Login to step 1
   await enterPassword("password");
-  await t.expect(Title.textContent).contains("Choose Document Type to Issue");
+  await t.expect(Title3.textContent).contains("Choose Document Type to Issue");
   await t.expect(ProgressBar.textContent).contains("1");
 
   // Navigate to form

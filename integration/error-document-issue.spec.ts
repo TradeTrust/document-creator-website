@@ -5,6 +5,7 @@ fixture("Error document issue").page`http://localhost:3000`;
 
 const ConfigFailPublishDocument = "./../src/test/fixtures/sample-config-error-document-issue.json";
 const Title = Selector("h1");
+const Title3 = Selector("h3");
 const Button = Selector("button");
 const SubmitButton = Selector("[data-testid='form-submit-button']");
 const ProgressBar = Selector("[data-testid='progress-bar']");
@@ -16,7 +17,7 @@ test("should show failed published document(s) errors", async (t) => {
 
   // Login to step 1
   await enterPassword("password");
-  await t.expect(Title.textContent).contains("Choose Document Type to Issue");
+  await t.expect(Title3.textContent).contains("Choose Document Type to Issue");
   await t.expect(ProgressBar.textContent).contains("1");
 
   // Navigate to form
