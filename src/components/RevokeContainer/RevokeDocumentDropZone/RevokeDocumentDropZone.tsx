@@ -3,7 +3,6 @@ import { FunctionComponent } from "react";
 import { useDropzone } from "react-dropzone";
 import { readFileAsJson } from "../../../common/utils";
 import { getLogger } from "../../../utils/logger";
-import { Title } from "../../UI/Title";
 import { Wrapper } from "../../UI/Wrapper";
 import { ProgressBar } from "../../ProgressBar";
 import { IssueOrRevokeSelector } from "../../UI/IssueOrRevokeSelector";
@@ -48,7 +47,9 @@ export const RevokeDocumentDropZone: FunctionComponent<RevokeDocumentDropZone> =
     <Wrapper>
       <IssueOrRevokeSelector />
       <ContentFrame>
-        <Title className="mb-8">Revoke Document</Title>
+        <h3 data-testid="revoke-title" className="mb-8 font-bold">
+          Revoke Document
+        </h3>
         <Card>
           <ProgressBar step={1} totalSteps={3} title="Upload Document" />
           <div className="my-6 text-2xl">Upload Document</div>

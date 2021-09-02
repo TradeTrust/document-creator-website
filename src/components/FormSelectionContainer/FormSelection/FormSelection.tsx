@@ -29,7 +29,9 @@ export const FormSelection: FunctionComponent<FormSelection> = ({ config }) => {
       <ContentFrame>
         <Card>
           <ProgressBar step={1} totalSteps={3} title="Choose Type" />
-          <h3 className="my-10">Choose Document Type to Issue</h3>
+          <h3 data-testid="form-selection-title" className="my-10">
+            Choose Document Type to Issue
+          </h3>
           <div className="flex flex-wrap justify-start">
             {config.forms.map((form: FormTemplate, index: number) => {
               return (

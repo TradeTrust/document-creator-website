@@ -3,8 +3,6 @@ import { FunctionComponent, ReactElement } from "react";
 import { CheckCircle, XCircle } from "react-feather";
 import { QueueState, QueueType } from "../../../constants/QueueState";
 import { WrappedDocument } from "../../../types";
-import { Title } from "../../UI/Title";
-
 interface ProcessDocumentTitle {
   queueState: QueueState;
   documents: WrappedDocument[];
@@ -51,5 +49,9 @@ export const ProcessDocumentTitle: FunctionComponent<ProcessDocumentTitle> = ({ 
     }
   };
 
-  return <Title className="flex items-center mb-8">{getDisplayTitle()}</Title>;
+  return (
+    <h3 data-testid="process-document-title" className="flex items-center mb-8">
+      {getDisplayTitle()}
+    </h3>
+  );
 };

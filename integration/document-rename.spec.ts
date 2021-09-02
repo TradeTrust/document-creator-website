@@ -5,8 +5,9 @@ fixture("Document rename").page`http://localhost:3000`;
 
 const Config = "./../src/test/fixtures/sample-config-local.json";
 
-const Title = Selector("h1");
-const Title3 = Selector("h3");
+const FillFormTitle = Selector("[data-testid='fill-form-title']");
+const FormSelectionTitle = Selector("[data-testid='form-selection-title']");
+const WalletDecryptionTitle = Selector("[data-testid='wallet-decryption-title']");
 const Button = Selector("button");
 const ProgressBar = Selector("[data-testid='progress-bar']");
 const AddNewButton = Selector("[data-testid='add-new-button']");
@@ -18,17 +19,17 @@ const fileNameField = Selector("[data-testid='file-name-input']");
 test("should rename document filename correctly", async (t) => {
   // Upload config file
   await loadConfigFile(Config);
-  await t.expect(Title.textContent).contains("Create and Revoke Document");
+  await t.expect(WalletDecryptionTitle.textContent).contains("Create and Revoke Document");
   await t.expect(Selector("[data-testid='login-title']").textContent).contains("Login");
 
   // Login to step 1
   await enterPassword("password");
-  await t.expect(Title3.textContent).contains("Choose Document Type to Issue");
+  await t.expect(FormSelectionTitle.textContent).contains("Choose Document Type to Issue");
   await t.expect(ProgressBar.textContent).contains("1");
 
   // Navigate to form
   await t.click(Button.withText("COO"));
-  await t.expect(Title.textContent).contains("Fill and Preview Form");
+  await t.expect(FillFormTitle.textContent).contains("Fill and Preview Form");
   await t.expect(ProgressBar.textContent).contains("2");
 
   // Add new form
