@@ -29,7 +29,9 @@ export const RevokeDocumentTileArea: FunctionComponent<RevokeDocumentTileArea> =
   const revokeButtonColor = isDisabled ? "bg-cloud-500 cursor-not-allowed" : "bg-rose-400";
   return (
     <Wrapper>
-      <IssueOrRevokeSelector />
+      <div className="mb-4">
+        <IssueOrRevokeSelector />
+      </div>
       <ContentFrame>
         <Card>
           <ProgressBar step={2} totalSteps={3} title="Confirm Document" />

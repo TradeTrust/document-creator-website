@@ -45,7 +45,9 @@ export const RevokeDocumentDropZone: FunctionComponent<RevokeDocumentDropZone> =
 
   return (
     <Wrapper>
-      <IssueOrRevokeSelector />
+      <div className="mb-4">
+        <IssueOrRevokeSelector />
+      </div>
       <ContentFrame>
         <h3 data-testid="revoke-title" className="mb-8 font-bold">
           Revoke Document
