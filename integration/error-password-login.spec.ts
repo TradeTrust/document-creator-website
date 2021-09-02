@@ -5,8 +5,8 @@ fixture("Error password login").page`http://localhost:3000`;
 
 const Config = "./../src/test/fixtures/sample-config-local.json";
 
-const Title = Selector("h1");
-const Title3 = Selector("h3");
+const WalletDecryptionTitle = Selector("[data-testid='wallet-decryption-title']");
+const FormSelectionTitle = Selector("[data-testid='form-selection-title']");
 const ButtonLogin = Selector("[data-testid='login-button']");
 const PasswordFieldMsg = Selector("[data-testid='password-field-msg']");
 const ProgressBar = Selector("[data-testid='progress-bar']");
@@ -14,7 +14,7 @@ const ProgressBar = Selector("[data-testid='progress-bar']");
 test("should handle no password, wrong password errors correctly", async (t) => {
   // Upload config file
   await loadConfigFile(Config);
-  await t.expect(Title.textContent).contains("Create and Revoke Document");
+  await t.expect(WalletDecryptionTitle.textContent).contains("Create and Revoke Document");
 
   // Login (no password)
   await t.click(ButtonLogin);
@@ -27,6 +27,6 @@ test("should handle no password, wrong password errors correctly", async (t) => 
   // Login (correct password)
   await deletePassword();
   await enterPassword("password");
-  await t.expect(Title3.textContent).contains("Choose Document Type to Issue");
+  await t.expect(FormSelectionTitle.textContent).contains("Choose Document Type to Issue");
   await t.expect(ProgressBar.textContent).contains("1");
 });

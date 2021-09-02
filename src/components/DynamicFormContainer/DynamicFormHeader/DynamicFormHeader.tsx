@@ -4,7 +4,6 @@ import { ArrowLeft } from "react-feather";
 import { useFormsContext } from "../../../common/context/forms";
 import { ProgressBar } from "../../ProgressBar";
 import { Card } from "../../UI/Card";
-import { Title } from "../../UI/Title";
 import { Wrapper } from "../../UI/Wrapper";
 import { DocumentSelector } from "../DocumentSelector";
 
@@ -39,7 +38,9 @@ export const DynamicFormHeader: FunctionComponent<DynamicFormHeaderProps> = ({
         <ProgressBar step={2} totalSteps={3} title="Fill Form" />
         <div className="flex justify-between items-end">
           <div className="flex flex-col">
-            <Title className="mb-4">Fill and Preview Form</Title>
+            <h3 data-testid="fill-form-title" className="mb-4">
+              Fill and Preview Form
+            </h3>
             <div className="text-gray-800 text-lg">{`${(activeFormIndex || 0) + 1} of ${
               forms.length
             } document(s)`}</div>

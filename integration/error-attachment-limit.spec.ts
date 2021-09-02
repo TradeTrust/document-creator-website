@@ -7,8 +7,8 @@ const Config = "./../src/test/fixtures/sample-config-local.json";
 const AttachmentSampleThatIs6Mb = "./../src/test/fixtures/sample-file-6MB.pdf";
 const AttachmentSample = "./../src/test/fixtures/sample.pdf";
 
-const Title = Selector("h1");
-const Title3 = Selector("h3");
+const FormSelectionTitle = Selector("[data-testid='form-selection-title']");
+const WalletDecryptionTitle = Selector("[data-testid='wallet-decryption-title']");
 const Button = Selector("button");
 const FormIdField = Selector("#root_iD");
 const ProgressBar = Selector("[data-testid='progress-bar']");
@@ -18,11 +18,11 @@ const FormAttachmentField = Selector("[data-testid='upload-file-0']");
 test("should show file limit warning when over 6mb", async (t) => {
   // Upload config file
   await loadConfigFile(Config);
-  await t.expect(Title.textContent).contains("Create and Revoke Document");
+  await t.expect(WalletDecryptionTitle.textContent).contains("Create and Revoke Document");
 
   // Login to step 1
   await enterPassword("password");
-  await t.expect(Title3.textContent).contains("Choose Document Type to Issue");
+  await t.expect(FormSelectionTitle.textContent).contains("Choose Document Type to Issue");
   await t.expect(ProgressBar.textContent).contains("1");
 
   // Navigate to form

@@ -3,7 +3,6 @@ import React, { FunctionComponent, useState } from "react";
 import { BarTrack } from "../../ProgressBar";
 import { Card } from "../../UI/Card";
 import { ContentFrame } from "../../UI/ContentFrame";
-import { Title } from "../../UI/Title";
 import { Wrapper } from "../../UI/Wrapper";
 
 interface WalletDecryption {
@@ -33,14 +32,16 @@ export const WalletDecryption: FunctionComponent<WalletDecryption> = ({
 
   return (
     <Wrapper>
-      <Title className="mb-8">Create and Revoke Document</Title>
+      <h3 data-testid="wallet-decryption-title" className="mb-8 font-bold">
+        Create and Revoke Document
+      </h3>
       <ContentFrame>
         <Card>
           <form className="relative flex flex-col rounded">
             {isDecrypting && <BarTrack progress={decryptProgress} className="absolute top-0 left-0" />}
-            <div className="text-cloud-900 mr-4 mb-4 text-2xl" data-testid="login-title">
+            <h3 className="mb-4" data-testid="login-title">
               Login
-            </div>
+            </h3>
             <input
               data-testid="password-field"
               placeholder="Password"

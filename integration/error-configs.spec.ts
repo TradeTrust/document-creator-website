@@ -7,7 +7,8 @@ const Config = "./../src/test/fixtures/sample-config-local.json";
 const ConfigWithError = "./../src/test/fixtures/sample-config-error-walletless.json";
 const ConfigErrorFile = "./../src/test/fixtures/sample-config-error-empty.json";
 
-const Title = Selector("h1");
+const ConfigDropzoneTitle = Selector("[data-testid='config-dropzone-title']");
+const WalletDecryptionTitle = Selector("[data-testid='wallet-decryption-title']");
 const ButtonReset = Selector("[data-testid='reset-button']");
 const ErrorCantReadFile = Selector("[data-testid='error-cannot-read-file']");
 const ConfigError = Selector("[data-testid='config-error']");
@@ -23,10 +24,10 @@ test("should show correct error messages on various malformed configs", async (t
 
   // Upload config file (working config file)
   await loadConfigFile(Config);
-  await t.expect(Title.textContent).contains("Create and Revoke Document");
+  await t.expect(WalletDecryptionTitle.textContent).contains("Create and Revoke Document");
   await t.expect(Selector("[data-testid='login-title']").textContent).contains("Login");
   await t.click(ButtonReset);
-  await t.expect(Title.textContent).contains("Create and Revoke Document");
+  await t.expect(ConfigDropzoneTitle.textContent).contains("Create and Revoke Document");
   await t
     .expect(Selector("[data-testid='home-description']").textContent)
     .contains("Drag and drop your configuration file here");

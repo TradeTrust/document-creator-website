@@ -3,10 +3,11 @@ import { enterPassword, loadConfigFile } from "./helper";
 
 fixture("Document attachments").page`http://localhost:3000`;
 
+const WalletDecryptionTitle = Selector("[data-testid='wallet-decryption-title']");
 const Config = "./../src/test/fixtures/sample-config-local.json";
 const AttachmentSample = "./../src/test/fixtures/sample.pdf";
-const Title = Selector("h1");
-const Title3 = Selector("h3");
+const FillFormTitle = Selector("[data-testid='fill-form-title']");
+const FormSelectionTitle = Selector("[data-testid='form-selection-title']");
 const ProgressBar = Selector("[data-testid='progress-bar']");
 
 const Button = Selector("button");
@@ -17,16 +18,16 @@ const FormAttachmentFields = Selector("[data-testid*='upload-file-']");
 test("should be added and removed correctly", async (t) => {
   // Upload config file
   await loadConfigFile(Config);
-  await t.expect(Title.textContent).contains("Create and Revoke Document");
+  await t.expect(WalletDecryptionTitle.textContent).contains("Create and Revoke Document");
 
   // Login to step 1
   await enterPassword("password");
-  await t.expect(Title3.textContent).contains("Choose Document Type to Issue");
+  await t.expect(FormSelectionTitle.textContent).contains("Choose Document Type to Issue");
   await t.expect(ProgressBar.textContent).contains("1");
 
   // Navigate to form
   await t.click(Button.withText("Covering Letter"));
-  await t.expect(Title.textContent).contains("Fill and Preview Form");
+  await t.expect(FillFormTitle.textContent).contains("Fill and Preview Form");
   await t.expect(ProgressBar.textContent).contains("2");
 
   // Add attachment

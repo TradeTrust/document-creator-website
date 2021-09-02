@@ -6,7 +6,6 @@ import { ConfigFile } from "../../../types";
 import { getLogger } from "../../../utils/logger";
 import { ContentFrame } from "../../UI/ContentFrame";
 import { DropZone } from "../../UI/DropZone";
-import { Title } from "../../UI/Title";
 
 const { stack } = getLogger("ConfigFileDropZone");
 interface ConfigFileDropZone {
@@ -31,7 +30,9 @@ export const ConfigFileDropZone: FunctionComponent<ConfigFileDropZone> = ({ onCo
 
   return (
     <>
-      <Title className="mb-8">Create and Revoke Document</Title>
+      <h3 data-testid="config-dropzone-title" className="mb-8 font-bold">
+        Create and Revoke Document
+      </h3>
       <ContentFrame>
         <div {...getRootProps()}>
           <input data-testid="config-file-drop-zone" {...getInputProps()} />

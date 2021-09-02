@@ -8,8 +8,9 @@ fixture("uiSchema").page`http://localhost:3000`;
 
 const Config = "./../src/test/fixtures/sample-config-local.json";
 
-const Title = Selector("h1");
-const Title3 = Selector("h3");
+const FillFormTitle = Selector("[data-testid='fill-form-title']");
+const WalletDecryptionTitle = Selector("[data-testid='wallet-decryption-title']");
+const FormSelectionTitle = Selector("[data-testid='form-selection-title']");
 const Button = Selector("button");
 const Form = Selector("[data-testid='form-group field field-object']");
 const AddNewButton = Selector("[data-testid='add-new-button']");
@@ -36,7 +37,7 @@ const waitForFileDownload = async (t: TestController, filePath: string): Promise
 test("form should render correctly according to uiSchema", async (t) => {
   // Upload config file
   await loadConfigFile(Config);
-  await t.expect(Title.textContent).contains("Create and Revoke Document");
+  await t.expect(WalletDecryptionTitle.textContent).contains("Create and Revoke Document");
   await t.expect(Selector("[data-testid='login-title']").textContent).contains("Login");
 
   // Check if on correct network
@@ -44,12 +45,12 @@ test("form should render correctly according to uiSchema", async (t) => {
 
   // login
   await enterPassword("password");
-  await t.expect(Title3.textContent).contains("Choose Document Type to Issue");
+  await t.expect(FormSelectionTitle.textContent).contains("Choose Document Type to Issue");
   await t.expect(ProgressBar.textContent).contains("1");
 
   // Navigate to form
   await t.click(Button.withText("Covering Letter (DBS)"));
-  await t.expect(Title.textContent).contains("Fill and Preview Form");
+  await t.expect(FillFormTitle.textContent).contains("Fill and Preview Form");
   await t.expect(ProgressBar.textContent).contains("2");
 
   // Validate that default values is populated
@@ -72,7 +73,7 @@ test("form should render correctly according to uiSchema", async (t) => {
 
   // Navigate to form
   await t.click(Button.withText("Covering Letter (DBS, Nested UISchema)"));
-  await t.expect(Title.textContent).contains("Fill and Preview Form");
+  await t.expect(FillFormTitle.textContent).contains("Fill and Preview Form");
   await t.expect(ProgressBar.textContent).contains("2");
 
   // Validate that default values is populated
