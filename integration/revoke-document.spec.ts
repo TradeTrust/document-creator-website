@@ -6,6 +6,7 @@ fixture("Revoke flow").page`http://localhost:3000`;
 const Config = "./../src/test/fixtures/sample-config-local.json";
 const revokableDocument = "./../src/test/fixtures/wrapped-document-local-revokable.json";
 const Title = Selector("h1");
+const Title3 = Selector("h3");
 const ProgressBar = Selector("[data-testid='progress-bar']");
 
 test("should revoke a document on local blockchain correctly", async (t) => {
@@ -16,7 +17,7 @@ test("should revoke a document on local blockchain correctly", async (t) => {
 
   // Login to step 1
   await enterPassword("password");
-  await t.expect(Title.textContent).contains("Choose Document Type to Issue");
+  await t.expect(Title3.textContent).contains("Choose Document Type to Issue");
   await t.expect(ProgressBar.textContent).contains("1");
 
   // Go to Revoke document page

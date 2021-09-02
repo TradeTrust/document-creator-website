@@ -6,6 +6,7 @@ fixture("Document preview").page`http://localhost:3000`;
 const Config = "./../src/test/fixtures/sample-config-local.json";
 const DataFile = "./../src/test/fixtures/sample-data-file-coo.json";
 const Title = Selector("h1");
+const Title3 = Selector("h3");
 const ProgressBar = Selector("[data-testid='progress-bar']");
 
 const Button = Selector("button");
@@ -19,7 +20,7 @@ test("should be able to preview form with data", async (t) => {
 
   // Login to step 1
   await enterPassword("password");
-  await t.expect(Title.textContent).contains("Choose Document Type to Issue");
+  await t.expect(Title3.textContent).contains("Choose Document Type to Issue");
   await t.expect(ProgressBar.textContent).contains("1");
 
   // Navigate to form

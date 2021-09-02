@@ -9,6 +9,7 @@ fixture("uiSchema").page`http://localhost:3000`;
 const Config = "./../src/test/fixtures/sample-config-local.json";
 
 const Title = Selector("h1");
+const Title3 = Selector("h3");
 const Button = Selector("button");
 const Form = Selector("[data-testid='form-group field field-object']");
 const AddNewButton = Selector("[data-testid='add-new-button']");
@@ -43,7 +44,7 @@ test("form should render correctly according to uiSchema", async (t) => {
 
   // login
   await enterPassword("password");
-  await t.expect(Title.textContent).contains("Choose Document Type to Issue");
+  await t.expect(Title3.textContent).contains("Choose Document Type to Issue");
   await t.expect(ProgressBar.textContent).contains("1");
 
   // Navigate to form
