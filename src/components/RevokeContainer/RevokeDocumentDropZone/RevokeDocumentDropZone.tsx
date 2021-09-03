@@ -51,7 +51,9 @@ export const RevokeDocumentDropZone: FunctionComponent<RevokeDocumentDropZone> =
       <ContentFrame>
         <Card>
           <ProgressBar step={1} totalSteps={3} title="Upload Document" />
-          <div className="my-6 text-2xl">Upload File</div>
+          <div data-testid="revoke-title" className="my-6 text-2xl">
+            Upload File
+          </div>
           <div {...getRootProps()} data-testid="revoke-dropzone">
             <input data-testid="revoke-document-drop-zone" {...getInputProps()} />
             <DropZone

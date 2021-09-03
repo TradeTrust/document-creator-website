@@ -1,6 +1,5 @@
 import { FunctionComponent } from "react";
 import { Wrapper } from "../../UI/Wrapper";
-import { Title } from "../../UI/Title";
 import { ProcessedDocumentTag } from "../../ProcessDocumentScreen/ProcessedDocumentTag";
 import { Button } from "@govtechsg/tradetrust-ui-components";
 import { DocumentUploadState } from "../../../constants/DocumentUploadState";
