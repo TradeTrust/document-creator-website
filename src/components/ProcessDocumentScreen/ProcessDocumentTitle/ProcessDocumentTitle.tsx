@@ -21,7 +21,7 @@ export const ProcessDocumentTitle: FunctionComponent<ProcessDocumentTitle> = ({ 
       case QueueState.PENDING:
         return (
           <>
-            <LoaderSpinner className="mr-2" width="24px" primary="#00cbbc" secondary="#e2e8f0" />
+            <LoaderSpinner className="mr-2" width="24px" primary="#3B8CC5" />
             {titleText(`${isIssuingFlow ? "Publishing document(s)..." : "Revoking document..."}`)}
           </>
         );
@@ -50,7 +50,7 @@ export const ProcessDocumentTitle: FunctionComponent<ProcessDocumentTitle> = ({ 
   };
 
   return (
-    <h3 data-testid="process-document-title" className="flex items-center mb-8">
+    <h3 data-testid="process-document-title" className="flex items-center my-8">
       {getDisplayTitle()}
     </h3>
   );

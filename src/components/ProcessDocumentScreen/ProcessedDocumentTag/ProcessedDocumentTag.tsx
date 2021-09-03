@@ -35,8 +35,7 @@ export const ProcessedDocumentTag: FunctionComponent<PublishedTagProps> = ({ doc
             className="mr-4 flex-shrink-0"
             data-testid="processing-loader"
             width="48px"
-            primary="#00cbbc"
-            secondary="#e2e8f0"
+            primary="#3B8CC5"
           />
         ) : (
           <div className="bg-cerulean w-12 h-12 rounded-full mr-4 flex-shrink-0">

@@ -1,6 +1,5 @@
 import { FunctionComponent } from "react";
 import { Wrapper } from "../../UI/Wrapper";
-import { Title } from "../../UI/Title";
 import { ProcessedDocumentTag } from "../../ProcessDocumentScreen/ProcessedDocumentTag";
 import { Button } from "@govtechsg/tradetrust-ui-components";
 import { DocumentUploadState } from "../../../constants/DocumentUploadState";
@@ -26,7 +25,7 @@ export const RevokeDocumentTileArea: FunctionComponent<RevokeDocumentTileArea> =
   onBack,
 }) => {
   const isDisabled = revokeDocuments.length <= 0 && documentUploadState !== DocumentUploadState.DONE;
-  const revokeButtonColor = isDisabled ? "bg-cloud-500 cursor-not-allowed" : "bg-rose-400";
+  const revokeButtonColor = isDisabled ? "bg-cloud-500 cursor-not-allowed" : "bg-rose";
   return (
     <Wrapper>
       <div className="mb-4">
@@ -35,7 +34,7 @@ export const RevokeDocumentTileArea: FunctionComponent<RevokeDocumentTileArea> =
       <ContentFrame>
         <Card>
           <ProgressBar step={2} totalSteps={3} title="Confirm Document" />
-          <Title className="mb-8">Confirm Document</Title>
+          <h3 className="my-8 pb-8 border-b">Confirm File</h3>
           <ProcessedDocumentTag
             doc={revokeDocuments[0]}
             isPending={false}

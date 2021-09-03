@@ -7,7 +7,7 @@ interface ContentFrameProps {
 export const ContentFrame: React.FunctionComponent<ContentFrameProps> = ({ children }: ContentFrameProps) => {
   return (
     <div className="flex justify-between">
-      <div className="flex-1">{children}</div>
+      <div className="flex-1 max-w-screen-md">{children}</div>
       <div className="hidden lg:block ml-8">
         <img src={"/creator-graphic.png"} />
       </div>
