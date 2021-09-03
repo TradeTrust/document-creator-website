@@ -43,6 +43,14 @@ export const ProcessDocumentTitle: FunctionComponent<ProcessDocumentTitle> = ({ 
           );
         }
 
+      case QueueState.ERROR:
+        return (
+          <>
+            <XCircle className="mr-2 text-rose" />
+            {titleText(`We have encountered an error`)}
+          </>
+        );
+
       case QueueState.INITIALIZED:
       default:
         return titleText(`Please wait while we prepare your ${isIssuingFlow ? "document(s)" : "document"}`);
