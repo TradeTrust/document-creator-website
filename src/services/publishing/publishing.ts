@@ -10,13 +10,15 @@ import {
 import { TitleEscrowCreatorFactory, TradeTrustErc721Factory } from "@govtechsg/token-registry";
 import { TitleEscrowCreator } from "@govtechsg/token-registry/types/TitleEscrowCreator";
 import { providers, Signer, Wallet } from "ethers";
-import { Provider } from "@ethersproject/abstract-provider";
 import { getGsnRelaySigner } from "../../common/config/decrypt";
 import { ConnectedSigner, PublishingJob } from "../../types";
 import { supportsInterface } from "./utils";
 
-export const assertAddressIsSmartContract = async (address: string, provider: Provider): Promise<void> => {
-  const code = await provider.getCode(address);
+export const assertAddressIsSmartContract = async (
+  address: string,
+  account: Wallet | ConnectedSigner
+): Promise<void> => {
+  const code = await account.provider.getCode(address);
   if (code === "0x") throw new Error("Address is not a smart contract");
 };
 
@@ -40,7 +42,7 @@ export const publishVerifiableDocumentJob = async (
   account: Wallet | ConnectedSigner
 ): Promise<string> => {
   const { contractAddress, merkleRoot, nonce } = job;
-  await assertAddressIsSmartContract(contractAddress, account.provider);
+  await assertAddressIsSmartContract(contractAddress, account);
   const documentStore = await getConnectedDocumentStore(account, contractAddress);
   const receipt = await documentStore.issue(`0x${merkleRoot}`, { nonce });
   const tx = await receipt.wait();
