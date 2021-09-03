@@ -36,11 +36,14 @@ export const ConfigFileDropZone: FunctionComponent<ConfigFileDropZone> = ({ onCo
       <ContentFrame>
         <div {...getRootProps()}>
           <input data-testid="config-file-drop-zone" {...getInputProps()} />
-          <DropZone isDragActive={isDragActive} error={Boolean(errorMessage || error)}>
+          <DropZone
+            isDragActive={isDragActive}
+            error={(errorMessage !== undefined && errorMessage.length > 0) || error}
+          >
             <img className="mb-12" src={"/dropzone-graphic.png"} />
             {error && (
               <div className="max-w-lg text-rose font-bold text-lg" data-testid={"error-cannot-read-file"}>
-                Error: File cannot be read
+                File cannot be read. Please check that you have a valid file
               </div>
             )}
             {errorMessage && !error && (
@@ -53,7 +56,9 @@ export const ConfigFileDropZone: FunctionComponent<ConfigFileDropZone> = ({ onCo
                 Drag and drop your configuration file here
               </div>
             )}
-            <div className="text-base text-gray-800 my-4">{errorMessage || error ? "Please try again." : "or"}</div>
+            <div className="text-base text-gray-800 my-4 font-bold">
+              {errorMessage || error ? "Please try again." : "or"}
+            </div>
             <Button className="bg-cerulean text-white hover:bg-cerulean-500 border-gray-300">Select File</Button>
             <a
               onClick={(e) => e.stopPropagation()}

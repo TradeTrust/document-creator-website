@@ -26,7 +26,7 @@ export const RevokeDocumentTileArea: FunctionComponent<RevokeDocumentTileArea> =
   onBack,
 }) => {
   const isDisabled = revokeDocuments.length <= 0 && documentUploadState !== DocumentUploadState.DONE;
-  const revokeButtonColor = isDisabled ? "bg-cloud-500 cursor-not-allowed" : "bg-rose-400";
+  const revokeButtonColor = isDisabled ? "bg-cloud-500 cursor-not-allowed" : "bg-rose";
   return (
     <Wrapper>
       <div className="mb-4">
@@ -35,7 +35,7 @@ export const RevokeDocumentTileArea: FunctionComponent<RevokeDocumentTileArea> =
       <ContentFrame>
         <Card>
           <ProgressBar step={2} totalSteps={3} title="Confirm Document" />
-          <Title className="mb-8">Confirm Document</Title>
+          <h3 className="my-8 pb-8 border-b">Confirm File</h3>
           <ProcessedDocumentTag
             doc={revokeDocuments[0]}
             isPending={false}
