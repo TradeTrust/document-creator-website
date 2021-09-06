@@ -38,6 +38,6 @@ test("should revoke a document on local blockchain correctly", async (t) => {
   await t.click(Selector("[data-testid='revoke-button']"));
   await t.expect(Selector("[data-testid='modal-title']").textContent).contains("Revoke Document");
   await t.click(Selector("[data-testid='modal-revoke-button']"));
-  await t.expect(ProcessDocumentTitle.textContent).contains("Document revoked successfully");
+  await t.expect(ProcessDocumentTitle.withText("Document revoked successfully").exists).ok();
   await t.expect(Selector("[data-testid='file-name']").textContent).contains("wrapped-document-local-revokable.json");
 });
