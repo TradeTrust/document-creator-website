@@ -188,7 +188,6 @@ export const ProcessDocumentScreen: FunctionComponent<ProcessDocumentScreen> = (
               <div className="bg-red-100 px-8 py-6 rounded-xl">
                 <div className="mb-8">
                   <div className="text-rose font-bold mb-8" data-testid="error-title">
-                    {/* {`Failed to ${isIssuingFlow ? "publish" : "revoke"} due to:`} */}
                     {`The document(s) could not be ${isIssuingFlow ? "published" : "revoked"} at this time.`}
                   </div>
                   <div>
