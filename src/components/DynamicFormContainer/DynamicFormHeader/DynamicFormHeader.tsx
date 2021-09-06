@@ -28,11 +28,11 @@ export const DynamicFormHeader: FunctionComponent<DynamicFormHeaderProps> = ({
     <Wrapper className="mb-8">
       <Card
         title={
-          <div className="flex justify-between items-center">
+          <div className="md:flex justify-between items-center">
             <IssueOrRevokeSelector createLink="/form" />
             <Button
               data-testid="clear-all-button"
-              className="bg-white text-cerulean hover:bg-cloud-100"
+              className="mt-2 md:mt-0 bg-white text-cerulean hover:bg-cloud-100"
               onClick={onBackToFormSelection}
             >
               Clear All
@@ -41,7 +41,7 @@ export const DynamicFormHeader: FunctionComponent<DynamicFormHeaderProps> = ({
         }
       >
         <ProgressBar step={2} totalSteps={3} title="Fill Form" />
-        <div className="flex justify-between items-end">
+        <div className="md:flex justify-between items-end">
           <div className="flex flex-col">
             <h3 data-testid="fill-form-title" className="my-8">
               Fill and Preview Form
@@ -51,7 +51,7 @@ export const DynamicFormHeader: FunctionComponent<DynamicFormHeaderProps> = ({
             } document(s)`}</div>
             <DocumentSelector validateCurrentForm={validateCurrentForm} closePreviewMode={closePreviewMode} />
           </div>
-          <div>
+          <div className="mt-4 md:mt-0">
             <Button
               className="bg-white text-cerulean hover:bg-gray-50 mr-4"
               onClick={onNewForm}

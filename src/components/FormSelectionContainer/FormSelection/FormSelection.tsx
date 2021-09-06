@@ -37,7 +37,7 @@ export const FormSelection: FunctionComponent<FormSelection> = ({ config }) => {
           <div className="flex flex-wrap justify-start">
             {config.forms.map((form: FormTemplate, index: number) => {
               return (
-                <div key={index} className="w-1/3 mb-4">
+                <div key={index} className="w-full md:w-1/3 mb-4">
                   <Button
                     className="bg-white text-cerulean w-11/12 hover:bg-cloud-100 h-full p-4"
                     onClick={() => selectedForm(index)}

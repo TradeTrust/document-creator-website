@@ -30,14 +30,14 @@ export const ProcessDocumentTitle: FunctionComponent<ProcessDocumentTitle> = ({ 
         if (documents.length > 0) {
           return (
             <>
-              <CheckCircle className="mr-2 text-teal-300" />
+              <CheckCircle className="mr-2 text-teal-300 h-12 w-12 md:h-auto md:w-auto" />
               {titleText(`${isIssuingFlow ? "Document(s) issued" : "Document revoked"} successfully`)}
             </>
           );
         } else {
           return (
             <>
-              <XCircle className="mr-2 text-rose" />
+              <XCircle className="mr-2 text-rose h-12 w-12 md:h-auto md:w-auto" />
               {titleText(`${isIssuingFlow ? "Document(s) failed to issue" : "Document failed to revoke"}`)}
             </>
           );
@@ -46,7 +46,7 @@ export const ProcessDocumentTitle: FunctionComponent<ProcessDocumentTitle> = ({ 
       case QueueState.ERROR:
         return (
           <>
-            <XCircle className="mr-2 text-rose" />
+            <XCircle className="mr-2 text-rose h-12 w-12 md:h-auto md:w-auto" />
             {titleText(`We have encountered an error`)}
           </>
         );
