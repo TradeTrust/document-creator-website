@@ -13,17 +13,17 @@ export const BackModal: FunctionComponent<BackModalProps> = ({ backToFormSelecti
     <>
       {show && (
         <ModalDialog close={closeBackModal}>
-          <div className="flex flex-col ">
-            <div data-testid="modal-title" className="text-2xl text-gray-800 font-bold">
-              Back to form selection
+          <div className="flex flex-col max-w-sm md: max-w-md">
+            <h3 className="text-center" data-testid="modal-title">
+              Clear All
+            </h3>
+            <div className="text-center mt-8">
+              Do you want to clear all? This will delete <b>ALL</b> your current document(s).
             </div>
-            <div className="text-gray-800 mt-4 mr-16">
-              Do you want to go back? This will delete <strong>ALL</strong> your current document(s).
-            </div>
-            <div className="mt-16">
-              <div className="flex justify-end">
+            <div className="mt-8">
+              <div className="flex justify-around">
                 <Button
-                  className="bg-white text-gray border-gray-400 hover:bg-gray-100 mr-4"
+                  className="bg-white text-cerulean hover:bg-cloud-100"
                   onClick={closeBackModal}
                   data-testid="cancel-form-button"
                 >
@@ -34,7 +34,7 @@ export const BackModal: FunctionComponent<BackModalProps> = ({ backToFormSelecti
                   className="bg-rose text-white hover:bg-red-400"
                   onClick={backToFormSelection}
                 >
-                  Back
+                  Delete
                 </Button>
               </div>
             </div>

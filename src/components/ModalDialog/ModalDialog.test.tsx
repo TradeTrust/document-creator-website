@@ -5,7 +5,7 @@ import { ModalDialog } from "./ModalDialog";
 describe("modalDialog", () => {
   it("should render the UI accordingly", () => {
     render(
-      <ModalDialog className="" close={() => {}}>
+      <ModalDialog close={() => {}}>
         <div>Hello World!</div>
       </ModalDialog>
     );
@@ -17,7 +17,7 @@ describe("modalDialog", () => {
   it("should fire the 'close' function when backdrop is clicked", () => {
     const mockClose = jest.fn();
     render(
-      <ModalDialog className="" close={mockClose}>
+      <ModalDialog close={mockClose}>
         <div>Hello World!</div>
       </ModalDialog>
     );

@@ -31,7 +31,7 @@ test("should lead to pages correctly", async (t) => {
 
   // Check back button
   await t.click(ButtonClearAll);
-  await t.expect(Selector("[data-testid='modal-title']").textContent).contains("Back to form selection");
+  await t.expect(Selector("[data-testid='modal-title']").textContent).contains("Clear All");
   await t.click(ButtonBackRed);
   await t.expect(FormSelectionTitle.textContent).contains("Choose Document Type to Issue");
 });
