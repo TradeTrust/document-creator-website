@@ -5,7 +5,6 @@ fixture("Revoke flow").page`http://localhost:3000`;
 
 const Config = "./../src/test/fixtures/sample-config-local.json";
 const revokableDocument = "./../src/test/fixtures/wrapped-document-local-revokable.json";
-const ProcessDocumentTitle = Selector("[data-testid='process-document-title']");
 const RevokeTitle = Selector("[data-testid='revoke-title']");
 const WalletDecryptionTitle = Selector("[data-testid='wallet-decryption-title']");
 const FormSelectionTitle = Selector("[data-testid='form-selection-title']");
@@ -38,6 +37,8 @@ test("should revoke a document on local blockchain correctly", async (t) => {
   await t.click(Selector("[data-testid='revoke-button']"));
   await t.expect(Selector("[data-testid='modal-title']").textContent).contains("Revoke Document");
   await t.click(Selector("[data-testid='modal-revoke-button']"));
-  await t.expect(ProcessDocumentTitle.withText("Document revoked successfully").exists).ok();
+  await t
+    .expect(Selector("[data-testid='process-document-title']").withText("Document revoked successfully").exists)
+    .ok();
   await t.expect(Selector("[data-testid='file-name']").textContent).contains("wrapped-document-local-revokable.json");
 });

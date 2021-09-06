@@ -15,7 +15,6 @@ const Button = Selector("button");
 const ProgressBar = Selector("[data-testid='progress-bar']");
 const SubmitButton = Selector("[data-testid='form-submit-button']");
 const NextDocumentButton = Selector("[data-testid='next-document-button']");
-const DownloadAllButton = Selector("[data-testid='download-all-button']");
 const FormIdField = Selector("#root_iD");
 const FormExporterNameField = Selector("#root_supplyChainConsignment_exporter_name");
 const EblBeneficiaryField = Selector("[data-testid='transferable-record-beneficiary-input']");
@@ -64,7 +63,7 @@ test("should issue the documents on local blockchain correctly", async (t) => {
   // Check that download exists
   await t.expect(Selector("div").withText("COO-1-local.tt").exists).ok();
   await t.expect(Selector("[data-testid='download-file-button']").withText("Download").exists).ok();
-  await t.expect(DownloadAllButton.exists).ok();
+  await t.expect(Selector("[data-testid='download-all-button']").exists).ok();
 
   // Issue transferable record
   await t.click(Button.withText("Create another Document"));
