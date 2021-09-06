@@ -5,13 +5,13 @@ describe("backModal", () => {
   it("should not display anything initially", () => {
     render(<BackModal backToFormSelection={() => {}} show={false} closeBackModal={() => {}} />);
 
-    expect(screen.queryAllByText(/Back to form selection/)).toHaveLength(0);
+    expect(screen.queryAllByText(/Clear All/)).toHaveLength(0);
   });
 
   it("should display the modal when state changed to 'true'", () => {
     render(<BackModal backToFormSelection={() => {}} show={true} closeBackModal={() => {}} />);
 
-    expect(screen.queryAllByText(/Back to form selection/)).toHaveLength(1);
+    expect(screen.queryAllByText(/Clear All/)).toHaveLength(1);
   });
 
   it("should fire 'backToFormSelection' function when clicked back button", () => {
