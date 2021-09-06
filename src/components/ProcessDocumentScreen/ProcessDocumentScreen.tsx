@@ -185,37 +185,32 @@ export const ProcessDocumentScreen: FunctionComponent<ProcessDocumentScreen> = (
               </div>
             )}
             {queueState === QueueState.ERROR && (
-              <div className="container">
-                <div className="bg-rose-400 p-3 flex flex-col">
-                  <div className="flex">
-                    <XCircle className="text-rose" />
-                    <div className="flex flex-col flex-grow">
-                      <div className="text-rose ml-2 flex-grow" data-testid="error-title">
-                        {`Failed to ${isIssuingFlow ? "publish" : "revoke"} due to:`}
-                      </div>
-                      <div className="text-rose ml-2 flex-grow">- {error?.message}</div>
-                      <div className="text-rose ml-2 flex-grow">
-                        {`Kindly rectify and try ${isIssuingFlow ? "publishing" : "revoking"} again.`}
-                      </div>
-                    </div>
-                    <Button className="bg-white text-rose hover:bg-cloud-100 h-12">
-                      <a
-                        download={generateFileName({
-                          network: config?.network,
-                          fileName: "error-log",
-                          extension: "txt",
-                          hasTimestamp: true,
-                        })}
-                        href={`data:text/plain;charset=UTF-8,${JSON.stringify(error, null, 2)}`}
-                      >
-                        <div className="flex">
-                          <Download />
-                          <div className="text-rose ml-2">Download Error Log</div>
-                        </div>
-                      </a>
-                    </Button>
+              <div className="bg-red-100 px-8 py-6 rounded-xl">
+                <div className="mb-8">
+                  <div className="text-rose font-bold mb-8" data-testid="error-title">
+                    {`The document(s) could not be ${isIssuingFlow ? "published" : "revoked"} at this time.`}
+                  </div>
+                  <div>
+                    Please contact TradeTrust via email or client representative to resolve your issue. Alternatively,
+                    please try again.
                   </div>
                 </div>
+                <Button className="bg-white hover:bg-cloud-100 flex mx-auto">
+                  <a
+                    download={generateFileName({
+                      network: config?.network,
+                      fileName: "error-log",
+                      extension: "txt",
+                      hasTimestamp: true,
+                    })}
+                    href={`data:text/plain;charset=UTF-8,${JSON.stringify(error, null, 2)}`}
+                  >
+                    <div className="flex">
+                      <Download />
+                      <div className="text-cerulean ml-2">Download Error Log</div>
+                    </div>
+                  </a>
+                </Button>
               </div>
             )}
           </div>

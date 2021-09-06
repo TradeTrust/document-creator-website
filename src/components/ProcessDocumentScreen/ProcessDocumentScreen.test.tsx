@@ -216,7 +216,7 @@ describe("ProcessDocumentScreen", () => {
         type={QueueType.ISSUE}
       />
     );
-    expect(screen.getByTestId("error-title")).toHaveTextContent("Failed to publish due to:");
+    expect(screen.getByTestId("error-title")).toHaveTextContent("The document(s) could not be published at this time.");
   });
 
   it("should display the correct title when document has error", () => {
@@ -230,7 +230,7 @@ describe("ProcessDocumentScreen", () => {
         type={QueueType.REVOKE}
       />
     );
-    expect(screen.getByTestId("error-title")).toHaveTextContent("Failed to revoke due to:");
+    expect(screen.getByTestId("error-title")).toHaveTextContent("The document(s) could not be revoked at this time.");
   });
 
   it("should display correctly when there are failed documents in issue flow", () => {

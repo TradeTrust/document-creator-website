@@ -171,7 +171,7 @@ export const NavigationBar: FunctionComponent<NavigationBarProps> = ({ logout })
   const NavLogo = () => {
     return (
       <NavLink to={"/"} data-testid="nav-logo-home">
-        <h4 className="text-gray-800">TradeTrust</h4>
+        <h4 className="text-cloud-900 font-bold">TradeTrust</h4>
       </NavLink>
     );
   };
