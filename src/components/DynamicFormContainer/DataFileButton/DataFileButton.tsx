@@ -123,8 +123,8 @@ export const DataFileButton: FunctionComponent<DataFileButton> = ({ onDataFile, 
           </Button>
         </div>
       </div>
-      <div className="flex text-sm justify-between text-cerulean-200 mt-4 px-4">
-        <div className="flex items-end">
+      <div className="md:flex text-sm justify-between text-cerulean-200 mt-4 px-4">
+        <div className="flex items-end mb-2 md:mb-0">
           <ToolTip toolTipText="JSON Schema is a lightweight data interchange format that generates clear, easy-to-understand documentation, making validation and testing easier. JSON Schema is used to describe the structure and validation constraints of JSON documents." />
           <div
             className="ml-2 cursor-pointer hover:underline"

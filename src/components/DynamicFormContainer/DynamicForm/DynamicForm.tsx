@@ -141,7 +141,7 @@ export const DynamicForm = styled(DynamicFormRaw)`
     ${mixin.fontRobotoBold()}
     ${mixin.fontSize(20)}
   ${tw`
-    text-gray-800 w-full mt-8 pt-6 capitalize border-t border-solid border-gray-300
+    text-gray-800 w-full mt-10 pt-10 capitalize border-t border-solid border-cloud-300
   `}
   }
 
@@ -173,13 +173,13 @@ export const DynamicForm = styled(DynamicFormRaw)`
 
   .array-item {
     ${tw`
-    border-b border-gray-300 border-solid pb-2 mb-4
+    border-b border-cloud-300 border-solid pb-2 mb-4
   `}
   }
 
   label {
     ${tw`
-    w-full sm:w-3/12 px-0 sm:px-4 sm:text-right text-gray-800
+    block w-full
   `}
   }
 
@@ -187,13 +187,13 @@ export const DynamicForm = styled(DynamicFormRaw)`
   .field-number input,
   .field-integer input {
     ${tw`
-    w-full sm:w-8/12 px-0 sm:px-2 h-10 rounded-none border border-solid border-gray-300
+    w-full px-3 h-10 rounded-lg border border-solid border-cloud-200
   `}
   }
 
   .btn {
     ${tw`
-      transition-colors duration-200 ease-out cursor-pointer font-bold p-2 rounded shadow-md border border-transparent bg-white text-cerulean-DEFAULT hover:bg-gray-100 m-2
+      transition-colors duration-200 ease-out cursor-pointer font-bold p-2 rounded border border-cloud-100 bg-white text-cerulean-DEFAULT hover:bg-cloud-100 m-2
     `}
 
     :first-of-type {
@@ -213,7 +213,7 @@ export const DynamicForm = styled(DynamicFormRaw)`
     ${tw`hidden`}
   }
   .btn-add::after {
-    content: "Add";
+    content: "Add Item";
   }
   .array-item-move-up::after {
     content: "Move Up";
