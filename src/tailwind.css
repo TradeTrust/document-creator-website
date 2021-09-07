@@ -74,6 +74,115 @@
 
 @tailwind components;
 
+@layer components {
+  .form-custom {
+    .dynamicForm-items {
+      @apply my-4;
+    }
+
+    legend {
+      @apply font-bold;
+      @apply text-xl;
+      @apply text-gray-800;
+      @apply w-full;
+      @apply mt-10;
+      @apply pt-10;
+      @apply capitalize;
+      @apply border-t;
+      @apply border-solid;
+      @apply border-cloud-300;
+    }
+
+    label {
+      @apply block;
+      @apply w-full;
+    }
+
+    textarea {
+      @apply w-full;
+      @apply resize-none;
+      @apply rounded-lg;
+    }
+
+    .field-array {
+      @apply mt-4;
+    }
+
+    .field-string,
+    .field-integer,
+    .field-number,
+    .field-null {
+      @apply flex;
+      @apply flex-wrap;
+      @apply items-center;
+    }
+
+    .field-string [type="text"],
+    .field-number input,
+    .field-integer input {
+      @apply w-full;
+      @apply px-3;
+      @apply h-10;
+      @apply rounded-lg;
+      @apply border;
+      @apply border-solid;
+      @apply border-cloud-200;
+    }
+
+    .array-item {
+      @apply border-b;
+      @apply border-cloud-300;
+      @apply border-solid;
+      @apply pb-2;
+      @apply mb-4;
+    }
+
+    .array-item-move-up::after {
+      content: "Move Up";
+    }
+
+    .array-item-move-down::after {
+      content: "Move Down";
+    }
+
+    .array-item-remove::after {
+      content: "Remove";
+    }
+
+    .btn {
+      @apply transition-colors;
+      @apply duration-200;
+      @apply ease-out;
+      @apply cursor-pointer;
+      @apply font-bold;
+      @apply p-2;
+      @apply rounded;
+      @apply border;
+      @apply border-cloud-100;
+      @apply bg-white;
+      @apply text-cerulean;
+      @apply hover:bg-cloud-100;
+      @apply m-2;
+    }
+
+    .btn:first-of-type {
+      @apply ml-0;
+    }
+
+    .btn:last-child {
+      @apply mr-0;
+    }
+
+    .btn[type="submit"] {
+      @apply hidden; /* seems like submit button will be rendered by default for react-jsonschema-form */
+    }
+
+    .btn-add::after {
+      content: "Add Item";
+    }
+  }
+}
+
 @tailwind utilities;
 
 /* https://philipwalton.com/articles/normalizing-cross-browser-flexbox-bugs/ */

@@ -2,7 +2,6 @@ import { Button } from "@govtechsg/tradetrust-ui-components";
 import React, { FunctionComponent } from "react";
 import logo from "../NavigationBar/logo.svg";
 import { CodeBlock } from "../UI/CodeBlock";
-import { Title } from "../UI/Title";
 
 export const ErrorBoundaryContent: FunctionComponent<{
   error?: string;
@@ -10,7 +9,7 @@ export const ErrorBoundaryContent: FunctionComponent<{
   <div className="flex min-h-screen min-w-screen items-center justify-center" data-testid="error-boundary-content">
     <div className="container max-w-screen-sm">
       <img style={{ width: 120, height: "auto" }} className="mb-6" src={logo} alt="TradeTrust Logo" />
-      <Title className="mb-6">Oops...something went wrong</Title>
+      <h3 className="mb-6">Oops...something went wrong</h3>
       <div className="mb-2">TradeTrust has encountered an issue.</div>
       <div>We are sorry, please</div>
       <ol className="mb-2">
@@ -31,7 +30,7 @@ export const ErrorBoundaryContent: FunctionComponent<{
         </div>
       )}
       <Button
-        className="bg-orange-300 text-white hover:bg-orange-600"
+        className="bg-tangerine text-white hover:bg-tangerine-600"
         data-testid="form-logout-button"
         onClick={() => window.location.reload()}
       >
