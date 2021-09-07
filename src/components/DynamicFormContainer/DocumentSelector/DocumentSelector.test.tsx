@@ -132,5 +132,6 @@ describe("documentSelector", () => {
     const mockValidateCurrentForm = jest.fn();
     render(<DocumentSelector validateCurrentForm={mockValidateCurrentForm} closePreviewMode={mockClosePreviewMode} />);
     expect(screen.getByTestId("document-name-select")).toHaveValue("1");
+    expect(screen.getByTestId("document-name-select").firstChild?.textContent).toEqual("document-1");
   });
 });
