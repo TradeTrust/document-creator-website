@@ -1,5 +1,5 @@
 import { Button } from "@govtechsg/tradetrust-ui-components";
-import React, { MouseEventHandler, ReactElement } from "react";
+import React, { MouseEventHandler } from "react";
 
 interface ErrorCardProps {
   title: string;
