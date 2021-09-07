@@ -60,7 +60,7 @@ test("should issue the documents on local blockchain correctly", async (t) => {
   // Pending confirmation of issued documents
   await t.expect(Selector("[data-testid='processing-loader']").exists).ok();
 
-  await t.wait(6000); // cater to ci latency, so it does not break the subsequent tests
+  await t.wait(6000); // cater to ci latency, so it does not break the subsequent tests, try not use everywhere
 
   // Check that download exists
   await t.expect(Selector("[data-testid='file-name']").exists).ok();
