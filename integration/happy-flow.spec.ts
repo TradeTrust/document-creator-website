@@ -62,8 +62,7 @@ test("should issue the documents on local blockchain correctly", async (t) => {
   await t.expect(Selector("[data-testid='processing-loader']").exists).ok();
 
   // Check that download exists
-  await t.expect(Selector("div").withText("COO-1-local.tt").exists).ok();
-  await t.expect(Selector("[data-testid='download-file-button']").withText("Download").exists).ok();
+  await t.expect(Selector("[data-testid='file-name']").withText("COO-1-local.tt").exists).ok();
   await t.expect(DownloadAllButton.exists).ok();
 
   // Issue transferable record
