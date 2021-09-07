@@ -57,7 +57,7 @@ export const ProcessedDocumentTag: FunctionComponent<PublishedTagProps> = ({
             <div className="text-cloud-500" data-testid="file-name">
               {documentName}
             </div>
-            <div className="text-cloud-300 text-xs font-regular"> ({size})</div>
+            <div className="text-cloud-300 text-xs font-regular whitespace-nowrap"> ({size})</div>
           </div>
           {isIssuingFlow && !isPending && !isError && (
             <div
