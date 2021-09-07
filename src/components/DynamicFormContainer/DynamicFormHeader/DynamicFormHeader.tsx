@@ -1,6 +1,5 @@
 import { Button } from "@govtechsg/tradetrust-ui-components";
 import React, { FunctionComponent } from "react";
-import { useFormsContext } from "../../../common/context/forms";
 import { ProgressBar } from "../../ProgressBar";
 import { Card } from "../../UI/Card";
 import { IssueOrRevokeSelector } from "../../UI/IssueOrRevokeSelector";
@@ -22,8 +21,6 @@ export const DynamicFormHeader: FunctionComponent<DynamicFormHeaderProps> = ({
   validateCurrentForm,
   closePreviewMode,
 }) => {
-  const { forms, activeFormIndex } = useFormsContext();
-
   return (
     <Wrapper className="mb-8">
       <Card
@@ -41,14 +38,11 @@ export const DynamicFormHeader: FunctionComponent<DynamicFormHeaderProps> = ({
         }
       >
         <ProgressBar step={2} totalSteps={3} title="Fill Form" />
-        <div className="md:flex justify-between items-end">
+        <h3 data-testid="fill-form-title" className="my-8">
+          Fill and Preview Form
+        </h3>
+        <div className="md:flex justify-between items-start">
           <div className="flex flex-col">
-            <h3 data-testid="fill-form-title" className="my-8">
-              Fill and Preview Form
-            </h3>
-            <div className="text-gray-800 text-lg">{`${(activeFormIndex || 0) + 1} of ${
-              forms.length
-            } document(s)`}</div>
             <DocumentSelector validateCurrentForm={validateCurrentForm} closePreviewMode={closePreviewMode} />
           </div>
           <div className="mt-4 md:mt-0">

@@ -16,8 +16,8 @@ const ProgressBar = Selector("[data-testid='progress-bar']");
 const Button = Selector("button");
 const FormTitleField = Selector("#root_title");
 const FormRemarksField = Selector("#root_remarks");
-const nextDocumentButton = Selector("[data-testid='next-document-button']");
-const fileNameField = Selector("[data-testid='file-name-input']");
+const documentNumberInput = Selector("[data-testid='document-number-input']");
+const documentNameSelect = Selector("[data-testid='document-name-select']");
 const downloadCsvDataFileButton = Selector("[data-testid='download-csv-data-schema-button']");
 const downloadJsonDataFileButton = Selector("[data-testid='download-json-data-schema-button']");
 
@@ -68,13 +68,13 @@ test("should upload populate data fields correctly", async (t) => {
   await t.setFilesToUpload("input[type=file][data-testid=config-file-drop-zone]", [DataFileCsv]);
 
   // Validated the content is overwritten by the data file
-  await t.expect(fileNameField.value).eql("Covering-Letter-2");
+  await t.expect(documentNameSelect.value).eql("2");
   await t.expect(FormTitleField.value).eql("Testing1");
   await t.expect(FormRemarksField.value).eql("Testing1");
 
   // Check next document
-  await t.click(nextDocumentButton);
-  await t.expect(fileNameField.value).eql("Covering-Letter-3");
+  await t.typeText(documentNumberInput, "3", { replace: true });
+  await t.expect(documentNameSelect.value).eql("3");
   await t.expect(FormTitleField.value).eql("Testing2");
   await t.expect(FormRemarksField.value).eql("Testing2");
 });
