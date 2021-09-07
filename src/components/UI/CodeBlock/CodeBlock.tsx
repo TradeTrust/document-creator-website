@@ -35,7 +35,7 @@ export const CodeBlock: React.FunctionComponent<CodeBlockProps> = ({ code }: Cod
   };
 
   return (
-    <CodeBlockWrap className="bg-cerulean">
+    <CodeBlockWrap className="bg-cerulean text-white">
       <p className="mb-0" id="copy-textarea">
         {code}
       </p>
