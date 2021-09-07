@@ -15,7 +15,6 @@ const Button = Selector("button");
 const ProgressBar = Selector("[data-testid='progress-bar']");
 const SubmitButton = Selector("[data-testid='form-submit-button']");
 const NextDocumentButton = Selector("[data-testid='next-document-button']");
-const DownloadAllButton = Selector("[data-testid='download-all-button']");
 const FormIdField = Selector("#root_iD");
 const FormExporterNameField = Selector("#root_supplyChainConsignment_exporter_name");
 const EblBeneficiaryField = Selector("[data-testid='transferable-record-beneficiary-input']");
@@ -61,9 +60,12 @@ test("should issue the documents on local blockchain correctly", async (t) => {
   // Pending confirmation of issued documents
   await t.expect(Selector("[data-testid='processing-loader']").exists).ok();
 
+  await t.wait(6000); // cater to ci latency, so it does not break the subsequent tests
+
   // Check that download exists
-  await t.expect(Selector("[data-testid='file-name']").withText("COO-1-local.tt").exists).ok();
-  await t.expect(DownloadAllButton.exists).ok();
+  await t.expect(Selector("[data-testid='file-name']").exists).ok();
+  await t.expect(Selector("[data-testid='download-file-button']").exists).ok();
+  await t.expect(Selector("[data-testid='download-all-button']").exists).ok();
 
   // Issue transferable record
   await t.click(Button.withText("Create another Document"));
