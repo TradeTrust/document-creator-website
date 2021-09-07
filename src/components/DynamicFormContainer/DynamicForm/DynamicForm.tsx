@@ -1,5 +1,5 @@
-import { cloneDeep } from "lodash";
-import React, { FunctionComponent } from "react";
+import { cloneDeep, debounce } from "lodash";
+import React, { FunctionComponent, useCallback, useEffect, useMemo, useRef, useState } from "react";
 import JsonForm from "react-jsonschema-form";
 import { useFormsContext } from "../../../common/context/forms";
 import { FileUploadType, FormEntry, FormTemplate, FormType, Ownership, SetFormParams } from "../../../types";
@@ -36,8 +36,35 @@ export const DynamicForm: FunctionComponent<DynamicFormProps> = ({
   attachmentAcceptedFormat = "",
 }) => {
   const { templateIndex, data, ownership } = form;
-  const { newPopulatedForm } = useFormsContext();
+  const { newPopulatedForm, currentForm, setCurrentFileName } = useFormsContext();
   const isTransferableRecord = type === "TRANSFERABLE_RECORD";
+
+  const [newFileName, setNewFileName] = useState(currentForm?.fileName);
+
+  const mounted = useRef(false);
+  useEffect(() => {
+    if (!mounted.current) {
+      mounted.current = true;
+    } else {
+      setNewFileName(currentForm?.fileName);
+    }
+  }, [currentForm?.fileName]);
+
+  const debouncedChange = useMemo(
+    () =>
+      debounce((val) => {
+        setCurrentFileName(val);
+      }, 400),
+    [setCurrentFileName]
+  );
+
+  const handleChangeFileName = useCallback(
+    (e) => {
+      setNewFileName(e.target.value);
+      debouncedChange(e.target.value);
+    },
+    [debouncedChange]
+  );
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const mergeFormValue = (value: any): void => {
@@ -106,6 +133,15 @@ export const DynamicForm: FunctionComponent<DynamicFormProps> = ({
           }
         />
       )}
+      <label>Document Name</label>
+      <input
+        onChange={handleChangeFileName}
+        data-testid="file-name-input"
+        type="text"
+        aria-label="file-name-input"
+        value={newFileName}
+        className="border border-cloud-200 h-10 w-full rounded-lg px-3"
+      />
       <JsonForm
         className="form-custom"
         schema={schema}

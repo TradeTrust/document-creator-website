@@ -159,7 +159,7 @@ describe("dynamicFormLayout", () => {
         <DynamicFormLayout />
       </MemoryRouter>
     );
-
+    expect(screen.queryAllByTestId("file-name-input")).toHaveLength(1);
     expect(screen.queryAllByTestId("document-name-select")).toHaveLength(1);
     expect(screen.queryAllByTestId("document-number-input")).toHaveLength(1);
   });

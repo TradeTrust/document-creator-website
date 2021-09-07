@@ -19,6 +19,7 @@ const FormExporterNameField = Selector("#root_supplyChainConsignment_exporter_na
 const EblBeneficiaryField = Selector("[data-testid='transferable-record-beneficiary-input']");
 const EblHolderField = Selector("[data-testid='transferable-record-holder-input']");
 const EblNumberField = Selector("input#root_blNumber");
+const EblFileNameField = Selector("[data-testid='file-name-input']");
 const EblDocumentNameSelect = Selector("[data-testid='document-name-select']");
 const EblDocumentNumberInput = Selector("[data-testid='document-number-input']");
 
@@ -80,6 +81,7 @@ test("should issue the documents on local blockchain correctly", async (t) => {
   await t.setFilesToUpload("input[type=file][data-testid=config-file-drop-zone]", [DataFileEbl]);
 
   // Validate the content is overwritten by the data file
+  await t.expect(EblFileNameField.value).eql("bill-123");
   await t.expect(EblDocumentNameSelect.value).eql("1");
   await t.expect(EblBeneficiaryField.value).eql("0xa61b056da0084a5f391ec137583073096880c2e3");
   await t.expect(EblHolderField.value).eql("0xa61b056da0084a5f391ec137583073096880c2e3");
@@ -89,12 +91,14 @@ test("should issue the documents on local blockchain correctly", async (t) => {
   await t.setFilesToUpload("input[type=file][data-testid=config-file-drop-zone]", [DataFileCsvEbl]);
 
   // Validate the content is overwritten by the data file
+  await t.expect(EblFileNameField.value).eql("bill-<blNumber 1>");
   await t.expect(EblDocumentNameSelect.value).eql("2");
   await t.expect(EblBeneficiaryField.value).eql("<beneficiary address 1>");
   await t.expect(EblHolderField.value).eql("<holder address 1>");
   await t.expect(EblNumberField.value).eql("<blNumber 1>");
 
   await t.typeText(EblDocumentNumberInput, "3", { replace: true });
+  await t.expect(EblFileNameField.value).eql("bill-<blNumber 2>");
   await t.expect(EblDocumentNameSelect.value).eql("3");
   await t.expect(EblBeneficiaryField.value).eql("<beneficiary address 2>");
   await t.expect(EblHolderField.value).eql("<holder address 2>");

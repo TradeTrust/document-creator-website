@@ -39,7 +39,7 @@ export const DocumentSelector: FunctionComponent<DocumentSelectorProps> = ({
         <select
           data-testid="document-name-select"
           value={activeDocumentNumber}
-          className="border border-cloud-200 rounded p-2 mt-3 min-w-full"
+          className="border border-cloud-200 rounded p-2 mt-3 w-48"
           onChange={(e) => selectDocument(parseInt(e.target.value))}
         >
           {forms.map((form, formIndex) => {
