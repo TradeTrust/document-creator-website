@@ -107,7 +107,11 @@ export const ProcessDocumentScreen: FunctionComponent<ProcessDocumentScreen> = (
                   description={
                     "Please contact TradeTrust via email or client representative to resolve your issue. Alternatively, please try again."
                   }
-                  buttonLink={<a onClick={() => processDocuments(type)}>Try Again</a>}
+                  buttonLink={
+                    <a className="text-cerulean" onClick={() => processDocuments(type)}>
+                      Try Again
+                    </a>
+                  }
                 />
 
                 <div className="p-3">
@@ -132,7 +136,11 @@ export const ProcessDocumentScreen: FunctionComponent<ProcessDocumentScreen> = (
                 description={
                   "Please contact TradeTrust via email or client representative to resolve your issue. Alternatively, please try again."
                 }
-                buttonLink={<a onClick={() => processDocuments(type)}>Try Again</a>}
+                buttonLink={
+                  <a className="text-cerulean" onClick={() => processDocuments(type)}>
+                    Try Again
+                  </a>
+                }
               />
             )}
             {queueState === QueueState.CONFIRMED && (

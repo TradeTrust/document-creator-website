@@ -20,7 +20,7 @@ export const ErrorCard: React.FunctionComponent<ErrorCardProps> = ({
         </div>
         <div>{description}</div>
       </div>
-      <Button className="bg-white hover:bg-cloud-100 flex mx-auto">{buttonLink}</Button>
+      <Button className="bg-white text-cerulean hover:bg-cloud-100 flex mx-auto">{buttonLink}</Button>
     </div>
   );
 };
