@@ -12,9 +12,9 @@ export const FormErrorBanner: FunctionComponent<FormErrorBanner> = ({ formErrorT
   if (!formError || !(formError.length > 0)) return null;
 
   return (
-    <div data-testid="form-error-banner" className="bg-red-100 rounded max-w-screen-sm mx-auto flex items-start py-3">
-      <XCircle className="text-rose mx-3 my-1" />
-      <div className="text-rose text-xl flex flex-col justify-center items-start">
+    <div data-testid="form-error-banner" className="bg-red-100 rounded-lg mx-auto flex items-center p-6 mt-4">
+      <XCircle className="text-rose mx-3 my-1 h-10 w-10" />
+      <div className="text-rose font-bold flex flex-col justify-center items-center">
         <div>{formErrorTitle}</div>
         <ul className="list-disc pl-5">
           {formError &&
