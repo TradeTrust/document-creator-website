@@ -1,10 +1,7 @@
-import styled from "@emotion/styled";
 import { cloneDeep } from "lodash";
 import React, { FunctionComponent } from "react";
 import JsonForm from "react-jsonschema-form";
-import tw from "twin.macro";
 import { useFormsContext } from "../../../common/context/forms";
-import { mixin } from "../../../styles";
 import { FileUploadType, FormEntry, FormTemplate, FormType, Ownership, SetFormParams } from "../../../types";
 import { DataFileButton } from "../DataFileButton";
 import { TransferableRecordForm } from "../TransferableRecordForm";
@@ -25,7 +22,7 @@ export interface DynamicFormProps {
   fileName?: string;
 }
 
-export const DynamicFormRaw: FunctionComponent<DynamicFormProps> = ({
+export const DynamicForm: FunctionComponent<DynamicFormProps> = ({
   schema,
   uiSchema,
   form,
@@ -110,6 +107,7 @@ export const DynamicFormRaw: FunctionComponent<DynamicFormProps> = ({
         />
       )}
       <JsonForm
+        className="form-custom"
         schema={schema}
         uiSchema={uiSchema}
         widgets={widgets}
@@ -129,110 +127,3 @@ export const DynamicFormRaw: FunctionComponent<DynamicFormProps> = ({
     </div>
   );
 };
-
-export const DynamicForm = styled(DynamicFormRaw)`
-  .form-group .form-group.field.field-object .dynamicForm-items {
-    ${tw`
-    my-4
-  `}
-  }
-
-  legend {
-    ${mixin.fontRobotoBold()}
-    ${mixin.fontSize(20)}
-  ${tw`
-    text-gray-800 w-full mt-10 pt-10 capitalize border-t border-solid border-cloud-300
-  `}
-  }
-
-  .field-string,
-  .field-integer,
-  .field-number,
-  .field-null {
-    ${tw`
-    flex flex-wrap items-center
-  `}
-  }
-  .field-string .file-drop-zone {
-    ${tw`flex flex-wrap w-full my-4`}
-  }
-
-  .checkbox label {
-    ${tw`flex flex-wrap items-center w-full justify-center`}
-
-    input {
-      ${tw`mr-4`}
-    }
-  }
-
-  .field-array {
-    ${tw`
-    mt-4
-  `}
-  }
-
-  .array-item {
-    ${tw`
-    border-b border-cloud-300 border-solid pb-2 mb-4
-  `}
-  }
-
-  label {
-    ${tw`
-    block w-full
-  `}
-  }
-
-  .field-string [type="text"],
-  .field-number input,
-  .field-integer input {
-    ${tw`
-    w-full px-3 h-10 rounded-lg border border-solid border-cloud-200
-  `}
-  }
-
-  .btn {
-    ${tw`
-      transition-colors duration-200 ease-out cursor-pointer font-bold p-2 rounded border border-cloud-100 bg-white text-cerulean-DEFAULT hover:bg-cloud-100 m-2
-    `}
-
-    :first-of-type {
-      ${tw`ml-0`}
-    }
-
-    :last-child {
-      ${tw`mr-0`}
-    }
-  }
-
-  .btn[type="submit"] {
-    display: none;
-  }
-
-  i.glyphicon {
-    ${tw`hidden`}
-  }
-  .btn-add::after {
-    content: "Add Item";
-  }
-  .array-item-move-up::after {
-    content: "Move Up";
-  }
-  .array-item-move-down::after {
-    content: "Move Down";
-  }
-  .array-item-remove::after {
-    content: "Remove";
-  }
-
-  .item-pd-0,
-  .item-pd-0 > fieldset {
-    ${tw`px-0`}
-  }
-
-  .help-block {
-    ${tw`
-    text-sm my-2 mx-0
-  `}
-  }
-`;
