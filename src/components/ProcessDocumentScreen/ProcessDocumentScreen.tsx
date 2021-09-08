@@ -67,14 +67,14 @@ export const ProcessDocumentScreen: FunctionComponent<ProcessDocumentScreen> = (
                 />
               </div>
             )}
+            <div className="mb-4 flex-grow py-3" data-testid="total-number-of-documents">
+              {successfulProcessedDocuments.length + pendingProcessDocuments.length + failedProcessedDocuments.length}
+              {isIssuingFlow ? " document(s)" : " document"}
+            </div>
             {(pendingProcessDocuments.length > 0 || successfulProcessedDocuments.length > 0) &&
               queueState !== QueueState.ERROR && (
                 <div>
                   <div className="flex items-center">
-                    <div className="mb-4 flex-grow py-3" data-testid="total-number-of-documents">
-                      {successfulProcessedDocuments.length + pendingProcessDocuments.length}
-                      {isIssuingFlow ? " document(s)" : " document"}
-                    </div>
                     {queueState === QueueState.CONFIRMED && isIssuingFlow && (
                       <Button
                         className="bg-white text-cerulean hover:bg-cloud-100 mb-4"
@@ -103,7 +103,7 @@ export const ProcessDocumentScreen: FunctionComponent<ProcessDocumentScreen> = (
             {failPublishedDocuments && failPublishedDocuments.length > 0 && queueState !== QueueState.ERROR && (
               <>
                 <ErrorCard
-                  title={`The document(s) could not be ${isIssuingFlow ? "published" : "revoked"} at this time.`}
+                  title={`The document(s) could not be ${isIssuingFlow ? "issued" : "revoked"} at this time.`}
                   description={
                     "Please contact TradeTrust via email or client representative to resolve your issue. Alternatively, please try again."
                   }
@@ -114,7 +114,7 @@ export const ProcessDocumentScreen: FunctionComponent<ProcessDocumentScreen> = (
                   }
                 />
 
-                <div className="p-3">
+                <div className="py-3">
                   {failPublishedDocuments.map((doc, index) => {
                     return (
                       <ProcessedDocumentTag
@@ -132,7 +132,7 @@ export const ProcessDocumentScreen: FunctionComponent<ProcessDocumentScreen> = (
             )}
             {queueState === QueueState.ERROR && (
               <ErrorCard
-                title={`The document(s) could not be ${isIssuingFlow ? "published" : "revoked"} at this time.`}
+                title={`The document(s) could not be ${isIssuingFlow ? "issued" : "revoked"} at this time.`}
                 description={
                   "Please contact TradeTrust via email or client representative to resolve your issue. Alternatively, please try again."
                 }
