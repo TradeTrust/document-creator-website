@@ -216,7 +216,7 @@ describe("ProcessDocumentScreen", () => {
         type={QueueType.ISSUE}
       />
     );
-    expect(screen.getByTestId("error-title")).toHaveTextContent("The document(s) could not be published at this time.");
+    expect(screen.getByTestId("error-title")).toHaveTextContent("The document(s) could not be issued at this time.");
   });
 
   it("should display the correct title when document has error", () => {
@@ -244,9 +244,7 @@ describe("ProcessDocumentScreen", () => {
       />
     );
     expect(screen.getByTestId("process-title")).toHaveTextContent("Document(s) failed to issue");
-    expect(screen.getByTestId("error-message")).toHaveTextContent(
-      "These documents failed to publish due to some errors. Kindly rectify and try publishing again."
-    );
+    expect(screen.getByTestId("error-title")).toHaveTextContent("The document(s) could not be issued at this time.");
   });
 
   it("should display correctly when there are failed documents in revoke flow", () => {
@@ -261,9 +259,7 @@ describe("ProcessDocumentScreen", () => {
       />
     );
     expect(screen.getByTestId("process-title")).toHaveTextContent("Document failed to revoke");
-    expect(screen.getByTestId("error-message")).toHaveTextContent(
-      "These documents failed to publish due to some errors. Kindly rectify and try publishing again."
-    );
+    expect(screen.getByTestId("error-title")).toHaveTextContent("The document(s) could not be revoked at this time.");
   });
 
   it("should called download method for download a single file", async () => {

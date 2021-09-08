@@ -30,7 +30,7 @@ export const ProcessDocumentTitle: FunctionComponent<ProcessDocumentTitle> = ({ 
         if (documents.length > 0) {
           return (
             <>
-              <CheckCircle className="mr-2 text-teal-300 h-12 w-12 md:h-auto md:w-auto" />
+              <CheckCircle className="mr-2 text-emerald h-12 w-12 md:h-auto md:w-auto" />
               {titleText(`${isIssuingFlow ? "Document(s) issued" : "Document revoked"} successfully`)}
             </>
           );
@@ -58,7 +58,7 @@ export const ProcessDocumentTitle: FunctionComponent<ProcessDocumentTitle> = ({ 
   };
 
   return (
-    <h3 data-testid="process-document-title" className="flex items-center my-8">
+    <h3 data-testid="process-document-title" className="flex items-center my-8 border-b border-cloud-200 w-full pb-16">
       {getDisplayTitle()}
     </h3>
   );
