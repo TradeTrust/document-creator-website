@@ -159,10 +159,9 @@ describe("dynamicFormLayout", () => {
         <DynamicFormLayout />
       </MemoryRouter>
     );
-
     expect(screen.queryAllByTestId("file-name-input")).toHaveLength(1);
-    expect(screen.queryAllByTestId("previous-document-button")).toHaveLength(1);
-    expect(screen.queryAllByTestId("next-document-button")).toHaveLength(1);
+    expect(screen.queryAllByTestId("document-name-select")).toHaveLength(1);
+    expect(screen.queryAllByTestId("document-number-input")).toHaveLength(1);
   });
 
   it("should render toggle switch for preview mode", () => {

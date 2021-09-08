@@ -104,43 +104,33 @@ describe("documentSelector", () => {
     const mockValidateCurrentForm = jest.fn();
     render(<DocumentSelector validateCurrentForm={mockValidateCurrentForm} closePreviewMode={mockClosePreviewMode} />);
 
-    expect(screen.queryAllByTestId("previous-document-button")).toHaveLength(1);
-    expect(screen.queryAllByTestId("file-name-input")).toHaveLength(1);
-    expect(screen.queryAllByTestId("next-document-button")).toHaveLength(1);
+    expect(screen.queryAllByTestId("document-number-input")).toHaveLength(1);
+    expect(screen.queryAllByTestId("document-name-select")).toHaveLength(1);
   });
 
-  it("should fire the function when the next arrow button is clicked", async () => {
+  it("should fire the function when the next number is input", async () => {
     whenActiveFormsAreAvailable();
     const mockValidateCurrentForm = jest.fn().mockReturnValue(true);
     render(<DocumentSelector validateCurrentForm={mockValidateCurrentForm} closePreviewMode={mockClosePreviewMode} />);
-
-    fireEvent.click(screen.getByTestId("next-document-button"));
+    fireEvent.change(screen.getByTestId("document-number-input"), { target: { value: "2" } });
     expect(mockValidateCurrentForm).toHaveBeenCalledTimes(1);
     expect(mockClosePreviewMode).toHaveBeenCalledTimes(1);
   });
 
-  it("should fire the function when the previous arrow button is clicked", () => {
+  it("should fire the function when the previous number is input", () => {
     whenActiveFormsIndexIs1();
     const mockValidateCurrentForm = jest.fn().mockReturnValue(true);
     render(<DocumentSelector validateCurrentForm={mockValidateCurrentForm} closePreviewMode={mockClosePreviewMode} />);
 
-    fireEvent.click(screen.getByTestId("previous-document-button"));
+    fireEvent.change(screen.getByTestId("document-number-input"), { target: { value: "1" } });
     expect(mockValidateCurrentForm).toHaveBeenCalledTimes(1);
     expect(mockClosePreviewMode).toHaveBeenCalledTimes(1);
   });
 
-  it("should display the file name input field correctly", () => {
+  it("should display the correct filename in the select component", () => {
     whenActiveFormsAreAvailable();
     const mockValidateCurrentForm = jest.fn();
     render(<DocumentSelector validateCurrentForm={mockValidateCurrentForm} closePreviewMode={mockClosePreviewMode} />);
-    expect(screen.getByTestId("file-name-input")).toHaveValue("document-1");
-  });
-
-  it("should set the file name when there is a change in the file name", () => {
-    whenActiveFormsAreAvailable();
-    const mockValidateCurrentForm = jest.fn();
-    render(<DocumentSelector validateCurrentForm={mockValidateCurrentForm} closePreviewMode={mockClosePreviewMode} />);
-    fireEvent.change(screen.getByLabelText("file-name-input"), { target: { value: "CCO-1" } });
-    expect(mockCurrentFileName).toHaveBeenCalledTimes(1);
+    expect(screen.getByTestId("document-name-select")).toHaveTextContent("document-1");
   });
 });

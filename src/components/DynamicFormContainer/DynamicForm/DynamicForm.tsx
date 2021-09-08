@@ -1,9 +1,10 @@
-import { cloneDeep } from "lodash";
-import React, { FunctionComponent } from "react";
+import { cloneDeep, debounce } from "lodash";
+import React, { FunctionComponent, useCallback, useEffect, useMemo, useRef, useState } from "react";
 import JsonForm from "react-jsonschema-form";
 import { useFormsContext } from "../../../common/context/forms";
 import { FileUploadType, FormEntry, FormTemplate, FormType, Ownership, SetFormParams } from "../../../types";
 import { DataFileButton } from "../DataFileButton";
+import { DocumentNameInput } from "../DocumentNameInput";
 import { TransferableRecordForm } from "../TransferableRecordForm";
 import { AttachmentDropzone } from "./AttachmentDropzone";
 import { CustomFieldTemplate, CustomObjectFieldTemplate, CustomTextareaWidget } from "./CustomTemplates";
@@ -36,8 +37,35 @@ export const DynamicForm: FunctionComponent<DynamicFormProps> = ({
   attachmentAcceptedFormat = "",
 }) => {
   const { templateIndex, data, ownership } = form;
-  const { newPopulatedForm } = useFormsContext();
+  const { newPopulatedForm, currentForm, setCurrentFileName } = useFormsContext();
   const isTransferableRecord = type === "TRANSFERABLE_RECORD";
+
+  const [newFileName, setNewFileName] = useState(currentForm?.fileName);
+
+  const mounted = useRef(false);
+  useEffect(() => {
+    if (!mounted.current) {
+      mounted.current = true;
+    } else {
+      setNewFileName(currentForm?.fileName);
+    }
+  }, [currentForm?.fileName]);
+
+  const debouncedChange = useMemo(
+    () =>
+      debounce((val) => {
+        setCurrentFileName(val);
+      }, 400),
+    [setCurrentFileName]
+  );
+
+  const handleChangeFileName = useCallback(
+    (e) => {
+      setNewFileName(e.target.value);
+      debouncedChange(e.target.value);
+    },
+    [debouncedChange]
+  );
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const mergeFormValue = (value: any): void => {
@@ -88,6 +116,7 @@ export const DynamicForm: FunctionComponent<DynamicFormProps> = ({
       <div className="mb-10">
         <DataFileButton onDataFile={mergeFormValue} schema={schema} />
       </div>
+      <DocumentNameInput onChange={handleChangeFileName} value={newFileName} isBorderedBottom={isTransferableRecord} />
       {isTransferableRecord && (
         <TransferableRecordForm
           beneficiaryAddress={ownership.beneficiaryAddress}

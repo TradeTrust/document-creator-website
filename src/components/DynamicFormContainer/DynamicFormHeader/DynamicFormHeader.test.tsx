@@ -150,7 +150,8 @@ describe("dynamicFormHeader", () => {
       </MemoryRouter>
     );
 
-    expect(screen.queryAllByText("2 of 2 document(s)")).toHaveLength(1);
+    expect(screen.getByTestId("document-number-input")).toHaveValue("2");
+    expect(screen.queryAllByText("of 2 document(s)")).toHaveLength(1);
   });
 
   it("should fire validation when switching documents", () => {
@@ -168,33 +169,11 @@ describe("dynamicFormHeader", () => {
       </MemoryRouter>
     );
 
-    fireEvent.click(screen.getByTestId("previous-document-button"));
+    fireEvent.change(screen.getByTestId("document-number-input"), { target: { value: "1" } });
     expect(mockValidateCurrentForm).toHaveBeenCalledTimes(1);
 
-    fireEvent.click(screen.getByTestId("next-document-button"));
+    fireEvent.change(screen.getByTestId("document-number-input"), { target: { value: "2" } });
     expect(mockValidateCurrentForm).toHaveBeenCalledTimes(1);
-  });
-
-  it("should switch active form index when previous button is clicked", () => {
-    whenActiveFormsAreAvailable();
-    const mockValidateCurrentForm = jest.fn().mockReturnValue(true);
-    render(
-      <MemoryRouter>
-        <DynamicFormHeader
-          onBackToFormSelection={() => {}}
-          onFormSubmit={() => {}}
-          onNewForm={() => {}}
-          validateCurrentForm={mockValidateCurrentForm}
-          closePreviewMode={mockClosePreviewMode}
-        />
-      </MemoryRouter>
-    );
-
-    fireEvent.click(screen.getByTestId("previous-document-button"));
-    expect(mockSetActiveFormIndex).toHaveBeenCalledTimes(1);
-
-    fireEvent.click(screen.getByTestId("next-document-button"));
-    expect(mockSetActiveFormIndex).toHaveBeenCalledTimes(1);
   });
 
   it("should close preview mode when switching documents", () => {
@@ -212,10 +191,7 @@ describe("dynamicFormHeader", () => {
       </MemoryRouter>
     );
 
-    fireEvent.click(screen.getByTestId("previous-document-button"));
-    expect(mockClosePreviewMode).toHaveBeenCalledTimes(1);
-
-    fireEvent.click(screen.getByTestId("next-document-button"));
+    fireEvent.change(screen.getByTestId("document-number-input"), { target: { value: "1" } });
     expect(mockClosePreviewMode).toHaveBeenCalledTimes(1);
   });
 });

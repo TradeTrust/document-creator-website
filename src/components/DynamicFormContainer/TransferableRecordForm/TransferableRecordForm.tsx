@@ -30,38 +30,38 @@ export const TransferableRecordForm: FunctionComponent<TransferableRecordForm> =
   };
 
   return (
-    <div data-testid="transferable-record-form" className="border-b border-solid border-gray-300 pb-4 rounded mb-8">
-      <div className="text-gray-800 font-bold text-xl pb-4">Transferable Record Owner</div>
-      <div className="flex my-4 items-center sm:flex-row flex-col">
-        <div className="w-full sm:w-3/12 px-0 sm:px-4 sm:text-right text-gray-800 mb-2 sm:mb-0">Owner</div>
-        <div className="w-full flex sm:w-8/12">
+    <div data-testid="transferable-record-form" className="border-b border-solid border-gray-300 pb-8 mb-8">
+      <div className="text-cloud-900 font-bold text-xl pb-4">Transferable Record Owner</div>
+      <div className="mb-3">
+        <div>Owner</div>
+        <div className="w-full flex">
           <input
             data-testid="transferable-record-beneficiary-input"
-            className="w-full h-10 rounded-none border border-solid border-gray-300 mr-2"
+            className="border border-cloud-200 h-10 w-full rounded-lg px-3 mr-2"
             value={beneficiaryAddress}
             type="text"
             onChange={(e) => setBeneficiaryAddress(e.target.value)}
           />
           <ButtonIcon
-            className="bg-cerulean text-white hover:bg-cerulean-500"
+            className="bg-white text-cerulean-200 hover:bg-cloud-100"
             onClick={() => onOverlayHandler(setBeneficiaryAddress)}
           >
             <Book />
           </ButtonIcon>
         </div>
       </div>
-      <div className="flex my-4 items-center sm:flex-row flex-col">
-        <div className="w-full sm:w-3/12 px-0 sm:px-4 sm:text-right text-gray-800 mb-2 sm:mb-0">Holder</div>
-        <div className="w-full flex sm:w-8/12">
+      <div>
+        <div>Holder</div>
+        <div className="w-full flex">
           <input
             data-testid="transferable-record-holder-input"
-            className="w-full  h-10 rounded-none border border-solid border-gray-300 mr-2"
+            className="border border-cloud-200 h-10 w-full rounded-lg px-3 mr-2"
             value={holderAddress}
             type="text"
             onChange={(e) => setHolderAddress(e.target.value)}
           />
           <ButtonIcon
-            className="bg-cerulean text-white hover:bg-cerulean-500"
+            className="bg-white text-cerulean-200 hover:bg-cloud-100"
             onClick={() => onOverlayHandler(setHolderAddress)}
           >
             <Book />

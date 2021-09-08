@@ -12,9 +12,9 @@ const Button = Selector("button");
 const ProgressBar = Selector("[data-testid='progress-bar']");
 const AddNewButton = Selector("[data-testid='add-new-button']");
 const FormIdField = Selector("#root_iD");
-const previousDocumentButton = Selector("[data-testid='previous-document-button']");
-const nextDocumentButton = Selector("[data-testid='next-document-button']");
 const fileNameField = Selector("[data-testid='file-name-input']");
+const documentNumberInput = Selector("[data-testid='document-number-input']");
+const documentNameSelect = Selector("[data-testid='document-name-select'");
 
 test("should rename document filename correctly", async (t) => {
   // Upload config file
@@ -39,15 +39,13 @@ test("should rename document filename correctly", async (t) => {
   await t.click(Button.withText("COO"));
   await t.typeText(FormIdField, "COO-ID");
 
-  // Rename document
-  await t.selectText(fileNameField);
-  await t.typeText(fileNameField, "File-2");
-
   // Go to the previous document
-  await t.click(previousDocumentButton);
+  await t.typeText(documentNumberInput, "1", { replace: true });
   await t.expect(fileNameField.value).eql("COO-1");
+  await t.expect(documentNameSelect.innerText).eql("COO-1");
 
   // Go back to the other document
-  await t.click(nextDocumentButton);
-  await t.expect(fileNameField.value).eql("File-2");
+  await t.typeText(documentNumberInput, "2", { replace: true });
+  await t.expect(fileNameField.value).eql("COO-2");
+  await t.expect(documentNameSelect.innerText).eql("COO-2");
 });
