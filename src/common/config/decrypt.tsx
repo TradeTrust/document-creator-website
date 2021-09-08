@@ -1,10 +1,11 @@
-import { Wallet, getDefaultProvider, providers } from "ethers";
+import { Wallet, providers } from "ethers";
 import { AwsKmwSignerOption, ConfigFile, ConnectedSigner } from "../../types";
 import { RelayProvider } from "@opengsn/gsn";
 import { getGSNRelayConfig, getHttpProviderUri } from "../../config";
 import Web3HttpProvider from "web3-providers-http";
 import { isWalletOption } from "../utils";
 import { AwsKmsSigner } from "ethers-aws-kms-signer";
+import { utils } from "@govtechsg/oa-verify";
 
 export const getGsnRelaySigner = async (
   account: Wallet | ConnectedSigner,
@@ -63,7 +64,8 @@ export const decryptWalletOrSigner = async (
   password: string,
   progressCallback: (progress: number) => void
 ): Promise<Wallet | ConnectedSigner> => {
-  const provider = config.network === "local" ? new providers.JsonRpcProvider() : getDefaultProvider(config.network);
+  const provider =
+    config.network === "local" ? new providers.JsonRpcProvider() : utils.generateProvider({ network: config.network });
   if (isWalletOption(config.wallet)) {
     // For backward compatibility when the wallet is still string
     return decryptEncryptedJson(config.wallet, password, progressCallback, provider);
@@ -79,7 +81,7 @@ export const decryptWalletOrSigner = async (
   }
 };
 
-const decryptAwsKms = async (wallet: AwsKmwSignerOption, password: string, provider: providers.BaseProvider) => {
+const decryptAwsKms = async (wallet: AwsKmwSignerOption, password: string, provider: providers.Provider) => {
   const kmsCredentials = {
     accessKeyId: wallet.accessKeyId, // credentials for your IAM user with KMS access
     secretAccessKey: password, // credentials for your IAM user with KMS access
@@ -103,7 +105,7 @@ const decryptEncryptedJson = async (
   encryptedJson: string,
   password: string,
   progressCallback: (progress: number) => void,
-  provider: providers.BaseProvider
+  provider: providers.Provider
 ) => {
   return (await Wallet.fromEncryptedJson(encryptedJson, password, progressCallback)).connect(provider);
 };
