@@ -104,14 +104,11 @@ export const ProcessDocumentScreen: FunctionComponent<ProcessDocumentScreen> = (
               <>
                 <ErrorCard
                   title={`The document(s) could not be ${isIssuingFlow ? "issued" : "revoked"} at this time.`}
-                  description={
-                    "Please contact TradeTrust via email or client representative to resolve your issue. Alternatively, please try again."
-                  }
-                  buttonLink={
-                    <a className="text-cerulean" onClick={() => processDocuments(type)}>
-                      Try Again
-                    </a>
-                  }
+                  description={`Please contact TradeTrust via email or client representative to resolve your issue. Alternatively, please try again.`}
+                  buttonProps={{
+                    onClick: () => processDocuments(type),
+                    text: "Try Again",
+                  }}
                 />
 
                 <div className="py-3">
@@ -133,14 +130,11 @@ export const ProcessDocumentScreen: FunctionComponent<ProcessDocumentScreen> = (
             {queueState === QueueState.ERROR && (
               <ErrorCard
                 title={`The document(s) could not be ${isIssuingFlow ? "issued" : "revoked"} at this time.`}
-                description={
-                  "Please contact TradeTrust via email or client representative to resolve your issue. Alternatively, please try again."
-                }
-                buttonLink={
-                  <a className="text-cerulean" onClick={() => processDocuments(type)}>
-                    Try Again
-                  </a>
-                }
+                description={`Please contact TradeTrust via email or client representative to resolve your issue. Alternatively, please try again.`}
+                buttonProps={{
+                  onClick: () => processDocuments(type),
+                  text: "Try Again",
+                }}
               />
             )}
             {queueState === QueueState.CONFIRMED && (
