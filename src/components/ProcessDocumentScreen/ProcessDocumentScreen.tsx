@@ -57,8 +57,12 @@ export const ProcessDocumentScreen: FunctionComponent<ProcessDocumentScreen> = (
             <ProcessDocumentTitle queueState={queueState} documents={successfulProcessedDocuments} type={type} />
           </div>
           <div className="py-6 h-full">
+            <div className="mb-4 flex-grow py-3" data-testid="total-number-of-documents">
+              {successfulProcessedDocuments.length + pendingProcessDocuments.length + failedProcessedDocuments.length}
+              {isIssuingFlow ? " document(s)" : " document"}
+            </div>
             {queueState === QueueState.INITIALIZED && (
-              <div className="flex items-center justify-center">
+              <div className="flex items-center justify-center mb-4">
                 <LoaderSpinner
                   className="mr-4 flex-shrink-0"
                   data-testid="preparing-loader"
@@ -67,10 +71,6 @@ export const ProcessDocumentScreen: FunctionComponent<ProcessDocumentScreen> = (
                 />
               </div>
             )}
-            <div className="mb-4 flex-grow py-3" data-testid="total-number-of-documents">
-              {successfulProcessedDocuments.length + pendingProcessDocuments.length + failedProcessedDocuments.length}
-              {isIssuingFlow ? " document(s)" : " document"}
-            </div>
             {(pendingProcessDocuments.length > 0 || successfulProcessedDocuments.length > 0) &&
               queueState !== QueueState.ERROR && (
                 <div>
