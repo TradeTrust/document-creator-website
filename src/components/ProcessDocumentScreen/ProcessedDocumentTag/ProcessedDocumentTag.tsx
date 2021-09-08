@@ -36,7 +36,7 @@ export const ProcessedDocumentTag: FunctionComponent<PublishedTagProps> = ({
       })
     : fileName;
   return (
-    <div className="mt-4 flex rounded-lg bg-white p-3 min-w-xs max-w-xs border border-solid border-cloud-200 mr-4 items-center">
+    <div className="my-4 flex rounded-lg bg-white p-3 min-w-xs max-w-xs border border-solid border-cloud-200 mr-4 items-center">
       <>
         {isPending ? (
           <LoaderSpinner
