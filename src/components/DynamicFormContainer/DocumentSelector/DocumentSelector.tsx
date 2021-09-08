@@ -1,3 +1,4 @@
+import { Dropdown, DropdownItem } from "@govtechsg/tradetrust-ui-components";
 import React, { FunctionComponent } from "react";
 import { useFormsContext } from "../../../common/context/forms";
 
@@ -10,7 +11,7 @@ export const DocumentSelector: FunctionComponent<DocumentSelectorProps> = ({
   validateCurrentForm,
   closePreviewMode,
 }) => {
-  const { forms, setActiveFormIndex, activeFormIndex } = useFormsContext();
+  const { forms, setActiveFormIndex, activeFormIndex, currentForm } = useFormsContext();
 
   const selectDocument = (formIndex: number): void => {
     if (isNaN(formIndex)) return;
@@ -36,21 +37,24 @@ export const DocumentSelector: FunctionComponent<DocumentSelectorProps> = ({
         <div>&nbsp;of {forms.length} document(s)</div>
       </div>
       <div>
-        <select
+        <Dropdown
           data-testid="document-name-select"
-          value={activeDocumentNumber}
-          className="border border-cloud-200 rounded p-2 mt-3 w-48"
-          onChange={(e) => selectDocument(parseInt(e.target.value))}
+          className="border border-cloud-200 rounded p-2 mt-3 mb-1 w-64"
+          dropdownButtonText={currentForm?.fileName || ""}
         >
           {forms.map((form, formIndex) => {
             const documentNumber = formIndex + 1;
             return (
-              <option key={`${form.fileName}-${documentNumber}`} value={documentNumber}>
+              <DropdownItem
+                className="w-64"
+                onClick={() => selectDocument(documentNumber)}
+                key={`${form.fileName}-${documentNumber}`}
+              >
                 {form.fileName}
-              </option>
+              </DropdownItem>
             );
           })}
-        </select>
+        </Dropdown>
       </div>
     </div>
   );

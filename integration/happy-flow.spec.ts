@@ -82,7 +82,7 @@ test("should issue the documents on local blockchain correctly", async (t) => {
 
   // Validate the content is overwritten by the data file
   await t.expect(EblFileNameField.value).eql("bill-123");
-  await t.expect(EblDocumentNameSelect.value).eql("1");
+  await t.expect(EblDocumentNameSelect.innerText).eql("bill-123");
   await t.expect(EblBeneficiaryField.value).eql("0xa61b056da0084a5f391ec137583073096880c2e3");
   await t.expect(EblHolderField.value).eql("0xa61b056da0084a5f391ec137583073096880c2e3");
   await t.expect(EblNumberField.value).eql("123");
@@ -92,14 +92,14 @@ test("should issue the documents on local blockchain correctly", async (t) => {
 
   // Validate the content is overwritten by the data file
   await t.expect(EblFileNameField.value).eql("bill-<blNumber 1>");
-  await t.expect(EblDocumentNameSelect.value).eql("2");
+  await t.expect(EblDocumentNameSelect.innerText).eql("bill-<blNumber 1>");
   await t.expect(EblBeneficiaryField.value).eql("<beneficiary address 1>");
   await t.expect(EblHolderField.value).eql("<holder address 1>");
   await t.expect(EblNumberField.value).eql("<blNumber 1>");
 
   await t.typeText(EblDocumentNumberInput, "3", { replace: true });
   await t.expect(EblFileNameField.value).eql("bill-<blNumber 2>");
-  await t.expect(EblDocumentNameSelect.value).eql("3");
+  await t.expect(EblDocumentNameSelect.innerText).eql("bill-<blNumber 2>");
   await t.expect(EblBeneficiaryField.value).eql("<beneficiary address 2>");
   await t.expect(EblHolderField.value).eql("<holder address 2>");
   await t.expect(EblNumberField.value).eql("<blNumber 2>");

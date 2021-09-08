@@ -4,6 +4,7 @@ import JsonForm from "react-jsonschema-form";
 import { useFormsContext } from "../../../common/context/forms";
 import { FileUploadType, FormEntry, FormTemplate, FormType, Ownership, SetFormParams } from "../../../types";
 import { DataFileButton } from "../DataFileButton";
+import { DocumentNameInput } from "../DocumentNameInput";
 import { TransferableRecordForm } from "../TransferableRecordForm";
 import { AttachmentDropzone } from "./AttachmentDropzone";
 import { CustomFieldTemplate, CustomObjectFieldTemplate, CustomTextareaWidget } from "./CustomTemplates";
@@ -115,6 +116,7 @@ export const DynamicForm: FunctionComponent<DynamicFormProps> = ({
       <div className="mb-10">
         <DataFileButton onDataFile={mergeFormValue} schema={schema} />
       </div>
+      <DocumentNameInput onChange={handleChangeFileName} value={newFileName} isBorderedBottom={isTransferableRecord} />
       {isTransferableRecord && (
         <TransferableRecordForm
           beneficiaryAddress={ownership.beneficiaryAddress}
@@ -133,15 +135,6 @@ export const DynamicForm: FunctionComponent<DynamicFormProps> = ({
           }
         />
       )}
-      <label>Document Name</label>
-      <input
-        onChange={handleChangeFileName}
-        data-testid="file-name-input"
-        type="text"
-        aria-label="file-name-input"
-        value={newFileName}
-        className="border border-cloud-200 h-10 w-full rounded-lg px-3"
-      />
       <JsonForm
         className="form-custom"
         schema={schema}
