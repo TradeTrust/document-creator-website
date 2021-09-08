@@ -1,7 +1,7 @@
-import React, { ReactElement } from "react";
-import { FieldTemplateProps } from "react-jsonschema-form";
+import React, { FunctionComponent } from "react";
+import { FieldTemplateProps } from "@rjsf/core";
 
-export const CustomFieldTemplate = ({
+export const CustomFieldTemplate: FunctionComponent<FieldTemplateProps> = ({
   id,
   classNames,
   label,
@@ -11,7 +11,7 @@ export const CustomFieldTemplate = ({
   errors,
   children,
   schema,
-}: FieldTemplateProps): ReactElement => {
+}) => {
   return (
     <div className={classNames} data-testid={classNames}>
       {!schema.format && schema.type !== "object" && schema.type !== "array" && schema.type !== "boolean" && (
