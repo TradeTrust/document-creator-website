@@ -103,7 +103,7 @@ export const ProcessDocumentScreen: FunctionComponent<ProcessDocumentScreen> = (
             {failPublishedDocuments && failPublishedDocuments.length > 0 && queueState !== QueueState.ERROR && (
               <>
                 <ErrorCard
-                  title={`The document(s) could not be ${isIssuingFlow ? "published" : "revoked"} at this time.`}
+                  title={`The document(s) could not be ${isIssuingFlow ? "issued" : "revoked"} at this time.`}
                   description={
                     "Please contact TradeTrust via email or client representative to resolve your issue. Alternatively, please try again."
                   }
