@@ -98,6 +98,7 @@
     label {
       @apply block;
       @apply w-full;
+      @apply mb-2;
     }
 
     textarea {

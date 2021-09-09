@@ -7,7 +7,12 @@ import { DataFileButton } from "../DataFileButton";
 import { DocumentNameInput } from "../DocumentNameInput";
 import { TransferableRecordForm } from "../TransferableRecordForm";
 import { AttachmentDropzone } from "./AttachmentDropzone";
-import { CustomFieldTemplate, CustomObjectFieldTemplate, CustomTextareaWidget } from "./CustomTemplates";
+import {
+  CustomFieldTemplate,
+  CustomObjectFieldTemplate,
+  CustomTextareaWidget,
+  CustomDropdownWidget,
+} from "./CustomTemplates";
 
 export interface DynamicFormProps {
   schema: FormTemplate["schema"];
@@ -109,6 +114,7 @@ export const DynamicForm: FunctionComponent<DynamicFormProps> = ({
 
   const widgets = {
     TextareaWidget: CustomTextareaWidget,
+    SelectWidget: CustomDropdownWidget,
   };
 
   return (
