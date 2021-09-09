@@ -2,7 +2,7 @@ import React, { ReactElement } from "react";
 
 interface ErrorCardProps {
   title: string;
-  description: string;
+  description: ReactElement | string;
   button: ReactElement;
 }
 

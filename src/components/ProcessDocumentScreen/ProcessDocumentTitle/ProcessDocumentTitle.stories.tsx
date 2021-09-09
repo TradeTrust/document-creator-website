@@ -23,29 +23,61 @@ const mockDoc = [
 ] as WrappedDocument[];
 
 export const preparing: FunctionComponent = () => {
-  return <ProcessDocumentTitle queueState={QueueState.INITIALIZED} documents={mockDoc} type={QueueType.ISSUE} />;
+  return (
+    <ProcessDocumentTitle
+      queueState={QueueState.INITIALIZED}
+      successfulDocumentsCount={mockDoc.length}
+      type={QueueType.ISSUE}
+    />
+  );
 };
 
 export const publishing: FunctionComponent = () => {
-  return <ProcessDocumentTitle queueState={QueueState.PENDING} documents={mockDoc} type={QueueType.ISSUE} />;
+  return (
+    <ProcessDocumentTitle
+      queueState={QueueState.PENDING}
+      successfulDocumentsCount={mockDoc.length}
+      type={QueueType.ISSUE}
+    />
+  );
 };
 
 export const documentPublishSuccess: FunctionComponent = () => {
-  return <ProcessDocumentTitle queueState={QueueState.CONFIRMED} documents={mockDoc} type={QueueType.ISSUE} />;
+  return (
+    <ProcessDocumentTitle
+      queueState={QueueState.CONFIRMED}
+      successfulDocumentsCount={mockDoc.length}
+      type={QueueType.ISSUE}
+    />
+  );
 };
 
 export const documentPublishedFailed: FunctionComponent = () => {
-  return <ProcessDocumentTitle queueState={QueueState.CONFIRMED} documents={[]} type={QueueType.ISSUE} />;
+  return <ProcessDocumentTitle queueState={QueueState.CONFIRMED} successfulDocumentsCount={0} type={QueueType.ISSUE} />;
 };
 
 export const revoking: FunctionComponent = () => {
-  return <ProcessDocumentTitle queueState={QueueState.PENDING} documents={mockDoc} type={QueueType.REVOKE} />;
+  return (
+    <ProcessDocumentTitle
+      queueState={QueueState.PENDING}
+      successfulDocumentsCount={mockDoc.length}
+      type={QueueType.REVOKE}
+    />
+  );
 };
 
 export const documentRevokeSuccess: FunctionComponent = () => {
-  return <ProcessDocumentTitle queueState={QueueState.CONFIRMED} documents={mockDoc} type={QueueType.REVOKE} />;
+  return (
+    <ProcessDocumentTitle
+      queueState={QueueState.CONFIRMED}
+      successfulDocumentsCount={mockDoc.length}
+      type={QueueType.REVOKE}
+    />
+  );
 };
 
 export const documentRevokedFailed: FunctionComponent = () => {
-  return <ProcessDocumentTitle queueState={QueueState.CONFIRMED} documents={[]} type={QueueType.REVOKE} />;
+  return (
+    <ProcessDocumentTitle queueState={QueueState.CONFIRMED} successfulDocumentsCount={0} type={QueueType.REVOKE} />
+  );
 };
