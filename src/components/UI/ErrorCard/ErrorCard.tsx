@@ -1,20 +1,12 @@
-import { Button } from "@govtechsg/tradetrust-ui-components";
-import React, { MouseEventHandler } from "react";
+import React, { ReactElement } from "react";
 
 interface ErrorCardProps {
   title: string;
   description: string;
-  buttonProps: {
-    onClick: MouseEventHandler<HTMLButtonElement>;
-    text: string;
-  };
+  button: ReactElement;
 }
 
-export const ErrorCard: React.FunctionComponent<ErrorCardProps> = ({
-  title,
-  description,
-  buttonProps,
-}: ErrorCardProps) => {
+export const ErrorCard: React.FunctionComponent<ErrorCardProps> = ({ title, description, button }: ErrorCardProps) => {
   return (
     <div className="bg-red-100 px-8 py-6 rounded-xl">
       <div className="mb-8">
@@ -23,9 +15,7 @@ export const ErrorCard: React.FunctionComponent<ErrorCardProps> = ({
         </div>
         <div>{description}</div>
       </div>
-      <Button onClick={buttonProps.onClick} className="bg-white text-cerulean hover:bg-cloud-100 flex mx-auto">
-        {buttonProps.text}
-      </Button>
+      {button}
     </div>
   );
 };
