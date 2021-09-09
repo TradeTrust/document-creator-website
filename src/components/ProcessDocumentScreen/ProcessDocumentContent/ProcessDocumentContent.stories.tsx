@@ -31,7 +31,7 @@ export const issueSuccess: FunctionComponent = () => {
       failedDocuments={[]}
       pendingDocuments={[]}
       successDocuments={mockDocs}
-      fileName={"What-thefuck"}
+      fileName={"file-name-test"}
       downloadErrorName={""}
       downloadErrorLink={""}
       downloadAllFn={() => {}}
@@ -49,7 +49,7 @@ export const issueFailure: FunctionComponent = () => {
       failedDocuments={mockDocs}
       pendingDocuments={[]}
       successDocuments={[]}
-      fileName={"What-thefuck"}
+      fileName={"file-name-test"}
       downloadErrorName={""}
       downloadErrorLink={""}
       downloadAllFn={() => {}}
@@ -67,7 +67,7 @@ export const issueSuccessAndFailure: FunctionComponent = () => {
       failedDocuments={mockDocs}
       pendingDocuments={[]}
       successDocuments={mockDocs}
-      fileName={"What-thefuck"}
+      fileName={"file-name-test"}
       downloadErrorName={""}
       downloadErrorLink={""}
       downloadAllFn={() => {}}
@@ -85,7 +85,7 @@ export const issueError: FunctionComponent = () => {
       failedDocuments={[]}
       pendingDocuments={[]}
       successDocuments={[]}
-      fileName={"What-thefuck"}
+      fileName={"file-name-test"}
       downloadErrorName={""}
       downloadErrorLink={""}
       downloadAllFn={() => {}}
@@ -102,7 +102,7 @@ export const revokeSuccess: FunctionComponent = () => {
       failedDocuments={[]}
       pendingDocuments={[]}
       successDocuments={mockDocs}
-      fileName={"What-thefuck"}
+      fileName={"file-name-test"}
       downloadErrorName={""}
       downloadErrorLink={""}
       downloadAllFn={() => {}}
@@ -120,7 +120,7 @@ export const revokeFailure: FunctionComponent = () => {
       failedDocuments={mockDocs}
       pendingDocuments={[]}
       successDocuments={[]}
-      fileName={"What-thefuck"}
+      fileName={"file-name-test"}
       downloadErrorName={""}
       downloadErrorLink={""}
       downloadAllFn={() => {}}
