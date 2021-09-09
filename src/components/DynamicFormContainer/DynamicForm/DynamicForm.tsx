@@ -1,6 +1,6 @@
 import { cloneDeep, debounce } from "lodash";
 import React, { FunctionComponent, useCallback, useEffect, useMemo, useRef, useState } from "react";
-import JsonForm from "react-jsonschema-form";
+import Form from "@rjsf/core";
 import { useFormsContext } from "../../../common/context/forms";
 import { FileUploadType, FormEntry, FormTemplate, FormType, Ownership, SetFormParams } from "../../../types";
 import { DataFileButton } from "../DataFileButton";
@@ -135,13 +135,13 @@ export const DynamicForm: FunctionComponent<DynamicFormProps> = ({
           }
         />
       )}
-      <JsonForm
+      <Form
         className="form-custom"
         schema={schema}
         uiSchema={uiSchema}
-        widgets={widgets}
         onChange={setFormData}
         formData={data?.formData}
+        widgets={widgets}
         ObjectFieldTemplate={CustomObjectFieldTemplate}
         FieldTemplate={CustomFieldTemplate}
       />
