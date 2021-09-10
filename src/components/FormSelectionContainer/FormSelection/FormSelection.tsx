@@ -30,7 +30,7 @@ export const FormSelection: FunctionComponent<FormSelection> = ({ config }) => {
       </div>
       <ContentFrame>
         <Card>
-          <ProgressBar step={1} totalSteps={3} title="Choose Type" />
+          <ProgressBar step={1} totalSteps={3} />
           <h3 data-testid="form-selection-title" className="my-10">
             Choose Document Type to Issue
           </h3>

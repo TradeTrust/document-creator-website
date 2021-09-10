@@ -33,7 +33,7 @@ export const RevokeDocumentTileArea: FunctionComponent<RevokeDocumentTileArea> =
       </div>
       <ContentFrame>
         <Card>
-          <ProgressBar step={2} totalSteps={3} title="Confirm Document" />
+          <ProgressBar step={2} totalSteps={3} />
           <h3 className="my-8 pb-8 border-b">Confirm File</h3>
           <ProcessedDocumentTag
             doc={revokeDocuments[0]}

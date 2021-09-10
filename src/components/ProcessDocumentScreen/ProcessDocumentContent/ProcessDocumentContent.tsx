@@ -44,6 +44,7 @@ export const ProcessDocumentContent: FunctionComponent<ProcessDocumentContentPro
   processAnotherDocumentFn,
 }) => {
   const isIssuingFlow = queueType === QueueType.ISSUE;
+
   const isNetworkError = queueState === QueueState.ERROR && failedDocuments.length === 0;
   const isDocumentError = queueState !== QueueState.ERROR && failedDocuments.length > 0;
   const isDocumentSuccess =
@@ -92,16 +93,16 @@ export const ProcessDocumentContent: FunctionComponent<ProcessDocumentContentPro
               description={
                 <div>
                   {failedDocuments.map((failedDocument, index) => {
-                    return (
-                      <div key={`${failedDocument.fileName}-${index}`}>
-                        {generateFileName({
-                          network,
-                          fileName: failedDocument.fileName,
-                          extension: failedDocument.extension,
-                          hasTimestamp: false,
-                        })}
-                      </div>
-                    );
+                    const failedDocumentFileName =
+                      failedDocument.fileName && failedDocument.extension
+                        ? generateFileName({
+                            network,
+                            fileName: failedDocument.fileName,
+                            extension: failedDocument.extension,
+                            hasTimestamp: false,
+                          })
+                        : fileName;
+                    return <div key={`${failedDocumentFileName}-${index}`}>{failedDocumentFileName}</div>;
                   })}
                 </div>
               }

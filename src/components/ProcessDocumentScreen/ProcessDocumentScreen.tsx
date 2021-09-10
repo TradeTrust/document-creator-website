@@ -27,15 +27,6 @@ export const ProcessDocumentScreen: FunctionComponent<ProcessDocumentScreen> = (
   fileName,
   type,
 }) => {
-  console.log({
-    config,
-    processAnotherDocument,
-    forms,
-    revokeDocuments,
-    fileName,
-    type,
-  });
-
   const isIssuingFlow = type === QueueType.ISSUE;
 
   const useQueueParameters = isIssuingFlow ? { config, formEntries: forms } : { config, documents: revokeDocuments };
@@ -66,7 +57,7 @@ export const ProcessDocumentScreen: FunctionComponent<ProcessDocumentScreen> = (
     <Wrapper>
       <ContentFrame>
         <Card>
-          <ProgressBar step={3} totalSteps={3} title={isIssuingFlow ? "Issue Document(s)" : "Revoked Document"} />
+          <ProgressBar step={3} totalSteps={3} />
           <div className="flex justify-between items-end" data-testid="processing-screen">
             <ProcessDocumentTitle
               queueState={queueState}

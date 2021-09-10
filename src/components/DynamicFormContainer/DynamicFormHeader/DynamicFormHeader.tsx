@@ -37,7 +37,7 @@ export const DynamicFormHeader: FunctionComponent<DynamicFormHeaderProps> = ({
           </div>
         }
       >
-        <ProgressBar step={2} totalSteps={3} title="Fill Form" />
+        <ProgressBar step={2} totalSteps={3} />
         <h3 data-testid="fill-form-title" className="my-8">
           Fill and Preview Form
         </h3>
