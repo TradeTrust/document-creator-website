@@ -49,8 +49,6 @@ export const ProcessDocumentContent: FunctionComponent<ProcessDocumentContentPro
   const isDocumentError = queueState !== QueueState.ERROR && failedDocuments.length > 0;
   const isDocumentSuccess =
     queueState !== QueueState.ERROR && (pendingDocuments.length > 0 || successDocuments.length > 0);
-  const isAllFailed =
-    queueState === QueueState.CONFIRMED && failedDocuments.length > 0 && successDocuments.length === 0;
 
   const ErrorLogButton = () => {
     return (
@@ -91,7 +89,7 @@ export const ProcessDocumentContent: FunctionComponent<ProcessDocumentContentPro
                 isIssuingFlow ? "issued" : "revoked"
               } at this time. Please fix the errors and try again.`}
               description={
-                <div>
+                <>
                   {failedDocuments.map((failedDocument, index) => {
                     const failedDocumentFileName =
                       failedDocument.fileName && failedDocument.extension
@@ -104,7 +102,7 @@ export const ProcessDocumentContent: FunctionComponent<ProcessDocumentContentPro
                         : fileName;
                     return <div key={`${failedDocumentFileName}-${index}`}>{failedDocumentFileName}</div>;
                   })}
-                </div>
+                </>
               }
               button={<ErrorLogButton />}
             />
@@ -144,7 +142,7 @@ export const ProcessDocumentContent: FunctionComponent<ProcessDocumentContentPro
         data-testid="process-another-document-button"
         onClick={processAnotherDocumentFn}
       >
-        {isAllFailed ? `Try Again` : `${isIssuingFlow ? "Create" : "Revoke"} another Document`}
+        {`${isIssuingFlow ? "Create" : "Revoke"} another Document`}
       </Button>
     </div>
   );
