@@ -29,13 +29,7 @@ test("should show failed published document(s) errors", async (t) => {
 
   // Failed published document
   await t.expect(ProcessDocumentTitle.textContent).contains("Document(s) failed to issue");
-  await t.expect(Selector("div").withText("1 Document(s) Failed").exists).ok();
-  await t
-    .expect(
-      Selector("div").withText(
-        "These documents failed to publish due to some errors. Kindly rectify and try publishing again."
-      ).exists
-    )
-    .ok();
+  await t.expect(Selector("div").withText("1 document(s)").exists).ok();
+  await t.expect(Selector("div").withText("The document(s) could not be issued at this time.").exists).ok();
   await t.expect(Selector("div").withText("Covering Letter (GT)-1-local.tt").exists).ok();
 });

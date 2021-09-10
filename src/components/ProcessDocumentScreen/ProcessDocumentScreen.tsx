@@ -1,17 +1,14 @@
-import prettyBytes from "pretty-bytes";
 import { Wrapper } from "../UI/Wrapper";
-import { Download, XCircle } from "react-feather";
 import { ProgressBar } from "../ProgressBar";
 import { FunctionComponent, useEffect } from "react";
 import { Config, FormEntry } from "../../types";
-import { QueueType, QueueState } from "../../constants/QueueState";
+import { QueueType } from "../../constants/QueueState";
 import { useQueue } from "../../common/hook/useQueue";
-import { generateZipFile, generateFileName, getFileSize } from "../../utils";
+import { generateFileName, generateZipFile } from "../../utils";
 import { ProcessDocumentTitle } from "./ProcessDocumentTitle";
-import { Button, LoaderSpinner } from "@govtechsg/tradetrust-ui-components";
-import { ProcessedDocumentTag } from "./ProcessedDocumentTag";
 import { Card } from "../UI/Card";
 import { ContentFrame } from "../UI/ContentFrame";
+import { ProcessDocumentContent } from "./ProcessDocumentContent";
 
 interface ProcessDocumentScreen {
   config: Config;
@@ -40,7 +37,6 @@ export const ProcessDocumentScreen: FunctionComponent<ProcessDocumentScreen> = (
     successfulProcessedDocuments,
     failedProcessedDocuments,
     pendingProcessDocuments,
-    error,
   } = useQueue(useQueueParameters);
 
   useEffect(() => {
@@ -61,159 +57,35 @@ export const ProcessDocumentScreen: FunctionComponent<ProcessDocumentScreen> = (
     <Wrapper>
       <ContentFrame>
         <Card>
-          <ProgressBar step={3} totalSteps={3} title={isIssuingFlow ? "Issue Document(s)" : "Revoked Document"} />
+          <ProgressBar step={3} totalSteps={3} />
           <div className="flex justify-between items-end" data-testid="processing-screen">
-            <ProcessDocumentTitle queueState={queueState} documents={successfulProcessedDocuments} type={type} />
-            {queueState === QueueState.CONFIRMED && (
-              <Button
-                className="bg-white text-tangerine hover:bg-cloud-100 mb-6 mr-4"
-                data-testid="process-another-document-button"
-                onClick={processAnotherDocument}
-              >
-                {`${isIssuingFlow ? "Create" : "Revoke"} another Document`}
-              </Button>
-            )}
+            <ProcessDocumentTitle
+              queueState={queueState}
+              successfulDocumentsCount={successfulProcessedDocuments.length}
+              failedDocumentsCount={failedProcessedDocuments.length}
+              type={type}
+            />
           </div>
-          <div className="py-6 h-full">
-            {queueState === QueueState.INITIALIZED && (
-              <div className="flex items-center justify-center">
-                <LoaderSpinner
-                  className="mr-4 flex-shrink-0"
-                  data-testid="preparing-loader"
-                  width="48px"
-                  primary="#3B8CC5"
-                />
-              </div>
-            )}
-            {(pendingProcessDocuments.length > 0 || successfulProcessedDocuments.length > 0) &&
-              queueState !== QueueState.ERROR && (
-                <div className="container">
-                  <div className="border-b border-solid border-cloud-200 flex items-center">
-                    <div
-                      className="text-cloud-500 font-medium text-lg mb-4 flex-grow py-3"
-                      data-testid="total-number-of-documents"
-                    >
-                      {successfulProcessedDocuments.length + pendingProcessDocuments.length}
-                      {isIssuingFlow ? " Document(s)" : " Document"}
-                    </div>
-                    {queueState === QueueState.CONFIRMED && isIssuingFlow && (
-                      <Button
-                        className="bg-white text-cerulean hover:bg-cloud-100 mb-4"
-                        data-testid="download-all-button"
-                        onClick={() => {
-                          generateZipFile(successfulProcessedDocuments, config?.network);
-                        }}
-                      >
-                        <div className="flex">
-                          <Download />
-                          <div className="text-cerulean ml-2">Download all</div>
-                        </div>
-                      </Button>
-                    )}
-                  </div>
-                  <div className="flex flex-wrap border-b border-solid border-cloud-200 pb-4 mb-4">
-                    {successfulProcessedDocuments.map((doc, index) => (
-                      <ProcessedDocumentTag doc={doc} key={index} isPending={false} type={type} fileName={fileName} />
-                    ))}
-                    {pendingProcessDocuments.map((doc, index) => (
-                      <ProcessedDocumentTag doc={doc} key={index} isPending={true} type={type} fileName={fileName} />
-                    ))}
-                  </div>
-                </div>
-              )}
-            {failPublishedDocuments && failPublishedDocuments.length > 0 && queueState !== QueueState.ERROR && (
-              <div className="container">
-                <div className="text-cloud-500 font-medium text-lg my-6">
-                  {failPublishedDocuments.length}
-                  {isIssuingFlow ? " Document(s)" : " Document"} Failed
-                </div>
-                <div className="bg-rose-400 p-3 flex flex-col">
-                  <div className="flex">
-                    <XCircle className="text-rose" />
-                    <div className="text-rose ml-2 flex-grow" data-testid="error-message">
-                      These documents failed to publish due to some errors. Kindly rectify and try publishing again.
-                    </div>
-                    <Button className="bg-white text-rose hover:bg-cloud-100">
-                      <a
-                        download={generateFileName({
-                          network: config?.network,
-                          fileName: "error-log",
-                          extension: "txt",
-                          hasTimestamp: true,
-                        })}
-                        href={`data:text/plain;charset=UTF-8,${JSON.stringify(formattedErrorLog, null, 2)}`}
-                      >
-                        <div className="flex">
-                          <Download />
-                          <div className="text-rose ml-2">Download Error Log</div>
-                        </div>
-                      </a>
-                    </Button>
-                  </div>
-                  {failPublishedDocuments.map((doc, index) => {
-                    const size = prettyBytes(getFileSize(JSON.stringify(doc.wrappedDocument)));
-                    return (
-                      <div key={index} className="flex items-center">
-                        <div className="font-bold text-cloud-500">
-                          {generateFileName({
-                            network: config?.network,
-                            fileName: doc.fileName,
-                            extension: doc.extension,
-                          })}
-                        </div>
-                        <div className="text-xs text-cloud-500 ml-1">({size})</div>
-                      </div>
-                    );
-                  })}
-                </div>
-                <div className="flex py-4">
-                  <div className="col-auto ml-auto">
-                    <Button
-                      className="bg-white text-cerulean hover:bg-cloud-100 mb-4"
-                      data-testid="download-fail-button"
-                      onClick={() => {
-                        generateZipFile(failedProcessedDocuments[0].documents);
-                      }}
-                    >
-                      <div className="flex">
-                        <Download />
-                        <div className="text-cerulean ml-2">Download Failed Documents</div>
-                      </div>
-                    </Button>
-                  </div>
-                </div>
-              </div>
-            )}
-            {queueState === QueueState.ERROR && (
-              <div className="bg-red-100 px-8 py-6 rounded-xl">
-                <div className="mb-8">
-                  <div className="text-rose font-bold mb-8" data-testid="error-title">
-                    {`The document(s) could not be ${isIssuingFlow ? "published" : "revoked"} at this time.`}
-                  </div>
-                  <div>
-                    Please contact TradeTrust via email or client representative to resolve your issue. Alternatively,
-                    please try again.
-                  </div>
-                </div>
-                <Button className="bg-white hover:bg-cloud-100 flex mx-auto">
-                  <a
-                    download={generateFileName({
-                      network: config?.network,
-                      fileName: "error-log",
-                      extension: "txt",
-                      hasTimestamp: true,
-                    })}
-                    href={`data:text/plain;charset=UTF-8,${JSON.stringify(error, null, 2)}`}
-                  >
-                    <div className="flex">
-                      <Download />
-                      <div className="text-cerulean ml-2">Download Error Log</div>
-                    </div>
-                  </a>
-                </Button>
-              </div>
-            )}
-          </div>
+          <ProcessDocumentContent
+            network={config?.network}
+            queueState={queueState}
+            queueType={type}
+            failedDocuments={failPublishedDocuments}
+            pendingDocuments={pendingProcessDocuments}
+            successDocuments={successfulProcessedDocuments}
+            fileName={fileName || ""}
+            downloadErrorName={generateFileName({
+              network: config?.network,
+              fileName: "error-log",
+              extension: "txt",
+              hasTimestamp: true,
+            })}
+            downloadErrorLink={`data:text/plain;charset=UTF-8,${JSON.stringify(formattedErrorLog, null, 2)}`}
+            downloadAllFn={() => {
+              generateZipFile(successfulProcessedDocuments, config?.network);
+            }}
+            processAnotherDocumentFn={processAnotherDocument}
+          />
         </Card>
       </ContentFrame>
     </Wrapper>

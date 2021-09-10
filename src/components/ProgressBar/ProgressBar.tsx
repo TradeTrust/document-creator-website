@@ -4,7 +4,6 @@ import React, { FunctionComponent } from "react";
 interface ProgressBarProps {
   step: number;
   totalSteps: number;
-  title: string;
   className?: string;
 }
 interface BarTrackProps {

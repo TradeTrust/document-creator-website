@@ -2,14 +2,19 @@ import { LoaderSpinner } from "@govtechsg/tradetrust-ui-components";
 import { FunctionComponent, ReactElement } from "react";
 import { CheckCircle, XCircle } from "react-feather";
 import { QueueState, QueueType } from "../../../constants/QueueState";
-import { WrappedDocument } from "../../../types";
 interface ProcessDocumentTitle {
   queueState: QueueState;
-  documents: WrappedDocument[];
+  successfulDocumentsCount: number;
+  failedDocumentsCount?: number;
   type: QueueType;
 }
 
-export const ProcessDocumentTitle: FunctionComponent<ProcessDocumentTitle> = ({ queueState, documents, type }) => {
+export const ProcessDocumentTitle: FunctionComponent<ProcessDocumentTitle> = ({
+  queueState,
+  successfulDocumentsCount,
+  failedDocumentsCount = 0,
+  type,
+}) => {
   const isIssuingFlow = type === QueueType.ISSUE;
 
   const titleText = (message: string): ReactElement => {
@@ -27,21 +32,30 @@ export const ProcessDocumentTitle: FunctionComponent<ProcessDocumentTitle> = ({ 
         );
 
       case QueueState.CONFIRMED:
-        if (documents.length > 0) {
+        if (successfulDocumentsCount > 0 && failedDocumentsCount > 0) {
           return (
             <>
-              <CheckCircle className="mr-2 text-teal-300 h-12 w-12 md:h-auto md:w-auto" />
-              {titleText(`${isIssuingFlow ? "Document(s) issued" : "Document revoked"} successfully`)}
-            </>
-          );
-        } else {
-          return (
-            <>
-              <XCircle className="mr-2 text-rose h-12 w-12 md:h-auto md:w-auto" />
-              {titleText(`${isIssuingFlow ? "Document(s) failed to issue" : "Document failed to revoke"}`)}
+              <CheckCircle className="mr-2 text-emerald h-12 w-12 md:h-auto md:w-auto" />
+              {titleText(`Some document(s) ${isIssuingFlow ? "issued" : "revoked"} successfully`)}
             </>
           );
         }
+
+        if (successfulDocumentsCount > 0) {
+          return (
+            <>
+              <CheckCircle className="mr-2 text-emerald h-12 w-12 md:h-auto md:w-auto" />
+              {titleText(`${isIssuingFlow ? "Document(s) issued" : "Document revoked"} successfully`)}
+            </>
+          );
+        }
+
+        return (
+          <>
+            <XCircle className="mr-2 text-rose h-12 w-12 md:h-auto md:w-auto" />
+            {titleText(`${isIssuingFlow ? "Document(s) failed to issue" : "Document failed to revoke"}`)}
+          </>
+        );
 
       case QueueState.ERROR:
         return (
@@ -58,7 +72,7 @@ export const ProcessDocumentTitle: FunctionComponent<ProcessDocumentTitle> = ({ 
   };
 
   return (
-    <h3 data-testid="process-document-title" className="flex items-center my-8">
+    <h3 data-testid="process-document-title" className="flex items-center my-8 border-b border-cloud-200 w-full pb-16">
       {getDisplayTitle()}
     </h3>
   );
