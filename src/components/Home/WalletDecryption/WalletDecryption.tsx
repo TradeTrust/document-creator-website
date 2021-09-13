@@ -32,9 +32,9 @@ export const WalletDecryption: FunctionComponent<WalletDecryption> = ({
 
   return (
     <Wrapper>
-      <h3 data-testid="wallet-decryption-title" className="mb-8 font-bold">
+      <h2 data-testid="wallet-decryption-title" className="mb-8">
         Create and Revoke Document
-      </h3>
+      </h2>
       <ContentFrame>
         {isDecrypting && <BarTrack progress={decryptProgress} className="mb-4" />}
         <Card>
@@ -67,7 +67,7 @@ export const WalletDecryption: FunctionComponent<WalletDecryption> = ({
             <div className="my-8 w-auto">
               <Button
                 data-testid="login-button"
-                className="bg-cerulean text-white hover:bg-cerulean-500 mt-4"
+                className="bg-cerulean text-white hover:bg-cerulean-500 mt-4 px-3"
                 onClick={onLogin}
                 disabled={isDecrypting}
               >

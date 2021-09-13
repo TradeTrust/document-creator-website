@@ -30,9 +30,9 @@ export const ConfigFileDropZone: FunctionComponent<ConfigFileDropZone> = ({ onCo
 
   return (
     <>
-      <h3 data-testid="config-dropzone-title" className="mb-8 font-bold">
+      <h2 data-testid="config-dropzone-title" className="mb-8">
         Create and Revoke Document
-      </h3>
+      </h2>
       <ContentFrame>
         <div {...getRootProps()}>
           <input data-testid="config-file-drop-zone" {...getInputProps()} />
@@ -52,14 +52,10 @@ export const ConfigFileDropZone: FunctionComponent<ConfigFileDropZone> = ({ onCo
               </div>
             )}
             {!errorMessage && !error && (
-              <div className="font-bold text-lg text-gray-800" data-testid="home-description">
-                Drag and drop your configuration file here
-              </div>
+              <h4 data-testid="home-description">Drag and drop your configuration file here</h4>
             )}
-            <div className="text-base text-gray-800 my-4 font-bold">
-              {errorMessage || error ? "Please try again." : "or"}
-            </div>
-            <Button className="bg-cerulean text-white hover:bg-cerulean-500 border-gray-300">Select File</Button>
+            <h4 className="my-4">{errorMessage || error ? "Please try again." : "or"}</h4>
+            <Button className="bg-cerulean text-white hover:bg-cerulean-500 border-gray-300 px-3">Select File</Button>
             <a
               onClick={(e) => e.stopPropagation()}
               className="text-cerulean-200 font-bold mt-8"

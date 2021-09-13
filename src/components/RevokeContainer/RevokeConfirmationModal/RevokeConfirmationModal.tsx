@@ -25,7 +25,7 @@ export const RevokeConfirmationModal: FunctionComponent<RevokeConfirmationModalP
             <div className="mt-8">
               <div className="flex justify-around">
                 <Button
-                  className="bg-white text-cerulean hover:bg-cloud-100"
+                  className="bg-white text-cerulean hover:bg-cloud-100 px-3"
                   onClick={closeRevokeConfirmationModal}
                   data-testid="cancel-button"
                 >
@@ -33,7 +33,7 @@ export const RevokeConfirmationModal: FunctionComponent<RevokeConfirmationModalP
                 </Button>
                 <Button
                   data-testid="modal-revoke-button"
-                  className="bg-rose hover:bg-red-400 text-white"
+                  className="bg-rose hover:bg-red-400 text-white px-3"
                   onClick={revokingDocument}
                 >
                   Revoke
