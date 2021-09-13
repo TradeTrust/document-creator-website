@@ -1,7 +1,7 @@
 import { LoaderSpinner } from "@govtechsg/tradetrust-ui-components";
 import Ajv, { ErrorObject } from "ajv";
 import { defaultsDeep } from "lodash";
-import React, { FunctionComponent, useEffect, useState } from "react";
+import React, { FunctionComponent, useState } from "react";
 import { Trash2 } from "react-feather";
 import { Redirect } from "react-router";
 import { useConfigContext } from "../../common/context/config";
@@ -39,7 +39,8 @@ export const DynamicFormLayout: FunctionComponent = () => {
   const { config } = useConfigContext();
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [formError, setFormError] = useState<ErrorObject[] | null | undefined>(null);
-  if (!config) return <Redirect to="/" />;
+
+  // if (!config) return <Redirect to="/" />;
   if (!currentForm) return <Redirect to="/forms-selection" />;
   if (!currentFormTemplate) return <Redirect to="/forms-selection" />;
   if (isSubmitted) return <Redirect to="/publish" />;
@@ -73,7 +74,7 @@ export const DynamicFormLayout: FunctionComponent = () => {
   const onAddNewForm = (index: number): void => {
     if (validateCurrentForm()) {
       newForm(index);
-      switchForm(50);
+      switchForm(400);
     }
   };
 
@@ -118,12 +119,14 @@ export const DynamicFormLayout: FunctionComponent = () => {
     <>
       <DeleteModal deleteForm={deleteForm} show={showDeleteModal} closeDeleteModal={closeDeleteModal} />
       <BackModal backToFormSelection={deleteAllForms} show={showBackModal} closeBackModal={closeBackModal} />
-      <AddFormModal
-        forms={config.forms}
-        onAdd={onAddNewForm}
-        onClose={() => setShowAddFormModal(false)}
-        show={showAddFormModal}
-      />
+      {config && (
+        <AddFormModal
+          forms={config.forms}
+          onAdd={onAddNewForm}
+          onClose={() => setShowAddFormModal(false)}
+          show={showAddFormModal}
+        />
+      )}
       <DynamicFormHeader
         onBackToFormSelection={() => setShowBackModal(true)}
         onNewForm={onNewForm}
