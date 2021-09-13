@@ -13,6 +13,7 @@ import {
   CustomTextareaWidget,
   CustomDropdownWidget,
 } from "./CustomTemplates";
+import { LoaderSpinner } from "@govtechsg/tradetrust-ui-components";
 
 export interface DynamicFormProps {
   schema: FormTemplate["schema"];
@@ -151,6 +152,7 @@ export const DynamicForm: FunctionComponent<DynamicFormProps> = ({
         ObjectFieldTemplate={CustomObjectFieldTemplate}
         FieldTemplate={CustomFieldTemplate}
       />
+
       {attachmentAccepted && (
         <AttachmentDropzone
           acceptedFormat={attachmentAcceptedFormat}

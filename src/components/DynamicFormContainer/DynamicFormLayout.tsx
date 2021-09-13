@@ -1,12 +1,15 @@
+import { LoaderSpinner } from "@govtechsg/tradetrust-ui-components";
 import Ajv, { ErrorObject } from "ajv";
 import { defaultsDeep } from "lodash";
-import React, { FunctionComponent, useState } from "react";
+import React, { FunctionComponent, useEffect, useState } from "react";
 import { Trash2 } from "react-feather";
 import { Redirect } from "react-router";
+import { useConfigContext } from "../../common/context/config";
 import { useFormsContext } from "../../common/context/forms";
 import { Card } from "../UI/Card";
 import { ContentFrame } from "../UI/ContentFrame";
 import { ToggleSwitch } from "../UI/ToggleSwitch";
+import { AddFormModal } from "./AddFormModal";
 import { BackModal } from "./BackModal";
 import { DeleteModal } from "./DeleteModal";
 import { DocumentPreview } from "./DocumentPreview";
@@ -18,6 +21,9 @@ export const DynamicFormLayout: FunctionComponent = () => {
   const [showDeleteModal, setDeleteModal] = useState(false);
   const [showBackModal, setShowBackModal] = useState(false);
   const [isPreviewMode, setIsPreviewMode] = useState(false);
+  const [showAddFormModal, setShowAddFormModal] = useState(false);
+  const [isSwitchingForm, setIsSwitchingForm] = useState(false);
+
   const {
     forms,
     setForms,
@@ -28,9 +34,12 @@ export const DynamicFormLayout: FunctionComponent = () => {
     setCurrentFormData,
     setCurrentFormOwnership,
     setCurrentForm,
+    newForm,
   } = useFormsContext();
+  const { config } = useConfigContext();
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [formError, setFormError] = useState<ErrorObject[] | null | undefined>(null);
+  if (!config) return <Redirect to="/" />;
   if (!currentForm) return <Redirect to="/forms-selection" />;
   if (!currentFormTemplate) return <Redirect to="/forms-selection" />;
   if (isSubmitted) return <Redirect to="/publish" />;
@@ -56,7 +65,16 @@ export const DynamicFormLayout: FunctionComponent = () => {
   };
 
   const onNewForm = (): void => {
-    if (validateCurrentForm()) setActiveFormIndex(undefined);
+    if (validateCurrentForm()) {
+      setShowAddFormModal(true);
+    }
+  };
+
+  const onAddNewForm = (index: number): void => {
+    if (validateCurrentForm()) {
+      newForm(index);
+      switchForm(50);
+    }
   };
 
   const onFormSubmit = (): void => {
@@ -70,6 +88,7 @@ export const DynamicFormLayout: FunctionComponent = () => {
   const deleteForm = (): void => {
     removeCurrentForm();
     closeDeleteModal();
+    setFormError(null);
   };
 
   const closeBackModal = (): void => {
@@ -86,12 +105,25 @@ export const DynamicFormLayout: FunctionComponent = () => {
     closeBackModal();
   };
 
+  const switchForm = (timeout: number): void => {
+    setIsSwitchingForm(true);
+    setTimeout(() => {
+      setIsSwitchingForm(false);
+    }, timeout);
+  };
+
   const currentUnwrappedData = defaultsDeep({}, currentForm.data.formData, currentFormTemplate.defaults);
 
   return (
     <>
       <DeleteModal deleteForm={deleteForm} show={showDeleteModal} closeDeleteModal={closeDeleteModal} />
       <BackModal backToFormSelection={deleteAllForms} show={showBackModal} closeBackModal={closeBackModal} />
+      <AddFormModal
+        forms={config.forms}
+        onAdd={onAddNewForm}
+        onClose={() => setShowAddFormModal(false)}
+        show={showAddFormModal}
+      />
       <DynamicFormHeader
         onBackToFormSelection={() => setShowBackModal(true)}
         onNewForm={onNewForm}
@@ -115,28 +147,34 @@ export const DynamicFormLayout: FunctionComponent = () => {
                 />
               )}
             </div>
-            <FormErrorBanner
-              formErrorTitle="This form has errors. Please fix the errors to proceed."
-              formError={formError}
-            />
-            {isPreviewMode ? (
-              <div className="max-w-screen-xl mx-auto mt-6">
-                <DocumentPreview document={currentUnwrappedData} />
-              </div>
+            {isSwitchingForm ? (
+              <LoaderSpinner className="flex mx-auto mt-4" />
             ) : (
-              <DynamicForm
-                className="mt-6"
-                schema={formSchema}
-                uiSchema={uiSchema}
-                form={currentForm}
-                type={currentFormTemplate.type}
-                setFormData={setCurrentFormData}
-                setOwnership={setCurrentFormOwnership}
-                setCurrentForm={setCurrentForm}
-                attachmentAccepted={attachmentAccepted}
-                attachmentAcceptedFormat={attachmentAcceptedFormat}
-                fileName={fileName}
-              />
+              <>
+                <FormErrorBanner
+                  formErrorTitle="This form has errors. Please fix the errors to proceed."
+                  formError={formError}
+                />
+                {isPreviewMode ? (
+                  <div className="max-w-screen-xl mx-auto mt-6">
+                    <DocumentPreview document={currentUnwrappedData} />
+                  </div>
+                ) : (
+                  <DynamicForm
+                    className="mt-6"
+                    schema={formSchema}
+                    uiSchema={uiSchema}
+                    form={currentForm}
+                    type={currentFormTemplate.type}
+                    setFormData={setCurrentFormData}
+                    setOwnership={setCurrentFormOwnership}
+                    setCurrentForm={setCurrentForm}
+                    attachmentAccepted={attachmentAccepted}
+                    attachmentAcceptedFormat={attachmentAcceptedFormat}
+                    fileName={fileName}
+                  />
+                )}
+              </>
             )}
           </Card>
         </ContentFrame>

@@ -49,6 +49,7 @@ export const FormsContextProvider: FunctionComponent = ({ children }) => {
     const newFormTemplate = config?.forms[templateIndex];
     const newFormName = newFormTemplate?.name ?? "Document";
     const extension = config?.forms[templateIndex]?.extension ?? "tt";
+
     setForms([
       ...forms,
       {
@@ -62,6 +63,7 @@ export const FormsContextProvider: FunctionComponent = ({ children }) => {
         extension: extension,
       },
     ]);
+
     setActiveFormIndex(newIndex);
   };
 
