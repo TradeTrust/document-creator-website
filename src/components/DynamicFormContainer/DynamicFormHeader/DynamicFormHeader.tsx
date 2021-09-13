@@ -29,7 +29,7 @@ export const DynamicFormHeader: FunctionComponent<DynamicFormHeaderProps> = ({
             <IssueOrRevokeSelector createLink="/form" />
             <Button
               data-testid="clear-all-button"
-              className="mt-2 md:mt-0 bg-white text-cerulean hover:bg-cloud-100"
+              className="mt-2 md:mt-0 bg-white text-cerulean hover:bg-cloud-100 px-3"
               onClick={onBackToFormSelection}
             >
               Clear All
@@ -47,14 +47,14 @@ export const DynamicFormHeader: FunctionComponent<DynamicFormHeaderProps> = ({
           </div>
           <div className="mt-4 md:mt-0">
             <Button
-              className="bg-white text-cerulean hover:bg-gray-50 mr-4"
+              className="bg-white text-cerulean hover:bg-gray-50 mr-4 px-3"
               onClick={onNewForm}
               data-testid="add-new-button"
             >
               Add New
             </Button>
             <Button
-              className="bg-cerulean text-white hover:bg-cerulean-500"
+              className="bg-cerulean text-white hover:bg-cerulean-500 px-3"
               onClick={onFormSubmit}
               data-testid="form-submit-button"
             >

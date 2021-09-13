@@ -19,7 +19,7 @@ export const DeleteModal: FunctionComponent<DeleteModalProps> = ({ deleteForm, s
             <div className="mt-16">
               <div className="flex justify-end">
                 <Button
-                  className="text-gray border-gray-400 hover:bg-gray-100 mr-4"
+                  className="text-gray border-gray-400 hover:bg-gray-100 mr-4 px-3"
                   onClick={closeDeleteModal}
                   data-testid="cancel-form-button"
                 >
@@ -27,7 +27,7 @@ export const DeleteModal: FunctionComponent<DeleteModalProps> = ({ deleteForm, s
                 </Button>
                 <Button
                   data-testid="delete-button"
-                  className=" bg-rose text-white hover:bg-red-400"
+                  className=" bg-rose text-white hover:bg-red-400 px-3"
                   onClick={deleteForm}
                 >
                   Delete

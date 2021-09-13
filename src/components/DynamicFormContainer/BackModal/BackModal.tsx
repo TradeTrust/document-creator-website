@@ -23,7 +23,7 @@ export const BackModal: FunctionComponent<BackModalProps> = ({ backToFormSelecti
             <div className="mt-8">
               <div className="flex justify-around">
                 <Button
-                  className="bg-white text-cerulean hover:bg-cloud-100"
+                  className="bg-white text-cerulean hover:bg-cloud-100 px-3"
                   onClick={closeBackModal}
                   data-testid="cancel-form-button"
                 >
@@ -31,7 +31,7 @@ export const BackModal: FunctionComponent<BackModalProps> = ({ backToFormSelecti
                 </Button>
                 <Button
                   data-testid="red-back-button"
-                  className="bg-rose text-white hover:bg-red-400"
+                  className="bg-rose text-white hover:bg-red-400 px-3"
                   onClick={backToFormSelection}
                 >
                   Delete
