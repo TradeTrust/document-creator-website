@@ -6,12 +6,14 @@ interface RevokeConfirmationModalProps {
   revokingDocument: () => void;
   show: boolean;
   closeRevokeConfirmationModal: () => void;
+  fileName: string;
 }
 
 export const RevokeConfirmationModal: FunctionComponent<RevokeConfirmationModalProps> = ({
   revokingDocument,
   show,
   closeRevokeConfirmationModal,
+  fileName,
 }) => {
   return (
     <>
@@ -21,7 +23,10 @@ export const RevokeConfirmationModal: FunctionComponent<RevokeConfirmationModalP
             <h3 className="text-center" data-testid="modal-title">
               Revoke Document
             </h3>
-            <div className="text-center mt-8">Are you sure you want to revoke this document?</div>
+            <div className="text-center mt-8">
+              You are about to revoke the following file. This step is irreversible.
+            </div>
+            <div>{fileName}</div>
             <div className="mt-8">
               <div className="flex justify-around">
                 <Button

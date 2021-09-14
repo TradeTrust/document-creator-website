@@ -46,7 +46,7 @@ export const RevokeDocumentDropZone: FunctionComponent<RevokeDocumentDropZone> =
   return (
     <Wrapper>
       <div className="mb-4">
-        <IssueOrRevokeSelector />
+        <IssueOrRevokeSelector activeType="revoke" />
       </div>
       <ContentFrame>
         <Card>
@@ -80,14 +80,14 @@ export const RevokeDocumentDropZone: FunctionComponent<RevokeDocumentDropZone> =
                 )}
                 {documentUploadState !== DocumentUploadState.LOADING && (
                   <>
-                    <div className="font-bold text-lg text-gray-800" data-testid="dropzone-description">
+                    <div className="font-bold text-lg text-cloud-900" data-testid="dropzone-description">
                       Drop your TradeTrust file to revoke the document
                     </div>
                     <div className="mt-4">or</div>
                   </>
                 )}
                 {documentUploadState !== DocumentUploadState.LOADING && (
-                  <Button className="bg-cerulean text-white hover:bg-cerulean-500 mt-4">Select File</Button>
+                  <Button className="bg-cerulean text-white hover:bg-cerulean-500 mt-4 px-3">Select File</Button>
                 )}
               </>
             </DropZone>

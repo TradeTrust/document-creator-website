@@ -26,7 +26,7 @@ export const DynamicFormHeader: FunctionComponent<DynamicFormHeaderProps> = ({
       <Card
         title={
           <div className="md:flex justify-between items-center">
-            <IssueOrRevokeSelector createLink="/form" />
+            <IssueOrRevokeSelector />
             <Button
               data-testid="clear-all-button"
               className="mt-2 md:mt-0 bg-white text-cerulean hover:bg-cloud-100 px-3"

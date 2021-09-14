@@ -35,7 +35,10 @@
           "actualDateTime": "2020-06-03T03:50:45Z",
           "statement": "On the basis of the control carried out, it is hereby certified that the information herein is correct and that the described goods comply with the origin requirements of the China-Australia Free Trade Agreement."
         },
-        "issueLocation": { "iD": "unece.un.org:locode:AUADL", "name": "Adelaide" },
+        "issueLocation": {
+          "iD": "unece.un.org:locode:AUADL",
+          "name": "Adelaide"
+        },
         "issuer": {
           "iD": "id:wfa.org.au",
           "name": "Australian Grape and Wine Incorporated",
@@ -61,17 +64,21 @@
       "schema": {
         "type": "object",
         "properties": {
-          "iD": { "type": "string", "title": "COO ID" },
+          "iD": {
+            "type": "string",
+            "title": "COO ID"
+          },
           "issueDateTime": {
             "type": "string",
             "title": "Issued Date & Time"
           },
           "supplyChainConsignment": {
+            "title": "Supply Chain Consignment",
             "type": "object",
             "properties": {
               "iD": {
                 "type": "string",
-                "title": "iD"
+                "title": "ID"
               },
               "information": {
                 "type": "string",
@@ -92,7 +99,7 @@
                 "type": "object",
                 "properties": {
                   "iD": {
-                    "title": "iD",
+                    "title": "ID",
                     "type": "string"
                   },
                   "name": {
@@ -193,7 +200,7 @@
                   "properties": {
                     "iD": {
                       "type": "string",
-                      "title": "iD"
+                      "title": "ID"
                     },
                     "information": {
                       "type": "string",
@@ -215,7 +222,7 @@
                       "properties": {
                         "iD": {
                           "type": "string",
-                          "title": "iD"
+                          "title": "ID"
                         },
                         "name": {
                           "type": "string",
@@ -269,7 +276,7 @@
                             "properties": {
                               "iD": {
                                 "type": "string",
-                                "title": "iD"
+                                "title": "ID"
                               },
                               "formattedIssueDateTime": {
                                 "type": "string",
@@ -293,7 +300,7 @@
                             "properties": {
                               "iD": {
                                 "type": "string",
-                                "title": "iD"
+                                "title": "ID"
                               },
                               "description": {
                                 "type": "string",
@@ -333,7 +340,7 @@
                               "properties": {
                                 "iD": {
                                   "type": "string",
-                                  "title": "iD"
+                                  "title": "ID"
                                 },
                                 "grossVolume": {
                                   "type": "string",
@@ -358,7 +365,7 @@
                 "properties": {
                   "iD": {
                     "type": "string",
-                    "title": "iD"
+                    "title": "ID"
                   },
                   "name": {
                     "type": "string",
@@ -372,7 +379,7 @@
                 "properties": {
                   "iD": {
                     "type": "string",
-                    "title": "iD"
+                    "title": "ID"
                   },
                   "information": {
                     "type": "string",
@@ -410,7 +417,7 @@
                 "properties": {
                   "iD": {
                     "type": "string",
-                    "title": "iD"
+                    "title": "ID"
                   },
                   "name": {
                     "type": "string",
@@ -449,7 +456,10 @@
       },
       "schema": {
         "type": "object",
-        "required": ["blNumber", "scac"],
+        "required": [
+          "blNumber",
+          "scac"
+        ],
         "properties": {
           "blNumber": {
             "type": "string",
@@ -592,7 +602,10 @@
       "attachments": {
         "allow": true
       },
-      "headers": ["title", "remarks"]
+      "headers": [
+        "title",
+        "remarks"
+      ]
     },
     {
       "name": "Covering Letter (DBS)",
@@ -745,7 +758,10 @@
       "attachments": {
         "allow": true
       },
-      "headers": ["title", "remarks"]
+      "headers": [
+        "title",
+        "remarks"
+      ]
     }
   ]
 }

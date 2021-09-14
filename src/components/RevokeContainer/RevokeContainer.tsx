@@ -74,6 +74,7 @@ export const RevokeContainer: FunctionComponent = () => {
   return (
     <>
       <RevokeConfirmationModal
+        fileName={fileName}
         revokingDocument={revokingDocument}
         show={showConfirmationModal}
         closeRevokeConfirmationModal={() => setShowConfirmationModal(false)}

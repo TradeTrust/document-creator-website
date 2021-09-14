@@ -85,7 +85,7 @@
     legend {
       @apply font-bold;
       @apply text-xl;
-      @apply text-gray-800;
+      @apply text-cloud-900;
       @apply w-full;
       @apply mt-10;
       @apply pt-10;

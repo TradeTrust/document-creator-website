@@ -20,6 +20,14 @@ const mockDocs = [
     rawDocument: {},
     wrappedDocument: { data: "TEST TEST" },
   },
+  {
+    type: "VERIFIABLE_DOCUMENT",
+    contractAddress: "",
+    fileName: "COO-TEST-2",
+    payload: {},
+    rawDocument: {},
+    wrappedDocument: { data: "TEST TEST" },
+  },
 ] as WrappedDocument[];
 
 export const issueSuccess: FunctionComponent = () => {
@@ -27,6 +35,24 @@ export const issueSuccess: FunctionComponent = () => {
     <ProcessDocumentContent
       network={"local"}
       queueState={QueueState.CONFIRMED}
+      queueType={QueueType.ISSUE}
+      failedDocuments={[]}
+      pendingDocuments={[]}
+      successDocuments={mockDocs}
+      fileName={"file-name-test"}
+      downloadErrorName={""}
+      downloadErrorLink={""}
+      downloadAllFn={() => {}}
+      processAnotherDocumentFn={() => {}}
+    />
+  );
+};
+
+export const issuePending: FunctionComponent = () => {
+  return (
+    <ProcessDocumentContent
+      network={"local"}
+      queueState={QueueState.PENDING}
       queueType={QueueType.ISSUE}
       failedDocuments={[]}
       pendingDocuments={[]}

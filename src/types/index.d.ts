@@ -34,6 +34,8 @@ export type EncryptedJsonOption = {
   encryptedJson: string;
 };
 
+export type FlowSelectorTypes = "issue" | "revoke";
+
 export type WalletOptions = AwsKmwSignerOption | EncryptedJsonOption;
 
 export interface ConfigFile {
