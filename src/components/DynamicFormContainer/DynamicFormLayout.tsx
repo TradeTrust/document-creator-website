@@ -6,6 +6,7 @@ import { Trash2 } from "react-feather";
 import { Redirect } from "react-router";
 import { useConfigContext } from "../../common/context/config";
 import { useFormsContext } from "../../common/context/forms";
+import { OnCloseGuard } from "../OnCloseGuard/OnCloseGuard";
 import { Card } from "../UI/Card";
 import { ContentFrame } from "../UI/ContentFrame";
 import { ToggleSwitch } from "../UI/ToggleSwitch";
@@ -116,7 +117,7 @@ export const DynamicFormLayout: FunctionComponent = () => {
   const currentUnwrappedData = defaultsDeep({}, currentForm.data.formData, currentFormTemplate.defaults);
 
   return (
-    <>
+    <OnCloseGuard active={activeFormIndex !== undefined}>
       <DeleteModal deleteForm={deleteForm} show={showDeleteModal} closeDeleteModal={closeDeleteModal} />
       <BackModal backToFormSelection={deleteAllForms} show={showBackModal} closeBackModal={closeBackModal} />
       {config && (
@@ -182,6 +183,6 @@ export const DynamicFormLayout: FunctionComponent = () => {
           </Card>
         </ContentFrame>
       </div>
-    </>
+    </OnCloseGuard>
   );
 };
