@@ -25,7 +25,7 @@ export const ConfirmModal: FunctionComponent<ConfirmModalProps> = ({
     <>
       {show && (
         <ModalDialog close={onClose}>
-          <div className="flex flex-col max-w-sm md: max-w-md">
+          <div className="flex flex-col max-w-sm md:max-w-md">
             <h3 className="text-center text-cloud-900" data-testid="modal-title">
               {title}
             </h3>
