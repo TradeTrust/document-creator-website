@@ -1,4 +1,4 @@
-import { FunctionComponent, ReactNode } from "react";
+import { FunctionComponent, ReactNode, useEffect } from "react";
 
 interface OnCloseGuardProps {
   children: ReactNode;
@@ -6,9 +6,19 @@ interface OnCloseGuardProps {
 }
 
 export const OnCloseGuard: FunctionComponent<OnCloseGuardProps> = ({ children, active }) => {
-  if (active) {
-    window.onbeforeunload = () => true;
-  }
+  const handleBeforeUnload = (e: BeforeUnloadEvent) => {
+    e.preventDefault();
+    e.returnValue = "";
+  };
 
+  useEffect(() => {
+    if (active) {
+      window.addEventListener("beforeunload", handleBeforeUnload);
+
+      return () => {
+        window.removeEventListener("beforeunload", handleBeforeUnload);
+      };
+    }
+  }, [active]);
   return <>{children}</>;
 };
