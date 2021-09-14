@@ -18,7 +18,7 @@ describe("backModal", () => {
     const mockBackToFormSelection = jest.fn();
     render(<BackModal backToFormSelection={mockBackToFormSelection} show={true} closeBackModal={() => {}} />);
 
-    fireEvent.click(screen.getByTestId("red-back-button"));
+    fireEvent.click(screen.getByTestId("confirm-modal-confirm-button"));
     expect(mockBackToFormSelection).toHaveBeenCalledTimes(1);
   });
 
@@ -26,7 +26,7 @@ describe("backModal", () => {
     const mockCloseBackModal = jest.fn();
     render(<BackModal backToFormSelection={() => {}} show={true} closeBackModal={mockCloseBackModal} />);
 
-    fireEvent.click(screen.getByTestId("cancel-form-button"));
+    fireEvent.click(screen.getByTestId("confirm-modal-cancel-button"));
     expect(mockCloseBackModal).toHaveBeenCalledTimes(1);
   });
 });

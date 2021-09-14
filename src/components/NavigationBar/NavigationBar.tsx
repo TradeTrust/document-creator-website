@@ -10,6 +10,7 @@ import {
   NAVIGATION_ITEM_TYPE,
 } from "@govtechsg/tradetrust-ui-components";
 import { getNetworkPath } from "../../utils";
+import { LogoutButton } from "./LogoutButton";
 
 export interface NavigationBarProps {
   logout?: () => void;
@@ -155,16 +156,7 @@ export const NavigationBar: FunctionComponent<NavigationBarProps> = ({ logout })
       id: "logout",
       label: "Logout",
       path: "/",
-      customLink: (
-        <Button
-          data-testid="navbar-logout"
-          onClick={logout}
-          className="bg-white text-cerulean hover:bg-gray-50 px-3"
-          size={ButtonSize.SM}
-        >
-          Logout
-        </Button>
-      ),
+      customLink: <LogoutButton logout={logout} />,
     });
   }
 

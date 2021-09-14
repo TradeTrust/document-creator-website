@@ -148,7 +148,7 @@ describe("dynamicFormLayout", () => {
     );
 
     fireEvent.click(screen.getByTestId("clear-all-button"));
-    fireEvent.click(screen.getByTestId("red-back-button"));
+    fireEvent.click(screen.getByTestId("confirm-modal-confirm-button"));
     expect(mockSetActiveFormIndex).toHaveBeenCalled(); // eslint-disable-line jest/prefer-called-with
     expect(mockSetForms).toHaveBeenCalledWith([]);
   });

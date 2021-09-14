@@ -19,7 +19,7 @@ describe("deleteModal", () => {
     const mockDeleteForm = jest.fn();
     render(<DeleteModal deleteForm={mockDeleteForm} show={true} closeDeleteModal={() => {}} />);
 
-    fireEvent.click(screen.getByTestId("delete-button"));
+    fireEvent.click(screen.getByTestId("confirm-modal-confirm-button"));
 
     expect(mockDeleteForm).toHaveBeenCalledTimes(1);
   });
@@ -28,7 +28,7 @@ describe("deleteModal", () => {
     const mockCloseDeleteModal = jest.fn();
     render(<DeleteModal deleteForm={() => {}} show={true} closeDeleteModal={mockCloseDeleteModal} />);
 
-    fireEvent.click(screen.getByTestId("cancel-form-button"));
+    fireEvent.click(screen.getByTestId("confirm-modal-cancel-button"));
 
     expect(mockCloseDeleteModal).toHaveBeenCalledTimes(1);
   });

@@ -1,6 +1,5 @@
-import { Button } from "@govtechsg/tradetrust-ui-components";
 import { FunctionComponent } from "react";
-import { ModalDialog } from "../../ModalDialog";
+import { ConfirmModal } from "../../ConfirmModal";
 
 interface RevokeConfirmationModalProps {
   revokingDocument: () => void;
@@ -16,38 +15,13 @@ export const RevokeConfirmationModal: FunctionComponent<RevokeConfirmationModalP
   fileName,
 }) => {
   return (
-    <>
-      {show && (
-        <ModalDialog close={closeRevokeConfirmationModal}>
-          <div className="flex flex-col ">
-            <h3 className="text-center" data-testid="modal-title">
-              Revoke Document
-            </h3>
-            <div className="text-center mt-8">
-              You are about to revoke the following file. This step is irreversible.
-            </div>
-            <div className="py-8 text-center">{fileName}</div>
-            <div className="mt-4">
-              <div className="flex justify-around">
-                <Button
-                  className="bg-white text-cerulean hover:bg-cloud-100 px-3"
-                  onClick={closeRevokeConfirmationModal}
-                  data-testid="cancel-button"
-                >
-                  Cancel
-                </Button>
-                <Button
-                  data-testid="modal-revoke-button"
-                  className="bg-rose hover:bg-red-400 text-white px-3"
-                  onClick={revokingDocument}
-                >
-                  Revoke
-                </Button>
-              </div>
-            </div>
-          </div>
-        </ModalDialog>
-      )}
-    </>
+    <ConfirmModal
+      title="Revoke Document"
+      description="Are you sure you want to revoke this document?"
+      onClose={closeRevokeConfirmationModal}
+      onConfirm={revokingDocument}
+      onConfirmText="Revoke"
+      show={show}
+    />
   );
 };

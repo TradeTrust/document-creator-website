@@ -9,7 +9,7 @@ const WalletDecryptionTitle = Selector("[data-testid='wallet-decryption-title']"
 const FormSelectionTitle = Selector("[data-testid='form-selection-title']");
 const Button = Selector("button");
 const ButtonClearAll = Selector("[data-testid='clear-all-button']");
-const ButtonBackRed = Selector("[data-testid='red-back-button']");
+const ButtonBackRed = Selector("[data-testid='confirm-modal-confirm-button']");
 const ProgressBar = Selector("[data-testid='progress-bar']");
 
 test("should lead to pages correctly", async (t) => {
