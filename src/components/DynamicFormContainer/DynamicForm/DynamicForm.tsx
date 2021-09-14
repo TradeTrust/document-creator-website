@@ -151,6 +151,7 @@ export const DynamicForm: FunctionComponent<DynamicFormProps> = ({
         ObjectFieldTemplate={CustomObjectFieldTemplate}
         FieldTemplate={CustomFieldTemplate}
       />
+
       {attachmentAccepted && (
         <AttachmentDropzone
           acceptedFormat={attachmentAcceptedFormat}
