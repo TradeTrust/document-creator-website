@@ -36,7 +36,7 @@ export const IssueOrRevokeSelector: FunctionComponent<IssueOrRevokeSelectorProps
         }
 
         return (
-          <NavLink key={link.to} to={link.to} className={className}>
+          <NavLink data-testid={`${link.type}-selector`} key={link.to} to={link.to} className={className}>
             {link.label}
           </NavLink>
         );

@@ -7,6 +7,7 @@ import { useQueue } from "../../common/hook/useQueue";
 import { QueueState, QueueType } from "../../constants/QueueState";
 import { render, screen, act, fireEvent, waitFor } from "@testing-library/react";
 import FileSaver from "file-saver";
+import { MemoryRouter } from "react-router";
 
 jest.mock("../../common/hook/useQueue");
 jest.mock("file-saver", () => ({ saveAs: jest.fn() }));
@@ -128,12 +129,14 @@ describe("ProcessDocumentScreen", () => {
   it("should display the correct title while initialise with issue flow", () => {
     whenQueueStateIsInitialize();
     render(
-      <ProcessDocumentScreen
-        config={config}
-        processAnotherDocument={() => {}}
-        forms={formEntries}
-        type={QueueType.ISSUE}
-      />
+      <MemoryRouter>
+        <ProcessDocumentScreen
+          config={config}
+          processAnotherDocument={() => {}}
+          forms={formEntries}
+          type={QueueType.ISSUE}
+        />
+      </MemoryRouter>
     );
     expect(screen.getByTestId("process-title")).toHaveTextContent("Please wait while we prepare your document(s)");
   });
@@ -141,13 +144,15 @@ describe("ProcessDocumentScreen", () => {
   it("should display the correct title while initialise with revoke flow", () => {
     whenQueueStateIsInitialize();
     render(
-      <ProcessDocumentScreen
-        config={config}
-        processAnotherDocument={() => {}}
-        fileName="document-1.tt"
-        revokeDocuments={revokeDocumentEntries}
-        type={QueueType.REVOKE}
-      />
+      <MemoryRouter>
+        <ProcessDocumentScreen
+          config={config}
+          processAnotherDocument={() => {}}
+          fileName="document-1.tt"
+          revokeDocuments={revokeDocumentEntries}
+          type={QueueType.REVOKE}
+        />
+      </MemoryRouter>
     );
     expect(screen.getByTestId("process-title")).toHaveTextContent("Please wait while we prepare your document");
   });
@@ -155,12 +160,14 @@ describe("ProcessDocumentScreen", () => {
   it("should display the correct title while pending issuing", () => {
     whenQueueStateIsPending();
     render(
-      <ProcessDocumentScreen
-        config={config}
-        processAnotherDocument={() => {}}
-        forms={formEntries}
-        type={QueueType.ISSUE}
-      />
+      <MemoryRouter>
+        <ProcessDocumentScreen
+          config={config}
+          processAnotherDocument={() => {}}
+          forms={formEntries}
+          type={QueueType.ISSUE}
+        />
+      </MemoryRouter>
     );
     expect(screen.getByTestId("process-title")).toHaveTextContent("Publishing document(s)...");
   });
@@ -168,13 +175,15 @@ describe("ProcessDocumentScreen", () => {
   it("should display the correct title while pending revoke", () => {
     whenQueueStateIsPending();
     render(
-      <ProcessDocumentScreen
-        config={config}
-        processAnotherDocument={() => {}}
-        fileName="document-1.tt"
-        revokeDocuments={revokeDocumentEntries}
-        type={QueueType.REVOKE}
-      />
+      <MemoryRouter>
+        <ProcessDocumentScreen
+          config={config}
+          processAnotherDocument={() => {}}
+          fileName="document-1.tt"
+          revokeDocuments={revokeDocumentEntries}
+          type={QueueType.REVOKE}
+        />
+      </MemoryRouter>
     );
     expect(screen.getByTestId("process-title")).toHaveTextContent("Revoking document...");
   });
@@ -182,12 +191,14 @@ describe("ProcessDocumentScreen", () => {
   it("should display the correct title when document issue successfully", () => {
     whenQueueStateIsConfirmed();
     render(
-      <ProcessDocumentScreen
-        config={config}
-        processAnotherDocument={() => {}}
-        forms={formEntries}
-        type={QueueType.ISSUE}
-      />
+      <MemoryRouter>
+        <ProcessDocumentScreen
+          config={config}
+          processAnotherDocument={() => {}}
+          forms={formEntries}
+          type={QueueType.ISSUE}
+        />
+      </MemoryRouter>
     );
     expect(screen.getByTestId("process-title")).toHaveTextContent("Document(s) issued successfully");
   });
@@ -195,13 +206,15 @@ describe("ProcessDocumentScreen", () => {
   it("should display the correct title when document revoke successfully", () => {
     whenQueueStateIsConfirmed();
     render(
-      <ProcessDocumentScreen
-        config={config}
-        processAnotherDocument={() => {}}
-        fileName="document-1.tt"
-        revokeDocuments={revokeDocumentEntries}
-        type={QueueType.REVOKE}
-      />
+      <MemoryRouter>
+        <ProcessDocumentScreen
+          config={config}
+          processAnotherDocument={() => {}}
+          fileName="document-1.tt"
+          revokeDocuments={revokeDocumentEntries}
+          type={QueueType.REVOKE}
+        />
+      </MemoryRouter>
     );
     expect(screen.getByTestId("process-title")).toHaveTextContent("Document revoked successfully");
   });
@@ -209,12 +222,14 @@ describe("ProcessDocumentScreen", () => {
   it("should display the correct title when document has error", () => {
     whenQueueStateIsError();
     render(
-      <ProcessDocumentScreen
-        config={config}
-        processAnotherDocument={() => {}}
-        forms={formEntries}
-        type={QueueType.ISSUE}
-      />
+      <MemoryRouter>
+        <ProcessDocumentScreen
+          config={config}
+          processAnotherDocument={() => {}}
+          forms={formEntries}
+          type={QueueType.ISSUE}
+        />
+      </MemoryRouter>
     );
     expect(screen.getByTestId("error-title")).toHaveTextContent("The document(s) could not be issued at this time.");
   });
@@ -222,13 +237,15 @@ describe("ProcessDocumentScreen", () => {
   it("should display the correct title when document has error", () => {
     whenQueueStateIsError();
     render(
-      <ProcessDocumentScreen
-        config={config}
-        processAnotherDocument={() => {}}
-        fileName="document-1.tt"
-        revokeDocuments={revokeDocumentEntries}
-        type={QueueType.REVOKE}
-      />
+      <MemoryRouter>
+        <ProcessDocumentScreen
+          config={config}
+          processAnotherDocument={() => {}}
+          fileName="document-1.tt"
+          revokeDocuments={revokeDocumentEntries}
+          type={QueueType.REVOKE}
+        />
+      </MemoryRouter>
     );
     expect(screen.getByTestId("error-title")).toHaveTextContent("The document(s) could not be revoked at this time.");
   });
@@ -236,12 +253,14 @@ describe("ProcessDocumentScreen", () => {
   it("should display correctly when there are failed documents in issue flow", () => {
     whenQueueStateIsConfirmButFailed();
     render(
-      <ProcessDocumentScreen
-        config={config}
-        processAnotherDocument={() => {}}
-        forms={formEntries}
-        type={QueueType.ISSUE}
-      />
+      <MemoryRouter>
+        <ProcessDocumentScreen
+          config={config}
+          processAnotherDocument={() => {}}
+          forms={formEntries}
+          type={QueueType.ISSUE}
+        />
+      </MemoryRouter>
     );
     expect(screen.getByTestId("process-title")).toHaveTextContent("Document(s) failed to issue");
     expect(screen.getByTestId("error-title")).toHaveTextContent("The document(s) could not be issued at this time.");
@@ -250,13 +269,15 @@ describe("ProcessDocumentScreen", () => {
   it("should display correctly when there are failed documents in revoke flow", () => {
     whenQueueStateIsConfirmButFailed();
     render(
-      <ProcessDocumentScreen
-        config={config}
-        processAnotherDocument={() => {}}
-        fileName="document-1.tt"
-        revokeDocuments={revokeDocumentEntries}
-        type={QueueType.REVOKE}
-      />
+      <MemoryRouter>
+        <ProcessDocumentScreen
+          config={config}
+          processAnotherDocument={() => {}}
+          fileName="document-1.tt"
+          revokeDocuments={revokeDocumentEntries}
+          type={QueueType.REVOKE}
+        />
+      </MemoryRouter>
     );
     expect(screen.getByTestId("process-title")).toHaveTextContent("Document failed to revoke");
     expect(screen.getByTestId("error-title")).toHaveTextContent("The document(s) could not be revoked at this time.");
@@ -265,12 +286,14 @@ describe("ProcessDocumentScreen", () => {
   it("should called download method for download a single file", async () => {
     whenQueueStateIsConfirmed();
     render(
-      <ProcessDocumentScreen
-        config={config}
-        processAnotherDocument={() => {}}
-        forms={formEntries}
-        type={QueueType.ISSUE}
-      />
+      <MemoryRouter>
+        <ProcessDocumentScreen
+          config={config}
+          processAnotherDocument={() => {}}
+          forms={formEntries}
+          type={QueueType.ISSUE}
+        />
+      </MemoryRouter>
     );
     expect(screen.queryAllByTestId("download-file-button")).toHaveLength(1);
 
@@ -285,12 +308,14 @@ describe("ProcessDocumentScreen", () => {
   it("should called generateZipFile method for download all button", async () => {
     whenQueueStateIsConfirmed();
     render(
-      <ProcessDocumentScreen
-        config={config}
-        processAnotherDocument={() => {}}
-        forms={formEntries}
-        type={QueueType.ISSUE}
-      />
+      <MemoryRouter>
+        <ProcessDocumentScreen
+          config={config}
+          processAnotherDocument={() => {}}
+          forms={formEntries}
+          type={QueueType.ISSUE}
+        />
+      </MemoryRouter>
     );
     expect(screen.queryAllByTestId("download-all-button")).toHaveLength(1);
 
@@ -306,12 +331,14 @@ describe("ProcessDocumentScreen", () => {
     whenQueueStateIsConfirmed();
     const processAnotherDocumentFn = jest.fn();
     render(
-      <ProcessDocumentScreen
-        config={config}
-        processAnotherDocument={processAnotherDocumentFn}
-        forms={formEntries}
-        type={QueueType.ISSUE}
-      />
+      <MemoryRouter>
+        <ProcessDocumentScreen
+          config={config}
+          processAnotherDocument={processAnotherDocumentFn}
+          forms={formEntries}
+          type={QueueType.ISSUE}
+        />
+      </MemoryRouter>
     );
 
     expect(screen.getAllByTestId("process-another-document-button")).toHaveLength(1);

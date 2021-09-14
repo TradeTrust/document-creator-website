@@ -34,7 +34,7 @@ export const RevokeContainer: FunctionComponent = () => {
         }
 
         if (!isDocumentValid) {
-          setErrorMessage("File cannot be read. Please check that you have a valid file");
+          setErrorMessage("Document cannot be read. Please check that you have a valid document");
           setRevokeDocuments([]);
           setDocumentUploadState(DocumentUploadState.ERROR);
         } else {

@@ -26,8 +26,8 @@ export const RevokeConfirmationModal: FunctionComponent<RevokeConfirmationModalP
             <div className="text-center mt-8">
               You are about to revoke the following file. This step is irreversible.
             </div>
-            <div>{fileName}</div>
-            <div className="mt-8">
+            <div className="py-8 text-center">{fileName}</div>
+            <div className="mt-4">
               <div className="flex justify-around">
                 <Button
                   className="bg-white text-cerulean hover:bg-cloud-100 px-3"

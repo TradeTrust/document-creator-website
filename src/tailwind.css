@@ -142,14 +142,21 @@
 
     .array-item-move-up::after {
       content: "Move Up";
+      padding: 0px 6px;
     }
 
     .array-item-move-down::after {
       content: "Move Down";
+      padding: 0px 6px;
     }
 
     .array-item-remove::after {
       content: "Remove";
+      padding: 0px 6px;
+    }
+
+    .btn-group {
+      justify-content: center !important;
     }
 
     .btn {
@@ -158,14 +165,43 @@
       @apply ease-out;
       @apply cursor-pointer;
       @apply font-bold;
-      @apply p-2;
-      @apply rounded;
+      @apply py-2;
+      @apply px-3;
+      @apply rounded-xl;
       @apply border;
       @apply border-cloud-100;
       @apply bg-white;
       @apply text-cerulean;
       @apply hover:bg-cloud-100;
-      @apply m-2;
+      flex: none !important;
+    }
+
+    .array-item-add {
+      @apply mt-6;
+    }
+
+    .array-item-remove {
+      @apply bg-rose;
+      @apply border-rose;
+      @apply text-white;
+      @apply mx-3;
+    }
+
+    .array-item-move-down {
+      @apply mx-3;
+    }
+
+    .array-item-move-up {
+      @apply mx-3;
+    }
+
+    .array-item-toolbox {
+      @apply mb-3;
+      @apply mt-2;
+    }
+
+    .btn-danger {
+      @apply px-6;
     }
 
     .btn:first-of-type {
@@ -180,8 +216,18 @@
       @apply hidden; /* seems like submit button will be rendered by default for react-jsonschema-form */
     }
 
+    .btn-add {
+      @apply flex;
+    }
+
     .btn-add::after {
       content: "Add Item";
+    }
+
+    .btn-add::before {
+      content: url("./img/add-btn-icon.png");
+      @apply mr-2;
+      height: 22px;
     }
   }
   /* purgecss end ignore */

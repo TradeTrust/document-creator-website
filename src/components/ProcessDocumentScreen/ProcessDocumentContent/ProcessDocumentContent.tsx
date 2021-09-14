@@ -144,7 +144,7 @@ export const ProcessDocumentContent: FunctionComponent<ProcessDocumentContentPro
             data-testid="process-another-document-button"
             onClick={processAnotherDocumentFn}
           >
-            {`${isIssuingFlow ? "Create" : "Revoke"} another Document`}
+            {`${isIssuingFlow ? "Create" : "Revoke"} Another Document`}
           </Button>
         </div>
       )}

@@ -34,7 +34,7 @@ export const RevokeDocumentTileArea: FunctionComponent<RevokeDocumentTileArea> =
       <ContentFrame>
         <Card>
           <ProgressBar step={2} totalSteps={3} />
-          <h3 className="my-8 pb-8 border-b">Confirm File</h3>
+          <h3 className="my-8 pb-8 border-b">Confirm Document</h3>
           <ProcessedDocumentTag
             doc={revokeDocuments[0]}
             isPending={false}

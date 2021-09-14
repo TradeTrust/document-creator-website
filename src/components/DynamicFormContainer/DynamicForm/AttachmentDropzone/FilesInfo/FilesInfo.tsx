@@ -1,6 +1,6 @@
 import prettyBytes from "pretty-bytes";
 import React, { FunctionComponent } from "react";
-import { Paperclip, Trash2, X } from "react-feather";
+import { Paperclip, Trash2 } from "react-feather";
 import { FileUploadType } from "../../../../../types";
 import csv from "./csv.svg";
 import doc from "./doc.svg";

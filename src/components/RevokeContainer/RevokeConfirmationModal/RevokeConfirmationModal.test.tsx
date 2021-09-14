@@ -11,6 +11,7 @@ describe("RevokeConfirmationModal", () => {
     render(
       <BrowserRouter>
         <RevokeConfirmationModal
+          fileName={""}
           revokingDocument={revokingDocument}
           show={show}
           closeRevokeConfirmationModal={closeRevokeConfirmationModal}
@@ -28,6 +29,7 @@ describe("RevokeConfirmationModal", () => {
     render(
       <BrowserRouter>
         <RevokeConfirmationModal
+          fileName={""}
           revokingDocument={revokingDocument}
           show={show}
           closeRevokeConfirmationModal={closeRevokeConfirmationModal}
@@ -45,6 +47,7 @@ describe("RevokeConfirmationModal", () => {
     render(
       <BrowserRouter>
         <RevokeConfirmationModal
+          fileName={""}
           revokingDocument={revokingDocument}
           show={show}
           closeRevokeConfirmationModal={closeRevokeConfirmationModal}
@@ -63,6 +66,7 @@ describe("RevokeConfirmationModal", () => {
     render(
       <BrowserRouter>
         <RevokeConfirmationModal
+          fileName={""}
           revokingDocument={revokingDocument}
           show={show}
           closeRevokeConfirmationModal={closeRevokeConfirmationModal}
