@@ -54,20 +54,27 @@ export const ProcessedDocumentTag: FunctionComponent<PublishedTagProps> = ({
         )}
         <div className="w-full">
           <div className="flex justify-between items-center">
-            <div className="text-cloud-500" data-testid="file-name">
-              {documentName}
+            <div>
+              <div className="text-cloud-900" data-testid="file-name">
+                {documentName}
+              </div>
+              {isIssuingFlow ? (
+                !isPending &&
+                !isError && (
+                  <div
+                    className="text-cerulean-200 cursor-pointer"
+                    data-testid="download-file-button"
+                    onClick={() => saveAs(blob, documentName)}
+                  >
+                    Download
+                  </div>
+                )
+              ) : (
+                <h6 className="text-rose">Revoked</h6>
+              )}
             </div>
-            <div className="text-cloud-300 text-xs font-regular whitespace-nowrap"> ({size})</div>
+            <div className="text-cloud-300 font-regular whitespace-nowrap"> ({size})</div>
           </div>
-          {isIssuingFlow && !isPending && !isError && (
-            <div
-              className="text-cerulean-200 cursor-pointer"
-              data-testid="download-file-button"
-              onClick={() => saveAs(blob, documentName)}
-            >
-              Download
-            </div>
-          )}
         </div>
       </>
     </div>

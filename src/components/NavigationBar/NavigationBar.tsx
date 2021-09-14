@@ -139,7 +139,7 @@ export const NavigationBar: FunctionComponent<NavigationBarProps> = ({ logout })
         <NavBarLink
           path={"/verify"}
           label={
-            <Button className="bg-cerulean text-white hover:bg-cerulean-500" size={ButtonSize.SM}>
+            <Button className="bg-cerulean text-white hover:bg-cerulean-500 px-3" size={ButtonSize.SM}>
               Verify Doc
             </Button>
           }
@@ -159,7 +159,7 @@ export const NavigationBar: FunctionComponent<NavigationBarProps> = ({ logout })
         <Button
           data-testid="navbar-logout"
           onClick={logout}
-          className="bg-white text-cerulean hover:bg-gray-50"
+          className="bg-white text-cerulean hover:bg-gray-50 px-3"
           size={ButtonSize.SM}
         >
           Logout

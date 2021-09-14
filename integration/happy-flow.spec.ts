@@ -69,7 +69,7 @@ test("should issue the documents on local blockchain correctly", async (t) => {
   await t.expect(Selector("[data-testid='download-all-button']").exists).ok();
 
   // Issue transferable record
-  await t.click(Button.withText("Create another Document"));
+  await t.click(Button.withText("Create Another Document"));
   await t.click(Button.withText("Bill of Lading"));
 
   // Fill in form

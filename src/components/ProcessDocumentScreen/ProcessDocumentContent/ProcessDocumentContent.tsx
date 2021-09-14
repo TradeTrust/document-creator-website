@@ -63,7 +63,7 @@ export const ProcessDocumentContent: FunctionComponent<ProcessDocumentContentPro
   const DownloadAllButton = () => {
     return (
       <Button
-        className="bg-white text-cerulean hover:bg-cloud-100 mb-4"
+        className="bg-white text-cerulean hover:bg-cloud-100 px-3"
         data-testid="download-all-button"
         onClick={downloadAllFn}
       >
@@ -133,17 +133,21 @@ export const ProcessDocumentContent: FunctionComponent<ProcessDocumentContentPro
                 <ProcessedDocumentTag doc={doc} key={index} isPending={true} type={queueType} fileName={fileName} />
               ))}
             </div>
-            <div className="my-4">{queueState === QueueState.CONFIRMED && isIssuingFlow && <DownloadAllButton />}</div>
           </div>
         </>
       )}
-      <Button
-        className="mt-8 bg-cerulean text-white hover:bg-cerulean-400 flex mx-auto"
-        data-testid="process-another-document-button"
-        onClick={processAnotherDocumentFn}
-      >
-        {`${isIssuingFlow ? "Create" : "Revoke"} another Document`}
-      </Button>
+      {queueState === QueueState.CONFIRMED && (
+        <div className="flex items-center justify-center pt-2">
+          {isIssuingFlow && <DownloadAllButton />}
+          <Button
+            className="bg-cerulean text-white hover:bg-cerulean-400 px-3 ml-5"
+            data-testid="process-another-document-button"
+            onClick={processAnotherDocumentFn}
+          >
+            {`${isIssuingFlow ? "Create" : "Revoke"} Another Document`}
+          </Button>
+        </div>
+      )}
     </div>
   );
 };

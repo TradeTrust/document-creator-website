@@ -139,7 +139,7 @@ export const DynamicFormLayout: FunctionComponent = () => {
         <ContentFrame>
           <Card>
             <div className="flex justify-between">
-              <div className="text-gray-800 flex items-center">
+              <div className="text-cloud-900 flex items-center">
                 <div className="align-middle mr-4">Preview mode:</div>
                 <ToggleSwitch isOn={isPreviewMode} handleToggle={() => setIsPreviewMode(!isPreviewMode)} />
               </div>

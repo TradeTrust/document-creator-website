@@ -31,7 +31,7 @@ export const TransferableRecordForm: FunctionComponent<TransferableRecordForm> =
 
   return (
     <div data-testid="transferable-record-form" className="border-b border-solid border-gray-300 pb-8 mb-8">
-      <div className="text-cloud-900 font-bold text-xl pb-4">Transferable Record Owner</div>
+      <h4 className="pb-4">Transferable Record Owner</h4>
       <div className="mb-3">
         <div>Owner</div>
         <div className="w-full flex">

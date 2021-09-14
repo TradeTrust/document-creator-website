@@ -118,7 +118,10 @@ export const DataFileButton: FunctionComponent<DataFileButton> = ({ onDataFile, 
         <p className="text-center mb-4">{text.header}</p>
         <div className="mb-4" data-testid="data-upload-zone" {...getRootProps()}>
           <input data-testid="config-file-drop-zone" {...getInputProps()} />
-          <Button data-testid="data-upload-button" className="flex mx-auto bg-white text-cerulean hover:bg-cloud-100">
+          <Button
+            data-testid="data-upload-button"
+            className="flex mx-auto bg-white text-cerulean hover:bg-cloud-100 px-3"
+          >
             {text.buttonText}
           </Button>
         </div>

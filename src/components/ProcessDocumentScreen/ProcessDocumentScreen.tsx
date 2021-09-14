@@ -9,6 +9,7 @@ import { ProcessDocumentTitle } from "./ProcessDocumentTitle";
 import { Card } from "../UI/Card";
 import { ContentFrame } from "../UI/ContentFrame";
 import { ProcessDocumentContent } from "./ProcessDocumentContent";
+import { IssueOrRevokeSelector } from "../UI/IssueOrRevokeSelector";
 
 interface ProcessDocumentScreen {
   config: Config;
@@ -55,6 +56,9 @@ export const ProcessDocumentScreen: FunctionComponent<ProcessDocumentScreen> = (
 
   return (
     <Wrapper>
+      <div className="mb-4">
+        <IssueOrRevokeSelector activeType={isIssuingFlow ? "issue" : "revoke"} />
+      </div>
       <ContentFrame>
         <Card>
           <ProgressBar step={3} totalSteps={3} />

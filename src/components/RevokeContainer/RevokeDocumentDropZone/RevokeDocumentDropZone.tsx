@@ -46,14 +46,14 @@ export const RevokeDocumentDropZone: FunctionComponent<RevokeDocumentDropZone> =
   return (
     <Wrapper>
       <div className="mb-4">
-        <IssueOrRevokeSelector />
+        <IssueOrRevokeSelector activeType="revoke" />
       </div>
       <ContentFrame>
         <Card>
           <ProgressBar step={1} totalSteps={3} />
-          <div data-testid="revoke-title" className="my-6 text-2xl">
-            Upload File
-          </div>
+          <h3 data-testid="revoke-title" className="my-6">
+            Upload Document
+          </h3>
           <div {...getRootProps()} data-testid="revoke-dropzone">
             <input data-testid="revoke-document-drop-zone" {...getInputProps()} />
             <DropZone
@@ -75,19 +75,21 @@ export const RevokeDocumentDropZone: FunctionComponent<RevokeDocumentDropZone> =
                 )}
                 {documentUploadState === DocumentUploadState.ERROR && (
                   <div className="max-w-lg text-rose font-bold text-lg mb-4" data-testid="error-message">
-                    {errorMessage ? errorMessage : "File cannot be read. Please check that you have a valid file"}
+                    {errorMessage
+                      ? errorMessage
+                      : "Document cannot be read. Please check that you have a valid document"}
                   </div>
                 )}
                 {documentUploadState !== DocumentUploadState.LOADING && (
                   <>
-                    <div className="font-bold text-lg text-gray-800" data-testid="dropzone-description">
-                      Drop your TradeTrust file to revoke the document
+                    <div className="font-bold text-lg text-cloud-900" data-testid="dropzone-description">
+                      Drop your TradeTrust document to revoke it
                     </div>
                     <div className="mt-4">or</div>
                   </>
                 )}
                 {documentUploadState !== DocumentUploadState.LOADING && (
-                  <Button className="bg-cerulean text-white hover:bg-cerulean-500 mt-4">Select File</Button>
+                  <Button className="bg-cerulean text-white hover:bg-cerulean-500 mt-4 px-3">Select Document</Button>
                 )}
               </>
             </DropZone>

@@ -69,11 +69,12 @@
             "title": "Issued Date & Time"
           },
           "supplyChainConsignment": {
+            "title": "Supply Chain Consignment",
             "type": "object",
             "properties": {
               "iD": {
                 "type": "string",
-                "title": "iD"
+                "title": "ID"
               },
               "information": {
                 "type": "string",
@@ -94,7 +95,7 @@
                 "type": "object",
                 "properties": {
                   "iD": {
-                    "title": "iD",
+                    "title": "ID",
                     "type": "string"
                   },
                   "name": {
@@ -195,7 +196,7 @@
                   "properties": {
                     "iD": {
                       "type": "string",
-                      "title": "iD"
+                      "title": "ID"
                     },
                     "information": {
                       "type": "string",
@@ -217,7 +218,7 @@
                       "properties": {
                         "iD": {
                           "type": "string",
-                          "title": "iD"
+                          "title": "ID"
                         },
                         "name": {
                           "type": "string",
@@ -271,7 +272,7 @@
                             "properties": {
                               "iD": {
                                 "type": "string",
-                                "title": "iD"
+                                "title": "ID"
                               },
                               "formattedIssueDateTime": {
                                 "type": "string",
@@ -295,7 +296,7 @@
                             "properties": {
                               "iD": {
                                 "type": "string",
-                                "title": "iD"
+                                "title": "ID"
                               },
                               "description": {
                                 "type": "string",
@@ -335,7 +336,7 @@
                               "properties": {
                                 "iD": {
                                   "type": "string",
-                                  "title": "iD"
+                                  "title": "ID"
                                 },
                                 "grossVolume": {
                                   "type": "string",
@@ -360,7 +361,7 @@
                 "properties": {
                   "iD": {
                     "type": "string",
-                    "title": "iD"
+                    "title": "ID"
                   },
                   "name": {
                     "type": "string",
@@ -374,7 +375,7 @@
                 "properties": {
                   "iD": {
                     "type": "string",
-                    "title": "iD"
+                    "title": "ID"
                   },
                   "information": {
                     "type": "string",
@@ -412,7 +413,7 @@
                 "properties": {
                   "iD": {
                     "type": "string",
-                    "title": "iD"
+                    "title": "ID"
                   },
                   "name": {
                     "type": "string",
@@ -452,7 +453,10 @@
       },
       "schema": {
         "type": "object",
-        "required": ["blNumber", "scac"],
+        "required": [
+          "blNumber",
+          "scac"
+        ],
         "properties": {
           "blNumber": {
             "type": "string",

@@ -20,7 +20,7 @@ test("should show correct error messages on various malformed configs", async (t
 
   // Upload config file (invalid config file)
   await loadConfigFile(ConfigErrorFile);
-  await t.expect(ErrorCantReadFile.textContent).contains("File cannot be read");
+  await t.expect(ErrorCantReadFile.textContent).contains("Document cannot be read");
 
   // Upload config file (working config file)
   await loadConfigFile(Config);
