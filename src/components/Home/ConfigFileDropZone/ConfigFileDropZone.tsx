@@ -54,10 +54,8 @@ export const ConfigFileDropZone: FunctionComponent<ConfigFileDropZone> = ({ onCo
             {!errorMessage && !error && (
               <h4 data-testid="home-description">Drag and drop your configuration file here</h4>
             )}
-            <h4 className="my-4">{errorMessage || error ? "Please try again." : "or"}</h4>
-            <Button className="bg-cerulean text-white hover:bg-cerulean-500 border-gray-300 px-3">
-              Select Document
-            </Button>
+            <h6 className="my-4">{errorMessage || error ? "Please try again." : "or"}</h6>
+            <Button className="bg-cerulean text-white hover:bg-cerulean-500 border-gray-300">Select Document</Button>
             <a
               onClick={(e) => e.stopPropagation()}
               className="text-cerulean-200 font-bold mt-8"

@@ -14,6 +14,7 @@ interface PublishedTagProps {
   type: QueueType;
   fileName?: string;
   isError?: boolean;
+  hideAction?: boolean;
 }
 
 export const ProcessedDocumentTag: FunctionComponent<PublishedTagProps> = ({
@@ -22,6 +23,7 @@ export const ProcessedDocumentTag: FunctionComponent<PublishedTagProps> = ({
   type,
   fileName,
   isError = false,
+  hideAction = false,
 }) => {
   const { config } = useConfigContext();
   const isIssuingFlow = type === QueueType.ISSUE;
@@ -58,19 +60,23 @@ export const ProcessedDocumentTag: FunctionComponent<PublishedTagProps> = ({
               <div className="text-cloud-900" data-testid="file-name">
                 {documentName}
               </div>
-              {isIssuingFlow ? (
-                !isPending &&
-                !isError && (
-                  <div
-                    className="text-cerulean-200 cursor-pointer"
-                    data-testid="download-file-button"
-                    onClick={() => saveAs(blob, documentName)}
-                  >
-                    Download
-                  </div>
-                )
-              ) : (
-                <h6 className="text-rose">Revoked</h6>
+              {!hideAction && (
+                <>
+                  {isIssuingFlow ? (
+                    !isPending &&
+                    !isError && (
+                      <div
+                        className="text-cerulean-200 cursor-pointer"
+                        data-testid="download-file-button"
+                        onClick={() => saveAs(blob, documentName)}
+                      >
+                        Download
+                      </div>
+                    )
+                  ) : (
+                    <h6 className="text-rose">Revoked</h6>
+                  )}
+                </>
               )}
             </div>
             <div className="text-cloud-300 font-regular whitespace-nowrap"> ({size})</div>

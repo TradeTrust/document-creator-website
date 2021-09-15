@@ -33,7 +33,7 @@ export const ConfirmModal: FunctionComponent<ConfirmModalProps> = ({
             <div className="mt-8">
               <div className="flex justify-around">
                 <Button
-                  className="bg-white text-cerulean hover:bg-cloud-100 px-3"
+                  className="bg-white text-cerulean hover:bg-cloud-100"
                   onClick={onClose}
                   data-testid="confirm-modal-cancel-button"
                 >
@@ -41,7 +41,7 @@ export const ConfirmModal: FunctionComponent<ConfirmModalProps> = ({
                 </Button>
                 <Button
                   data-testid="confirm-modal-confirm-button"
-                  className="bg-rose text-white hover:bg-red-400 px-3"
+                  className="bg-rose text-white hover:bg-red-400"
                   onClick={onConfirm}
                 >
                   {onConfirmText || "Confirm"}
