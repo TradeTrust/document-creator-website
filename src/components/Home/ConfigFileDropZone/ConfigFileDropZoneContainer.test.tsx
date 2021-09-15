@@ -6,6 +6,8 @@ describe("ConfigFileDropZoneContainer", () => {
     render(<ConfigFileDropZoneContainer />);
     const docLink = screen.getByText("Don’t have a config file? Learn how to create one");
     expect(docLink.getAttribute("target")).toBe("_blank");
-    expect(docLink.getAttribute("href")).toBe("https://docs.tradetrust.io/docs/document-creator/config-file");
+    expect(docLink.getAttribute("href")).toBe(
+      "https://docs.tradetrust.io/docs/document-creator/config-file/config-generator"
+    );
   });
 });
