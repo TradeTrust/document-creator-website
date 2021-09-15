@@ -17,7 +17,12 @@ export const RevokeConfirmationModal: FunctionComponent<RevokeConfirmationModalP
   return (
     <ConfirmModal
       title="Revoke Document"
-      description="Are you sure you want to revoke this document?"
+      description={
+        <div className="my-2">
+          <div className="text-center mb-4">You are about to revoke the following file. This step is irreversible.</div>
+          <div className="text-center">{fileName}</div>
+        </div>
+      }
       onClose={closeRevokeConfirmationModal}
       onConfirm={revokingDocument}
       onConfirmText="Revoke"
