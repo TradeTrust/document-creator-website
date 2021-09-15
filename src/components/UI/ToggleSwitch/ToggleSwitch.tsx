@@ -17,7 +17,7 @@ export const ToggleSwitch: FunctionComponent<ToggleSwitchProps> = ({ isOn, handl
           id="toggle-switch"
           data-testid="toggle-switch"
         />
-        <div className={`block ${isOn ? `bg-emerald` : `bg-cloud-200`} w-16 h-8 rounded-xl`} />
+        <div className={`block ${isOn ? `bg-emerald` : `bg-cloud-200`} w-16 h-8 rounded-2xl`} />
         <div
           className={`w-full absolute top-1 transform duration-100 ${
             isOn ? `right-2 translate-x-2/3` : `left-1 translate-x-0`
