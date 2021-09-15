@@ -9,7 +9,7 @@ const WalletDecryptionTitle = Selector("[data-testid='wallet-decryption-title']"
 const FormSelectionTitle = Selector("[data-testid='form-selection-title']");
 const Button = Selector("button");
 const ButtonClearAll = Selector("[data-testid='clear-all-button']");
-const ButtonBackRed = Selector("[data-testid='red-back-button']");
+const ConfirmModalButton = Selector("[data-testid='confirm-modal-confirm-button']");
 const ProgressBar = Selector("[data-testid='progress-bar']");
 
 test("should lead to pages correctly", async (t) => {
@@ -32,6 +32,6 @@ test("should lead to pages correctly", async (t) => {
   // Check back button
   await t.click(ButtonClearAll);
   await t.expect(Selector("[data-testid='modal-title']").textContent).contains("Clear All");
-  await t.click(ButtonBackRed);
+  await t.click(ConfirmModalButton);
   await t.expect(FormSelectionTitle.textContent).contains("Choose Document Type to Issue");
 });

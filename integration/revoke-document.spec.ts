@@ -37,7 +37,7 @@ test("should revoke a document on local blockchain correctly", async (t) => {
   // Revoke Document
   await t.click(Selector("[data-testid='revoke-button']"));
   await t.expect(Selector("[data-testid='modal-title']").textContent).contains("Revoke Document");
-  await t.click(Selector("[data-testid='modal-revoke-button']"));
+  await t.click(Selector("[data-testid='confirm-modal-confirm-button']"));
 
   await t.wait(6000); // cater to ci latency, so it does not break the subsequent tests, try not use everywhere
 

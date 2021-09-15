@@ -54,7 +54,7 @@ describe("RevokeConfirmationModal", () => {
         />
       </BrowserRouter>
     );
-    fireEvent.click(screen.getByTestId("modal-revoke-button"));
+    fireEvent.click(screen.getByTestId("confirm-modal-confirm-button"));
     expect(revokingDocument).toHaveBeenCalledTimes(1);
   });
 
@@ -73,7 +73,7 @@ describe("RevokeConfirmationModal", () => {
         />
       </BrowserRouter>
     );
-    fireEvent.click(screen.getByTestId("cancel-button"));
+    fireEvent.click(screen.getByTestId("confirm-modal-cancel-button"));
     expect(closeRevokeConfirmationModal).toHaveBeenCalledTimes(1);
   });
 });
