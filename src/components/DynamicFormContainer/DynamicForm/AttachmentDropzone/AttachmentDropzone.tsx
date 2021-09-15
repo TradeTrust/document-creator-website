@@ -82,11 +82,11 @@ export const AttachmentDropzone: FunctionComponent<AttachmentDropzone> = ({
           )}
           {!error && (
             <>
-              <div className="font-bold text-lg text-cloud-900">Drag and drop your file(s) here</div>
-              <div className="mt-4">or</div>
+              <h4>Drag and drop your file(s) here</h4>
+              <p className="mt-4">or</p>
             </>
           )}
-          <Button className="bg-cerulean text-white hover:bg-cerulean-500 mt-4 px-3">Browse File</Button>
+          <Button className="bg-cerulean text-white hover:bg-cerulean-500 mt-4">Browse File</Button>
         </DropZone>
       </div>
     </div>

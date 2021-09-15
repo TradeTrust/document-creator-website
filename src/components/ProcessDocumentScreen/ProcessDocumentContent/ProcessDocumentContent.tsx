@@ -63,7 +63,7 @@ export const ProcessDocumentContent: FunctionComponent<ProcessDocumentContentPro
   const DownloadAllButton = () => {
     return (
       <Button
-        className="bg-white text-cerulean hover:bg-cloud-100 px-3"
+        className="bg-white text-cerulean hover:bg-cloud-100"
         data-testid="download-all-button"
         onClick={downloadAllFn}
       >
@@ -137,10 +137,10 @@ export const ProcessDocumentContent: FunctionComponent<ProcessDocumentContentPro
         </>
       )}
       {queueState === QueueState.CONFIRMED && (
-        <div className="flex items-center justify-center pt-2">
+        <div className="flex items-center justify-center mt-12">
           {isIssuingFlow && <DownloadAllButton />}
           <Button
-            className="bg-cerulean text-white hover:bg-cerulean-400 px-3 ml-5"
+            className="bg-cerulean text-white hover:bg-cerulean-400 ml-5"
             data-testid="process-another-document-button"
             onClick={processAnotherDocumentFn}
           >

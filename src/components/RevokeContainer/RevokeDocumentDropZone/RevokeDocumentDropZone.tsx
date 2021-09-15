@@ -89,7 +89,7 @@ export const RevokeDocumentDropZone: FunctionComponent<RevokeDocumentDropZone> =
                   </>
                 )}
                 {documentUploadState !== DocumentUploadState.LOADING && (
-                  <Button className="bg-cerulean text-white hover:bg-cerulean-500 mt-4 px-3">Select Document</Button>
+                  <Button className="bg-cerulean text-white hover:bg-cerulean-500 mt-4">Select Document</Button>
                 )}
               </>
             </DropZone>

@@ -79,12 +79,12 @@
                 "title": "Consignment Information"
               },
               "exportCountry": {
-                "title": "Export country",
+                "title": "Export Country",
                 "type": "object",
                 "properties": {
                   "code": {
                     "type": "string",
-                    "title": "Country code"
+                    "title": "Country Code"
                   }
                 }
               },
@@ -118,15 +118,15 @@
                       },
                       "postcode": {
                         "type": "string",
-                        "title": "Postal code"
+                        "title": "Postal Code"
                       },
                       "countrySubDivisionName": {
                         "type": "string",
-                        "title": "Country Sub Division name"
+                        "title": "Country Sub Division Name"
                       },
                       "countryCode": {
                         "type": "string",
-                        "title": "Country code"
+                        "title": "Country Code"
                       }
                     }
                   }
@@ -134,11 +134,11 @@
               },
               "importCountry": {
                 "type": "object",
-                "title": "Import country",
+                "title": "Import Country",
                 "properties": {
                   "code": {
                     "type": "string",
-                    "title": "Country code"
+                    "title": "Country Code"
                   }
                 }
               },
@@ -147,7 +147,7 @@
                 "type": "object",
                 "properties": {
                   "iD": {
-                    "title": "importer iD",
+                    "title": "Importer ID",
                     "type": "string"
                   },
                   "name": {
@@ -172,15 +172,15 @@
                       },
                       "postcode": {
                         "type": "string",
-                        "title": "Postal code"
+                        "title": "Postal Code"
                       },
                       "countrySubDivisionName": {
                         "type": "string",
-                        "title": "Country Sub Division name"
+                        "title": "Country Sub Division Name"
                       },
                       "countryCode": {
                         "type": "string",
-                        "title": "Country code"
+                        "title": "Country Code"
                       }
                     }
                   }
@@ -206,7 +206,7 @@
                       "properties": {
                         "originCriteriaText": {
                           "type": "string",
-                          "title": "Origin criteria text"
+                          "title": "Origin Criteria Text"
                         }
                       }
                     },
@@ -240,15 +240,15 @@
                             },
                             "postcode": {
                               "type": "string",
-                              "title": "Postal code"
+                              "title": "Postal Code"
                             },
                             "countrySubDivisionName": {
                               "type": "string",
-                              "title": "Country Sub Division name"
+                              "title": "Country Sub Division Name"
                             },
                             "countryCode": {
                               "type": "string",
-                              "title": "Country code"
+                              "title": "Country Code"
                             }
                           }
                         }
@@ -256,7 +256,7 @@
                     },
                     "tradeLineItems": {
                       "type": "array",
-                      "title": "Trade line Items",
+                      "title": "Trade Line Items",
                       "items": {
                         "type": "object",
                         "properties": {
@@ -266,7 +266,7 @@
                           },
                           "invoiceReference": {
                             "type": "object",
-                            "title": "Invoice reference",
+                            "title": "Invoice Reference",
                             "properties": {
                               "iD": {
                                 "type": "string",
@@ -274,7 +274,7 @@
                               },
                               "formattedIssueDateTime": {
                                 "type": "string",
-                                "title": "Formatted issue date & time"
+                                "title": "Formatted Issue Date & Time"
                               },
                               "attachedBinaryFile": {
                                 "type": "object",
@@ -282,7 +282,7 @@
                                 "properties": {
                                   "uRI": {
                                     "type": "string",
-                                    "title": "Attached binary file uRI"
+                                    "title": "Attached Binary File URI"
                                   }
                                 }
                               }
@@ -290,7 +290,7 @@
                           },
                           "tradeProduct": {
                             "type": "object",
-                            "title": "Trade product",
+                            "title": "Trade Product",
                             "properties": {
                               "iD": {
                                 "type": "string",
@@ -306,17 +306,17 @@
                                 "properties": {
                                   "classCode": {
                                     "type": "string",
-                                    "title": "Harmonised tariff class code"
+                                    "title": "Harmonised Tariff Class Code"
                                   },
                                   "className": {
                                     "type": "string",
-                                    "title": "Harmonised tariff class name"
+                                    "title": "Harmonised Tariff Class Name"
                                   }
                                 }
                               },
                               "originCountry": {
                                 "type": "object",
-                                "title": "Origin country",
+                                "title": "Origin Country",
                                 "properties": {
                                   "code": {
                                     "type": "string",
@@ -328,7 +328,7 @@
                           },
                           "transportPackages": {
                             "type": "array",
-                            "title": "Transport packages",
+                            "title": "Transport Packages",
                             "items": {
                               "type": "object",
                               "properties": {
@@ -338,11 +338,11 @@
                                 },
                                 "grossVolume": {
                                   "type": "string",
-                                  "title": "Gross volume"
+                                  "title": "Gross Volume"
                                 },
                                 "grossWeight": {
                                   "type": "string",
-                                  "title": "Gross weight"
+                                  "title": "Gross Weight"
                                 }
                               }
                             }
@@ -385,11 +385,11 @@
                     "properties": {
                       "name": {
                         "type": "string",
-                        "title": "Used transport"
+                        "title": "Used Transport"
                       },
                       "iD": {
                         "type": "string",
-                        "title": "Used transport iD"
+                        "title": "Used Transport ID"
                       }
                     }
                   },
@@ -399,7 +399,7 @@
                     "properties": {
                       "departureDateTime": {
                         "type": "string",
-                        "title": "Departure date and time"
+                        "title": "Departure Date and Time"
                       }
                     }
                   }

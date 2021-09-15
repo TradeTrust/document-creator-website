@@ -67,7 +67,7 @@ export const WalletDecryption: FunctionComponent<WalletDecryption> = ({
             <div className="my-8 w-auto">
               <Button
                 data-testid="login-button"
-                className="bg-cerulean text-white hover:bg-cerulean-500 mt-4 px-3"
+                className="bg-cerulean text-white hover:bg-cerulean-500 mt-4"
                 onClick={onLogin}
                 disabled={isDecrypting}
               >
