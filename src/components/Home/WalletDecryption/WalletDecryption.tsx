@@ -1,6 +1,5 @@
-import { Button } from "@govtechsg/tradetrust-ui-components";
+import { Button, BarTrack } from "@govtechsg/tradetrust-ui-components";
 import React, { FunctionComponent, useState } from "react";
-import { BarTrack } from "../../ProgressBar";
 import { Card } from "../../UI/Card";
 import { ContentFrame } from "../../UI/ContentFrame";
 import { Wrapper } from "../../UI/Wrapper";

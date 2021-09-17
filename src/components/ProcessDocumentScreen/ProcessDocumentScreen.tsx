@@ -1,5 +1,5 @@
+import { ProgressBar } from "@govtechsg/tradetrust-ui-components";
 import { Wrapper } from "../UI/Wrapper";
-import { ProgressBar } from "../ProgressBar";
 import { FunctionComponent, useEffect } from "react";
 import { Config, FormEntry } from "../../types";
 import { QueueType } from "../../constants/QueueState";

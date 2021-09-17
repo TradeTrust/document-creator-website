@@ -1,10 +1,9 @@
-import { Button, LoaderSpinner } from "@govtechsg/tradetrust-ui-components";
+import { Button, LoaderSpinner, ProgressBar } from "@govtechsg/tradetrust-ui-components";
 import { FunctionComponent } from "react";
 import { useDropzone } from "react-dropzone";
 import { readFileAsJson } from "../../../common/utils";
 import { getLogger } from "../../../utils/logger";
 import { Wrapper } from "../../UI/Wrapper";
-import { ProgressBar } from "../../ProgressBar";
 import { IssueOrRevokeSelector } from "../../UI/IssueOrRevokeSelector";
 import { DocumentUploadState } from "../../../constants/DocumentUploadState";
 import { DropZone } from "../../UI/DropZone";
