@@ -1,10 +1,9 @@
 import { FunctionComponent } from "react";
 import { Wrapper } from "../../UI/Wrapper";
 import { ProcessedDocumentTag } from "../../ProcessDocumentScreen/ProcessedDocumentTag";
-import { Button } from "@govtechsg/tradetrust-ui-components";
+import { Button, ProgressBar } from "@govtechsg/tradetrust-ui-components";
 import { DocumentUploadState } from "../../../constants/DocumentUploadState";
 import { IssueOrRevokeSelector } from "../../UI/IssueOrRevokeSelector";
-import { ProgressBar } from "../../ProgressBar";
 import { QueueType } from "../../../constants/QueueState";
 import { ContentFrame } from "../../UI/ContentFrame";
 import { Card } from "../../UI/Card";

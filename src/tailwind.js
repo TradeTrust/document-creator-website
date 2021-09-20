@@ -23,11 +23,6 @@ const localConfig = {
       "wave-lines": "url('./img/wave-lines.png')",
     }),
   },
-  variants: {
-    extend: {
-      margin: ["last"],
-    },
-  },
 };
 const finalConfig = _.merge(commonUiConfig, localConfig); // deep merge
 

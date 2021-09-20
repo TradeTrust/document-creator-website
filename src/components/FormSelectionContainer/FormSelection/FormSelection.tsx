@@ -1,9 +1,8 @@
-import { Button } from "@govtechsg/tradetrust-ui-components";
+import { Button, ProgressBar } from "@govtechsg/tradetrust-ui-components";
 import React, { FunctionComponent } from "react";
 import { Redirect } from "react-router-dom";
 import { useFormsContext } from "../../../common/context/forms";
 import { Config, FormTemplate } from "../../../types";
-import { ProgressBar } from "../../ProgressBar";
 import { Wrapper } from "../../UI/Wrapper";
 import { IssueOrRevokeSelector } from "../../UI/IssueOrRevokeSelector";
 import { Card } from "../../UI/Card";
