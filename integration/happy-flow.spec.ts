@@ -39,15 +39,6 @@ test("should issue the documents on local blockchain correctly", async (t) => {
   await t.expect(FillFormTitle.textContent).contains("Fill and Preview Form");
   await t.expect(ProgressBar.textContent).contains("2");
 
-  // Validate that default values is populated
-  await t
-    .expect(Selector("#root_supplyChainConsignment_loadingBaseportLocation_iD").value)
-    .contains("DEFAULT_BASEPORT_ID");
-  await t
-    .expect(Selector("#root_supplyChainConsignment_loadingBaseportLocation_name").value)
-    .contains("DEFAULT_BASEPORT_LOCATION");
-  await t.typeText(FormIdField, "COO-ID");
-
   // Upload data file
   await t.setFilesToUpload("input[type=file][data-testid=config-file-drop-zone]", [DataFileCoo]);
 

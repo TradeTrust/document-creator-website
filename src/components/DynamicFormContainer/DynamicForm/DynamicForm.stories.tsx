@@ -1,48 +1,6 @@
-import { FunctionComponent, useState } from "react";
+import { FunctionComponent } from "react";
 import sample from "../../../test/fixtures/sample-config-ropsten.json";
-import { ConfigFile, FormTemplate } from "../../../types";
-import { identifyProofType } from "../../../constants/QueueState";
 import { DynamicForm } from "./DynamicForm";
-
-// Default values in the document we do not want the admin staff to change
-const defaults = {
-  $template: {
-    type: "EMBEDDED_RENDERER",
-    name: "COVERING_LETTER",
-    url: "https://generic-templates.tradetrust.io",
-  },
-  issuers: [
-    {
-      name: "Demo Issuer",
-      documentStore: "0x8bA63EAB43342AAc3AdBB4B827b68Cf4aAE5Caca",
-      identityProof: {
-        type: identifyProofType.DnsTxt,
-        location: "demo-tradetrust.openattestation.com",
-      },
-    },
-  ],
-  name: "Covering Letter",
-  logo: "https://www.aretese.com/images/govtech-animated-logo.gif",
-  title: "Documents Bundle",
-  remarks: "Some very important documents in here for some submission",
-};
-
-// Form values that the admin staff will be changing
-const configFile = sample as ConfigFile;
-const schema = configFile.forms[2].schema;
-const attachments = configFile.forms[2].attachments;
-const uiSchema = configFile.forms[2].uiSchema;
-const extension = configFile.forms[2].extension;
-
-const form: FormTemplate = {
-  name: "Covering Letter",
-  type: "VERIFIABLE_DOCUMENT",
-  defaults,
-  schema,
-  attachments,
-  uiSchema,
-  extension,
-};
 
 export default {
   title: "DynamicForm/DynamicForm",
@@ -52,27 +10,64 @@ export default {
   },
 };
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-export const Default: FunctionComponent = () => {
-  const [formData, setFormData] = useState<any>({
-    fileName: "document-1",
-    data: { formData: {} },
-    templateIndex: 0,
-    ownership: { holderAddress: "", beneficiaryAddress: "" },
-  });
+const mockFormData = {
+  fileName: "document-1",
+  data: { formData: {} },
+  templateIndex: 0,
+  ownership: { holderAddress: "", beneficiaryAddress: "" },
+  extension: "tt",
+};
+
+export const Ebl: FunctionComponent = () => {
+  const sampleForm = sample.forms[1];
+  const formEbl = { ...sampleForm };
 
   return (
     <DynamicForm
-      schema={form.schema}
-      uiSchema={form.uiSchema}
-      form={formData}
-      setFormData={setFormData}
-      // eslint-disable-next-line @typescript-eslint/no-empty-function
+      schema={formEbl.schema}
+      uiSchema={formEbl.uiSchema}
+      form={mockFormData}
+      setFormData={() => {}}
       setOwnership={() => {}}
-      // eslint-disable-next-line @typescript-eslint/no-empty-function
       setCurrentForm={() => {}}
       attachmentAccepted={true}
-      type="VERIFIABLE_DOCUMENT"
+      type={sampleForm.type as any}
+    />
+  );
+};
+
+export const Invoice: FunctionComponent = () => {
+  const sampleForm = sample.forms[4];
+  const formInvoice = { ...sampleForm };
+
+  return (
+    <DynamicForm
+      schema={formInvoice.schema}
+      uiSchema={formInvoice.uiSchema}
+      form={mockFormData}
+      setFormData={() => {}}
+      setOwnership={() => {}}
+      setCurrentForm={() => {}}
+      attachmentAccepted={true}
+      type={sampleForm.type as any}
+    />
+  );
+};
+
+export const Coo: FunctionComponent = () => {
+  const sampleForm = sample.forms[0];
+  const formCoo = { ...sampleForm };
+
+  return (
+    <DynamicForm
+      schema={formCoo.schema}
+      uiSchema={formCoo.uiSchema}
+      form={mockFormData}
+      setFormData={() => {}}
+      setOwnership={() => {}}
+      setCurrentForm={() => {}}
+      attachmentAccepted={true}
+      type={sampleForm.type as any}
     />
   );
 };

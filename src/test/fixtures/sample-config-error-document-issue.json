@@ -23,8 +23,7 @@
             "name": "My token registry",
             "tokenRegistry": "0x9Eb613a88534E2939518f4ffBFE65F5969b491FF"
           }
-        ],
-        "name": "Maersk Bill of Lading"
+        ]
       },
       "schema": {
         "type": "object",
@@ -59,11 +58,7 @@
               "location": "isaactest.xyz"
             }
           }
-        ],
-        "name": "Covering Letter",
-        "logo": "https://www.aretese.com/images/govtech-animated-logo.gif",
-        "title": "Documents Bundle",
-        "description": "Some very important documents in here for some submission"
+        ]
       },
       "schema": {
         "type": "object",
