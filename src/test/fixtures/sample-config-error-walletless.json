@@ -19,8 +19,7 @@
             "name": "DEMO STORE",
             "tokenRegistry": "0xc3E9eBc6aDA9BA4B4Ce65D71901Cb2307e9670cE"
           }
-        ],
-        "name": "Maersk Bill of Lading"
+        ]
       },
       "schema": {
         "type": "object",

@@ -23,11 +23,7 @@
               "location": "hr.tech.gov.sg"
             }
           }
-        ],
-        "recipient": {
-          "name": "Recipient Full Name"
-        },
-        "type": "(champion / runner-up / completion)"
+        ]
       },
       "schema": {
         "type": "object",
