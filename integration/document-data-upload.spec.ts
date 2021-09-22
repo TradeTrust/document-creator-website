@@ -6,21 +6,31 @@ import { existsSync, read, readFileSync } from "fs";
 
 fixture("Data upload").page`http://localhost:3000`;
 
-const Config = "./../src/test/fixtures/sample-config-local.json";
-const DataFileCsv = "./../src/test/fixtures/sample-data-file-csv.csv";
+// Data files
+const V2ConfigurationFile = "./../src/test/fixtures/sample-config-local.json";
+const V2DataFileCsv = "./../src/test/fixtures/sample-data-file-coo.csv";
+const V3ConfigurationFile = "./../src/test/fixtures/sample-config-local-v3.json";
+const V3DataFileCsv = "./../src/test/fixtures/sample-data-file-coo-v3.csv";
+
+// Template selector
+const Button = Selector("button");
 const FillFormTitle = Selector("[data-testid='fill-form-title']");
 const WalletDecryptionTitle = Selector("[data-testid='wallet-decryption-title']");
 const FormSelectionTitle = Selector("[data-testid='form-selection-title']");
 const ProgressBar = Selector("[data-testid='progress-bar']");
 
-const Button = Selector("button");
-const FormTitleField = Selector("#root_title");
-const FormRemarksField = Selector("#root_remarks");
+// Form component selector
 const documentNumberInput = Selector("[data-testid='document-number-input']");
 const documentNameSelect = Selector("[data-testid='document-name-select']");
 const downloadCsvDataFileButton = Selector("[data-testid='download-csv-data-schema-button']");
 const downloadJsonDataFileButton = Selector("[data-testid='download-json-data-schema-button']");
 const fileNameField = Selector("[data-testid='file-name-input']");
+
+// Form fields component selector
+const V2COOiDField = Selector("#root_iD");
+const V2COOIssueDateTimeField = Selector("#root_issueDateTime");
+const V3COOiDField = Selector("#root_credentialSubject_iD");
+const V3COOIssueDateTimeField = Selector("#root_credentialSubject_issueDateTime");
 
 function getFileDownloadPath(fileName: string): string {
   return join(homedir(), "Downloads", fileName);
@@ -36,9 +46,9 @@ const waitForFileDownload = async (t: TestController, filePath: string): Promise
   return existsSync(filePath);
 };
 
-test("should upload populate data fields correctly", async (t) => {
+test("should upload populate data fields correctly for version 2 document", async (t) => {
   // Upload config file
-  await loadConfigFile(Config);
+  await loadConfigFile(V2ConfigurationFile);
   await t.expect(WalletDecryptionTitle.textContent).contains("Create and Revoke Document");
 
   // Login to step 1
@@ -47,7 +57,7 @@ test("should upload populate data fields correctly", async (t) => {
   await t.expect(ProgressBar.textContent).contains("1");
 
   // Navigate to form
-  await t.click(Button.withText("Covering Letter"));
+  await t.click(Button.withText("COO"));
   await t.expect(FillFormTitle.textContent).contains("Fill and Preview Form");
   await t.expect(ProgressBar.textContent).contains("2");
 
@@ -56,28 +66,74 @@ test("should upload populate data fields correctly", async (t) => {
   const csvFilePath = getFileDownloadPath("sample-data.csv");
   await t.expect(await waitForFileDownload(t, csvFilePath)).eql(true);
   const csvFileContent = readFileSync(csvFilePath, "utf8");
-  await t.expect(csvFileContent).contains("title,remarks");
+  await t.expect(csvFileContent).contains("iD,issueDateTime");
 
   //download json data sample file
   await t.click(downloadJsonDataFileButton);
   const jsonFilePath = getFileDownloadPath("sample-data.json");
   await t.expect(await waitForFileDownload(t, jsonFilePath)).eql(true);
   const jsonFileContent = JSON.parse(readFileSync(jsonFilePath, "utf8"));
-  await t.expect(jsonFileContent.data).contains({ title: "", remarks: "" });
+  await t.expect(jsonFileContent.data).contains({ iD: "", issueDateTime: "" });
 
   // Upload data file
-  await t.setFilesToUpload("input[type=file][data-testid=config-file-drop-zone]", [DataFileCsv]);
+  await t.setFilesToUpload("input[type=file][data-testid=config-file-drop-zone]", [V2DataFileCsv]);
 
   // Validated the content is overwritten by the data file
-  await t.expect(documentNameSelect.innerText).eql("Covering-Letter-2");
-  await t.expect(fileNameField.value).eql("Covering-Letter-2");
-  await t.expect(FormTitleField.value).eql("Testing1");
-  await t.expect(FormRemarksField.value).eql("Testing1");
+  await t.expect(documentNameSelect.innerText).eql("COO-2");
+  await t.expect(fileNameField.value).eql("COO-2");
+  await t.expect(V2COOiDField.value).eql("SampleId-1");
+  await t.expect(V2COOIssueDateTimeField.value).eql("issueDateTime-1");
 
   // Check next document
   await t.typeText(documentNumberInput, "3", { replace: true });
-  await t.expect(documentNameSelect.innerText).eql("Covering-Letter-3");
-  await t.expect(fileNameField.value).eql("Covering-Letter-3");
-  await t.expect(FormTitleField.value).eql("Testing2");
-  await t.expect(FormRemarksField.value).eql("Testing2");
+  await t.expect(documentNameSelect.innerText).eql("COO-3");
+  await t.expect(fileNameField.value).eql("COO-3");
+  await t.expect(V2COOiDField.value).eql("SampleId-2");
+  await t.expect(V2COOIssueDateTimeField.value).eql("issueDateTime-2");
+});
+
+test("should upload populate data fields correctly for version 3 document", async (t) => {
+  // Upload config file
+  await loadConfigFile(V3ConfigurationFile);
+  await t.expect(WalletDecryptionTitle.textContent).contains("Create and Revoke Document");
+
+  // Login to step 1
+  await enterPassword("password");
+  await t.expect(FormSelectionTitle.textContent).contains("Choose Document Type to Issue");
+  await t.expect(ProgressBar.textContent).contains("1");
+
+  // Navigate to form
+  await t.click(Button.withText("Certificate of Origin"));
+  await t.expect(FillFormTitle.textContent).contains("Fill and Preview Form");
+  await t.expect(ProgressBar.textContent).contains("2");
+
+  // download csv data sample file
+  await t.click(downloadCsvDataFileButton);
+  const csvFilePath = getFileDownloadPath("sample-data.csv");
+  await t.expect(await waitForFileDownload(t, csvFilePath)).eql(true);
+  const csvFileContent = readFileSync(csvFilePath, "utf8");
+  await t.expect(csvFileContent).contains("credentialSubject.iD,credentialSubject.issueDateTime");
+
+  //download json data sample file
+  await t.click(downloadJsonDataFileButton);
+  const jsonFilePath = getFileDownloadPath("sample-data.json");
+  await t.expect(await waitForFileDownload(t, jsonFilePath)).eql(true);
+  const jsonFileContent = JSON.parse(readFileSync(jsonFilePath, "utf8"));
+  await t.expect(jsonFileContent.data).contains({ credentialSubject: { iD: "", issueDateTime: "" } });
+
+  // Upload data file
+  await t.setFilesToUpload("input[type=file][data-testid=config-file-drop-zone]", [V3DataFileCsv]);
+
+  // Validated the content is overwritten by the data file
+  await t.expect(documentNameSelect.innerText).eql("Certificate-of-Origin-2");
+  await t.expect(fileNameField.value).eql("Certificate-of-Origin-2");
+  await t.expect(V3COOiDField.value).eql("SampleId-1");
+  await t.expect(V3COOIssueDateTimeField.value).eql("issueDateTime-1");
+
+  // Check next document
+  await t.typeText(documentNumberInput, "3", { replace: true });
+  await t.expect(documentNameSelect.innerText).eql("Certificate-of-Origin-3");
+  await t.expect(fileNameField.value).eql("Certificate-of-Origin-3");
+  await t.expect(V3COOiDField.value).eql("SampleId-2");
+  await t.expect(V3COOIssueDateTimeField.value).eql("issueDateTime-2");
 });

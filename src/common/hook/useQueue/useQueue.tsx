@@ -68,6 +68,7 @@ export const useQueue = ({
         queueType === QueueType.ISSUE
           ? await getPublishingJobs(formEntries as FormEntry[], config, nonce, wallet)
           : await getRevokingJobs(documents as any[]);
+
       setJobs(processingJobs);
       const pendingJobs = new Set(processingJobs.map((job, index) => index));
       setPendingJobIndex(Array.from(pendingJobs));

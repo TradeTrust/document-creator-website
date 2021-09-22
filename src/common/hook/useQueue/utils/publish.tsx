@@ -1,4 +1,8 @@
-import { wrapDocuments } from "@govtechsg/open-attestation";
+import {
+  wrapDocuments,
+  __unsafe__use__it__at__your__own__risks__wrapDocuments as wrapDocumentsV3,
+  utils,
+} from "@govtechsg/open-attestation";
 import { defaultsDeep, groupBy } from "lodash";
 import { identifyProofType } from "../../../../constants/QueueState";
 import { ActionsUrlObject, Config, DocumentStorage, FormEntry, PublishingJob, RawDocument } from "../../../../types";
@@ -61,10 +65,19 @@ export const getRawDocuments = async (forms: FormEntry[], config: Config): Promi
       const formDefaults = formConfig.defaults;
       const formData = { ...data.formData, ...qrUrl };
       defaultsDeep(formData, formDefaults);
-      const contractAddress =
-        formData.issuers[0]?.identityProof?.type === identifyProofType.DnsDid
-          ? identifyProofType.DnsDid
-          : formData.issuers[0]?.documentStore || formData.issuers[0]?.tokenRegistry;
+
+      let contractAddress = "";
+      if (utils.isRawV3Document(formData)) {
+        contractAddress =
+          formData.openAttestationMetadata.identityProof.type.toString() === identifyProofType.DnsDid
+            ? identifyProofType.DnsDid
+            : formData.openAttestationMetadata.proof.value;
+      } else {
+        contractAddress =
+          formData.issuers[0]?.identityProof?.type === identifyProofType.DnsDid
+            ? identifyProofType.DnsDid
+            : formData.issuers[0]?.documentStore || formData.issuers[0]?.tokenRegistry;
+      }
       const payload = formConfig.type === "TRANSFERABLE_RECORD" ? { ownership } : {};
       return {
         type: formConfig.type,
@@ -100,14 +113,19 @@ export const groupDocumentsIntoJobs = async (
   let nonce = currentNonce;
 
   const jobs: PublishingJob[] = [];
-
   // Process all verifiable documents with document store first
-  documentStoreAddresses.forEach((contractAddress) => {
+  for (const contractAddress of documentStoreAddresses) {
     const firstRawDocument = verifiableDocumentsWithDocumentStore[contractAddress][0];
     // eslint-disable-next-line @typescript-eslint/no-shadow
     const rawDocuments = verifiableDocumentsWithDocumentStore[contractAddress].map((doc) => doc.rawDocument);
-    const wrappedDocuments = wrapDocuments(rawDocuments);
+
+    const wrappedDocuments = utils.isRawV3Document(rawDocuments[0])
+      ? await wrapDocumentsV3(rawDocuments)
+      : wrapDocuments(rawDocuments);
+
     const firstWrappedDocument = wrappedDocuments[0];
+    const merkleRoot = utils.getMerkleRoot(firstWrappedDocument);
+
     jobs.push({
       type: firstRawDocument.type,
       nonce,
@@ -116,16 +134,18 @@ export const groupDocumentsIntoJobs = async (
         ...doc,
         wrappedDocument: wrappedDocuments[index],
       })),
-      merkleRoot: firstWrappedDocument.signature?.merkleRoot,
+      merkleRoot: merkleRoot,
       payload: {},
     });
     nonce += TX_NEEDED_FOR_VERIFIABLE_DOCUMENTS;
-  });
+  }
 
   // Process all verifiable document with DNS-DID next
   if (verifiableDocumentsWithDnsDid.length > 0) {
     const didRawDocuments = verifiableDocumentsWithDnsDid.map((doc) => doc.rawDocument);
-    const wrappedDnsDidDocuments = wrapDocuments(didRawDocuments);
+    const wrappedDnsDidDocuments = utils.isRawV3Document(didRawDocuments[0])
+      ? await wrapDocumentsV3(didRawDocuments)
+      : wrapDocuments(didRawDocuments);
     // Sign DNS-DID document here as we preparing the jobs
     const signedDnsDidDocument = await publishDnsDidVerifiableDocumentJob(wrappedDnsDidDocuments, signer);
     jobs.push({
@@ -143,19 +163,24 @@ export const groupDocumentsIntoJobs = async (
   }
 
   // Process all transferable records next
-  transferableRecords.forEach((transferableRecord) => {
+  for (const transferableRecord of transferableRecords) {
     const { type, contractAddress, rawDocument, payload } = transferableRecord;
-    const documents = wrapDocuments([rawDocument]);
+
+    const documents = utils.isRawV3Document(rawDocument)
+      ? await wrapDocumentsV3([rawDocument])
+      : wrapDocuments([rawDocument]);
+
+    const merkleRoot = utils.getMerkleRoot(documents[0]);
     jobs.push({
       type,
       nonce,
       contractAddress,
       documents: [{ ...transferableRecord, wrappedDocument: documents[0] }],
-      merkleRoot: documents[0].signature?.merkleRoot,
+      merkleRoot: merkleRoot,
       payload,
     });
     nonce += TX_NEEDED_FOR_TRANSFERABLE_RECORDS;
-  });
+  }
 
   return jobs;
 };
@@ -168,5 +193,5 @@ export const getPublishingJobs = async (
 ): Promise<PublishingJob[]> => {
   // Currently works for only multiple verifiable document issuance:
   const rawDocuments = await getRawDocuments(forms, config);
-  return groupDocumentsIntoJobs(rawDocuments, nonce, signer);
+  return await groupDocumentsIntoJobs(rawDocuments, nonce, signer);
 };
