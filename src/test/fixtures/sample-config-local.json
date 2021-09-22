@@ -605,7 +605,7 @@
       }
     },
     {
-      "name": "Covering Letter (DBS, Nested UISchema)",
+      "name": "Covering Letter (DBS, No UISchema)",
       "type": "VERIFIABLE_DOCUMENT",
       "defaults": {
         "$template": {
@@ -622,20 +622,7 @@
               "location": "demo-tradetrust.openattestation.com"
             }
           }
-        ],
-        "misc": {
-          "miscKey1": "miscValue1",
-          "uiSchema": {
-            "remarks": {
-              "ui:widget": "textarea"
-            }
-          }
-        }
-      },
-      "uiSchema": {
-        "remarks": {
-          "ui:widget": "textarea"
-        }
+        ]
       },
       "schema": {
         "type": "object",

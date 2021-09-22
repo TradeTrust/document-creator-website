@@ -1,6 +1,5 @@
 import { FunctionComponent } from "react";
 import sample from "../../../test/fixtures/sample-config-ropsten.json";
-import { FormTemplate } from "../../../types";
 import { DynamicForm } from "./DynamicForm";
 
 export default {
@@ -21,15 +20,7 @@ const mockFormData = {
 
 export const Ebl: FunctionComponent = () => {
   const sampleForm = sample.forms[1];
-  const formEbl: FormTemplate = {
-    name: sampleForm.name,
-    type: sampleForm.type as any,
-    defaults: sampleForm.defaults, // Default values = we do not want the admin staff to change
-    schema: sampleForm.schema, // Config values = the admin staff will be changing
-    attachments: sampleForm.attachments, // Config values = the admin staff will be changing
-    uiSchema: sampleForm.uiSchema, // Config values = the admin staff will be changing
-    extension: sampleForm.extension, // Config values = the admin staff will be changing
-  };
+  const formEbl = { ...sampleForm };
 
   return (
     <DynamicForm
@@ -47,15 +38,7 @@ export const Ebl: FunctionComponent = () => {
 
 export const Invoice: FunctionComponent = () => {
   const sampleForm = sample.forms[4];
-  const formInvoice: FormTemplate = {
-    name: sampleForm.name,
-    type: sampleForm.type as any,
-    defaults: sampleForm.defaults,
-    schema: sampleForm.schema,
-    attachments: sampleForm.attachments,
-    uiSchema: sampleForm.uiSchema,
-    extension: sampleForm.extension,
-  };
+  const formInvoice = { ...sampleForm };
 
   return (
     <DynamicForm
@@ -73,15 +56,7 @@ export const Invoice: FunctionComponent = () => {
 
 export const Coo: FunctionComponent = () => {
   const sampleForm = sample.forms[0];
-  const formCoo: FormTemplate = {
-    name: sampleForm.name,
-    type: sampleForm.type as any,
-    defaults: sampleForm.defaults,
-    schema: sampleForm.schema,
-    attachments: sampleForm.attachments,
-    uiSchema: sampleForm.uiSchema,
-    extension: sampleForm.extension,
-  };
+  const formCoo = { ...sampleForm };
 
   return (
     <DynamicForm
