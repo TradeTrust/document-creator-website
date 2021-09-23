@@ -2,7 +2,7 @@ import { Selector } from "testcafe";
 import { enterPassword, loadConfigFile } from "./helper";
 import { join } from "path";
 import { homedir } from "os";
-import { existsSync, read, readFileSync } from "fs";
+import { existsSync, read, readFileSync, unlinkSync, unwatchFile, watchFile } from "fs";
 
 fixture("Data upload").page`http://localhost:3000`;
 
@@ -46,6 +46,12 @@ const waitForFileDownload = async (t: TestController, filePath: string): Promise
   return existsSync(filePath);
 };
 
+const deleteDownloadFile = async (filePath: string): Promise<void> => {
+  if (existsSync(filePath)) {
+    unlinkSync(filePath);
+  }
+};
+
 test("should upload populate data fields correctly for version 2 document", async (t) => {
   // Upload config file
   await loadConfigFile(V2ConfigurationFile);
@@ -67,6 +73,7 @@ test("should upload populate data fields correctly for version 2 document", asyn
   await t.expect(await waitForFileDownload(t, csvFilePath)).eql(true);
   const csvFileContent = readFileSync(csvFilePath, "utf8");
   await t.expect(csvFileContent).contains("iD,issueDateTime");
+  await deleteDownloadFile(csvFilePath);
 
   //download json data sample file
   await t.click(downloadJsonDataFileButton);
@@ -74,7 +81,7 @@ test("should upload populate data fields correctly for version 2 document", asyn
   await t.expect(await waitForFileDownload(t, jsonFilePath)).eql(true);
   const jsonFileContent = JSON.parse(readFileSync(jsonFilePath, "utf8"));
   await t.expect(jsonFileContent.data).contains({ iD: "", issueDateTime: "" });
-
+  await deleteDownloadFile(jsonFilePath);
   // Upload data file
   await t.setFilesToUpload("input[type=file][data-testid=config-file-drop-zone]", [V2DataFileCsv]);
 
@@ -82,14 +89,14 @@ test("should upload populate data fields correctly for version 2 document", asyn
   await t.expect(documentNameSelect.innerText).eql("COO-2");
   await t.expect(fileNameField.value).eql("COO-2");
   await t.expect(V2COOiDField.value).eql("SampleId-1");
-  await t.expect(V2COOIssueDateTimeField.value).eql("issueDateTime-1");
+  await t.expect(V2COOIssueDateTimeField.value).eql("SampleIssueDateTime-1");
 
   // Check next document
   await t.typeText(documentNumberInput, "3", { replace: true });
   await t.expect(documentNameSelect.innerText).eql("COO-3");
   await t.expect(fileNameField.value).eql("COO-3");
   await t.expect(V2COOiDField.value).eql("SampleId-2");
-  await t.expect(V2COOIssueDateTimeField.value).eql("issueDateTime-2");
+  await t.expect(V2COOIssueDateTimeField.value).eql("SampleIssueDateTime-2");
 });
 
 test("should upload populate data fields correctly for version 3 document", async (t) => {
@@ -113,13 +120,15 @@ test("should upload populate data fields correctly for version 3 document", asyn
   await t.expect(await waitForFileDownload(t, csvFilePath)).eql(true);
   const csvFileContent = readFileSync(csvFilePath, "utf8");
   await t.expect(csvFileContent).contains("credentialSubject.iD,credentialSubject.issueDateTime");
+  await deleteDownloadFile(csvFilePath);
 
   //download json data sample file
   await t.click(downloadJsonDataFileButton);
   const jsonFilePath = getFileDownloadPath("sample-data.json");
   await t.expect(await waitForFileDownload(t, jsonFilePath)).eql(true);
   const jsonFileContent = JSON.parse(readFileSync(jsonFilePath, "utf8"));
-  await t.expect(jsonFileContent.data).contains({ credentialSubject: { iD: "", issueDateTime: "" } });
+  await t.expect(jsonFileContent.data.credentialSubject).contains({ iD: "", issueDateTime: "" });
+  await deleteDownloadFile(jsonFilePath);
 
   // Upload data file
   await t.setFilesToUpload("input[type=file][data-testid=config-file-drop-zone]", [V3DataFileCsv]);
@@ -128,12 +137,12 @@ test("should upload populate data fields correctly for version 3 document", asyn
   await t.expect(documentNameSelect.innerText).eql("Certificate-of-Origin-2");
   await t.expect(fileNameField.value).eql("Certificate-of-Origin-2");
   await t.expect(V3COOiDField.value).eql("SampleId-1");
-  await t.expect(V3COOIssueDateTimeField.value).eql("issueDateTime-1");
+  await t.expect(V3COOIssueDateTimeField.value).eql("SampleIssueDateTime-1");
 
   // Check next document
   await t.typeText(documentNumberInput, "3", { replace: true });
   await t.expect(documentNameSelect.innerText).eql("Certificate-of-Origin-3");
   await t.expect(fileNameField.value).eql("Certificate-of-Origin-3");
   await t.expect(V3COOiDField.value).eql("SampleId-2");
-  await t.expect(V3COOIssueDateTimeField.value).eql("issueDateTime-2");
+  await t.expect(V3COOIssueDateTimeField.value).eql("SampleIssueDateTime-2");
 });
