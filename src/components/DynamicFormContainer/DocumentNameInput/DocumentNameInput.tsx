@@ -3,16 +3,11 @@ import { ChangeEventHandler, FunctionComponent } from "react";
 interface DocumentNameInputProps {
   value?: string;
   onChange: ChangeEventHandler<HTMLInputElement>;
-  isBorderedBottom?: boolean;
 }
 
-export const DocumentNameInput: FunctionComponent<DocumentNameInputProps> = ({
-  value = "",
-  onChange,
-  isBorderedBottom = false,
-}) => {
+export const DocumentNameInput: FunctionComponent<DocumentNameInputProps> = ({ value = "", onChange }) => {
   return (
-    <div className={isBorderedBottom ? `mb-8 pb-8 border-b border-cloud-200` : ""}>
+    <div className="mb-16">
       <label>Document Name</label>
       <input
         onChange={onChange}
@@ -20,7 +15,7 @@ export const DocumentNameInput: FunctionComponent<DocumentNameInputProps> = ({
         type="text"
         aria-label="file-name-input"
         value={value}
-        className={`border border-cloud-200 h-10 w-full rounded-lg px-3`}
+        className={`custom-input`}
       />
     </div>
   );

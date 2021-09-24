@@ -623,7 +623,7 @@
       "extension": "tt"
     },
     {
-      "name": "Invoice (IMDA)",
+      "name": "Invoice",
       "type": "VERIFIABLE_DOCUMENT",
       "defaults": {
         "$template": {

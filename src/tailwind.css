@@ -75,163 +75,24 @@
 @tailwind components;
 
 @layer components {
-  /* to target markup from react-jsonschema-form - START */
+  .custom-input {
+    @apply w-full p-2 rounded-lg border border-cloud-200;
+  }
+
   /* purgecss start ignore */
+
+  /* DO NOT target react-jsonschema-form styles with .form-custom unless neccessary, go to custom templates directly instead  */
   .form-custom {
-    .dynamicForm-items {
-      @apply my-4;
-    }
-
-    legend {
-      @apply font-bold;
-      @apply text-xl;
-      @apply text-cloud-900;
-      @apply w-full;
-      @apply mt-10;
-      @apply pt-10;
-      @apply capitalize;
-      @apply border-t;
-      @apply border-solid;
-      @apply border-cloud-300;
-    }
-
-    label {
-      @apply block;
-      @apply w-full;
-      @apply mb-2;
-    }
-
-    textarea {
-      @apply w-full;
-      @apply resize-none;
-      @apply rounded-lg;
-    }
-
-    .field-array {
-      @apply mt-4;
-    }
-
-    .field-string,
-    .field-integer,
-    .field-number,
-    .field-null {
-      @apply flex;
-      @apply flex-wrap;
-      @apply items-center;
-    }
-
-    .field-string [type="text"],
-    .field-number input,
-    .field-integer input {
-      @apply w-full;
-      @apply px-3;
-      @apply h-10;
-      @apply rounded-lg;
-      @apply border;
-      @apply border-solid;
-      @apply border-cloud-200;
-    }
-
-    .array-item {
-      @apply border-b;
-      @apply border-cloud-300;
-      @apply border-solid;
-      @apply pb-2;
-      @apply mb-4;
-    }
-
-    .array-item-move-up::after {
-      content: "Move Up";
-      padding: 0px 6px;
-    }
-
-    .array-item-move-down::after {
-      content: "Move Down";
-      padding: 0px 6px;
-    }
-
-    .array-item-remove::after {
-      content: "Remove";
-      padding: 0px 6px;
-    }
-
-    .btn-group {
-      justify-content: center !important;
-    }
-
-    .btn {
-      @apply transition-colors;
-      @apply duration-200;
-      @apply ease-out;
-      @apply cursor-pointer;
-      @apply font-bold;
-      @apply py-2;
-      @apply px-3;
-      @apply rounded-xl;
-      @apply border;
-      @apply border-cloud-100;
-      @apply bg-white;
-      @apply text-cerulean;
-      @apply hover:bg-cloud-100;
-      flex: none !important;
-    }
-
-    .array-item-add {
-      @apply mt-6;
-    }
-
-    .array-item-remove {
-      @apply bg-rose;
-      @apply border-rose;
-      @apply text-white;
-      @apply mx-3;
-    }
-
-    .array-item-move-down {
-      @apply mx-3;
-    }
-
-    .array-item-move-up {
-      @apply mx-3;
-    }
-
-    .array-item-toolbox {
-      @apply mb-3;
-      @apply mt-2;
-    }
-
-    .btn-danger {
-      @apply px-6;
-    }
-
-    .btn:first-of-type {
-      @apply ml-0;
-    }
-
-    .btn:last-child {
-      @apply mr-0;
-    }
-
     .btn[type="submit"] {
-      @apply hidden; /* seems like submit button will be rendered by default for react-jsonschema-form */
+      @apply hidden; /* https://github.com/rjsf-team/react-jsonschema-form/issues/1602 */
     }
 
-    .btn-add {
-      @apply flex;
-    }
-
-    .btn-add::after {
-      content: "Add Item";
-    }
-
-    .btn-add::before {
-      content: url("./img/add-btn-icon.png");
-      @apply mr-2;
-      height: 22px;
+    input {
+      @apply custom-input;
     }
   }
+
   /* purgecss end ignore */
-  /* to target markup from react-jsonschema-form - END */
 }
 
 @tailwind utilities;

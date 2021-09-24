@@ -1,17 +1,25 @@
 import React, { FunctionComponent } from "react";
 import { ObjectFieldTemplateProps } from "@rjsf/core";
 
+// Title UI should be reused in custom array item
+export const CustomTitle: FunctionComponent<{ title: string }> = ({ title }) => {
+  return (
+    <>
+      {title && <div className={`border-t border-cloud-200 my-16`} data-testid="custom-title-divider" />}
+      {title && <h4 className={`text-cloud-900 capitalize my-4`}>{title}</h4>}
+    </>
+  );
+};
+
 export const CustomObjectFieldTemplate: FunctionComponent<ObjectFieldTemplateProps> = ({
-  TitleField,
   properties,
   title,
   description,
-  required,
 }) => {
   return (
     <>
-      {title && <TitleField title={title} id={title} required={required} />}
-      <ul className="dynamicForm-items">
+      <CustomTitle title={title} />
+      <ul>
         {properties.map(
           (
             prop: { content: boolean | React.ReactChild | React.ReactFragment | React.ReactPortal | null | undefined },
