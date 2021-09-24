@@ -27,7 +27,7 @@ test("form should render remarks as custom textarea when uiSchema exists", async
   await t.expect(ProgressBar.textContent).contains("1");
 
   // Navigate to form
-  await t.click(Button.withText("Covering Letter (DBS)"));
+  await t.click(Button.withText("Covering Letter"));
   await t.expect(FillFormTitle.textContent).contains("Fill and Preview Form");
   await t.expect(ProgressBar.textContent).contains("2");
 
@@ -51,7 +51,7 @@ test("form should render remarks as default input when uiSchema not exists", asy
   await t.expect(ProgressBar.textContent).contains("1");
 
   // Navigate to form
-  await t.click(Button.withText("Covering Letter (DBS, No UISchema)"));
+  await t.click(Button.withText("Covering Letter (No uiSchema)"));
   await t.expect(FillFormTitle.textContent).contains("Fill and Preview Form");
   await t.expect(ProgressBar.textContent).contains("2");
 
