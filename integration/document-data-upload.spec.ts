@@ -2,7 +2,7 @@ import { Selector } from "testcafe";
 import { enterPassword, loadConfigFile } from "./helper";
 import { join } from "path";
 import { homedir } from "os";
-import { existsSync, read, readFileSync, unlinkSync, unwatchFile, watchFile } from "fs";
+import { existsSync, readFileSync, unlinkSync } from "fs";
 
 fixture("Data upload").page`http://localhost:3000`;
 
