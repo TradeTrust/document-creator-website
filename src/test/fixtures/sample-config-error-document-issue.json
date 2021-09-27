@@ -6,42 +6,7 @@
   },
   "forms": [
     {
-      "name": "Bill of Lading",
-      "type": "TRANSFERABLE_RECORD",
-      "defaults": {
-        "$template": {
-          "type": "EMBEDDED_RENDERER",
-          "name": "BILL_OF_LADING",
-          "url": "https://demo-cnm.openattestation.com"
-        },
-        "issuers": [
-          {
-            "identityProof": {
-              "type": "DNS-TXT",
-              "location": "demo-tradetrust.openattestation.com"
-            },
-            "name": "My token registry",
-            "tokenRegistry": "0x9Eb613a88534E2939518f4ffBFE65F5969b491FF"
-          }
-        ]
-      },
-      "schema": {
-        "type": "object",
-        "required": ["blNumber"],
-        "properties": {
-          "blNumber": {
-            "type": "string",
-            "title": "BL Number"
-          }
-        }
-      },
-      "attachments": {
-        "allow": true,
-        "accept": ".pdf"
-      }
-    },
-    {
-      "name": "Covering Letter (GT)",
+      "name": "Covering Letter",
       "type": "VERIFIABLE_DOCUMENT",
       "defaults": {
         "$template": {

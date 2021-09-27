@@ -55,8 +55,8 @@ export const AttachmentDropzone: FunctionComponent<AttachmentDropzone> = ({
   const error = isFileRejected || fileSizeError;
 
   return (
-    <div className="flex flex-col m-auto" key="AttachmentDropzone" data-testid="attachment-dropzone">
-      <legend className="text-cloud-900 font-bold">Attachments</legend>
+    <div className="my-16" data-testid="attachment-dropzone">
+      <h4 className={`text-cloud-900 capitalize`}>Attachments</h4>
       <div className="text-cloud-900">Max. total file size: {MAX_FILE_SIZE / BYTE_CONVERTION_RATE}MB</div>
 
       <FilesInfo filesInfo={uploadedFiles} removeFile={removeFile} />

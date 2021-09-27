@@ -24,7 +24,7 @@ export const CustomTextareaWidget: FunctionComponent<WidgetProps> = ({
   return (
     <textarea
       id={id}
-      className="form-control border border-solid border-gray-300 w-full sm:w-8/12 px-0 sm:px-2 rounded-none border border-solid border-gray-300"
+      className={`custom-input resize-none`}
       value={value ? value : ""}
       placeholder={placeholder}
       required={required}
