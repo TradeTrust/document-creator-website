@@ -10,6 +10,7 @@ import { AttachmentDropzone } from "./AttachmentDropzone";
 import {
   CustomFieldTemplate,
   CustomObjectFieldTemplate,
+  CustomArrayFieldTemplate,
   CustomTextareaWidget,
   CustomDropdownWidget,
 } from "./CustomTemplates";
@@ -122,7 +123,7 @@ export const DynamicForm: FunctionComponent<DynamicFormProps> = ({
       <div className="mb-10">
         <DataFileButton onDataFile={mergeFormValue} schema={schema} />
       </div>
-      <DocumentNameInput onChange={handleChangeFileName} value={newFileName} isBorderedBottom={isTransferableRecord} />
+      <DocumentNameInput onChange={handleChangeFileName} value={newFileName} />
       {isTransferableRecord && (
         <TransferableRecordForm
           beneficiaryAddress={ownership.beneficiaryAddress}
@@ -150,6 +151,7 @@ export const DynamicForm: FunctionComponent<DynamicFormProps> = ({
         widgets={widgets}
         ObjectFieldTemplate={CustomObjectFieldTemplate}
         FieldTemplate={CustomFieldTemplate}
+        ArrayFieldTemplate={CustomArrayFieldTemplate}
       />
 
       {attachmentAccepted && (

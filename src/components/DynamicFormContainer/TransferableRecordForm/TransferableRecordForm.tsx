@@ -37,7 +37,7 @@ export const TransferableRecordForm: FunctionComponent<TransferableRecordForm> =
         <div className="w-full flex">
           <input
             data-testid="transferable-record-beneficiary-input"
-            className="border border-cloud-200 h-10 w-full rounded-lg px-3 mr-2"
+            className="custom-input mr-2"
             value={beneficiaryAddress}
             type="text"
             onChange={(e) => setBeneficiaryAddress(e.target.value)}
@@ -55,7 +55,7 @@ export const TransferableRecordForm: FunctionComponent<TransferableRecordForm> =
         <div className="w-full flex">
           <input
             data-testid="transferable-record-holder-input"
-            className="border border-cloud-200 h-10 w-full rounded-lg px-3 mr-2"
+            className="custom-input mr-2"
             value={holderAddress}
             type="text"
             onChange={(e) => setHolderAddress(e.target.value)}

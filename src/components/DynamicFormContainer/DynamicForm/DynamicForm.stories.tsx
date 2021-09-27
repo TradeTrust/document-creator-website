@@ -71,3 +71,21 @@ export const Coo: FunctionComponent = () => {
     />
   );
 };
+
+export const CoverLetter: FunctionComponent = () => {
+  const sampleForm = sample.forms[2];
+  const formCoverLetter = { ...sampleForm };
+
+  return (
+    <DynamicForm
+      schema={formCoverLetter.schema}
+      uiSchema={formCoverLetter.uiSchema}
+      form={mockFormData}
+      setFormData={() => {}}
+      setOwnership={() => {}}
+      setCurrentForm={() => {}}
+      attachmentAccepted={true}
+      type={sampleForm.type as any}
+    />
+  );
+};
