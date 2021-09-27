@@ -63,7 +63,7 @@ test("should upload populate data fields correctly for version 2 document", asyn
   await t.expect(ProgressBar.textContent).contains("1");
 
   // Navigate to form
-  await t.click(Button.withText("COO"));
+  await t.click(Button.withText("COO (ChAFTA)"));
   await t.expect(FillFormTitle.textContent).contains("Fill and Preview Form");
   await t.expect(ProgressBar.textContent).contains("2");
 
@@ -86,15 +86,15 @@ test("should upload populate data fields correctly for version 2 document", asyn
   await t.setFilesToUpload("input[type=file][data-testid=config-file-drop-zone]", [V2DataFileCsv]);
 
   // Validated the content is overwritten by the data file
-  await t.expect(documentNameSelect.innerText).eql("COO-2");
-  await t.expect(fileNameField.value).eql("COO-2");
+  await t.expect(documentNameSelect.innerText).eql("COO-(ChAFTA)-2");
+  await t.expect(fileNameField.value).eql("COO-(ChAFTA)-2");
   await t.expect(V2COOiDField.value).eql("SampleId-1");
   await t.expect(V2COOIssueDateTimeField.value).eql("SampleIssueDateTime-1");
 
   // Check next document
   await t.typeText(documentNumberInput, "3", { replace: true });
-  await t.expect(documentNameSelect.innerText).eql("COO-3");
-  await t.expect(fileNameField.value).eql("COO-3");
+  await t.expect(documentNameSelect.innerText).eql("COO-(ChAFTA)-3");
+  await t.expect(fileNameField.value).eql("COO-(ChAFTA)-3");
   await t.expect(V2COOiDField.value).eql("SampleId-2");
   await t.expect(V2COOIssueDateTimeField.value).eql("SampleIssueDateTime-2");
 });
@@ -134,15 +134,15 @@ test("should upload populate data fields correctly for version 3 document", asyn
   await t.setFilesToUpload("input[type=file][data-testid=config-file-drop-zone]", [V3DataFileCsv]);
 
   // Validated the content is overwritten by the data file
-  await t.expect(documentNameSelect.innerText).eql("Certificate-of-Origin-2");
-  await t.expect(fileNameField.value).eql("Certificate-of-Origin-2");
+  await t.expect(documentNameSelect.innerText).eql("Certificate-of-Origin-(ChAFTA)-2");
+  await t.expect(fileNameField.value).eql("Certificate-of-Origin-(ChAFTA)-2");
   await t.expect(V3COOiDField.value).eql("SampleId-1");
   await t.expect(V3COOIssueDateTimeField.value).eql("SampleIssueDateTime-1");
 
   // Check next document
   await t.typeText(documentNumberInput, "3", { replace: true });
-  await t.expect(documentNameSelect.innerText).eql("Certificate-of-Origin-3");
-  await t.expect(fileNameField.value).eql("Certificate-of-Origin-3");
+  await t.expect(documentNameSelect.innerText).eql("Certificate-of-Origin-(ChAFTA)-3");
+  await t.expect(fileNameField.value).eql("Certificate-of-Origin-(ChAFTA)-3");
   await t.expect(V3COOiDField.value).eql("SampleId-2");
   await t.expect(V3COOIssueDateTimeField.value).eql("SampleIssueDateTime-2");
 });

@@ -8,7 +8,7 @@
   },
   "forms": [
     {
-      "name": "COO",
+      "name": "COO (ChAFTA)",
       "type": "VERIFIABLE_DOCUMENT",
       "defaults": {
         "$template": {

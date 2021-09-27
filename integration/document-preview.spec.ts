@@ -25,7 +25,7 @@ test("should be able to preview form with data", async (t) => {
   await t.expect(ProgressBar.textContent).contains("1");
 
   // Navigate to form
-  await t.click(Button.withText("COO"));
+  await t.click(Button.withText("COO (ChAFTA)"));
   await t.expect(FillFormTitle.textContent).contains("Fill and Preview Form");
   await t.expect(ProgressBar.textContent).contains("2");
 

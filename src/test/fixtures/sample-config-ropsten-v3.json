@@ -6,7 +6,7 @@
   },
   "forms": [
     {
-      "name": "Certificate of Origin",
+      "name": "Certificate of Origin (ChAFTA)",
       "type": "VERIFIABLE_DOCUMENT",
       "defaults": {
         "version": "https://schema.openattestation.com/3.0/schema.json",
@@ -626,8 +626,8 @@
         "version": "https://schema.openattestation.com/3.0/schema.json",
         "@context": [
           "https://www.w3.org/2018/credentials/v1",
-          "https://schemata.openattestation.com/io/tradetrust/bill-of-lading/1.0/bill-of-lading-context.json",
-          "https://schemata.openattestation.com/com/openattestation/1.0/OpenAttestation.v3.json"
+          "https://schemata.openattestation.com/com/openattestation/1.0/OpenAttestation.v3.json",
+          "https://schemata.openattestation.com/io/tradetrust/bill-of-lading/1.0/bill-of-lading-context.json"
         ],
         "type": ["VerifiableCredential", "OpenAttestationCredential"],
         "issuanceDate": "2010-01-01T19:23:24Z",

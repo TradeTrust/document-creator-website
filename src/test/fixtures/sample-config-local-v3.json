@@ -6,7 +6,7 @@
   },
   "forms": [
     {
-      "name": "Certificate of Origin",
+      "name": "Certificate of Origin (ChAFTA)",
       "type": "VERIFIABLE_DOCUMENT",
       "defaults": {
         "version": "https://schema.openattestation.com/3.0/schema.json",
