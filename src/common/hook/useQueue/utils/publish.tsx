@@ -91,12 +91,8 @@ export const getRawDocuments = async (forms: FormEntry[], config: Config): Promi
   );
 };
 
-const wrapDocument = async (rawDocuments: any) => {
-  if (Array.isArray(rawDocuments)) {
-    return utils.isRawV3Document(rawDocuments[0]) ? await wrapDocumentsV3(rawDocuments) : wrapDocumentV2(rawDocuments);
-  } else {
-    return utils.isRawV3Document(rawDocuments) ? await wrapDocumentsV3([rawDocuments]) : wrapDocumentV2([rawDocuments]);
-  }
+const wrapDocument = async (rawDocuments: any[]) => {
+  return utils.isRawV3Document(rawDocuments[0]) ? await wrapDocumentsV3(rawDocuments) : wrapDocumentV2(rawDocuments);
 };
 
 const TX_NEEDED_FOR_VERIFIABLE_DOCUMENTS = 1;
@@ -167,7 +163,7 @@ export const groupDocumentsIntoJobs = async (
   // Process all transferable records next
   for (const transferableRecord of transferableRecords) {
     const { type, contractAddress, rawDocument, payload } = transferableRecord;
-    const transferableDocuments = await wrapDocument(rawDocument);
+    const transferableDocuments = await wrapDocument([rawDocument]);
     const merkleRoot = utils.getMerkleRoot(transferableDocuments[0]);
 
     jobs.push({
