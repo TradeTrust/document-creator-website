@@ -26,7 +26,7 @@
           "template": {
             "type": "EMBEDDED_RENDERER",
             "name": "CHAFTA_COO",
-            "url": "https://deploy-preview-22--generic-templates.netlify.app"
+            "url": "https://generic-templates.tradetrust.io"
           },
           "proof": {
             "type": "OpenAttestationProofMethod",
@@ -470,7 +470,7 @@
           "template": {
             "type": "EMBEDDED_RENDERER",
             "name": "INVOICE",
-            "url": "https://deploy-preview-22--generic-templates.netlify.app"
+            "url": "https://generic-templates.tradetrust.io"
           },
           "proof": {
             "type": "OpenAttestationProofMethod",
