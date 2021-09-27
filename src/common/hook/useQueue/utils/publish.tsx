@@ -91,7 +91,7 @@ export const getRawDocuments = async (forms: FormEntry[], config: Config): Promi
   );
 };
 
-const wrapDocument = async (rawDocuments: any[]) => {
+const wrapDocuments = async (rawDocuments: any[]) => {
   return utils.isRawV3Document(rawDocuments[0]) ? await wrapDocumentsV3(rawDocuments) : wrapDocumentV2(rawDocuments);
 };
 
@@ -122,7 +122,7 @@ export const groupDocumentsIntoJobs = async (
     const firstRawDocument = verifiableDocumentsWithDocumentStore[contractAddress][0];
     // eslint-disable-next-line @typescript-eslint/no-shadow
     const rawDocuments = verifiableDocumentsWithDocumentStore[contractAddress].map((doc) => doc.rawDocument);
-    const wrappedDocuments = await wrapDocument(rawDocuments);
+    const wrappedDocuments = await wrapDocuments(rawDocuments);
     const firstWrappedDocument = wrappedDocuments[0];
     const merkleRoot = utils.getMerkleRoot(firstWrappedDocument);
 
@@ -143,7 +143,7 @@ export const groupDocumentsIntoJobs = async (
   // Process all verifiable document with DNS-DID next
   if (verifiableDocumentsWithDnsDid.length > 0) {
     const didRawDocuments = verifiableDocumentsWithDnsDid.map((doc) => doc.rawDocument);
-    const wrappedDnsDidDocuments = await wrapDocument(didRawDocuments);
+    const wrappedDnsDidDocuments = await wrapDocuments(didRawDocuments);
     // Sign DNS-DID document here as we preparing the jobs
     const signedDnsDidDocument = await publishDnsDidVerifiableDocumentJob(wrappedDnsDidDocuments, signer);
     jobs.push({
@@ -163,7 +163,7 @@ export const groupDocumentsIntoJobs = async (
   // Process all transferable records next
   for (const transferableRecord of transferableRecords) {
     const { type, contractAddress, rawDocument, payload } = transferableRecord;
-    const transferableDocuments = await wrapDocument([rawDocument]);
+    const transferableDocuments = await wrapDocuments([rawDocument]);
     const merkleRoot = utils.getMerkleRoot(transferableDocuments[0]);
 
     jobs.push({
