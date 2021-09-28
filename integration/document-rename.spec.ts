@@ -28,7 +28,7 @@ test("should rename document filename correctly", async (t) => {
   await t.expect(ProgressBar.textContent).contains("1");
 
   // Navigate to form
-  await t.click(Button.withText("COO"));
+  await t.click(Button.withText("COO (ChAFTA)"));
   await t.expect(FillFormTitle.textContent).contains("Fill and Preview Form");
   await t.expect(ProgressBar.textContent).contains("2");
 
@@ -36,16 +36,16 @@ test("should rename document filename correctly", async (t) => {
   await t.click(AddNewButton);
 
   // Navigate to form
-  await t.click(Button.withText("COO"));
+  await t.click(Button.withText("COO (ChAFTA)"));
   await t.typeText(FormIdField, "COO-ID");
 
   // Go to the previous document
   await t.typeText(documentNumberInput, "1", { replace: true });
-  await t.expect(fileNameField.value).eql("COO-1");
-  await t.expect(documentNameSelect.innerText).eql("COO-1");
+  await t.expect(fileNameField.value).eql("COO-(ChAFTA)-1");
+  await t.expect(documentNameSelect.innerText).eql("COO-(ChAFTA)-1");
 
   // Go back to the other document
   await t.typeText(documentNumberInput, "2", { replace: true });
-  await t.expect(fileNameField.value).eql("COO-2");
-  await t.expect(documentNameSelect.innerText).eql("COO-2");
+  await t.expect(fileNameField.value).eql("COO-(ChAFTA)-2");
+  await t.expect(documentNameSelect.innerText).eql("COO-(ChAFTA)-2");
 });
