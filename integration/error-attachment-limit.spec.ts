@@ -1,11 +1,7 @@
 import { Selector } from "testcafe";
-import { enterPassword, loadConfigFile } from "./helper";
+import { enterPassword, loadConfigFile, configLocal, samplePdf, samplePdf6Mb } from "./helper";
 
 fixture("Error attachment limit").page`http://localhost:3000`;
-
-const Config = "./../src/test/fixtures/sample-config-local.json";
-const AttachmentSampleThatIs6Mb = "./../src/test/fixtures/sample-file-6MB.pdf";
-const AttachmentSample = "./../src/test/fixtures/sample.pdf";
 
 const FormSelectionTitle = Selector("[data-testid='form-selection-title']");
 const WalletDecryptionTitle = Selector("[data-testid='wallet-decryption-title']");
@@ -17,7 +13,7 @@ const FormAttachmentField = Selector("[data-testid='upload-file-0']");
 
 test("should show file limit warning when over 6mb", async (t) => {
   // Upload config file
-  await loadConfigFile(Config);
+  await loadConfigFile(configLocal);
   await t.expect(WalletDecryptionTitle.textContent).contains("Create and Revoke Document");
 
   // Login to step 1
@@ -30,10 +26,10 @@ test("should show file limit warning when over 6mb", async (t) => {
   await t.typeText(FormIdField, "COO-ID");
 
   // Upload a attachment (over file limit)
-  await t.setFilesToUpload("input[data-testid=attachment-file-drop-zone]", [AttachmentSampleThatIs6Mb]);
+  await t.setFilesToUpload("input[data-testid=attachment-file-drop-zone]", [samplePdf6Mb]);
   await t.expect(FileSizeError.textContent).contains("Error: Total attachment file size exceeds 5MB");
 
   // Upload a attachment (below file limit)
-  await t.setFilesToUpload("input[data-testid=attachment-file-drop-zone]", [AttachmentSample]);
-  await t.expect(FormAttachmentField.textContent).contains("sample.pdf");
+  await t.setFilesToUpload("input[data-testid=attachment-file-drop-zone]", [samplePdf]);
+  await t.expect(FormAttachmentField.textContent).contains("sample-file.pdf");
 });

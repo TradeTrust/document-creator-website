@@ -1,6 +1,6 @@
-/* eslint-disable  @typescript-eslint/no-explicit-any */
-import sample from "../../test/fixtures/sample-config-ropsten.json";
 import { assertConfigFile } from "./validate";
+
+import sample from "../../test/fixtures/v2/config/ropsten/sample-config-ropsten.json";
 
 describe("configFileSchema", () => {
   it("validates against sample wallet file", () => {

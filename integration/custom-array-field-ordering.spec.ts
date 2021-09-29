@@ -1,9 +1,8 @@
 import { Selector } from "testcafe";
-import { enterPassword, loadConfigFile } from "./helper";
+import { enterPassword, loadConfigFile, configRopsten } from "./helper";
 
 fixture("Custom array ordering").page`http://localhost:3000`;
 
-const Config = "./../src/test/fixtures/sample-config-ropsten.json";
 const AddItem = Selector("button").withText("Add Item");
 const Desc0 = Selector(`[data-testid="custom-array-field-0"] input[label="Description"]`);
 const Desc1 = Selector(`[data-testid="custom-array-field-1"] input[label="Description"]`);
@@ -13,7 +12,7 @@ const MoveUp2 = Selector(`[data-testid="custom-array-field-2"] [data-testid="mov
 const Remove0 = Selector(`[data-testid="custom-array-field-0"] [data-testid="remove"]`);
 
 test("should add, order, remove correctly", async (t) => {
-  await loadConfigFile(Config);
+  await loadConfigFile(configRopsten);
   await enterPassword("password");
   await t.click(Selector("button").withText("Invoice"));
 

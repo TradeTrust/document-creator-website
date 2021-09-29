@@ -1,11 +1,9 @@
 import { Selector } from "testcafe";
-import { enterPassword, loadConfigFile } from "./helper";
+import { enterPassword, loadConfigFile, configLocal, samplePdf } from "./helper";
 
 fixture("Document attachments").page`http://localhost:3000`;
 
 const WalletDecryptionTitle = Selector("[data-testid='wallet-decryption-title']");
-const Config = "./../src/test/fixtures/sample-config-local.json";
-const AttachmentSample = "./../src/test/fixtures/sample.pdf";
 const FillFormTitle = Selector("[data-testid='fill-form-title']");
 const FormSelectionTitle = Selector("[data-testid='form-selection-title']");
 const ProgressBar = Selector("[data-testid='progress-bar']");
@@ -17,7 +15,7 @@ const FormAttachmentFields = Selector("[data-testid*='upload-file-']");
 
 test("should be added and removed correctly", async (t) => {
   // Upload config file
-  await loadConfigFile(Config);
+  await loadConfigFile(configLocal);
   await t.expect(WalletDecryptionTitle.textContent).contains("Create and Revoke Document");
 
   // Login to step 1
@@ -31,8 +29,8 @@ test("should be added and removed correctly", async (t) => {
   await t.expect(ProgressBar.textContent).contains("2");
 
   // Add attachment
-  await t.setFilesToUpload("input[data-testid='attachment-file-drop-zone']", [AttachmentSample]);
-  await t.expect(FormAttachmentField.textContent).contains("sample.pdf");
+  await t.setFilesToUpload("input[data-testid='attachment-file-drop-zone']", [samplePdf]);
+  await t.expect(FormAttachmentField.textContent).contains("sample-file.pdf");
   await t.expect(FormAttachmentFields.count).eql(1);
 
   // Remove attachment

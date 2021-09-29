@@ -1,8 +1,8 @@
 {
-  "network": "ropsten",
+  "network": "local",
   "wallet": {
     "type": "ENCRYPTED_JSON",
-    "encryptedJson": "{\"address\":\"1245e5b64d785b25057f7438f715f4aa5d965733\",\"id\":\"bf069d1b-4e88-487c-b695-f2e03ed7c1ff\",\"version\":3,\"Crypto\":{\"cipher\":\"aes-128-ctr\",\"cipherparams\":{\"iv\":\"1f34e7bfdaee4b0778ecea4c8d12a543\"},\"ciphertext\":\"4f6cee88b4776f4f6f8eedf3da11c6a13542aa4bb65d46a5c1bc44c100a96f54\",\"kdf\":\"scrypt\",\"kdfparams\":{\"salt\":\"d931e0ea13032fd70060e40054c5a76c0571f4d840ec91eeda1bf68bdcad84db\",\"n\":1,\"dklen\":32,\"p\":1,\"r\":8},\"mac\":\"06c7897e3ff04245bf4f0765d8b6a8482c1c9981cb46ae88f636f9c83cd0b891\"},\"x-ethers\":{\"client\":\"ethers.js\",\"gethFilename\":\"UTC--2020-05-15T09-03-13.0Z--1245e5b64d785b25057f7438f715f4aa5d965733\",\"mnemonicCounter\":\"99b7f5b6897dcfe22fc7aa00d8e3cf5e\",\"mnemonicCiphertext\":\"6e7c1d38f162e54050b125f1f51b43ca\",\"path\":\"m/44'/60'/0'/0/0\",\"version\":\"0.1\"}}"
+    "encryptedJson": "{\"address\":\"e0a71284ef59483795053266cb796b65e48b5124\",\"id\":\"04c746c3-fbef-453a-8c63-5e915021f57a\",\"version\":3,\"Crypto\":{\"cipher\":\"aes-128-ctr\",\"cipherparams\":{\"iv\":\"0f6963939595d04cb27a4d4abe689e32\"},\"ciphertext\":\"c80c8ca9acb96cf2f87279fef71508a06d4cf166e46e06a8beecd1420f2f525f\",\"kdf\":\"scrypt\",\"kdfparams\":{\"salt\":\"bf52c3386a9235e74a075c533ec1febd6e9221b57d649a2e156775fce984a58e\",\"n\":1,\"dklen\":32,\"p\":1,\"r\":8},\"mac\":\"5014d1d53e9294028eb808fbc9dd36394ebec22381946724111b9ee5ab46fd06\"}}"
   },
   "forms": [
     {
@@ -26,7 +26,7 @@
           "template": {
             "type": "EMBEDDED_RENDERER",
             "name": "CHAFTA_COO",
-            "url": "https://generic-templates.tradetrust.io"
+            "url": "https://deploy-preview-22--generic-templates.netlify.app"
           },
           "proof": {
             "type": "OpenAttestationProofMethod",
@@ -68,7 +68,13 @@
           },
           "status": "issued",
           "isPreferential": true,
-          "freeTradeAgreement": "CHAFTA"
+          "freeTradeAgreement": "CHAFTA",
+          "supplyChainConsignment": {
+            "loadingBaseportLocation": {
+              "iD": "DEFAULT_BASEPORT_ID",
+              "name": "DEFAULT_BASEPORT_LOCATION"
+            }
+          }
         }
       },
       "schema": {
@@ -450,7 +456,7 @@
       "extension": "tt"
     },
     {
-      "name": "Invoice (IMDA)",
+      "name": "Invoice",
       "type": "VERIFIABLE_DOCUMENT",
       "defaults": {
         "version": "https://schema.openattestation.com/3.0/schema.json",
@@ -470,7 +476,7 @@
           "template": {
             "type": "EMBEDDED_RENDERER",
             "name": "INVOICE",
-            "url": "https://generic-templates.tradetrust.io"
+            "url": "https://deploy-preview-22--generic-templates.netlify.app"
           },
           "proof": {
             "type": "OpenAttestationProofMethod",
@@ -620,187 +626,14 @@
       }
     },
     {
-      "name": "Invoice-DID (IMDA)",
-      "type": "VERIFIABLE_DOCUMENT",
-      "defaults": {
-        "version": "https://schema.openattestation.com/3.0/schema.json",
-        "@context": [
-          "https://www.w3.org/2018/credentials/v1",
-          "https://schemata.openattestation.com/io/tradetrust/Invoice/1.0/invoice-context.json",
-          "https://schemata.openattestation.com/com/openattestation/1.0/OpenAttestation.v3.json"
-        ],
-        "type": ["VerifiableCredential", "OpenAttestationCredential"],
-        "issuanceDate": "2010-01-01T19:23:24Z",
-        "issuer": {
-          "id": "https://example.com",
-          "name": "DEMO DID",
-          "type": "OpenAttestationIssuer"
-        },
-        "openAttestationMetadata": {
-          "template": {
-            "type": "EMBEDDED_RENDERER",
-            "name": "INVOICE",
-            "url": "https://generic-templates.tradetrust.io"
-          },
-          "proof": {
-            "type": "OpenAttestationProofMethod",
-            "method": "DID",
-            "value": "did:ethr:0x1245e5b64d785b25057f7438f715f4aa5d965733",
-            "revocation": {
-              "type": "NONE"
-            }
-          },
-          "identityProof": {
-            "type": "DNS-DID",
-            "identifier": "demo-tradetrust.openattestation.com"
-          }
-        },
-
-        "credentialSubject": {}
-      },
-      "schema": {
-        "type": "object",
-        "properties": {
-          "credentialSubject": {
-            "type": "object",
-            "properties": {
-              "id": {
-                "type": "string",
-                "title": "Invoice ID"
-              },
-              "date": {
-                "type": "string",
-                "title": "Date"
-              },
-              "customerId": {
-                "type": "string",
-                "title": "Customer ID"
-              },
-              "terms": {
-                "type": "string",
-                "title": "Terms"
-              },
-              "billFrom": {
-                "type": "object",
-                "title": "Bill From",
-                "properties": {
-                  "name": {
-                    "type": "string",
-                    "title": "Name"
-                  },
-                  "streetAddress": {
-                    "type": "string",
-                    "title": "Street Address"
-                  },
-                  "city": {
-                    "type": "string",
-                    "title": "City"
-                  },
-                  "postalCode": {
-                    "type": "string",
-                    "title": "Postal Code"
-                  },
-                  "phoneNumber": {
-                    "type": "string",
-                    "title": "Phone Number"
-                  }
-                }
-              },
-              "billTo": {
-                "type": "object",
-                "title": "Bill To",
-                "properties": {
-                  "name": {
-                    "type": "string",
-                    "title": "Name"
-                  },
-                  "email": {
-                    "type": "string",
-                    "title": "Email"
-                  },
-                  "company": {
-                    "type": "object",
-                    "title": "Bill To Company",
-                    "properties": {
-                      "name": {
-                        "type": "string",
-                        "title": "Name"
-                      },
-                      "streetAddress": {
-                        "type": "string",
-                        "title": "Street Address"
-                      },
-                      "city": {
-                        "type": "string",
-                        "title": "City"
-                      },
-                      "postalCode": {
-                        "type": "string",
-                        "title": "Postal Code"
-                      },
-                      "phoneNumber": {
-                        "type": "string",
-                        "title": "Phone Number"
-                      }
-                    }
-                  }
-                }
-              },
-              "billableItems": {
-                "type": "array",
-                "title": "Billable Items",
-                "items": {
-                  "type": "object",
-                  "properties": {
-                    "description": {
-                      "type": "string",
-                      "title": "Description"
-                    },
-                    "quantity": {
-                      "type": "string",
-                      "title": "Quantity"
-                    },
-                    "unitPrice": {
-                      "type": "string",
-                      "title": "Unit Price"
-                    },
-                    "amount": {
-                      "type": "string",
-                      "title": "Amount"
-                    }
-                  }
-                }
-              },
-              "subtotal": {
-                "type": "string",
-                "title": "Subtotal"
-              },
-              "tax": {
-                "type": "string",
-                "title": "Tax (%)"
-              },
-              "taxTotal": {
-                "type": "string",
-                "title": "Tax Total"
-              },
-              "total": {
-                "type": "string",
-                "title": "Total"
-              }
-            }
-          }
-        }
-      }
-    },
-    {
       "name": "Bill of Lading",
       "type": "TRANSFERABLE_RECORD",
       "defaults": {
         "version": "https://schema.openattestation.com/3.0/schema.json",
         "@context": [
           "https://www.w3.org/2018/credentials/v1",
-          "https://schemata.openattestation.com/com/openattestation/1.0/OpenAttestation.v3.json",
-          "https://schemata.openattestation.com/io/tradetrust/bill-of-lading/1.0/bill-of-lading-context.json"
+          "https://schemata.openattestation.com/io/tradetrust/bill-of-lading/1.0/bill-of-lading-context.json",
+          "https://schemata.openattestation.com/com/openattestation/1.0/OpenAttestation.v3.json"
         ],
         "type": ["VerifiableCredential", "OpenAttestationCredential"],
         "issuanceDate": "2010-01-01T19:23:24Z",

@@ -2,7 +2,8 @@ import { render, screen } from "@testing-library/react";
 import { RevokeContainer } from "./RevokeContainer";
 import { BrowserRouter } from "react-router-dom";
 import { useConfigContext } from "../../common/context/config";
-import sampleConfig from "../../test/fixtures/sample-config-ropsten.json";
+
+import sampleConfig from "../../test/fixtures/v2/config/ropsten/sample-config-ropsten.json";
 
 jest.mock("../../common/context/config");
 jest.mock("react-router-dom", () => ({

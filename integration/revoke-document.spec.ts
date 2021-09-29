@@ -1,10 +1,8 @@
 import { Selector } from "testcafe";
-import { enterPassword, loadConfigFile } from "./helper";
+import { enterPassword, loadConfigFile, configLocal, documentRevoked } from "./helper";
 
 fixture("Revoke flow").page`http://localhost:3000`;
 
-const Config = "./../src/test/fixtures/sample-config-local.json";
-const revokableDocument = "./../src/test/fixtures/wrapped-document-local-revokable.json";
 const ProcessDocumentTitle = Selector("[data-testid='process-document-title']");
 const RevokeTitle = Selector("[data-testid='revoke-title']");
 const WalletDecryptionTitle = Selector("[data-testid='wallet-decryption-title']");
@@ -13,7 +11,7 @@ const ProgressBar = Selector("[data-testid='progress-bar']");
 
 test("should revoke a document on local blockchain correctly", async (t) => {
   // Upload config file
-  await loadConfigFile(Config);
+  await loadConfigFile(configLocal);
   await t.expect(WalletDecryptionTitle.textContent).contains("Create and Revoke Document");
   await t.expect(Selector("[data-testid='login-title']").textContent).contains("Login");
 
@@ -27,12 +25,12 @@ test("should revoke a document on local blockchain correctly", async (t) => {
   await t.expect(RevokeTitle.textContent).contains("Upload Document");
 
   // Upload a file
-  await t.setFilesToUpload("input[type=file][data-testid=revoke-document-drop-zone]", [revokableDocument]);
+  await t.setFilesToUpload("input[type=file][data-testid=revoke-document-drop-zone]", [documentRevoked]);
 
   // Click back button to test back flow and upload file again
   await t.click(Selector("[data-testid='back-revoke-button']"));
   await t.expect(RevokeTitle.textContent).contains("Upload Document");
-  await t.setFilesToUpload("input[type=file][data-testid=revoke-document-drop-zone]", [revokableDocument]);
+  await t.setFilesToUpload("input[type=file][data-testid=revoke-document-drop-zone]", [documentRevoked]);
 
   // Revoke Document
   await t.click(Selector("[data-testid='revoke-button']"));

@@ -1,16 +1,10 @@
 import { Selector } from "testcafe";
-import { enterPassword, loadConfigFile } from "./helper";
+import { enterPassword, loadConfigFile, configLocal, configLocalV3, dataFileCsvCoo, dataFileCsvCooV3 } from "./helper";
 import { join } from "path";
 import { homedir } from "os";
 import { existsSync, readFileSync, unlinkSync } from "fs";
 
 fixture("Data upload").page`http://localhost:3000`;
-
-// Data files
-const V2ConfigurationFile = "./../src/test/fixtures/sample-config-local.json";
-const V2DataFileCsv = "./../src/test/fixtures/sample-data-file-coo.csv";
-const V3ConfigurationFile = "./../src/test/fixtures/sample-config-local-v3.json";
-const V3DataFileCsv = "./../src/test/fixtures/sample-data-file-coo-v3.csv";
 
 // Template selector
 const Button = Selector("button");
@@ -54,7 +48,7 @@ const deleteDownloadFile = async (filePath: string): Promise<void> => {
 
 test("should upload populate data fields correctly for version 2 document", async (t) => {
   // Upload config file
-  await loadConfigFile(V2ConfigurationFile);
+  await loadConfigFile(configLocal);
   await t.expect(WalletDecryptionTitle.textContent).contains("Create and Revoke Document");
 
   // Login to step 1
@@ -83,7 +77,7 @@ test("should upload populate data fields correctly for version 2 document", asyn
   await t.expect(jsonFileContent.data).contains({ iD: "", issueDateTime: "" });
   await deleteDownloadFile(jsonFilePath);
   // Upload data file
-  await t.setFilesToUpload("input[type=file][data-testid=config-file-drop-zone]", [V2DataFileCsv]);
+  await t.setFilesToUpload("input[type=file][data-testid=config-file-drop-zone]", [dataFileCsvCoo]);
 
   // Validated the content is overwritten by the data file
   await t.expect(documentNameSelect.innerText).eql("COO-(ChAFTA)-2");
@@ -101,7 +95,7 @@ test("should upload populate data fields correctly for version 2 document", asyn
 
 test("should upload populate data fields correctly for version 3 document", async (t) => {
   // Upload config file
-  await loadConfigFile(V3ConfigurationFile);
+  await loadConfigFile(configLocalV3);
   await t.expect(WalletDecryptionTitle.textContent).contains("Create and Revoke Document");
 
   // Login to step 1
@@ -131,7 +125,7 @@ test("should upload populate data fields correctly for version 3 document", asyn
   await deleteDownloadFile(jsonFilePath);
 
   // Upload data file
-  await t.setFilesToUpload("input[type=file][data-testid=config-file-drop-zone]", [V3DataFileCsv]);
+  await t.setFilesToUpload("input[type=file][data-testid=config-file-drop-zone]", [dataFileCsvCooV3]);
 
   // Validated the content is overwritten by the data file
   await t.expect(documentNameSelect.innerText).eql("Certificate-of-Origin-(ChAFTA)-2");

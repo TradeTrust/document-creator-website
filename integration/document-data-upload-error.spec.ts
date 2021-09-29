@@ -1,12 +1,9 @@
 import { Selector } from "testcafe";
-import { enterPassword, loadConfigFile } from "./helper";
+import { enterPassword, loadConfigFile, configLocal, dataFileJsonEblMissingFields } from "./helper";
 
 fixture("Data upload error").page`http://localhost:3000`;
 
-const Config = "./../src/test/fixtures/sample-config-local.json";
-const DataFileEblError = "./../src/test/fixtures/sample-data-file-ebl-error-missing-fields.json";
 const FillFormTitle = Selector("[data-testid='fill-form-title']");
-
 const WalletDecryptionTitle = Selector("[data-testid='wallet-decryption-title']");
 const FormSelectionTitle = Selector("[data-testid='form-selection-title']");
 const ProgressBar = Selector("[data-testid='progress-bar']");
@@ -17,7 +14,7 @@ const ErrorItem2 = Selector("[data-testid='form-error-banner'] li").nth(1);
 
 test("should show validation error messages correctly", async (t) => {
   // Upload config file
-  await loadConfigFile(Config);
+  await loadConfigFile(configLocal);
   await t.expect(WalletDecryptionTitle.textContent).contains("Create and Revoke Document");
 
   // Login to step 1
@@ -31,7 +28,7 @@ test("should show validation error messages correctly", async (t) => {
   await t.expect(ProgressBar.textContent).contains("2");
 
   // Upload data file
-  await t.setFilesToUpload("input[type=file][data-testid=config-file-drop-zone]", [DataFileEblError]);
+  await t.setFilesToUpload("input[type=file][data-testid=config-file-drop-zone]", [dataFileJsonEblMissingFields]);
 
   // Assert validation error messages
   await t.expect(ErrorItem1.textContent).contains("must have required property 'blNumber'");

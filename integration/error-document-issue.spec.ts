@@ -1,9 +1,8 @@
 import { Selector } from "testcafe";
-import { enterPassword, loadConfigFile } from "./helper";
+import { enterPassword, loadConfigFile, configLocalErrorDocumentIssue } from "./helper";
 
 fixture("Error document issue").page`http://localhost:3000`;
 
-const ConfigFailPublishDocument = "./../src/test/fixtures/sample-config-error-document-issue.json";
 const ProcessDocumentTitle = Selector("[data-testid='process-document-title']");
 const FormSelectionTitle = Selector("[data-testid='form-selection-title']");
 const WalletDecryptionTitle = Selector("[data-testid='wallet-decryption-title']");
@@ -13,7 +12,7 @@ const ProgressBar = Selector("[data-testid='progress-bar']");
 
 test("should show failed published document(s) errors", async (t) => {
   // Upload config file
-  await loadConfigFile(ConfigFailPublishDocument);
+  await loadConfigFile(configLocalErrorDocumentIssue);
   await t.expect(WalletDecryptionTitle.textContent).contains("Create and Revoke Document");
 
   // Login to step 1

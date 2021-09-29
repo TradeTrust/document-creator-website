@@ -1,12 +1,7 @@
-import { Selector, ClientFunction } from "testcafe";
-import { enterPassword, loadConfigFile } from "./helper";
+import { Selector } from "testcafe";
+import { enterPassword, loadConfigFile, configLocal, dataFileJsonCoo, dataFileJsonEbl, dataFileCsvEbl } from "./helper";
 
 fixture("Happy flow").page`http://localhost:3000`;
-
-const Config = "./../src/test/fixtures/sample-config-local.json";
-const DataFileCoo = "./../src/test/fixtures/sample-data-file-coo.json";
-const DataFileEbl = "./../src/test/fixtures/sample-data-file-ebl.json";
-const DataFileCsvEbl = "./../src/test/fixtures/sample-data-file-ebl.csv";
 
 const FillFormTitle = Selector("[data-testid='fill-form-title']");
 const FormSelectionTitle = Selector("[data-testid='form-selection-title']");
@@ -25,7 +20,7 @@ const EblDocumentNumberInput = Selector("[data-testid='document-number-input']")
 
 test("should issue the documents on local blockchain correctly", async (t) => {
   // Upload config file
-  await loadConfigFile(Config);
+  await loadConfigFile(configLocal);
   await t.expect(WalletDecryptionTitle.textContent).contains("Create and Revoke Document");
   await t.expect(Selector("[data-testid='login-title']").textContent).contains("Login");
 
@@ -40,7 +35,7 @@ test("should issue the documents on local blockchain correctly", async (t) => {
   await t.expect(ProgressBar.textContent).contains("2");
 
   // Upload data file
-  await t.setFilesToUpload("input[type=file][data-testid=config-file-drop-zone]", [DataFileCoo]);
+  await t.setFilesToUpload("input[type=file][data-testid=config-file-drop-zone]", [dataFileJsonCoo]);
 
   // Validated the content is overwritten by the data file
   await t.expect(FormIdField.value).eql("wfa.org.au:coo:WBC208897");
@@ -69,7 +64,7 @@ test("should issue the documents on local blockchain correctly", async (t) => {
   await t.typeText(EblNumberField, "MY-BL-NUMBER");
 
   // Test data upload json file
-  await t.setFilesToUpload("input[type=file][data-testid=config-file-drop-zone]", [DataFileEbl]);
+  await t.setFilesToUpload("input[type=file][data-testid=config-file-drop-zone]", [dataFileJsonEbl]);
 
   // Validate the content is overwritten by the data file
   await t.expect(EblFileNameField.value).eql("bill-123");
@@ -79,7 +74,7 @@ test("should issue the documents on local blockchain correctly", async (t) => {
   await t.expect(EblNumberField.value).eql("123");
 
   // Test data upload csv file
-  await t.setFilesToUpload("input[type=file][data-testid=config-file-drop-zone]", [DataFileCsvEbl]);
+  await t.setFilesToUpload("input[type=file][data-testid=config-file-drop-zone]", [dataFileCsvEbl]);
 
   // Validate the content is overwritten by the data file
   await t.expect(EblFileNameField.value).eql("bill-<blNumber 1>");
