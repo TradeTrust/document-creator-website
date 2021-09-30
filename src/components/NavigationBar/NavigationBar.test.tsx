@@ -1,9 +1,10 @@
 import { render, screen } from "@testing-library/react";
 import React from "react";
 import { BrowserRouter, Route } from "react-router-dom";
-import rinkebyConfig from "../../test/fixtures/sample-config-rinkeby.json";
-import ropstenConfig from "../../test/fixtures/sample-config-ropsten.json";
 import { NavigationBar } from "./NavigationBar";
+
+import configRinkeby from "../../test/fixtures/v2/config/rinkeby/sample-config-rinkeby.json";
+import configRopsten from "../../test/fixtures/v2/config/ropsten/sample-config-ropsten.json";
 
 const mockMainnetConfig = {
   network: "homestead",
@@ -49,7 +50,7 @@ describe("navigationBar", () => {
   });
 
   it("should render href to rinkeby verify documents page with rinkeby config", () => {
-    window.localStorage.setItem("CONFIG_FILE", JSON.stringify(rinkebyConfig));
+    window.localStorage.setItem("CONFIG_FILE", JSON.stringify(configRinkeby));
     render(
       <BrowserRouter>
         <Route path="/">
@@ -64,7 +65,7 @@ describe("navigationBar", () => {
   });
 
   it("should render href to ropsten verify documents page with ropsten config", () => {
-    window.localStorage.setItem("CONFIG_FILE", JSON.stringify(ropstenConfig));
+    window.localStorage.setItem("CONFIG_FILE", JSON.stringify(configRopsten));
     render(
       <BrowserRouter>
         <Route path="/">

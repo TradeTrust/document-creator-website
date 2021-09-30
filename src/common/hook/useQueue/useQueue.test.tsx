@@ -3,15 +3,16 @@ import { getDefaultProvider, Wallet } from "ethers";
 import { QueueState, QueueType } from "../../../constants/QueueState";
 import { publishJob } from "../../../services/publishing";
 import { revokeDocumentJob } from "../../../services/revoking";
-import sampleConfig from "../../../test/fixtures/sample-config-ropsten.json";
-import samplePublishJobs from "../../../test/fixtures/sample-jobs.json";
-import sampleRevokeJobs from "../../../test/fixtures/sample-revoke-jobs.json";
 import { Config, FormEntry } from "../../../types";
 import { uploadToStorage } from "../../API/storageAPI";
 import { useQueue } from "./useQueue";
 import { getPublishingJobs } from "./utils/publish";
 import { getRevokingJobs } from "./utils/revoke";
-import sampleWrappedDocument from "../../../test/fixtures/sample-wrapped-document.json";
+
+import samplePublishJobs from "../../../test/fixtures/jobs-publish.json";
+import sampleRevokeJobs from "../../../test/fixtures/jobs-revoke.json";
+import sampleConfigRopsten from "../../../test/fixtures/v2/config/ropsten/sample-config-ropsten.json";
+import sampleWrappedDocument from "../../../test/fixtures/v2/wrapped/sample-wrapped-document.json";
 
 jest.mock("../../../services/publishing");
 jest.mock("./utils/publish");
@@ -26,7 +27,7 @@ const mockRevokeJob = revokeDocumentJob as jest.Mock;
 const mockGetRevokeJobs = getRevokingJobs as jest.Mock;
 
 const config = {
-  ...sampleConfig,
+  ...sampleConfigRopsten,
   wallet: Wallet.createRandom().connect(getDefaultProvider("ropsten")),
 } as Config;
 

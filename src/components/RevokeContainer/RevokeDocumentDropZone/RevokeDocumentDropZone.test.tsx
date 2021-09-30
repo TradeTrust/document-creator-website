@@ -1,9 +1,10 @@
 import { render, screen, act, fireEvent, waitFor } from "@testing-library/react";
 import { BrowserRouter } from "react-router-dom";
 import { RevokeDocumentDropZone } from "./RevokeDocumentDropZone";
-import sampleRevokableDocument from "../../../test/fixtures/sample-wrapped-document.json";
 import { DocumentUploadState } from "../../../constants/DocumentUploadState";
 import { createFileTransferEvent } from "../../../utils/utils";
+
+import sampleRevokableDocument from "../../../test/fixtures/v2/wrapped/sample-wrapped-document.json";
 
 describe("RevokeDocumentDropZone", () => {
   it("should fire setRevokeDocument, setFileName and setDocumentUploadState when a file is dropped", async () => {

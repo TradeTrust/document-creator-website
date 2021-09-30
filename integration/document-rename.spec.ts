@@ -1,9 +1,7 @@
 import { Selector } from "testcafe";
-import { enterPassword, loadConfigFile } from "./helper";
+import { enterPassword, loadConfigFile, configLocal } from "./helper";
 
 fixture("Document rename").page`http://localhost:3000`;
-
-const Config = "./../src/test/fixtures/sample-config-local.json";
 
 const FillFormTitle = Selector("[data-testid='fill-form-title']");
 const FormSelectionTitle = Selector("[data-testid='form-selection-title']");
@@ -18,7 +16,7 @@ const documentNameSelect = Selector("[data-testid='document-name-select'");
 
 test("should rename document filename correctly", async (t) => {
   // Upload config file
-  await loadConfigFile(Config);
+  await loadConfigFile(configLocal);
   await t.expect(WalletDecryptionTitle.textContent).contains("Create and Revoke Document");
   await t.expect(Selector("[data-testid='login-title']").textContent).contains("Login");
 

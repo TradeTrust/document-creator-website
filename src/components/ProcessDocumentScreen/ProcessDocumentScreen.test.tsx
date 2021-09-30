@@ -1,13 +1,14 @@
 import { ProcessDocumentScreen } from "./ProcessDocumentScreen";
-import sampleConfig from "../../test/fixtures/sample-config-ropsten.json";
 import { getDefaultProvider, Wallet } from "ethers";
 import { Config, FormEntry } from "../../types";
-import sampleWrappedDocument from "../../test/fixtures/sample-wrapped-document.json";
 import { useQueue } from "../../common/hook/useQueue";
 import { QueueState, QueueType } from "../../constants/QueueState";
 import { render, screen, act, fireEvent, waitFor } from "@testing-library/react";
 import FileSaver from "file-saver";
 import { MemoryRouter } from "react-router";
+
+import sampleConfig from "../../test/fixtures/v2/config/ropsten/sample-config-ropsten.json";
+import sampleWrappedDocument from "../../test/fixtures/v2/wrapped/sample-wrapped-document.json";
 
 jest.mock("../../common/hook/useQueue");
 jest.mock("file-saver", () => ({ saveAs: jest.fn() }));

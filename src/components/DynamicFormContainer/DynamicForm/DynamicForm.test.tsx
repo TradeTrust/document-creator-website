@@ -1,8 +1,9 @@
 import { render, screen } from "@testing-library/react";
 import React from "react";
-import sampleConfig from "../../../test/fixtures/sample-config-ropsten.json";
 import { FormTemplate, FormType } from "../../../types";
 import { DynamicForm } from "./DynamicForm";
+
+import sampleConfig from "../../../test/fixtures/v2/config/ropsten/sample-config-ropsten.json";
 
 const form = sampleConfig.forms[0] as FormTemplate;
 

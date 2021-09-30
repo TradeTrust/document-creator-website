@@ -1,8 +1,9 @@
 import { render, screen, fireEvent } from "@testing-library/react";
 import { RevokeDocumentTileArea } from "./RevokeDocumentTileArea";
-import sampleRevokableDocument from "../../../test/fixtures/sample-wrapped-document.json";
 import { BrowserRouter } from "react-router-dom";
 import { DocumentUploadState } from "../../../constants/DocumentUploadState";
+
+import sampleRevokableDocument from "../../../test/fixtures/v2/wrapped/sample-wrapped-document.json";
 
 describe("RevokeDocumentTileArea", () => {
   it("should render correctly given the revoke documents", () => {

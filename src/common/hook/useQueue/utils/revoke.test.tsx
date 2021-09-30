@@ -1,8 +1,8 @@
 import { getRevokingJobs, getRevokeAddress } from "./revoke";
-import sampleWrappedDocument from "../../../../test/fixtures/sample-wrapped-document.json";
-import sampleWrappedCertificate from "../../../../test/fixtures/sample-wrapped-certificate.json";
-import sampleV2DidDocument from "../../../../test/fixtures/sample-v2-did-wrapped.json";
-import sampleV3DidDocument from "../../../../test/fixtures/sample-v3-did-wrapped.json";
+import sampleWrappedDocument from "../../../../test/fixtures/v2/wrapped/sample-wrapped-document.json";
+import sampleWrappedCertificate from "../../../../test/fixtures/v2/wrapped/sample-wrapped-certificate.json";
+import sampleV2DidDocument from "../../../../test/fixtures/v2/did/sample-v2-did-wrapped.json";
+import sampleV3DidDocument from "../../../../test/fixtures/v3/did/sample-v3-did-wrapped.json";
 
 describe("getRevokingJobs", () => {
   it("should return an array with the revoking jobs", async () => {

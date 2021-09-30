@@ -1,10 +1,8 @@
 import { Selector } from "testcafe";
-import { enterPassword, loadConfigFile } from "./helper";
+import { enterPassword, loadConfigFile, configLocal, dataFileJsonCoo } from "./helper";
 
 fixture("Document preview").page`http://localhost:3000`;
 
-const Config = "./../src/test/fixtures/sample-config-local.json";
-const DataFile = "./../src/test/fixtures/sample-data-file-coo.json";
 const FillFormTitle = Selector("[data-testid='fill-form-title']");
 const WalletDecryptionTitle = Selector("[data-testid='wallet-decryption-title']");
 const FormSelectionTitle = Selector("[data-testid='form-selection-title']");
@@ -16,7 +14,7 @@ const IframeRoot = Selector("#root");
 
 test("should be able to preview form with data", async (t) => {
   // Upload config file
-  await loadConfigFile(Config);
+  await loadConfigFile(configLocal);
   await t.expect(WalletDecryptionTitle.textContent).contains("Create and Revoke Document");
 
   // Login to step 1
@@ -30,7 +28,7 @@ test("should be able to preview form with data", async (t) => {
   await t.expect(ProgressBar.textContent).contains("2");
 
   // Upload data file
-  await t.setFilesToUpload("input[type=file][data-testid=config-file-drop-zone]", [DataFile]);
+  await t.setFilesToUpload("input[type=file][data-testid=config-file-drop-zone]", [dataFileJsonCoo]);
 
   // Set preview mode to true
   await t.click(Selector("[data-testid='toggle-switch-label']"));

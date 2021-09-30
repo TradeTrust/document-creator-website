@@ -1,10 +1,11 @@
 import { fireEvent, render, screen } from "@testing-library/react";
 import { saveAs } from "file-saver";
 import { useConfigContext } from "../../../common/context/config";
-import sampleConfig from "../../../test/fixtures/sample-config-ropsten.json";
 import { WrappedDocument } from "../../../types";
 import { ProcessedDocumentTag } from "./ProcessedDocumentTag";
 import { QueueType } from "../../../constants/QueueState";
+
+import sampleConfig from "../../../test/fixtures/v2/config/ropsten/sample-config-ropsten.json";
 
 jest.mock("file-saver");
 jest.mock("../../../common/context/config");

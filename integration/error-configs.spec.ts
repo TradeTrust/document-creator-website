@@ -1,11 +1,7 @@
 import { Selector } from "testcafe";
-import { loadConfigFile } from "./helper";
+import { loadConfigFile, configLocal, configLocalWalletless, configLocalEmpty } from "./helper";
 
 fixture("Error configs").page`http://localhost:3000`;
-
-const Config = "./../src/test/fixtures/sample-config-local.json";
-const ConfigWithError = "./../src/test/fixtures/sample-config-error-walletless.json";
-const ConfigErrorFile = "./../src/test/fixtures/sample-config-error-empty.json";
 
 const ConfigDropzoneTitle = Selector("[data-testid='config-dropzone-title']");
 const WalletDecryptionTitle = Selector("[data-testid='wallet-decryption-title']");
@@ -15,15 +11,15 @@ const ConfigError = Selector("[data-testid='config-error']");
 
 test("should show correct error messages on various malformed configs", async (t) => {
   // Upload config file (without wallet)
-  await loadConfigFile(ConfigWithError);
+  await loadConfigFile(configLocalWalletless);
   await t.expect(ConfigError.textContent).contains("Config is malformed");
 
   // Upload config file (invalid config file)
-  await loadConfigFile(ConfigErrorFile);
+  await loadConfigFile(configLocalEmpty);
   await t.expect(ErrorCantReadFile.textContent).contains("Document cannot be read");
 
   // Upload config file (working config file)
-  await loadConfigFile(Config);
+  await loadConfigFile(configLocal);
   await t.expect(WalletDecryptionTitle.textContent).contains("Create and Revoke Document");
   await t.expect(Selector("[data-testid='login-title']").textContent).contains("Login");
   await t.click(ButtonReset);

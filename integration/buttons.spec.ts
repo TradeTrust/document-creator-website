@@ -1,9 +1,7 @@
 import { Selector } from "testcafe";
-import { enterPassword, loadConfigFile } from "./helper";
+import { enterPassword, loadConfigFile, configLocal } from "./helper";
 
 fixture("Buttons").page`http://localhost:3000`;
-
-const Config = "./../src/test/fixtures/sample-config-local.json";
 
 const WalletDecryptionTitle = Selector("[data-testid='wallet-decryption-title']");
 const FormSelectionTitle = Selector("[data-testid='form-selection-title']");
@@ -14,7 +12,7 @@ const ProgressBar = Selector("[data-testid='progress-bar']");
 
 test("should lead to pages correctly", async (t) => {
   // Upload config file
-  await loadConfigFile(Config);
+  await loadConfigFile(configLocal);
   await t.expect(WalletDecryptionTitle.textContent).contains("Create and Revoke Document");
   await t.expect(Selector("[data-testid='login-title']").textContent).contains("Login");
 
