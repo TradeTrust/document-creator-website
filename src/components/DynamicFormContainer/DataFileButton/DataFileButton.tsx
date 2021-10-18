@@ -7,6 +7,7 @@ import { getLogger } from "../../../utils/logger";
 import { FormError, FormErrorBanner } from "./../FormErrorBanner";
 import { Draft04 as Core, JSONSchema } from "json-schema-library";
 import { ToolTip } from "../../UI/ToolTip";
+import { DropZone } from "../../UI/DropZone";
 
 const { stack } = getLogger("DataFileButton");
 
@@ -100,10 +101,20 @@ export const DataFileButton: FunctionComponent<DataFileButton> = ({ onDataFile, 
       ]);
     }
   };
-  const { getRootProps, getInputProps } = useDropzone({ onDrop, multiple: false });
+  const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop, multiple: false });
 
   const core = new Core();
   const jsonTemplate = core.getTemplate({}, schema);
+
+  let customDropZoneCss = "cursor-pointer p-8 rounded-xl border-dashed border-2";
+  customDropZoneCss += error ? ` bg-red-100` : ` bg-yellow-50`;
+  customDropZoneCss += error
+    ? isDragActive
+      ? ` bg-red-200`
+      : ` bg-red-100`
+    : isDragActive
+    ? ` bg-yellow-100`
+    : ` bg-yellow-50`;
 
   // TODO: when change to Tailwindcss v2 for ui Update please update the background color, or use a color that is closes to this color.
   return (
@@ -113,15 +124,17 @@ export const DataFileButton: FunctionComponent<DataFileButton> = ({ onDataFile, 
           <FormErrorBanner formErrorTitle="Uploaded data file format has errors." formError={dataFileError} />
         </div>
       )}
-      <div className="p-8 rounded-xl border-dashed border-2" style={{ backgroundColor: "#FFF7E2" }}>
-        <img className="mx-auto mb-8" src={"/upload-icon-dark.png"} />
-        <p className="text-center mb-4">{text.header}</p>
-        <div className="mb-4" data-testid="data-upload-zone" {...getRootProps()}>
-          <input data-testid="config-file-drop-zone" {...getInputProps()} />
-          <Button data-testid="data-upload-button" className="flex mx-auto bg-white text-cerulean hover:bg-cloud-100">
-            {text.buttonText}
-          </Button>
-        </div>
+      <div {...getRootProps()}>
+        <DropZone isDragActive={isDragActive} customDropZoneCss={customDropZoneCss}>
+          <img className="mx-auto mb-8" src={"/upload-icon-dark.png"} />
+          <p className="text-center mb-4">{text.header}</p>
+          <div className="mb-4" data-testid="data-upload-zone" {...getRootProps()}>
+            <input data-testid="config-file-drop-zone" {...getInputProps()} />
+            <Button data-testid="data-upload-button" className="flex mx-auto bg-white text-cerulean hover:bg-cloud-100">
+              {text.buttonText}
+            </Button>
+          </div>
+        </DropZone>
       </div>
       <div className="md:flex text-sm justify-between text-cerulean-200 mt-4 px-4">
         <div className="flex items-end mb-2 md:mb-0">
