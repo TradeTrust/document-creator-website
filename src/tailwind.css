@@ -87,7 +87,7 @@
       @apply hidden; /* https://github.com/rjsf-team/react-jsonschema-form/issues/1602 */
     }
 
-    input {
+    input:not([type="color"]) {
       @apply custom-input;
     }
   }

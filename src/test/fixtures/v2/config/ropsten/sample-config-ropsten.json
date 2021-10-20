@@ -46,6 +46,21 @@
             "type": "string",
             "title": "Issued Date & Time"
           },
+          "signature": {
+            "type": "string",
+            "title": "Test Signature"
+          },
+          "firstSignatoryAuthentication": {
+            "title": "Signatory Authentication",
+            "type": "object",
+            "properties": {
+              "signature": {
+                "type": "string",
+                "format": "data-url",
+                "title": "First Signatory"
+              }
+            }
+          },
           "supplyChainConsignment": {
             "title": "Supply Chain Consignment",
             "type": "object",
@@ -403,6 +418,17 @@
           }
         }
       },
+      "uiSchema": {
+        "firstSignatoryAuthentication": {
+          "signature": {
+            "ui:widget": "file",
+            "ui:options":{
+              "text": "Upload Signature",
+              "accept":".png, .jpeg, .jpg"
+            }
+          }
+        }
+      },
       "attachments": {
         "allow": true,
         "accept": ".pdf"
@@ -562,6 +588,10 @@
           "remarks": {
             "type": "string",
             "title": "Remarks"
+          },
+          "titleColor": {
+            "type": "string",
+            "title": "Title Color"
           }
         }
       },
@@ -571,6 +601,12 @@
       "uiSchema": {
         "remarks": {
           "ui:widget": "textarea"
+        },
+        "titleColor": {
+          "ui:widget": "color",
+          "ui:options": {
+            "emptyValue": "#e20808"
+          }
         }
       },
       "extension": "tt"

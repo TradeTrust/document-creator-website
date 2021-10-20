@@ -13,6 +13,8 @@ import {
   CustomArrayFieldTemplate,
   CustomTextareaWidget,
   CustomDropdownWidget,
+  CustomColorWidget,
+  CustomFileWidget,
 } from "./CustomTemplates";
 
 export interface DynamicFormProps {
@@ -116,6 +118,8 @@ export const DynamicForm: FunctionComponent<DynamicFormProps> = ({
   const widgets = {
     TextareaWidget: CustomTextareaWidget,
     SelectWidget: CustomDropdownWidget,
+    ColorWidget: CustomColorWidget,
+    FileWidget: CustomFileWidget,
   };
 
   return (
