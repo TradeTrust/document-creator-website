@@ -1,13 +1,12 @@
 import { Button } from "@govtechsg/tradetrust-ui-components";
 import Ajv from "ajv";
 import React, { FunctionComponent, useState } from "react";
-import { useDropzone } from "react-dropzone";
 import { readFileAsCsv, readFileAsJson, downloadCsvDataFile, downloadJsonDataFile } from "../../../common/utils";
 import { getLogger } from "../../../utils/logger";
 import { FormError, FormErrorBanner } from "./../FormErrorBanner";
 import { Draft04 as Core, JSONSchema } from "json-schema-library";
 import { ToolTip } from "../../UI/ToolTip";
-import { DropZone } from "../../UI/DropZone";
+import { StyledDropZone } from "../../UI/DropZone";
 
 const { stack } = getLogger("DataFileButton");
 
@@ -101,20 +100,12 @@ export const DataFileButton: FunctionComponent<DataFileButton> = ({ onDataFile, 
       ]);
     }
   };
-  const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop, multiple: false });
 
   const core = new Core();
   const jsonTemplate = core.getTemplate({}, schema);
 
-  let customDropZoneCss = "cursor-pointer p-8 rounded-xl border-dashed border-2";
-  customDropZoneCss += error ? ` bg-red-100` : ` bg-yellow-50`;
-  customDropZoneCss += error
-    ? isDragActive
-      ? ` bg-red-200`
-      : ` bg-red-100`
-    : isDragActive
-    ? ` bg-yellow-100`
-    : ` bg-yellow-50`;
+  const defaultStyle = "bg-yellow-50";
+  const activeStyle = "bg-yellow-100";
 
   // TODO: when change to Tailwindcss v2 for ui Update please update the background color, or use a color that is closes to this color.
   return (
@@ -124,18 +115,20 @@ export const DataFileButton: FunctionComponent<DataFileButton> = ({ onDataFile, 
           <FormErrorBanner formErrorTitle="Uploaded data file format has errors." formError={dataFileError} />
         </div>
       )}
-      <div {...getRootProps()}>
-        <DropZone isDragActive={isDragActive} customDropZoneCss={customDropZoneCss}>
-          <img className="mx-auto mb-8" src={"/upload-icon-dark.png"} />
-          <p className="text-center mb-4">{text.header}</p>
-          <div className="mb-4" data-testid="data-upload-zone" {...getRootProps()}>
-            <input data-testid="config-file-drop-zone" {...getInputProps()} />
-            <Button data-testid="data-upload-button" className="flex mx-auto bg-white text-cerulean hover:bg-cloud-100">
-              {text.buttonText}
-            </Button>
-          </div>
-        </DropZone>
-      </div>
+      <StyledDropZone
+        dropzoneOptions={{ onDrop, multiple: false }}
+        defaultStyle={defaultStyle}
+        activeStyle={activeStyle}
+      >
+        <img className="mx-auto mb-8" src={"/upload-icon-dark.png"} />
+        <p className="text-center mb-4">{text.header}</p>
+        <div className="mb-4" data-testid="data-upload-zone">
+          <Button data-testid="data-upload-button" className="flex mx-auto bg-white text-cerulean hover:bg-cloud-100">
+            {text.buttonText}
+          </Button>
+        </div>
+      </StyledDropZone>
+
       <div className="md:flex text-sm justify-between text-cerulean-200 mt-4 px-4">
         <div className="flex items-end mb-2 md:mb-0">
           <ToolTip toolTipText="JSON Schema is a lightweight data interchange format that generates clear, easy-to-understand documentation, making validation and testing easier. JSON Schema is used to describe the structure and validation constraints of JSON documents." />
