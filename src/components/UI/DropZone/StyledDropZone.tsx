@@ -24,10 +24,9 @@ export const StyledDropZone: FunctionComponent<DropZoneProps> = ({
 }) => {
   const { getInputProps, getRootProps, isDragActive, isDragAccept, isDragReject } = useDropzone(dropzoneOptions);
 
-  const style = useMemo(() => {
+  const dragStyle = useMemo(() => {
     return `
-      ${baseStyle}
-      ${isDragActive ? activeStyle : defaultStyle} 
+      ${isDragActive ? activeStyle : ""} 
       ${isDragAccept ? acceptStyle : ""} 
       ${isDragReject ? rejectStyle : ""} 
     `;
