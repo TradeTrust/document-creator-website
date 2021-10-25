@@ -34,7 +34,7 @@ export const StyledDropZone: FunctionComponent<DropZoneProps> = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isDragActive, isDragAccept, isDragReject]);
   return (
-    <div className={style} {...getRootProps()}>
+    <div className={style} data-testid="data-upload-zone" {...getRootProps()}>
       <input {...getInputProps()} data-testid={testId} />
       {children}
     </div>
