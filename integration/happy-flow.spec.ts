@@ -35,7 +35,7 @@ test("should issue the documents on local blockchain correctly", async (t) => {
   await t.expect(ProgressBar.textContent).contains("2");
 
   // Upload data file
-  await t.setFilesToUpload("input[type=file][data-testid=config-file-drop-zone]", [dataFileJsonCoo]);
+  await t.setFilesToUpload("input[type=file][data-testid=data-file-dropzone]", [dataFileJsonCoo]);
 
   // Validated the content is overwritten by the data file
   await t.expect(FormIdField.value).eql("wfa.org.au:coo:WBC208897");
