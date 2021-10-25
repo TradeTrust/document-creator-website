@@ -28,7 +28,7 @@ test("should show validation error messages correctly", async (t) => {
   await t.expect(ProgressBar.textContent).contains("2");
 
   // Upload data file
-  await t.setFilesToUpload("input[type=file][data-testid=config-file-drop-zone]", [dataFileJsonEblMissingFields]);
+  await t.setFilesToUpload("input[type=file][data-testid=data-file-dropzone]", [dataFileJsonEblMissingFields]);
 
   // Assert validation error messages
   await t.expect(ErrorItem1.textContent).contains("must have required property 'blNumber'");

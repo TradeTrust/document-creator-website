@@ -119,10 +119,11 @@ export const DataFileButton: FunctionComponent<DataFileButton> = ({ onDataFile, 
         dropzoneOptions={{ onDrop, multiple: false }}
         defaultStyle={defaultStyle}
         activeStyle={activeStyle}
+        testId={"data-file-dropzone"}
       >
         <img className="mx-auto mb-8" src={"/upload-icon-dark.png"} />
         <p className="text-center mb-4">{text.header}</p>
-        <div className="mb-4" data-testid="data-upload-zone">
+        <div className="mb-4">
           <Button data-testid="data-upload-button" className="flex mx-auto bg-white text-cerulean hover:bg-cloud-100">
             {text.buttonText}
           </Button>

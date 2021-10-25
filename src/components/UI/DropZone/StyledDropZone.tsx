@@ -8,6 +8,7 @@ interface DropZoneProps {
   rejectStyle?: string;
   children: React.ReactNode;
   dropzoneOptions: DropzoneOptions;
+  testId?: string;
 }
 
 const baseStyle = `cursor-pointer rounded-xl border-dashed border-2 border-cloud-100 items-center flex flex-col pt-16 pb-16 px-4 text-center`;
@@ -19,6 +20,7 @@ export const StyledDropZone: FunctionComponent<DropZoneProps> = ({
   acceptStyle,
   rejectStyle,
   dropzoneOptions,
+  testId,
 }) => {
   const { getInputProps, getRootProps, isDragActive, isDragAccept, isDragReject } = useDropzone(dropzoneOptions);
 
@@ -33,7 +35,7 @@ export const StyledDropZone: FunctionComponent<DropZoneProps> = ({
   }, [isDragActive, isDragAccept, isDragReject]);
   return (
     <div className={style} {...getRootProps()}>
-      <input {...getInputProps()} />
+      <input {...getInputProps()} data-testid={testId} />
       {children}
     </div>
   );
