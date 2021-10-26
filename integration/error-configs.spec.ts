@@ -6,8 +6,8 @@ fixture("Error configs").page`http://localhost:3000`;
 const ConfigDropzoneTitle = Selector("[data-testid='config-dropzone-title']");
 const WalletDecryptionTitle = Selector("[data-testid='wallet-decryption-title']");
 const ButtonReset = Selector("[data-testid='reset-button']");
-const ErrorCantReadFile = Selector("[data-testid='error-cannot-read-file']");
-const ConfigError = Selector("[data-testid='files-error']");
+const ErrorCantReadFile = Selector("[data-testid='file-error']");
+const ConfigError = Selector("[data-testid='file-error']");
 
 test("should show correct error messages on various malformed configs", async (t) => {
   // Upload config file (without wallet)
