@@ -36,7 +36,7 @@ describe("dataFileButton", () => {
   it("should fire onDataFile when a file is successfully read", async () => {
     render(<DataFileButton onDataFile={onDataFile} schema={{}} />);
 
-    const dropzone = screen.getByTestId("data-upload-zone");
+    const dropzone = screen.getByTestId("file-upload-zone");
     const file = new File([JSON.stringify({ foo: "bar" })], "sample.json", {
       type: "application/json",
     });
@@ -53,7 +53,7 @@ describe("dataFileButton", () => {
   it("should show error when a file cannot be read", async () => {
     render(<DataFileButton onDataFile={onDataFile} schema={{}} />);
 
-    const dropzone = screen.getByTestId("data-upload-zone");
+    const dropzone = screen.getByTestId("file-upload-zone");
     const file = new File(["RANDOM_BINARY_FILE"], "sample.json", {
       type: "application/json",
     });
@@ -70,7 +70,7 @@ describe("dataFileButton", () => {
   it("should validate against schema", async () => {
     render(<DataFileButton onDataFile={onDataFile} schema={mockSchema} />);
 
-    const dropzone = screen.getByTestId("data-upload-zone");
+    const dropzone = screen.getByTestId("file-upload-zone");
     const mockDataFileUpload = { data: { abc: "bar" } };
     const file = new File([JSON.stringify(mockDataFileUpload)], "sample.json", {
       type: "application/json",
@@ -88,7 +88,7 @@ describe("dataFileButton", () => {
   it("should display error when data file schema validation fails", async () => {
     render(<DataFileButton onDataFile={onDataFile} schema={mockSchema} />);
 
-    const dropzone = screen.getByTestId("data-upload-zone");
+    const dropzone = screen.getByTestId("file-upload-zone");
     const mockDataFileUpload = { data: { foo: "bar" } };
     const file = new File([JSON.stringify(mockDataFileUpload)], "sample.json", {
       type: "application/json",

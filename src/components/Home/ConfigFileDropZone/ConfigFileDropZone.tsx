@@ -1,11 +1,10 @@
 import { Button } from "@govtechsg/tradetrust-ui-components";
-import React, { FunctionComponent, useState } from "react";
-import { useDropzone } from "react-dropzone";
+import React, { FunctionComponent, useEffect, useState } from "react";
 import { readFileAsJson } from "../../../common/utils";
 import { ConfigFile } from "../../../types";
 import { getLogger } from "../../../utils/logger";
 import { ContentFrame } from "../../UI/ContentFrame";
-import { DropZone } from "../../UI/DropZone";
+import { StyledDropZone } from "../../UI/StyledDropZone";
 
 const { stack } = getLogger("ConfigFileDropZone");
 interface ConfigFileDropZone {
@@ -14,19 +13,36 @@ interface ConfigFileDropZone {
 }
 
 export const ConfigFileDropZone: FunctionComponent<ConfigFileDropZone> = ({ onConfigFile, errorMessage }) => {
-  const [error, setError] = useState(false);
-  const onDrop = async (files: File[]): Promise<void> => {
+  const [fileErrors, setFileErrors] = useState<Error[]>();
+
+  useEffect(() => {
+    if (errorMessage) {
+      const malformedError = new Error(errorMessage);
+      setFileErrors([malformedError]);
+    } else {
+      setFileErrors(undefined);
+    }
+  }, [errorMessage]);
+
+  const onDropAccepted = async (files: File[]): Promise<void> => {
     try {
       const file = files[0];
       const config = await readFileAsJson<ConfigFile>(file);
-      setError(false);
+      setFileErrors(undefined);
       onConfigFile(config);
     } catch (e) {
-      setError(true);
+      const readFileError = new Error("Document cannot be read. Please check that you have a valid document");
+      setFileErrors([readFileError]);
       stack(e);
     }
   };
-  const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop });
+
+  const defaultStyle = "bg-white";
+  const activeStyle = "bg-gray-300";
+  const dropzoneOptions = {
+    onDropAccepted,
+    maxFiles: 1,
+  };
 
   return (
     <>
@@ -34,39 +50,28 @@ export const ConfigFileDropZone: FunctionComponent<ConfigFileDropZone> = ({ onCo
         Create and Revoke Document
       </h2>
       <ContentFrame>
-        <div {...getRootProps()}>
-          <input data-testid="config-file-drop-zone" {...getInputProps()} />
-          <DropZone
-            isDragActive={isDragActive}
-            error={(errorMessage !== undefined && errorMessage.length > 0) || error}
+        <StyledDropZone
+          dropzoneOptions={dropzoneOptions}
+          defaultStyle={defaultStyle}
+          activeStyle={activeStyle}
+          fileErrors={fileErrors}
+          dropzoneIcon={"/dropzone-graphic.png"}
+        >
+          <h4 data-testid="home-description">Drag and drop your configuration file here</h4>
+          <p className="my-4">or</p>
+          <Button className="bg-cerulean text-white hover:bg-cerulean-500 border-gray-300 block mx-auto mb-5">
+            Select Document
+          </Button>
+          <a
+            onClick={(e) => e.stopPropagation()}
+            className="text-cerulean-200 font-bold mt-8"
+            href="https://docs.tradetrust.io/docs/document-creator/config-file/config-generator"
+            target="_blank"
+            rel="noopener noreferrer"
           >
-            <img className="mb-12" src={"/dropzone-graphic.png"} />
-            {error && (
-              <div className="max-w-lg text-rose font-bold text-lg" data-testid={"error-cannot-read-file"}>
-                Document cannot be read. Please check that you have a valid document
-              </div>
-            )}
-            {errorMessage && !error && (
-              <div className="max-w-lg text-rose font-bold text-lg" data-testid={"config-error"}>
-                {errorMessage}
-              </div>
-            )}
-            {!errorMessage && !error && (
-              <h4 data-testid="home-description">Drag and drop your configuration file here</h4>
-            )}
-            <p className="my-4">{errorMessage || error ? "Please try again." : "or"}</p>
-            <Button className="bg-cerulean text-white hover:bg-cerulean-500 border-gray-300">Select Document</Button>
-            <a
-              onClick={(e) => e.stopPropagation()}
-              className="text-cerulean-200 font-bold mt-8"
-              href="https://docs.tradetrust.io/docs/document-creator/config-file/config-generator"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Don’t have a config file? Learn how to create one
-            </a>
-          </DropZone>
-        </div>
+            Don’t have a config file? Learn how to create one
+          </a>
+        </StyledDropZone>
       </ContentFrame>
     </>
   );

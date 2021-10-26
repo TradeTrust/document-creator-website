@@ -1,12 +1,11 @@
 import { Button } from "@govtechsg/tradetrust-ui-components";
 import React, { FunctionComponent, useCallback, useState } from "react";
-import { useDropzone } from "react-dropzone";
 import { FileUploadType } from "../../../../types";
-import { DropZone } from "../../../UI/DropZone";
+import { StyledDropZone } from "../../../UI/StyledDropZone";
 import { FilesInfo } from "./FilesInfo";
 
 // 5MB is 5242880 bytes as 1MB is 1048576 bytes
-const MAX_FILE_SIZE = 5242880;
+const TOTAL_FILES_MAX_SIZE = 5242880;
 const BYTE_CONVERTION_RATE = 1048576;
 
 interface AttachmentDropzone {
@@ -22,9 +21,9 @@ export const AttachmentDropzone: FunctionComponent<AttachmentDropzone> = ({
   onRemove,
   uploadedFiles,
 }) => {
-  const [fileSizeError, setFileSizeError] = useState(false);
+  const [fileErrors, setFileErrors] = useState<Error[]>();
 
-  const onDrop = useCallback(
+  const onDropAccepted = useCallback(
     async (files: File[]) => {
       let totalSize = uploadedFiles
         ? uploadedFiles.reduce((acc: number, current: FileUploadType) => acc + atob(current.data).length, 0)
@@ -32,63 +31,50 @@ export const AttachmentDropzone: FunctionComponent<AttachmentDropzone> = ({
 
       files.forEach((file) => (totalSize += file.size));
 
-      if (totalSize > MAX_FILE_SIZE) return setFileSizeError(true);
+      if (totalSize > TOTAL_FILES_MAX_SIZE) {
+        const totalFileSizeError = new Error(
+          `Total attachment file size exceeds ${
+            TOTAL_FILES_MAX_SIZE / BYTE_CONVERTION_RATE
+          }MB, Please try again with a smaller file size.`
+        );
+        return setFileErrors([totalFileSizeError]);
+      } else {
+        setFileErrors(undefined);
+      }
 
       const processedFiles = await Promise.all(files.map(processFiles));
       onUpload(processedFiles);
-      setFileSizeError(false);
     },
     [onUpload, uploadedFiles]
   );
 
   const removeFile = (fileIndex: number): void => {
     onRemove(fileIndex);
-    setFileSizeError(false);
   };
 
-  const { getRootProps, getInputProps, isDragActive, fileRejections } = useDropzone({
-    onDrop,
+  const dropzoneOptions = {
+    onDropAccepted,
     accept: acceptedFormat,
-  });
-
-  const isFileRejected = fileRejections.length > 0;
-  const error = isFileRejected || fileSizeError;
+  };
+  const defaultStyle = "bg-white";
+  const activeStyle = "bg-gray-300";
 
   return (
-    <div className="my-16" data-testid="attachment-dropzone">
-      <h4 className={`text-cloud-900 capitalize`}>Attachments</h4>
-      <div className="text-cloud-900">Max. total file size: {MAX_FILE_SIZE / BYTE_CONVERTION_RATE}MB</div>
-
+    <div className="flex flex-col m-auto" key="AttachmentDropzone" data-testid="attachment-dropzone">
+      <legend>Attachments</legend>
+      <div className="text-gray-800">Max. total file size: {TOTAL_FILES_MAX_SIZE / BYTE_CONVERTION_RATE}MB</div>
+      <StyledDropZone
+        dropzoneOptions={dropzoneOptions}
+        defaultStyle={defaultStyle}
+        activeStyle={activeStyle}
+        fileErrors={fileErrors}
+        dropzoneIcon={"/upload-icon-dark.png"}
+      >
+        <div className="font-bold text-lg text-gray-800">Drag and drop your file(s) here</div>
+        <div className="mt-4">or</div>
+        <Button className="bg-cerulean text-white hover:bg-cerulean-500 mt-4">Browse File</Button>
+      </StyledDropZone>
       <FilesInfo filesInfo={uploadedFiles} removeFile={removeFile} />
-      <div data-testid="attachment-upload-zone" className="mt-4" {...getRootProps()}>
-        <input data-testid="attachment-file-drop-zone" {...getInputProps()} />
-        <DropZone error={error} isDragActive={isDragActive}>
-          <img className="mb-4" src={"/upload-icon.png"} />
-          {isFileRejected && (
-            <>
-              <div className="max-w-lg text-rose font-bold text-lg" data-testid="invalid-file-error">
-                Error: Incorrect file type selected
-              </div>
-              <div className="text-base text-cloud-900 my-4">{`Only ${acceptedFormat} are allowed`}</div>
-            </>
-          )}
-          {fileSizeError && (
-            <>
-              <div className="max-w-lg text-rose font-bold text-lg" data-testid="file-size-error">
-                Error: Total attachment file size exceeds {MAX_FILE_SIZE / BYTE_CONVERTION_RATE}MB
-              </div>
-              <div className="text-base text-cloud-900 my-4">Please try again with a smaller file size.</div>
-            </>
-          )}
-          {!error && (
-            <>
-              <h4>Drag and drop your file(s) here</h4>
-              <p className="mt-4">or</p>
-            </>
-          )}
-          <Button className="bg-cerulean text-white hover:bg-cerulean-500 mt-4">Browse File</Button>
-        </DropZone>
-      </div>
     </div>
   );
 };

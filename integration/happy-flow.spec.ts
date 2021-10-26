@@ -17,6 +17,8 @@ const EblNumberField = Selector("input#root_blNumber");
 const EblFileNameField = Selector("[data-testid='file-name-input']");
 const EblDocumentNameSelect = Selector("[data-testid='document-name-select']");
 const EblDocumentNumberInput = Selector("[data-testid='document-number-input']");
+const DataFileDropZoneInput = Selector("[data-testid='file-upload-zone'] input").nth(0);
+const AttachmentFileDropZoneInput = Selector("[data-testid='file-upload-zone'] input").nth(1);
 
 test("should issue the documents on local blockchain correctly", async (t) => {
   // Upload config file
@@ -35,7 +37,7 @@ test("should issue the documents on local blockchain correctly", async (t) => {
   await t.expect(ProgressBar.textContent).contains("2");
 
   // Upload data file
-  await t.setFilesToUpload("input[type=file][data-testid=data-file-dropzone]", [dataFileJsonCoo]);
+  await t.setFilesToUpload(DataFileDropZoneInput, [dataFileJsonCoo]);
 
   // Validated the content is overwritten by the data file
   await t.expect(FormIdField.value).eql("wfa.org.au:coo:WBC208897");
@@ -64,7 +66,7 @@ test("should issue the documents on local blockchain correctly", async (t) => {
   await t.typeText(EblNumberField, "MY-BL-NUMBER");
 
   // Test data upload json file
-  await t.setFilesToUpload("input[type=file][data-testid=config-file-drop-zone]", [dataFileJsonEbl]);
+  await t.setFilesToUpload(DataFileDropZoneInput, [dataFileJsonEbl]);
 
   // Validate the content is overwritten by the data file
   await t.expect(EblFileNameField.value).eql("bill-123");
@@ -74,7 +76,7 @@ test("should issue the documents on local blockchain correctly", async (t) => {
   await t.expect(EblNumberField.value).eql("123");
 
   // Test data upload csv file
-  await t.setFilesToUpload("input[type=file][data-testid=config-file-drop-zone]", [dataFileCsvEbl]);
+  await t.setFilesToUpload(DataFileDropZoneInput, [dataFileCsvEbl]);
 
   // Validate the content is overwritten by the data file
   await t.expect(EblFileNameField.value).eql("bill-<blNumber 1>");

@@ -6,7 +6,7 @@ import { getLogger } from "../../../utils/logger";
 import { FormError, FormErrorBanner } from "./../FormErrorBanner";
 import { Draft04 as Core, JSONSchema } from "json-schema-library";
 import { ToolTip } from "../../UI/ToolTip";
-import { StyledDropZone } from "../../UI/DropZone";
+import { StyledDropZone } from "../../UI/StyledDropZone";
 
 const { stack } = getLogger("DataFileButton");
 
@@ -46,7 +46,7 @@ interface GetDataFileBasedOnExtension {
 
 export const DataFileButton: FunctionComponent<DataFileButton> = ({ onDataFile, schema }) => {
   const [error, setError] = useState(false);
-  const [dataFileError, setDataFileError] = useState<FormError>(null);
+  const [fileErrors, setFileErrors] = useState<FormError>(null);
 
   const getDataFileBasedOnExtension = async (file: File): Promise<GetDataFileBasedOnExtension> => {
     let dataFile;
@@ -68,7 +68,7 @@ export const DataFileButton: FunctionComponent<DataFileButton> = ({ onDataFile, 
     return { isValidated, errors: ajv.errors };
   };
 
-  const onDrop = async (files: File[]): Promise<void> => {
+  const onDropAccepted = async (files: File[]): Promise<void> => {
     try {
       const file = files[0];
       const { dataFile, dataToValidate } = await getDataFileBasedOnExtension(file);
@@ -76,19 +76,19 @@ export const DataFileButton: FunctionComponent<DataFileButton> = ({ onDataFile, 
 
       if (!isValidated) {
         setError(true);
-        setDataFileError(errors);
+        setFileErrors(errors);
         return;
       }
 
       setError(false);
-      setDataFileError(null);
+      setFileErrors(null);
 
       onDataFile(dataFile);
     } catch (e) {
       stack(e);
 
       setError(true);
-      setDataFileError([
+      setFileErrors([
         // ajv set error manually, printing out error message on UI
         {
           instancePath: "",
@@ -112,16 +112,16 @@ export const DataFileButton: FunctionComponent<DataFileButton> = ({ onDataFile, 
     <>
       {error && (
         <div className="my-2" data-testid="file-read-error">
-          <FormErrorBanner formErrorTitle="Uploaded data file format has errors." formError={dataFileError} />
+          <FormErrorBanner formErrorTitle="Uploaded data file format has errors." formError={fileErrors} />
         </div>
       )}
       <StyledDropZone
-        dropzoneOptions={{ onDrop, multiple: false }}
+        dropzoneOptions={{ onDropAccepted, multiple: false, accept: [".csv", ".json"] }}
         defaultStyle={defaultStyle}
         activeStyle={activeStyle}
-        testId={"data-file-dropzone"}
+        fileErrors={fileErrors}
+        dropzoneIcon={"/upload-icon-dark.png"}
       >
-        <img className="mx-auto mb-8" src={"/upload-icon-dark.png"} />
         <p className="text-center mb-4">{text.header}</p>
         <div className="mb-4">
           <Button data-testid="data-upload-button" className="flex mx-auto bg-white text-cerulean hover:bg-cloud-100">

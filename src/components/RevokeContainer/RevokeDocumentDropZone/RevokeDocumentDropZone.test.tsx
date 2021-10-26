@@ -33,7 +33,7 @@ describe("RevokeDocumentDropZone", () => {
     await act(async () => {
       const event = new Event("drop", { bubbles: true });
       Object.assign(event, data);
-      fireEvent(screen.getByTestId("revoke-document-drop-zone"), event);
+      fireEvent(screen.getByTestId("file-upload-zone"), event);
       await waitFor(() => {
         expect(setRevokeDocuments).toHaveBeenCalledWith([sampleRevokableDocument]);
         expect(setFileName).toHaveBeenCalledWith("revokable-document.json");
@@ -60,7 +60,7 @@ describe("RevokeDocumentDropZone", () => {
         />
       </BrowserRouter>
     );
-    expect(screen.getAllByTestId("error-message")).toHaveLength(1);
+    expect(screen.getAllByTestId("file-error")).toHaveLength(1);
   });
 
   it("should display loader when documentUploadState is true", () => {

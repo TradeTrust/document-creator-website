@@ -8,8 +8,9 @@ const WalletDecryptionTitle = Selector("[data-testid='wallet-decryption-title']"
 const Button = Selector("button");
 const FormIdField = Selector("#root_iD");
 const ProgressBar = Selector("[data-testid='progress-bar']");
-const FileSizeError = Selector("[data-testid='file-size-error']");
+const TotalFileSizeError = Selector("[data-testid='file-error']");
 const FormAttachmentField = Selector("[data-testid='upload-file-0']");
+const AttachmentFileDropZoneInput = Selector("[data-testid='file-upload-zone'] input").nth(1);
 
 test("should show file limit warning when over 6mb", async (t) => {
   // Upload config file
@@ -26,10 +27,12 @@ test("should show file limit warning when over 6mb", async (t) => {
   await t.typeText(FormIdField, "COO-ID");
 
   // Upload a attachment (over file limit)
-  await t.setFilesToUpload("input[data-testid=attachment-file-drop-zone]", [samplePdf6Mb]);
-  await t.expect(FileSizeError.textContent).contains("Error: Total attachment file size exceeds 5MB");
+  await t.setFilesToUpload(AttachmentFileDropZoneInput, [samplePdf6Mb]);
+  await t
+    .expect(TotalFileSizeError.textContent)
+    .contains("Total attachment file size exceeds 5MB, Please try again with a smaller file size.");
 
   // Upload a attachment (below file limit)
-  await t.setFilesToUpload("input[data-testid=attachment-file-drop-zone]", [samplePdf]);
+  await t.setFilesToUpload(AttachmentFileDropZoneInput, [samplePdf]);
   await t.expect(FormAttachmentField.textContent).contains("sample-file.pdf");
 });
