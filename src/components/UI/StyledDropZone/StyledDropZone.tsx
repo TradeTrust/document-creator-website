@@ -2,6 +2,7 @@ import { ErrorObject } from "ajv";
 import { trim } from "lodash";
 import { FunctionComponent, useMemo, useState } from "react";
 import { DropzoneOptions, FileRejection, useDropzone } from "react-dropzone";
+import { FileUpload } from "../../../constants/FileUpload";
 
 type DropZonefileErrors = ErrorObject[] | Error[] | null | undefined;
 
@@ -16,9 +17,6 @@ interface DropZoneProps {
   dropzoneIcon?: string;
   dataTestId?: string;
 }
-
-// 5MB is 5242880 bytes as 1MB is 1048576 bytes
-const BYTE_CONVERTION_RATE = 1048576;
 
 const baseStyle = `cursor-pointer rounded-xl border-dashed border-2 border-cloud-100 items-center flex flex-col pt-16 pb-16 px-4 text-center mt-4`;
 const errorStyle = `bg-red-100`;
@@ -83,7 +81,8 @@ export const StyledDropZone: FunctionComponent<DropZoneProps> = ({
       )}
       {fileSizeError && (
         <p className="max-w-lg text-rose text-lg leading-none mb-2" data-testid="file-size-error">
-          File size exceeds {dropzoneOptions.maxSize ? ` ${dropzoneOptions.maxSize / BYTE_CONVERTION_RATE}` : ""}MB,
+          File size exceeds{" "}
+          {dropzoneOptions.maxSize ? ` ${dropzoneOptions.maxSize / FileUpload.BYTE_TO_MB_CONVERTION_RATE}` : ""}MB,
           Please try again with a smaller file size.
         </p>
       )}

@@ -1,12 +1,9 @@
 import { Button } from "@govtechsg/tradetrust-ui-components";
 import React, { FunctionComponent, useCallback, useState } from "react";
+import { FileUpload } from "../../../../constants/FileUpload";
 import { FileUploadType } from "../../../../types";
 import { StyledDropZone } from "../../../UI/StyledDropZone";
 import { FilesInfo } from "./FilesInfo";
-
-// 5MB is 5242880 bytes as 1MB is 1048576 bytes
-const TOTAL_FILES_MAX_SIZE = 5242880;
-const BYTE_CONVERTION_RATE = 1048576;
 
 interface AttachmentDropzone {
   acceptedFormat: string;
@@ -31,10 +28,10 @@ export const AttachmentDropzone: FunctionComponent<AttachmentDropzone> = ({
 
       files.forEach((file) => (totalSize += file.size));
 
-      if (totalSize > TOTAL_FILES_MAX_SIZE) {
+      if (totalSize > FileUpload.ATTACHMENT_TOTAL_FILES_MAX_SIZE) {
         const totalFileSizeError = new Error(
           `Total attachment file size exceeds ${
-            TOTAL_FILES_MAX_SIZE / BYTE_CONVERTION_RATE
+            FileUpload.ATTACHMENT_TOTAL_FILES_MAX_SIZE / FileUpload.BYTE_TO_MB_CONVERTION_RATE
           }MB, Please try again with a smaller file size.`
         );
         return setFileErrors([totalFileSizeError]);
@@ -62,7 +59,9 @@ export const AttachmentDropzone: FunctionComponent<AttachmentDropzone> = ({
   return (
     <div className="flex flex-col m-auto" key="AttachmentDropzone" data-testid="attachment-dropzone">
       <legend>Attachments</legend>
-      <div className="text-gray-800">Max. total file size: {TOTAL_FILES_MAX_SIZE / BYTE_CONVERTION_RATE}MB</div>
+      <div className="text-gray-800">
+        Max. total file size: {FileUpload.ATTACHMENT_TOTAL_FILES_MAX_SIZE / FileUpload.BYTE_TO_MB_CONVERTION_RATE}MB
+      </div>
       <StyledDropZone
         dropzoneOptions={dropzoneOptions}
         defaultStyle={defaultStyle}
