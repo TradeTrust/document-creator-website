@@ -1,12 +1,13 @@
 import React, { FunctionComponent } from "react";
 import { render, screen } from "@testing-library/react";
 import { ErrorBoundary } from "./ErrorBoundary";
+import { MemoryRouter } from "react-router-dom";
 
 const ErrorComponent: FunctionComponent = () => {
   throw new Error("Intentionally throws error");
 };
 
-describe("errorboundary", () => {
+describe("errorBoundary", () => {
   beforeEach(() => {
     jest.spyOn(console, "error").mockImplementation(() => {});
   });
@@ -16,12 +17,15 @@ describe("errorboundary", () => {
   });
 
   it("should calls getLogger and renders that there was a problem", () => {
-    expect.assertions(1);
+    expect.assertions(2);
     render(
-      <ErrorBoundary>
-        <ErrorComponent />
-      </ErrorBoundary>
+      <MemoryRouter>
+        <ErrorBoundary>
+          <ErrorComponent />
+        </ErrorBoundary>
+      </MemoryRouter>
     );
-    expect(screen.getByTestId("error-boundary-content")).toBeInTheDocument();
+    expect(screen.getAllByText("ERROR")).toHaveLength(1);
+    expect(screen.getAllByText("Something Went Wrong")).toHaveLength(1);
   });
 });
