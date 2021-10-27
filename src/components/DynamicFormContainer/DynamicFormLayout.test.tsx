@@ -224,7 +224,7 @@ describe("dynamicFormLayout", () => {
     );
 
     // Drop data file in drop zone
-    const dropzone = screen.getByTestId("data-upload-zone");
+    const dropzone = screen.getByTestId("data-file-dropzone");
     const file = new File(
       [
         JSON.stringify({

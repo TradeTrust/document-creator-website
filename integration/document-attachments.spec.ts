@@ -12,6 +12,7 @@ const Button = Selector("button");
 const AttachmentXButton = Selector("[data-testid='remove-uploaded-file-0']");
 const FormAttachmentField = Selector("[data-testid='upload-file-0']");
 const FormAttachmentFields = Selector("[data-testid*='upload-file-']");
+const AttachmentFileDropZoneInput = Selector("[data-testid='attachment-file-dropzone'] input");
 
 test("should be added and removed correctly", async (t) => {
   // Upload config file
@@ -29,7 +30,7 @@ test("should be added and removed correctly", async (t) => {
   await t.expect(ProgressBar.textContent).contains("2");
 
   // Add attachment
-  await t.setFilesToUpload("input[data-testid='attachment-file-drop-zone']", [samplePdf]);
+  await t.setFilesToUpload(AttachmentFileDropZoneInput, [samplePdf]);
   await t.expect(FormAttachmentField.textContent).contains("sample-file.pdf");
   await t.expect(FormAttachmentFields.count).eql(1);
 

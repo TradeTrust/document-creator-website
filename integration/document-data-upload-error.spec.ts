@@ -11,6 +11,7 @@ const ProgressBar = Selector("[data-testid='progress-bar']");
 const Button = Selector("button");
 const ErrorItem1 = Selector("[data-testid='form-error-banner'] li").nth(0);
 const ErrorItem2 = Selector("[data-testid='form-error-banner'] li").nth(1);
+const DataFileDropZoneInput = Selector("[data-testid='data-file-dropzone'] input");
 
 test("should show validation error messages correctly", async (t) => {
   // Upload config file
@@ -28,7 +29,7 @@ test("should show validation error messages correctly", async (t) => {
   await t.expect(ProgressBar.textContent).contains("2");
 
   // Upload data file
-  await t.setFilesToUpload("input[type=file][data-testid=config-file-drop-zone]", [dataFileJsonEblMissingFields]);
+  await t.setFilesToUpload(DataFileDropZoneInput, [dataFileJsonEblMissingFields]);
 
   // Assert validation error messages
   await t.expect(ErrorItem1.textContent).contains("must have required property 'blNumber'");

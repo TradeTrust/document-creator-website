@@ -11,6 +11,7 @@ const ProgressBar = Selector("[data-testid='progress-bar']");
 const Button = Selector("button");
 const Iframe = Selector("#iframe[title='Decentralised Rendered Certificate']");
 const IframeRoot = Selector("#root");
+const DataFileDropZoneInput = Selector("[data-testid='data-file-dropzone'] input");
 
 test("should be able to preview form with data", async (t) => {
   // Upload config file
@@ -28,7 +29,7 @@ test("should be able to preview form with data", async (t) => {
   await t.expect(ProgressBar.textContent).contains("2");
 
   // Upload data file
-  await t.setFilesToUpload("input[type=file][data-testid=config-file-drop-zone]", [dataFileJsonCoo]);
+  await t.setFilesToUpload(DataFileDropZoneInput, [dataFileJsonCoo]);
 
   // Set preview mode to true
   await t.click(Selector("[data-testid='toggle-switch-label']"));

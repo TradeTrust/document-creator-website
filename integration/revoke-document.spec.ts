@@ -8,6 +8,7 @@ const RevokeTitle = Selector("[data-testid='revoke-title']");
 const WalletDecryptionTitle = Selector("[data-testid='wallet-decryption-title']");
 const FormSelectionTitle = Selector("[data-testid='form-selection-title']");
 const ProgressBar = Selector("[data-testid='progress-bar']");
+const RevokeFileDropZoneInput = Selector("[data-testid='revoke-file-dropzone'] input");
 
 test("should revoke a document on local blockchain correctly", async (t) => {
   // Upload config file
@@ -25,12 +26,12 @@ test("should revoke a document on local blockchain correctly", async (t) => {
   await t.expect(RevokeTitle.textContent).contains("Upload Document");
 
   // Upload a file
-  await t.setFilesToUpload("input[type=file][data-testid=revoke-document-drop-zone]", [documentRevoked]);
+  await t.setFilesToUpload(RevokeFileDropZoneInput, [documentRevoked]);
 
   // Click back button to test back flow and upload file again
   await t.click(Selector("[data-testid='back-revoke-button']"));
   await t.expect(RevokeTitle.textContent).contains("Upload Document");
-  await t.setFilesToUpload("input[type=file][data-testid=revoke-document-drop-zone]", [documentRevoked]);
+  await t.setFilesToUpload(RevokeFileDropZoneInput, [documentRevoked]);
 
   // Revoke Document
   await t.click(Selector("[data-testid='revoke-button']"));

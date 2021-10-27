@@ -29,7 +29,7 @@ describe("RevokeContainer", () => {
         <RevokeContainer />
       </BrowserRouter>
     );
-    expect(screen.queryAllByTestId("revoke-dropzone")).toHaveLength(1);
+    expect(screen.queryAllByTestId("revoke-file-dropzone")).toHaveLength(1);
   });
 
   it("should redirect to '/' if there is no config file", () => {
@@ -39,6 +39,6 @@ describe("RevokeContainer", () => {
         <RevokeContainer />
       </BrowserRouter>
     );
-    expect(screen.queryAllByTestId("revoke-dropzone")).toHaveLength(0);
+    expect(screen.queryAllByTestId("revoke-file-dropzone")).toHaveLength(0);
   });
 });

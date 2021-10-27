@@ -2,7 +2,7 @@ import { Selector, t } from "testcafe";
 
 const PasswordField = Selector("[data-testid='password-field']");
 const ButtonLogin = Selector("[data-testid='login-button']");
-
+const ConfigFileDropZoneInput = Selector("[data-testid='config-file-dropzone'] input");
 // fixtures
 export const configLocal = "./../src/test/fixtures/v2/config/local/sample-config-local.json";
 export const configLocalV3 = "./../src/test/fixtures/v3/config/local/sample-config-local-v3.json";
@@ -23,7 +23,7 @@ export const samplePdf6Mb = "./../src/test/fixtures/sample-file-6MB.pdf";
 export const documentRevoked = "./../src/test/fixtures/v2/wrapped/wrapped-document-local-revokable.json";
 
 export const loadConfigFile = async (configFile: string): Promise<void> => {
-  await t.setFilesToUpload("input[type=file][data-testid=config-file-drop-zone]", [configFile]);
+  await t.setFilesToUpload(ConfigFileDropZoneInput, [configFile]);
 };
 
 export const enterPassword = async (password: string): Promise<void> => {
