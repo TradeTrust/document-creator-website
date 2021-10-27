@@ -675,6 +675,11 @@
       "schema": {
         "type": "object",
         "properties": {
+          "logo": {
+            "type": "string",
+            "format": "data-url",
+            "title": "Document Title"
+          },
           "title": {
             "type": "string",
             "title": "Document Title"
@@ -682,6 +687,18 @@
           "remarks": {
             "type": "string",
             "title": "Remarks"
+          },
+          "backgroundColor": {
+            "type": "string",
+            "title": "Background Color"
+          },
+          "titleColor": {
+            "type": "string",
+            "title": "Title Color"
+          },
+          "remarksColor": {
+            "type": "string",
+            "title": "Remarks Color"
           }
         }
       },
@@ -698,6 +715,24 @@
         },
         "remarks": {
           "ui:widget": "textarea"
+        },
+        "backgroundColor": {
+          "ui:widget": "color",
+          "ui:options": {
+            "emptyValue": "#ffffff"
+          }
+        },
+        "titleColor": {
+          "ui:widget": "color",
+          "ui:options": {
+            "emptyValue": "#4e4e50"
+          }
+        },
+        "remarksColor": {
+          "ui:widget": "color",
+          "ui:options": {
+            "emptyValue": "#4e4e50"
+          }
         }
       }
     },
