@@ -581,12 +581,16 @@
               "location": "demo-tradetrust.openattestation.com"
             }
           }
-        ],
-        "logo": "https://www.aretese.com/images/govtech-animated-logo.gif"
+        ]
       },
       "schema": {
         "type": "object",
         "properties": {
+          "logo": {
+            "type": "string",
+            "format": "data-url",
+            "title": "Document Title"
+          },
           "title": {
             "type": "string",
             "title": "Document Title"
@@ -613,6 +617,13 @@
         "allow": true
       },
       "uiSchema": {
+        "logo": {
+          "ui:widget": "file",
+          "ui:options": {
+            "text": "Upload Cover Letter Logo",
+            "accept": ".png, .jpeg, .jpg"
+          }
+        },
         "remarks": {
           "ui:widget": "textarea"
         },
@@ -659,8 +670,7 @@
               "location": "demo-tradetrust.openattestation.com"
             }
           }
-        ],
-        "logo": "https://www.aretese.com/images/govtech-animated-logo.gif"
+        ]
       },
       "schema": {
         "type": "object",
@@ -679,6 +689,13 @@
         "allow": true
       },
       "uiSchema": {
+        "logo": {
+          "ui:widget": "file",
+          "ui:options": {
+            "text": "Upload Cover Letter Logo",
+            "accept": ".png, .jpeg, .jpg"
+          }
+        },
         "remarks": {
           "ui:widget": "textarea"
         }

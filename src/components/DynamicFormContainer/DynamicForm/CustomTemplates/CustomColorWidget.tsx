@@ -31,6 +31,7 @@ export const CustomColorWidget: FunctionComponent<WidgetProps> = ({
       onChange={_onChange}
       onBlur={onBlur && ((event) => onBlur(id, event.target.value))}
       onFocus={onFocus && ((event) => onFocus(id, event.target.value))}
+      data-testid="custom-color-widget"
     />
   );
 };

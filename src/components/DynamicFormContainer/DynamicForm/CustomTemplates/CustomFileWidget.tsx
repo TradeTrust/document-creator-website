@@ -52,10 +52,11 @@ export const CustomFileWidget: FunctionComponent<WidgetProps> = ({
     return (
       <ul className="file-info">
         {filesMetadata.map((info: any, key: number) => {
-          const { name, size, type } = info;
+          const { name, dataURL } = info;
           return (
-            <li key={key}>
-              <strong>{name}</strong> ({type}, {size} bytes)
+            <li key={key} className="mt-3" data-testid="custom-file-widget-thumbnail">
+              <img className="w-72" src={dataURL} />
+              {name}
             </li>
           );
         })}
@@ -92,6 +93,7 @@ export const CustomFileWidget: FunctionComponent<WidgetProps> = ({
         autoFocus={autofocus}
         multiple={multiple}
         accept={(options.accept as string) ?? undefined}
+        data-testid="custom-file-widget"
       />
     </label>
   );
