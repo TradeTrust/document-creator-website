@@ -33,7 +33,7 @@ describe("RevokeDocumentDropZone", () => {
     await act(async () => {
       const event = new Event("drop", { bubbles: true });
       Object.assign(event, data);
-      fireEvent(screen.getByTestId("file-upload-zone"), event);
+      fireEvent(screen.getByTestId("revoke-file-dropzone"), event);
       await waitFor(() => {
         expect(setRevokeDocuments).toHaveBeenCalledWith([sampleRevokableDocument]);
         expect(setFileName).toHaveBeenCalledWith("revokable-document.json");

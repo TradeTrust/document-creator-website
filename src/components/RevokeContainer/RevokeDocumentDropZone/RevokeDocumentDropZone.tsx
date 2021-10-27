@@ -76,6 +76,7 @@ export const RevokeDocumentDropZone: FunctionComponent<RevokeDocumentDropZone> =
             activeStyle={activeStyle}
             fileErrors={fileErrors}
             dropzoneIcon={documentUploadState !== DocumentUploadState.LOADING ? "/dropzone-graphic.png" : ""}
+            dataTestId="revoke-file-dropzone"
           >
             {documentUploadState !== DocumentUploadState.LOADING && (
               <>

@@ -2,7 +2,7 @@ import { Selector, t } from "testcafe";
 
 const PasswordField = Selector("[data-testid='password-field']");
 const ButtonLogin = Selector("[data-testid='login-button']");
-const ConfigFileDropZoneInput = Selector("[data-testid='file-upload-zone'] input").nth(0);
+const ConfigFileDropZoneInput = Selector("[data-testid='config-file-dropzone'] input");
 // fixtures
 export const configLocal = "./../src/test/fixtures/v2/config/local/sample-config-local.json";
 export const configLocalV3 = "./../src/test/fixtures/v3/config/local/sample-config-local-v3.json";

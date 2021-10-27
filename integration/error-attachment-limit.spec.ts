@@ -10,7 +10,7 @@ const FormIdField = Selector("#root_iD");
 const ProgressBar = Selector("[data-testid='progress-bar']");
 const TotalFileSizeError = Selector("[data-testid='file-error']");
 const FormAttachmentField = Selector("[data-testid='upload-file-0']");
-const AttachmentFileDropZoneInput = Selector("[data-testid='file-upload-zone'] input").nth(1);
+const AttachmentFileDropZoneInput = Selector("[data-testid='attachment-file-dropzone'] input");
 
 test("should show file limit warning when over 6mb", async (t) => {
   // Upload config file

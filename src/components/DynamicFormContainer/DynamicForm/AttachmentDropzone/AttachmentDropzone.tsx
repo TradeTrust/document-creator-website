@@ -68,7 +68,8 @@ export const AttachmentDropzone: FunctionComponent<AttachmentDropzone> = ({
         defaultStyle={defaultStyle}
         activeStyle={activeStyle}
         fileErrors={fileErrors}
-        dropzoneIcon={"/upload-icon-dark.png"}
+        dropzoneIcon="/upload-icon-dark.png"
+        dataTestId="attachment-file-dropzone"
       >
         <div className="font-bold text-lg text-gray-800">Drag and drop your file(s) here</div>
         <div className="mt-4">or</div>

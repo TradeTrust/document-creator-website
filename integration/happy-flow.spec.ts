@@ -17,8 +17,7 @@ const EblNumberField = Selector("input#root_blNumber");
 const EblFileNameField = Selector("[data-testid='file-name-input']");
 const EblDocumentNameSelect = Selector("[data-testid='document-name-select']");
 const EblDocumentNumberInput = Selector("[data-testid='document-number-input']");
-const DataFileDropZoneInput = Selector("[data-testid='file-upload-zone'] input").nth(0);
-const AttachmentFileDropZoneInput = Selector("[data-testid='file-upload-zone'] input").nth(1);
+const DataFileDropZoneInput = Selector("[data-testid='data-file-dropzone'] input");
 
 test("should issue the documents on local blockchain correctly", async (t) => {
   // Upload config file

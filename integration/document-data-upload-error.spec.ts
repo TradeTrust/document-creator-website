@@ -11,7 +11,7 @@ const ProgressBar = Selector("[data-testid='progress-bar']");
 const Button = Selector("button");
 const ErrorItem1 = Selector("[data-testid='form-error-banner'] li").nth(0);
 const ErrorItem2 = Selector("[data-testid='form-error-banner'] li").nth(1);
-const DataFileDropZoneInput = Selector("[data-testid='file-upload-zone'] input").nth(0);
+const DataFileDropZoneInput = Selector("[data-testid='data-file-dropzone'] input");
 
 test("should show validation error messages correctly", async (t) => {
   // Upload config file

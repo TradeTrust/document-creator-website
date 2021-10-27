@@ -59,6 +59,6 @@ describe("dynamicForm", () => {
 
   it("should render the data file dropzone", () => {
     render(<DynamicForm {...commonProps} />);
-    expect(screen.queryByTestId("file-upload-zone")).not.toBeNull();
+    expect(screen.queryByTestId("data-file-dropzone")).not.toBeNull();
   });
 });

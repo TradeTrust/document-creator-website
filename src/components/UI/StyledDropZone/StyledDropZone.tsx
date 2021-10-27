@@ -14,6 +14,7 @@ interface DropZoneProps {
   dropzoneOptions: DropzoneOptions;
   fileErrors?: DropZonefileErrors;
   dropzoneIcon?: string;
+  dataTestId?: string;
 }
 
 // 5MB is 5242880 bytes as 1MB is 1048576 bytes
@@ -31,6 +32,7 @@ export const StyledDropZone: FunctionComponent<DropZoneProps> = ({
   dropzoneOptions,
   fileErrors,
   dropzoneIcon,
+  dataTestId,
 }) => {
   const [fileTypeError, setFileTypeError] = useState(false);
   const [fileSizeError, setFileSizeError] = useState(false);
@@ -69,7 +71,7 @@ export const StyledDropZone: FunctionComponent<DropZoneProps> = ({
   }, [isDragActive, activeStyle, isDragAccept, acceptStyle, isDragReject, rejectStyle]);
 
   return (
-    <div className={`${baseStyle} ${dragStyle || currentStyle} `} data-testid="file-upload-zone" {...getRootProps()}>
+    <div className={`${baseStyle} ${dragStyle || currentStyle} `} data-testid={dataTestId} {...getRootProps()}>
       <input {...getInputProps()} />
       {dropzoneIcon && <img className="mx-auto mb-8" src={dropzoneIcon} />}
 

@@ -120,7 +120,8 @@ export const DataFileButton: FunctionComponent<DataFileButton> = ({ onDataFile, 
         defaultStyle={defaultStyle}
         activeStyle={activeStyle}
         fileErrors={fileErrors}
-        dropzoneIcon={"/upload-icon-dark.png"}
+        dropzoneIcon="/upload-icon-dark.png"
+        dataTestId="data-file-dropzone"
       >
         <p className="text-center mb-4">{text.header}</p>
         <div className="mb-4">

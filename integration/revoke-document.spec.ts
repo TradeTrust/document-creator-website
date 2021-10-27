@@ -8,7 +8,7 @@ const RevokeTitle = Selector("[data-testid='revoke-title']");
 const WalletDecryptionTitle = Selector("[data-testid='wallet-decryption-title']");
 const FormSelectionTitle = Selector("[data-testid='form-selection-title']");
 const ProgressBar = Selector("[data-testid='progress-bar']");
-const RevokeFileDropZoneInput = Selector("[data-testid='file-upload-zone'] input").nth(0);
+const RevokeFileDropZoneInput = Selector("[data-testid='revoke-file-dropzone'] input");
 
 test("should revoke a document on local blockchain correctly", async (t) => {
   // Upload config file

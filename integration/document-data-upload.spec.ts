@@ -25,7 +25,7 @@ const V2COOiDField = Selector("#root_iD");
 const V2COOIssueDateTimeField = Selector("#root_issueDateTime");
 const V3COOiDField = Selector("#root_credentialSubject_iD");
 const V3COOIssueDateTimeField = Selector("#root_credentialSubject_issueDateTime");
-const DataFileDropZoneInput = Selector("[data-testid='file-upload-zone'] input").nth(0);
+const DataFileDropZoneInput = Selector("[data-testid='data-file-dropzone'] input");
 
 function getFileDownloadPath(fileName: string): string {
   return join(homedir(), "Downloads", fileName);

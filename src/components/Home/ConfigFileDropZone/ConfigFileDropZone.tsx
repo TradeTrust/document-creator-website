@@ -56,6 +56,7 @@ export const ConfigFileDropZone: FunctionComponent<ConfigFileDropZone> = ({ onCo
           activeStyle={activeStyle}
           fileErrors={fileErrors}
           dropzoneIcon={"/dropzone-graphic.png"}
+          dataTestId="config-file-dropzone"
         >
           <h4 data-testid="home-description">Drag and drop your configuration file here</h4>
           <p className="my-4">or</p>

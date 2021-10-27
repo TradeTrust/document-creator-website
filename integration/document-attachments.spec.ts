@@ -12,7 +12,7 @@ const Button = Selector("button");
 const AttachmentXButton = Selector("[data-testid='remove-uploaded-file-0']");
 const FormAttachmentField = Selector("[data-testid='upload-file-0']");
 const FormAttachmentFields = Selector("[data-testid*='upload-file-']");
-const AttachmentFileDropZoneInput = Selector("[data-testid='file-upload-zone'] input").nth(1);
+const AttachmentFileDropZoneInput = Selector("[data-testid='attachment-file-dropzone'] input");
 
 test("should be added and removed correctly", async (t) => {
   // Upload config file

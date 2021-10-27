@@ -22,7 +22,7 @@ describe("configFileDropZone", () => {
     await act(async () => {
       const event = new Event("drop", { bubbles: true });
       Object.assign(event, data);
-      fireEvent(screen.getByTestId("file-upload-zone"), event);
+      fireEvent(screen.getByTestId("config-file-dropzone"), event);
       await waitFor(() => expect(onConfigFile).toHaveBeenCalledWith(configContent));
     });
   });

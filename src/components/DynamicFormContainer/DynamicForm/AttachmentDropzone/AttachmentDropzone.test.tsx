@@ -58,7 +58,7 @@ describe("attachmentDropzone", () => {
       />
     );
 
-    const dropzone = screen.getByTestId("file-upload-zone");
+    const dropzone = screen.getByTestId("attachment-file-dropzone");
     const file = new File([JSON.stringify({ foo: "bar" })], "sample.json", {
       type: "application/json",
     });
@@ -75,7 +75,7 @@ describe("attachmentDropzone", () => {
   it("should show error when a file cannot be read", async () => {
     render(<AttachmentDropzone acceptedFormat=".pdf" onUpload={() => {}} onRemove={() => {}} uploadedFiles={[]} />);
 
-    const dropzone = screen.getByTestId("file-upload-zone");
+    const dropzone = screen.getByTestId("attachment-file-dropzone");
     const file = new File(["RANDOM_BINARY_FILE"], "sample.json", {
       type: "application/json",
     });
@@ -107,7 +107,7 @@ describe("attachmentDropzone", () => {
       />
     );
 
-    const dropzone = screen.getByTestId("file-upload-zone");
+    const dropzone = screen.getByTestId("attachment-file-dropzone");
     const file = new File(["sample"], "sample.json", {
       type: "application/json",
     });
