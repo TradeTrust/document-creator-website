@@ -1,6 +1,6 @@
 import React, { ChangeEvent, FunctionComponent, useState } from "react";
 import { WidgetProps } from "@rjsf/core";
-import { Download } from "react-feather";
+import { Upload } from "react-feather";
 
 export const CustomFileWidget: FunctionComponent<WidgetProps> = ({
   id,
@@ -79,8 +79,8 @@ export const CustomFileWidget: FunctionComponent<WidgetProps> = ({
   return (
     <label>
       <div className="cursor-pointer w-max px-4 py-2 border border-gray-300 rounded-lg mt-3 hover:bg-cloud-100">
-        <Download className="inline mr-4 text-blue-800" />
-        <p className="inline text-blue-800 font-medium">{options.text ?? "Upload Button"}</p>
+        <Upload className="inline mr-4 text-cerulean" />
+        <p className="inline text-cerulean font-medium">{options.text ?? "Upload Button"}</p>
       </div>
       <FilesInfo />
       <input

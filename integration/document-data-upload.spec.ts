@@ -84,14 +84,14 @@ test("should upload populate data fields correctly for version 2 document", asyn
   await t.expect(documentNameSelect.innerText).eql("COO-(ChAFTA)-2");
   await t.expect(fileNameField.value).eql("COO-(ChAFTA)-2");
   await t.expect(V2COOiDField.value).eql("SampleId-1");
-  await t.expect(V2COOIssueDateTimeField.value).eql("SampleIssueDateTime-1");
+  await t.expect(V2COOIssueDateTimeField.value).eql("2015-01-01T00:00:00.000");
 
   // Check next document
   await t.typeText(documentNumberInput, "3", { replace: true });
   await t.expect(documentNameSelect.innerText).eql("COO-(ChAFTA)-3");
   await t.expect(fileNameField.value).eql("COO-(ChAFTA)-3");
   await t.expect(V2COOiDField.value).eql("SampleId-2");
-  await t.expect(V2COOIssueDateTimeField.value).eql("SampleIssueDateTime-2");
+  await t.expect(V2COOIssueDateTimeField.value).eql("2015-01-02T00:00:00.000");
 });
 
 test("should upload populate data fields correctly for version 3 document", async (t) => {

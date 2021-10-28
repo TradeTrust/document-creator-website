@@ -50,7 +50,6 @@
             "properties": {
               "signature": {
                 "type": "string",
-                "format": "data-url",
                 "title": "First Signatory"
               }
             }
@@ -587,7 +586,6 @@
         "properties": {
           "logo": {
             "type": "string",
-            "format": "data-url",
             "title": "Document Title"
           },
           "title": {
@@ -676,7 +674,6 @@
         "properties": {
           "logo": {
             "type": "string",
-            "format": "data-url",
             "title": "Document Title"
           },
           "title": {

@@ -89,7 +89,7 @@
                 "properties": {
                   "signature": {
                     "type": "string",
-                    "format": "data-url",
+                    
                     "title": "First Signatory"
                   }
                 }
