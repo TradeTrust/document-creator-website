@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 export const ErrorBoundaryContent: FunctionComponent<{
   error?: string;
 }> = ({ error }) => {
-  const description = error ? error : "TradeTrust has encountered an issue, please try again later.";
+  const description = error ? error : "TradeTrust has encountered an issue.";
   return (
     <ErrorPage pageTitle="ERROR" header="Something Went Wrong" description={description} image="/error-boundary.png">
       <h3 className="font-normal my-2 sm:my-4 text-lg sm:text-2xl">
