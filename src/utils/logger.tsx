@@ -1,6 +1,6 @@
 import debug from "debug";
 
-const creator = debug("creator");
+const creator = debug("tradetrust-creator");
 
 const trace = creator.extend("trace");
 const error = creator.extend("error");

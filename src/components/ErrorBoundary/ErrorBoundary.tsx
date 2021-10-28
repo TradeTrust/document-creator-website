@@ -7,7 +7,10 @@ const { stack } = getLogger("component:errorBoundary");
 type State = { hasError: boolean; error?: Error };
 
 export class ErrorBoundary extends Component<unknown, State> {
-  state: State = { hasError: false };
+  constructor(props: Record<string, unknown>) {
+    super(props);
+    this.state = { hasError: false };
+  }
 
   static getDerivedStateFromError(error: Error): State {
     return { hasError: true, error };
