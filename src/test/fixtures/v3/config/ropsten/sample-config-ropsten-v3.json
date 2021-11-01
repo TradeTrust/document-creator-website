@@ -6,7 +6,7 @@
   },
   "forms": [
     {
-      "name": "Certificate of Origin (ChAFTA)",
+      "name": "COO (ChAFTA)",
       "type": "VERIFIABLE_DOCUMENT",
       "defaults": {
         "version": "https://schema.openattestation.com/3.0/schema.json",
@@ -38,36 +38,7 @@
             "identifier": "demo-tradetrust.openattestation.com"
           }
         },
-        "credentialSubject": {
-          "name": "CHAFTA Certificate of Origin",
-          "firstSignatoryAuthentication": {
-            "actualDateTime": "2020-05-29T09:46:34Z",
-            "statement": "The undersigned hereby declares that the above-stated information is correct and that the goods exported to [importer] comply with the origin requirements specified in the China-Australia Free Trade Agreement."
-          },
-          "secondSignatoryAuthentication": {
-            "actualDateTime": "2020-06-03T03:50:45Z",
-            "statement": "On the basis of the control carried out, it is hereby certified that the information herein is correct and that the described goods comply with the origin requirements of the China-Australia Free Trade Agreement."
-          },
-          "issueLocation": {
-            "iD": "unece.un.org:locode:AUADL",
-            "name": "Adelaide"
-          },
-          "issuer": {
-            "iD": "id:wfa.org.au",
-            "name": "Australian Grape and Wine Incorporated",
-            "postalAddress": {
-              "line1": "Level 1, Industry Offcies",
-              "line2": "Botanic Road",
-              "cityName": "Adelaide",
-              "postcode": "5000",
-              "countrySubDivisionName": "SA",
-              "countryCode": "AU"
-            }
-          },
-          "status": "issued",
-          "isPreferential": true,
-          "freeTradeAgreement": "CHAFTA"
-        }
+        "credentialSubject": {}
       },
       "schema": {
         "type": "object",
@@ -89,8 +60,11 @@
                 "properties": {
                   "signature": {
                     "type": "string",
-                    
                     "title": "First Signatory"
+                  },
+                  "actualDateTime": {
+                    "type": "string",
+                    "title": "Actual Date Time"
                   }
                 }
               },
@@ -453,23 +427,28 @@
         }
       },
       "uiSchema": {
-        "firstSignatoryAuthentication": {
-          "signature": {
-            "ui:widget": "file",
-            "ui:options": {
-              "text": "Upload Signature",
-              "accept": ".png, .jpeg, .jpg"
+        "credentialSubject": {
+          "firstSignatoryAuthentication": {
+            "signature": {
+              "ui:widget": "file",
+              "ui:options": {
+                "text": "Upload Signature",
+                "accept": ".png, .jpeg, .jpg"
+              }
+            },
+            "actualDateTime": {
+              "ui:widget": "datetime"
             }
-          }
-        },
-        "issueDateTime": {
-          "ui:widget": "datetime"
-        },
-        "supplyChainConsignment": {
-          "mainCarriageTransportMovement": {
-            "departureEvent": {
-              "departureDateTime": {
-                "ui:widget": "datetime"
+          },
+          "issueDateTime": {
+            "ui:widget": "datetime"
+          },
+          "supplyChainConsignment": {
+            "mainCarriageTransportMovement": {
+              "departureEvent": {
+                "departureDateTime": {
+                  "ui:widget": "datetime"
+                }
               }
             }
           }
@@ -514,7 +493,6 @@
             "identifier": "demo-tradetrust.openattestation.com"
           }
         },
-
         "credentialSubject": {}
       },
       "schema": {
@@ -687,7 +665,6 @@
             "identifier": "demo-tradetrust.openattestation.com"
           }
         },
-
         "credentialSubject": {}
       },
       "schema": {
