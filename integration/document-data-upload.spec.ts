@@ -105,7 +105,7 @@ test("should upload populate data fields correctly for version 3 document", asyn
   await t.expect(ProgressBar.textContent).contains("1");
 
   // Navigate to form
-  await t.click(Button.withText("Certificate of Origin"));
+  await t.click(Button.withText("COO (ChAFTA)"));
   await t.expect(FillFormTitle.textContent).contains("Fill and Preview Form");
   await t.expect(ProgressBar.textContent).contains("2");
 
@@ -129,15 +129,15 @@ test("should upload populate data fields correctly for version 3 document", asyn
   await t.setFilesToUpload(DataFileDropZoneInput, [dataFileCsvCooV3]);
 
   // Validated the content is overwritten by the data file
-  await t.expect(documentNameSelect.innerText).eql("Certificate-of-Origin-(ChAFTA)-2");
-  await t.expect(fileNameField.value).eql("Certificate-of-Origin-(ChAFTA)-2");
+  await t.expect(documentNameSelect.innerText).eql("COO-(ChAFTA)-2");
+  await t.expect(fileNameField.value).eql("COO-(ChAFTA)-2");
   await t.expect(V3COOiDField.value).eql("SampleId-1");
-  await t.expect(V3COOIssueDateTimeField.value).eql("SampleIssueDateTime-1");
+  await t.expect(V3COOIssueDateTimeField.value).eql("2021-01-01T00:00:00.000");
 
   // Check next document
   await t.typeText(documentNumberInput, "3", { replace: true });
-  await t.expect(documentNameSelect.innerText).eql("Certificate-of-Origin-(ChAFTA)-3");
-  await t.expect(fileNameField.value).eql("Certificate-of-Origin-(ChAFTA)-3");
+  await t.expect(documentNameSelect.innerText).eql("COO-(ChAFTA)-3");
+  await t.expect(fileNameField.value).eql("COO-(ChAFTA)-3");
   await t.expect(V3COOiDField.value).eql("SampleId-2");
-  await t.expect(V3COOIssueDateTimeField.value).eql("SampleIssueDateTime-2");
+  await t.expect(V3COOIssueDateTimeField.value).eql("2021-02-01T00:00:00.000");
 });
