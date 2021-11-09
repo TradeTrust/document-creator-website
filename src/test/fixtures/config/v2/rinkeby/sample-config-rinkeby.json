@@ -450,10 +450,7 @@
         },
         "issuers": [
           {
-            "identityProof": {
-              "type": "DNS-TXT",
-              "location": "demo-tradetrust.openattestation.com"
-            },
+            "identityProof": { "type": "DNS-TXT", "location": "demo-tradetrust.openattestation.com" },
             "name": "DEMO TOKEN REGISTRY",
             "tokenRegistry": "0x26E730520949F9B2F73b53A35044680c2165725D"
           }
