@@ -1,10 +1,7 @@
 {
   "compilerOptions": {
     "target": "es5",
-    "lib": [
-      "dom",
-      "esnext"
-    ],
+    "lib": ["dom", "esnext"],
     "skipLibCheck": true,
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
@@ -14,21 +11,17 @@
     "moduleResolution": "node",
     "resolveJsonModule": true,
     "jsx": "react-jsx",
-    "types": [
-      "jest",
-      "node",
-      "webpack-env",
-      "@testing-library/jest-dom"
-    ],
+    "types": ["jest", "node", "webpack-env", "@testing-library/jest-dom"],
     "allowJs": true,
     "noEmit": true,
     "noFallthroughCasesInSwitch": true,
     "downlevelIteration": true,
     "isolatedModules": true
   },
-  "include": [
-    "src",
-    "integration",
-    "**/*.config.js"
-  ]
+  "ts-node": {
+    "compilerOptions": {
+      "module": "CommonJS"
+    }
+  },
+  "include": ["src", "integration", "**/*.config.js"]
 }

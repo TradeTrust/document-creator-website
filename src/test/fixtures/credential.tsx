@@ -65,7 +65,7 @@ export const did = {
   },
   issuer: {
     id: "did:ethr:0x1245e5b64d785b25057f7438f715f4aa5d965733",
-    name: "Demo Issuer",
+    name: "DEMO DID",
     revocation: {
       type: "NONE",
     },

@@ -19,6 +19,7 @@
     "build": "cross-env NODE_OPTIONS='--max-old-space-size=4096' CI=false npm-run-all -s build:css build:js",
     "build:css": "cross-env NODE_ENV=production postcss src/tailwind.css -o src/index.css",
     "build:js": "cross-env NODE_ENV=production react-app-rewired build",
+    "build:config": "ts-node src/test/fixtures/generator.tsx",
     "eject": "react-scripts eject",
     "blockchain": "run-p blockchain:start blockchain:setup",
     "blockchain:contracts": "node ./scripts/setup-contracts.js",
@@ -42,7 +43,8 @@
     "prep": "cross-env npm-run-all -s lint lint:type lint:fix test:ci build integration:ci",
     "test:ci": "cross-env CI=true react-app-rewired test",
     "test": "react-app-rewired test",
-    "wait:blockchain": "wait-on -l -i 1000 tcp:8545"
+    "wait:blockchain": "wait-on -l -i 1000 tcp:8545",
+    "prepare": "husky install"
   },
   "dependencies": {
     "@emotion/react": "^11.4.0",
@@ -128,7 +130,9 @@
     "shelljs": "^0.8.4",
     "tailwindcss": "npm:@tailwindcss/postcss7-compat@^2.2.7",
     "testcafe": "^1.14.2",
+    "ts-node": "^10.4.0",
     "typescript": "^4.3.2",
-    "wait-on": "^6.0.0"
+    "wait-on": "^6.0.0",
+    "husky": "^7.0.0"
   }
 }
