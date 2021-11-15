@@ -2,7 +2,7 @@ import { getGSNRelayConfig } from "../../config";
 import { ConfigFile } from "../../types";
 import { decryptWalletOrSigner, getGsnRelaySigner } from "./decrypt";
 
-import sample from "../../test/fixtures/v2/config/ropsten/sample-config-ropsten.json";
+import sample from "../../test/fixtures/config/v2/ropsten/sample-config-ropsten.json";
 
 const configFile = sample as ConfigFile;
 const gsnConfig = getGSNRelayConfig("ropsten");

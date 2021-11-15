@@ -2,7 +2,7 @@ import { v2 } from "@govtechsg/open-attestation";
 import React, { FunctionComponent } from "react";
 import { DocumentPreview } from "./DocumentPreview";
 
-import SampleCnm from "../../../test/fixtures/v2/raw/unwrapped-cnm.json";
+import SampleCnm from "../../../test/fixtures/sample-files/v2/raw/unwrapped-cnm.json";
 
 export default {
   title: "DynamicForm/DocumentPreview",
