@@ -4,7 +4,7 @@ import { RevokeDocumentDropZone } from "./RevokeDocumentDropZone";
 import { DocumentUploadState } from "../../../constants/DocumentUploadState";
 import { createFileTransferEvent } from "../../../utils/utils";
 
-import sampleRevokableDocument from "../../../test/fixtures/v2/wrapped/sample-wrapped-document.json";
+import sampleRevokableDocument from "../../../test/fixtures/sample-files/v2/wrapped/sample-wrapped-document.json";
 
 describe("RevokeDocumentDropZone", () => {
   it("should fire setRevokeDocument, setFileName and setDocumentUploadState when a file is dropped", async () => {

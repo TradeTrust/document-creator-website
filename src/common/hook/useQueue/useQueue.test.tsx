@@ -11,8 +11,8 @@ import { getRevokingJobs } from "./utils/revoke";
 
 import samplePublishJobs from "../../../test/fixtures/jobs-publish.json";
 import sampleRevokeJobs from "../../../test/fixtures/jobs-revoke.json";
-import sampleConfigRopsten from "../../../test/fixtures/v2/config/ropsten/sample-config-ropsten.json";
-import sampleWrappedDocument from "../../../test/fixtures/v2/wrapped/sample-wrapped-document.json";
+import sampleConfigRopsten from "../../../test/fixtures/config/v2/ropsten/sample-config-ropsten.json";
+import sampleWrappedDocument from "../../../test/fixtures/sample-files/v2/wrapped/sample-wrapped-document.json";
 
 jest.mock("../../../services/publishing");
 jest.mock("./utils/publish");
