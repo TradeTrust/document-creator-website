@@ -3,4 +3,4 @@
 
 npm run lint
 npm run build:config
-git add src/test/fixtures/_generated
+git add src/test/fixtures/config/_generated-config-files

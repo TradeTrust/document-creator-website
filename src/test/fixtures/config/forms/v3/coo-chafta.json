@@ -1,33 +1,28 @@
 {
-  "network": "ropsten",
-  "wallet": {
-    "type": "AWS_KMS",
-    "accessKeyId": "<access key id>",
-    "region": "<region>",
-    "kmsKeyId": "<kms key id>"
+  "name": "TradeTrust Chafa Certificate of Origin v3",
+  "type": "VERIFIABLE_DOCUMENT",
+  "defaults": {
+    "version": "https://schema.openattestation.com/3.0/schema.json",
+    "@context": [
+      "https://www.w3.org/2018/credentials/v1",
+      "https://schemata.openattestation.com/io/tradetrust/certificate-of-origin/1.0/certificate-of-origin-context.json",
+      "https://schemata.openattestation.com/com/openattestation/1.0/OpenAttestation.v3.json"
+    ],
+    "type": ["VerifiableCredential", "OpenAttestationCredential"],
+    "issuanceDate": "2010-01-01T19:23:24Z",
+    "openAttestationMetadata": {
+      "template": {
+        "type": "EMBEDDED_RENDERER",
+        "name": "CHAFTA_COO",
+        "url": "https://generic-templates.tradetrust.io"
+      }
+    },
+    "credentialSubject": {}
   },
-  "forms": [
-    {
-      "name": "COO (ChAFTA)",
-      "type": "VERIFIABLE_DOCUMENT",
-      "defaults": {
-        "$template": {
-          "type": "EMBEDDED_RENDERER",
-          "name": "CHAFTA_COO",
-          "url": "https://generic-templates.tradetrust.io"
-        },
-        "issuers": [
-          {
-            "name": "Demo Issuer",
-            "documentStore": "0x6e80FD3dD1151607Ce15B98eE1e3DDd4E4DdF0B6",
-            "identityProof": {
-              "type": "DNS-TXT",
-              "location": "example.openattestation.com"
-            }
-          }
-        ]
-      },
-      "schema": {
+  "schema": {
+    "type": "object",
+    "properties": {
+      "credentialSubject": {
         "type": "object",
         "properties": {
           "iD": {
@@ -53,24 +48,23 @@
             }
           },
           "supplyChainConsignment": {
-            "title": "Supply Chain Consignment",
             "type": "object",
             "properties": {
               "iD": {
                 "type": "string",
-                "title": "ID"
+                "title": "iD"
               },
               "information": {
                 "type": "string",
                 "title": "Consignment Information"
               },
               "exportCountry": {
-                "title": "Export Country",
+                "title": "Export country",
                 "type": "object",
                 "properties": {
                   "code": {
                     "type": "string",
-                    "title": "Country Code"
+                    "title": "Country code"
                   }
                 }
               },
@@ -79,7 +73,7 @@
                 "type": "object",
                 "properties": {
                   "iD": {
-                    "title": "ID",
+                    "title": "iD",
                     "type": "string"
                   },
                   "name": {
@@ -104,15 +98,15 @@
                       },
                       "postcode": {
                         "type": "string",
-                        "title": "Postal Code"
+                        "title": "Postal code"
                       },
                       "countrySubDivisionName": {
                         "type": "string",
-                        "title": "Country Sub Division Name"
+                        "title": "Country Sub Division name"
                       },
                       "countryCode": {
                         "type": "string",
-                        "title": "Country Code"
+                        "title": "Country code"
                       }
                     }
                   }
@@ -120,11 +114,11 @@
               },
               "importCountry": {
                 "type": "object",
-                "title": "Import Country",
+                "title": "Import country",
                 "properties": {
                   "code": {
                     "type": "string",
-                    "title": "Country Code"
+                    "title": "Country code"
                   }
                 }
               },
@@ -133,7 +127,7 @@
                 "type": "object",
                 "properties": {
                   "iD": {
-                    "title": "Importer ID",
+                    "title": "importer iD",
                     "type": "string"
                   },
                   "name": {
@@ -158,15 +152,15 @@
                       },
                       "postcode": {
                         "type": "string",
-                        "title": "Postal Code"
+                        "title": "Postal code"
                       },
                       "countrySubDivisionName": {
                         "type": "string",
-                        "title": "Country Sub Division Name"
+                        "title": "Country Sub Division name"
                       },
                       "countryCode": {
                         "type": "string",
-                        "title": "Country Code"
+                        "title": "Country code"
                       }
                     }
                   }
@@ -180,7 +174,7 @@
                   "properties": {
                     "iD": {
                       "type": "string",
-                      "title": "ID"
+                      "title": "iD"
                     },
                     "information": {
                       "type": "string",
@@ -192,7 +186,7 @@
                       "properties": {
                         "originCriteriaText": {
                           "type": "string",
-                          "title": "Origin Criteria Text"
+                          "title": "Origin criteria text"
                         }
                       }
                     },
@@ -202,7 +196,7 @@
                       "properties": {
                         "iD": {
                           "type": "string",
-                          "title": "ID"
+                          "title": "iD"
                         },
                         "name": {
                           "type": "string",
@@ -226,15 +220,15 @@
                             },
                             "postcode": {
                               "type": "string",
-                              "title": "Postal Code"
+                              "title": "Postal code"
                             },
                             "countrySubDivisionName": {
                               "type": "string",
-                              "title": "Country Sub Division Name"
+                              "title": "Country Sub Division name"
                             },
                             "countryCode": {
                               "type": "string",
-                              "title": "Country Code"
+                              "title": "Country code"
                             }
                           }
                         }
@@ -252,15 +246,15 @@
                           },
                           "invoiceReference": {
                             "type": "object",
-                            "title": "Invoice Reference",
+                            "title": "Invoice reference",
                             "properties": {
                               "iD": {
                                 "type": "string",
-                                "title": "ID"
+                                "title": "iD"
                               },
                               "formattedIssueDateTime": {
                                 "type": "string",
-                                "title": "Formatted Issue Date & Time"
+                                "title": "Formatted issue date & time"
                               },
                               "attachedBinaryFile": {
                                 "type": "object",
@@ -268,7 +262,7 @@
                                 "properties": {
                                   "uRI": {
                                     "type": "string",
-                                    "title": "Attached Binary File URI"
+                                    "title": "Attached binary file uRI"
                                   }
                                 }
                               }
@@ -276,11 +270,11 @@
                           },
                           "tradeProduct": {
                             "type": "object",
-                            "title": "Trade Product",
+                            "title": "Trade product",
                             "properties": {
                               "iD": {
                                 "type": "string",
-                                "title": "ID"
+                                "title": "iD"
                               },
                               "description": {
                                 "type": "string",
@@ -292,17 +286,17 @@
                                 "properties": {
                                   "classCode": {
                                     "type": "string",
-                                    "title": "Harmonised Tariff Class Code"
+                                    "title": "Harmonised tariff class code"
                                   },
                                   "className": {
                                     "type": "string",
-                                    "title": "Harmonised Tariff Class Name"
+                                    "title": "Harmonised tariff class name"
                                   }
                                 }
                               },
                               "originCountry": {
                                 "type": "object",
-                                "title": "Origin Country",
+                                "title": "Origin country",
                                 "properties": {
                                   "code": {
                                     "type": "string",
@@ -314,21 +308,21 @@
                           },
                           "transportPackages": {
                             "type": "array",
-                            "title": "Transport Packages",
+                            "title": "Transport packages",
                             "items": {
                               "type": "object",
                               "properties": {
                                 "iD": {
                                   "type": "string",
-                                  "title": "ID"
+                                  "title": "iD"
                                 },
                                 "grossVolume": {
                                   "type": "string",
-                                  "title": "Gross Volume"
+                                  "title": "Gross volume"
                                 },
                                 "grossWeight": {
                                   "type": "string",
-                                  "title": "Gross Weight"
+                                  "title": "Gross weight"
                                 }
                               }
                             }
@@ -345,7 +339,7 @@
                 "properties": {
                   "iD": {
                     "type": "string",
-                    "title": "ID"
+                    "title": "iD"
                   },
                   "name": {
                     "type": "string",
@@ -359,7 +353,7 @@
                 "properties": {
                   "iD": {
                     "type": "string",
-                    "title": "ID"
+                    "title": "iD"
                   },
                   "information": {
                     "type": "string",
@@ -371,11 +365,11 @@
                     "properties": {
                       "name": {
                         "type": "string",
-                        "title": "Used Transport"
+                        "title": "Used transport"
                       },
                       "iD": {
                         "type": "string",
-                        "title": "Used Transport ID"
+                        "title": "Used transport iD"
                       }
                     }
                   },
@@ -385,7 +379,7 @@
                     "properties": {
                       "departureDateTime": {
                         "type": "string",
-                        "title": "Departure Date and Time"
+                        "title": "Departure date and time"
                       }
                     }
                   }
@@ -397,7 +391,7 @@
                 "properties": {
                   "iD": {
                     "type": "string",
-                    "title": "ID"
+                    "title": "iD"
                   },
                   "name": {
                     "type": "string",
@@ -408,313 +402,40 @@
             }
           }
         }
-      },
-      "uiSchema": {
-        "firstSignatoryAuthentication": {
-          "signature": {
-            "ui:widget": "file",
-            "ui:options": {
-              "text": "Upload Signature",
-              "accept": ".png, .jpeg, .jpg"
-            }
-          },
-          "actualDateTime": {
-            "ui:widget": "datetime"
-          }
-        },
-        "issueDateTime": {
-          "ui:widget": "datetime"
-        },
-        "supplyChainConsignment": {
-          "mainCarriageTransportMovement": {
-            "departureEvent": {
-              "departureDateTime": {
-                "ui:widget": "datetime"
-              }
-            }
-          }
-        }
-      },
-      "attachments": {
-        "allow": true,
-        "accept": ".pdf"
-      },
-      "extension": "tt"
-    },
-    {
-      "name": "Bill of Lading",
-      "type": "TRANSFERABLE_RECORD",
-      "defaults": {
-        "$template": {
-          "type": "EMBEDDED_RENDERER",
-          "name": "BILL_OF_LADING",
-          "url": "https://generic-templates.tradetrust.io"
-        },
-        "issuers": [
-          {
-            "identityProof": {
-              "type": "DNS-TXT",
-              "location": "example.tradetrust.io"
-            },
-            "name": "DEMO TOKEN REGISTRY",
-            "tokenRegistry": "0x039F02729e64fa77128C334F3685AFbd1f22DB96"
-          }
-        ]
-      },
-      "schema": {
-        "type": "object",
-        "required": ["blNumber", "scac"],
-        "properties": {
-          "blNumber": {
-            "type": "string",
-            "title": "BL Number"
-          },
-          "scac": {
-            "type": "string",
-            "title": "Standard Carrier Alpha Code (SCAC)"
-          },
-          "carrierName": {
-            "title": "Signed for the Carrier",
-            "type": "string"
-          },
-          "shipper": {
-            "type": "object",
-            "properties": {
-              "name": {
-                "type": "string"
-              },
-              "address": {
-                "type": "object",
-                "properties": {
-                  "street": {
-                    "type": "string"
-                  },
-                  "country": {
-                    "type": "string"
-                  }
-                }
-              }
-            }
-          },
-          "consignee": {
-            "type": "object",
-            "properties": {
-              "name": {
-                "type": "string"
-              }
-            }
-          },
-          "notifyParty": {
-            "title": "Notify Party",
-            "type": "object",
-            "properties": {
-              "name": {
-                "type": "string"
-              }
-            }
-          },
-          "vessel": {
-            "type": "string"
-          },
-          "voyageNo": {
-            "title": "Voyage No.",
-            "type": "string"
-          },
-          "portOfLoading": {
-            "title": "Port of Loading",
-            "type": "string"
-          },
-          "portOfDischarge": {
-            "title": "Port of Discharge",
-            "type": "string"
-          },
-          "placeOfReceipt": {
-            "title": "Place of Receipt",
-            "type": "string"
-          },
-          "placeOfDelivery": {
-            "title": "Place of Delivery",
-            "type": "string"
-          },
-          "packages": {
-            "type": "array",
-            "title": "Packages",
-            "items": {
-              "type": "object",
-              "properties": {
-                "description": {
-                  "type": "string"
-                },
-                "measurement": {
-                  "type": "string"
-                },
-                "weight": {
-                  "type": "string"
-                }
-              }
-            }
-          }
-        }
-      },
-      "attachments": {
-        "allow": true,
-        "accept": ".pdf, .json"
-      },
-      "extension": "tt"
-    },
-    {
-      "name": "Invoice",
-      "type": "VERIFIABLE_DOCUMENT",
-      "defaults": {
-        "$template": {
-          "type": "EMBEDDED_RENDERER",
-          "name": "INVOICE",
-          "url": "https://generic-templates.tradetrust.io"
-        },
-        "issuers": [
-          {
-            "name": "Demo Issuer",
-            "documentStore": "0x6e80FD3dD1151607Ce15B98eE1e3DDd4E4DdF0B6",
-            "identityProof": {
-              "type": "DNS-TXT",
-              "location": "example.openattestation.com"
-            }
-          }
-        ]
-      },
-      "schema": {
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "string",
-            "title": "Invoice ID"
-          },
-          "date": {
-            "type": "string",
-            "title": "Date"
-          },
-          "customerId": {
-            "type": "string",
-            "title": "Customer ID"
-          },
-          "terms": {
-            "type": "string",
-            "title": "Terms"
-          },
-          "billFrom": {
-            "type": "object",
-            "title": "Bill From",
-            "properties": {
-              "name": {
-                "type": "string",
-                "title": "Name"
-              },
-              "streetAddress": {
-                "type": "string",
-                "title": "Street Address"
-              },
-              "city": {
-                "type": "string",
-                "title": "City"
-              },
-              "postalCode": {
-                "type": "string",
-                "title": "Postal Code"
-              },
-              "phoneNumber": {
-                "type": "string",
-                "title": "Phone Number"
-              }
-            }
-          },
-          "billTo": {
-            "type": "object",
-            "title": "Bill To",
-            "properties": {
-              "name": {
-                "type": "string",
-                "title": "Name"
-              },
-              "email": {
-                "type": "string",
-                "title": "Email"
-              },
-              "company": {
-                "type": "object",
-                "title": "Bill To Company",
-                "properties": {
-                  "name": {
-                    "type": "string",
-                    "title": "Name"
-                  },
-                  "streetAddress": {
-                    "type": "string",
-                    "title": "Street Address"
-                  },
-                  "city": {
-                    "type": "string",
-                    "title": "City"
-                  },
-                  "postalCode": {
-                    "type": "string",
-                    "title": "Postal Code"
-                  },
-                  "phoneNumber": {
-                    "type": "string",
-                    "title": "Phone Number"
-                  }
-                }
-              }
-            }
-          },
-          "billableItems": {
-            "type": "array",
-            "title": "Billable Items",
-            "items": {
-              "type": "object",
-              "properties": {
-                "description": {
-                  "type": "string",
-                  "title": "Description"
-                },
-                "quantity": {
-                  "type": "string",
-                  "title": "Quantity"
-                },
-                "unitPrice": {
-                  "type": "string",
-                  "title": "Unit Price"
-                },
-                "amount": {
-                  "type": "string",
-                  "title": "Amount"
-                }
-              }
-            }
-          },
-          "subtotal": {
-            "type": "string",
-            "title": "Subtotal"
-          },
-          "tax": {
-            "type": "string",
-            "title": "Tax (%)"
-          },
-          "taxTotal": {
-            "type": "string",
-            "title": "Tax Total"
-          },
-          "total": {
-            "type": "string",
-            "title": "Total"
-          }
-        }
-      },
-      "extension": "tt"
+      }
     }
-  ],
-  "documentStorage": {
-    "apiKey": "randomKey",
-    "url": "https://api-ropsten.tradetrust.io/storage"
-  }
+  },
+  "uiSchema": {
+    "credentialSubject": {
+      "firstSignatoryAuthentication": {
+        "signature": {
+          "ui:widget": "file",
+          "ui:options": {
+            "text": "Upload Signature",
+            "accept": ".png, .jpeg, .jpg"
+          }
+        },
+        "actualDateTime": {
+          "ui:widget": "datetime"
+        }
+      },
+      "issueDateTime": {
+        "ui:widget": "datetime"
+      },
+      "supplyChainConsignment": {
+        "mainCarriageTransportMovement": {
+          "departureEvent": {
+            "departureDateTime": {
+              "ui:widget": "datetime"
+            }
+          }
+        }
+      }
+    }
+  },
+  "attachments": {
+    "allow": true,
+    "accept": ".pdf"
+  },
+  "extension": "tt"
 }
