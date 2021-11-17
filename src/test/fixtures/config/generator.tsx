@@ -7,7 +7,8 @@ export const generateConfigFile = (
   configFile: EmptyConfig,
   formsList: Forms[],
   credential: Credential | DidCredential,
-  directory: string
+  directory: string,
+  validationBypass?: boolean
 ): void => {
   try {
     const { network, wallet, documentStorage } = credential;
@@ -39,7 +40,7 @@ export const generateConfigFile = (
       forms: formsList.flat(),
     };
 
-    updateConfigFile(generatedConfig, directory);
+    updateConfigFile(generatedConfig, directory, validationBypass);
   } catch (e: any) {
     console.error(e.message);
   }
@@ -201,8 +202,11 @@ function insertV3Credential(forms: any, credential: Credential | DidCredential, 
   });
 }
 
-function updateConfigFile(configFile: any, directory: string) {
-  assertConfigFile(configFile);
+function updateConfigFile(configFile: any, directory: string, validationBypass = false) {
+  if (!validationBypass) {
+    assertConfigFile(configFile);
+  }
+
   if (!existsSync(parse(directory).dir)) {
     mkdirSync(parse(directory).dir, { recursive: true });
   }

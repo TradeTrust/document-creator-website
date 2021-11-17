@@ -1,5 +1,5 @@
 {
-  "name": "TradeTrust Bill of Lading v3",
+  "name": "Bill of Lading",
   "type": "TRANSFERABLE_RECORD",
   "defaults": {
     "version": "https://schema.openattestation.com/3.0/schema.json",

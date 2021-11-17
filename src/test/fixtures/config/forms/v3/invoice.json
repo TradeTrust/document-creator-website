@@ -1,5 +1,5 @@
 {
-  "name": "TradeTrust Invoice v3",
+  "name": "Invoice",
   "type": "VERIFIABLE_DOCUMENT",
   "defaults": {
     "version": "https://schema.openattestation.com/3.0/schema.json",

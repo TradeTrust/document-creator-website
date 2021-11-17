@@ -6,7 +6,7 @@
   },
   "forms": [
     {
-      "name": "TradeTrust Bill of Lading v3",
+      "name": "Bill of Lading",
       "type": "TRANSFERABLE_RECORD",
       "defaults": {
         "version": "https://schema.openattestation.com/3.0/schema.json",
@@ -148,7 +148,7 @@
       }
     },
     {
-      "name": "TradeTrust Chafa Certificate of Origin v3",
+      "name": "COO (ChAFTA)",
       "type": "VERIFIABLE_DOCUMENT",
       "defaults": {
         "version": "https://schema.openattestation.com/3.0/schema.json",
@@ -606,7 +606,7 @@
       "extension": "tt"
     },
     {
-      "name": "TradeTrust Invoice v3",
+      "name": "Invoice",
       "type": "VERIFIABLE_DOCUMENT",
       "defaults": {
         "version": "https://schema.openattestation.com/3.0/schema.json",

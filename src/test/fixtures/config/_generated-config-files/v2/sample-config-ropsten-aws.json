@@ -8,7 +8,7 @@
   },
   "forms": [
     {
-      "name": "TradeTrust Bill of Lading v2",
+      "name": "Bill of Lading",
       "type": "TRANSFERABLE_RECORD",
       "defaults": {
         "$template": {
@@ -133,7 +133,7 @@
       "fileName": "bill-<%= blNumber %>"
     },
     {
-      "name": "TradeTrust Chafta Certificate of Origin v2",
+      "name": "COO (ChAFTA)",
       "type": "VERIFIABLE_DOCUMENT",
       "defaults": {
         "$template": {
@@ -560,7 +560,7 @@
       "extension": "tt"
     },
     {
-      "name": "TradeTrust Covering Letter v2",
+      "name": "Covering Letter",
       "type": "VERIFIABLE_DOCUMENT",
       "defaults": {
         "$template": {
@@ -644,7 +644,7 @@
       "extension": "tt"
     },
     {
-      "name": "TradeTrust Invoice v2",
+      "name": "Invoice",
       "type": "VERIFIABLE_DOCUMENT",
       "defaults": {
         "$template": {

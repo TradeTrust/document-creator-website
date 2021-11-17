@@ -1,5 +1,6 @@
 import { Selector } from "testcafe";
-import { loadConfigFile, configLocal, configLocalWalletless, configLocalEmpty } from "./helper";
+import { loadConfigFile, configLocal, configLocalWalletless } from "./helper";
+import tmp from "tmp";
 
 fixture("Error configs").page`http://localhost:3000`;
 
@@ -15,7 +16,8 @@ test("should show correct error messages on various malformed configs", async (t
   await t.expect(ConfigError.textContent).contains("Config is malformed");
 
   // Upload config file (invalid config file)
-  await loadConfigFile(configLocalEmpty);
+  const configLocalEmpty = tmp.fileSync({ postfix: ".json" });
+  await loadConfigFile(configLocalEmpty.name);
   await t.expect(ErrorCantReadFile.textContent).contains("Document cannot be read");
 
   // Upload config file (working config file)

@@ -1,9 +1,6 @@
 {
-  "network": "homestead",
-  "wallet": {
-    "type": "ENCRYPTED_JSON",
-    "encryptedJson": "{\"address\":\"1245e5b64d785b25057f7438f715f4aa5d965733\",\"id\":\"bf069d1b-4e88-487c-b695-f2e03ed7c1ff\",\"version\":3,\"Crypto\":{\"cipher\":\"aes-128-ctr\",\"cipherparams\":{\"iv\":\"1f34e7bfdaee4b0778ecea4c8d12a543\"},\"ciphertext\":\"4f6cee88b4776f4f6f8eedf3da11c6a13542aa4bb65d46a5c1bc44c100a96f54\",\"kdf\":\"scrypt\",\"kdfparams\":{\"salt\":\"d931e0ea13032fd70060e40054c5a76c0571f4d840ec91eeda1bf68bdcad84db\",\"n\":1,\"dklen\":32,\"p\":1,\"r\":8},\"mac\":\"06c7897e3ff04245bf4f0765d8b6a8482c1c9981cb46ae88f636f9c83cd0b891\"},\"x-ethers\":{\"client\":\"ethers.js\",\"gethFilename\":\"UTC--2020-05-15T09-03-13.0Z--1245e5b64d785b25057f7438f715f4aa5d965733\",\"mnemonicCounter\":\"99b7f5b6897dcfe22fc7aa00d8e3cf5e\",\"mnemonicCiphertext\":\"6e7c1d38f162e54050b125f1f51b43ca\",\"path\":\"m/44'/60'/0'/0/0\",\"version\":\"0.1\"}}"
-  },
+  "network": "local",
+  "wallet": "",
   "forms": [
     {
       "name": "Bill of Lading",
@@ -20,7 +17,8 @@
               "type": "DNS-TXT",
               "location": "demo-tradetrust.openattestation.com"
             },
-            "name": "DEMO TOKEN REGISTRY"
+            "name": "DEMO TOKEN REGISTRY",
+            "tokenRegistry": "0x9Eb613a88534E2939518f4ffBFE65F5969b491FF"
           }
         ]
       },
@@ -144,7 +142,8 @@
               "type": "DNS-TXT",
               "location": "demo-tradetrust.openattestation.com"
             },
-            "name": "DEMO DOCUMENT STORE"
+            "name": "DEMO DOCUMENT STORE",
+            "documentStore": "0x63a223e025256790e88778a01f480eba77731d04"
           }
         ]
       },
@@ -570,7 +569,8 @@
               "type": "DNS-TXT",
               "location": "demo-tradetrust.openattestation.com"
             },
-            "name": "DEMO DOCUMENT STORE"
+            "name": "DEMO DOCUMENT STORE",
+            "documentStore": "0x63a223e025256790e88778a01f480eba77731d04"
           }
         ]
       },
@@ -653,7 +653,8 @@
               "type": "DNS-TXT",
               "location": "demo-tradetrust.openattestation.com"
             },
-            "name": "DEMO DOCUMENT STORE"
+            "name": "DEMO DOCUMENT STORE",
+            "documentStore": "0x63a223e025256790e88778a01f480eba77731d04"
           }
         ]
       },
@@ -791,6 +792,151 @@
         }
       },
       "extension": "tt"
+    },
+    {
+      "name": "Covering Letter (extension)",
+      "type": "VERIFIABLE_DOCUMENT",
+      "defaults": {
+        "$template": {
+          "type": "EMBEDDED_RENDERER",
+          "name": "COVERING_LETTER",
+          "url": "https://generic-templates.tradetrust.io"
+        },
+        "issuers": [
+          {
+            "identityProof": {
+              "type": "DNS-TXT",
+              "location": "demo-tradetrust.openattestation.com"
+            },
+            "name": "DEMO DOCUMENT STORE",
+            "documentStore": "0x63a223e025256790e88778a01f480eba77731d04"
+          }
+        ]
+      },
+      "schema": {
+        "type": "object",
+        "properties": {
+          "logo": {
+            "type": "string",
+            "title": "Document Title"
+          },
+          "title": {
+            "type": "string",
+            "title": "Document Title"
+          },
+          "remarks": {
+            "type": "string",
+            "title": "Remarks"
+          },
+          "backgroundColor": {
+            "type": "string",
+            "title": "Background Color"
+          },
+          "titleColor": {
+            "type": "string",
+            "title": "Title Color"
+          },
+          "remarksColor": {
+            "type": "string",
+            "title": "Remarks Color"
+          }
+        }
+      },
+      "uiSchema": {
+        "logo": {
+          "ui:widget": "file",
+          "ui:options": {
+            "text": "Upload Cover Letter Logo",
+            "accept": ".png, .jpeg, .jpg"
+          }
+        },
+        "remarks": {
+          "ui:widget": "textarea"
+        },
+        "backgroundColor": {
+          "ui:widget": "color",
+          "ui:options": {
+            "emptyValue": "#ffffff"
+          }
+        },
+        "titleColor": {
+          "ui:widget": "color",
+          "ui:options": {
+            "emptyValue": "#4e4e50"
+          }
+        },
+        "remarksColor": {
+          "ui:widget": "color",
+          "ui:options": {
+            "emptyValue": "#4e4e50"
+          }
+        }
+      },
+      "attachments": {
+        "allow": true
+      },
+      "extension": "docTest",
+      "headers": [
+        "title",
+        "remarks"
+      ]
+    },
+    {
+      "name": "Covering Letter (No uiSchema)",
+      "type": "VERIFIABLE_DOCUMENT",
+      "defaults": {
+        "$template": {
+          "type": "EMBEDDED_RENDERER",
+          "name": "COVERING_LETTER",
+          "url": "https://generic-templates.tradetrust.io"
+        },
+        "issuers": [
+          {
+            "identityProof": {
+              "type": "DNS-TXT",
+              "location": "demo-tradetrust.openattestation.com"
+            },
+            "name": "DEMO DOCUMENT STORE",
+            "documentStore": "0x63a223e025256790e88778a01f480eba77731d04"
+          }
+        ]
+      },
+      "schema": {
+        "type": "object",
+        "properties": {
+          "logo": {
+            "type": "string",
+            "title": "Document Title"
+          },
+          "title": {
+            "type": "string",
+            "title": "Document Title"
+          },
+          "remarks": {
+            "type": "string",
+            "title": "Remarks"
+          },
+          "backgroundColor": {
+            "type": "string",
+            "title": "Background Color"
+          },
+          "titleColor": {
+            "type": "string",
+            "title": "Title Color"
+          },
+          "remarksColor": {
+            "type": "string",
+            "title": "Remarks Color"
+          }
+        }
+      },
+      "attachments": {
+        "allow": true
+      }
     }
-  ]
+  ],
+  "documentStorage": {
+    "apiKey": "randonKey",
+    "url": "https://api-rinkeby.tradetrust.io/storage"
+  }
 }

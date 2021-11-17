@@ -23,7 +23,7 @@ test("should have the correct extension if specified", async (t) => {
   await t.expect(ProgressBar.textContent).contains("1");
 
   // Navigate to form
-  await t.click(Button.withText("Covering Letter (No uiSchema)"));
+  await t.click(Button.withText("Covering Letter"));
   await t.expect(FillFormTitle.textContent).contains("Fill and Preview Form");
   await t.expect(ProgressBar.textContent).contains("2");
 
@@ -39,7 +39,7 @@ test("should have the correct extension if specified", async (t) => {
   await t.click(SubmitButton);
 
   // Check that the two Covering Letters are created with the correct document extensions
-  const fileName1 = "Covering Letter (No uiSchema)-1-local.tt";
+  const fileName1 = "Covering Letter-1-local.tt";
   const fileName2 = "Covering Letter (extension)-2-local.docTest";
   await t.expect(Selector("div").withText(fileName1).exists).ok();
   await t.expect(Selector("div").withText(fileName2).exists).ok();

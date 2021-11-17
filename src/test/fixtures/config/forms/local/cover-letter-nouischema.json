@@ -1,5 +1,5 @@
 {
-  "name": "Covering Letter",
+  "name": "Covering Letter (No uiSchema)",
   "type": "VERIFIABLE_DOCUMENT",
   "defaults": {
     "$template": {
@@ -40,36 +40,5 @@
   },
   "attachments": {
     "allow": true
-  },
-  "uiSchema": {
-    "logo": {
-      "ui:widget": "file",
-      "ui:options": {
-        "text": "Upload Cover Letter Logo",
-        "accept": ".png, .jpeg, .jpg"
-      }
-    },
-    "remarks": {
-      "ui:widget": "textarea"
-    },
-    "backgroundColor": {
-      "ui:widget": "color",
-      "ui:options": {
-        "emptyValue": "#ffffff"
-      }
-    },
-    "titleColor": {
-      "ui:widget": "color",
-      "ui:options": {
-        "emptyValue": "#4e4e50"
-      }
-    },
-    "remarksColor": {
-      "ui:widget": "color",
-      "ui:options": {
-        "emptyValue": "#4e4e50"
-      }
-    }
-  },
-  "extension": "tt"
+  }
 }
