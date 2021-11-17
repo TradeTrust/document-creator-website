@@ -5,7 +5,7 @@ import { WrappedDocument } from "../../../types";
 import { ProcessedDocumentTag } from "./ProcessedDocumentTag";
 import { QueueType } from "../../../constants/QueueState";
 
-import sampleConfig from "../../../test/fixtures/config/v2/ropsten/sample-config-ropsten.json";
+import sampleConfig from "../../../test/fixtures/config/_generated-config-files/v2/sample-config-ropsten.json";
 
 jest.mock("file-saver");
 jest.mock("../../../common/context/config");

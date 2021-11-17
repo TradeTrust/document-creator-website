@@ -3,9 +3,9 @@ import React from "react";
 import { FormTemplate, FormType } from "../../../types";
 import { DynamicForm } from "./DynamicForm";
 
-import sampleConfig from "../../../test/fixtures/config/v2/ropsten/sample-config-ropsten.json";
+import sampleConfig from "../../../test/fixtures/config/_generated-config-files/v2/sample-config-ropsten.json";
 
-const form = sampleConfig.forms[0] as FormTemplate;
+const form = sampleConfig.forms[1] as FormTemplate;
 
 const mockSetFormData = jest.fn();
 const mockSetOwnership = jest.fn();
