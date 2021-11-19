@@ -1,3 +1,4 @@
+import { utils } from "@govtechsg/open-attestation";
 import axios, { AxiosResponse } from "axios";
 import { DocumentStorage, WrappedDocument } from "../../types";
 import { decodeQrCode } from "../utils";
@@ -33,7 +34,9 @@ export const uploadToStorage = async (
   doc: WrappedDocument,
   documentStorage: DocumentStorage
 ): Promise<AxiosResponse> => {
-  const qrCodeObj = decodeQrCode(doc.rawDocument.links.self.href);
+  const qrCodeObj = utils.isRawV3Document(doc.rawDocument)
+    ? decodeQrCode((doc.rawDocument.credentialSubject as any).links.self.href)
+    : decodeQrCode(doc.rawDocument.links.self.href);
   const uri = qrCodeObj.payload.uri;
 
   return axios({

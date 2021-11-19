@@ -75,7 +75,12 @@ export const getRawDocuments = async (forms: FormEntry[], config: Config): Promi
       const formConfig = config.forms[templateIndex];
       if (!formConfig) throw new Error("Form definition not found");
       const formDefaults = formConfig.defaults;
-      const formData = { ...data.formData, ...qrUrl };
+      let formData;
+      if (utils.isRawV3Document(data.formData)) {
+        formData = { ...data.formData, credentialSubject: { ...data.formData.credentialSubject, ...qrUrl } };
+      } else {
+        formData = { ...data.formData, ...qrUrl };
+      }
       defaultsDeep(formData, formDefaults);
       const contractAddress = getContractAddressFromRawDoc(formData);
       const payload = formConfig.type === "TRANSFERABLE_RECORD" ? { ownership } : {};
