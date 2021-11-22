@@ -20,6 +20,8 @@ const configFile: EmptyConfig = {
 
 const formsV2: Forms[] = [{ version: "v2", forms: documentFormsV2 }];
 const formsV3: Forms[] = [{ version: "v3", forms: documentFormsV3 }];
+const didFormsV2: Forms[] = [{ version: "v2-did", forms: documentFormsV2 }];
+const didFormsV3: Forms[] = [{ version: "v3-did", forms: documentFormsV3 }];
 const allForms: Forms[] = [
   { version: "v2", forms: documentFormsV2 },
   { version: "v3", forms: documentFormsV3 },
@@ -39,11 +41,11 @@ const ALL_FORMS_ROPSTEN_DIRECTORY = join(__dirname, "_generated-config-files", "
 generateConfigFile(configFile, formsV2, ropstenCredential, V2_ROPSTEN_DIRECTORY);
 generateConfigFile(configFile, formsV2, ropstenAWSCredential, V2_AWS_ROPSTEN_DIRECTORY);
 generateConfigFile(configFile, formsV2, rinkebyCredential, V2_RINKEBY_DIRECTORY);
-generateConfigFile(configFile, formsV2, didCredential, V2_DID_DIRECTORY);
+generateConfigFile(configFile, didFormsV2, didCredential, V2_DID_DIRECTORY);
 
 generateConfigFile(configFile, formsV3, ropstenCredential, V3_ROPSTEN_DIRECTORY);
 generateConfigFile(configFile, formsV3, rinkebyCredential, V3_RINKEBY_DIRECTORY);
-generateConfigFile(configFile, formsV3, didCredential, V3_DID_DIRECTORY);
+generateConfigFile(configFile, didFormsV3, didCredential, V3_DID_DIRECTORY);
 
 generateConfigFile(configFile, allForms, ropstenCredential, ALL_FORMS_ROPSTEN_DIRECTORY);
 
