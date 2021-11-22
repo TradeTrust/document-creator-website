@@ -1,5 +1,5 @@
 {
-  "name": "Bill of Lading",
+  "name": "TradeTrust Bill of Lading v2",
   "type": "TRANSFERABLE_RECORD",
   "defaults": {
     "$template": {

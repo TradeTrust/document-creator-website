@@ -6,7 +6,148 @@
   },
   "forms": [
     {
-      "name": "COO (ChAFTA)",
+      "name": "TradeTrust Bill of Lading v3",
+      "type": "TRANSFERABLE_RECORD",
+      "defaults": {
+        "version": "https://schema.openattestation.com/3.0/schema.json",
+        "@context": [
+          "https://www.w3.org/2018/credentials/v1",
+          "https://schemata.openattestation.com/com/openattestation/1.0/OpenAttestation.v3.json",
+          "https://schemata.openattestation.com/io/tradetrust/bill-of-lading/1.0/bill-of-lading-context.json"
+        ],
+        "type": [
+          "VerifiableCredential",
+          "OpenAttestationCredential"
+        ],
+        "issuanceDate": "2010-01-01T19:23:24Z",
+        "openAttestationMetadata": {
+          "template": {
+            "type": "EMBEDDED_RENDERER",
+            "name": "BILL_OF_LADING",
+            "url": "https://generic-templates.tradetrust.io"
+          },
+          "proof": {
+            "type": "OpenAttestationProofMethod",
+            "method": "TOKEN_REGISTRY"
+          },
+          "identityProof": {
+            "type": "DNS-TXT",
+            "identifier": "demo-tradetrust.openattestation.com"
+          }
+        },
+        "credentialSubject": {},
+        "issuer": {
+          "id": "https://example.com",
+          "name": "DEMO TOKEN REGISTRY",
+          "type": "OpenAttestationIssuer"
+        }
+      },
+      "schema": {
+        "type": "object",
+        "properties": {
+          "credentialSubject": {
+            "type": "object",
+            "required": [
+              "blNumber",
+              "scac"
+            ],
+            "properties": {
+              "blNumber": {
+                "type": "string",
+                "title": "BL Number"
+              },
+              "scac": {
+                "type": "string",
+                "title": "Standard Carrier Alpha Code (SCAC)"
+              },
+              "carrierName": {
+                "title": "Signed for the Carrier",
+                "type": "string"
+              },
+              "shipper": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string"
+                  },
+                  "address": {
+                    "type": "object",
+                    "properties": {
+                      "street": {
+                        "type": "string"
+                      },
+                      "country": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                }
+              },
+              "consignee": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string"
+                  }
+                }
+              },
+              "notifyParty": {
+                "title": "Notify Party",
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string"
+                  }
+                }
+              },
+              "vessel": {
+                "type": "string"
+              },
+              "voyageNo": {
+                "title": "Voyage No.",
+                "type": "string"
+              },
+              "portOfLoading": {
+                "title": "Port of Loading",
+                "type": "string"
+              },
+              "portOfDischarge": {
+                "title": "Port of Discharge",
+                "type": "string"
+              },
+              "placeOfReceipt": {
+                "title": "Place of Receipt",
+                "type": "string"
+              },
+              "placeOfDelivery": {
+                "title": "Place of Delivery",
+                "type": "string"
+              },
+              "packages": {
+                "type": "array",
+                "title": "Packages",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "description": {
+                      "type": "string"
+                    },
+                    "measurement": {
+                      "type": "string"
+                    },
+                    "weight": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "TradeTrust Chafa Certificate of Origin v3",
       "type": "VERIFIABLE_DOCUMENT",
       "defaults": {
         "version": "https://schema.openattestation.com/3.0/schema.json",
@@ -467,7 +608,7 @@
       "extension": "tt"
     },
     {
-      "name": "Invoice",
+      "name": "TradeTrust Invoice v3",
       "type": "VERIFIABLE_DOCUMENT",
       "defaults": {
         "version": "https://schema.openattestation.com/3.0/schema.json",
