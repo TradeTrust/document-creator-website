@@ -58,7 +58,7 @@ test("should upload populate data fields correctly for version 2 document", asyn
   await t.expect(ProgressBar.textContent).contains("1");
 
   // Navigate to form
-  await t.click(Button.withText("TradeTrust Chafa Certificate of Origin v2"));
+  await t.click(Button.withText("TradeTrust ChAFTA Certificate of Origin v2"));
   await t.expect(FillFormTitle.textContent).contains("Fill and Preview Form");
   await t.expect(ProgressBar.textContent).contains("2");
 
@@ -81,15 +81,15 @@ test("should upload populate data fields correctly for version 2 document", asyn
   await t.setFilesToUpload(DataFileDropZoneInput, [dataFileCsvCoo]);
 
   // Validated the content is overwritten by the data file
-  await t.expect(documentNameSelect.innerText).eql("TradeTrust-Chafa-Certificate-of-Origin-v2-2");
-  await t.expect(fileNameField.value).eql("TradeTrust-Chafa-Certificate-of-Origin-v2-2");
+  await t.expect(documentNameSelect.innerText).eql("TradeTrust-ChAFTA-Certificate-of-Origin-v2-2");
+  await t.expect(fileNameField.value).eql("TradeTrust-ChAFTA-Certificate-of-Origin-v2-2");
   await t.expect(V2COOiDField.value).eql("SampleId-1");
   await t.expect(V2COOIssueDateTimeField.value).eql("2015-01-01T00:00:00.000");
 
   // Check next document
   await t.typeText(documentNumberInput, "3", { replace: true });
-  await t.expect(documentNameSelect.innerText).eql("TradeTrust-Chafa-Certificate-of-Origin-v2-3");
-  await t.expect(fileNameField.value).eql("TradeTrust-Chafa-Certificate-of-Origin-v2-3");
+  await t.expect(documentNameSelect.innerText).eql("TradeTrust-ChAFTA-Certificate-of-Origin-v2-3");
+  await t.expect(fileNameField.value).eql("TradeTrust-ChAFTA-Certificate-of-Origin-v2-3");
   await t.expect(V2COOiDField.value).eql("SampleId-2");
   await t.expect(V2COOIssueDateTimeField.value).eql("2015-01-02T00:00:00.000");
 });
@@ -105,7 +105,7 @@ test("should upload populate data fields correctly for version 3 document", asyn
   await t.expect(ProgressBar.textContent).contains("1");
 
   // Navigate to form
-  await t.click(Button.withText("TradeTrust Chafa Certificate of Origin v3"));
+  await t.click(Button.withText("TradeTrust ChAFTA Certificate of Origin v3"));
   await t.expect(FillFormTitle.textContent).contains("Fill and Preview Form");
   await t.expect(ProgressBar.textContent).contains("2");
 
@@ -129,15 +129,15 @@ test("should upload populate data fields correctly for version 3 document", asyn
   await t.setFilesToUpload(DataFileDropZoneInput, [dataFileCsvCooV3]);
 
   // Validated the content is overwritten by the data file
-  await t.expect(documentNameSelect.innerText).eql("TradeTrust-Chafa-Certificate-of-Origin-v3-2");
-  await t.expect(fileNameField.value).eql("TradeTrust-Chafa-Certificate-of-Origin-v3-2");
+  await t.expect(documentNameSelect.innerText).eql("TradeTrust-ChAFTA-Certificate-of-Origin-v3-2");
+  await t.expect(fileNameField.value).eql("TradeTrust-ChAFTA-Certificate-of-Origin-v3-2");
   await t.expect(V3COOiDField.value).eql("SampleId-1");
   await t.expect(V3COOIssueDateTimeField.value).eql("2021-01-01T00:00:00.000");
 
   // Check next document
   await t.typeText(documentNumberInput, "3", { replace: true });
-  await t.expect(documentNameSelect.innerText).eql("TradeTrust-Chafa-Certificate-of-Origin-v3-3");
-  await t.expect(fileNameField.value).eql("TradeTrust-Chafa-Certificate-of-Origin-v3-3");
+  await t.expect(documentNameSelect.innerText).eql("TradeTrust-ChAFTA-Certificate-of-Origin-v3-3");
+  await t.expect(fileNameField.value).eql("TradeTrust-ChAFTA-Certificate-of-Origin-v3-3");
   await t.expect(V3COOiDField.value).eql("SampleId-2");
   await t.expect(V3COOIssueDateTimeField.value).eql("2021-02-01T00:00:00.000");
 });

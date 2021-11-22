@@ -131,7 +131,7 @@
       "fileName": "bill-<%= blNumber %>"
     },
     {
-      "name": "TradeTrust Chafa Certificate of Origin v2",
+      "name": "TradeTrust ChAFTA Certificate of Origin v2",
       "type": "VERIFIABLE_DOCUMENT",
       "defaults": {
         "$template": {
@@ -939,7 +939,7 @@
       }
     },
     {
-      "name": "TradeTrust Chafa Certificate of Origin v3",
+      "name": "TradeTrust ChAFTA Certificate of Origin v3",
       "type": "VERIFIABLE_DOCUMENT",
       "defaults": {
         "version": "https://schema.openattestation.com/3.0/schema.json",

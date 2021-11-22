@@ -31,7 +31,7 @@ test("should issue the documents on local blockchain correctly", async (t) => {
   await t.expect(ProgressBar.textContent).contains("1");
 
   // Navigate to form
-  await t.click(Button.withText("TradeTrust Chafa Certificate of Origin v2"));
+  await t.click(Button.withText("TradeTrust ChAFTA Certificate of Origin v2"));
   await t.expect(FillFormTitle.textContent).contains("Fill and Preview Form");
   await t.expect(ProgressBar.textContent).contains("2");
 
