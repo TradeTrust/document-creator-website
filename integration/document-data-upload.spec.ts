@@ -1,5 +1,5 @@
 import { Selector } from "testcafe";
-import { enterPassword, loadConfigFile, configLocal, configLocalV3, dataFileCsvCoo, dataFileCsvCooV3 } from "./helper";
+import { enterPassword, loadConfigFile, configLocal, dataFileCsvCoo, dataFileCsvCooV3 } from "./helper";
 import { join } from "path";
 import { homedir } from "os";
 import { existsSync, readFileSync, unlinkSync } from "fs";
@@ -96,7 +96,7 @@ test("should upload populate data fields correctly for version 2 document", asyn
 
 test("should upload populate data fields correctly for version 3 document", async (t) => {
   // Upload config file
-  await loadConfigFile(configLocalV3);
+  await loadConfigFile(configLocal);
   await t.expect(WalletDecryptionTitle.textContent).contains("Create and Revoke Document");
 
   // Login to step 1
@@ -105,7 +105,7 @@ test("should upload populate data fields correctly for version 3 document", asyn
   await t.expect(ProgressBar.textContent).contains("1");
 
   // Navigate to form
-  await t.click(Button.withText("COO (ChAFTA)"));
+  await t.click(Button.withText("COO (ChAFTA)").nth(1));
   await t.expect(FillFormTitle.textContent).contains("Fill and Preview Form");
   await t.expect(ProgressBar.textContent).contains("2");
 

@@ -5,7 +5,6 @@ const ButtonLogin = Selector("[data-testid='login-button']");
 const ConfigFileDropZoneInput = Selector("[data-testid='config-file-dropzone'] input");
 // fixtures
 
-export const configLocalV3 = "./../src/test/fixtures/config/_generated-config-files/v3/sample-config-local.json";
 export const configLocal = "./../src/test/fixtures/config/_generated-config-files/test/sample-config-local.json";
 export const configLocalErrorDocumentIssue =
   "./../src/test/fixtures/config/_generated-config-files/test/config-invalid-issuer.json";

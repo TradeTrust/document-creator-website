@@ -74,8 +74,4 @@ export const localCredential: Credential = {
   tokenRegistry: "0x9Eb613a88534E2939518f4ffBFE65F5969b491FF",
   documentStore: "0x63a223e025256790e88778a01f480eba77731d04",
   identityProof: "demo-tradetrust.openattestation.com",
-  documentStorage: {
-    apiKey: "randonKey",
-    url: "https://api-rinkeby.tradetrust.io/storage",
-  },
 };
