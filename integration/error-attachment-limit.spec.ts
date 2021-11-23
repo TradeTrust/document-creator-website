@@ -23,7 +23,7 @@ test("should show file limit warning when over 6mb", async (t) => {
   await t.expect(ProgressBar.textContent).contains("1");
 
   // Navigate to form
-  await t.click(Button.withText("COO (ChAFTA)"));
+  await t.click(Button.withText("TradeTrust ChAFTA Certificate of Origin v2"));
   await t.typeText(FormIdField, "COO-ID");
 
   // Upload a attachment (over file limit)

@@ -24,7 +24,7 @@ test("should show validation error messages correctly", async (t) => {
   await t.expect(ProgressBar.textContent).contains("1");
 
   // Navigate to form
-  await t.click(Button.withText("Bill of Lading"));
+  await t.click(Button.withText("TradeTrust Bill of Lading v2"));
   await t.expect(FillFormTitle.textContent).contains("Fill and Preview Form");
   await t.expect(ProgressBar.textContent).contains("2");
 

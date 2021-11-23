@@ -6,7 +6,7 @@
   },
   "forms": [
     {
-      "name": "Bill of Lading",
+      "name": "TradeTrust Bill of Lading v2",
       "type": "TRANSFERABLE_RECORD",
       "defaults": {
         "$template": {
@@ -131,7 +131,7 @@
       "fileName": "bill-<%= blNumber %>"
     },
     {
-      "name": "COO (ChAFTA)",
+      "name": "TradeTrust ChAFTA Certificate of Origin v2",
       "type": "VERIFIABLE_DOCUMENT",
       "defaults": {
         "$template": {
@@ -558,7 +558,7 @@
       "extension": "tt"
     },
     {
-      "name": "Covering Letter",
+      "name": "TradeTrust Covering Letter v2",
       "type": "VERIFIABLE_DOCUMENT",
       "defaults": {
         "$template": {
@@ -642,7 +642,7 @@
       "extension": "tt"
     },
     {
-      "name": "Invoice",
+      "name": "TradeTrust Invoice v2",
       "type": "VERIFIABLE_DOCUMENT",
       "defaults": {
         "$template": {
@@ -797,7 +797,7 @@
       "extension": "tt"
     },
     {
-      "name": "Bill of Lading",
+      "name": "TradeTrust Bill of Lading v3",
       "type": "TRANSFERABLE_RECORD",
       "defaults": {
         "version": "https://schema.openattestation.com/3.0/schema.json",
@@ -939,7 +939,7 @@
       }
     },
     {
-      "name": "COO (ChAFTA)",
+      "name": "TradeTrust ChAFTA Certificate of Origin v3",
       "type": "VERIFIABLE_DOCUMENT",
       "defaults": {
         "version": "https://schema.openattestation.com/3.0/schema.json",
@@ -1397,7 +1397,7 @@
       "extension": "tt"
     },
     {
-      "name": "Invoice",
+      "name": "TradeTrust Invoice v3",
       "type": "VERIFIABLE_DOCUMENT",
       "defaults": {
         "version": "https://schema.openattestation.com/3.0/schema.json",

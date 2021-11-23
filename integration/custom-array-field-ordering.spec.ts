@@ -14,7 +14,7 @@ const Remove0 = Selector(`[data-testid="custom-array-field-0"] [data-testid="rem
 test("should add, order, remove correctly", async (t) => {
   await loadConfigFile(configRopsten);
   await enterPassword("password");
-  await t.click(Selector("button").withText("Invoice"));
+  await t.click(Selector("button").withText("TradeTrust Invoice v2"));
 
   await t.click(AddItem);
   await t.typeText(Desc0, "foobar");

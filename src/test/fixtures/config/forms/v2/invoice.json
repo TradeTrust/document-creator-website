@@ -1,5 +1,5 @@
 {
-  "name": "Invoice",
+  "name": "TradeTrust Invoice v2",
   "type": "VERIFIABLE_DOCUMENT",
   "defaults": {
     "$template": {

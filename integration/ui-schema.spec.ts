@@ -25,7 +25,7 @@ test("form should render remarks as custom textarea when uiSchema exists", async
   await t.expect(ProgressBar.textContent).contains("1");
 
   // Navigate to form
-  await t.click(Button.withText("Covering Letter"));
+  await t.click(Button.withText("TradeTrust Covering Letter v2"));
   await t.expect(FillFormTitle.textContent).contains("Fill and Preview Form");
   await t.expect(ProgressBar.textContent).contains("2");
 
