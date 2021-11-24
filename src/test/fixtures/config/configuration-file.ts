@@ -99,9 +99,9 @@ const localCredential: Credential = {
  *  Forms Import
  */
 
-export const documentFormsV2Local = [CoverLetterExtension, CoverLetterNoUiSchema];
-export const documentFormsV2 = [v2BillOfLading, v2CooChafta, v2CoverLetter, v2Invoice];
-export const documentFormsV3 = [v3BillOfLading, v3CooChafta, v3Invoice];
+const documentFormsV2Local = [CoverLetterExtension, CoverLetterNoUiSchema];
+const documentFormsV2 = [v2BillOfLading, v2CooChafta, v2CoverLetter, v2Invoice];
+const documentFormsV3 = [v3BillOfLading, v3CooChafta, v3Invoice];
 
 const formsV2: Forms[] = [{ version: "v2", forms: documentFormsV2 }];
 const formsV3: Forms[] = [{ version: "v3", forms: documentFormsV3 }];
