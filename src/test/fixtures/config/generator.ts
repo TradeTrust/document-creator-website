@@ -1,15 +1,15 @@
-import { Credential, DidCredential, EmptyConfig, Forms } from "./types";
+import { Credential, DidCredential, Forms, GenerateConfigFileProps } from "./types";
 import { existsSync, writeFileSync, mkdirSync } from "fs";
 import { parse } from "path";
 import { assertConfigFile } from "../../../common/config/validate";
 
-export const generateConfigFile = (
-  configFile: EmptyConfig,
-  formsList: Forms[],
-  credential: Credential | DidCredential,
-  directory: string,
-  validationBypass?: boolean
-): void => {
+export const generateConfigFile = ({
+  configFile,
+  formsList,
+  credential,
+  directory,
+  validationBypass,
+}: GenerateConfigFileProps): void => {
   try {
     const { network, wallet, documentStorage } = credential;
 
