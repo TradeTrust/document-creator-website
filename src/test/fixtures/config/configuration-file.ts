@@ -12,7 +12,7 @@ import { EmptyConfig, Forms, Credential, DidCredential } from "./types";
 
 const configFile: EmptyConfig = {
   network: "",
-  wallet: {},
+  wallet: "",
   forms: [],
 };
 

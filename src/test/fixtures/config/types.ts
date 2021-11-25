@@ -28,9 +28,9 @@ export interface DidCredential {
 
 export interface EmptyConfig {
   network: string;
-  wallet: any;
+  wallet: string | WalletOptions;
   forms: [];
-  documentStorage?: any;
+  documentStorage?: DocumentStorage;
 }
 
 // validationBypass is used for local configuration to
