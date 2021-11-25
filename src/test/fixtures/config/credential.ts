@@ -51,7 +51,7 @@ export const rinkebyCredential: Credential = {
 };
 
 export const didCredential: DidCredential = {
-  network: "homestead",
+  network: "homestead", // DID does not need network, but as we are running the config file through joi validator, we will placehold to homestead,
   wallet: encryptedJsonWallet,
   didAddress: "did:ethr:0x1245e5b64d785b25057f7438f715f4aa5d965733",
   identityProof: identityProof,
