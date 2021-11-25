@@ -875,11 +875,7 @@
       "attachments": {
         "allow": true
       },
-      "extension": "docTest",
-      "headers": [
-        "title",
-        "remarks"
-      ]
+      "extension": "docTest"
     },
     {
       "name": "Covering Letter (No uiSchema)",
