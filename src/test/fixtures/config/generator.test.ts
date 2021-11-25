@@ -1,5 +1,3 @@
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-import React from "react";
 import { v2CoverLetter } from "./forms/v2";
 import { v3Invoice } from "./forms/v3";
 import tmp from "tmp";
@@ -21,7 +19,7 @@ const localCredential: Credential = {
 
 const configFile: EmptyConfig = {
   network: "",
-  wallet: {},
+  wallet: "",
   forms: [],
 };
 

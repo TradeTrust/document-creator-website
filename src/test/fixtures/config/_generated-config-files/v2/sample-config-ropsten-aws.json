@@ -2,9 +2,9 @@
   "network": "ropsten",
   "wallet": {
     "type": "AWS_KMS",
-    "accessKeyId": "<access key id>",
-    "region": "<region>",
-    "kmsKeyId": "<kms key id>"
+    "accessKeyId": "<ACCESS_KEY_ID>",
+    "region": "<REGION>",
+    "kmsKeyId": "<KMS_KEY_ID>"
   },
   "forms": [
     {
@@ -20,10 +20,10 @@
           {
             "identityProof": {
               "type": "DNS-TXT",
-              "location": ""
+              "location": "<IDENTITY_PROOF>"
             },
             "name": "DEMO TOKEN REGISTRY",
-            "tokenRegistry": ""
+            "tokenRegistry": "<TOKEN_REGISTRY>"
           }
         ]
       },
@@ -145,10 +145,10 @@
           {
             "identityProof": {
               "type": "DNS-TXT",
-              "location": ""
+              "location": "<IDENTITY_PROOF>"
             },
             "name": "DEMO DOCUMENT STORE",
-            "documentStore": ""
+            "documentStore": "<DOCUMENT_STORE>"
           }
         ]
       },
@@ -572,10 +572,10 @@
           {
             "identityProof": {
               "type": "DNS-TXT",
-              "location": ""
+              "location": "<IDENTITY_PROOF>"
             },
             "name": "DEMO DOCUMENT STORE",
-            "documentStore": ""
+            "documentStore": "<DOCUMENT_STORE>"
           }
         ]
       },
@@ -656,10 +656,10 @@
           {
             "identityProof": {
               "type": "DNS-TXT",
-              "location": ""
+              "location": "<IDENTITY_PROOF>"
             },
             "name": "DEMO DOCUMENT STORE",
-            "documentStore": ""
+            "documentStore": "<DOCUMENT_STORE>"
           }
         ]
       },
