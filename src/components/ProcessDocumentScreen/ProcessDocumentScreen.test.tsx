@@ -7,7 +7,7 @@ import { render, screen, act, fireEvent, waitFor } from "@testing-library/react"
 import FileSaver from "file-saver";
 import { MemoryRouter } from "react-router";
 
-import sampleConfig from "../../test/fixtures/config/v2/ropsten/sample-config-ropsten.json";
+import sampleConfig from "../../test/fixtures/config/_generated-config-files/v2/sample-config-ropsten.json";
 import sampleWrappedDocument from "../../test/fixtures/sample-files/v2/wrapped/sample-wrapped-document.json";
 
 jest.mock("../../common/hook/useQueue");

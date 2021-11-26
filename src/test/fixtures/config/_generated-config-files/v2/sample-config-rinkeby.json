@@ -1,12 +1,137 @@
 {
-  "network": "local",
+  "network": "rinkeby",
   "wallet": {
     "type": "ENCRYPTED_JSON",
-    "encryptedJson": "{\"address\":\"e0a71284ef59483795053266cb796b65e48b5124\",\"id\":\"04c746c3-fbef-453a-8c63-5e915021f57a\",\"version\":3,\"Crypto\":{\"cipher\":\"aes-128-ctr\",\"cipherparams\":{\"iv\":\"0f6963939595d04cb27a4d4abe689e32\"},\"ciphertext\":\"c80c8ca9acb96cf2f87279fef71508a06d4cf166e46e06a8beecd1420f2f525f\",\"kdf\":\"scrypt\",\"kdfparams\":{\"salt\":\"bf52c3386a9235e74a075c533ec1febd6e9221b57d649a2e156775fce984a58e\",\"n\":1,\"dklen\":32,\"p\":1,\"r\":8},\"mac\":\"5014d1d53e9294028eb808fbc9dd36394ebec22381946724111b9ee5ab46fd06\"}}"
+    "encryptedJson": "{\"address\":\"1245e5b64d785b25057f7438f715f4aa5d965733\",\"id\":\"bf069d1b-4e88-487c-b695-f2e03ed7c1ff\",\"version\":3,\"Crypto\":{\"cipher\":\"aes-128-ctr\",\"cipherparams\":{\"iv\":\"1f34e7bfdaee4b0778ecea4c8d12a543\"},\"ciphertext\":\"4f6cee88b4776f4f6f8eedf3da11c6a13542aa4bb65d46a5c1bc44c100a96f54\",\"kdf\":\"scrypt\",\"kdfparams\":{\"salt\":\"d931e0ea13032fd70060e40054c5a76c0571f4d840ec91eeda1bf68bdcad84db\",\"n\":1,\"dklen\":32,\"p\":1,\"r\":8},\"mac\":\"06c7897e3ff04245bf4f0765d8b6a8482c1c9981cb46ae88f636f9c83cd0b891\"},\"x-ethers\":{\"client\":\"ethers.js\",\"gethFilename\":\"UTC--2020-05-15T09-03-13.0Z--1245e5b64d785b25057f7438f715f4aa5d965733\",\"mnemonicCounter\":\"99b7f5b6897dcfe22fc7aa00d8e3cf5e\",\"mnemonicCiphertext\":\"6e7c1d38f162e54050b125f1f51b43ca\",\"path\":\"m/44'/60'/0'/0/0\",\"version\":\"0.1\"}}"
   },
   "forms": [
     {
-      "name": "COO (ChAFTA)",
+      "name": "TradeTrust Bill of Lading v2",
+      "type": "TRANSFERABLE_RECORD",
+      "defaults": {
+        "$template": {
+          "type": "EMBEDDED_RENDERER",
+          "name": "BILL_OF_LADING",
+          "url": "https://generic-templates.tradetrust.io"
+        },
+        "issuers": [
+          {
+            "identityProof": {
+              "type": "DNS-TXT",
+              "location": "demo-tradetrust.openattestation.com"
+            },
+            "name": "DEMO TOKEN REGISTRY",
+            "tokenRegistry": "0x26E730520949F9B2F73b53A35044680c2165725D"
+          }
+        ]
+      },
+      "schema": {
+        "type": "object",
+        "required": [
+          "blNumber",
+          "scac"
+        ],
+        "properties": {
+          "blNumber": {
+            "type": "string",
+            "title": "BL Number"
+          },
+          "scac": {
+            "type": "string",
+            "title": "Standard Carrier Alpha Code (SCAC)"
+          },
+          "carrierName": {
+            "title": "Signed for the Carrier",
+            "type": "string"
+          },
+          "shipper": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string"
+              },
+              "address": {
+                "type": "object",
+                "properties": {
+                  "street": {
+                    "type": "string"
+                  },
+                  "country": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          },
+          "consignee": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string"
+              }
+            }
+          },
+          "notifyParty": {
+            "title": "Notify Party",
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string"
+              }
+            }
+          },
+          "vessel": {
+            "type": "string"
+          },
+          "voyageNo": {
+            "title": "Voyage No.",
+            "type": "string"
+          },
+          "portOfLoading": {
+            "title": "Port of Loading",
+            "type": "string"
+          },
+          "portOfDischarge": {
+            "title": "Port of Discharge",
+            "type": "string"
+          },
+          "placeOfReceipt": {
+            "title": "Place of Receipt",
+            "type": "string"
+          },
+          "placeOfDelivery": {
+            "title": "Place of Delivery",
+            "type": "string"
+          },
+          "packages": {
+            "type": "array",
+            "title": "Packages",
+            "items": {
+              "type": "object",
+              "properties": {
+                "description": {
+                  "type": "string"
+                },
+                "measurement": {
+                  "type": "string"
+                },
+                "weight": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      },
+      "attachments": {
+        "allow": true,
+        "accept": ".pdf, .json"
+      },
+      "extension": "tt",
+      "fileName": "bill-<%= blNumber %>"
+    },
+    {
+      "name": "TradeTrust ChAFTA Certificate of Origin v2",
       "type": "VERIFIABLE_DOCUMENT",
       "defaults": {
         "$template": {
@@ -16,12 +141,12 @@
         },
         "issuers": [
           {
-            "name": "Demo Issuer",
-            "documentStore": "0x63a223e025256790e88778a01f480eba77731d04",
             "identityProof": {
               "type": "DNS-TXT",
               "location": "demo-tradetrust.openattestation.com"
-            }
+            },
+            "name": "DEMO DOCUMENT STORE",
+            "documentStore": "0x8bA63EAB43342AAc3AdBB4B827b68Cf4aAE5Caca"
           }
         ]
       },
@@ -43,10 +168,6 @@
               "signature": {
                 "type": "string",
                 "title": "First Signatory"
-              },
-              "actualDateTime": {
-                "type": "string",
-                "title": "Actual Date Time"
               }
             }
           },
@@ -240,7 +361,7 @@
                     },
                     "tradeLineItems": {
                       "type": "array",
-                      "title": "Trade Line Items",
+                      "title": "Trade line Items",
                       "items": {
                         "type": "object",
                         "properties": {
@@ -352,7 +473,7 @@
                 }
               },
               "mainCarriageTransportMovement": {
-                "title": "Main Carraige Transport Movement",
+                "title": "Main Carriage Transport Movement",
                 "type": "object",
                 "properties": {
                   "iD": {
@@ -415,9 +536,6 @@
               "text": "Upload Signature",
               "accept": ".png, .jpeg, .jpg"
             }
-          },
-          "actualDateTime": {
-            "ui:widget": "datetime"
           }
         },
         "issueDateTime": {
@@ -436,15 +554,16 @@
       "attachments": {
         "allow": true,
         "accept": ".pdf"
-      }
+      },
+      "extension": "tt"
     },
     {
-      "name": "Bill of Lading",
-      "type": "TRANSFERABLE_RECORD",
+      "name": "TradeTrust Covering Letter v2",
+      "type": "VERIFIABLE_DOCUMENT",
       "defaults": {
         "$template": {
           "type": "EMBEDDED_RENDERER",
-          "name": "BILL_OF_LADING",
+          "name": "COVERING_LETTER",
           "url": "https://generic-templates.tradetrust.io"
         },
         "issuers": [
@@ -453,333 +572,233 @@
               "type": "DNS-TXT",
               "location": "demo-tradetrust.openattestation.com"
             },
-            "name": "DEMO STORE",
-            "tokenRegistry": "0x9Eb613a88534E2939518f4ffBFE65F5969b491FF"
+            "name": "DEMO DOCUMENT STORE",
+            "documentStore": "0x8bA63EAB43342AAc3AdBB4B827b68Cf4aAE5Caca"
           }
         ]
       },
       "schema": {
         "type": "object",
-        "required": ["blNumber", "scac"],
         "properties": {
-          "blNumber": {
+          "logo": {
             "type": "string",
-            "title": "BL Number"
+            "title": "Document Title"
           },
-          "scac": {
+          "title": {
             "type": "string",
-            "title": "Standard Carrier Alpha Code (SCAC)"
+            "title": "Document Title"
           },
-          "carrierName": {
-            "title": "Signed for the Carrier",
-            "type": "string"
+          "remarks": {
+            "type": "string",
+            "title": "Remarks"
           },
-          "shipper": {
+          "backgroundColor": {
+            "type": "string",
+            "title": "Background Color"
+          },
+          "titleColor": {
+            "type": "string",
+            "title": "Title Color"
+          },
+          "remarksColor": {
+            "type": "string",
+            "title": "Remarks Color"
+          }
+        }
+      },
+      "attachments": {
+        "allow": true
+      },
+      "uiSchema": {
+        "logo": {
+          "ui:widget": "file",
+          "ui:options": {
+            "text": "Upload Cover Letter Logo",
+            "accept": ".png, .jpeg, .jpg"
+          }
+        },
+        "remarks": {
+          "ui:widget": "textarea"
+        },
+        "backgroundColor": {
+          "ui:widget": "color",
+          "ui:options": {
+            "emptyValue": "#ffffff"
+          }
+        },
+        "titleColor": {
+          "ui:widget": "color",
+          "ui:options": {
+            "emptyValue": "#4e4e50"
+          }
+        },
+        "remarksColor": {
+          "ui:widget": "color",
+          "ui:options": {
+            "emptyValue": "#4e4e50"
+          }
+        }
+      },
+      "extension": "tt"
+    },
+    {
+      "name": "TradeTrust Invoice v2",
+      "type": "VERIFIABLE_DOCUMENT",
+      "defaults": {
+        "$template": {
+          "type": "EMBEDDED_RENDERER",
+          "name": "INVOICE",
+          "url": "https://generic-templates.tradetrust.io"
+        },
+        "issuers": [
+          {
+            "identityProof": {
+              "type": "DNS-TXT",
+              "location": "demo-tradetrust.openattestation.com"
+            },
+            "name": "DEMO DOCUMENT STORE",
+            "documentStore": "0x8bA63EAB43342AAc3AdBB4B827b68Cf4aAE5Caca"
+          }
+        ]
+      },
+      "schema": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "title": "Invoice ID"
+          },
+          "date": {
+            "type": "string",
+            "title": "Date"
+          },
+          "customerId": {
+            "type": "string",
+            "title": "Customer ID"
+          },
+          "terms": {
+            "type": "string",
+            "title": "Terms"
+          },
+          "billFrom": {
             "type": "object",
+            "title": "Bill From",
             "properties": {
               "name": {
-                "type": "string"
+                "type": "string",
+                "title": "Name"
               },
-              "address": {
+              "streetAddress": {
+                "type": "string",
+                "title": "Street Address"
+              },
+              "city": {
+                "type": "string",
+                "title": "City"
+              },
+              "postalCode": {
+                "type": "string",
+                "title": "Postal Code"
+              },
+              "phoneNumber": {
+                "type": "string",
+                "title": "Phone Number"
+              }
+            }
+          },
+          "billTo": {
+            "type": "object",
+            "title": "Bill To",
+            "properties": {
+              "name": {
+                "type": "string",
+                "title": "Name"
+              },
+              "email": {
+                "type": "string",
+                "title": "Email"
+              },
+              "company": {
                 "type": "object",
+                "title": "Bill To Company",
                 "properties": {
-                  "street": {
-                    "type": "string"
+                  "name": {
+                    "type": "string",
+                    "title": "Name"
                   },
-                  "country": {
-                    "type": "string"
+                  "streetAddress": {
+                    "type": "string",
+                    "title": "Street Address"
+                  },
+                  "city": {
+                    "type": "string",
+                    "title": "City"
+                  },
+                  "postalCode": {
+                    "type": "string",
+                    "title": "Postal Code"
+                  },
+                  "phoneNumber": {
+                    "type": "string",
+                    "title": "Phone Number"
                   }
                 }
               }
             }
           },
-          "consignee": {
-            "type": "object",
-            "properties": {
-              "name": {
-                "type": "string"
-              }
-            }
-          },
-          "notifyParty": {
-            "title": "Notify Party",
-            "type": "object",
-            "properties": {
-              "name": {
-                "type": "string"
-              }
-            }
-          },
-          "vessel": {
-            "type": "string"
-          },
-          "voyageNo": {
-            "title": "Voyage No.",
-            "type": "string"
-          },
-          "portOfLoading": {
-            "title": "Port of Loading",
-            "type": "string"
-          },
-          "portOfDischarge": {
-            "title": "Port of Discharge",
-            "type": "string"
-          },
-          "placeOfReceipt": {
-            "title": "Place of Receipt",
-            "type": "string"
-          },
-          "placeOfDelivery": {
-            "title": "Place of Delivery",
-            "type": "string"
-          },
-          "packages": {
+          "billableItems": {
             "type": "array",
-            "title": "Packages",
+            "title": "Billable Items",
             "items": {
               "type": "object",
               "properties": {
                 "description": {
-                  "type": "string"
+                  "type": "string",
+                  "title": "Description"
                 },
-                "measurement": {
-                  "type": "string"
+                "quantity": {
+                  "type": "string",
+                  "title": "Quantity"
                 },
-                "weight": {
-                  "type": "string"
+                "unitPrice": {
+                  "type": "string",
+                  "title": "Unit Price"
+                },
+                "amount": {
+                  "type": "string",
+                  "title": "Amount"
                 }
               }
             }
-          }
-        }
-      },
-      "attachments": {
-        "allow": true,
-        "accept": ".pdf, .json"
-      },
-      "fileName": "bill-<%= blNumber %>"
-    },
-    {
-      "name": "Covering Letter",
-      "type": "VERIFIABLE_DOCUMENT",
-      "defaults": {
-        "$template": {
-          "type": "EMBEDDED_RENDERER",
-          "name": "COVERING_LETTER",
-          "url": "https://generic-templates.tradetrust.io"
-        },
-        "issuers": [
-          {
-            "name": "Demo Issuer",
-            "documentStore": "0x8bA63EAB43342AAc3AdBB4B827b68Cf4aAE5Caca",
-            "identityProof": {
-              "type": "DNS-TXT",
-              "location": "demo-tradetrust.openattestation.com"
-            }
-          }
-        ]
-      },
-      "schema": {
-        "type": "object",
-        "properties": {
-          "logo": {
-            "type": "string",
-            "title": "Document Title"
           },
-          "title": {
+          "subtotal": {
             "type": "string",
-            "title": "Document Title"
+            "title": "Subtotal"
           },
-          "remarks": {
+          "tax": {
             "type": "string",
-            "title": "Remarks"
+            "title": "Tax (%)"
           },
-          "backgroundColor": {
+          "taxTotal": {
             "type": "string",
-            "title": "Background Color"
+            "title": "Tax Total"
           },
-          "titleColor": {
+          "total": {
             "type": "string",
-            "title": "Title Color"
-          },
-          "remarksColor": {
-            "type": "string",
-            "title": "Remarks Color"
+            "title": "Total"
           }
         }
       },
       "uiSchema": {
-        "logo": {
-          "ui:widget": "file",
-          "ui:options": {
-            "text": "Upload Cover Letter Logo",
-            "accept": ".png, .jpeg, .jpg"
-          }
-        },
-        "remarks": {
-          "ui:widget": "textarea"
-        },
-        "backgroundColor": {
-          "ui:widget": "color",
-          "ui:options": {
-            "emptyValue": "#ffffff"
-          }
-        },
-        "titleColor": {
-          "ui:widget": "color",
-          "ui:options": {
-            "emptyValue": "#4e4e50"
-          }
-        },
-        "remarksColor": {
-          "ui:widget": "color",
-          "ui:options": {
-            "emptyValue": "#4e4e50"
-          }
+        "date": {
+          "ui:widget": "date"
         }
       },
-      "attachments": {
-        "allow": true
-      },
-      "headers": ["title", "remarks"]
-    },
-    {
-      "name": "Covering Letter (No uiSchema)",
-      "type": "VERIFIABLE_DOCUMENT",
-      "defaults": {
-        "$template": {
-          "type": "EMBEDDED_RENDERER",
-          "name": "COVERING_LETTER",
-          "url": "https://generic-templates.tradetrust.io"
-        },
-        "issuers": [
-          {
-            "name": "Demo Issuer",
-            "documentStore": "0x63a223e025256790e88778a01f480eba77731d04",
-            "identityProof": {
-              "type": "DNS-TXT",
-              "location": "demo-tradetrust.openattestation.com"
-            }
-          }
-        ]
-      },
-      "schema": {
-        "type": "object",
-        "properties": {
-          "logo": {
-            "type": "string",
-            "title": "Document Title"
-          },
-          "title": {
-            "type": "string",
-            "title": "Document Title"
-          },
-          "remarks": {
-            "type": "string",
-            "title": "Remarks"
-          },
-          "backgroundColor": {
-            "type": "string",
-            "title": "Background Color"
-          },
-          "titleColor": {
-            "type": "string",
-            "title": "Title Color"
-          },
-          "remarksColor": {
-            "type": "string",
-            "title": "Remarks Color"
-          }
-        }
-      },
-      "attachments": {
-        "allow": true
-      }
-    },
-    {
-      "name": "Covering Letter (extension)",
-      "type": "VERIFIABLE_DOCUMENT",
-      "defaults": {
-        "$template": {
-          "type": "EMBEDDED_RENDERER",
-          "name": "COVERING_LETTER",
-          "url": "https://generic-templates.tradetrust.io"
-        },
-        "issuers": [
-          {
-            "name": "Demo Issuer",
-            "documentStore": "0x8bA63EAB43342AAc3AdBB4B827b68Cf4aAE5Caca",
-            "identityProof": {
-              "type": "DNS-TXT",
-              "location": "demo-tradetrust.openattestation.com"
-            }
-          }
-        ]
-      },
-      "schema": {
-        "type": "object",
-        "properties": {
-          "logo": {
-            "type": "string",
-            "title": "Document Title"
-          },
-          "title": {
-            "type": "string",
-            "title": "Document Title"
-          },
-          "remarks": {
-            "type": "string",
-            "title": "Remarks"
-          },
-          "backgroundColor": {
-            "type": "string",
-            "title": "Background Color"
-          },
-          "titleColor": {
-            "type": "string",
-            "title": "Title Color"
-          },
-          "remarksColor": {
-            "type": "string",
-            "title": "Remarks Color"
-          }
-        }
-      },
-      "uiSchema": {
-        "logo": {
-          "ui:widget": "file",
-          "ui:options": {
-            "text": "Upload Cover Letter Logo",
-            "accept": ".png, .jpeg, .jpg"
-          }
-        },
-        "remarks": {
-          "ui:widget": "textarea"
-        },
-        "backgroundColor": {
-          "ui:widget": "color",
-          "ui:options": {
-            "emptyValue": "#ffffff"
-          }
-        },
-        "titleColor": {
-          "ui:widget": "color",
-          "ui:options": {
-            "emptyValue": "#4e4e50"
-          }
-        },
-        "remarksColor": {
-          "ui:widget": "color",
-          "ui:options": {
-            "emptyValue": "#4e4e50"
-          }
-        }
-      },
-      "attachments": {
-        "allow": true
-      },
-      "extension": "docTest",
-      "headers": ["title", "remarks"]
+      "extension": "tt"
     }
-  ]
+  ],
+  "documentStorage": {
+    "apiKey": "randomKey",
+    "url": "https://api-rinkeby.tradetrust.io/storage"
+  }
 }

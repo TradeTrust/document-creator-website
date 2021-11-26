@@ -1,33 +1,42 @@
 {
-  "wallet": "",
-  "forms": [
-    {
-      "name": "Bill of Lading",
-      "type": "TRANSFERABLE_RECORD",
-      "defaults": {
-        "$template": {
-          "type": "EMBEDDED_RENDERER",
-          "name": "BILL_OF_LADING",
-          "url": "https://demo-cnm.openattestation.com"
-        },
-        "issuers": [
-          {
-            "identityProof": {
-              "type": "DNS-TXT",
-              "location": "demo-tradetrust.openattestation.com"
-            },
-            "name": "DEMO STORE",
-            "tokenRegistry": "0xc3E9eBc6aDA9BA4B4Ce65D71901Cb2307e9670cE"
-          }
-        ]
-      },
-      "schema": {
+  "name": "TradeTrust Bill of Lading v3",
+  "type": "TRANSFERABLE_RECORD",
+  "defaults": {
+    "version": "https://schema.openattestation.com/3.0/schema.json",
+    "@context": [
+      "https://www.w3.org/2018/credentials/v1",
+      "https://schemata.openattestation.com/com/openattestation/1.0/OpenAttestation.v3.json",
+      "https://schemata.openattestation.com/io/tradetrust/bill-of-lading/1.0/bill-of-lading-context.json"
+    ],
+    "type": ["VerifiableCredential", "OpenAttestationCredential"],
+    "issuanceDate": "2010-01-01T19:23:24Z",
+    "openAttestationMetadata": {
+      "template": {
+        "type": "EMBEDDED_RENDERER",
+        "name": "BILL_OF_LADING",
+        "url": "https://generic-templates.tradetrust.io"
+      }
+    },
+    "credentialSubject": {}
+  },
+  "schema": {
+    "type": "object",
+    "properties": {
+      "credentialSubject": {
         "type": "object",
-        "required": ["blNumber"],
+        "required": ["blNumber", "scac"],
         "properties": {
           "blNumber": {
             "type": "string",
             "title": "BL Number"
+          },
+          "scac": {
+            "type": "string",
+            "title": "Standard Carrier Alpha Code (SCAC)"
+          },
+          "carrierName": {
+            "title": "Signed for the Carrier",
+            "type": "string"
           },
           "shipper": {
             "type": "object",
@@ -109,5 +118,5 @@
         }
       }
     }
-  ]
+  }
 }

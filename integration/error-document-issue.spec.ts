@@ -21,7 +21,7 @@ test("should show failed published document(s) errors", async (t) => {
   await t.expect(ProgressBar.textContent).contains("1");
 
   // Navigate to form
-  await t.click(Button.withText("Covering Letter"));
+  await t.click(Button.withText("TradeTrust Covering Letter v2"));
 
   // Submit form
   await t.click(SubmitButton);
@@ -30,5 +30,5 @@ test("should show failed published document(s) errors", async (t) => {
   await t.expect(ProcessDocumentTitle.textContent).contains("Document(s) failed to issue");
   await t.expect(Selector("div").withText("1 document(s)").exists).ok();
   await t.expect(Selector("div").withText("The document(s) could not be issued at this time.").exists).ok();
-  await t.expect(Selector("div").withText("Covering Letter-1-local.tt").exists).ok();
+  await t.expect(Selector("div").withText("TradeTrust Covering Letter v2-1-local.tt").exists).ok();
 });

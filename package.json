@@ -16,9 +16,10 @@
     "IE >= 11"
   ],
   "scripts": {
-    "build": "cross-env NODE_OPTIONS='--max-old-space-size=4096' CI=false npm-run-all -s build:css build:js",
+    "build": "cross-env NODE_OPTIONS='--max-old-space-size=4096' CI=false npm-run-all -s build:*",
     "build:css": "cross-env NODE_ENV=production postcss src/tailwind.css -o src/index.css",
     "build:js": "cross-env NODE_ENV=production react-app-rewired build",
+    "build:config": "ts-node src/test/fixtures/config/configuration-file.ts",
     "eject": "react-scripts eject",
     "blockchain": "run-p blockchain:start blockchain:setup",
     "blockchain:contracts": "node ./scripts/setup-contracts.js",
@@ -42,7 +43,8 @@
     "prep": "cross-env npm-run-all -s lint lint:type lint:fix test:ci build integration:ci",
     "test:ci": "cross-env CI=true react-app-rewired test",
     "test": "react-app-rewired test",
-    "wait:blockchain": "wait-on -l -i 1000 tcp:8545"
+    "wait:blockchain": "wait-on -l -i 1000 tcp:8545",
+    "prepare": "husky install"
   },
   "dependencies": {
     "@emotion/react": "^11.4.0",
@@ -100,6 +102,7 @@
     "@types/react-dom": "^17.0.7",
     "@types/react-jsonschema-form": "^1.7.5",
     "@types/react-router-dom": "^5.1.7",
+    "@types/tmp": "^0.2.2",
     "@types/use-persisted-state": "^0.3.0",
     "@typescript-eslint/eslint-plugin": "^4.26.1",
     "@typescript-eslint/parser": "^4.26.1",
@@ -117,6 +120,7 @@
     "ganache-cli": "^6.12.2",
     "git-cz": "^4.7.6",
     "http-server": "^0.12.3",
+    "husky": "^7.0.0",
     "npm-run-all": "^4.1.5",
     "patch-package": "^6.4.7",
     "postcss": "^8.3.6",
@@ -128,6 +132,8 @@
     "shelljs": "^0.8.4",
     "tailwindcss": "npm:@tailwindcss/postcss7-compat@^2.2.7",
     "testcafe": "^1.14.2",
+    "tmp": "^0.2.1",
+    "ts-node": "^10.4.0",
     "typescript": "^4.3.2",
     "wait-on": "^6.0.0"
   }

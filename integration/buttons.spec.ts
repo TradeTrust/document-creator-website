@@ -25,7 +25,7 @@ test("should lead to pages correctly", async (t) => {
   await t.expect(ProgressBar.textContent).contains("1");
 
   // Navigate to form
-  await t.click(Button.withText("Covering Letter"));
+  await t.click(Button.withText("TradeTrust Covering Letter v2"));
 
   // Check back button
   await t.click(ButtonClearAll);
