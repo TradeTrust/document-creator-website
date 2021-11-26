@@ -17,14 +17,12 @@ export const generateConfigFile = ({
       switch (version) {
         case "v2":
           return insertV2Credential(forms, credential);
-        case "v2-did":
-          // Transferable record not supported in DID
+        case "v2-did": // Transferable record not supported in DID
           forms = forms.filter((form: any) => form.type != "TRANSFERABLE_RECORD");
           return insertV2Credential(forms, credential, true);
         case "v3":
           return insertV3Credential(forms, credential);
-        case "v3-did":
-          // Transferable record not supported in DID
+        case "v3-did": // Transferable record not supported in DID
           forms = forms.filter((form: any) => form.type != "TRANSFERABLE_RECORD");
           return insertV3Credential(forms, credential, true);
         default:
