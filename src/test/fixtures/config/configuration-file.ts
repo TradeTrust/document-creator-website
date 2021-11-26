@@ -34,24 +34,10 @@ const formsV2: Forms[] = [{ version: "v2", forms: documentFormsV2 }];
 const formsV3: Forms[] = [{ version: "v3", forms: documentFormsV3 }];
 const didFormsV2: Forms[] = [{ version: "v2-did", forms: documentFormsV2 }];
 const didFormsV3: Forms[] = [{ version: "v3-did", forms: documentFormsV3 }];
-const allForms: Forms[] = [
-  { version: "v2", forms: documentFormsV2 },
-  { version: "v3", forms: documentFormsV3 },
-];
 
 /**
  *  Generate Configuration Files
  */
-
-// ALL Ropsten Configuration File
-const ALL_FORMS_ROPSTEN_DIRECTORY = join(__dirname, "_generated-config-files", "sample-config-ropsten.json");
-generateConfigFile({
-  configFile: configFile,
-  formsList: allForms,
-  credential: ropstenCredential,
-  directory: ALL_FORMS_ROPSTEN_DIRECTORY,
-  validationBypass: false,
-});
 
 // V2 Ropsten Configuration File
 const V2_ROPSTEN_DIRECTORY = join(__dirname, "_generated-config-files", "v2", "sample-config-ropsten.json");
