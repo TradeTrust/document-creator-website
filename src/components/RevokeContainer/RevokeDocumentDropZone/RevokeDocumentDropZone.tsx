@@ -47,8 +47,10 @@ export const RevokeDocumentDropZone: FunctionComponent<RevokeDocumentDropZone> =
       const revokeDocument = await readFileAsJson<any>(file);
       setRevokeDocuments([revokeDocument]);
     } catch (e) {
-      setDocumentUploadState(DocumentUploadState.ERROR);
-      stack(e);
+      if (e instanceof Error) {
+        setDocumentUploadState(DocumentUploadState.ERROR);
+        stack(e);
+      }
     }
   };
 
@@ -90,9 +92,9 @@ export const RevokeDocumentDropZone: FunctionComponent<RevokeDocumentDropZone> =
               <Button className="bg-cerulean text-white hover:bg-cerulean-500 mt-4">Select Document</Button>
             )}
             {documentUploadState === DocumentUploadState.LOADING && (
-              <div className="py-8 flex flex-col items-center" data-testid="dropzone-loader">
-                <LoaderSpinner primary="#3B8CC5" />
-                <div className="mt-4 text-cerulean font-bold">Verifying Document</div>
+              <div className="py-8 h-72 flex flex-col items-center justify-center" data-testid="dropzone-loader">
+                <LoaderSpinner primary="#3B8CC5" width="40px" />
+                <h4 className="mt-8 text-cerulean">Verifying Document</h4>
               </div>
             )}
           </StyledDropZone>

@@ -85,19 +85,21 @@ export const DataFileButton: FunctionComponent<DataFileButton> = ({ onDataFile, 
 
       onDataFile(dataFile);
     } catch (e) {
-      stack(e);
+      if (e instanceof Error) {
+        stack(e);
 
-      setError(true);
-      setFileErrors([
-        // ajv set error manually, printing out error message on UI
-        {
-          instancePath: "",
-          keyword: "type",
-          message: e.message,
-          params: {},
-          schemaPath: "#/type",
-        },
-      ]);
+        setError(true);
+        setFileErrors([
+          // ajv set error manually, printing out error message on UI
+          {
+            instancePath: "",
+            keyword: "type",
+            message: e.message,
+            params: {},
+            schemaPath: "#/type",
+          },
+        ]);
+      }
     }
   };
 

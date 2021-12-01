@@ -1,8 +1,11 @@
-import React, { FunctionComponent, useState } from "react";
+import { FunctionComponent, useState } from "react";
 import { decryptWalletOrSigner } from "../../../common/config/decrypt";
 import { useConfigContext } from "../../../common/context/config";
 import { usePersistedConfigFile } from "../../../common/hook/usePersistedConfigFile";
 import { WalletDecryption } from "./WalletDecryption";
+import { getLogger } from "../../../utils/logger";
+
+const { stack } = getLogger("RevokeDocumentDropZone");
 
 export const WalletDecryptionContainer: FunctionComponent = () => {
   const { setConfig } = useConfigContext();
@@ -28,7 +31,10 @@ export const WalletDecryptionContainer: FunctionComponent = () => {
         documentStorage: configFile.documentStorage,
       });
     } catch (e) {
-      setIsIncorrectPassword(true);
+      if (e instanceof Error) {
+        setIsIncorrectPassword(true);
+        stack(e);
+      }
     }
   };
 

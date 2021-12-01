@@ -60,10 +60,9 @@ export const ProcessedDocumentTag: FunctionComponent<PublishedTagProps> = ({
               <div className="text-cloud-900" data-testid="file-name">
                 {documentName}
               </div>
-              {!hideAction && (
+              {!hideAction && !isPending && (
                 <>
                   {isIssuingFlow ? (
-                    !isPending &&
                     !isError && (
                       <div
                         className="text-cerulean-200 cursor-pointer"
