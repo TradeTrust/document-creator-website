@@ -93,13 +93,15 @@ export const useQueue = ({
             setCompletedJobIndex(completedJobsIndexes);
           }
         } catch (e) {
-          failedJobs.push({
-            index: index,
-            error: e,
-          });
-          setFailedJob(failedJobs);
-          stack(e);
-          throw e;
+          if (e instanceof Error) {
+            failedJobs.push({
+              index: index,
+              error: e,
+            });
+            setFailedJob(failedJobs);
+            stack(e);
+            throw e;
+          }
         } finally {
           pendingJobs.delete(index);
           setPendingJobIndex(Array.from(pendingJobs));
@@ -110,9 +112,11 @@ export const useQueue = ({
       setFailedJob(failedJobs);
       setQueueState(QueueState.CONFIRMED);
     } catch (e) {
-      stack(e);
-      setError(e);
-      setQueueState(QueueState.ERROR);
+      if (e instanceof Error) {
+        stack(e);
+        setError(e);
+        setQueueState(QueueState.ERROR);
+      }
     }
   };
 

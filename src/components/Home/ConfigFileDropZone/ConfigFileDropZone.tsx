@@ -31,9 +31,11 @@ export const ConfigFileDropZone: FunctionComponent<ConfigFileDropZone> = ({ onCo
       setFileErrors(undefined);
       onConfigFile(config);
     } catch (e) {
-      const readFileError = new Error("Document cannot be read. Please check that you have a valid document");
-      setFileErrors([readFileError]);
-      stack(e);
+      if (e instanceof Error) {
+        const readFileError = new Error("Document cannot be read. Please check that you have a valid document");
+        setFileErrors([readFileError]);
+        stack(e);
+      }
     }
   };
 

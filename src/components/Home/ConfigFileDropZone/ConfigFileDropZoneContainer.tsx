@@ -15,7 +15,9 @@ export const ConfigFileDropZoneContainer: FunctionComponent = () => {
       setConfigFile(configFileFromDropZone);
       setConfigValidationError("");
     } catch (e) {
-      setConfigValidationError(`Config is malformed: ${e.message}`);
+      if (e instanceof Error) {
+        setConfigValidationError(`Config is malformed: ${e.message}`);
+      }
     }
   };
 

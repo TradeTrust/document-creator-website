@@ -120,10 +120,11 @@ export const ProcessDocumentContent: FunctionComponent<ProcessDocumentContentPro
       )}
       {isDocumentSuccess && (
         <>
-          <div className="flex-grow py-3" data-testid="total-number-of-documents">
-            {successDocuments.length} document(s)
-            {isIssuingFlow ? " issued" : " revoked"}
-          </div>
+          {isIssuingFlow && (
+            <div className="flex-grow py-3" data-testid="total-number-of-documents">
+              {successDocuments.length} document(s) issued
+            </div>
+          )}
           <div className="flex justify-between pb-4 mb-4 mt-4">
             <div>
               {successDocuments.map((doc, index) => (
