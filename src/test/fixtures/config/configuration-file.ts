@@ -1,7 +1,5 @@
-import { join } from "path";
-import { v2CooChafta, v2BillOfLading, v2CoverLetter, v2Invoice } from "./forms/v2";
-import { v3BillOfLading, v3CooChafta, v3Invoice } from "./forms/v3";
-import { CoverLetterExtension, CoverLetterNoUiSchema } from "./forms/local";
+import path, { join } from "path";
+import fs from "fs";
 import { generateConfigFile } from "./generator";
 import { EmptyConfig, Forms } from "./types";
 import {
@@ -12,6 +10,19 @@ import {
   ropstenCredential,
 } from "./credential";
 
+const dirFormsLocal = path.join(__dirname, "forms", "local");
+const dirFormsV2 = path.join(__dirname, "forms", "v2");
+const dirFormsV3 = path.join(__dirname, "forms", "v3");
+
+const getForms = (dir: string) => {
+  const forms: any[] = [];
+  fs.readdirSync(dir).forEach((filename) => {
+    const content = fs.readFileSync(path.join(dir, filename), "utf-8");
+    forms.push(JSON.parse(content));
+  });
+  return forms;
+};
+
 // Configuration base file
 const configFileEmpty: EmptyConfig = {
   network: "",
@@ -20,9 +31,9 @@ const configFileEmpty: EmptyConfig = {
 };
 
 // Forms preparation
-const documentFormsV2Local = [CoverLetterExtension, CoverLetterNoUiSchema];
-const documentFormsV2 = [v2BillOfLading, v2CooChafta, v2CoverLetter, v2Invoice];
-const documentFormsV3 = [v3BillOfLading, v3CooChafta, v3Invoice];
+const documentFormsV2Local = getForms(dirFormsLocal);
+const documentFormsV2 = getForms(dirFormsV2);
+const documentFormsV3 = getForms(dirFormsV3);
 
 const formsV2: Forms[] = [{ version: "v2", forms: documentFormsV2 }];
 const formsV3: Forms[] = [{ version: "v3", forms: documentFormsV3 }];
