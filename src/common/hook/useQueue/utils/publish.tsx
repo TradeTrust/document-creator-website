@@ -1,5 +1,5 @@
 import {
-  wrapDocuments as wrapDocumentV2,
+  wrapDocuments as wrapDocumentsV2,
   __unsafe__use__it__at__your__own__risks__wrapDocuments as wrapDocumentsV3,
   utils,
 } from "@govtechsg/open-attestation";
@@ -97,7 +97,33 @@ export const getRawDocuments = async (forms: FormEntry[], config: Config): Promi
 };
 
 const wrapDocuments = async (rawDocuments: any[]) => {
-  return utils.isRawV3Document(rawDocuments[0]) ? await wrapDocumentsV3(rawDocuments) : wrapDocumentV2(rawDocuments);
+  return utils.isRawV3Document(rawDocuments[0]) ? await wrapDocumentsV3(rawDocuments) : wrapDocumentsV2(rawDocuments);
+};
+
+const processVerifiableDocument = async (
+  jobs: PublishingJob[],
+  nonce: number,
+  contractAddress: string,
+  verifiableDocuments: RawDocument[]
+) => {
+  if (verifiableDocuments.length === 0) return;
+  console.log(verifiableDocuments);
+  const rawDocuments = verifiableDocuments.map((doc) => doc.rawDocument);
+  const wrappedDocuments = await wrapDocuments(rawDocuments);
+  const firstWrappedDocument = wrappedDocuments[0];
+  const merkleRoot = utils.getMerkleRoot(firstWrappedDocument);
+  const firstRawDocument = verifiableDocuments[0];
+  jobs.push({
+    type: firstRawDocument.type,
+    nonce,
+    contractAddress,
+    documents: verifiableDocuments.map((doc, index) => ({
+      ...doc,
+      wrappedDocument: wrappedDocuments[index],
+    })),
+    merkleRoot: merkleRoot,
+    payload: {},
+  });
 };
 
 const TX_NEEDED_FOR_VERIFIABLE_DOCUMENTS = 1;
@@ -124,25 +150,17 @@ export const groupDocumentsIntoJobs = async (
   const jobs: PublishingJob[] = [];
   // Process all verifiable documents with document store first
   for (const contractAddress of documentStoreAddresses) {
-    const firstRawDocument = verifiableDocumentsWithDocumentStore[contractAddress][0];
-    // eslint-disable-next-line @typescript-eslint/no-shadow
-    const rawDocuments = verifiableDocumentsWithDocumentStore[contractAddress].map((doc) => doc.rawDocument);
-    const wrappedDocuments = await wrapDocuments(rawDocuments);
-    const firstWrappedDocument = wrappedDocuments[0];
-    const merkleRoot = utils.getMerkleRoot(firstWrappedDocument);
-
-    jobs.push({
-      type: firstRawDocument.type,
-      nonce,
-      contractAddress,
-      documents: verifiableDocumentsWithDocumentStore[contractAddress].map((doc, index) => ({
-        ...doc,
-        wrappedDocument: wrappedDocuments[index],
-      })),
-      merkleRoot: merkleRoot,
-      payload: {},
+    const verifiableDocumentsV2 = verifiableDocumentsWithDocumentStore[contractAddress].filter((docs) => {
+      return utils.isRawV2Document(docs.rawDocument);
     });
-    nonce += TX_NEEDED_FOR_VERIFIABLE_DOCUMENTS;
+    const verifiableDocumentsV3 = verifiableDocumentsWithDocumentStore[contractAddress].filter((docs) => {
+      return utils.isRawV3Document(docs.rawDocument);
+    });
+
+    await processVerifiableDocument(jobs, nonce, contractAddress, verifiableDocumentsV2);
+    if (verifiableDocumentsV2.length !== 0) nonce += TX_NEEDED_FOR_VERIFIABLE_DOCUMENTS;
+    await processVerifiableDocument(jobs, nonce, contractAddress, verifiableDocumentsV3);
+    if (verifiableDocumentsV3.length !== 0) nonce += TX_NEEDED_FOR_VERIFIABLE_DOCUMENTS;
   }
 
   // Process all verifiable document with DNS-DID next
