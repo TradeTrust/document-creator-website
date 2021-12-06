@@ -1,5 +1,6 @@
 import { DocumentStoreFactory, GsnCapableDocumentStoreFactory } from "@govtechsg/document-store";
 import { DocumentStore } from "@govtechsg/document-store/src/contracts/DocumentStore";
+import { openAttestationVerifiers, verificationBuilder, utils } from "@govtechsg/oa-verify";
 import {
   getData,
   signDocument,
@@ -20,6 +21,41 @@ export const assertAddressIsSmartContract = async (
 ): Promise<void> => {
   const code = await account.provider.getCode(address);
   if (code === "0x") throw new Error("Address is not a smart contract");
+};
+
+export const assertValidDocument = async (job: PublishingJob, account: Wallet | ConnectedSigner): Promise<void> => {
+  const networkInformation = await account.provider.getNetwork();
+  const network = networkInformation?.name;
+  if (network === "local") return;
+
+  const verify = verificationBuilder(openAttestationVerifiers, { network: network });
+  const errorMessage: Array<string> = [];
+
+  const document = job.documents[0];
+  const fragments = await verify(document.wrappedDocument);
+
+  // Validate for invalid document store, token registry and contract
+  const documentStatus = utils.getDocumentStatusFragments(fragments);
+  if (utils.isDocumentStoreAddressOrTokenRegistryAddressInvalid(documentStatus)) {
+    errorMessage.push("Invalid document store / token registry address");
+  }
+
+  if (utils.contractNotFound(documentStatus)) {
+    errorMessage.push("Contract not found");
+  }
+
+  // Validate for invalid issuer identity
+  const issuerIdentity = utils.getIssuerIdentityFragments(fragments);
+  issuerIdentity.forEach((fragment) => {
+    if (utils.isErrorFragment(fragment) || utils.isInvalidFragment(fragment)) {
+      errorMessage.push((fragment as any).reason.message);
+    }
+  });
+
+  // throw Error for any invalid document
+  if (errorMessage.length !== 0) {
+    throw new Error(errorMessage.toString());
+  }
 };
 
 export const getConnectedDocumentStore = async (
@@ -43,6 +79,7 @@ export const publishVerifiableDocumentJob = async (
 ): Promise<string> => {
   const { contractAddress, merkleRoot, nonce } = job;
   await assertAddressIsSmartContract(contractAddress, account);
+  await assertValidDocument(job, account);
   const documentStore = await getConnectedDocumentStore(account, contractAddress);
   const receipt = await documentStore.issue(`0x${merkleRoot}`, { nonce });
   const tx = await receipt.wait();
