@@ -1,0 +1,103 @@
+{
+  "type": "VERIFIABLE_DOCUMENT",
+  "nonce": 2782,
+  "contractAddress": "0x8bA63EAB43342AAc3AdBB4B827b68Cf4aAE5Caca",
+  "documents": [
+    {
+      "type": "VERIFIABLE_DOCUMENT",
+      "contractAddress": "0x8bA63EAB43342AAc3AdBB4B827b68Cf4aAE5Caca",
+      "rawDocument": {
+        "firstSignatoryAuthentication": {},
+        "supplyChainConsignment": {
+          "exportCountry": {},
+          "exporter": {
+            "postalAddress": {}
+          },
+          "importCountry": {},
+          "importer": {
+            "postalAddress": {}
+          },
+          "loadingBaseportLocation": {},
+          "mainCarriageTransportMovement": {
+            "usedTransportMeans": {},
+            "departureEvent": {}
+          },
+          "unloadingBaseportLocation": {}
+        },
+        "$template": {
+          "type": "EMBEDDED_RENDERER",
+          "name": "CHAFTA_COO",
+          "url": "https://generic-templates.tradetrust.io"
+        },
+        "issuers": [
+          {
+            "identityProof": {
+              "type": "DNS-TXT",
+              "location": "asd.com"
+            },
+            "name": "DEMO DOCUMENT STORE",
+            "documentStore": "0x8bA63EAB43342AAc3AdBB4B827b68Cf4aAE5Caca"
+          }
+        ],
+        "links": {
+          "self": {
+            "href": "https://action.openattestation.com?q=%7B%22type%22%3A%22DOCUMENT%22%2C%22payload%22%3A%7B%22uri%22%3A%22https%3A%2F%2Fapi-ropsten.tradetrust.io%2Fstorage%2F57ded704-6b0e-42c4-8b18-4465dda696d4%22%2C%22key%22%3A%224ccc2b5282149b7c39a1b261749e41319d86249755e736a4e7384575e810403f%22%2C%22permittedActions%22%3A%5B%22STORE%22%5D%2C%22redirect%22%3A%22https%3A%2F%2Fdev.tradetrust.io%2F%22%7D%7D"
+          }
+        }
+      },
+      "fileName": "TradeTrust-ChAFTA-Certificate-of-Origin-v2-1",
+      "payload": {},
+      "extension": "tt",
+      "wrappedDocument": {
+        "version": "https://schema.openattestation.com/2.0/schema.json",
+        "data": {
+          "firstSignatoryAuthentication": {},
+          "supplyChainConsignment": {
+            "exportCountry": {},
+            "exporter": {
+              "postalAddress": {}
+            },
+            "importCountry": {},
+            "importer": {
+              "postalAddress": {}
+            },
+            "loadingBaseportLocation": {},
+            "mainCarriageTransportMovement": {
+              "usedTransportMeans": {},
+              "departureEvent": {}
+            },
+            "unloadingBaseportLocation": {}
+          },
+          "$template": {
+            "type": "a0b0875d-d902-4b3f-a305-0a8fb02f8e0c:string:EMBEDDED_RENDERER",
+            "name": "28432aa1-36e3-4de2-b08f-ab5d41a948a6:string:CHAFTA_COO",
+            "url": "f8fb633b-741d-432d-b960-c27919b964a4:string:https://generic-templates.tradetrust.io"
+          },
+          "issuers": [
+            {
+              "identityProof": {
+                "type": "f3599626-193f-4822-8c66-be5cc430d4ea:string:DNS-TXT",
+                "location": "b6949354-8f43-4669-96db-ee2f939fd04e:string:demo-tradetrustasddsa.openattestation.com"
+              },
+              "name": "188d85cd-a4df-4496-be14-80939c8d497d:string:DEMO DOCUMENT STORE",
+              "documentStore": "e54360d9-2fb3-4b33-a3b1-49d6f1b0da23:string:0x8bA63EAB43342AAc3AdBB4B827b68Cf4aAE5Caca"
+            }
+          ],
+          "links": {
+            "self": {
+              "href": "cbdb9a60-e88a-4504-9e2e-5d53dc2a7b53:string:https://action.openattestation.com?q=%7B%22type%22%3A%22DOCUMENT%22%2C%22payload%22%3A%7B%22uri%22%3A%22https%3A%2F%2Fapi-ropsten.tradetrust.io%2Fstorage%2F57ded704-6b0e-42c4-8b18-4465dda696d4%22%2C%22key%22%3A%224ccc2b5282149b7c39a1b261749e41319d86249755e736a4e7384575e810403f%22%2C%22permittedActions%22%3A%5B%22STORE%22%5D%2C%22redirect%22%3A%22https%3A%2F%2Fdev.tradetrust.io%2F%22%7D%7D"
+            }
+          }
+        },
+        "signature": {
+          "type": "SHA3MerkleProof",
+          "targetHash": "a6c9410e4b7e180511876f0c014cf214aa587eb6cb87db174709e02d410d2bcb",
+          "proof": [],
+          "merkleRoot": "a6c9410e4b7e180511876f0c014cf214aa587eb6cb87db174709e02d410d2bcb"
+        }
+      }
+    }
+  ],
+  "merkleRoot": "a6c9410e4b7e180511876f0c014cf214aa587eb6cb87db174709e02d410d2bcb",
+  "payload": {}
+}

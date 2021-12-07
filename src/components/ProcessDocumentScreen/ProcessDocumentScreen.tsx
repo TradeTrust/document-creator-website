@@ -39,12 +39,12 @@ export const ProcessDocumentScreen: FunctionComponent<ProcessDocumentScreen> = (
     successfulProcessedDocuments,
     failedProcessedDocuments,
     pendingProcessDocuments,
+    error,
   } = useQueue(useQueueParameters);
 
   useEffect(() => {
     processDocuments(type);
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
-
   const failPublishedDocuments = failedProcessedDocuments.map((failedJob) => failedJob.documents).flat();
 
   const formattedErrorLog = failedProcessedDocuments.map((failedJob) => {
@@ -54,7 +54,7 @@ export const ProcessDocumentScreen: FunctionComponent<ProcessDocumentScreen> = (
       error: serializeError(failedJob.error),
     };
   });
-
+  const errorLog = error ? serializeError(error) : formattedErrorLog;
   return (
     <Wrapper>
       <div className="mb-4">
@@ -85,7 +85,7 @@ export const ProcessDocumentScreen: FunctionComponent<ProcessDocumentScreen> = (
               extension: "txt",
               hasTimestamp: true,
             })}
-            downloadErrorLink={`data:text/plain;charset=UTF-8,${JSON.stringify(formattedErrorLog, null, 2)}`}
+            downloadErrorLink={`data:text/plain;charset=UTF-8,${JSON.stringify(errorLog, null, 2)}`}
             downloadAllFn={() => {
               generateZipFile(successfulProcessedDocuments, config?.network);
             }}

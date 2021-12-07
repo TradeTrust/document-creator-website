@@ -30,7 +30,6 @@ export const assertValidDocument = async (job: PublishingJob, account: Wallet | 
 
   const verify = verificationBuilder(openAttestationVerifiers, { network: network });
   const errorMessage: Array<string> = [];
-
   const document = job.documents[0];
   const fragments = await verify(document.wrappedDocument);
 
@@ -79,7 +78,6 @@ export const publishVerifiableDocumentJob = async (
 ): Promise<string> => {
   const { contractAddress, merkleRoot, nonce } = job;
   await assertAddressIsSmartContract(contractAddress, account);
-  await assertValidDocument(job, account);
   const documentStore = await getConnectedDocumentStore(account, contractAddress);
   const receipt = await documentStore.issue(`0x${merkleRoot}`, { nonce });
   const tx = await receipt.wait();
@@ -164,6 +162,7 @@ export const publishTransferableRecordJob = async (job: PublishingJob, signer: S
 };
 
 export const publishJob = async (job: PublishingJob, wallet: Wallet | ConnectedSigner): Promise<string> => {
+  await assertValidDocument(job, wallet);
   if (job.type === "VERIFIABLE_DOCUMENT") return publishVerifiableDocumentJob(job, wallet);
   if (job.type === "TRANSFERABLE_RECORD") return publishTransferableRecordJob(job, wallet);
   throw new Error("Job type is not supported");

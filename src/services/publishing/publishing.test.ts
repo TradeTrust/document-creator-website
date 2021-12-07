@@ -1,7 +1,14 @@
 import { DocumentStoreFactory } from "@govtechsg/document-store";
 import { TitleEscrowCreatorFactory, TradeTrustErc721Factory } from "@govtechsg/token-registry";
 import { getDefaultProvider, Wallet } from "ethers";
-import { getTitleEscrowCreator, publishTransferableRecordJob, publishVerifiableDocumentJob } from "./index";
+import jobsInvalidDns from "../../test/fixtures/jobs-invalid-dns.json";
+import { PublishingJob } from "../../types";
+import {
+  assertValidDocument,
+  getTitleEscrowCreator,
+  publishTransferableRecordJob,
+  publishVerifiableDocumentJob,
+} from "./index";
 import { supportsInterface } from "./utils";
 
 jest.mock("@govtechsg/token-registry");
@@ -232,6 +239,16 @@ describe("publishing", () => {
           wallet
         )
       ).rejects.toThrow(/Minting fail/);
+    });
+  });
+
+  describe("assertValidDocument", () => {
+    it("should throw when invalid DNS", async () => {
+      whenDocumentStoreExist();
+      const wallet = mockWallet();
+      await expect(assertValidDocument(jobsInvalidDns as PublishingJob, wallet)).rejects.toThrow(
+        /Matching DNS record not found for 0x8bA63EAB43342AAc3AdBB4B827b68Cf4aAE5Caca/
+      );
     });
   });
 });
