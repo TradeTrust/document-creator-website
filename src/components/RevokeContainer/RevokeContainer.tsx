@@ -5,10 +5,12 @@ import { RevokeDocumentDropZone } from "./RevokeDocumentDropZone/RevokeDocumentD
 import { RevokeDocumentTileArea } from "./RevokeDocumentTileArea/RevokeDocumentTileArea";
 import { utils } from "@govtechsg/open-attestation";
 import { RevokeConfirmationModal } from "./RevokeConfirmationModal";
-import { verificationBuilder, isValid, openAttestationVerifiers } from "@govtechsg/oa-verify";
+import { verificationBuilder, openAttestationVerifiers } from "@govtechsg/oa-verify";
 import { DocumentUploadState } from "../../constants/DocumentUploadState";
 import { ProcessDocumentScreen } from "../ProcessDocumentScreen";
 import { QueueType } from "../../constants/QueueState";
+import { errorMessageHandling } from "../../services/verify/fragments";
+import { MESSAGES } from "../../constants/VerificationErrorMessages";
 
 export const RevokeContainer: FunctionComponent = () => {
   const { config } = useConfigContext();
@@ -25,19 +27,23 @@ export const RevokeContainer: FunctionComponent = () => {
 
       const validateDocument = async () => {
         const network = config?.network || "";
-        let isDocumentValid = true;
+        let isDocumentValid = false;
 
         if (network !== "local") {
           const verify = verificationBuilder(openAttestationVerifiers, { network: network });
           const fragments = await verify(revokeDocuments[0]);
-          isDocumentValid = isValid(fragments);
+          const errors = errorMessageHandling(fragments);
+
+          if (errors.length > 0) {
+            setErrorMessage(MESSAGES[errors[0]].failureMessage);
+            setRevokeDocuments([]);
+            setDocumentUploadState(DocumentUploadState.ERROR);
+          } else {
+            isDocumentValid = true;
+          }
         }
 
-        if (!isDocumentValid) {
-          setErrorMessage("Document cannot be read. Please check that you have a valid document");
-          setRevokeDocuments([]);
-          setDocumentUploadState(DocumentUploadState.ERROR);
-        } else {
+        if (isDocumentValid) {
           setErrorMessage("");
           setRevokeStep(2);
           setDocumentUploadState(DocumentUploadState.DONE);
@@ -83,6 +89,7 @@ export const RevokeContainer: FunctionComponent = () => {
         <RevokeDocumentDropZone
           setRevokeDocuments={setRevokeDocuments}
           errorMessage={errorMessage}
+          setErrorMessage={setErrorMessage}
           setFileName={setFileName}
           documentUploadState={documentUploadState}
           setDocumentUploadState={setDocumentUploadState}

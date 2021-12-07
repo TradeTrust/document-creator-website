@@ -91,7 +91,7 @@ const decryptAwsKms = async (wallet: AwsKmwSignerOption, password: string, provi
 
   const signer = new AwsKmsSigner(kmsCredentials).connect(provider);
   try {
-    const connectedSigner = signer as ConnectedSigner;
+    const connectedSigner = signer as unknown as ConnectedSigner;
     if (await connectedSigner.getAddress()) {
       return connectedSigner;
     }

@@ -14,6 +14,7 @@ const { stack } = getLogger("RevokeDocumentDropZone");
 interface RevokeDocumentDropZone {
   setRevokeDocuments: (revokeDocuments: any) => void;
   errorMessage?: string;
+  setErrorMessage: (errorMessage: string) => void;
   setFileName: (fileName: string) => void;
   documentUploadState: DocumentUploadState;
   setDocumentUploadState: (documentUploadState: DocumentUploadState) => void;
@@ -22,6 +23,7 @@ interface RevokeDocumentDropZone {
 export const RevokeDocumentDropZone: FunctionComponent<RevokeDocumentDropZone> = ({
   setRevokeDocuments,
   errorMessage,
+  setErrorMessage,
   setFileName,
   documentUploadState,
   setDocumentUploadState,
@@ -49,13 +51,15 @@ export const RevokeDocumentDropZone: FunctionComponent<RevokeDocumentDropZone> =
     } catch (e) {
       if (e instanceof Error) {
         setDocumentUploadState(DocumentUploadState.ERROR);
+        setErrorMessage("Document cannot be read. Please check that you have a valid document");
         stack(e);
       }
     }
   };
 
   const defaultStyle = "bg-white";
-  const activeStyle = "bg-gray-300";
+  const activeStyle = "border-green-400 bg-green-50";
+  const acceptStyle = "border-green-400 bg-green-50";
   const dropzoneOptions = {
     onDropAccepted,
     maxFiles: 1,
@@ -76,6 +80,7 @@ export const RevokeDocumentDropZone: FunctionComponent<RevokeDocumentDropZone> =
             dropzoneOptions={dropzoneOptions}
             defaultStyle={defaultStyle}
             activeStyle={activeStyle}
+            acceptStyle={acceptStyle}
             fileErrors={fileErrors}
             dropzoneIcon={documentUploadState !== DocumentUploadState.LOADING ? "/dropzone-graphic.png" : ""}
             dataTestId="revoke-file-dropzone"

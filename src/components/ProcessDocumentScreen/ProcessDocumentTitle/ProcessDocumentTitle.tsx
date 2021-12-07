@@ -27,7 +27,7 @@ export const ProcessDocumentTitle: FunctionComponent<ProcessDocumentTitle> = ({
         return (
           <>
             <LoaderSpinner className="mr-2" width="24px" primary="#3B8CC5" />
-            {titleText(`${isIssuingFlow ? "Publishing document(s)..." : "Revoking document..."}`)}
+            {titleText(`${isIssuingFlow ? "Issuing document(s)..." : "Revoking document..."}`)}
           </>
         );
 
