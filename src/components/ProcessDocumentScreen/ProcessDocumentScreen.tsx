@@ -10,7 +10,6 @@ import { Card } from "../UI/Card";
 import { ContentFrame } from "../UI/ContentFrame";
 import { ProcessDocumentContent } from "./ProcessDocumentContent";
 import { IssueOrRevokeSelector } from "../UI/IssueOrRevokeSelector";
-import { serializeError } from "serialize-error";
 
 interface ProcessDocumentScreen {
   config: Config;
@@ -49,12 +48,13 @@ export const ProcessDocumentScreen: FunctionComponent<ProcessDocumentScreen> = (
 
   const formattedErrorLog = failedProcessedDocuments.map((failedJob) => {
     const fileNames = failedJob.documents.map((document) => document.fileName).join(", ");
+    const serializeError = JSON.parse(JSON.stringify(failedJob.error, Object.getOwnPropertyNames(failedJob.error)));
     return {
       files: fileNames,
-      error: serializeError(failedJob.error),
+      error: serializeError,
     };
   });
-  const errorLog = error ? serializeError(error) : formattedErrorLog;
+  const errorLog = error ? error : formattedErrorLog;
   return (
     <Wrapper>
       <div className="mb-4">
