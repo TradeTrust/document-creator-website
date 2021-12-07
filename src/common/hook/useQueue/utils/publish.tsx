@@ -101,19 +101,16 @@ const wrapDocuments = async (rawDocuments: any[]) => {
 };
 
 const processVerifiableDocument = async (
-  jobs: PublishingJob[],
   nonce: number,
   contractAddress: string,
   verifiableDocuments: RawDocument[]
-) => {
-  if (verifiableDocuments.length === 0) return;
-  console.log(verifiableDocuments);
-  const rawDocuments = verifiableDocuments.map((doc) => doc.rawDocument);
-  const wrappedDocuments = await wrapDocuments(rawDocuments);
+): Promise<PublishingJob> => {
+  const rawOpenAttestationDocument = verifiableDocuments.map((doc) => doc.rawDocument);
+  const wrappedDocuments = await wrapDocuments(rawOpenAttestationDocument);
   const firstWrappedDocument = wrappedDocuments[0];
   const merkleRoot = utils.getMerkleRoot(firstWrappedDocument);
   const firstRawDocument = verifiableDocuments[0];
-  jobs.push({
+  return {
     type: firstRawDocument.type,
     nonce,
     contractAddress,
@@ -123,7 +120,7 @@ const processVerifiableDocument = async (
     })),
     merkleRoot: merkleRoot,
     payload: {},
-  });
+  };
 };
 
 const TX_NEEDED_FOR_VERIFIABLE_DOCUMENTS = 1;
@@ -157,10 +154,17 @@ export const groupDocumentsIntoJobs = async (
       return utils.isRawV3Document(docs.rawDocument);
     });
 
-    await processVerifiableDocument(jobs, nonce, contractAddress, verifiableDocumentsV2);
-    if (verifiableDocumentsV2.length !== 0) nonce += TX_NEEDED_FOR_VERIFIABLE_DOCUMENTS;
-    await processVerifiableDocument(jobs, nonce, contractAddress, verifiableDocumentsV3);
-    if (verifiableDocumentsV3.length !== 0) nonce += TX_NEEDED_FOR_VERIFIABLE_DOCUMENTS;
+    if (verifiableDocumentsV2.length > 0) {
+      const verifiableDocumentV2Job = await processVerifiableDocument(nonce, contractAddress, verifiableDocumentsV2);
+      jobs.push(verifiableDocumentV2Job);
+      nonce += TX_NEEDED_FOR_VERIFIABLE_DOCUMENTS;
+    }
+
+    if (verifiableDocumentsV3.length > 0) {
+      const verifiableDocumentV3Job = await processVerifiableDocument(nonce, contractAddress, verifiableDocumentsV3);
+      jobs.push(verifiableDocumentV3Job);
+      nonce += TX_NEEDED_FOR_VERIFIABLE_DOCUMENTS;
+    }
   }
 
   // Process all verifiable document with DNS-DID next
