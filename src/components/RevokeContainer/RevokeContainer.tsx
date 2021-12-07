@@ -28,19 +28,20 @@ export const RevokeContainer: FunctionComponent = () => {
       const validateDocument = async () => {
         const network = config?.network || "";
         let isDocumentValid = false;
+        let errors = [] as string[];
 
         if (network !== "local") {
           const verify = verificationBuilder(openAttestationVerifiers, { network: network });
           const fragments = await verify(revokeDocuments[0]);
-          const errors = errorMessageHandling(fragments);
+          errors = errorMessageHandling(fragments);
+        }
 
-          if (errors.length > 0) {
-            setErrorMessage(MESSAGES[errors[0]].failureMessage);
-            setRevokeDocuments([]);
-            setDocumentUploadState(DocumentUploadState.ERROR);
-          } else {
-            isDocumentValid = true;
-          }
+        if (errors.length > 0) {
+          setErrorMessage(MESSAGES[errors[0]].failureMessage);
+          setRevokeDocuments([]);
+          setDocumentUploadState(DocumentUploadState.ERROR);
+        } else {
+          isDocumentValid = true;
         }
 
         if (isDocumentValid) {
