@@ -26,6 +26,10 @@ const documentFormsV3 = [v3BillOfLading, v3CooChafta, v3Invoice];
 
 const formsV2: Forms[] = [{ version: "v2", forms: documentFormsV2 }];
 const formsV3: Forms[] = [{ version: "v3", forms: documentFormsV3 }];
+const formsV2AndV3: Forms[] = [
+  { version: "v2", forms: documentFormsV2 },
+  { version: "v3", forms: documentFormsV3 },
+];
 const didFormsV2: Forms[] = [{ version: "v2-did", forms: documentFormsV2 }];
 const didFormsV3: Forms[] = [{ version: "v3-did", forms: documentFormsV3 }];
 
@@ -36,6 +40,15 @@ const localForms: Forms[] = [
 ];
 
 // Generate Configuration Files
+const V2_AND_V3_ROPSTEN_DIRECTORY = join(__dirname, "_generated-config-files", "sample-config-ropsten.json");
+generateConfigFile({
+  configFile: configFileEmpty,
+  formsList: formsV2AndV3,
+  credential: ropstenCredential,
+  directory: V2_AND_V3_ROPSTEN_DIRECTORY,
+  validationBypass: false,
+});
+
 const V2_ROPSTEN_DIRECTORY = join(__dirname, "_generated-config-files", "v2", "sample-config-ropsten.json");
 generateConfigFile({
   configFile: configFileEmpty,
