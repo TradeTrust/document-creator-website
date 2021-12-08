@@ -245,8 +245,7 @@ describe("publishing", () => {
   describe("assertValidDocument", () => {
     it("should throw when invalid DNS", async () => {
       whenDocumentStoreExist();
-      const wallet = mockWallet();
-      await expect(assertValidDocument(jobsInvalidDns as PublishingJob, wallet)).rejects.toThrow(
+      await expect(assertValidDocument(jobsInvalidDns as PublishingJob, "ropsten")).rejects.toThrow(
         /Matching DNS record not found for 0x8bA63EAB43342AAc3AdBB4B827b68Cf4aAE5Caca/
       );
     });
