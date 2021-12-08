@@ -100,13 +100,13 @@ const wrapDocuments = async (rawDocuments: any[]) => {
   return utils.isRawV3Document(rawDocuments[0]) ? await wrapDocumentsV3(rawDocuments) : wrapDocumentsV2(rawDocuments);
 };
 
-const processVerifiableDocument = async (
+const processVerifiableDocuments = async (
   nonce: number,
   contractAddress: string,
   verifiableDocuments: RawDocument[]
 ): Promise<PublishingJob> => {
-  const rawOpenAttestationDocument = verifiableDocuments.map((doc) => doc.rawDocument);
-  const wrappedDocuments = await wrapDocuments(rawOpenAttestationDocument);
+  const rawOpenAttestationDocuments = verifiableDocuments.map((doc) => doc.rawDocument);
+  const wrappedDocuments = await wrapDocuments(rawOpenAttestationDocuments);
   const firstWrappedDocument = wrappedDocuments[0];
   const merkleRoot = utils.getMerkleRoot(firstWrappedDocument);
   const firstRawDocument = verifiableDocuments[0];
@@ -155,13 +155,13 @@ export const groupDocumentsIntoJobs = async (
     });
 
     if (verifiableDocumentsV2.length > 0) {
-      const verifiableDocumentV2Job = await processVerifiableDocument(nonce, contractAddress, verifiableDocumentsV2);
+      const verifiableDocumentV2Job = await processVerifiableDocuments(nonce, contractAddress, verifiableDocumentsV2);
       jobs.push(verifiableDocumentV2Job);
       nonce += TX_NEEDED_FOR_VERIFIABLE_DOCUMENTS;
     }
 
     if (verifiableDocumentsV3.length > 0) {
-      const verifiableDocumentV3Job = await processVerifiableDocument(nonce, contractAddress, verifiableDocumentsV3);
+      const verifiableDocumentV3Job = await processVerifiableDocuments(nonce, contractAddress, verifiableDocumentsV3);
       jobs.push(verifiableDocumentV3Job);
       nonce += TX_NEEDED_FOR_VERIFIABLE_DOCUMENTS;
     }
