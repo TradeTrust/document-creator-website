@@ -29,31 +29,41 @@ export const assertValidDocument = async (job: PublishingJob, account: Wallet | 
   if (network === "local") return;
 
   const verify = verificationBuilder(openAttestationVerifiers, { network: network });
-  const errorMessage: Array<string> = [];
-  const document = job.documents[0];
-  const fragments = await verify(document.wrappedDocument);
+  const errorMessages: Array<string> = [];
+  for (const document of job.documents) {
+    const verificationFragments = await verify(document.wrappedDocument);
 
-  // Validate for invalid document store, token registry and contract
-  const documentStatus = utils.getDocumentStatusFragments(fragments);
-  if (utils.isDocumentStoreAddressOrTokenRegistryAddressInvalid(documentStatus)) {
-    errorMessage.push("Invalid document store / token registry address");
-  }
-
-  if (utils.contractNotFound(documentStatus)) {
-    errorMessage.push("Contract not found");
-  }
-
-  // Validate for invalid issuer identity
-  const issuerIdentity = utils.getIssuerIdentityFragments(fragments);
-  issuerIdentity.forEach((fragment) => {
-    if (utils.isErrorFragment(fragment) || utils.isInvalidFragment(fragment)) {
-      errorMessage.push((fragment as any).reason.message);
+    // Validate for invalid document store, token registry and contract
+    const documentStatusFragments = utils.getDocumentStatusFragments(verificationFragments);
+    if (utils.isDocumentStoreAddressOrTokenRegistryAddressInvalid(documentStatusFragments)) {
+      const invalidDocumentStoreAndTokenRegistryError = "Invalid document store / token registry address";
+      if (!errorMessages.some((errorMessage) => errorMessage === invalidDocumentStoreAndTokenRegistryError)) {
+        errorMessages.push(invalidDocumentStoreAndTokenRegistryError);
+      }
     }
-  });
+
+    if (utils.contractNotFound(documentStatusFragments)) {
+      const contractNotFoundError = "Contract not found";
+      if (!errorMessages.some((errorMessage) => errorMessage === contractNotFoundError)) {
+        errorMessages.push(contractNotFoundError);
+      }
+    }
+
+    // Validate for invalid issuer identity
+    const issuerIdentityFragments = utils.getIssuerIdentityFragments(verificationFragments);
+    issuerIdentityFragments.forEach((issuerFragment) => {
+      if (utils.isErrorFragment(issuerFragment) || utils.isInvalidFragment(issuerFragment)) {
+        const issuerIdentityError = (issuerFragment as any).reason.message;
+        if (!errorMessages.some((errorMessage) => errorMessage === issuerIdentityError)) {
+          errorMessages.push(issuerIdentityError);
+        }
+      }
+    });
+  }
 
   // throw Error for any invalid document
-  if (errorMessage.length !== 0) {
-    throw new Error(errorMessage.toString());
+  if (errorMessages.length !== 0) {
+    throw new Error(errorMessages.toString());
   }
 };
 
