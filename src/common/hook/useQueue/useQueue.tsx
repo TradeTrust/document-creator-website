@@ -81,7 +81,7 @@ export const useQueue = ({
           if (queueType === QueueType.ISSUE) {
             if (job.contractAddress !== identifyProofType.DnsDid) {
               // publish verifiable documents and transferable records with doc store and token registry
-              await publishJob(job as PublishingJob, wallet);
+              await publishJob(job as PublishingJob, wallet, config.network);
             }
             // upload all the docs to document storage
             const uploadDocuments = job.documents.map(async (doc) => {

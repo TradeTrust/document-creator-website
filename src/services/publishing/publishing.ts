@@ -12,7 +12,7 @@ import { TitleEscrowCreatorFactory, TradeTrustErc721Factory } from "@govtechsg/t
 import { TitleEscrowCreator } from "@govtechsg/token-registry/types/TitleEscrowCreator";
 import { providers, Signer, Wallet } from "ethers";
 import { getGsnRelaySigner } from "../../common/config/decrypt";
-import { ConnectedSigner, PublishingJob } from "../../types";
+import { ConnectedSigner, Network, PublishingJob } from "../../types";
 import { supportsInterface } from "./utils";
 
 export const assertAddressIsSmartContract = async (
@@ -23,9 +23,7 @@ export const assertAddressIsSmartContract = async (
   if (code === "0x") throw new Error("Address is not a smart contract");
 };
 
-export const assertValidDocument = async (job: PublishingJob, account: Wallet | ConnectedSigner): Promise<void> => {
-  const networkInformation = await account.provider.getNetwork();
-  const network = networkInformation?.name;
+export const assertValidDocument = async (job: PublishingJob, network: Network): Promise<void> => {
   if (network === "local") return;
 
   const verify = verificationBuilder(openAttestationVerifiers, { network: network });
@@ -171,8 +169,12 @@ export const publishTransferableRecordJob = async (job: PublishingJob, signer: S
   return mintingTx.transactionHash;
 };
 
-export const publishJob = async (job: PublishingJob, wallet: Wallet | ConnectedSigner): Promise<string> => {
-  await assertValidDocument(job, wallet);
+export const publishJob = async (
+  job: PublishingJob,
+  wallet: Wallet | ConnectedSigner,
+  network: Network
+): Promise<string> => {
+  await assertValidDocument(job, network);
   if (job.type === "VERIFIABLE_DOCUMENT") return publishVerifiableDocumentJob(job, wallet);
   if (job.type === "TRANSFERABLE_RECORD") return publishTransferableRecordJob(job, wallet);
   throw new Error("Job type is not supported");
