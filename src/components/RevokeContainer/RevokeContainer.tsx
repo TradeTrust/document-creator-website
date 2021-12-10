@@ -9,8 +9,7 @@ import { verificationBuilder, openAttestationVerifiers } from "@govtechsg/oa-ver
 import { DocumentUploadState } from "../../constants/DocumentUploadState";
 import { ProcessDocumentScreen } from "../ProcessDocumentScreen";
 import { QueueType } from "../../constants/QueueState";
-import { errorMessageHandling } from "../../services/verify/fragments";
-import { MESSAGES } from "../../constants/VerificationErrorMessages";
+import { errorMessageHandling, CONSTANTS } from "@govtechsg/tradetrust-utils";
 
 export const RevokeContainer: FunctionComponent = () => {
   const { config } = useConfigContext();
@@ -37,7 +36,7 @@ export const RevokeContainer: FunctionComponent = () => {
         }
 
         if (errors.length > 0) {
-          setErrorMessage(MESSAGES[errors[0]].failureMessage);
+          setErrorMessage(CONSTANTS.MESSAGES[errors[0]].failureMessage);
           setRevokeDocuments([]);
           setDocumentUploadState(DocumentUploadState.ERROR);
         } else {
