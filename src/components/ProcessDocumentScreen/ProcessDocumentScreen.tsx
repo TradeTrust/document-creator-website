@@ -38,7 +38,6 @@ export const ProcessDocumentScreen: FunctionComponent<ProcessDocumentScreen> = (
     successfulProcessedDocuments,
     failedProcessedDocuments,
     pendingProcessDocuments,
-    error,
   } = useQueue(useQueueParameters);
 
   useEffect(() => {
@@ -54,7 +53,9 @@ export const ProcessDocumentScreen: FunctionComponent<ProcessDocumentScreen> = (
       error: serializeError,
     };
   });
-  const errorLog = error ? error : formattedErrorLog;
+
+  // TODO: Require to handle error from oa file schema
+  // const errorLog = error ? error : formattedErrorLog;
   return (
     <Wrapper>
       <div className="mb-4">
@@ -85,7 +86,7 @@ export const ProcessDocumentScreen: FunctionComponent<ProcessDocumentScreen> = (
               extension: "txt",
               hasTimestamp: true,
             })}
-            downloadErrorLink={`data:text/plain;charset=UTF-8,${JSON.stringify(errorLog, null, 2)}`}
+            downloadErrorLink={`data:text/plain;charset=UTF-8,${JSON.stringify(formattedErrorLog, null, 2)}`}
             downloadAllFn={() => {
               generateZipFile(successfulProcessedDocuments, config?.network);
             }}

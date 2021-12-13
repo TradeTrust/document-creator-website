@@ -7,7 +7,6 @@ import { getLogger } from "../../../utils/logger";
 import { uploadToStorage } from "../../API/storageAPI";
 import { getRevokingJobs } from "./utils/revoke";
 import { getPublishingJobs } from "./utils/publish";
-import { utils } from "@govtechsg/open-attestation";
 
 const { stack } = getLogger("useQueue");
 
@@ -20,10 +19,7 @@ interface UseQueue {
   formEntries?: FormEntry[];
   documents?: any[];
 }
-interface ConfigError extends Error {
-  validationErrors: any;
-  document: any;
-}
+
 export const useQueue = ({
   config,
   formEntries,
@@ -117,21 +113,8 @@ export const useQueue = ({
       setQueueState(QueueState.CONFIRMED);
     } catch (e) {
       if (e instanceof Error) {
-        if (utils.isSchemaValidationError(e)) {
-          // Error log unable to print '#' symbol
-          e.validationErrors = JSON.parse(JSON.stringify(e.validationErrors).replaceAll("#", ""));
-          const configSchemaError: ConfigError = {
-            name: "Configuration File Schema Error",
-            message: e.message,
-            validationErrors: e.validationErrors,
-            document: e.document,
-          };
-          stack(configSchemaError);
-          setError(configSchemaError);
-        } else {
-          stack(e);
-          setError(e);
-        }
+        stack(e);
+        setError(e);
         setQueueState(QueueState.ERROR);
       }
     }
