@@ -1,5 +1,5 @@
-import { v2CoverLetter } from "./forms/v2";
-import { v3Invoice } from "./forms/v3";
+import v2CoverLetter from "./forms/v2/cover-letter.json";
+import v3Invoice from "./forms/v3/invoice.json";
 import tmp from "tmp";
 import { Credential, EmptyConfig, Forms } from "./types";
 import { generateConfigFile } from "./generator";
