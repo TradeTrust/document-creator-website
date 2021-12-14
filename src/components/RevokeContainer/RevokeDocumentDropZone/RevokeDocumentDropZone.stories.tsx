@@ -14,7 +14,7 @@ export default {
 export const Default: FunctionComponent = () => {
   const [revokeDocument, setRevokeDocument] = useState();
   const [fileName, setFileName] = useState("");
-  const [errorMessage, setErrorMessage] = useState("");
+  const [errorMessages, setErrorMessages] = useState<string[]>([]);
   const [documentUploadState, setDocumentUploadState] = useState(DocumentUploadState.INITIALIZED);
   console.info(revokeDocument, fileName);
 
@@ -25,8 +25,8 @@ export const Default: FunctionComponent = () => {
         setFileName={setFileName}
         documentUploadState={documentUploadState}
         setDocumentUploadState={setDocumentUploadState}
-        errorMessage={errorMessage}
-        setErrorMessage={setErrorMessage}
+        errorMessages={errorMessages}
+        setErrorMessages={setErrorMessages}
       />
     </MemoryRouter>
   );

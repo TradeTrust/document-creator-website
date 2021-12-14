@@ -15,7 +15,7 @@ export const RevokeContainer: FunctionComponent = () => {
   const { config } = useConfigContext();
   const [revokeDocuments, setRevokeDocuments] = useState([]);
   const [fileName, setFileName] = useState("");
-  const [errorMessage, setErrorMessage] = useState("");
+  const [errorMessages, setErrorMessages] = useState<string[]>([]);
   const [showConfirmationModal, setShowConfirmationModal] = useState(false);
   const [revokeStep, setRevokeStep] = useState(1);
   const [documentUploadState, setDocumentUploadState] = useState(DocumentUploadState.INITIALIZED);
@@ -26,7 +26,6 @@ export const RevokeContainer: FunctionComponent = () => {
 
       const validateDocument = async () => {
         const network = config?.network || "";
-        let isDocumentValid = false;
         let errors = [] as string[];
 
         if (network !== "local") {
@@ -36,22 +35,18 @@ export const RevokeContainer: FunctionComponent = () => {
         }
 
         if (errors.length > 0) {
-          setErrorMessage(CONSTANTS.MESSAGES[errors[0]].failureMessage);
+          setErrorMessages(errors.map((error) => CONSTANTS.MESSAGES[error].failureMessage));
           setRevokeDocuments([]);
           setDocumentUploadState(DocumentUploadState.ERROR);
         } else {
-          isDocumentValid = true;
-        }
-
-        if (isDocumentValid) {
-          setErrorMessage("");
+          setErrorMessages([]);
           setRevokeStep(2);
           setDocumentUploadState(DocumentUploadState.DONE);
         }
       };
 
       if (!isDocumentRevokable) {
-        setErrorMessage("Document is not revokable, please use a revokable document");
+        setErrorMessages(["Document is not revokable, please use a revokable document"]);
         setRevokeDocuments([]);
         setDocumentUploadState(DocumentUploadState.ERROR);
       } else {
@@ -72,7 +67,7 @@ export const RevokeContainer: FunctionComponent = () => {
     setRevokeStep(1);
     setRevokeDocuments([]);
     setFileName("");
-    setErrorMessage("");
+    setErrorMessages([]);
     setShowConfirmationModal(false);
     setDocumentUploadState(DocumentUploadState.INITIALIZED);
   };
@@ -88,8 +83,8 @@ export const RevokeContainer: FunctionComponent = () => {
       {revokeStep === 1 && (
         <RevokeDocumentDropZone
           setRevokeDocuments={setRevokeDocuments}
-          errorMessage={errorMessage}
-          setErrorMessage={setErrorMessage}
+          errorMessages={errorMessages}
+          setErrorMessages={setErrorMessages}
           setFileName={setFileName}
           documentUploadState={documentUploadState}
           setDocumentUploadState={setDocumentUploadState}
