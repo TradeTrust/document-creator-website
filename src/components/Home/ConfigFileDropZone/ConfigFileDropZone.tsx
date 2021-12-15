@@ -40,7 +40,8 @@ export const ConfigFileDropZone: FunctionComponent<ConfigFileDropZone> = ({ onCo
   };
 
   const defaultStyle = "bg-white";
-  const activeStyle = "bg-gray-300";
+  const activeStyle = "border-green-400 bg-green-50";
+  const acceptStyle = "border-green-400 bg-green-50";
   const dropzoneOptions = {
     onDropAccepted,
     maxFiles: 1,
@@ -56,6 +57,7 @@ export const ConfigFileDropZone: FunctionComponent<ConfigFileDropZone> = ({ onCo
           dropzoneOptions={dropzoneOptions}
           defaultStyle={defaultStyle}
           activeStyle={activeStyle}
+          acceptStyle={acceptStyle}
           fileErrors={fileErrors}
           dropzoneIcon={"/dropzone-graphic.png"}
           dataTestId="config-file-dropzone"

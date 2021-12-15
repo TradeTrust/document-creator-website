@@ -13,7 +13,8 @@ const { stack } = getLogger("RevokeDocumentDropZone");
 
 interface RevokeDocumentDropZone {
   setRevokeDocuments: (revokeDocuments: any) => void;
-  errorMessage?: string;
+  errorMessages: string[];
+  setErrorMessages: (errorMessage: string[]) => void;
   setFileName: (fileName: string) => void;
   documentUploadState: DocumentUploadState;
   setDocumentUploadState: (documentUploadState: DocumentUploadState) => void;
@@ -21,7 +22,8 @@ interface RevokeDocumentDropZone {
 
 export const RevokeDocumentDropZone: FunctionComponent<RevokeDocumentDropZone> = ({
   setRevokeDocuments,
-  errorMessage,
+  errorMessages,
+  setErrorMessages,
   setFileName,
   documentUploadState,
   setDocumentUploadState,
@@ -30,14 +32,15 @@ export const RevokeDocumentDropZone: FunctionComponent<RevokeDocumentDropZone> =
 
   useEffect(() => {
     if (documentUploadState === DocumentUploadState.ERROR) {
-      const readFileError = new Error(
-        errorMessage ?? "Document cannot be read. Please check that you have a valid document"
-      );
-      setFileErrors([readFileError]);
+      const readFileError =
+        errorMessages.length > 0
+          ? errorMessages.map((errorMessage) => new Error(errorMessage))
+          : [new Error("Document cannot be read. Please check that you have a valid document")];
+      setFileErrors(readFileError);
     } else {
       setFileErrors(undefined);
     }
-  }, [documentUploadState, errorMessage]);
+  }, [documentUploadState, errorMessages]);
 
   const onDropAccepted = async (files: File[]): Promise<void> => {
     try {
@@ -49,13 +52,15 @@ export const RevokeDocumentDropZone: FunctionComponent<RevokeDocumentDropZone> =
     } catch (e) {
       if (e instanceof Error) {
         setDocumentUploadState(DocumentUploadState.ERROR);
+        setErrorMessages(["Document cannot be read. Please check that you have a valid document"]);
         stack(e);
       }
     }
   };
 
   const defaultStyle = "bg-white";
-  const activeStyle = "bg-gray-300";
+  const activeStyle = "border-green-400 bg-green-50";
+  const acceptStyle = "border-green-400 bg-green-50";
   const dropzoneOptions = {
     onDropAccepted,
     maxFiles: 1,
@@ -76,6 +81,7 @@ export const RevokeDocumentDropZone: FunctionComponent<RevokeDocumentDropZone> =
             dropzoneOptions={dropzoneOptions}
             defaultStyle={defaultStyle}
             activeStyle={activeStyle}
+            acceptStyle={acceptStyle}
             fileErrors={fileErrors}
             dropzoneIcon={documentUploadState !== DocumentUploadState.LOADING ? "/dropzone-graphic.png" : ""}
             dataTestId="revoke-file-dropzone"

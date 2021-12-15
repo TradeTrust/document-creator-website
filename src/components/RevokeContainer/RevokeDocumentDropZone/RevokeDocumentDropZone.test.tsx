@@ -9,7 +9,8 @@ import sampleRevokableDocument from "../../../test/fixtures/sample-files/v2/wrap
 describe("RevokeDocumentDropZone", () => {
   it("should fire setRevokeDocument, setFileName and setDocumentUploadState when a file is dropped", async () => {
     const setRevokeDocuments = jest.fn();
-    const errorMessage = "";
+    const errorMessages = [] as string[];
+    const setErrorMessages = jest.fn();
     const setFileName = jest.fn();
     const documentUploadState = DocumentUploadState.INITIALIZED;
     const setDocumentUploadState = jest.fn();
@@ -18,7 +19,8 @@ describe("RevokeDocumentDropZone", () => {
       <BrowserRouter>
         <RevokeDocumentDropZone
           setRevokeDocuments={setRevokeDocuments}
-          errorMessage={errorMessage}
+          errorMessages={errorMessages}
+          setErrorMessages={setErrorMessages}
           setFileName={setFileName}
           documentUploadState={documentUploadState}
           setDocumentUploadState={setDocumentUploadState}
@@ -44,7 +46,8 @@ describe("RevokeDocumentDropZone", () => {
 
   it("should display error when there is an error message", () => {
     const setRevokeDocuments = jest.fn();
-    const errorMessage = "Some Error";
+    const errorMessages = ["Some Error"];
+    const setErrorMessages = jest.fn();
     const setFileName = jest.fn();
     const documentUploadState = DocumentUploadState.ERROR;
     const setDocumentUploadState = jest.fn();
@@ -53,7 +56,8 @@ describe("RevokeDocumentDropZone", () => {
       <BrowserRouter>
         <RevokeDocumentDropZone
           setRevokeDocuments={setRevokeDocuments}
-          errorMessage={errorMessage}
+          errorMessages={errorMessages}
+          setErrorMessages={setErrorMessages}
           setFileName={setFileName}
           documentUploadState={documentUploadState}
           setDocumentUploadState={setDocumentUploadState}
@@ -65,7 +69,8 @@ describe("RevokeDocumentDropZone", () => {
 
   it("should display loader when documentUploadState is true", () => {
     const setRevokeDocuments = jest.fn();
-    const errorMessage = "";
+    const errorMessages = [] as string[];
+    const setErrorMessages = jest.fn();
     const setFileName = jest.fn();
     const documentUploadState = DocumentUploadState.LOADING;
     const setDocumentUploadState = jest.fn();
@@ -74,7 +79,8 @@ describe("RevokeDocumentDropZone", () => {
       <BrowserRouter>
         <RevokeDocumentDropZone
           setRevokeDocuments={setRevokeDocuments}
-          errorMessage={errorMessage}
+          errorMessages={errorMessages}
+          setErrorMessages={setErrorMessages}
           setFileName={setFileName}
           documentUploadState={documentUploadState}
           setDocumentUploadState={setDocumentUploadState}
@@ -86,7 +92,8 @@ describe("RevokeDocumentDropZone", () => {
 
   it("should not display loader when documentUploadState is DONE", () => {
     const setRevokeDocuments = jest.fn();
-    const errorMessage = "";
+    const errorMessages = [] as string[];
+    const setErrorMessages = jest.fn();
     const setFileName = jest.fn();
     const documentUploadState = DocumentUploadState.DONE;
     const setDocumentUploadState = jest.fn();
@@ -95,7 +102,8 @@ describe("RevokeDocumentDropZone", () => {
       <BrowserRouter>
         <RevokeDocumentDropZone
           setRevokeDocuments={setRevokeDocuments}
-          errorMessage={errorMessage}
+          errorMessages={errorMessages}
+          setErrorMessages={setErrorMessages}
           setFileName={setFileName}
           documentUploadState={documentUploadState}
           setDocumentUploadState={setDocumentUploadState}

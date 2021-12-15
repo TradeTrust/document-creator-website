@@ -27,7 +27,7 @@ describe("ProcessDocumentTitle", () => {
     expect(screen.queryAllByText("Please wait while we prepare your document(s)")).toHaveLength(1);
   });
 
-  it("should display 'publishing' when queueState is 'PENDING' for issuing documents", () => {
+  it("should display 'Issuing' when queueState is 'PENDING' for issuing documents", () => {
     render(
       <ProcessDocumentTitle
         queueState={QueueState.PENDING}
@@ -36,7 +36,7 @@ describe("ProcessDocumentTitle", () => {
       />
     );
 
-    expect(screen.queryAllByText("Publishing document(s)...")).toHaveLength(1);
+    expect(screen.queryAllByText("Issuing document(s)...")).toHaveLength(1);
   });
   it("should display 'revoking' when queueState is 'PENDING' for revoking documents", () => {
     render(

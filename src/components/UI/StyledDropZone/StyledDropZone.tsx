@@ -3,8 +3,9 @@ import { trim } from "lodash";
 import { FunctionComponent, useMemo, useState } from "react";
 import { DropzoneOptions, FileRejection, useDropzone } from "react-dropzone";
 import { FileUpload } from "../../../constants/FileUpload";
+import { ErrorMessage } from "./ErrorMessage";
 
-type DropZonefileErrors = ErrorObject[] | Error[] | null | undefined;
+type DropZoneFileErrors = ErrorObject[] | Error[] | null | undefined;
 
 interface DropZoneProps {
   defaultStyle: string;
@@ -13,7 +14,7 @@ interface DropZoneProps {
   rejectStyle?: string;
   children: React.ReactNode;
   dropzoneOptions: DropzoneOptions;
-  fileErrors?: DropZonefileErrors;
+  fileErrors?: DropZoneFileErrors;
   dropzoneIcon?: string;
   dataTestId?: string;
 }
@@ -34,10 +35,12 @@ export const StyledDropZone: FunctionComponent<DropZoneProps> = ({
 }) => {
   const [fileTypeError, setFileTypeError] = useState(false);
   const [fileSizeError, setFileSizeError] = useState(false);
+  const [tooManyFilesError, setTooManyFilesError] = useState(false);
 
   const onDrop = () => {
     setFileTypeError(false);
     setFileSizeError(false);
+    setTooManyFilesError(false);
   };
 
   const onDropRejected = (fileRejections: FileRejection[]) => {
@@ -51,6 +54,11 @@ export const StyledDropZone: FunctionComponent<DropZoneProps> = ({
         file.errors.some((error) => error.code === "file-too-large")
       );
       setFileSizeError(checkInvalidFileSize);
+
+      const checkNumberOfFiles = fileRejections.some((file) =>
+        file.errors.some((error) => error.code === "too-many-files")
+      );
+      setTooManyFilesError(checkNumberOfFiles);
     }
   };
   dropzoneOptions.onDrop = onDrop;
@@ -58,7 +66,7 @@ export const StyledDropZone: FunctionComponent<DropZoneProps> = ({
 
   const { getInputProps, getRootProps, isDragActive, isDragAccept, isDragReject } = useDropzone(dropzoneOptions);
 
-  const error = fileTypeError || fileSizeError || !!fileErrors;
+  const error = fileTypeError || fileSizeError || tooManyFilesError || !!fileErrors;
   const currentStyle = error ? errorStyle : defaultStyle;
   const dragStyle = useMemo(() => {
     return trim(`
@@ -75,24 +83,34 @@ export const StyledDropZone: FunctionComponent<DropZoneProps> = ({
 
       {error && <p className="max-w-lg text-rose text-lg leading-none font-bold mb-2">Error</p>}
       {fileTypeError && (
-        <p className="max-w-lg text-rose text-lg leading-none mb-2" data-testid="invalid-file-error">
-          Incorrect file type selected, Only {dropzoneOptions.accept} are allowed
-        </p>
+        <ErrorMessage
+          id="invalid-file-error"
+          message={`Incorrect file type selected, Only ${dropzoneOptions.accept} are allowed`}
+        />
       )}
       {fileSizeError && (
-        <p className="max-w-lg text-rose text-lg leading-none mb-2" data-testid="file-size-error">
-          File size exceeds{" "}
-          {dropzoneOptions.maxSize ? ` ${dropzoneOptions.maxSize / FileUpload.BYTE_TO_MB_CONVERTION_RATE}` : ""}MB,
-          Please try again with a smaller file size.
-        </p>
+        <ErrorMessage
+          id="file-size-error"
+          message={`File size exceeds ${
+            dropzoneOptions.maxSize ? ` ${dropzoneOptions.maxSize / FileUpload.BYTE_TO_MB_CONVERSION_RATE}` : ""
+          }MB, Please try again with a smaller file size.`}
+        />
+      )}
+      {tooManyFilesError && (
+        <ErrorMessage
+          id="too-many-files-error"
+          message={`Upload too many documents at once, please upload a total of ${dropzoneOptions.maxFiles} document at a time.`}
+        />
       )}
       {fileErrors &&
         fileErrors.length > 0 &&
         fileErrors.map((formError, index: number) => {
           return (
-            <p key={index} className="max-w-lg text-rose text-lg leading-none mb-2" data-testid="file-error">
-              {formError instanceof Error ? "" : formError.instancePath} {formError.message}
-            </p>
+            <ErrorMessage
+              key={`file-errors-${index}`}
+              id="file-error"
+              message={`${formError instanceof Error ? "" : formError.instancePath} ${formError.message}`}
+            />
           );
         })}
 

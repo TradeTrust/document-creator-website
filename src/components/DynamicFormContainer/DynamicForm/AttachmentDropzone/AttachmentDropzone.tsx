@@ -31,7 +31,7 @@ export const AttachmentDropzone: FunctionComponent<AttachmentDropzone> = ({
       if (totalSize > FileUpload.ATTACHMENT_TOTAL_FILES_MAX_SIZE) {
         const totalFileSizeError = new Error(
           `Total attachment file size exceeds ${
-            FileUpload.ATTACHMENT_TOTAL_FILES_MAX_SIZE / FileUpload.BYTE_TO_MB_CONVERTION_RATE
+            FileUpload.ATTACHMENT_TOTAL_FILES_MAX_SIZE / FileUpload.BYTE_TO_MB_CONVERSION_RATE
           }MB, Please try again with a smaller file size.`
         );
         return setFileErrors([totalFileSizeError]);
@@ -60,7 +60,7 @@ export const AttachmentDropzone: FunctionComponent<AttachmentDropzone> = ({
     <div className="flex flex-col m-auto" key="AttachmentDropzone" data-testid="attachment-dropzone">
       <legend>Attachments</legend>
       <div className="text-gray-800">
-        Max. total file size: {FileUpload.ATTACHMENT_TOTAL_FILES_MAX_SIZE / FileUpload.BYTE_TO_MB_CONVERTION_RATE}MB
+        Max. total file size: {FileUpload.ATTACHMENT_TOTAL_FILES_MAX_SIZE / FileUpload.BYTE_TO_MB_CONVERSION_RATE}MB
       </div>
       <StyledDropZone
         dropzoneOptions={dropzoneOptions}

@@ -5,7 +5,7 @@ import { usePersistedConfigFile } from "../../../common/hook/usePersistedConfigF
 import { WalletDecryption } from "./WalletDecryption";
 import { getLogger } from "../../../utils/logger";
 
-const { stack } = getLogger("RevokeDocumentDropZone");
+const { stack } = getLogger("Wallet Decryption Container");
 
 export const WalletDecryptionContainer: FunctionComponent = () => {
   const { setConfig } = useConfigContext();

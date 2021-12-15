@@ -170,7 +170,7 @@ describe("ProcessDocumentScreen", () => {
         />
       </MemoryRouter>
     );
-    expect(screen.getByTestId("process-title")).toHaveTextContent("Publishing document(s)...");
+    expect(screen.getByTestId("process-title")).toHaveTextContent("Issuing document(s)...");
   });
 
   it("should display the correct title while pending revoke", () => {
