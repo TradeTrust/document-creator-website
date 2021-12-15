@@ -13,7 +13,7 @@ const { stack } = getLogger("RevokeDocumentDropZone");
 
 interface RevokeDocumentDropZone {
   setRevokeDocuments: (revokeDocuments: any) => void;
-  errorMessages?: string[];
+  errorMessages: string[];
   setErrorMessages: (errorMessage: string[]) => void;
   setFileName: (fileName: string) => void;
   documentUploadState: DocumentUploadState;
@@ -33,7 +33,7 @@ export const RevokeDocumentDropZone: FunctionComponent<RevokeDocumentDropZone> =
   useEffect(() => {
     if (documentUploadState === DocumentUploadState.ERROR) {
       const readFileError =
-        errorMessages !== undefined && errorMessages.length > 0
+        errorMessages.length > 0
           ? errorMessages.map((errorMessage) => new Error(errorMessage))
           : [new Error("Document cannot be read. Please check that you have a valid document")];
       setFileErrors(readFileError);

@@ -107,7 +107,7 @@ export const StyledDropZone: FunctionComponent<DropZoneProps> = ({
         fileErrors.map((formError, index: number) => {
           return (
             <ErrorMessage
-              key={index}
+              key={`file-errors-${index}`}
               id="file-error"
               message={`${formError instanceof Error ? "" : formError.instancePath} ${formError.message}`}
             />
