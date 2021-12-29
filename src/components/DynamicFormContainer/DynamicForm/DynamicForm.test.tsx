@@ -3,7 +3,7 @@ import React from "react";
 import { FormTemplate, FormType } from "../../../types";
 import { DynamicForm } from "./DynamicForm";
 
-import sampleConfig from "../../../test/fixtures/config/_generated-config-files/v2/sample-config-ropsten.json";
+import sampleConfig from "../../../test/fixtures/config/v2/sample-config-ropsten.json";
 
 const form = sampleConfig.forms[1] as FormTemplate;
 
