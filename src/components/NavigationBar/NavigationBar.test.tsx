@@ -3,8 +3,8 @@ import React from "react";
 import { BrowserRouter, Route } from "react-router-dom";
 import { NavigationBar } from "./NavigationBar";
 
-import configRinkeby from "../../test/fixtures/config/_generated-config-files/v2/sample-config-rinkeby.json";
-import configRopsten from "../../test/fixtures/config/_generated-config-files/v2/sample-config-ropsten.json";
+import configRinkeby from "../../test/fixtures/config/v2/sample-config-rinkeby.json";
+import configRopsten from "../../test/fixtures/config/v2/sample-config-ropsten.json";
 
 const mockMainnetConfig = {
   network: "homestead",

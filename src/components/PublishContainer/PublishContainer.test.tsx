@@ -6,7 +6,7 @@ import { useQueue } from "../../common/hook/useQueue";
 import { PublishContainer } from "./PublishContainer";
 import { QueueState } from "./../../constants/QueueState";
 
-import sampleConfig from "../../test/fixtures/config/_generated-config-files/v2/sample-config-ropsten.json";
+import sampleConfig from "../../test/fixtures/config/v2/sample-config-ropsten.json";
 
 jest.mock("../../common/context/forms");
 jest.mock("../../common/context/config");

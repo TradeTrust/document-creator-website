@@ -1,6 +1,6 @@
 import { assertConfigFile } from "./validate";
 
-import sample from "../../test/fixtures/config/_generated-config-files/v2/sample-config-ropsten.json";
+import sample from "../../test/fixtures/config/v2/sample-config-ropsten.json";
 
 describe("configFileSchema", () => {
   it("validates against sample wallet file", () => {
