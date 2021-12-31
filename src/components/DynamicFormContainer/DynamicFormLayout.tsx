@@ -1,4 +1,4 @@
-import { LoaderSpinner } from "@govtechsg/tradetrust-ui-components";
+import { LoaderSpinner, ToggleSwitch } from "@govtechsg/tradetrust-ui-components";
 import Ajv, { ErrorObject } from "ajv";
 import { defaultsDeep } from "lodash";
 import React, { FunctionComponent, useState } from "react";
@@ -9,7 +9,6 @@ import { useFormsContext } from "../../common/context/forms";
 import { OnCloseGuard } from "../OnCloseGuard/OnCloseGuard";
 import { Card } from "../UI/Card";
 import { ContentFrame } from "../UI/ContentFrame";
-import { ToggleSwitch } from "../UI/ToggleSwitch";
 import { AddFormModal } from "./AddFormModal";
 import { BackModal } from "./BackModal";
 import { DeleteModal } from "./DeleteModal";
