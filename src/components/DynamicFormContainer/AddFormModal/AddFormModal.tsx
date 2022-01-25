@@ -2,6 +2,7 @@ import { Button } from "@govtechsg/tradetrust-ui-components";
 import { FunctionComponent } from "react";
 import { FormTemplate } from "../../../types";
 import { ModalDialog } from "../../ModalDialog";
+import { FormSelect } from "../../FormSelectionContainer/FormSelect";
 
 interface AddFormModalProps {
   onAdd: (index: number) => void;
@@ -15,8 +16,8 @@ export const AddFormModal: FunctionComponent<AddFormModalProps> = ({ onAdd, show
     return null;
   }
 
-  const handleAdd = (index: number) => {
-    onAdd(index);
+  const onAddForm = (formIndex: number) => {
+    onAdd(formIndex);
     onClose();
   };
 
@@ -27,14 +28,13 @@ export const AddFormModal: FunctionComponent<AddFormModalProps> = ({ onAdd, show
       <div className="flex flex-wrap justify-start">
         {forms.map((form: FormTemplate, index: number) => {
           return (
-            <div key={index} className="w-full md:w-1/3 mb-8 flex justify-center">
-              <Button
+            <div key={`modal-form-select-${index}`} className="w-full md:w-1/3 mb-8 flex justify-center">
+              <FormSelect
+                id={`modal-form-select-${index}`}
+                form={form}
+                onAddForm={() => onAddForm(index)}
                 data-testid={`add-form-button-${index}`}
-                className="bg-white text-cerulean w-11/12 hover:bg-cloud-100 h-full p-4 leading-5"
-                onClick={() => handleAdd(index)}
-              >
-                {form.name}
-              </Button>
+              />
             </div>
           );
         })}
