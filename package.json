@@ -129,7 +129,7 @@
     "react-app-rewired": "^2.1.8",
     "react-scripts": "4.0.3",
     "react-test-renderer": "^17.0.2",
-    "shelljs": "^0.8.4",
+    "shelljs": "^0.8.5",
     "tailwindcss": "npm:@tailwindcss/postcss7-compat@^2.2.7",
     "testcafe": "^1.14.2",
     "tmp": "^0.2.1",
