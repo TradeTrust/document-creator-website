@@ -67,7 +67,9 @@ describe("formSelect", () => {
 
     await waitFor(() => {
       expect(
-        screen.getByText("0x8bA63EAB43342AAc3AdBB4B827b68Cf4aAE5Caca could not be found at abc.com.")
+        screen.getByText(
+          "0x8bA63EAB43342AAc3AdBB4B827b68Cf4aAE5Caca address could not be found at abc.com DNS TXT records."
+        )
       ).toBeInTheDocument();
     });
   });

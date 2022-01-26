@@ -23,7 +23,11 @@ export const FormSelect: FunctionComponent<FormSelectProps> = ({ id, form, onAdd
     } else {
       const isDnsValidated = await validateDns(form);
       if (!isDnsValidated) {
-        setErrorMsg(`${getIssuerAddress(form.defaults)} could not be found at ${getIssuerLocation(form.defaults)}.`);
+        setErrorMsg(
+          `${getIssuerAddress(form.defaults)} address could not be found at ${getIssuerLocation(
+            form.defaults
+          )} DNS TXT records.`
+        );
         ReactTooltip.show(refButton.current as unknown as Element);
       }
       setIsValidDns(isDnsValidated);
