@@ -27,7 +27,7 @@ const mockRecordsDnsTxt = [
   },
 ];
 
-const mockFormFail: FormTemplate = {
+const mockFormInvoiceV2FailDnsLocation: FormTemplate = {
   name: "TradeTrust Invoice v2",
   type: "VERIFIABLE_DOCUMENT",
   defaults: {
@@ -55,13 +55,13 @@ const mockFormFail: FormTemplate = {
 
 describe("formSelect", () => {
   it("should show file name", () => {
-    render(<FormSelect id={`abc`} form={mockFormFail} onAddForm={() => {}} />);
+    render(<FormSelect id={`abc`} form={mockFormInvoiceV2FailDnsLocation} onAddForm={() => {}} />);
     expect(screen.getByText("TradeTrust Invoice v2")).toBeInTheDocument();
   });
 
   it("should show tooltip with error message", async () => {
     mockGetDocumentStoreRecords.mockReturnValue(mockRecordsDnsTxt);
-    render(<FormSelect id={`abc`} form={mockFormFail} onAddForm={() => {}} />);
+    render(<FormSelect id={`abc`} form={mockFormInvoiceV2FailDnsLocation} onAddForm={() => {}} />);
 
     fireEvent.click(screen.getByText("TradeTrust Invoice v2"));
 

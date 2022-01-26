@@ -1,5 +1,6 @@
 import { useState } from "react";
-import { QueueState, identifyProofType, QueueType } from "../../../constants/QueueState";
+import { IdentityProofType } from "../../../constants";
+import { QueueState, QueueType } from "../../../constants/QueueState";
 import { publishJob } from "../../../services/publishing";
 import { revokeDocumentJob } from "../../../services/revoking";
 import { Config, FailedJobErrors, FormEntry, PublishingJob, RevokingJob, WrappedDocument } from "../../../types";
@@ -75,7 +76,7 @@ export const useQueue = ({
       const allJobs = processingJobs.map(async (job, index) => {
         try {
           if (queueType === QueueType.ISSUE) {
-            if (job.contractAddress !== identifyProofType.DnsDid) {
+            if (job.contractAddress !== IdentityProofType.DNSDid) {
               // publish verifiable documents and transferable records with doc store and token registry
               await publishJob(job as PublishingJob, wallet);
             }

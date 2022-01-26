@@ -216,6 +216,16 @@ describe("getIssuerAddress", () => {
 });
 
 describe("validateDnsTxtRecords", () => {
+  it("should return true for DNS-TXT method if address exists on dns regardless of text casing", async () => {
+    mockGetDocumentStoreRecords.mockReturnValue(mockRecordsDnsTxt);
+    const isDnsValidated = await validateDnsTxtRecords({
+      identityProofType: v2.IdentityProofType.DNSTxt,
+      issuerLocation: "example.com",
+      issuerAddress: "0x8BA63EAB43342AAC3ADBB4B827B68CF4AAE5CACA",
+    });
+    expect(isDnsValidated).toBe(true);
+  });
+
   it("should return true for DNS-TXT method if address exists on dns", async () => {
     mockGetDocumentStoreRecords.mockReturnValue(mockRecordsDnsTxt);
     const isDnsValidated = await validateDnsTxtRecords({

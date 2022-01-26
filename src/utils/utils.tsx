@@ -2,10 +2,9 @@ import { Network, WrappedDocument } from "../types";
 import { saveAs } from "file-saver";
 import JSZip from "jszip";
 import { utils, OpenAttestationDocument } from "@govtechsg/open-attestation";
-import { IdentityProofType } from "@govtechsg/open-attestation/dist/types/__generated__/schema.2.0";
 import { getDocumentStoreRecords, getDnsDidRecords } from "@govtechsg/dnsprove";
-import { v2 } from "@govtechsg/open-attestation";
 import { FormTemplate } from "../types";
+import { IdentityProofType } from "../constants";
 
 interface GenerateFileName {
   network?: string;
@@ -99,7 +98,7 @@ export const getIssuerLocation = (rawDocument: OpenAttestationDocument): string 
   );
 };
 
-export const getIdentityProofType = (rawDocument: OpenAttestationDocument): IdentityProofType | undefined => {
+export const getIdentityProofType = (rawDocument: OpenAttestationDocument): string | undefined => {
   if (utils.isRawV2Document(rawDocument)) {
     const { issuers } = rawDocument;
     return issuers[0].identityProof?.type; // let's assume only 1 issuer, so far no multiple issuer cases
@@ -129,7 +128,7 @@ export const getIssuerAddress = (rawDocument: OpenAttestationDocument): string |
 };
 
 interface ValidateDnsTxtRecords {
-  identityProofType: v2.IdentityProofType;
+  identityProofType: string;
   issuerLocation: string;
   issuerAddress: string;
 }
@@ -139,10 +138,10 @@ export const validateDnsTxtRecords = async ({
   issuerLocation,
   issuerAddress,
 }: ValidateDnsTxtRecords): Promise<boolean> => {
-  if (identityProofType === v2.IdentityProofType.DNSDid) {
+  if (identityProofType === IdentityProofType.DNSDid) {
     const txtRecords = await getDnsDidRecords(issuerLocation);
     return txtRecords.some((record) => record.publicKey.toLowerCase() === issuerAddress.toLowerCase());
-  } else if (identityProofType === v2.IdentityProofType.DNSTxt) {
+  } else if (identityProofType === IdentityProofType.DNSTxt) {
     const txtRecords = await getDocumentStoreRecords(issuerLocation);
     return txtRecords.some((record) => record.addr.toLowerCase() === issuerAddress.toLowerCase());
   }

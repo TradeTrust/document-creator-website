@@ -4,12 +4,13 @@ import {
   utils,
 } from "@govtechsg/open-attestation";
 import { defaultsDeep, groupBy } from "lodash";
-import { identifyProofType } from "../../../../constants/QueueState";
+import { IdentityProofType } from "../../../../constants";
 import { ActionsUrlObject, Config, DocumentStorage, FormEntry, PublishingJob, RawDocument } from "../../../../types";
 import { getQueueNumber } from "../../../API/storageAPI";
 import { encodeQrCode } from "../../../utils";
 import { Signer } from "ethers";
 import { publishDnsDidVerifiableDocumentJob } from "../../../../services/publishing";
+import { getIssuerAddress } from "../../../../utils";
 
 interface NetworkUrl {
   homestead: string;
@@ -49,18 +50,6 @@ const getReservedStorageUrl = async (
   return qrCodeObject;
 };
 
-const getContractAddressFromRawDoc = (document: any) => {
-  if (utils.isRawV3Document(document)) {
-    return document.openAttestationMetadata.identityProof.type.toString() === identifyProofType.DnsDid
-      ? identifyProofType.DnsDid
-      : document.openAttestationMetadata.proof.value;
-  } else {
-    return document.issuers[0]?.identityProof?.type === identifyProofType.DnsDid
-      ? identifyProofType.DnsDid
-      : document.issuers[0]?.documentStore || document.issuers[0]?.tokenRegistry;
-  }
-};
-
 export const getRawDocuments = async (forms: FormEntry[], config: Config): Promise<RawDocument[]> => {
   return Promise.all(
     forms.map(async ({ data, templateIndex, fileName, ownership, extension }) => {
@@ -82,7 +71,7 @@ export const getRawDocuments = async (forms: FormEntry[], config: Config): Promi
         formData = { ...data.formData, ...qrUrl };
       }
       defaultsDeep(formData, formDefaults);
-      const contractAddress = getContractAddressFromRawDoc(formData);
+      const contractAddress = getIssuerAddress(formData) as string; // type `OpenAttestationDocument` conflicts with `RawDocument`
       const payload = formConfig.type === "TRANSFERABLE_RECORD" ? { ownership } : {};
       return {
         type: formConfig.type,
@@ -136,10 +125,10 @@ export const groupDocumentsIntoJobs = async (
   const verifiableDocuments = rawDocuments.filter((doc) => doc.type === "VERIFIABLE_DOCUMENT");
   const groupedVerifiableDocuments = groupBy(verifiableDocuments, "contractAddress");
   const verifiableDocumentsWithDocumentStore = { ...groupedVerifiableDocuments };
-  delete verifiableDocumentsWithDocumentStore[identifyProofType.DnsDid];
+  delete verifiableDocumentsWithDocumentStore[IdentityProofType.DNSDid];
   const verifiableDocumentsWithDnsDid =
-    Object.keys(groupedVerifiableDocuments).indexOf(identifyProofType.DnsDid) >= 0
-      ? [...groupedVerifiableDocuments[identifyProofType.DnsDid]]
+    Object.keys(groupedVerifiableDocuments).indexOf(IdentityProofType.DNSDid) >= 0
+      ? [...groupedVerifiableDocuments[IdentityProofType.DNSDid]]
       : [];
   const documentStoreAddresses = Object.keys(verifiableDocumentsWithDocumentStore);
   let nonce = currentNonce;
@@ -176,7 +165,7 @@ export const groupDocumentsIntoJobs = async (
     jobs.push({
       type: verifiableDocumentsWithDnsDid[0].type,
       nonce,
-      contractAddress: identifyProofType.DnsDid,
+      contractAddress: IdentityProofType.DNSDid,
       documents: verifiableDocumentsWithDnsDid.map((doc, index) => ({
         ...doc,
         wrappedDocument: signedDnsDidDocument[index],
