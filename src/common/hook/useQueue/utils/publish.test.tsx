@@ -1,4 +1,4 @@
-import { identifyProofType } from "../../../../constants/QueueState";
+import { IdentityProofType } from "../../../../constants";
 import { Config, RawDocument } from "../../../../types";
 import { getDefaultProvider, Wallet } from "ethers";
 import { getQueueNumber } from "../../../API/storageAPI";
@@ -74,7 +74,7 @@ describe("groupDocumentsIntoJobs", () => {
     expect(publishingJobs[0].documents).toHaveLength(1);
     expect(publishingJobs[0].nonce).toBe(0);
 
-    expect(publishingJobs[1].contractAddress).toBe(identifyProofType.DnsDid);
+    expect(publishingJobs[1].contractAddress).toBe(IdentityProofType.DNSDid);
     expect(publishingJobs[1].merkleRoot).toBeTruthy(); // eslint-disable-line jest/no-truthy-falsy
     expect(publishingJobs[1].documents).toHaveLength(1);
     expect(publishingJobs[1].nonce).toBe(1);

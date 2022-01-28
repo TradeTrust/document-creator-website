@@ -1,4 +1,4 @@
-import { Button, ProgressBar } from "@govtechsg/tradetrust-ui-components";
+import { ProgressBar } from "@govtechsg/tradetrust-ui-components";
 import React, { FunctionComponent } from "react";
 import { Redirect } from "react-router-dom";
 import { useFormsContext } from "../../../common/context/forms";
@@ -7,6 +7,7 @@ import { Wrapper } from "../../UI/Wrapper";
 import { IssueOrRevokeSelector } from "../../UI/IssueOrRevokeSelector";
 import { Card } from "../../UI/Card";
 import { ContentFrame } from "../../UI/ContentFrame";
+import { FormSelect } from "../FormSelect";
 
 interface FormSelection {
   config: Config;
@@ -14,8 +15,9 @@ interface FormSelection {
 
 export const FormSelection: FunctionComponent<FormSelection> = ({ config }) => {
   const { activeFormIndex, newForm } = useFormsContext();
-  const selectedForm = (templateIndex: number): void => {
-    newForm(templateIndex);
+
+  const onAddForm = (formIndex: number) => {
+    newForm(formIndex);
   };
 
   // Once the active form has been set, redirect to /form
@@ -36,13 +38,8 @@ export const FormSelection: FunctionComponent<FormSelection> = ({ config }) => {
           <div className="flex flex-wrap justify-start">
             {config.forms.map((form: FormTemplate, index: number) => {
               return (
-                <div key={index} className="w-full md:w-1/3 mb-4">
-                  <Button
-                    className="bg-white text-cerulean w-11/12 hover:bg-cloud-100 h-full p-4"
-                    onClick={() => selectedForm(index)}
-                  >
-                    {form.name}
-                  </Button>
+                <div key={`form-select-${index}`} className="w-full md:w-1/3 mb-4">
+                  <FormSelect id={`form-select-${index}`} form={form} onAddForm={() => onAddForm(index)} />
                 </div>
               );
             })}

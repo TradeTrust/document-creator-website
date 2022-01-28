@@ -6,11 +6,6 @@ export enum QueueState {
   ERROR = "ERROR",
 }
 
-export enum identifyProofType {
-  DnsTxt = "DNS-TXT",
-  DnsDid = "DNS-DID",
-}
-
 export enum QueueType {
   ISSUE = "ISSUE",
   REVOKE = "REVOKE",
