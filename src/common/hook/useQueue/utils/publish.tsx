@@ -10,7 +10,6 @@ import { getQueueNumber } from "../../../API/storageAPI";
 import { encodeQrCode } from "../../../utils";
 import { Signer } from "ethers";
 import { publishDnsDidVerifiableDocumentJob } from "../../../../services/publishing";
-import { getIssuerAddress, isDocumentByIdentityProofType } from "../../../../utils";
 
 interface NetworkUrl {
   homestead: string;
@@ -50,6 +49,18 @@ const getReservedStorageUrl = async (
   return qrCodeObject;
 };
 
+const getContractAddressFromRawDoc = (document: any) => {
+  if (utils.isRawV3Document(document)) {
+    return document.openAttestationMetadata.identityProof.type.toString() === IdentityProofType.DNSDid
+      ? IdentityProofType.DNSDid
+      : document.openAttestationMetadata.proof.value;
+  } else {
+    return document.issuers[0]?.identityProof?.type === IdentityProofType.DNSDid
+      ? IdentityProofType.DNSDid
+      : document.issuers[0]?.documentStore || document.issuers[0]?.tokenRegistry;
+  }
+};
+
 export const getRawDocuments = async (forms: FormEntry[], config: Config): Promise<RawDocument[]> => {
   return Promise.all(
     forms.map(async ({ data, templateIndex, fileName, ownership, extension }) => {
@@ -71,7 +82,7 @@ export const getRawDocuments = async (forms: FormEntry[], config: Config): Promi
         formData = { ...data.formData, ...qrUrl };
       }
       defaultsDeep(formData, formDefaults);
-      const contractAddress = getIssuerAddress(formData) as string; // type `OpenAttestationDocument` conflicts with `RawDocument`
+      const contractAddress = getContractAddressFromRawDoc(formData);
       const payload = formConfig.type === "TRANSFERABLE_RECORD" ? { ownership } : {};
       return {
         type: formConfig.type,
@@ -122,36 +133,52 @@ export const groupDocumentsIntoJobs = async (
   signer: Signer
 ): Promise<PublishingJob[]> => {
   const transferableRecords = rawDocuments.filter((doc) => doc.type === "TRANSFERABLE_RECORD");
-  const verifiableDocumentsDnsTxt = rawDocuments
-    .filter((doc) => doc.type === "VERIFIABLE_DOCUMENT")
-    .filter((doc) => isDocumentByIdentityProofType(doc.rawDocument, IdentityProofType.DNSTxt));
-  const verifiableDocumentsDnsTxtBatched = Object.keys({ ...groupBy(verifiableDocumentsDnsTxt, "contractAddress") });
-
-  const verifiableDocumentsDnsDid = rawDocuments
-    .filter((doc) => doc.type === "VERIFIABLE_DOCUMENT")
-    .filter((doc) => isDocumentByIdentityProofType(doc.rawDocument, IdentityProofType.DNSDid));
+  const verifiableDocuments = rawDocuments.filter((doc) => doc.type === "VERIFIABLE_DOCUMENT");
+  const groupedVerifiableDocuments = groupBy(verifiableDocuments, "contractAddress");
+  const verifiableDocumentsWithDocumentStore = { ...groupedVerifiableDocuments };
+  delete verifiableDocumentsWithDocumentStore[IdentityProofType.DNSDid];
+  const verifiableDocumentsWithDnsDid =
+    Object.keys(groupedVerifiableDocuments).indexOf(IdentityProofType.DNSDid) >= 0
+      ? [...groupedVerifiableDocuments[IdentityProofType.DNSDid]]
+      : [];
+  const documentStoreAddresses = Object.keys(verifiableDocumentsWithDocumentStore);
 
   let nonce = currentNonce;
 
   const jobs: PublishingJob[] = [];
-  // Process all verifiable documents with DNS-TXT
-  for (const contractAddress of verifiableDocumentsDnsTxtBatched) {
-    const verifiableDocumentJob = await processVerifiableDocuments(nonce, contractAddress, verifiableDocumentsDnsTxt);
-    jobs.push(verifiableDocumentJob);
-    nonce += TX_NEEDED_FOR_VERIFIABLE_DOCUMENTS;
+  // Process all verifiable documents with document store first
+  for (const contractAddress of documentStoreAddresses) {
+    const verifiableDocumentsV2 = verifiableDocumentsWithDocumentStore[contractAddress].filter((docs) => {
+      return utils.isRawV2Document(docs.rawDocument);
+    });
+    const verifiableDocumentsV3 = verifiableDocumentsWithDocumentStore[contractAddress].filter((docs) => {
+      return utils.isRawV3Document(docs.rawDocument);
+    });
+
+    if (verifiableDocumentsV2.length > 0) {
+      const verifiableDocumentV2Job = await processVerifiableDocuments(nonce, contractAddress, verifiableDocumentsV2);
+      jobs.push(verifiableDocumentV2Job);
+      nonce += TX_NEEDED_FOR_VERIFIABLE_DOCUMENTS;
+    }
+
+    if (verifiableDocumentsV3.length > 0) {
+      const verifiableDocumentV3Job = await processVerifiableDocuments(nonce, contractAddress, verifiableDocumentsV3);
+      jobs.push(verifiableDocumentV3Job);
+      nonce += TX_NEEDED_FOR_VERIFIABLE_DOCUMENTS;
+    }
   }
 
-  // Process all verifiable document with DNS-DID
-  if (verifiableDocumentsDnsDid.length > 0) {
-    const didRawDocuments = verifiableDocumentsDnsDid.map((doc) => doc.rawDocument);
+  // Process all verifiable document with DNS-DID next
+  if (verifiableDocumentsWithDnsDid.length > 0) {
+    const didRawDocuments = verifiableDocumentsWithDnsDid.map((doc) => doc.rawDocument);
     const wrappedDnsDidDocuments = await wrapDocuments(didRawDocuments);
     // Sign DNS-DID document here as we preparing the jobs
     const signedDnsDidDocument = await publishDnsDidVerifiableDocumentJob(wrappedDnsDidDocuments, signer);
     jobs.push({
-      type: verifiableDocumentsDnsDid[0].type,
+      type: verifiableDocumentsWithDnsDid[0].type,
       nonce,
       contractAddress: IdentityProofType.DNSDid,
-      documents: verifiableDocumentsDnsDid.map((doc, index) => ({
+      documents: verifiableDocumentsWithDnsDid.map((doc, index) => ({
         ...doc,
         wrappedDocument: signedDnsDidDocument[index],
       })),

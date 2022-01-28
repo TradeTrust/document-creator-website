@@ -86,20 +86,6 @@ export const getNetworkPath = (network?: Network): string => {
   }
 };
 
-export const isDocumentByIdentityProofType = (
-  rawDocument: OpenAttestationDocument,
-  identityProofType: IdentityProofType
-): boolean => {
-  if (utils.isRawV2Document(rawDocument)) {
-    return rawDocument.issuers[0].identityProof?.type === identityProofType;
-  } else if (utils.isRawV3Document(rawDocument)) {
-    return rawDocument.openAttestationMetadata.identityProof.type === identityProofType;
-  }
-  throw new Error(
-    "Unsupported document type: Only can retrieve IdentityProof type from OpenAttestation v2 & v3 documents."
-  );
-};
-
 export const getIssuerLocation = (rawDocument: OpenAttestationDocument): string | undefined => {
   if (utils.isRawV2Document(rawDocument)) {
     const { issuers } = rawDocument;
