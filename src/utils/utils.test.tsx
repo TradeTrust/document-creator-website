@@ -6,8 +6,10 @@ import {
   getIdentityProofType,
   getIssuerAddress,
   validateDnsTxtRecords,
+  isDocumentByIdentityProofType,
 } from "./utils";
 import { FormTemplate } from "../types";
+import { IdentityProofType } from "../constants";
 
 jest.mock("@govtechsg/dnsprove", () => ({
   getDnsDidRecords: jest.fn(),
@@ -245,6 +247,18 @@ const mockInvoiceV3DnsDid: FormTemplate = {
   },
   schema: {},
 };
+
+describe("isDocumentByIdentityProofType", () => {
+  it("should return true if identityProofType is DNS-TXT", () => {
+    const isDocumentDnsTxt = isDocumentByIdentityProofType(mockInvoiceV2.defaults, IdentityProofType.DNSTxt);
+    expect(isDocumentDnsTxt).toBe(true);
+  });
+
+  it("should return true if identityProofType is DNS-DID", () => {
+    const isDocumentDnsDid = isDocumentByIdentityProofType(mockInvoiceV2DnsDid.defaults, IdentityProofType.DNSDid);
+    expect(isDocumentDnsDid).toBe(true);
+  });
+});
 
 describe("getIssuerLocation", () => {
   it("should return dns location from raw document v2", () => {
