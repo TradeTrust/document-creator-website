@@ -139,6 +139,33 @@ const mockInvoiceV2: FormTemplate = {
   schema: {},
 };
 
+const mockInvoiceV2DnsDid: FormTemplate = {
+  name: "TradeTrust Invoice v2",
+  type: "VERIFIABLE_DOCUMENT",
+  defaults: {
+    $template: {
+      type: v2.TemplateType.EmbeddedRenderer,
+      name: "INVOICE",
+      url: "https://generic-templates.tradetrust.io",
+    },
+    issuers: [
+      {
+        id: "did:ethr:0x1245e5b64d785b25057f7438f715f4aa5d965733",
+        name: "Demo DNS-DID",
+        identityProof: {
+          type: v2.IdentityProofType.DNSDid,
+          location: "demo-tradetrust.openattestation.com",
+          key: "did:ethr:0x1245e5b64d785b25057f7438f715f4aa5d965733#controller",
+        },
+        revocation: {
+          type: v2.RevocationType.None,
+        },
+      },
+    ],
+  },
+  schema: {},
+};
+
 const mockInvoiceV3: FormTemplate = {
   name: "TradeTrust Invoice v3",
   type: "VERIFIABLE_DOCUMENT",
@@ -160,6 +187,46 @@ const mockInvoiceV3: FormTemplate = {
         type: v3.ProofType.OpenAttestationProofMethod,
         method: v3.Method.DocumentStore,
         value: "0x8bA63EAB43342AAc3AdBB4B827b68Cf4aAE5Caca",
+        revocation: {
+          type: v3.RevocationType.None,
+        },
+      },
+      identityProof: {
+        type: v3.IdentityProofType.DNSTxt,
+        identifier: "demo-tradetrust.openattestation.com",
+      },
+    },
+    credentialSubject: {},
+    issuer: {
+      id: "https://example.com",
+      name: "DEMO DOCUMENT STORE",
+      type: "OpenAttestationIssuer",
+    },
+  },
+  schema: {},
+};
+
+const mockInvoiceV3DnsDid: FormTemplate = {
+  name: "TradeTrust Invoice v3",
+  type: "VERIFIABLE_DOCUMENT",
+  defaults: {
+    "@context": [
+      "https://www.w3.org/2018/credentials/v1",
+      "https://schemata.openattestation.com/io/tradetrust/Invoice/1.0/invoice-context.json",
+      "https://schemata.openattestation.com/com/openattestation/1.0/OpenAttestation.v3.json",
+    ],
+    type: ["VerifiableCredential", "OpenAttestationCredential"],
+    issuanceDate: "2010-01-01T19:23:24Z",
+    openAttestationMetadata: {
+      template: {
+        type: v3.TemplateType.EmbeddedRenderer,
+        name: "INVOICE",
+        url: "https://generic-templates.tradetrust.io",
+      },
+      proof: {
+        type: v3.ProofType.OpenAttestationProofMethod,
+        method: v3.Method.Did,
+        value: "did:ethr:0x1245e5b64d785b25057f7438f715f4aa5d965733",
         revocation: {
           type: v3.RevocationType.None,
         },
@@ -212,6 +279,16 @@ describe("getIssuerAddress", () => {
   it("should return issuer address from raw document v3", () => {
     const address = getIssuerAddress(mockInvoiceV3.defaults);
     expect(address).toBe("0x8bA63EAB43342AAc3AdBB4B827b68Cf4aAE5Caca");
+  });
+
+  it("should return issuer address from raw document v2 (dns-did)", () => {
+    const address = getIssuerAddress(mockInvoiceV2DnsDid.defaults);
+    expect(address).toBe("0x1245e5b64d785b25057f7438f715f4aa5d965733");
+  });
+
+  it("should return issuer address from raw document v3 (dns-did)", () => {
+    const address = getIssuerAddress(mockInvoiceV3DnsDid.defaults);
+    expect(address).toBe("0x1245e5b64d785b25057f7438f715f4aa5d965733");
   });
 });
 
