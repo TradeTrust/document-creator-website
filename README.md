@@ -53,10 +53,14 @@ To learn React, check out the [React documentation](https://reactjs.org/).
 
 ## Integration test flow (locally)
 
+- Firstly, you have to run build, as the integration run script will serve static.
+
 - run 2 instances concurrently, 1 = `npm run blockchain`, 1 = `npm run integration`
+
+- to test a specific file, you will need run 2 instances concurrently, 1 = `npm run blockchain`, 1 = `npm run integration:single integration/<file name>.spec.ts`
 
 ## Windows Gotchas
 
 [cross-env](https://www.npmjs.com/package/cross-env) is required to run the npm scripts. It should be installed when running `npm install`
 
-Encountered _File name differs from already included file name only in casing_ error? Ensure that the absolute paths specified in the error are *exactly* the same and that the casings match. 
+Encountered _File name differs from already included file name only in casing_ error? Ensure that the absolute paths specified in the error are _exactly_ the same and that the casings match.
