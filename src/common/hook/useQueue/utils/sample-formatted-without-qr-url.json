@@ -19,7 +19,11 @@
           }
         }
       ],
-      "name": "CHAFTA Certificate of Origin"
+      "name": "CHAFTA Certificate of Origin",
+      "network": {
+        "chain": "ETH",
+        "chainId": "3"
+      }
     },
     "fileName": "Document-1.tt",
     "extension": "tt",
@@ -45,7 +49,11 @@
           "tokenRegistry": "0x10E936e6BA85dC92505760259881167141365821"
         }
       ],
-      "name": "Maersk Bill of Lading"
+      "name": "Maersk Bill of Lading",
+      "network": {
+        "chain": "ETH",
+        "chainId": "3"
+      }
     },
     "fileName": "Document-2.tt",
     "extension": "tt",
@@ -76,7 +84,11 @@
           }
         }
       ],
-      "name": "CHAFTA Certificate of Origin"
+      "name": "CHAFTA Certificate of Origin",
+      "network": {
+        "chain": "ETH",
+        "chainId": "3"
+      }
     },
     "fileName": "Document-3.tt",
     "extension": "tt",
@@ -102,7 +114,11 @@
           "tokenRegistry": "0x10E936e6BA85dC92505760259881167141365821"
         }
       ],
-      "name": "Maersk Bill of Lading"
+      "name": "Maersk Bill of Lading",
+      "network": {
+        "chain": "ETH",
+        "chainId": "3"
+      }
     },
     "fileName": "Document-4.tt",
     "extension": "tt",
