@@ -1,7 +1,8 @@
 import { Wallet, Signer } from "ethers";
 import { Provider } from "@ethersproject/abstract-provider";
+import { OpenAttestationDocument } from "@govtechsg/open-attestation";
 
-type Network = "homestead" | "ropsten" | "rinkeby" | "local";
+export type Network = "homestead" | "ropsten" | "rinkeby" | "local";
 type FormType = "TRANSFERABLE_RECORD" | "VERIFIABLE_DOCUMENT";
 
 // FormTemplate is defined in configuration file
@@ -103,7 +104,7 @@ export interface SetFormParams {
 export interface RawDocument {
   type: FormType;
   contractAddress: string;
-  rawDocument: any; // eslint-disable-line @typescript-eslint/no-explicit-any
+  rawDocument: OpenAttestationDocument;
   fileName: string;
   payload: { ownership?: Ownership };
   extension: string;
@@ -140,4 +141,11 @@ export interface ActionsUrlObject {
 export interface QueueNumberResponse {
   id: string;
   key: string;
+}
+
+export interface NetworkObject {
+  network: {
+    chain: string;
+    chainId: string;
+  };
 }

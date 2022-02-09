@@ -1,7 +1,8 @@
 import { csv2jsonAsync } from "json-2-csv";
 import converter from "json-2-csv";
 import { saveAs } from "file-saver";
-import { WalletOptions } from "../types";
+import { WalletOptions, Network, NetworkObject } from "../types";
+import { ChainId, ChainInfo } from "../constants/chainInfo";
 
 export function readFileAsJson<T>(file: File): Promise<T> {
   return new Promise((resolve, reject) => {
@@ -83,4 +84,19 @@ export const downloadJsonDataFile = (jsonTemplate: any): void => {
 
 export const isWalletOption = (option: string | WalletOptions): option is string => {
   return typeof option === "string";
+};
+
+export const getDocumentNetwork = (network: Network): NetworkObject => {
+  const chainInfo = Object.keys(ChainInfo)
+    .map((chainId) => ChainInfo[Number(chainId) as ChainId])
+    .find((info) => info.networkName === network);
+
+  if (!chainInfo) throw new Error(`Unsupported network ${network}`);
+
+  return {
+    network: {
+      chain: chainInfo?.chain,
+      chainId: chainInfo?.chainId.toString(),
+    },
+  };
 };

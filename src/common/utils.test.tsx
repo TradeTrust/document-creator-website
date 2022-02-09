@@ -1,4 +1,4 @@
-import { decodeQrCode, encodeQrCode } from "./utils";
+import { decodeQrCode, encodeQrCode, getDocumentNetwork } from "./utils";
 
 describe("encodeQrCode", () => {
   it("should encode the url into the correct format", () => {
@@ -36,5 +36,16 @@ describe("decodeQrCode", () => {
   it("throws when qr code is malformed", () => {
     const encodedQrCode = "http://%7B%22uri%22%3A%22https%3A%2F%2Fsample.domain%2Fdocument%2Fid%3Fq%3Dabc%23123%22%7D";
     expect(() => decodeQrCode(encodedQrCode)).toThrow("not formatted");
+  });
+});
+
+describe("getDocumentNetwork", () => {
+  it("should get the network details based on the network given", () => {
+    expect(getDocumentNetwork("ropsten")).toStrictEqual({ network: { chain: "ETH", chainId: "3" } });
+  });
+
+  it("should throw an error when the network is not in the list", () => {
+    // @ts-expect-error: Test if the error will throw when its not one of the type in the Network enum.
+    expect(() => getDocumentNetwork("abc")).toThrow("Unsupported network abc");
   });
 });
