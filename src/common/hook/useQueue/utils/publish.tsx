@@ -80,7 +80,8 @@ export const getRawDocuments = async (forms: FormEntry[], config: Config): Promi
       if (utils.isRawV3Document(data.formData)) {
         formData = {
           ...data.formData,
-          credentialSubject: { ...data.formData.credentialSubject, ...qrUrl, ...documentNetwork },
+          ...documentNetwork,
+          credentialSubject: { ...data.formData.credentialSubject, ...qrUrl },
         };
       } else {
         formData = { ...data.formData, ...qrUrl, ...documentNetwork };
@@ -220,5 +221,6 @@ export const getPublishingJobs = async (
 ): Promise<PublishingJob[]> => {
   // Currently works for only multiple verifiable document issuance:
   const rawDocuments = await getRawDocuments(forms, config);
+  console.log("raw", rawDocuments);
   return groupDocumentsIntoJobs(rawDocuments, nonce, signer);
 };
