@@ -7,7 +7,7 @@ import { defaultsDeep, groupBy } from "lodash";
 import { IdentityProofType } from "../../../../constants";
 import { ActionsUrlObject, Config, DocumentStorage, FormEntry, PublishingJob, RawDocument } from "../../../../types";
 import { getQueueNumber } from "../../../API/storageAPI";
-import { encodeQrCode } from "../../../utils";
+import { encodeQrCode, getDocumentNetwork } from "../../../utils";
 import { Signer } from "ethers";
 import { publishDnsDidVerifiableDocumentJob } from "../../../../services/publishing";
 
@@ -75,11 +75,16 @@ export const getRawDocuments = async (forms: FormEntry[], config: Config): Promi
       const formConfig = config.forms[templateIndex];
       if (!formConfig) throw new Error("Form definition not found");
       const formDefaults = formConfig.defaults;
+      const documentNetwork = getDocumentNetwork(config.network);
       let formData;
       if (utils.isRawV3Document(data.formData)) {
-        formData = { ...data.formData, credentialSubject: { ...data.formData.credentialSubject, ...qrUrl } };
+        formData = {
+          ...data.formData,
+          ...documentNetwork,
+          credentialSubject: { ...data.formData.credentialSubject, ...qrUrl },
+        };
       } else {
-        formData = { ...data.formData, ...qrUrl };
+        formData = { ...data.formData, ...qrUrl, ...documentNetwork };
       }
       defaultsDeep(formData, formDefaults);
       const contractAddress = getContractAddressFromRawDoc(formData);
@@ -216,5 +221,6 @@ export const getPublishingJobs = async (
 ): Promise<PublishingJob[]> => {
   // Currently works for only multiple verifiable document issuance:
   const rawDocuments = await getRawDocuments(forms, config);
+  console.log("raw", rawDocuments);
   return groupDocumentsIntoJobs(rawDocuments, nonce, signer);
 };

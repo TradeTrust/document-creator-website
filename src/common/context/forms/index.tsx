@@ -94,7 +94,9 @@ export const FormsContextProvider: FunctionComponent = ({ children }) => {
       if (e instanceof ReferenceError) {
         throw new Error("failed to interpolate data properties, could not find data properties in configuration file.");
       }
-      throw new Error(e);
+      if (e instanceof Error) {
+        throw new Error(e.message);
+      }
     }
   };
 
@@ -133,7 +135,9 @@ export const FormsContextProvider: FunctionComponent = ({ children }) => {
       if (e instanceof ReferenceError) {
         throw new Error("failed to interpolate data properties, could not find data properties in configuration file.");
       }
-      throw new Error(e);
+      if (e instanceof Error) {
+        throw new Error(e.message);
+      }
     }
   };
 
