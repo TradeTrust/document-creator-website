@@ -29,7 +29,7 @@ const renderExternalLink = ({ label, to }: FooterColumnItemProps) => {
   return (
     <a className="flex items-center" href={to} target={"_blank"} rel="noopener noreferrer">
       <p className={`${sharedStyles} mr-1`}>{label}</p>
-      <div className={`w-auto`}>
+      <div className="w-auto">
         <ExternalLink size={12} color={"#89969F"} />
       </div>
     </a>

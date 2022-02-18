@@ -3,7 +3,17 @@ const toPath = (_path) => path.join(process.cwd(), _path);
 
 module.exports = {
   stories: ["../src/**/*.stories.@(tsx)"],
-  addons: ["@storybook/addon-essentials", "@storybook/addon-postcss"],
+  addons: [
+    "@storybook/addon-essentials",
+    {
+      name: "@storybook/addon-postcss",
+      options: {
+        postcssLoaderOptions: {
+          implementation: require("postcss"),
+        },
+      },
+    },
+  ],
   webpackFinal: (config) => {
     return {
       ...config,
