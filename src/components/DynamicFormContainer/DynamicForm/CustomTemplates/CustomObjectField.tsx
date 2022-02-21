@@ -5,8 +5,8 @@ import { ObjectFieldTemplateProps } from "@rjsf/core";
 export const CustomTitle: FunctionComponent<{ title: string }> = ({ title }) => {
   return (
     <>
-      {title && <div className={`border-t border-cloud-200 my-16`} data-testid="custom-title-divider" />}
-      {title && <h4 className={`text-cloud-900 capitalize my-4`}>{title}</h4>}
+      {title && <div className="border-t border-cloud-200 my-16" data-testid="custom-title-divider" />}
+      {title && <h4 className="text-cloud-900 capitalize my-4">{title}</h4>}
     </>
   );
 };

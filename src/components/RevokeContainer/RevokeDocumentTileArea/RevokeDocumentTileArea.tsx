@@ -45,7 +45,7 @@ export const RevokeDocumentTileArea: FunctionComponent<RevokeDocumentTileArea> =
             <Button
               onClick={onBack}
               data-testid="back-revoke-button"
-              className={`w-auto px-8 text-cerulean mb-8 bg-white mr-4 hover:bg-cloud-100`}
+              className="w-auto px-8 text-cerulean mb-8 bg-white mr-4 hover:bg-cloud-100"
             >
               Back
             </Button>
