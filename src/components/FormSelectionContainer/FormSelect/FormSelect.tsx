@@ -1,9 +1,9 @@
 import { Button } from "@govtechsg/tradetrust-ui-components";
-import React, { FunctionComponent, useState, useRef, useEffect } from "react";
+import React, { FunctionComponent, useState, useRef } from "react";
 import ReactTooltip from "react-tooltip";
 import { useConfigContext } from "../../../common/context/config";
 import { FormTemplate } from "../../../types";
-import { validateDns, getIssuerAddress, getIssuerLocation } from "../../../utils";
+import { validateDns, getIssuerLocation } from "../../../utils";
 
 interface FormSelectProps {
   id: string;
@@ -18,27 +18,24 @@ export const FormSelect: FunctionComponent<FormSelectProps> = ({ id, form, onAdd
   const refButton = useRef<HTMLDivElement>(null);
 
   const handleForm = async (): Promise<void> => {
+    if (isValidDns) {
+      onAddForm();
+    }
+  };
+
+  const dnsCheck = async (): Promise<void> => {
     if (config?.network === "local") {
       setIsValidDns(true); // for local e2e to pass, skip dns validate + set valid
     } else {
       const isDnsValidated = await validateDns(form);
       if (!isDnsValidated) {
-        setErrorMsg(
-          `${getIssuerAddress(form.defaults)} address could not be found at ${getIssuerLocation(
-            form.defaults
-          )} DNS TXT records.`
-        );
-        ReactTooltip.show(refButton.current as unknown as Element);
+        setErrorMsg(`The contract address could not be found on ${getIssuerLocation(form.defaults)} DNS TXT records.`);
       }
       setIsValidDns(isDnsValidated);
     }
   };
 
-  useEffect(() => {
-    if (isValidDns) {
-      onAddForm();
-    }
-  }, [isValidDns, onAddForm]);
+  dnsCheck();
 
   return (
     <>
