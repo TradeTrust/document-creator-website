@@ -54,23 +54,21 @@ const mockFormInvoiceV2FailDnsLocation: FormTemplate = {
 };
 
 describe("formSelect", () => {
-  it("should show file name", () => {
-    render(<FormSelect id={`abc`} form={mockFormInvoiceV2FailDnsLocation} onAddForm={() => {}} />);
+  it("should show file name", async () => {
+    mockGetDocumentStoreRecords.mockResolvedValue(mockRecordsDnsTxt);
+    await waitFor(() => {
+      render(<FormSelect id={`abc`} form={mockFormInvoiceV2FailDnsLocation} onAddForm={() => {}} />);
+    });
     expect(screen.getByText("TradeTrust Invoice v2")).toBeInTheDocument();
   });
 
   it("should show tooltip with error message", async () => {
-    mockGetDocumentStoreRecords.mockReturnValue(mockRecordsDnsTxt);
-    render(<FormSelect id={`abc`} form={mockFormInvoiceV2FailDnsLocation} onAddForm={() => {}} />);
-
+    mockGetDocumentStoreRecords.mockResolvedValue(mockRecordsDnsTxt);
+    await waitFor(() => {
+      render(<FormSelect id={`abc`} form={mockFormInvoiceV2FailDnsLocation} onAddForm={() => {}} />);
+    });
     fireEvent.click(screen.getByText("TradeTrust Invoice v2"));
 
-    await waitFor(() => {
-      expect(
-        screen.getByText(
-          "0x8bA63EAB43342AAc3AdBB4B827b68Cf4aAE5Caca address could not be found at abc.com DNS TXT records."
-        )
-      ).toBeInTheDocument();
-    });
+    expect(screen.getByText("The contract address could not be found on abc.com DNS TXT records.")).toBeInTheDocument();
   });
 });

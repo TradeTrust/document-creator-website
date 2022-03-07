@@ -1,5 +1,5 @@
 import { Button } from "@govtechsg/tradetrust-ui-components";
-import React, { FunctionComponent, useState, useRef } from "react";
+import React, { FunctionComponent, useState, useRef, useEffect, useCallback } from "react";
 import ReactTooltip from "react-tooltip";
 import { useConfigContext } from "../../../common/context/config";
 import { FormTemplate } from "../../../types";
@@ -20,10 +20,12 @@ export const FormSelect: FunctionComponent<FormSelectProps> = ({ id, form, onAdd
   const handleForm = async (): Promise<void> => {
     if (isValidDns) {
       onAddForm();
+    } else {
+      ReactTooltip.show(refButton.current as unknown as Element);
     }
   };
 
-  const dnsCheck = async (): Promise<void> => {
+  const dnsCheck = useCallback(async () => {
     if (config?.network === "local") {
       setIsValidDns(true); // for local e2e to pass, skip dns validate + set valid
     } else {
@@ -33,9 +35,11 @@ export const FormSelect: FunctionComponent<FormSelectProps> = ({ id, form, onAdd
       }
       setIsValidDns(isDnsValidated);
     }
-  };
+  }, [config, form]);
 
-  dnsCheck();
+  useEffect(() => {
+    dnsCheck();
+  }, [dnsCheck]);
 
   return (
     <>
