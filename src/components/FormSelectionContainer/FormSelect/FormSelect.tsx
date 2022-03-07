@@ -3,7 +3,8 @@ import React, { FunctionComponent, useState, useRef, useEffect, useCallback } fr
 import ReactTooltip from "react-tooltip";
 import { useConfigContext } from "../../../common/context/config";
 import { FormTemplate } from "../../../types";
-import { validateDns, getIssuerLocation } from "../../../utils";
+import { validateDns, getIssuerLocation, getIssuerAddress } from "../../../utils";
+import { checkOwnership } from "../../../services/publishing/prechecks"
 
 interface FormSelectProps {
   id: string;
@@ -15,6 +16,7 @@ export const FormSelect: FunctionComponent<FormSelectProps> = ({ id, form, onAdd
   const { config } = useConfigContext();
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
   const [isValidDns, setIsValidDns] = useState<boolean>();
+  const [isValidOwner, setIsValidOwner] = useState<boolean>();
   const refButton = useRef<HTMLDivElement>(null);
 
   const handleForm = async (): Promise<void> => {
@@ -37,9 +39,28 @@ export const FormSelect: FunctionComponent<FormSelectProps> = ({ id, form, onAdd
     }
   }, [config, form]);
 
+  const ownershipCheck = useCallback(async () => {
+    const wallet = config?.wallet;
+    const contractAddress = getIssuerAddress(form.defaults);
+    const contractType = form?.type;
+    setIsValidOwner(false)
+    if (config?.network === "local") {
+      setIsValidOwner(true); // for local e2e to pass, skip dns validate + set valid
+    }else if(contractAddress != undefined && wallet != undefined){
+      const valid = await checkOwnership(contractType, contractAddress, wallet);
+      setIsValidOwner(valid);
+    }
+    
+    const address = await wallet?.getAddress();
+    if (!isValidOwner) {
+      setErrorMsg(`The contract ${contractAddress} does not belong to ${address}`);
+    }
+  }, [config, form]);
+
   useEffect(() => {
     dnsCheck();
-  }, [dnsCheck]);
+    ownershipCheck();
+  }, [dnsCheck, ownershipCheck]);
 
   return (
     <>
