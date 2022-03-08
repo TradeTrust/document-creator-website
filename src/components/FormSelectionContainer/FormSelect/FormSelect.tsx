@@ -3,7 +3,7 @@ import React, { FunctionComponent, useState, useRef, useEffect, useCallback } fr
 import ReactTooltip from "react-tooltip";
 import { useConfigContext } from "../../../common/context/config";
 import { FormTemplate } from "../../../types";
-import { validateDns, getIssuerAddress } from "../../../utils";
+import { validateDns, getIssuerAddress, getIssuerLocation } from "../../../utils";
 import { checkDID, checkOwnership } from "../../../services/publishing/prechecks";
 
 interface FormSelectProps {
@@ -58,15 +58,22 @@ export const FormSelect: FunctionComponent<FormSelectProps> = ({ id, form, onAdd
     setIsValidEntry(isValidDns && isValidOwner);
     const errorMessage: string[] = [];
     if (!isValidDns) {
-      errorMessage.push("The contract address could not be found on the DNS TXT records.");
+      const contractAddress = getIssuerAddress(form.defaults);
+      errorMessage.push(
+        `The contract address ${contractAddress} could not be found on ${getIssuerLocation(
+          form.defaults
+        )} DNS TXT records.`
+      );
     }
     if (!isValidOwner) {
-      errorMessage.push("The contract on the address does not belong to the wallet.");
+      const contractAddress = getIssuerAddress(form.defaults);
+      const address = await config?.wallet?.getAddress();
+      errorMessage.push(`The contract ${contractAddress} does not belong to ${address}.`);
     }
     if (errorMessage.length > 0) {
       setErrorMsg(errorMessage.join("<br />"));
     }
-  }, [isValidDns, isValidOwner]);
+  }, [isValidDns, isValidOwner, form, config]);
 
   useEffect(() => {
     dnsCheck();

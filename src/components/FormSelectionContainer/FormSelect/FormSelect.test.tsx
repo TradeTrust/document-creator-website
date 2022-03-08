@@ -69,6 +69,10 @@ describe("formSelect", () => {
     });
     fireEvent.click(screen.getByText("TradeTrust Invoice v2"));
 
-    expect(screen.getByText("The contract address could not be found on abc.com DNS TXT records.")).toBeInTheDocument();
+    expect(
+      screen.getByText(
+        "The contract address 0x8bA63EAB43342AAc3AdBB4B827b68Cf4aAE5Caca could not be found on abc.com DNS TXT records."
+      )
+    ).toBeInTheDocument();
   });
 });
