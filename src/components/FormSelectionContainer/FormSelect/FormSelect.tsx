@@ -3,8 +3,8 @@ import React, { FunctionComponent, useState, useRef, useEffect, useCallback } fr
 import ReactTooltip from "react-tooltip";
 import { useConfigContext } from "../../../common/context/config";
 import { FormTemplate } from "../../../types";
-import { validateDns, getIssuerLocation, getIssuerAddress } from "../../../utils";
-import { checkOwnership } from "../../../services/publishing/prechecks"
+import { validateDns, getIssuerAddress } from "../../../utils";
+import { checkDID, checkOwnership } from "../../../services/publishing/prechecks";
 
 interface FormSelectProps {
   id: string;
@@ -15,12 +15,13 @@ interface FormSelectProps {
 export const FormSelect: FunctionComponent<FormSelectProps> = ({ id, form, onAddForm, ...props }) => {
   const { config } = useConfigContext();
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
-  const [isValidDns, setIsValidDns] = useState<boolean>();
-  const [isValidOwner, setIsValidOwner] = useState<boolean>();
+  const [isValidDns, setIsValidDns] = useState<boolean>(true);
+  const [isValidOwner, setIsValidOwner] = useState<boolean>(true);
+  const [isValidEntry, setIsValidEntry] = useState<boolean>(true);
   const refButton = useRef<HTMLDivElement>(null);
 
   const handleForm = async (): Promise<void> => {
-    if (isValidDns) {
+    if (isValidEntry) {
       onAddForm();
     } else {
       ReactTooltip.show(refButton.current as unknown as Element);
@@ -32,9 +33,6 @@ export const FormSelect: FunctionComponent<FormSelectProps> = ({ id, form, onAdd
       setIsValidDns(true); // for local e2e to pass, skip dns validate + set valid
     } else {
       const isDnsValidated = await validateDns(form);
-      if (!isDnsValidated) {
-        setErrorMsg(`The contract address could not be found on ${getIssuerLocation(form.defaults)} DNS TXT records.`);
-      }
       setIsValidDns(isDnsValidated);
     }
   }, [config, form]);
@@ -42,32 +40,46 @@ export const FormSelect: FunctionComponent<FormSelectProps> = ({ id, form, onAdd
   const ownershipCheck = useCallback(async () => {
     const wallet = config?.wallet;
     const contractAddress = getIssuerAddress(form.defaults);
+    const isDID = checkDID(form.defaults);
+    if (isDID) {
+      setIsValidOwner(true);
+      return;
+    }
     const contractType = form?.type;
-    setIsValidOwner(false)
     if (config?.network === "local") {
       setIsValidOwner(true); // for local e2e to pass, skip dns validate + set valid
-    }else if(contractAddress != undefined && wallet != undefined){
+    } else if (contractAddress != undefined && wallet != undefined) {
       const valid = await checkOwnership(contractType, contractAddress, wallet);
       setIsValidOwner(valid);
     }
-    
-    const address = await wallet?.getAddress();
-    if (!isValidOwner) {
-      setErrorMsg(`The contract ${contractAddress} does not belong to ${address}`);
-    }
   }, [config, form]);
+
+  const checkValidity = useCallback(async () => {
+    setIsValidEntry(isValidDns && isValidOwner);
+    const errorMessage: string[] = [];
+    if (!isValidDns) {
+      errorMessage.push("The contract address could not be found on the DNS TXT records.");
+    }
+    if (!isValidOwner) {
+      errorMessage.push("The contract on the address does not belong to the wallet.");
+    }
+    if (errorMessage.length > 0) {
+      setErrorMsg(errorMessage.join("<br />"));
+    }
+  }, [isValidDns, isValidOwner]);
 
   useEffect(() => {
     dnsCheck();
     ownershipCheck();
-  }, [dnsCheck, ownershipCheck]);
+    checkValidity();
+  }, [dnsCheck, ownershipCheck, checkValidity]);
 
   return (
     <>
       <div ref={refButton} data-tip data-for={`tooltip-${id}`} data-testid="tooltip-form-select">
         <Button
           className={`bg-white w-11/12 h-full p-4 leading-5 ${
-            isValidDns === false ? "text-cloud-300 bg-cloud-100" : "text-cerulean hover:bg-cloud-100"
+            isValidEntry === false ? "text-cloud-300 bg-cloud-100" : "text-cerulean hover:bg-cloud-100"
           }`}
           onClick={() => handleForm()}
           {...props}
@@ -78,7 +90,7 @@ export const FormSelect: FunctionComponent<FormSelectProps> = ({ id, form, onAdd
       <ReactTooltip
         className="max-w-xs break-words"
         id={`tooltip-${id}`}
-        data-multiline={true}
+        multiline={true}
         place={`bottom`}
         type="dark"
         effect="solid"

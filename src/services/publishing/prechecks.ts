@@ -1,26 +1,19 @@
 import { DocumentStoreFactory, GsnCapableDocumentStoreFactory } from "@govtechsg/document-store";
 import { DocumentStore } from "@govtechsg/document-store/src/contracts/DocumentStore";
-import {
-  getData,
-  signDocument,
-  SignedWrappedDocument,
-  SUPPORTED_SIGNING_ALGORITHM,
-  v2,
-} from "@govtechsg/open-attestation";
-import { TitleEscrowCreatorFactory, TradeTrustErc721Factory } from "@govtechsg/token-registry";
-import { TitleEscrowCreator } from "@govtechsg/token-registry/types/TitleEscrowCreator";
-import { providers, Signer, Wallet } from "ethers";
+import { OpenAttestationDocument, utils } from "@govtechsg/open-attestation";
+import { Signer, Wallet } from "ethers";
 import { getGsnRelaySigner } from "../../common/config/decrypt";
-import { ConnectedSigner, PublishingJob } from "../../types";
+import { ConnectedSigner, NetworkObject } from "../../types";
 import { supportsInterface } from "./utils";
-const axios = require('axios');
+import { getCreationAddress } from "./utils/explorer";
 
 export const assertAddressIsSmartContract = async (
   address: string,
   account: Wallet | ConnectedSigner
-): Promise<void> => {
+): Promise<boolean> => {
   const code = await account.provider.getCode(address);
-  if (code === "0x") throw new Error("Address is not a smart contract");
+  if (code === "0x") return false;
+  return true;
 };
 
 export const getConnectedDocumentStore = async (
@@ -39,42 +32,51 @@ export const getConnectedDocumentStore = async (
 };
 
 export const checkVerifiableDocumentOwnership = async (
-    contractAddress: string,
-    account: Wallet | ConnectedSigner
-  ): Promise<boolean> => {
-      return false;
-    await assertAddressIsSmartContract(contractAddress, account);
-    const documentStore = await getConnectedDocumentStore(account, contractAddress);
-    return documentStore.isOwner();
+  contractAddress: string,
+  account: Wallet | ConnectedSigner
+): Promise<boolean> => {
+  if (!(await assertAddressIsSmartContract(contractAddress, account))) {
+    return false;
+  }
+  const documentStore = await getConnectedDocumentStore(account, contractAddress);
+  return (await documentStore.owner()) == (await account.getAddress());
 };
 
-// 
-/*
-
-*/
 export const checkTransferableRecordOwnership = async (contractAddress: string, signer: Signer): Promise<boolean> => {
-    const userWalletAddress = await signer.getAddress();
-    const chainId = await signer.getChainId();
-    var network = "";
-    if(chainId == 1){
-        network = "";
-    }else if(chainId == 3){
-        network = "-ropsten";
-    }else if(chainId == 4){
-        network = "-rinkeby";
-    }else if(chainId == 5){
-        network = "-goerli";
-    }else if(chainId == 42){
-        network = "-kovan";
-    }
-
-    const response = await axios.get(`https://api${network}.etherscan.io/api?module=account&action=txlist&address=${contractAddress}&startblock=0&endblock=99999999&page=1&offset=1&sort=asc`);
-    return response.data?.result[0]?.from == userWalletAddress;
+  const userWalletAddress = await signer.getAddress();
+  const network = await signer.provider?.getNetwork();
+  if (network == undefined) {
+    return false;
+  } else {
+    const networkObject: NetworkObject = {
+      network: {
+        chain: network.name,
+        chainId: network.chainId.toString(),
+      },
+    } as NetworkObject;
+    return (await getCreationAddress(contractAddress, networkObject)) == userWalletAddress;
+  }
 };
 
-export const checkOwnership = async (type: string, contractAddress: string, wallet: Wallet | ConnectedSigner): Promise<boolean> => {
-    // if (type === "VERIFIABLE_DOCUMENT") return checkVerifiableDocumentOwnership(contractAddress, wallet);
-    // if (type === "TRANSFERABLE_RECORD") return checkTransferableRecordOwnership(contractAddress, wallet);
-    return checkTransferableRecordOwnership(contractAddress, wallet);
-    throw new Error("Job type is not supported");
-  };
+export const checkOwnership = async (
+  type: string,
+  contractAddress: string,
+  wallet: Wallet | ConnectedSigner
+): Promise<boolean> => {
+  if (type === "VERIFIABLE_DOCUMENT") return checkVerifiableDocumentOwnership(contractAddress, wallet);
+  if (type === "TRANSFERABLE_RECORD") return checkTransferableRecordOwnership(contractAddress, wallet);
+  throw new Error("Job type is not supported");
+};
+
+export const checkDID = (rawDocument: OpenAttestationDocument): boolean => {
+  if (utils.isRawV2Document(rawDocument)) {
+    const { issuers } = rawDocument;
+    const isDID = issuers[0].id?.includes("did:ethr:");
+    return isDID == undefined ? false : isDID;
+  } else if (utils.isRawV3Document(rawDocument)) {
+    return rawDocument.openAttestationMetadata.proof.value.includes("did:ethr:");
+  }
+  throw new Error(
+    "Unsupported document type: Only can retrieve issuer address from OpenAttestation v2 & v3 documents."
+  );
+};
