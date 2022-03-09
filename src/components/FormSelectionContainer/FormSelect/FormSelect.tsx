@@ -72,12 +72,14 @@ export const FormSelect: FunctionComponent<FormSelectProps> = ({ id, form, onAdd
     }
     if (errorMessage.length > 0) {
       setErrorMsg(errorMessage.join("<br />"));
+    } else {
+      setErrorMsg(null);
     }
   }, [isValidDns, isValidOwner, form, config]);
 
   useEffect(() => {
     dnsCheck();
-    // ownershipCheck();
+    ownershipCheck();
     checkValidity();
   }, [dnsCheck, ownershipCheck, checkValidity]);
 

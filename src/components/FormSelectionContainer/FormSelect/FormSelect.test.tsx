@@ -3,11 +3,24 @@ import { getDocumentStoreRecords } from "@govtechsg/dnsprove";
 import React, { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { FormSelect } from "./FormSelect";
 import { FormTemplate } from "../../../types";
+import { checkOwnership } from "../../../services/publishing/prechecks";
 
 jest.mock("@govtechsg/dnsprove", () => ({
   getDnsDidRecords: jest.fn(),
   getDocumentStoreRecords: jest.fn(),
 }));
+
+jest.mock("../../../services/publishing/prechecks", () => {
+  const originalModule = jest.requireActual("../../../services/publishing/prechecks");
+
+  return {
+    __esModule: true,
+    ...originalModule,
+    checkOwnership: jest.fn(),
+  };
+});
+
+const mockCheckOwnership = checkOwnership as jest.Mock;
 const mockGetDocumentStoreRecords = getDocumentStoreRecords as jest.Mock;
 
 const mockRecordsDnsTxt = [
@@ -55,6 +68,7 @@ const mockFormInvoiceV2FailDnsLocation: FormTemplate = {
 
 describe("formSelect", () => {
   it("should show file name", async () => {
+    mockCheckOwnership.mockResolvedValue(true);
     mockGetDocumentStoreRecords.mockResolvedValue(mockRecordsDnsTxt);
     await waitFor(() => {
       render(<FormSelect id={`abc`} form={mockFormInvoiceV2FailDnsLocation} onAddForm={() => {}} />);
@@ -63,6 +77,7 @@ describe("formSelect", () => {
   });
 
   it("should show tooltip with error message", async () => {
+    mockCheckOwnership.mockResolvedValue(true);
     mockGetDocumentStoreRecords.mockResolvedValue(mockRecordsDnsTxt);
     await waitFor(() => {
       render(<FormSelect id={`abc`} form={mockFormInvoiceV2FailDnsLocation} onAddForm={() => {}} />);

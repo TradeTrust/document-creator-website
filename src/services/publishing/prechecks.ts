@@ -5,7 +5,7 @@ import { Signer, Wallet } from "ethers";
 import { getGsnRelaySigner } from "../../common/config/decrypt";
 import { ConnectedSigner, NetworkObject } from "../../types";
 import { supportsInterface } from "./utils";
-import { getCreationAddress } from "./utils/explorer";
+import { checkCreationAddress } from "./utils/explorer";
 
 export const assertAddressIsSmartContract = async (
   address: string,
@@ -54,7 +54,7 @@ export const checkTransferableRecordOwnership = async (contractAddress: string, 
         chainId: network.chainId.toString(),
       },
     } as NetworkObject;
-    return (await getCreationAddress(contractAddress, networkObject)) == userWalletAddress;
+    return await checkCreationAddress(contractAddress, networkObject, userWalletAddress, false);
   }
 };
 
