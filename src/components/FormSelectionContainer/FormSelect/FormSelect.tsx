@@ -47,7 +47,7 @@ export const FormSelect: FunctionComponent<FormSelectProps> = ({ id, form, onAdd
     }
     const contractType = form?.type;
     if (config?.network === "local") {
-      setIsValidOwner(true); // for local e2e to pass, skip dns validate + set valid
+      setIsValidOwner(true); // for local e2e to pass, skip ownership validate + set valid
     } else if (contractAddress != undefined && wallet != undefined) {
       const valid = await checkOwnership(contractType, contractAddress, wallet);
       setIsValidOwner(valid);
@@ -77,7 +77,7 @@ export const FormSelect: FunctionComponent<FormSelectProps> = ({ id, form, onAdd
 
   useEffect(() => {
     dnsCheck();
-    ownershipCheck();
+    // ownershipCheck();
     checkValidity();
   }, [dnsCheck, ownershipCheck, checkValidity]);
 

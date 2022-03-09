@@ -2,6 +2,10 @@ import axios, { AxiosResponse } from "axios";
 import { NetworkObject } from "../../../types";
 
 interface ExplorerHeaders {
+  "Content-Type": string;
+}
+
+interface ExploreParams {
   module: string;
   action: string;
   address: string;
@@ -23,7 +27,15 @@ const explorerAPIKey = {
   MATIC: "",
 };
 
-const getHeaders = (contractAddress: string, apiKey: string): ExplorerHeaders => {
+const getHeaders = (): ExplorerHeaders => {
+  const headers = {
+    "Content-Type": "application/json",
+  } as ExplorerHeaders;
+
+  return headers;
+};
+
+const getParams = (contractAddress: string, apiKey: string): ExploreParams => {
   const headers = {
     module: "account",
     action: "txlist",
@@ -32,7 +44,7 @@ const getHeaders = (contractAddress: string, apiKey: string): ExplorerHeaders =>
     page: "1",
     offset: "1",
     sort: "asc",
-  } as ExplorerHeaders;
+  } as ExploreParams;
 
   if (apiKey) {
     headers["apikey"] = apiKey;
@@ -46,15 +58,17 @@ const getHeaders = (contractAddress: string, apiKey: string): ExplorerHeaders =>
 };
 
 const getNetworkAPIDetails = (network: NetworkObject): NetworkAPIDetails => {
-  const chain: string = network.network.chain;
+  // const chain: string = network.network.chain;
   const chainId: number = parseInt(network.network.chainId);
   let url = "";
   let apiKey = "";
-  if ("ETH" == chain) {
-    let hostnameNetwork = "";
-    if (chainId == 1) {
-      hostnameNetwork = "";
-    } else if (chainId == 3) {
+  let hostnameNetwork = "";
+  let chainType = "";
+
+  if (chainId == 1 || chainId == 3 || chainId == 4 || chainId == 5 || chainId == 42) {
+    hostnameNetwork = "";
+    chainType = "ETH";
+    if (chainId == 3) {
       hostnameNetwork = "-ropsten";
     } else if (chainId == 4) {
       hostnameNetwork = "-rinkeby";
@@ -63,17 +77,19 @@ const getNetworkAPIDetails = (network: NetworkObject): NetworkAPIDetails => {
     } else if (chainId == 42) {
       hostnameNetwork = "-kovan";
     }
-    url = `https://api${hostnameNetwork}.etherscan.io/`;
-  } else if ("MATIC" == chain) {
-    let hostnameNetwork = "";
-    if (chainId == 137) {
-      hostnameNetwork = "";
-    } else if (chainId == 80001) {
+    url = `https://api${hostnameNetwork}.etherscan.io`;
+  } else if (chainId == 137 || chainId == 80001) {
+    hostnameNetwork = "";
+    chainType = "MATIC";
+    if (chainId == 80001) {
       hostnameNetwork = "-testnet";
     }
-    url = `https://api${hostnameNetwork}.polygonscan.com/`;
+    url = `https://api${hostnameNetwork}.polygonscan.com`;
+  } else {
+    url = `https://api.etherscan.io`;
   }
-  apiKey = (explorerAPIKey as any)[chain];
+
+  apiKey = (explorerAPIKey as any)[chainType];
   return { hostname: url, apiKey: apiKey } as NetworkAPIDetails;
 };
 
@@ -92,7 +108,8 @@ export const sendCreationAddressRequest = async (
   return axios({
     method: "get",
     url: url,
-    headers: getHeaders(contractAddress, apiKey),
+    headers: getHeaders(),
+    params: getParams(contractAddress, apiKey),
   });
 };
 
