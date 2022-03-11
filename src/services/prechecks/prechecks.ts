@@ -4,7 +4,7 @@ import { OpenAttestationDocument, utils } from "@govtechsg/open-attestation";
 import { Signer, Wallet } from "ethers";
 import { getGsnRelaySigner } from "../../common/config/decrypt";
 import { ConnectedSigner, NetworkObject } from "../../types";
-import { supportsInterface } from "./utils";
+import { supportsInterface } from "../publishing/utils";
 import { checkCreationAddress } from "./utils/explorer";
 
 export const assertAddressIsSmartContract = async (
@@ -39,13 +39,13 @@ export const checkVerifiableDocumentOwnership = async (
     return false;
   }
   const documentStore = await getConnectedDocumentStore(account, contractAddress);
-  return (await documentStore.owner()) == (await account.getAddress());
+  return (await documentStore.owner()) === (await account.getAddress());
 };
 
 export const checkTransferableRecordOwnership = async (contractAddress: string, signer: Signer): Promise<boolean> => {
   const userWalletAddress = await signer.getAddress();
   const network = await signer.provider?.getNetwork();
-  if (network == undefined) {
+  if (network === undefined) {
     return false;
   } else {
     const networkObject: NetworkObject = {
@@ -72,7 +72,7 @@ export const checkDID = (rawDocument: OpenAttestationDocument): boolean => {
   if (utils.isRawV2Document(rawDocument)) {
     const { issuers } = rawDocument;
     const isDID = issuers[0].id?.includes("did:ethr:");
-    return isDID == undefined ? false : isDID;
+    return isDID === undefined ? false : isDID;
   } else if (utils.isRawV3Document(rawDocument)) {
     return rawDocument.openAttestationMetadata.proof.value.includes("did:ethr:");
   }

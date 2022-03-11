@@ -3,15 +3,15 @@ import { getDocumentStoreRecords } from "@govtechsg/dnsprove";
 import React, { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { FormSelect } from "./FormSelect";
 import { FormTemplate } from "../../../types";
-import { checkOwnership } from "../../../services/publishing/prechecks";
+import { checkOwnership } from "../../../services/prechecks";
 
 jest.mock("@govtechsg/dnsprove", () => ({
   getDnsDidRecords: jest.fn(),
   getDocumentStoreRecords: jest.fn(),
 }));
 
-jest.mock("../../../services/publishing/prechecks", () => {
-  const originalModule = jest.requireActual("../../../services/publishing/prechecks");
+jest.mock("../../../services/prechecks", () => {
+  const originalModule = jest.requireActual("../../../services/prechecks");
 
   return {
     __esModule: true,

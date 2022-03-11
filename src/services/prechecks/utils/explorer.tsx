@@ -17,7 +17,7 @@ interface ExploreParams {
   apikey: string;
 }
 
-interface NetworkAPIDetails {
+interface NetworkApiDetails {
   apiKey: string;
   hostname: string;
 }
@@ -58,7 +58,7 @@ const getParams = (contractAddress: string, apiKey: string): ExploreParams => {
   return headers;
 };
 
-const getNetworkAPIDetails = (network: NetworkObject): NetworkAPIDetails => {
+const getNetworkApiDetails = (network: NetworkObject): NetworkApiDetails => {
   // const chain: string = network.network.chain;
   const chainId: number = parseInt(network.network.chainId);
   let url = "";
@@ -66,23 +66,23 @@ const getNetworkAPIDetails = (network: NetworkObject): NetworkAPIDetails => {
   let hostnameNetwork = "";
   let chainType = "";
 
-  if (chainId == 1 || chainId == 3 || chainId == 4 || chainId == 5 || chainId == 42) {
+  if (chainId === 1 || chainId === 3 || chainId === 4 || chainId === 5 || chainId === 42) {
     hostnameNetwork = "";
     chainType = "ETH";
-    if (chainId == 3) {
+    if (chainId === 3) {
       hostnameNetwork = "-ropsten";
-    } else if (chainId == 4) {
+    } else if (chainId === 4) {
       hostnameNetwork = "-rinkeby";
-    } else if (chainId == 5) {
+    } else if (chainId === 5) {
       hostnameNetwork = "-goerli";
-    } else if (chainId == 42) {
+    } else if (chainId === 42) {
       hostnameNetwork = "-kovan";
     }
     url = `https://api${hostnameNetwork}.etherscan.io`;
-  } else if (chainId == 137 || chainId == 80001) {
+  } else if (chainId === 137 || chainId === 80001) {
     hostnameNetwork = "";
     chainType = "MATIC";
-    if (chainId == 80001) {
+    if (chainId === 80001) {
       hostnameNetwork = "-testnet";
     }
     url = `https://api${hostnameNetwork}.polygonscan.com`;
@@ -91,7 +91,7 @@ const getNetworkAPIDetails = (network: NetworkObject): NetworkAPIDetails => {
   }
 
   apiKey = (ETHERSCAN_API_KEY as any)[chainType];
-  return { hostname: url, apiKey: apiKey } as NetworkAPIDetails;
+  return { hostname: url, apiKey: apiKey } as NetworkApiDetails;
 };
 
 export const getCreationAddressRequest = async (
@@ -99,11 +99,11 @@ export const getCreationAddressRequest = async (
   network: NetworkObject,
   apiKey?: string
 ): Promise<AxiosResponse> => {
-  const networkAPIDetails = getNetworkAPIDetails(network);
-  const url = `${networkAPIDetails.hostname}/api`;
+  const networkApiDetails = getNetworkApiDetails(network);
+  const url = `${networkApiDetails.hostname}/api`;
 
-  if (apiKey == undefined) {
-    apiKey = networkAPIDetails.apiKey;
+  if (apiKey === undefined) {
+    apiKey = networkApiDetails.apiKey;
   }
 
   return axios({
@@ -125,27 +125,27 @@ const sendCreationAddressRequest = async (
   let attempts = 3;
   while (attempts > 0) {
     const response = await getCreationAddressRequest(contractAddress, network, apiKey);
-    if (response.data == undefined) {
+    if (response.data === undefined) {
       const simplifiedResponse = {
         status: 1,
         reason: "Call Failed",
       } as SimplifiedResponse;
       return simplifiedResponse;
     } else {
-      if (response.data.status.toString() == "0") {
-        if (response.data.message.toString() == "No transactions found") {
+      if (response.data.status.toString() === "0") {
+        if (response.data.message.toString() === "No transactions found") {
           const simplifiedResponse = {
             status: 2,
             reason: "No Transaction Found",
           } as SimplifiedResponse;
           return simplifiedResponse;
         }
-        // else if(response.data.message.toString() == "NOTOK"){
-        //     if(response.data.result.toString() == "Max rate limit reached, please use API Key for higher rate limit"){
+        // else if(response.data.message.toString() === "NOTOK"){
+        //     if(response.data.result.toString() === "Max rate limit reached, please use API Key for higher rate limit"){
         //       // Re-run, rate limit
         //     }
         // }
-      } else if (response.data.status.toString() == "1") {
+      } else if (response.data.status.toString() === "1") {
         const simplifiedResponse = {
           status: 0,
           reason: "Call Successful",
@@ -181,15 +181,15 @@ export const checkCreationAddress = async (
   apiKey?: string
 ): Promise<boolean> => {
   const simplifiedResponse = await sendCreationAddressRequest(contractAddress, network, apiKey);
-  if (simplifiedResponse.status == 0) {
-    return simplifiedResponse.address.toLowerCase() == ownerAddress.toLowerCase();
-  } else if (simplifiedResponse.status == 1) {
+  if (simplifiedResponse.status === 0) {
+    return simplifiedResponse.address.toLowerCase() === ownerAddress.toLowerCase();
+  } else if (simplifiedResponse.status === 1) {
     if (strict) {
       return false;
     } else {
       return true;
     }
-  } else if (simplifiedResponse.status == 2) {
+  } else if (simplifiedResponse.status === 2) {
     return false;
   } else {
     return false;

@@ -2,9 +2,9 @@ import { Button } from "@govtechsg/tradetrust-ui-components";
 import React, { FunctionComponent, useState, useRef, useEffect, useCallback } from "react";
 import ReactTooltip from "react-tooltip";
 import { useConfigContext } from "../../../common/context/config";
+import { checkOwnership, checkDID } from "../../../services/prechecks";
 import { FormTemplate } from "../../../types";
 import { validateDns, getIssuerAddress, getIssuerLocation } from "../../../utils";
-import { checkDID, checkOwnership } from "../../../services/publishing/prechecks";
 
 interface FormSelectProps {
   id: string;
@@ -41,14 +41,12 @@ export const FormSelect: FunctionComponent<FormSelectProps> = ({ id, form, onAdd
     const wallet = config?.wallet;
     const contractAddress = getIssuerAddress(form.defaults);
     const isDID = checkDID(form.defaults);
-    if (isDID) {
-      setIsValidOwner(true);
-      return;
-    }
     const contractType = form?.type;
     if (config?.network === "local") {
       setIsValidOwner(true); // for local e2e to pass, skip ownership validate + set valid
-    } else if (contractAddress != undefined && wallet != undefined) {
+    } else if (isDID) {
+      setIsValidOwner(true);
+    } else if (contractAddress !== undefined && wallet !== undefined) {
       const valid = await checkOwnership(contractType, contractAddress, wallet);
       setIsValidOwner(valid);
     }
