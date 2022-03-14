@@ -1,10 +1,11 @@
-import { Button } from "@govtechsg/tradetrust-ui-components";
-import React, { FunctionComponent, useState, useRef, useEffect, useCallback } from "react";
+import { Button, LoaderSpinner } from "@govtechsg/tradetrust-ui-components";
+import React, { FunctionComponent, useState, useRef, useEffect } from "react";
 import ReactTooltip from "react-tooltip";
 import { useConfigContext } from "../../../common/context/config";
 import { checkOwnership, checkDID } from "../../../services/prechecks";
+import { validateDns } from "../../../services/prechecks";
 import { FormTemplate } from "../../../types";
-import { validateDns, getIssuerAddress, getIssuerLocation } from "../../../utils";
+import { getIssuerAddress, getIssuerLocation } from "../../../utils";
 
 interface FormSelectProps {
   id: string;
@@ -14,45 +15,37 @@ interface FormSelectProps {
 
 export const FormSelect: FunctionComponent<FormSelectProps> = ({ id, form, onAddForm, ...props }) => {
   const { config } = useConfigContext();
-  const [errorMsg, setErrorMsg] = useState<string | null>(null);
-  const [isValidDns, setIsValidDns] = useState<boolean>(true);
-  const [isValidOwner, setIsValidOwner] = useState<boolean>(true);
-  const [isValidEntry, setIsValidEntry] = useState<boolean>(true);
+  const [tooltipMsg, setTooltipMsg] = useState<string | null>(null);
+  const [isValidEntry, setIsValidEntry] = useState<boolean>();
+  const [loadingState, setLoadingState] = useState<boolean>(false);
   const refButton = useRef<HTMLDivElement>(null);
 
-  const handleForm = async (): Promise<void> => {
-    if (isValidEntry) {
-      onAddForm();
+  const dnsCheck = async (): Promise<boolean> => {
+    if (config?.network === "local") {
+      return true; // for local e2e to pass, skip dns validate + set valid
     } else {
-      ReactTooltip.show(refButton.current as unknown as Element);
+      const isDnsValidated = await validateDns(form);
+      return isDnsValidated;
     }
   };
 
-  const dnsCheck = useCallback(async () => {
-    if (config?.network === "local") {
-      setIsValidDns(true); // for local e2e to pass, skip dns validate + set valid
-    } else {
-      const isDnsValidated = await validateDns(form);
-      setIsValidDns(isDnsValidated);
-    }
-  }, [config, form]);
-
-  const ownershipCheck = useCallback(async () => {
+  const ownershipCheck = async (): Promise<boolean> => {
     const wallet = config?.wallet;
     const contractAddress = getIssuerAddress(form.defaults);
     const isDID = checkDID(form.defaults);
     const contractType = form?.type;
     if (config?.network === "local") {
-      setIsValidOwner(true); // for local e2e to pass, skip ownership validate + set valid
+      return true; // for local e2e to pass, skip ownership validate + set valid
     } else if (isDID) {
-      setIsValidOwner(true);
+      return true;
     } else if (contractAddress !== undefined && wallet !== undefined) {
       const valid = await checkOwnership(contractType, contractAddress, wallet);
-      setIsValidOwner(valid);
+      return valid;
     }
-  }, [config, form]);
+    return false;
+  };
 
-  const checkValidity = useCallback(async () => {
+  const checkValidity = async (isValidDns: boolean, isValidOwner: boolean) => {
     setIsValidEntry(isValidDns && isValidOwner);
     const errorMessage: string[] = [];
     if (!isValidDns) {
@@ -69,29 +62,54 @@ export const FormSelect: FunctionComponent<FormSelectProps> = ({ id, form, onAdd
       errorMessage.push(`The contract ${contractAddress} does not belong to ${address}.`);
     }
     if (errorMessage.length > 0) {
-      setErrorMsg(errorMessage.join("<br />"));
+      setTooltipMsg(errorMessage.join(" "));
+      ReactTooltip.show(refButton.current as unknown as Element);
     } else {
-      setErrorMsg(null);
+      setTooltipMsg(null);
     }
-  }, [isValidDns, isValidOwner, form, config]);
+    setLoadingState(false);
+  };
 
   useEffect(() => {
-    dnsCheck();
-    ownershipCheck();
-    checkValidity();
-  }, [dnsCheck, ownershipCheck, checkValidity]);
+    if (isValidEntry) {
+      onAddForm();
+    }
+  }, [isValidEntry, onAddForm]);
+
+  const handleForm = async (): Promise<void> => {
+    if (isValidEntry === undefined) {
+      setLoadingState(true);
+      setTooltipMsg("Loading...");
+      const validDns = await dnsCheck();
+      const validOwnership = await ownershipCheck();
+      checkValidity(validDns, validOwnership);
+    } else if (!isValidEntry) {
+      ReactTooltip.show(refButton.current as unknown as Element);
+    } else {
+      onAddForm();
+    }
+  };
 
   return (
     <>
       <div ref={refButton} data-tip data-for={`tooltip-${id}`} data-testid="tooltip-form-select">
         <Button
           className={`bg-white w-11/12 h-full p-4 leading-5 ${
-            isValidEntry === false ? "text-cloud-300 bg-cloud-100" : "text-cerulean hover:bg-cloud-100"
+            isValidEntry === false || loadingState === true
+              ? "text-cloud-300 bg-cloud-100"
+              : "text-cerulean hover:bg-cloud-100"
           }`}
           onClick={() => handleForm()}
           {...props}
         >
-          {form.name}
+          {loadingState ? (
+            <div className="flex flex-col flex-wrap">
+              <div>{form.name}</div>
+              <LoaderSpinner className="content-center self-center mt-1" />
+            </div>
+          ) : (
+            form.name
+          )}
         </Button>
       </div>
       <ReactTooltip
@@ -102,7 +120,7 @@ export const FormSelect: FunctionComponent<FormSelectProps> = ({ id, form, onAdd
         type="dark"
         effect="solid"
         getContent={() => {
-          return errorMsg;
+          return tooltipMsg;
         }}
       />
     </>

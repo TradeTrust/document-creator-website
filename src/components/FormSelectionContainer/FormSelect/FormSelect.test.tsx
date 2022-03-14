@@ -4,12 +4,15 @@ import React, { fireEvent, render, screen, waitFor } from "@testing-library/reac
 import { FormSelect } from "./FormSelect";
 import { FormTemplate } from "../../../types";
 import { checkOwnership } from "../../../services/prechecks";
+import { useConfigContext } from "../../../common/context/config";
+import sampleConfig from "../../../test/fixtures/config/v2/sample-config-ropsten.json";
 
 jest.mock("@govtechsg/dnsprove", () => ({
   getDnsDidRecords: jest.fn(),
   getDocumentStoreRecords: jest.fn(),
 }));
 
+jest.mock("../../../common/context/config");
 jest.mock("../../../services/prechecks", () => {
   const originalModule = jest.requireActual("../../../services/prechecks");
 
@@ -22,6 +25,7 @@ jest.mock("../../../services/prechecks", () => {
 
 const mockCheckOwnership = checkOwnership as jest.Mock;
 const mockGetDocumentStoreRecords = getDocumentStoreRecords as jest.Mock;
+const mockUseConfigContext = useConfigContext as jest.Mock;
 
 const mockRecordsDnsTxt = [
   {
@@ -67,27 +71,92 @@ const mockFormInvoiceV2FailDnsLocation: FormTemplate = {
 };
 
 describe("formSelect", () => {
+  beforeEach(() => {
+    mockUseConfigContext.mockReturnValue({
+      config: {
+        ...sampleConfig,
+        wallet: {
+          ...sampleConfig.wallet,
+          getAddress: () => {
+            return "0x" + JSON.parse(sampleConfig.wallet.encryptedJson).address;
+          },
+        },
+      },
+    });
+    mockGetDocumentStoreRecords.mockResolvedValue(mockRecordsDnsTxt);
+  });
+
   it("should show file name", async () => {
     mockCheckOwnership.mockResolvedValue(true);
-    mockGetDocumentStoreRecords.mockResolvedValue(mockRecordsDnsTxt);
     await waitFor(() => {
       render(<FormSelect id={`abc`} form={mockFormInvoiceV2FailDnsLocation} onAddForm={() => {}} />);
     });
     expect(screen.getByText("TradeTrust Invoice v2")).toBeInTheDocument();
   });
 
-  it("should show tooltip with error message", async () => {
+  it("should show tooltip with dns error message", async () => {
     mockCheckOwnership.mockResolvedValue(true);
-    mockGetDocumentStoreRecords.mockResolvedValue(mockRecordsDnsTxt);
-    await waitFor(() => {
-      render(<FormSelect id={`abc`} form={mockFormInvoiceV2FailDnsLocation} onAddForm={() => {}} />);
-    });
-    fireEvent.click(screen.getByText("TradeTrust Invoice v2"));
 
-    expect(
-      screen.getByText(
-        "The contract address 0x8bA63EAB43342AAc3AdBB4B827b68Cf4aAE5Caca could not be found on abc.com DNS TXT records."
-      )
-    ).toBeInTheDocument();
+    render(<FormSelect id={`abc`} form={mockFormInvoiceV2FailDnsLocation} onAddForm={() => {}} />);
+
+    await waitFor(() => {
+      fireEvent.click(screen.getByText("TradeTrust Invoice v2"));
+      expect(screen.getByText("Loading...")).toBeInTheDocument();
+    });
+
+    await waitFor(() => {
+      expect(
+        screen.getByText(
+          "The contract address 0x8bA63EAB43342AAc3AdBB4B827b68Cf4aAE5Caca could not be found on abc.com DNS TXT records."
+        )
+      ).toBeInTheDocument();
+    });
+  });
+
+  it("should show tooltip with dns and ownership error message", async () => {
+    mockCheckOwnership.mockResolvedValue(false);
+
+    render(<FormSelect id={`abc`} form={mockFormInvoiceV2FailDnsLocation} onAddForm={() => {}} />);
+
+    await waitFor(() => {
+      fireEvent.click(screen.getByText("TradeTrust Invoice v2"));
+      expect(screen.getByText("Loading...")).toBeInTheDocument();
+    });
+
+    await waitFor(() => {
+      expect(
+        screen.getByText(
+          "The contract address 0x8bA63EAB43342AAc3AdBB4B827b68Cf4aAE5Caca could not be found on abc.com DNS TXT records. The contract 0x8bA63EAB43342AAc3AdBB4B827b68Cf4aAE5Caca does not belong to 0x1245e5b64d785b25057f7438f715f4aa5d965733."
+        )
+      ).toBeInTheDocument();
+    });
+  });
+
+  it("should have a success case", async () => {
+    mockCheckOwnership.mockResolvedValue(true);
+
+    const mockValidRecordsDnsTxt = [
+      {
+        ...mockRecordsDnsTxt[0],
+        addr: "0x8bA63EAB43342AAc3AdBB4B827b68Cf4aAE5Caca",
+      },
+    ];
+
+    mockGetDocumentStoreRecords.mockResolvedValue(mockValidRecordsDnsTxt);
+
+    const spyCall = {
+      called: () => {
+        return true;
+      },
+    };
+
+    const spy = jest.spyOn(spyCall, "called");
+
+    render(<FormSelect id={`abc`} form={mockFormInvoiceV2FailDnsLocation} onAddForm={spyCall.called} />);
+
+    await waitFor(() => {
+      fireEvent.click(screen.getByText("TradeTrust Invoice v2"));
+      expect(spy).toHaveBeenCalled();
+    });
   });
 });
