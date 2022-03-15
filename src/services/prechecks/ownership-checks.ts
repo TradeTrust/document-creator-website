@@ -1,41 +1,16 @@
-import { DocumentStoreFactory, GsnCapableDocumentStoreFactory } from "@govtechsg/document-store";
-import { DocumentStore } from "@govtechsg/document-store/src/contracts/DocumentStore";
 import { OpenAttestationDocument, utils } from "@govtechsg/open-attestation";
 import { Signer, Wallet } from "ethers";
-import { getGsnRelaySigner } from "../../common/config/decrypt";
 import { ConnectedSigner, NetworkObject } from "../../types";
-import { supportsInterface } from "../publishing/utils";
-import { checkCreationAddress } from "./utils/explorer";
-
-export const assertAddressIsSmartContract = async (
-  address: string,
-  account: Wallet | ConnectedSigner
-): Promise<boolean> => {
-  const code = await account.provider.getCode(address);
-  if (code === "0x") return false;
-  return true;
-};
-
-export const getConnectedDocumentStore = async (
-  account: Wallet | ConnectedSigner,
-  contractAddress: string
-): Promise<DocumentStore> => {
-  const documentStore = GsnCapableDocumentStoreFactory.connect(contractAddress, account);
-  // Determine if contract is gsn capable
-  const isGsnCapable = await supportsInterface(documentStore, "0xa5a23640");
-  if (!isGsnCapable) return DocumentStoreFactory.connect(contractAddress, account);
-  // Get paymaster address and the relevant gsnProvider
-  const paymasterAddress = await documentStore.getPaymaster();
-  const gsnRelaySigner = await getGsnRelaySigner(account, paymasterAddress);
-  const gsnDocumentStore = GsnCapableDocumentStoreFactory.connect(contractAddress, gsnRelaySigner);
-  return gsnDocumentStore;
-};
+import { assertAddressIsSmartContract, getConnectedDocumentStore } from "../publishing";
+import { checkCreationAddress } from "./utils";
 
 export const checkVerifiableDocumentOwnership = async (
   contractAddress: string,
   account: Wallet | ConnectedSigner
 ): Promise<boolean> => {
-  if (!(await assertAddressIsSmartContract(contractAddress, account))) {
+  try {
+    await assertAddressIsSmartContract(contractAddress, account);
+  } catch (e) {
     return false;
   }
   const documentStore = await getConnectedDocumentStore(account, contractAddress);
