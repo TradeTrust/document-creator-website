@@ -221,6 +221,5 @@ export const getPublishingJobs = async (
 ): Promise<PublishingJob[]> => {
   // Currently works for only multiple verifiable document issuance:
   const rawDocuments = await getRawDocuments(forms, config);
-  console.log("raw", rawDocuments);
   return groupDocumentsIntoJobs(rawDocuments, nonce, signer);
 };
