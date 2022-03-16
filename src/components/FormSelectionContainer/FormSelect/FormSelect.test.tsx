@@ -3,7 +3,7 @@ import { getDocumentStoreRecords } from "@govtechsg/dnsprove";
 import React, { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { FormSelect } from "./FormSelect";
 import { FormTemplate } from "../../../types";
-import { checkOwnership } from "../../../services/prechecks";
+import { checkContractOwnership } from "../../../services/prechecks";
 import { useConfigContext } from "../../../common/context/config";
 import sampleConfig from "../../../test/fixtures/config/v2/sample-config-ropsten.json";
 
@@ -19,11 +19,11 @@ jest.mock("../../../services/prechecks", () => {
   return {
     __esModule: true,
     ...originalModule,
-    checkOwnership: jest.fn(),
+    checkContractOwnership: jest.fn(),
   };
 });
 
-const mockCheckOwnership = checkOwnership as jest.Mock;
+const mockCheckContractOwnership = checkContractOwnership as jest.Mock;
 const mockGetDocumentStoreRecords = getDocumentStoreRecords as jest.Mock;
 const mockUseConfigContext = useConfigContext as jest.Mock;
 
@@ -87,7 +87,7 @@ describe("formSelect", () => {
   });
 
   it("should show file name", async () => {
-    mockCheckOwnership.mockResolvedValue(true);
+    mockCheckContractOwnership.mockResolvedValue(true);
     await waitFor(() => {
       render(<FormSelect id={`abc`} form={mockFormInvoiceV2FailDnsLocation} onAddForm={() => {}} />);
     });
@@ -95,7 +95,7 @@ describe("formSelect", () => {
   });
 
   it("should show tooltip with dns error message", async () => {
-    mockCheckOwnership.mockResolvedValue(true);
+    mockCheckContractOwnership.mockResolvedValue(true);
 
     render(<FormSelect id={`abc`} form={mockFormInvoiceV2FailDnsLocation} onAddForm={() => {}} />);
 
@@ -114,7 +114,7 @@ describe("formSelect", () => {
   });
 
   it("should show tooltip with dns and ownership error message", async () => {
-    mockCheckOwnership.mockResolvedValue(false);
+    mockCheckContractOwnership.mockResolvedValue(false);
 
     render(<FormSelect id={`abc`} form={mockFormInvoiceV2FailDnsLocation} onAddForm={() => {}} />);
 
@@ -133,7 +133,7 @@ describe("formSelect", () => {
   });
 
   it("should have a success case", async () => {
-    mockCheckOwnership.mockResolvedValue(true);
+    mockCheckContractOwnership.mockResolvedValue(true);
 
     const mockValidRecordsDnsTxt = [
       {

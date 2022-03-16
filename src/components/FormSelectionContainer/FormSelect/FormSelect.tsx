@@ -2,7 +2,7 @@ import { Button, LoaderSpinner } from "@govtechsg/tradetrust-ui-components";
 import React, { FunctionComponent, useState, useRef, useEffect } from "react";
 import ReactTooltip from "react-tooltip";
 import { useConfigContext } from "../../../common/context/config";
-import { checkOwnership, checkDID } from "../../../services/prechecks";
+import { checkContractOwnership, checkDID } from "../../../services/prechecks";
 import { validateDns } from "../../../services/prechecks";
 import { FormTemplate } from "../../../types";
 import { getIssuerAddress, getIssuerLocation } from "../../../utils";
@@ -20,7 +20,7 @@ export const FormSelect: FunctionComponent<FormSelectProps> = ({ id, form, onAdd
   const [loadingState, setLoadingState] = useState<boolean>(false);
   const refButton = useRef<HTMLDivElement>(null);
 
-  const dnsCheck = async (): Promise<boolean> => {
+  const checkDns = async (): Promise<boolean> => {
     if (config?.network === "local") {
       return true; // for local e2e to pass, skip dns validate + set valid
     } else {
@@ -29,7 +29,7 @@ export const FormSelect: FunctionComponent<FormSelectProps> = ({ id, form, onAdd
     }
   };
 
-  const ownershipCheck = async (): Promise<boolean> => {
+  const checkOwnership = async (): Promise<boolean> => {
     const wallet = config?.wallet;
     const contractAddress = getIssuerAddress(form.defaults);
     const isDID = checkDID(form.defaults);
@@ -39,7 +39,7 @@ export const FormSelect: FunctionComponent<FormSelectProps> = ({ id, form, onAdd
     } else if (isDID) {
       return true;
     } else if (contractAddress !== undefined && wallet !== undefined) {
-      const valid = await checkOwnership(contractType, contractAddress, wallet);
+      const valid = await checkContractOwnership(contractType, contractAddress, wallet);
       return valid;
     }
     return false;
@@ -80,8 +80,8 @@ export const FormSelect: FunctionComponent<FormSelectProps> = ({ id, form, onAdd
     if (isValidEntry === undefined) {
       setLoadingState(true);
       setTooltipMsg("Loading...");
-      const validDns = await dnsCheck();
-      const validOwnership = await ownershipCheck();
+      const validDns = await checkDns();
+      const validOwnership = await checkOwnership();
       checkValidity(validDns, validOwnership);
     } else if (!isValidEntry) {
       ReactTooltip.show(refButton.current as unknown as Element);

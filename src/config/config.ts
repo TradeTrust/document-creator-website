@@ -12,6 +12,10 @@ interface GsnRelayConfig {
   forwarder: string;
   gasPrice: number;
 }
+interface EtherscanNetworkApiDetails {
+  apiKey: string;
+  hostname: string;
+}
 
 const ropstenGsnRelayConfig = {
   relayHub: "0x29e41C2b329fF4921d8AC654CEc909a0B575df20",
@@ -36,4 +40,35 @@ export const getHttpProviderUri = (networkId: string): string => {
   if (networkId === "local") return `http://localhost:8545`;
   if (networkId === "homestead") return `https://mainnet.infura.io/v3/${INFURA_PROJECT_ID}`;
   return `https://${networkId}.infura.io/v3/${INFURA_PROJECT_ID}`;
+};
+
+export const getEtherscanNetworkApiDetails = (chain: string, chainId: number): EtherscanNetworkApiDetails => {
+  let url = "";
+  let apiKey = "";
+  let networkHostname = "";
+
+  if (chainId === 1 || chainId === 3 || chainId === 4 || chainId === 5 || chainId === 42) {
+    chain = "ETH";
+    if (chainId === 3) {
+      networkHostname = "-ropsten";
+    } else if (chainId === 4) {
+      networkHostname = "-rinkeby";
+    } else if (chainId === 5) {
+      networkHostname = "-goerli";
+    } else if (chainId === 42) {
+      networkHostname = "-kovan";
+    }
+    url = `https://api${networkHostname}.etherscan.io`;
+  } else if (chainId === 137 || chainId === 80001) {
+    chain = "MATIC";
+    if (chainId === 80001) {
+      networkHostname = "-testnet";
+    }
+    url = `https://api${networkHostname}.polygonscan.com`;
+  } else {
+    url = `https://api.etherscan.io`;
+  }
+
+  apiKey = (ETHERSCAN_API_KEY as any)[chain];
+  return { hostname: url, apiKey: apiKey } as EtherscanNetworkApiDetails;
 };

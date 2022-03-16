@@ -1,5 +1,5 @@
 import axios, { AxiosResponse } from "axios";
-import { ETHERSCAN_API_KEY } from "../../../config";
+import { getEtherscanNetworkApiDetails } from "../../../config";
 import { NetworkObject } from "../../../types";
 interface ExplorerHeaders {
   "Content-Type": string;
@@ -16,12 +16,6 @@ interface ExploreParams {
   sort: string;
   apikey: string;
 }
-
-interface NetworkApiDetails {
-  apiKey: string;
-  hostname: string;
-}
-
 interface SimplifiedResponse {
   status: number;
   reason: string;
@@ -58,48 +52,12 @@ const getParams = (contractAddress: string, apiKey: string): ExploreParams => {
   return headers;
 };
 
-const getNetworkApiDetails = (network: NetworkObject): NetworkApiDetails => {
-  // const chain: string = network.network.chain;
-  const chainId: number = parseInt(network.network.chainId);
-  let url = "";
-  let apiKey = "";
-  let hostnameNetwork = "";
-  let chainType = "";
-
-  if (chainId === 1 || chainId === 3 || chainId === 4 || chainId === 5 || chainId === 42) {
-    hostnameNetwork = "";
-    chainType = "ETH";
-    if (chainId === 3) {
-      hostnameNetwork = "-ropsten";
-    } else if (chainId === 4) {
-      hostnameNetwork = "-rinkeby";
-    } else if (chainId === 5) {
-      hostnameNetwork = "-goerli";
-    } else if (chainId === 42) {
-      hostnameNetwork = "-kovan";
-    }
-    url = `https://api${hostnameNetwork}.etherscan.io`;
-  } else if (chainId === 137 || chainId === 80001) {
-    hostnameNetwork = "";
-    chainType = "MATIC";
-    if (chainId === 80001) {
-      hostnameNetwork = "-testnet";
-    }
-    url = `https://api${hostnameNetwork}.polygonscan.com`;
-  } else {
-    url = `https://api.etherscan.io`;
-  }
-
-  apiKey = (ETHERSCAN_API_KEY as any)[chainType];
-  return { hostname: url, apiKey: apiKey } as NetworkApiDetails;
-};
-
 export const getCreationAddressRequest = async (
   contractAddress: string,
   network: NetworkObject,
   apiKey?: string
 ): Promise<AxiosResponse> => {
-  const networkApiDetails = getNetworkApiDetails(network);
+  const networkApiDetails = getEtherscanNetworkApiDetails(network.network.chain, parseInt(network.network.chainId));
   const url = `${networkApiDetails.hostname}/api`;
 
   if (apiKey === undefined) {
@@ -119,48 +77,29 @@ const sendCreationAddressRequest = async (
   network: NetworkObject,
   apiKey?: string
 ): Promise<SimplifiedResponse> => {
-  // {"status":"0","message":"NOTOK","result":"Max rate limit reached, please use API Key for higher rate limit"}
-  // {"status":"1","message":"OK-Missing/Invalid API Key, rate limit of 1/5sec applied"
-  // {"status":"0","message":"No transactions found","result":[]}
-  let attempts = 3;
-  while (attempts > 0) {
-    const response = await getCreationAddressRequest(contractAddress, network, apiKey);
-    if (response.data === undefined) {
-      const simplifiedResponse = {
-        status: 1,
-        reason: "Call Failed",
+  const response = await getCreationAddressRequest(contractAddress, network, apiKey);
+  const responseStatus = response.data?.status?.toString?.();
+  const responseMessage = response.data?.message?.toString?.();
+  if (responseStatus === "0") {
+    if (responseMessage === "No transactions found") {
+      const noTransactionResponse = {
+        status: 2,
+        reason: "No Transaction Found",
       } as SimplifiedResponse;
-      return simplifiedResponse;
-    } else {
-      if (response.data.status.toString() === "0") {
-        if (response.data.message.toString() === "No transactions found") {
-          const simplifiedResponse = {
-            status: 2,
-            reason: "No Transaction Found",
-          } as SimplifiedResponse;
-          return simplifiedResponse;
-        }
-        // else if(response.data.message.toString() === "NOTOK"){
-        //     if(response.data.result.toString() === "Max rate limit reached, please use API Key for higher rate limit"){
-        //       // Re-run, rate limit
-        //     }
-        // }
-      } else if (response.data.status.toString() === "1") {
-        const simplifiedResponse = {
-          status: 0,
-          reason: "Call Successful",
-          address: response.data?.result[0]?.from,
-        } as SimplifiedResponse;
-        return simplifiedResponse;
-      }
+      return noTransactionResponse;
     }
-    attempts = attempts - 1;
+  } else if (responseStatus === "1") {
+    const successResponse = {
+      status: 0,
+      reason: "Call Successful",
+      address: response.data?.result?.[0]?.from,
+    } as SimplifiedResponse;
+    return successResponse;
   }
-  const simplifiedResponse = {
+  return {
     status: 1,
     reason: "Call Failed",
   } as SimplifiedResponse;
-  return simplifiedResponse;
 };
 
 export const getCreationAddress = async (
@@ -173,25 +112,24 @@ export const getCreationAddress = async (
   ).address;
 };
 
-export const checkCreationAddress = async (
-  contractAddress: string,
-  network: NetworkObject,
-  ownerAddress: string,
-  strict: boolean,
-  apiKey?: string
-): Promise<boolean> => {
+export const checkCreationAddress = async ({
+  contractAddress,
+  network,
+  userAddress,
+  strict,
+  apiKey,
+}: {
+  contractAddress: string;
+  network: NetworkObject;
+  userAddress: string;
+  strict: boolean;
+  apiKey?: string;
+}): Promise<boolean> => {
   const simplifiedResponse = await sendCreationAddressRequest(contractAddress, network, apiKey);
   if (simplifiedResponse.status === 0) {
-    return simplifiedResponse.address.toLowerCase() === ownerAddress.toLowerCase();
+    return simplifiedResponse.address.toLowerCase() === userAddress.toLowerCase();
   } else if (simplifiedResponse.status === 1) {
-    if (strict) {
-      return false;
-    } else {
-      return true;
-    }
-  } else if (simplifiedResponse.status === 2) {
-    return false;
-  } else {
-    return false;
+    return !strict;
   }
+  return false;
 };

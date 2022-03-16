@@ -4,6 +4,7 @@ import { checkCreationAddress } from "./utils";
 import { checkDID, checkTransferableRecordOwnership, checkVerifiableDocumentOwnership } from "./ownership-checks";
 import { getConnectedDocumentStore, assertAddressIsSmartContract } from "../publishing";
 import { Wallet } from "ethers";
+import { NetworkObject } from "../../types";
 
 jest.mock("../publishing", () => {
   const originalModule = jest.requireActual("../publishing");
@@ -97,17 +98,18 @@ describe("ownershipChecks", () => {
       const status = await checkTransferableRecordOwnership(contractAddress, wallet);
       expect(mockCheckCreationAddress).toBeCalledTimes(1);
       const network = await wallet.provider.getNetwork();
-      expect(mockCheckCreationAddress).toHaveBeenCalledWith(
-        contractAddress,
-        {
-          network: {
-            chain: network.name,
-            chainId: network.chainId.toString(),
-          },
+      const networkObject: NetworkObject = {
+        network: {
+          chain: network.name,
+          chainId: network.chainId.toString(),
         },
-        wallet.getAddress(),
-        false
-      );
+      } as NetworkObject;
+      expect(mockCheckCreationAddress).toHaveBeenCalledWith({
+        contractAddress: contractAddress,
+        network: networkObject,
+        userAddress: wallet.getAddress(),
+        strict: false,
+      });
       expect(status).toBe(true);
     });
 
@@ -119,17 +121,18 @@ describe("ownershipChecks", () => {
       const status = await checkTransferableRecordOwnership(contractAddress, wallet);
       expect(mockCheckCreationAddress).toBeCalledTimes(1);
       const network = await wallet.provider.getNetwork();
-      expect(mockCheckCreationAddress).toHaveBeenCalledWith(
-        contractAddress,
-        {
-          network: {
-            chain: network.name,
-            chainId: network.chainId.toString(),
-          },
+      const networkObject: NetworkObject = {
+        network: {
+          chain: network.name,
+          chainId: network.chainId.toString(),
         },
-        wallet.getAddress(),
-        false
-      );
+      } as NetworkObject;
+      expect(mockCheckCreationAddress).toHaveBeenCalledWith({
+        contractAddress: contractAddress,
+        network: networkObject,
+        userAddress: wallet.getAddress(),
+        strict: false,
+      });
       expect(status).toBe(false);
     });
   });

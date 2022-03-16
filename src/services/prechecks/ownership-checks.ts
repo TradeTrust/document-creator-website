@@ -29,11 +29,16 @@ export const checkTransferableRecordOwnership = async (contractAddress: string, 
         chainId: network.chainId.toString(),
       },
     } as NetworkObject;
-    return await checkCreationAddress(contractAddress, networkObject, userWalletAddress, false);
+    return await checkCreationAddress({
+      contractAddress: contractAddress,
+      network: networkObject,
+      userAddress: userWalletAddress,
+      strict: false,
+    });
   }
 };
 
-export const checkOwnership = async (
+export const checkContractOwnership = async (
   type: string,
   contractAddress: string,
   wallet: Wallet | ConnectedSigner
