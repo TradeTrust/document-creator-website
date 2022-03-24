@@ -1,10 +1,10 @@
 import { DocumentStoreFactory } from "@govtechsg/document-store";
 import { Wallet } from "ethers";
 import { revokeDocumentJob } from "./index";
-import { supportsInterface } from "../publishing/utils";
+import { supportsInterface } from "../common/utils";
 
 jest.mock("@govtechsg/document-store");
-jest.mock("../publishing/utils");
+jest.mock("../common/utils");
 
 const mockDocumentStoreFactoryConnect = DocumentStoreFactory.connect as jest.Mock;
 const mockDocumentStoreRevoke = jest.fn();

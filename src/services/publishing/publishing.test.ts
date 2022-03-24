@@ -2,11 +2,11 @@ import { DocumentStoreFactory } from "@govtechsg/document-store";
 import { TitleEscrowCreatorFactory, TradeTrustErc721Factory } from "@govtechsg/token-registry";
 import { getDefaultProvider, Wallet } from "ethers";
 import { getTitleEscrowCreator, publishTransferableRecordJob, publishVerifiableDocumentJob } from "./index";
-import { supportsInterface } from "./utils";
+import { supportsInterface } from "../common/utils";
 
 jest.mock("@govtechsg/token-registry");
 jest.mock("@govtechsg/document-store");
-jest.mock("./utils");
+jest.mock("../common/utils");
 
 const mockTitleEscrowCreatorFactoryConnect = TitleEscrowCreatorFactory.connect as jest.Mock;
 const mockDocumentStoreFactoryConnect = DocumentStoreFactory.connect as jest.Mock;

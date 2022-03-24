@@ -1,6 +1,7 @@
 import { getCreationAddress, getCreationAddressRequest } from "./explorer";
 import axios from "axios";
-import { NetworkObject } from "../../../types";
+import { Network } from "../../../types";
+import { getNetworkDetails } from "../../../common/utils";
 
 jest.mock("axios", () => jest.fn());
 const mockAxios = axios as any as jest.Mock;
@@ -41,11 +42,9 @@ describe("explorer", () => {
     it("should call axios with valid parameters", async () => {
       mockAxios.mockReturnValue(true);
       const contractAddress = "0xC0NTRACTADDRESS";
-      const network = {
-        network: { chain: "ropsten", chainId: "3" },
-      } as NetworkObject;
+      const networkDetails = getNetworkDetails("ropsten" as Network);
       const apiKey = "APIKEY-FOR-TEST";
-      const response = await getCreationAddressRequest(contractAddress, network, apiKey);
+      const response = await getCreationAddressRequest(contractAddress, networkDetails, apiKey);
       expect(response).toBe(true);
       expect(mockAxios).toHaveBeenCalledWith({
         method: "get",
@@ -70,22 +69,18 @@ describe("explorer", () => {
     it("should return undefined on a bad case", async () => {
       mockAxios.mockReturnValue(mockEtherscanFailResponse);
       const contractAddress = "0xC0NTRACTADDRESS";
-      const network = {
-        network: { chain: "ropsten", chainId: "3" },
-      } as NetworkObject;
+      const networkDetails = getNetworkDetails("ropsten" as Network);
       const apiKey = "APIKEY-FOR-TEST";
-      const response = await getCreationAddress(contractAddress, network, apiKey);
+      const response = await getCreationAddress(contractAddress, networkDetails, apiKey);
       expect(response).toBe(undefined);
     });
 
     it("should return owner address on a good case", async () => {
       mockAxios.mockReturnValue(mockEtherscanSuccessResponse);
       const contractAddress = "0xC0NTRACTADDRESS";
-      const network = {
-        network: { chain: "ropsten", chainId: "3" },
-      } as NetworkObject;
+      const networkDetails = getNetworkDetails("ropsten" as Network);
       const apiKey = "APIKEY-FOR-TEST";
-      const response = await getCreationAddress(contractAddress, network, apiKey);
+      const response = await getCreationAddress(contractAddress, networkDetails, apiKey);
       expect(response).toBe("0x1245e5b64d785b25057f7438f715f4aa5d965733");
     });
   });

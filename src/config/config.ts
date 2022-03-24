@@ -1,10 +1,12 @@
+import { ChainInfoObject } from "../constants/chainInfo";
+
 export const INFURA_PROJECT_ID = process.env.INFURA_PROJECT_ID || "6028cd7708c54c91a90df6cefd9bf1a9"; // TODO: inject project id into env variable
-export const ETHERSCAN_API_KEY = (process.env.ETHERSCAN_API_KEY
-  ? JSON.parse(process.env.ETHERSCAN_API_KEY)
-  : false) || {
-  ETH: "XWKZFH99X5M1ESC6QC5YK26RRK8K9P3W9K",
-  MATIC: "RPFRR1C1XI7K2D3ZEZXT2VY9GNJPNUQ3Z3",
+
+export const ETHERSCAN_API_KEY = {
+  ETH: process.env.API_KEY_ETH,
+  MATIC: process.env.MATIC,
 };
+
 // Addresses retrieved from https://docs.opengsn.org/gsn-provider/networks.html
 interface GsnRelayConfig {
   relayHub: string;
@@ -42,33 +44,7 @@ export const getHttpProviderUri = (networkId: string): string => {
   return `https://${networkId}.infura.io/v3/${INFURA_PROJECT_ID}`;
 };
 
-export const getEtherscanNetworkApiDetails = (chain: string, chainId: number): EtherscanNetworkApiDetails => {
-  let url = "";
-  let apiKey = "";
-  let networkHostname = "";
-
-  if (chainId === 1 || chainId === 3 || chainId === 4 || chainId === 5 || chainId === 42) {
-    chain = "ETH";
-    if (chainId === 3) {
-      networkHostname = "-ropsten";
-    } else if (chainId === 4) {
-      networkHostname = "-rinkeby";
-    } else if (chainId === 5) {
-      networkHostname = "-goerli";
-    } else if (chainId === 42) {
-      networkHostname = "-kovan";
-    }
-    url = `https://api${networkHostname}.etherscan.io`;
-  } else if (chainId === 137 || chainId === 80001) {
-    chain = "MATIC";
-    if (chainId === 80001) {
-      networkHostname = "-testnet";
-    }
-    url = `https://api${networkHostname}.polygonscan.com`;
-  } else {
-    url = `https://api.etherscan.io`;
-  }
-
-  apiKey = (ETHERSCAN_API_KEY as any)[chain];
-  return { hostname: url, apiKey: apiKey } as EtherscanNetworkApiDetails;
+export const getEtherscanNetworkApiDetails = (chainInfo: ChainInfoObject): EtherscanNetworkApiDetails => {
+  const apiKey = (ETHERSCAN_API_KEY as any)[chainInfo.chain];
+  return { hostname: chainInfo.explorerApiUrl, apiKey: apiKey } as EtherscanNetworkApiDetails;
 };

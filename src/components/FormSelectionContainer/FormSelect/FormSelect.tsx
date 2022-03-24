@@ -16,8 +16,7 @@ interface FormSelectProps {
 export const FormSelect: FunctionComponent<FormSelectProps> = ({ id, form, onAddForm, ...props }) => {
   const { config } = useConfigContext();
   const [tooltipMsg, setTooltipMsg] = useState<string | null>(null);
-  const [isValidEntry, setIsValidEntry] = useState<boolean>();
-  const [loadingState, setLoadingState] = useState<boolean>(false);
+  const [formStatus, setFormStatus] = useState<"initial" | "pending" | "success" | "error">("initial");
   const refButton = useRef<HTMLDivElement>(null);
 
   const checkDns = async (): Promise<boolean> => {
@@ -37,7 +36,7 @@ export const FormSelect: FunctionComponent<FormSelectProps> = ({ id, form, onAdd
     if (config?.network === "local") {
       return true; // for local e2e to pass, skip ownership validate + set valid
     } else if (isDID) {
-      return true;
+      return true; // Assume DIDs are valid
     } else if (contractAddress !== undefined && wallet !== undefined) {
       const valid = await checkContractOwnership(contractType, contractAddress, wallet);
       return valid;
@@ -45,11 +44,14 @@ export const FormSelect: FunctionComponent<FormSelectProps> = ({ id, form, onAdd
     return false;
   };
 
-  const checkValidity = async (isValidDns: boolean, isValidOwner: boolean) => {
-    setIsValidEntry(isValidDns && isValidOwner);
+  const checkValidity = async () => {
+    setFormStatus("pending");
+    setTooltipMsg("Loading...");
+    const isValidDns = await checkDns();
+    const isValidOwner = await checkOwnership();
     const errorMessage: string[] = [];
+    const contractAddress = getIssuerAddress(form.defaults);
     if (!isValidDns) {
-      const contractAddress = getIssuerAddress(form.defaults);
       errorMessage.push(
         `The contract address ${contractAddress} could not be found on ${getIssuerLocation(
           form.defaults
@@ -57,7 +59,6 @@ export const FormSelect: FunctionComponent<FormSelectProps> = ({ id, form, onAdd
       );
     }
     if (!isValidOwner) {
-      const contractAddress = getIssuerAddress(form.defaults);
       const address = await config?.wallet?.getAddress();
       errorMessage.push(`The contract ${contractAddress} does not belong to ${address}.`);
     }
@@ -67,26 +68,23 @@ export const FormSelect: FunctionComponent<FormSelectProps> = ({ id, form, onAdd
     } else {
       setTooltipMsg(null);
     }
-    setLoadingState(false);
+    setFormStatus(isValidDns && isValidOwner ? "success" : "error");
   };
 
   useEffect(() => {
-    if (isValidEntry) {
+    if (formStatus === "success") {
       onAddForm();
     }
-  }, [isValidEntry, onAddForm]);
+  }, [formStatus, onAddForm]);
 
   const handleForm = async (): Promise<void> => {
-    if (isValidEntry === undefined) {
-      setLoadingState(true);
-      setTooltipMsg("Loading...");
-      const validDns = await checkDns();
-      const validOwnership = await checkOwnership();
-      checkValidity(validDns, validOwnership);
-    } else if (!isValidEntry) {
-      ReactTooltip.show(refButton.current as unknown as Element);
-    } else {
+    if (formStatus === "initial") {
+      checkValidity();
+    } else if (formStatus === "success") {
       onAddForm();
+    } else {
+      // Error or Pending Status
+      ReactTooltip.show(refButton.current as unknown as Element);
     }
   };
 
@@ -95,14 +93,14 @@ export const FormSelect: FunctionComponent<FormSelectProps> = ({ id, form, onAdd
       <div ref={refButton} data-tip data-for={`tooltip-${id}`} data-testid="tooltip-form-select">
         <Button
           className={`bg-white w-11/12 h-full p-4 leading-5 ${
-            isValidEntry === false || loadingState === true
+            formStatus === "error" || formStatus === "pending"
               ? "text-cloud-300 bg-cloud-100"
               : "text-cerulean hover:bg-cloud-100"
           }`}
           onClick={() => handleForm()}
           {...props}
         >
-          {loadingState ? (
+          {formStatus === "pending" ? (
             <div className="flex flex-col flex-wrap">
               <div>{form.name}</div>
               <LoaderSpinner className="content-center self-center mt-1" />

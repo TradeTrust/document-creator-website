@@ -1,16 +1,15 @@
 import { OpenAttestationDocument, utils } from "@govtechsg/open-attestation";
 import { Signer, Wallet } from "ethers";
-import { ConnectedSigner, NetworkObject } from "../../types";
-import { assertAddressIsSmartContract, getConnectedDocumentStore } from "../publishing";
+import { getNetworkDetails } from "../../common/utils";
+import { ConnectedSigner, Network } from "../../types";
+import { getConnectedDocumentStore, checkAddressIsSmartContract } from "../common";
 import { checkCreationAddress } from "./utils";
 
 export const checkVerifiableDocumentOwnership = async (
   contractAddress: string,
   account: Wallet | ConnectedSigner
 ): Promise<boolean> => {
-  try {
-    await assertAddressIsSmartContract(contractAddress, account);
-  } catch (e) {
+  if (!(await checkAddressIsSmartContract(contractAddress, account))) {
     return false;
   }
   const documentStore = await getConnectedDocumentStore(account, contractAddress);
@@ -21,17 +20,12 @@ export const checkTransferableRecordOwnership = async (contractAddress: string, 
   const userWalletAddress = await signer.getAddress();
   const network = await signer.provider?.getNetwork();
   if (network === undefined) {
-    return false;
+    throw new Error("Wallet owner's Network not found.");
   } else {
-    const networkObject: NetworkObject = {
-      network: {
-        chain: network.name,
-        chainId: network.chainId.toString(),
-      },
-    } as NetworkObject;
+    const networkDetails = getNetworkDetails(network.name as Network);
     return await checkCreationAddress({
       contractAddress: contractAddress,
-      network: networkObject,
+      network: networkDetails,
       userAddress: userWalletAddress,
       strict: false,
     });

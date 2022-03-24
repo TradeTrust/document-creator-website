@@ -1,6 +1,6 @@
 import axios, { AxiosResponse } from "axios";
 import { getEtherscanNetworkApiDetails } from "../../../config";
-import { NetworkObject } from "../../../types";
+import { ChainInfoObject } from "../../../constants/chainInfo";
 interface ExplorerHeaders {
   "Content-Type": string;
 }
@@ -54,10 +54,10 @@ const getParams = (contractAddress: string, apiKey: string): ExploreParams => {
 
 export const getCreationAddressRequest = async (
   contractAddress: string,
-  network: NetworkObject,
+  chainInfo: ChainInfoObject,
   apiKey?: string
 ): Promise<AxiosResponse> => {
-  const networkApiDetails = getEtherscanNetworkApiDetails(network.network.chain, parseInt(network.network.chainId));
+  const networkApiDetails = getEtherscanNetworkApiDetails(chainInfo);
   const url = `${networkApiDetails.hostname}/api`;
 
   if (apiKey === undefined) {
@@ -74,10 +74,10 @@ export const getCreationAddressRequest = async (
 
 const sendCreationAddressRequest = async (
   contractAddress: string,
-  network: NetworkObject,
+  chainInfo: ChainInfoObject,
   apiKey?: string
 ): Promise<SimplifiedResponse> => {
-  const response = await getCreationAddressRequest(contractAddress, network, apiKey);
+  const response = await getCreationAddressRequest(contractAddress, chainInfo, apiKey);
   const responseStatus = response.data?.status?.toString?.();
   const responseMessage = response.data?.message?.toString?.();
   if (responseStatus === "0") {
@@ -104,11 +104,11 @@ const sendCreationAddressRequest = async (
 
 export const getCreationAddress = async (
   contractAddress: string,
-  network: NetworkObject,
+  chainInfo: ChainInfoObject,
   apiKey?: string
 ): Promise<string> => {
   return await (
-    await sendCreationAddressRequest(contractAddress, network, apiKey)
+    await sendCreationAddressRequest(contractAddress, chainInfo, apiKey)
   ).address;
 };
 
@@ -120,7 +120,7 @@ export const checkCreationAddress = async ({
   apiKey,
 }: {
   contractAddress: string;
-  network: NetworkObject;
+  network: ChainInfoObject;
   userAddress: string;
   strict: boolean;
   apiKey?: string;

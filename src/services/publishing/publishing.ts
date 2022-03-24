@@ -1,5 +1,3 @@
-import { DocumentStoreFactory, GsnCapableDocumentStoreFactory } from "@govtechsg/document-store";
-import { DocumentStore } from "@govtechsg/document-store/src/contracts/DocumentStore";
 import {
   getData,
   signDocument,
@@ -10,32 +8,8 @@ import {
 import { TitleEscrowCreatorFactory, TradeTrustErc721Factory } from "@govtechsg/token-registry";
 import { TitleEscrowCreator } from "@govtechsg/token-registry/types/TitleEscrowCreator";
 import { providers, Signer, Wallet } from "ethers";
-import { getGsnRelaySigner } from "../../common/config/decrypt";
 import { ConnectedSigner, PublishingJob } from "../../types";
-import { supportsInterface } from "./utils";
-
-export const assertAddressIsSmartContract = async (
-  address: string,
-  account: Wallet | ConnectedSigner
-): Promise<void> => {
-  const code = await account.provider.getCode(address);
-  if (code === "0x") throw new Error("Address is not a smart contract");
-};
-
-export const getConnectedDocumentStore = async (
-  account: Wallet | ConnectedSigner,
-  contractAddress: string
-): Promise<DocumentStore> => {
-  const documentStore = GsnCapableDocumentStoreFactory.connect(contractAddress, account);
-  // Determine if contract is gsn capable
-  const isGsnCapable = await supportsInterface(documentStore, "0xa5a23640");
-  if (!isGsnCapable) return DocumentStoreFactory.connect(contractAddress, account);
-  // Get paymaster address and the relevant gsnProvider
-  const paymasterAddress = await documentStore.getPaymaster();
-  const gsnRelaySigner = await getGsnRelaySigner(account, paymasterAddress);
-  const gsnDocumentStore = GsnCapableDocumentStoreFactory.connect(contractAddress, gsnRelaySigner);
-  return gsnDocumentStore;
-};
+import { assertAddressIsSmartContract, getConnectedDocumentStore } from "../common";
 
 export const publishVerifiableDocumentJob = async (
   job: PublishingJob,
