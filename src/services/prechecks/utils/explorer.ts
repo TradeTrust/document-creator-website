@@ -19,7 +19,7 @@ interface ExploreParams {
 interface SimplifiedResponse {
   status: number;
   reason: string;
-  address: string;
+  address?: string;
 }
 
 const getHeaders = (): ExplorerHeaders => {
@@ -72,41 +72,36 @@ export const getCreationAddressRequest = async (
   });
 };
 
+const simplifyResponse = (responseData: any): SimplifiedResponse => {
+  const responseStatus = responseData?.status?.toString?.();
+  const responseMessage = responseData?.message?.toString?.();
+  let simplifiedResponse: SimplifiedResponse = { status: 1, reason: "Call Failed" };
+  if (responseStatus === "0") {
+    if (responseMessage === "No transactions found") {
+      simplifiedResponse = { status: 2, reason: "No Transaction Found" };
+    }
+  } else if (responseStatus === "1") {
+    simplifiedResponse = { status: 0, reason: "Call Successful" };
+    simplifiedResponse.address = responseData?.result?.[0]?.from;
+  }
+  return simplifiedResponse;
+};
+
 const sendCreationAddressRequest = async (
   contractAddress: string,
   chainInfo: ChainInfoObject,
   apiKey?: string
 ): Promise<SimplifiedResponse> => {
   const response = await getCreationAddressRequest(contractAddress, chainInfo, apiKey);
-  const responseStatus = response.data?.status?.toString?.();
-  const responseMessage = response.data?.message?.toString?.();
-  if (responseStatus === "0") {
-    if (responseMessage === "No transactions found") {
-      const noTransactionResponse = {
-        status: 2,
-        reason: "No Transaction Found",
-      } as SimplifiedResponse;
-      return noTransactionResponse;
-    }
-  } else if (responseStatus === "1") {
-    const successResponse = {
-      status: 0,
-      reason: "Call Successful",
-      address: response.data?.result?.[0]?.from,
-    } as SimplifiedResponse;
-    return successResponse;
-  }
-  return {
-    status: 1,
-    reason: "Call Failed",
-  } as SimplifiedResponse;
+  const responseData = response.data;
+  return simplifyResponse(responseData);
 };
 
 export const getCreationAddress = async (
   contractAddress: string,
   chainInfo: ChainInfoObject,
   apiKey?: string
-): Promise<string> => {
+): Promise<string | undefined> => {
   return await (
     await sendCreationAddressRequest(contractAddress, chainInfo, apiKey)
   ).address;
@@ -127,7 +122,7 @@ export const checkCreationAddress = async ({
 }): Promise<boolean> => {
   const simplifiedResponse = await sendCreationAddressRequest(contractAddress, network, apiKey);
   if (simplifiedResponse.status === 0) {
-    return simplifiedResponse.address.toLowerCase() === userAddress.toLowerCase();
+    return simplifiedResponse?.address?.toLowerCase?.() === userAddress.toLowerCase();
   } else if (simplifiedResponse.status === 1) {
     return !strict;
   }
