@@ -31,7 +31,7 @@ const getHeaders = (): ExplorerHeaders => {
 };
 
 const getParams = (contractAddress: string, apiKey: string): ExploreParams => {
-  const headers = {
+  const params = {
     module: "account",
     action: "txlist",
     startblock: "0",
@@ -42,14 +42,14 @@ const getParams = (contractAddress: string, apiKey: string): ExploreParams => {
   } as ExploreParams;
 
   if (apiKey) {
-    headers["apikey"] = apiKey;
+    params["apikey"] = apiKey;
   }
 
   if (contractAddress) {
-    headers["address"] = contractAddress;
+    params["address"] = contractAddress;
   }
 
-  return headers;
+  return params;
 };
 
 export const getCreationAddressRequest = async (

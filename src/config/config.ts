@@ -4,7 +4,7 @@ export const INFURA_PROJECT_ID = process.env.INFURA_PROJECT_ID || "6028cd7708c54
 
 export const ETHERSCAN_API_KEY = {
   ETH: process.env.API_KEY_ETH,
-  MATIC: process.env.MATIC,
+  MATIC: process.env.API_KEY_MATIC,
 };
 
 // Addresses retrieved from https://docs.opengsn.org/gsn-provider/networks.html
