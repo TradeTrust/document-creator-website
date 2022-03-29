@@ -105,11 +105,7 @@ describe("formSelect", () => {
     });
 
     await waitFor(() => {
-      expect(
-        screen.getByText(
-          "The contract address 0x8bA63EAB43342AAc3AdBB4B827b68Cf4aAE5Caca could not be found on abc.com DNS TXT records."
-        )
-      ).toBeInTheDocument();
+      expect(screen.getByText("The contract could not be found on it's DNS TXT records.")).toBeInTheDocument();
     });
   });
 
@@ -125,9 +121,7 @@ describe("formSelect", () => {
 
     await waitFor(() => {
       expect(
-        screen.getByText(
-          "The contract address 0x8bA63EAB43342AAc3AdBB4B827b68Cf4aAE5Caca could not be found on abc.com DNS TXT records. The contract 0x8bA63EAB43342AAc3AdBB4B827b68Cf4aAE5Caca does not belong to 0x1245e5b64d785b25057f7438f715f4aa5d965733."
-        )
+        screen.getByText("The contract could not be found on it's DNS TXT records and does not belong to the wallet.")
       ).toBeInTheDocument();
     });
   });
