@@ -13,17 +13,26 @@ interface FormSelectProps {
   onAddForm: () => void;
 }
 
+const errorMsgDns = "The contract could not be found on it's DNS TXT records.";
+const errorDnsOwner = "The contract does not belong to the wallet.";
+
+enum FormStates {
+  "INITIAL",
+  "PENDING",
+  "ERROR",
+  "SUCCESS",
+}
+
+interface FormErrors {
+  type: "dns" | "ownership";
+  message: string;
+}
+
 export const FormSelect: FunctionComponent<FormSelectProps> = ({ id, form, onAddForm, ...props }) => {
   const { config } = useConfigContext();
-  enum formStates {
-    "initial",
-    "pending",
-    "success",
-    "error:dns",
-    "error:ownership",
-    "error:both",
-  }
-  const [formStatus, setFormStatus] = useState<formStates>(formStates["initial"]);
+
+  const [errors, setErrors] = useState<FormErrors[]>([]);
+  const [formStatus, setFormStatus] = useState<FormStates>(FormStates.INITIAL);
   const refButton = useRef<HTMLDivElement>(null);
 
   const checkDns = async (): Promise<boolean> => {
@@ -54,71 +63,65 @@ export const FormSelect: FunctionComponent<FormSelectProps> = ({ id, form, onAdd
   };
 
   const checkValidity = async () => {
-    setFormStatus(formStates["pending"]);
+    setFormStatus(FormStates.PENDING);
     const isValidDns = await checkDns();
     const isValidOwner = await checkOwnership();
 
     if (!isValidDns || !isValidOwner) {
       if (!isValidDns && !isValidOwner) {
-        setFormStatus(formStates["error:both"]);
+        setErrors([
+          {
+            type: "dns",
+            message: errorMsgDns,
+          },
+          {
+            type: "ownership",
+            message: errorDnsOwner,
+          },
+        ]);
       } else if (!isValidDns) {
-        setFormStatus(formStates["error:dns"]);
-      } else {
-        setFormStatus(formStates["error:ownership"]);
+        setErrors([
+          {
+            type: "dns",
+            message: errorMsgDns,
+          },
+        ]);
+      } else if (!isValidOwner) {
+        setErrors([
+          {
+            type: "ownership",
+            message: errorDnsOwner,
+          },
+        ]);
       }
+      setFormStatus(FormStates.ERROR);
     } else {
-      setFormStatus(formStates["success"]);
+      setErrors([]);
+      setFormStatus(FormStates.SUCCESS);
     }
   };
 
   useEffect(() => {
-    if (formStatus === formStates["success"]) {
+    if (formStatus === FormStates.SUCCESS) {
       onAddForm();
     }
-  }, [formStatus, onAddForm, formStates]);
+  }, [formStatus, onAddForm]);
 
   const handleForm = async (): Promise<void> => {
-    if (formStatus === formStates["initial"]) {
+    if (formStatus === FormStates.INITIAL) {
       checkValidity();
-    } else if (formStatus === formStates["success"]) {
-      onAddForm();
-    } else {
-      // Error or Pending Status
+    } else if (formStatus === FormStates.ERROR) {
       ReactTooltip.show(refButton.current as unknown as Element);
     }
   };
 
-  const isErrorState = (queryState: formStates) => {
-    const bothError = queryState === formStates["error:both"];
-    const isValidDns = !(queryState === formStates["error:dns"] || bothError);
-    const isValidOwner = !(queryState === formStates["error:ownership"] || bothError);
-    return bothError || !isValidDns || !isValidOwner;
-  };
-
   const getTooltipMessage = () => {
-    if (formStatus === formStates["pending"]) {
+    if (formStatus === FormStates.PENDING) {
       return "Loading...";
     }
-    const bothError = formStatus === formStates["error:both"];
-    const isValidDns = !(formStatus === formStates["error:dns"] || bothError);
-    const isValidOwner = !(formStatus === formStates["error:ownership"] || bothError);
 
-    const errorMessage: string[] = [];
-
-    if (!isValidDns) {
-      errorMessage.push(`The contract could not be found on it's DNS TXT records`);
-    }
-
-    if (!isValidOwner) {
-      if (errorMessage.length > 0) {
-        errorMessage.push(`and does not belong to the wallet`);
-      } else {
-        errorMessage.push(`The contract does not belong to the wallet`);
-      }
-    }
-
-    if (errorMessage.length > 0) {
-      return errorMessage.join(" ") + ".";
+    if (errors.length > 0) {
+      return errors.map((error) => `${error.message}`).join(" ");
     } else {
       return null;
     }
@@ -129,14 +132,14 @@ export const FormSelect: FunctionComponent<FormSelectProps> = ({ id, form, onAdd
       <div ref={refButton} data-tip data-for={`tooltip-${id}`} data-testid="tooltip-form-select">
         <Button
           className={`bg-white w-11/12 h-full p-4 leading-5 ${
-            isErrorState(formStatus) || formStatus === formStates["pending"]
+            formStatus === FormStates.PENDING || formStatus === FormStates.ERROR
               ? "text-cloud-300 bg-cloud-100"
               : "text-cerulean hover:bg-cloud-100"
           }`}
           onClick={() => handleForm()}
           {...props}
         >
-          {formStatus === formStates["pending"] ? (
+          {formStatus === FormStates.PENDING ? (
             <div className="flex flex-col flex-wrap">
               <div>{form.name}</div>
               <LoaderSpinner className="content-center self-center mt-1" />
