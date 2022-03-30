@@ -13,10 +13,10 @@ interface FormSelectProps {
   onAddForm: () => void;
 }
 
-const errorMsgDns = "The contract could not be found on it's DNS TXT records.";
-const errorDnsOwner = "The contract does not belong to the wallet.";
+const errorMsgDnsTxt = "The contract could not be found on it's DNS TXT records.";
+const errorMsgOwnership = "The contract does not belong to the wallet.";
 
-enum FormStates {
+enum FormStatus {
   "INITIAL",
   "PENDING",
   "ERROR",
@@ -31,8 +31,8 @@ interface FormErrors {
 export const FormSelect: FunctionComponent<FormSelectProps> = ({ id, form, onAddForm, ...props }) => {
   const { config } = useConfigContext();
 
-  const [errors, setErrors] = useState<FormErrors[]>([]);
-  const [formStatus, setFormStatus] = useState<FormStates>(FormStates.INITIAL);
+  const [formErrors, setFormErrors] = useState<FormErrors[]>([]);
+  const [formStatus, setFormStatus] = useState<FormStatus>(FormStatus.INITIAL);
   const refButton = useRef<HTMLDivElement>(null);
 
   const checkDns = async (): Promise<boolean> => {
@@ -63,65 +63,65 @@ export const FormSelect: FunctionComponent<FormSelectProps> = ({ id, form, onAdd
   };
 
   const checkValidity = async () => {
-    setFormStatus(FormStates.PENDING);
+    setFormStatus(FormStatus.PENDING);
     const isValidDns = await checkDns();
     const isValidOwner = await checkOwnership();
 
     if (!isValidDns || !isValidOwner) {
       if (!isValidDns && !isValidOwner) {
-        setErrors([
+        setFormErrors([
           {
             type: "dns",
-            message: errorMsgDns,
+            message: errorMsgDnsTxt,
           },
           {
             type: "ownership",
-            message: errorDnsOwner,
+            message: errorMsgOwnership,
           },
         ]);
       } else if (!isValidDns) {
-        setErrors([
+        setFormErrors([
           {
             type: "dns",
-            message: errorMsgDns,
+            message: errorMsgDnsTxt,
           },
         ]);
       } else if (!isValidOwner) {
-        setErrors([
+        setFormErrors([
           {
             type: "ownership",
-            message: errorDnsOwner,
+            message: errorMsgOwnership,
           },
         ]);
       }
-      setFormStatus(FormStates.ERROR);
+      setFormStatus(FormStatus.ERROR);
     } else {
-      setErrors([]);
-      setFormStatus(FormStates.SUCCESS);
+      setFormErrors([]);
+      setFormStatus(FormStatus.SUCCESS);
     }
   };
 
   useEffect(() => {
-    if (formStatus === FormStates.SUCCESS) {
+    if (formStatus === FormStatus.SUCCESS) {
       onAddForm();
     }
   }, [formStatus, onAddForm]);
 
   const handleForm = async (): Promise<void> => {
-    if (formStatus === FormStates.INITIAL) {
+    if (formStatus === FormStatus.INITIAL) {
       checkValidity();
-    } else if (formStatus === FormStates.ERROR) {
+    } else if (formStatus === FormStatus.ERROR) {
       ReactTooltip.show(refButton.current as unknown as Element);
     }
   };
 
   const getTooltipMessage = () => {
-    if (formStatus === FormStates.PENDING) {
+    if (formStatus === FormStatus.PENDING) {
       return "Loading...";
     }
 
-    if (errors.length > 0) {
-      return errors.map((error) => `${error.message}`).join(" ");
+    if (formErrors.length > 0) {
+      return formErrors.map((error) => `${error.message}`).join(" ");
     } else {
       return null;
     }
@@ -132,14 +132,14 @@ export const FormSelect: FunctionComponent<FormSelectProps> = ({ id, form, onAdd
       <div ref={refButton} data-tip data-for={`tooltip-${id}`} data-testid="tooltip-form-select">
         <Button
           className={`bg-white w-11/12 h-full p-4 leading-5 ${
-            formStatus === FormStates.PENDING || formStatus === FormStates.ERROR
+            formStatus === FormStatus.PENDING || formStatus === FormStatus.ERROR
               ? "text-cloud-300 bg-cloud-100"
               : "text-cerulean hover:bg-cloud-100"
           }`}
           onClick={() => handleForm()}
           {...props}
         >
-          {formStatus === FormStates.PENDING ? (
+          {formStatus === FormStatus.PENDING ? (
             <div className="flex flex-col flex-wrap">
               <div>{form.name}</div>
               <LoaderSpinner className="content-center self-center mt-1" />
