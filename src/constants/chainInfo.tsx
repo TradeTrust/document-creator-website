@@ -4,6 +4,7 @@ export interface ChainInfoObject {
   chainId: ChainId;
   networkName: string; // network name that aligns with existing NETWORK_NAME
   explorerUrl: string;
+  explorerApiUrl: string;
 }
 
 type ChainInfo = Record<ChainId, ChainInfoObject>;
@@ -33,6 +34,8 @@ export const ChainInfo: ChainInfo = {
     chainId: ChainId.Local,
     networkName: "local",
     explorerUrl: "https://localhost/explorer",
+    explorerApiUrl: "NIL",
+    // Is there a api for the ganache or sth
   },
   [ChainId.Ethereum]: {
     label: "Ethereum",
@@ -40,6 +43,7 @@ export const ChainInfo: ChainInfo = {
     chainId: ChainId.Ethereum,
     networkName: "homestead",
     explorerUrl: "https://etherscan.io",
+    explorerApiUrl: "https://api.etherscan.io",
   },
   [ChainId.Ropsten]: {
     label: "Ropsten",
@@ -47,6 +51,7 @@ export const ChainInfo: ChainInfo = {
     chainId: ChainId.Ropsten,
     networkName: "ropsten",
     explorerUrl: "https://ropsten.etherscan.io",
+    explorerApiUrl: "https://api-ropsten.etherscan.io",
   },
   [ChainId.Rinkeby]: {
     label: "Rinkeby",
@@ -54,6 +59,7 @@ export const ChainInfo: ChainInfo = {
     chainId: ChainId.Rinkeby,
     networkName: "rinkeby",
     explorerUrl: "https://rinkeby.etherscan.io",
+    explorerApiUrl: "https://api-rinkeby.etherscan.io",
   },
   [ChainId.Goerli]: {
     label: "Goerli",
@@ -61,6 +67,7 @@ export const ChainInfo: ChainInfo = {
     chainId: ChainId.Goerli,
     networkName: "goerli",
     explorerUrl: "https://goerli.etherscan.io",
+    explorerApiUrl: "https://api-goerli.etherscan.io",
   },
   [ChainId.Kovan]: {
     label: "Kovan",
@@ -68,6 +75,7 @@ export const ChainInfo: ChainInfo = {
     chainId: ChainId.Kovan,
     networkName: "kovan",
     explorerUrl: "https://kovan.etherscan.io",
+    explorerApiUrl: "https://api-kovan.etherscan.io",
   },
   [ChainId.Polygon]: {
     label: "Polygon (Beta)",
@@ -75,6 +83,7 @@ export const ChainInfo: ChainInfo = {
     chainId: ChainId.Polygon,
     networkName: "matic",
     explorerUrl: "https://polygonscan.com",
+    explorerApiUrl: "https://api.polygonscan.com",
   },
   [ChainId.PolygonMumbai]: {
     label: "Polygon Mumbai",
@@ -82,5 +91,6 @@ export const ChainInfo: ChainInfo = {
     chainId: ChainId.PolygonMumbai,
     networkName: "maticmum",
     explorerUrl: "https://mumbai.polygonscan.com",
+    explorerApiUrl: "https://api-testnet.polygonscan.com",
   },
 };

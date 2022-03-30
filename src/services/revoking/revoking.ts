@@ -1,6 +1,6 @@
 import { Wallet } from "ethers";
 import { RevokingJob, ConnectedSigner } from "../../types";
-import { assertAddressIsSmartContract, getConnectedDocumentStore } from "../publishing";
+import { assertAddressIsSmartContract, getConnectedDocumentStore } from "../common";
 
 export const revokeDocumentJob = async (job: RevokingJob, account: Wallet | ConnectedSigner): Promise<string> => {
   const { contractAddress, targetHash } = job;

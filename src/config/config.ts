@@ -1,4 +1,11 @@
+import { ChainInfoObject } from "../constants/chainInfo";
+
 export const INFURA_PROJECT_ID = process.env.INFURA_PROJECT_ID || "6028cd7708c54c91a90df6cefd9bf1a9"; // TODO: inject project id into env variable
+
+export const ETHERSCAN_API_KEY = {
+  ETH: process.env.REACT_APP_API_KEY_ETH,
+  MATIC: process.env.REACT_APP_API_KEY_MATIC,
+};
 
 // Addresses retrieved from https://docs.opengsn.org/gsn-provider/networks.html
 interface GsnRelayConfig {
@@ -6,6 +13,10 @@ interface GsnRelayConfig {
   stakeManager: string;
   forwarder: string;
   gasPrice: number;
+}
+interface EtherscanNetworkApiDetails {
+  apiKey: string;
+  hostname: string;
 }
 
 const ropstenGsnRelayConfig = {
@@ -31,4 +42,11 @@ export const getHttpProviderUri = (networkId: string): string => {
   if (networkId === "local") return `http://localhost:8545`;
   if (networkId === "homestead") return `https://mainnet.infura.io/v3/${INFURA_PROJECT_ID}`;
   return `https://${networkId}.infura.io/v3/${INFURA_PROJECT_ID}`;
+};
+
+export const getEtherscanNetworkApiDetails = (chainInfo: ChainInfoObject): EtherscanNetworkApiDetails => {
+  const apiKey = (ETHERSCAN_API_KEY as any)[chainInfo.chain];
+  console.log(ETHERSCAN_API_KEY);
+  console.log(process.env);
+  return { hostname: chainInfo.explorerApiUrl, apiKey: apiKey } as EtherscanNetworkApiDetails;
 };
