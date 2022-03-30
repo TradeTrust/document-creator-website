@@ -121,7 +121,9 @@ describe("formSelect", () => {
 
     await waitFor(() => {
       expect(
-        screen.getByText("The contract could not be found on it's DNS TXT records and does not belong to the wallet.")
+        screen.getByText(
+          "The contract could not be found on it's DNS TXT records. The contract does not belong to the wallet."
+        )
       ).toBeInTheDocument();
     });
   });
