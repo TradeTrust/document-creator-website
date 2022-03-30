@@ -46,7 +46,5 @@ export const getHttpProviderUri = (networkId: string): string => {
 
 export const getEtherscanNetworkApiDetails = (chainInfo: ChainInfoObject): EtherscanNetworkApiDetails => {
   const apiKey = (ETHERSCAN_API_KEY as any)[chainInfo.chain];
-  console.log(ETHERSCAN_API_KEY);
-  console.log(process.env);
   return { hostname: chainInfo.explorerApiUrl, apiKey: apiKey } as EtherscanNetworkApiDetails;
 };
