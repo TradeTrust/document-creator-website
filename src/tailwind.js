@@ -9,10 +9,9 @@ const localConfig = {
   ],
   theme: {
     fontFamily: {
-      "gilroy-light": ["Gilroy-Light", "sans-serif"],
-      "gilroy-medium": ["Gilroy-Medium", "sans-serif"],
-      "gilroy-bold": ["Gilroy-Bold", "sans-serif"],
-      "gilroy-extrabold": ["Gilroy-ExtraBold", "sans-serif"],
+      sans: ["Gilroy-Medium", "sans-serif"],
+      display: ["Gilroy-Medium", "sans-serif"],
+      body: ["Gilroy-Medium", "sans-serif"],
     },
     extend: {
       inset: {
