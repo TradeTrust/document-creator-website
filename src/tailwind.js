@@ -9,9 +9,9 @@ const localConfig = {
   ],
   theme: {
     fontFamily: {
-      sans: ["Roboto", "sans-serif"],
-      display: ["Roboto", "sans-serif"],
-      body: ["Roboto", "sans-serif"],
+      sans: ["Gilroy-Medium", "sans-serif"],
+      display: ["Gilroy-Medium", "sans-serif"],
+      body: ["Gilroy-Medium", "sans-serif"],
     },
     extend: {
       inset: {
