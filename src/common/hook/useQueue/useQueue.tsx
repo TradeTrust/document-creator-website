@@ -65,20 +65,30 @@ export const useQueue = ({
     const wallet = config.wallet;
     try {
       const nonce = await config.wallet.getTransactionCount();
+
+      // Retrieve tasks
       const processingJobs =
         queueType === QueueType.ISSUE
           ? await getPublishingJobs(formEntries as FormEntry[], config, nonce, wallet)
           : await getRevokingJobs(documents as any[]);
+
+      // set tasks as state
       setJobs(processingJobs);
+
+      // Set list of index as job indexes
       const pendingJobs = new Set(processingJobs.map((job, index) => index));
       setPendingJobIndex(Array.from(pendingJobs));
+
       setQueueState(QueueState.PENDING);
+
+      // Run tasks
       const allJobs = processingJobs.map(async (job, index) => {
         try {
           if (queueType === QueueType.ISSUE) {
+            //Issuance
             if (job.contractAddress !== IdentityProofType.DNSDid) {
               // publish verifiable documents and transferable records with doc store and token registry
-              await publishJob(job as PublishingJob, wallet);
+              await publishJob(job as PublishingJob, wallet); // Important
             }
             // upload all the docs to document storage
             const uploadDocuments = job.documents.map(async (doc) => {
@@ -89,7 +99,8 @@ export const useQueue = ({
             completedJobsIndexes.push(index);
             setCompletedJobIndex(completedJobsIndexes);
           } else if (queueType === QueueType.REVOKE) {
-            await revokeDocumentJob(job as RevokingJob, wallet);
+            // Revocation
+            await revokeDocumentJob(job as RevokingJob, wallet); // Important
             completedJobsIndexes.push(index);
             setCompletedJobIndex(completedJobsIndexes);
           }

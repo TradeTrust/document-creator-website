@@ -137,36 +137,42 @@ export const groupDocumentsIntoJobs = async (
   currentNonce: number,
   signer: Signer
 ): Promise<PublishingJob[]> => {
-  const transferableRecords = rawDocuments.filter((doc) => doc.type === "TRANSFERABLE_RECORD");
-  const verifiableDocuments = rawDocuments.filter((doc) => doc.type === "VERIFIABLE_DOCUMENT");
-  const groupedVerifiableDocuments = groupBy(verifiableDocuments, "contractAddress");
+  const transferableRecords = rawDocuments.filter((doc) => doc.type === "TRANSFERABLE_RECORD"); // all transferable record
+  const verifiableDocuments = rawDocuments.filter((doc) => doc.type === "VERIFIABLE_DOCUMENT"); // all verifiable document
+  const groupedVerifiableDocuments = groupBy(verifiableDocuments, "contractAddress"); // grouped verifiable document
   const verifiableDocumentsWithDocumentStore = { ...groupedVerifiableDocuments };
-  delete verifiableDocumentsWithDocumentStore[IdentityProofType.DNSDid];
+  delete verifiableDocumentsWithDocumentStore[IdentityProofType.DNSDid]; // verifiable documents with document store (excludes dnsdid)
+
   const verifiableDocumentsWithDnsDid =
     Object.keys(groupedVerifiableDocuments).indexOf(IdentityProofType.DNSDid) >= 0
       ? [...groupedVerifiableDocuments[IdentityProofType.DNSDid]]
-      : [];
-  const documentStoreAddresses = Object.keys(verifiableDocumentsWithDocumentStore);
+      : []; // verifiable document to be signed with dns-did
+
+  const documentStoreAddresses = Object.keys(verifiableDocumentsWithDocumentStore); // list of  all document store address
 
   let nonce = currentNonce;
 
   const jobs: PublishingJob[] = [];
   // Process all verifiable documents with document store first
   for (const contractAddress of documentStoreAddresses) {
+    // all v2 verifiable
     const verifiableDocumentsV2 = verifiableDocumentsWithDocumentStore[contractAddress].filter((docs) => {
       return utils.isRawV2Document(docs.rawDocument);
     });
+    // all v3 verifiable
     const verifiableDocumentsV3 = verifiableDocumentsWithDocumentStore[contractAddress].filter((docs) => {
       return utils.isRawV3Document(docs.rawDocument);
     });
 
     if (verifiableDocumentsV2.length > 0) {
+      // Process docs to v2 schema standard
       const verifiableDocumentV2Job = await processVerifiableDocuments(nonce, contractAddress, verifiableDocumentsV2);
       jobs.push(verifiableDocumentV2Job);
       nonce += TX_NEEDED_FOR_VERIFIABLE_DOCUMENTS;
     }
 
     if (verifiableDocumentsV3.length > 0) {
+      // Process docs to v3 schema standard
       const verifiableDocumentV3Job = await processVerifiableDocuments(nonce, contractAddress, verifiableDocumentsV3);
       jobs.push(verifiableDocumentV3Job);
       nonce += TX_NEEDED_FOR_VERIFIABLE_DOCUMENTS;
