@@ -6,6 +6,7 @@ import { checkContractOwnership, checkDID } from "../../../services/prechecks";
 import { validateDns } from "../../../services/prechecks";
 import { FormTemplate } from "../../../types";
 import { getIssuerAddress } from "../../../utils";
+import { primary } from "../../../constants/styles";
 
 interface FormSelectProps {
   id: string;
@@ -142,7 +143,7 @@ export const FormSelect: FunctionComponent<FormSelectProps> = ({ id, form, onAdd
           {formStatus === FormStatus.PENDING ? (
             <div className="flex flex-col flex-wrap">
               <div>{form.name}</div>
-              <LoaderSpinner className="content-center self-center mt-1" primary="#2D5FAA" />
+              <LoaderSpinner className="content-center self-center mt-1" primary={primary} />
             </div>
           ) : (
             form.name

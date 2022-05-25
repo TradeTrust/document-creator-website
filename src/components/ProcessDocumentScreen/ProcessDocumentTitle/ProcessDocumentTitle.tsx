@@ -2,6 +2,8 @@ import { LoaderSpinner } from "@govtechsg/tradetrust-ui-components";
 import { FunctionComponent, ReactElement } from "react";
 import { CheckCircle, XCircle } from "react-feather";
 import { QueueState, QueueType } from "../../../constants/QueueState";
+import { primary } from "../../../constants/styles";
+
 interface ProcessDocumentTitle {
   queueState: QueueState;
   successfulDocumentsCount: number;
@@ -26,7 +28,7 @@ export const ProcessDocumentTitle: FunctionComponent<ProcessDocumentTitle> = ({
       case QueueState.PENDING:
         return (
           <>
-            <LoaderSpinner className="mr-2" width="24px" primary="#2D5FAA" />
+            <LoaderSpinner className="mr-2" width="24px" primary={primary} />
             {titleText(`${isIssuingFlow ? "Issuing document(s)..." : "Revoking document..."}`)}
           </>
         );

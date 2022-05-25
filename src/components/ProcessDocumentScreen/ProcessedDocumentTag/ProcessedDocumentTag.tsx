@@ -7,6 +7,7 @@ import { useConfigContext } from "../../../common/context/config";
 import { QueueType } from "../../../constants/QueueState";
 import { WrappedDocument } from "../../../types";
 import { generateFileName, getFileSize } from "../../../utils";
+import { primary } from "../../../constants/styles";
 
 interface PublishedTagProps {
   doc: WrappedDocument;
@@ -45,7 +46,7 @@ export const ProcessedDocumentTag: FunctionComponent<PublishedTagProps> = ({
             className="mr-4 flex-shrink-0"
             data-testid="processing-loader"
             width="48px"
-            primary="#2D5FAA"
+            primary={primary}
           />
         ) : isError ? (
           <XCircle className="mr-4 text-scarlet-500 h-12 w-12" />

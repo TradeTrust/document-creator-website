@@ -8,6 +8,7 @@ import { DocumentUploadState } from "../../../constants/DocumentUploadState";
 import { StyledDropZone } from "../../UI/StyledDropZone";
 import { ContentFrame } from "../../UI/ContentFrame";
 import { Card } from "../../UI/Card";
+import { primary } from "../../../constants/styles";
 
 const { stack } = getLogger("RevokeDocumentDropZone");
 
@@ -99,7 +100,7 @@ export const RevokeDocumentDropZone: FunctionComponent<RevokeDocumentDropZone> =
             )}
             {documentUploadState === DocumentUploadState.LOADING && (
               <div className="py-8 h-72 flex flex-col items-center justify-center" data-testid="dropzone-loader">
-                <LoaderSpinner primary="#2D5FAA" width="40px" />
+                <LoaderSpinner primary={primary} width="40px" />
                 <h4 className="mt-8 text-cerulean-500">Verifying Document</h4>
               </div>
             )}

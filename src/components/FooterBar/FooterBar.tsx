@@ -17,20 +17,21 @@ const renderNavLink = ({ label, to }: FooterColumnItemProps) => {
   );
 };
 
-const renderExternalLinkWithoutIcon = ({ label, to }: FooterColumnItemProps) => {
-  return (
-    <a className="flex items-center" href={to} target={"_blank"} rel="noopener noreferrer">
-      <p className={`${sharedStyles} mr-1`}>{label}</p>
-    </a>
-  );
-};
+// This component is not being used at the moment, but if you ever want an external link without the icon please use this component.
+// const renderExternalLinkWithoutIcon = ({ label, to }: FooterColumnItemProps) => {
+//   return (
+//     <a className="flex items-center" href={to} target={"_blank"} rel="noopener noreferrer">
+//       <p className={`${sharedStyles} mr-1`}>{label}</p>
+//     </a>
+//   );
+// };
 
 const renderExternalLink = ({ label, to }: FooterColumnItemProps) => {
   return (
     <a className="flex items-center" href={to} target={"_blank"} rel="noopener noreferrer">
       <p className={`${sharedStyles} mr-1`}>{label}</p>
-      <div className="w-auto">
-        <ExternalLink size={12} color={"#89969F"} />
+      <div className="w-auto text-cloud-400">
+        <ExternalLink size={12} />
       </div>
     </a>
   );
@@ -50,16 +51,16 @@ const getData = (configFile?: ConfigFile) => {
     {
       category: "Resources",
       items: [
-        { label: "Learn", to: `${networkPath}/learn`, render: renderExternalLinkWithoutIcon },
-        { label: "FAQ", to: `${networkPath}/faq`, render: renderExternalLinkWithoutIcon },
-        { label: "ETA", to: `${networkPath}/eta`, render: renderExternalLinkWithoutIcon },
+        { label: "Learn", to: `${networkPath}/learn`, render: renderExternalLink },
+        { label: "FAQ", to: `${networkPath}/faq`, render: renderExternalLink },
+        { label: "ETA", to: `${networkPath}/eta`, render: renderExternalLink },
       ],
     },
     {
       category: "News & Event",
       items: [
-        { label: "News", to: `${networkPath}/news`, render: renderExternalLinkWithoutIcon },
-        { label: "Events", to: `${networkPath}/events`, render: renderExternalLinkWithoutIcon },
+        { label: "News", to: `${networkPath}/news`, render: renderExternalLink },
+        { label: "Events", to: `${networkPath}/events`, render: renderExternalLink },
       ],
     },
     {
@@ -67,8 +68,8 @@ const getData = (configFile?: ConfigFile) => {
       items: [
         { label: "Github", to: URLS.GITHUB, render: renderExternalLink },
         { label: "Documentation", to: URLS.DOCS, render: renderExternalLink },
-        { label: "Contact", to: `${networkPath}/contact`, render: renderExternalLinkWithoutIcon },
-        { label: "FAQ", to: `${networkPath}/faq`, render: renderExternalLinkWithoutIcon },
+        { label: "Contact", to: `${networkPath}/contact`, render: renderExternalLink },
+        { label: "FAQ", to: `${networkPath}/faq`, render: renderExternalLink },
       ],
     },
     {
