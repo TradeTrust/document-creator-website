@@ -88,19 +88,19 @@ export const RevokeDocumentDropZone: FunctionComponent<RevokeDocumentDropZone> =
           >
             {documentUploadState !== DocumentUploadState.LOADING && (
               <>
-                <div className="font-bold text-lg text-cloud-900" data-testid="dropzone-description">
+                <div className="font-bold text-lg text-cloud-800" data-testid="dropzone-description">
                   Drop your TradeTrust document to revoke it
                 </div>
                 <div className="mt-4">or</div>
               </>
             )}
             {documentUploadState !== DocumentUploadState.LOADING && (
-              <Button className="bg-cerulean text-white hover:bg-cerulean-500 mt-4">Select Document</Button>
+              <Button className="bg-cerulean-500 text-white hover:bg-cerulean-800 mt-4">Select Document</Button>
             )}
             {documentUploadState === DocumentUploadState.LOADING && (
               <div className="py-8 h-72 flex flex-col items-center justify-center" data-testid="dropzone-loader">
-                <LoaderSpinner primary="#3B8CC5" width="40px" />
-                <h4 className="mt-8 text-cerulean">Verifying Document</h4>
+                <LoaderSpinner primary="#2D5FAA" width="40px" />
+                <h4 className="mt-8 text-cerulean-500">Verifying Document</h4>
               </div>
             )}
           </StyledDropZone>

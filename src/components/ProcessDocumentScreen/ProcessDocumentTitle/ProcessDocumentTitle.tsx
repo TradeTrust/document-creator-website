@@ -26,7 +26,7 @@ export const ProcessDocumentTitle: FunctionComponent<ProcessDocumentTitle> = ({
       case QueueState.PENDING:
         return (
           <>
-            <LoaderSpinner className="mr-2" width="24px" primary="#3B8CC5" />
+            <LoaderSpinner className="mr-2" width="24px" primary="#2D5FAA" />
             {titleText(`${isIssuingFlow ? "Issuing document(s)..." : "Revoking document..."}`)}
           </>
         );
@@ -35,7 +35,7 @@ export const ProcessDocumentTitle: FunctionComponent<ProcessDocumentTitle> = ({
         if (successfulDocumentsCount > 0 && failedDocumentsCount > 0) {
           return (
             <>
-              <CheckCircle className="mr-2 text-emerald h-12 w-12 md:h-auto md:w-auto" />
+              <CheckCircle className="mr-2 text-forest-500 h-12 w-12 md:h-auto md:w-auto" />
               {titleText(`Some document(s) ${isIssuingFlow ? "issued" : "revoked"} successfully`)}
             </>
           );
@@ -44,7 +44,7 @@ export const ProcessDocumentTitle: FunctionComponent<ProcessDocumentTitle> = ({
         if (successfulDocumentsCount > 0) {
           return (
             <>
-              <CheckCircle className="mr-2 text-emerald h-12 w-12 md:h-auto md:w-auto" />
+              <CheckCircle className="mr-2 text-forest-500 h-12 w-12 md:h-auto md:w-auto" />
               {titleText(`${isIssuingFlow ? "Document(s) issued" : "Document revoked"} successfully`)}
             </>
           );
@@ -52,7 +52,7 @@ export const ProcessDocumentTitle: FunctionComponent<ProcessDocumentTitle> = ({
 
         return (
           <>
-            <XCircle className="mr-2 text-rose h-12 w-12 md:h-auto md:w-auto" />
+            <XCircle className="mr-2 text-scarlet-500 h-12 w-12 md:h-auto md:w-auto" />
             {titleText(`${isIssuingFlow ? "Document(s) failed to issue" : "Document failed to revoke"}`)}
           </>
         );
@@ -60,7 +60,7 @@ export const ProcessDocumentTitle: FunctionComponent<ProcessDocumentTitle> = ({
       case QueueState.ERROR:
         return (
           <>
-            <XCircle className="mr-2 text-rose h-12 w-12 md:h-auto md:w-auto" />
+            <XCircle className="mr-2 text-scarlet-500 h-12 w-12 md:h-auto md:w-auto" />
             {titleText(`We have encountered an error`)}
           </>
         );

@@ -11,7 +11,7 @@ export const CustomArrayFieldTemplate: FunctionComponent<ArrayFieldTemplateProps
     <>
       <CustomTitle title={title} />
       {canAdd && (
-        <Button className="bg-white text-cerulean hover:bg-cloud-100 mb-4" onClick={onAddClick}>
+        <Button className="bg-white text-cerulean-500 hover:bg-cloud-100 mb-4" onClick={onAddClick}>
           <IconAddFile className="mr-2" />
           Add Item
         </Button>
@@ -28,7 +28,7 @@ export const CustomArrayFieldTemplate: FunctionComponent<ArrayFieldTemplateProps
               {element.hasMoveUp && (
                 <Button
                   data-testid={`move-up`}
-                  className="bg-white text-cerulean hover:bg-cloud-100 w-auto ml-2"
+                  className="bg-white text-cerulean-500 hover:bg-cloud-100 w-auto ml-2"
                   onClick={element.onReorderClick(index, index - 1)}
                 >
                   <ChevronUp />
@@ -37,7 +37,7 @@ export const CustomArrayFieldTemplate: FunctionComponent<ArrayFieldTemplateProps
               {element.hasMoveDown && (
                 <Button
                   data-testid={`move-down`}
-                  className="bg-white text-cerulean hover:bg-cloud-100 w-auto ml-2"
+                  className="bg-white text-cerulean-500 hover:bg-cloud-100 w-auto ml-2"
                   onClick={element.onReorderClick(index, index + 1)}
                 >
                   <ChevronDown />
@@ -46,7 +46,7 @@ export const CustomArrayFieldTemplate: FunctionComponent<ArrayFieldTemplateProps
               {element.hasRemove && (
                 <Button
                   data-testid={`remove`}
-                  className="bg-rose-400 text-white hover:bg-red-400 w-auto ml-2"
+                  className="bg-scarlet-400 text-white hover:bg-scarlet-500 w-auto ml-2"
                   onClick={element.onDropIndexClick(index)}
                 >
                   <Trash2 />

@@ -29,7 +29,7 @@ export const IssueOrRevokeSelector: FunctionComponent<IssueOrRevokeSelectorProps
   return (
     <div className="space-x-6 text-lg">
       {links.map((link) => {
-        let className = `text-cloud-900`;
+        let className = `text-cloud-800`;
 
         if (link.type == activeType) {
           className += ` font-bold underline`;

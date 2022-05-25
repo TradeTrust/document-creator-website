@@ -42,7 +42,7 @@ export const AddFormModal: FunctionComponent<AddFormModalProps> = ({ onAdd, show
       <Button
         data-testid="cancel-add-form-button"
         onClick={onClose}
-        className="flex mx-auto bg-rose hover:bg-red-400 text-white"
+        className="flex mx-auto bg-scarlet-500 hover:bg-red-600 text-white"
       >
         Cancel
       </Button>

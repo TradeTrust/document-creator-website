@@ -138,13 +138,13 @@ export const DynamicFormLayout: FunctionComponent = () => {
         <ContentFrame>
           <Card>
             <div className="flex justify-between">
-              <div className="text-cloud-900 flex items-center">
+              <div className="text-cloud-800 flex items-center">
                 <div className="align-middle mr-4">Preview mode:</div>
                 <ToggleSwitch isOn={isPreviewMode} handleToggle={() => setIsPreviewMode(!isPreviewMode)} />
               </div>
               {forms.length > 1 && (
                 <Trash2
-                  className="cursor-pointer text-cerulean-200 hover:text-cerulean-500"
+                  className="cursor-pointer text-cerulean-300 hover:text-cerulean-500"
                   data-testid="delete-button"
                   onClick={() => setDeleteModal(true)}
                 />

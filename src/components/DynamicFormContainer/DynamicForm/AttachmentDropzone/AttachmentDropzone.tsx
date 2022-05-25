@@ -72,7 +72,7 @@ export const AttachmentDropzone: FunctionComponent<AttachmentDropzone> = ({
       >
         <div className="font-bold text-lg text-gray-800">Drag and drop your file(s) here</div>
         <div className="mt-4">or</div>
-        <Button className="bg-cerulean text-white hover:bg-cerulean-500 mt-4">Browse File</Button>
+        <Button className="bg-cerulean-500 text-white hover:bg-cerulean-800 mt-4">Browse File</Button>
       </StyledDropZone>
       <FilesInfo filesInfo={uploadedFiles} removeFile={removeFile} />
     </div>

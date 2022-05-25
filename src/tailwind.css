@@ -26,8 +26,7 @@
   }
 
   body {
-    @apply text-cloud-900;
-    @apply font-gilroy-medium;
+    @apply text-cloud-800;
   }
 
   h1 {
@@ -51,21 +50,24 @@
 
   h4 {
     font-size: 20px;
-    @apply font-bold;
+    @apply font-gilroy-bold;
   }
 
   h5 {
     font-size: 16px;
+    @apply font-gilroy-medium;
     @apply font-bold;
   }
 
   h6 {
     font-size: 14px;
+    @apply font-gilroy-medium;
     @apply font-normal;
   }
 
   p {
     font-size: 16px;
+    @apply font-gilroy-medium;
     @apply font-normal;
   }
 
@@ -77,11 +79,11 @@
     @apply transition-colors;
     @apply duration-200;
     @apply ease-out;
-    @apply text-cloud-500;
+    @apply text-cerulean-300;
   }
 
   a:hover {
-    @apply text-cerulean;
+    @apply text-cerulean-500;
   }
 
   svg {

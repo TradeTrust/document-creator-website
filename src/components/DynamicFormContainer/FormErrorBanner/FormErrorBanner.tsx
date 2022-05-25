@@ -13,8 +13,8 @@ export const FormErrorBanner: FunctionComponent<FormErrorBanner> = ({ formErrorT
 
   return (
     <div data-testid="form-error-banner" className="bg-red-100 rounded-lg mx-auto flex items-center p-6 mt-4">
-      <XCircle className="text-rose mx-3 my-1 h-10 w-10" />
-      <div className="text-rose font-bold flex flex-col justify-center items-left ml-4">
+      <XCircle className="text-scarlet-500 mx-3 my-1 h-10 w-10" />
+      <div className="text-scarlet-500 font-bold flex flex-col justify-center items-left ml-4">
         <div>{formErrorTitle}</div>
         <ul className="list-disc pl-5">
           {formError &&
