@@ -6,7 +6,6 @@ import {
   v2,
 } from "@govtechsg/open-attestation";
 import { TradeTrustERC721, TradeTrustERC721Factory } from "@govtechsg/token-registry";
-// import { TitleEscrowCreator } from "@govtechsg/token-registry/types/TitleEscrowCreator";
 import { ContractTransaction, providers, Signer, Wallet } from "ethers";
 import { ConnectedSigner, PublishingJob } from "../../types";
 import { assertAddressIsSmartContract, getConnectedDocumentStore } from "../common";
@@ -55,7 +54,7 @@ const CREATOR_CONTRACTS: CreatorContract = {
   unknown: "0x4Bf7E4777a8D1b6EdD5F2d9b8582e2817F0B0953",
 };
 
-export const getConnectedRegistry = async (wallet: Signer): Promise<TradeTrustERC721> => {
+export const getConnectedTokenRegistryContract = async (wallet: Signer): Promise<TradeTrustERC721> => {
   const provider = wallet.provider as providers.Provider;
   const { name } = await provider.getNetwork();
   const creatorContractAddress = CREATOR_CONTRACTS[name];
@@ -67,7 +66,7 @@ export const publishTransferableRecordJob = async (job: PublishingJob, signer: S
   const { payload, merkleRoot } = job;
   if (!payload.ownership) throw new Error("Ownership data is not provided");
   const { beneficiaryAddress, holderAddress } = payload.ownership;
-  const titleEscrowCreatorContract = await getConnectedRegistry(signer);
+  const titleEscrowCreatorContract = await getConnectedTokenRegistryContract(signer);
   const escrowDeploymentReceipt: ContractTransaction = await titleEscrowCreatorContract.mintTitle(
     beneficiaryAddress,
     holderAddress,

@@ -1,7 +1,7 @@
 import { DocumentStoreFactory } from "@govtechsg/document-store";
 import { getDefaultProvider, Wallet } from "ethers";
 import { TradeTrustERC721Factory } from "@govtechsg/token-registry";
-import { getConnectedRegistry, publishTransferableRecordJob, publishVerifiableDocumentJob } from "./index";
+import { getConnectedTokenRegistryContract, publishTransferableRecordJob, publishVerifiableDocumentJob } from "./index";
 import { supportsInterface } from "../common/utils";
 
 jest.mock("@govtechsg/token-registry");
@@ -58,11 +58,11 @@ describe("publishing", () => {
     resetMocks([mockTokenRegistryConnect, mockDocumentStoreFactoryConnect, mockDocumentStoreIssue, mockTxWait]);
   });
 
-  describe("getConnectedRegistry", () => {
+  describe("getConnectedTokenRegistryContract", () => {
     it("should return instance of TitleEscrowCreator for a network with deployed creator contract", async () => {
       mockTokenRegistryConnect.mockResolvedValue("MOCK_TITLE_ESCROW_FACTORY");
       const wallet = randomWallet();
-      const connectedRegistryInstance = await getConnectedRegistry(wallet);
+      const connectedRegistryInstance = await getConnectedTokenRegistryContract(wallet);
 
       expect(mockTokenRegistryConnect).toHaveBeenCalledWith("0xB0dE5E22bAc12820b6dbF6f63287B1ec44026c83", wallet);
       expect(connectedRegistryInstance).toBe("MOCK_TITLE_ESCROW_FACTORY");
@@ -71,7 +71,7 @@ describe("publishing", () => {
     it("should throw on network without creator contract", async () => {
       mockTokenRegistryConnect.mockResolvedValue("MOCK_TITLE_ESCROW_FACTORY");
       const wallet = randomWallet("kovan");
-      await expect(getConnectedRegistry(wallet)).rejects.toThrow(
+      await expect(getConnectedTokenRegistryContract(wallet)).rejects.toThrow(
         /Title escrow contract creator is not declared for kovan network/
       );
     });
