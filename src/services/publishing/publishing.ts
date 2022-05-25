@@ -71,7 +71,7 @@ export const publishTransferableRecordJob = async (job: PublishingJob, signer: S
   const escrowDeploymentReceipt: ContractTransaction = await titleEscrowCreatorContract.mintTitle(
     beneficiaryAddress,
     holderAddress,
-    merkleRoot
+    `0x${merkleRoot}`
   );
 
   const mintingTx = await escrowDeploymentReceipt.wait();

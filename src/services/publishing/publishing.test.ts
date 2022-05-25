@@ -164,7 +164,7 @@ describe("publishing", () => {
 
       expect(hash).toBe("TX_HASH");
       expect(mockTxWait).toHaveBeenCalledTimes(1);
-      expect(mockTokenRegistryMintTitle).toHaveBeenCalledWith("0x1111", "0x2222", "9999");
+      expect(mockTokenRegistryMintTitle).toHaveBeenCalledWith("0x1111", "0x2222", "0x9999");
     });
 
     it("should throw when deployment transaction fails", async () => {
