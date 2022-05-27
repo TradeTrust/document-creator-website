@@ -64,12 +64,12 @@ export const ConfigFileDropZone: FunctionComponent<ConfigFileDropZone> = ({ onCo
         >
           <h4 data-testid="home-description">Drag and drop your configuration file here</h4>
           <p className="my-4">or</p>
-          <Button className="bg-cerulean text-white hover:bg-cerulean-500 border-gray-300 block mx-auto mb-5">
+          <Button className="bg-cerulean-500 text-white hover:bg-cerulean-800 border-cloud-800 block mx-auto mb-5">
             Select Document
           </Button>
           <a
             onClick={(e) => e.stopPropagation()}
-            className="text-cerulean-200 font-bold mt-8"
+            className="text-cerulean-300 font-bold mt-8 hover:text-cerulean-500"
             href="https://docs.tradetrust.io/docs/document-creator/config-file/config-generator"
             target="_blank"
             rel="noopener noreferrer"

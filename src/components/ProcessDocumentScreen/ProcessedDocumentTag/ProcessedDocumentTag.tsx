@@ -7,6 +7,7 @@ import { useConfigContext } from "../../../common/context/config";
 import { QueueType } from "../../../constants/QueueState";
 import { WrappedDocument } from "../../../types";
 import { generateFileName, getFileSize } from "../../../utils";
+import { primary } from "../../../constants/styles";
 
 interface PublishedTagProps {
   doc: WrappedDocument;
@@ -45,19 +46,19 @@ export const ProcessedDocumentTag: FunctionComponent<PublishedTagProps> = ({
             className="mr-4 flex-shrink-0"
             data-testid="processing-loader"
             width="48px"
-            primary="#3B8CC5"
+            primary={primary}
           />
         ) : isError ? (
-          <XCircle className="mr-4 text-rose h-12 w-12" />
+          <XCircle className="mr-4 text-scarlet-500 h-12 w-12" />
         ) : (
-          <div className="bg-cerulean w-12 h-12 rounded-full mr-4 flex-shrink-0">
+          <div className="bg-cerulean-500 w-12 h-12 rounded-full mr-4 flex-shrink-0">
             <div className="flex justify-center items-center h-full text-white">TT</div>
           </div>
         )}
         <div className="w-full">
           <div className="flex justify-between items-center">
             <div>
-              <div className="text-cloud-900" data-testid="file-name">
+              <div className="text-cloud-800" data-testid="file-name">
                 {documentName}
               </div>
               {!hideAction && !isPending && (
@@ -65,7 +66,7 @@ export const ProcessedDocumentTag: FunctionComponent<PublishedTagProps> = ({
                   {isIssuingFlow ? (
                     !isError && (
                       <div
-                        className="text-cerulean-200 cursor-pointer"
+                        className="text-cerulean-300 cursor-pointer hover:text-cerulean-500"
                         data-testid="download-file-button"
                         onClick={() => saveAs(blob, documentName)}
                       >
@@ -73,7 +74,7 @@ export const ProcessedDocumentTag: FunctionComponent<PublishedTagProps> = ({
                       </div>
                     )
                   ) : (
-                    <h6 className="text-rose">Revoked</h6>
+                    <h6 className="text-scarlet-500">Revoked</h6>
                   )}
                 </>
               )}

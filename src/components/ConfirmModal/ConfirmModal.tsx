@@ -26,14 +26,14 @@ export const ConfirmModal: FunctionComponent<ConfirmModalProps> = ({
       {show && (
         <ModalDialog close={onClose}>
           <div className="flex flex-col max-w-sm md:max-w-md">
-            <h3 className="text-center text-cloud-900" data-testid="modal-title">
+            <h3 className="text-center text-cloud-800" data-testid="modal-title">
               {title}
             </h3>
-            <div className="text-center text-cloud-900 font-normal mt-8">{description}</div>
+            <div className="text-center text-cloud-800 font-normal mt-8">{description}</div>
             <div className="mt-8">
               <div className="flex justify-around">
                 <Button
-                  className="bg-white text-cerulean hover:bg-cloud-100"
+                  className="bg-white text-cerulean-500 hover:bg-cloud-100"
                   onClick={onClose}
                   data-testid="confirm-modal-cancel-button"
                 >
@@ -41,7 +41,7 @@ export const ConfirmModal: FunctionComponent<ConfirmModalProps> = ({
                 </Button>
                 <Button
                   data-testid="confirm-modal-confirm-button"
-                  className="bg-rose text-white hover:bg-red-400"
+                  className="bg-scarlet-500 text-white hover:bg-red-600"
                   onClick={onConfirm}
                 >
                   {onConfirmText || "Confirm"}

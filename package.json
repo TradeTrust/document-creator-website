@@ -55,7 +55,7 @@
     "@govtechsg/oa-verify": "^7.7.0",
     "@govtechsg/open-attestation": "^6.3.0",
     "@govtechsg/token-registry": "^2.5.2",
-    "@govtechsg/tradetrust-ui-components": "^2.17.0",
+    "@govtechsg/tradetrust-ui-components": "^2.18.3",
     "@govtechsg/tradetrust-utils": "^1.0.1",
     "@hapi/joi": "^17.1.1",
     "@opengsn/gsn": "^2.1.0",
