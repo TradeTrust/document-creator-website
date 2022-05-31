@@ -169,15 +169,13 @@ export const NavigationBar: FunctionComponent<NavigationBarProps> = ({ logout })
   };
 
   return (
-    <div className="bg-white">
-      <NavBar
-        logo={<NavLogo />}
-        menuLeft={leftNavItems}
-        menuRight={rightNavItems}
-        menuMobile={leftNavItems.concat(rightNavItems)}
-        setToggleNavBar={setToggleNavBar}
-        toggleNavBar={toggleNavBar}
-      />
-    </div>
+    <NavBar
+      logo={<NavLogo />}
+      menuLeft={leftNavItems}
+      menuRight={rightNavItems}
+      menuMobile={leftNavItems.concat(rightNavItems)}
+      setToggleNavBar={setToggleNavBar}
+      toggleNavBar={toggleNavBar}
+    />
   );
 };
