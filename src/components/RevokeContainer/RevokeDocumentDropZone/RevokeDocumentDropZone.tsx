@@ -89,9 +89,9 @@ export const RevokeDocumentDropZone: FunctionComponent<RevokeDocumentDropZone> =
           >
             {documentUploadState !== DocumentUploadState.LOADING && (
               <>
-                <div className="font-bold text-lg text-cloud-800" data-testid="dropzone-description">
+                <h4 className="text-cloud-800" data-testid="dropzone-description">
                   Drop your TradeTrust document to revoke it
-                </div>
+                </h4>
                 <div className="mt-4">or</div>
               </>
             )}

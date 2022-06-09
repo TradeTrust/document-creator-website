@@ -123,7 +123,7 @@ export const NavigationBar: FunctionComponent<NavigationBarProps> = ({ logout })
         <NavLink to={"/"}>
           <Button
             data-testid="navbar-create-doc"
-            className="bg-white text-cerulean-500 hover:bg-gray-50"
+            className="bg-white text-cerulean-500 hover:bg-cloud-100"
             size={ButtonSize.SM}
           >
             Create Doc

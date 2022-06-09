@@ -26,7 +26,7 @@ export const LogoutButton: FunctionComponent<LogoutButtonProps> = ({ logout }) =
       <Button
         data-testid="navbar-logout"
         onClick={() => setShowConfirmModal(true)}
-        className="bg-white text-cerulean-500 hover:bg-gray-50 hover:text-cerulean-800"
+        className="bg-white text-cerulean-500 hover:bg-cloud-100 hover:text-cerulean-800"
         size={ButtonSize.SM}
       >
         Logout

@@ -20,7 +20,7 @@ export const CustomDropdownWidget: FunctionComponent<WidgetProps> = (props) => {
     <Dropdown
       dropdownButtonText={dropdownButtonText}
       classNameRoot="w-full"
-      className="border-gray-300 border-solid border rounded-none py-2 px-3 hover:bg-gray-50 rounded-lg"
+      className="border-cloud-200 border-solid border py-2 px-3 hover:bg-cloud-100 rounded-lg"
       classNameShared="w-full"
     >
       {opts.enumOptions.map((option, index) => {
