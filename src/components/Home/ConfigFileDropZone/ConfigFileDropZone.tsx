@@ -73,6 +73,7 @@ export const ConfigFileDropZone: FunctionComponent<ConfigFileDropZone> = ({ onCo
             href="https://docs.tradetrust.io/docs/document-creator/config-file/config-generator"
             target="_blank"
             rel="noopener noreferrer"
+            data-testid="no-config-file-button"
           >
             <h5>Don’t have a config file? Learn how to create one</h5>
           </a>
