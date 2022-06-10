@@ -27,20 +27,16 @@ export const IssueOrRevokeSelector: FunctionComponent<IssueOrRevokeSelectorProps
   ] as Link[];
 
   return (
-    <div className="space-x-6 text-lg">
-      {links.map((link) => {
-        let className = `text-cloud-800`;
-
-        if (link.type == activeType) {
-          className += ` font-bold underline`;
-        }
-
-        return (
-          <NavLink data-testid={`${link.type}-selector`} key={link.to} to={link.to} className={className}>
-            {link.label}
-          </NavLink>
-        );
-      })}
+    <div className="space-x-6 text-lg flex">
+      {links.map((link) => (
+        <NavLink data-testid={`${link.type}-selector`} key={link.to} to={link.to} className="text-cloud-800">
+          {link.type === activeType ? (
+            <h4 className="underline">{link.label}</h4>
+          ) : (
+            <div className="text-xl">{link.label}</div>
+          )}
+        </NavLink>
+      ))}
     </div>
   );
 };

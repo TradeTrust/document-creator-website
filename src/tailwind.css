@@ -55,8 +55,7 @@
 
   h5 {
     font-size: 16px;
-    @apply font-gilroy-medium;
-    @apply font-bold;
+    @apply font-gilroy-bold;
   }
 
   h6 {

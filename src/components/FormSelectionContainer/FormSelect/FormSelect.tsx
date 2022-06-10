@@ -142,11 +142,11 @@ export const FormSelect: FunctionComponent<FormSelectProps> = ({ id, form, onAdd
         >
           {formStatus === FormStatus.PENDING ? (
             <div className="flex flex-col flex-wrap">
-              <div>{form.name}</div>
+              <h5>{form.name}</h5>
               <LoaderSpinner className="content-center self-center mt-1" primary={primary} />
             </div>
           ) : (
-            form.name
+            <h5>{form.name}</h5>
           )}
         </Button>
       </div>

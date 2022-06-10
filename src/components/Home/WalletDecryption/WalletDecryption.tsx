@@ -58,10 +58,10 @@ export const WalletDecryption: FunctionComponent<WalletDecryption> = ({
             )}
             <div
               data-testid="reset-button"
-              className="text-cerulean-300 font-bold mt-4 cursor-pointer hover:text-cerulean-500 mr-auto"
+              className="text-cerulean-300 mt-4 cursor-pointer hover:text-cerulean-500 mr-auto"
               onClick={onResetConfigFile}
             >
-              Upload a new config file
+              <h5>Upload a new config file</h5>
             </div>
             <div className="my-8 w-auto">
               <Button

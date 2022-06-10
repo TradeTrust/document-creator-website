@@ -81,7 +81,7 @@ export const StyledDropZone: FunctionComponent<DropZoneProps> = ({
       <input {...getInputProps()} />
       {dropzoneIcon && <img className="mx-auto mb-8" src={dropzoneIcon} />}
 
-      {error && <p className="max-w-lg text-scarlet-500 text-lg leading-none font-bold mb-2">Error</p>}
+      {error && <p className="max-w-lg text-scarlet-500 text-lg leading-none font-gilroy-bold mb-2">Error</p>}
       {fileTypeError && (
         <ErrorMessage
           id="invalid-file-error"
