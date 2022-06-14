@@ -87,7 +87,7 @@ export const CustomFileWidget: FunctionComponent<WidgetProps> = ({
         id={id}
         className="hidden"
         type="file"
-        onChange={_onChange}
+        onChange={() => _onChange}
         disabled={readonly || disabled}
         defaultValue=""
         autoFocus={autofocus}
