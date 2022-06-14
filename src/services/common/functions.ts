@@ -28,10 +28,14 @@ export const getConnectedDocumentStore = async (
   const documentStore = GsnCapableDocumentStoreFactory.connect(contractAddress, account);
   // Determine if contract is gsn capable
   const isGsnCapable = await supportsInterface(documentStore, "0xa5a23640");
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  // @ts-ignore
   if (!isGsnCapable) return DocumentStoreFactory.connect(contractAddress, account);
   // Get paymaster address and the relevant gsnProvider
   const paymasterAddress = await documentStore.getPaymaster();
   const gsnRelaySigner = await getGsnRelaySigner(account, paymasterAddress);
   const gsnDocumentStore = GsnCapableDocumentStoreFactory.connect(contractAddress, gsnRelaySigner);
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  // @ts-ignore
   return gsnDocumentStore;
 };

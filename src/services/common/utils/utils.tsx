@@ -15,14 +15,13 @@ export const supportsInterface = async (
   try {
     isSameInterfaceType = await contractInstance.supportsInterface(interfaceId);
     return isSameInterfaceType;
-  } catch (supportsInterfaceErrorMessage) {
-    if (
-      supportsInterfaceErrorMessage.message.includes("revert") ||
-      supportsInterfaceErrorMessage.message.includes("cannot estimate gas")
-    ) {
-      return false;
+  } catch (e) {
+    if (e instanceof Error) {
+      if (e.message.includes("revert") || e.message.includes("cannot estimate gas")) {
+        return false;
+      }
+      error(e);
+      throw e;
     }
-    error(supportsInterfaceErrorMessage);
-    throw supportsInterfaceErrorMessage;
   }
 };

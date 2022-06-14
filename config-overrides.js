@@ -1,9 +1,34 @@
-const path = require("path");
+const webpack = require("webpack");
 
 module.exports = function override(config) {
-  config.resolve.alias.react = path.resolve("./node_modules/react");
-  if (process.env.NODE_ENV === "production") {
-    config.devtool = false; // https://webpack.js.org/configuration/devtool/#devtool
-  }
-  return config;
+  const configOverrides = {
+    ...config,
+    resolve: {
+      ...config.resolve,
+      extensions: [...config.resolve.extensions, ".ts", ".tsx", ".js"],
+      fallback: {
+        ...config.resolve.fallback,
+        stream: require.resolve("stream-browserify"),
+        buffer: require.resolve("buffer"),
+        stream: require.resolve("stream-browserify"),
+        buffer: require.resolve("buffer"),
+        crypto: require.resolve("crypto-browserify"),
+        https: require.resolve("https-browserify"),
+        http: require.resolve("stream-http"),
+        os: require.resolve("os-browserify/browser"),
+        path: require.resolve("path-browserify"),
+        zlib: require.resolve("browserify-zlib"),
+        fs: false,
+      },
+    },
+    plugins: [
+      ...config.plugins,
+      new webpack.ProvidePlugin({
+        process: "process/browser",
+        Buffer: ["buffer", "Buffer"],
+      }),
+    ],
+    devtool: !process.env.NODE_ENV === "production",
+  };
+  return configOverrides;
 };
