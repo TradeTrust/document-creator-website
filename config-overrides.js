@@ -1,4 +1,4 @@
-const webpack = require("webpack");
+const nodejsPolyfillWebpack = require("./nodejs-polyfill-webpack.js");
 
 module.exports = function override(config) {
   const configOverrides = {
@@ -6,28 +6,9 @@ module.exports = function override(config) {
     resolve: {
       ...config.resolve,
       extensions: [...config.resolve.extensions, ".ts", ".tsx", ".js"],
-      fallback: {
-        ...config.resolve.fallback,
-        stream: require.resolve("stream-browserify"),
-        buffer: require.resolve("buffer"),
-        stream: require.resolve("stream-browserify"),
-        buffer: require.resolve("buffer"),
-        crypto: require.resolve("crypto-browserify"),
-        https: require.resolve("https-browserify"),
-        http: require.resolve("stream-http"),
-        os: require.resolve("os-browserify/browser"),
-        path: require.resolve("path-browserify"),
-        zlib: require.resolve("browserify-zlib"),
-        fs: false,
-      },
+      fallback: nodejsPolyfillWebpack.fallback(config),
     },
-    plugins: [
-      ...config.plugins,
-      new webpack.ProvidePlugin({
-        process: "process/browser",
-        Buffer: ["buffer", "Buffer"],
-      }),
-    ],
+    plugins: nodejsPolyfillWebpack.plugins(config),
     devtool: !process.env.NODE_ENV === "production",
   };
   return configOverrides;
