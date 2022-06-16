@@ -5,10 +5,9 @@ import {
   SUPPORTED_SIGNING_ALGORITHM,
   v2,
 } from "@govtechsg/open-attestation";
-import { TradeTrustERC721, TradeTrustERC721Factory } from "@govtechsg/token-registry";
-import { ContractTransaction, providers, Signer, Wallet } from "ethers";
+import { Signer, Wallet } from "ethers";
 import { ConnectedSigner, PublishingJob } from "../../types";
-import { assertAddressIsSmartContract, getConnectedDocumentStore } from "../common";
+import { assertAddressIsSmartContract, getConnectedDocumentStore, getConnectedTokenRegistry } from "../common";
 
 export const publishVerifiableDocumentJob = async (
   job: PublishingJob,
@@ -42,38 +41,18 @@ export const publishDnsDidVerifiableDocumentJob = async (
   return signedDocumentsList;
 };
 
-interface CreatorContract {
-  [network: string]: string;
-}
-
-const CREATOR_CONTRACTS: CreatorContract = {
-  homestead: "0x907A4D491A09D59Bcb5dC38eeb9d121ac47237F1",
-  ropsten: "0xB0dE5E22bAc12820b6dbF6f63287B1ec44026c83",
-  rinkeby: "0xa51B8dAC076d5aC80507041146AC769542aAe195",
-  // unknown is used for local test net, see integration test
-  unknown: "0x4Bf7E4777a8D1b6EdD5F2d9b8582e2817F0B0953",
-};
-
-export const getConnectedTokenRegistryContract = async (wallet: Signer): Promise<TradeTrustERC721> => {
-  const provider = wallet.provider as providers.Provider;
-  const { name } = await provider.getNetwork();
-  const creatorContractAddress = CREATOR_CONTRACTS[name];
-  if (!creatorContractAddress) throw new Error(`Title escrow contract creator is not declared for ${name} network`);
-  return TradeTrustERC721Factory.connect(creatorContractAddress, wallet);
-};
-
-export const publishTransferableRecordJob = async (job: PublishingJob, signer: Signer): Promise<string> => {
-  const { payload, merkleRoot } = job;
+export const publishTransferableRecordJob = async (job: PublishingJob, signer: Wallet | ConnectedSigner): Promise<string> => {
+  const { payload, contractAddress, merkleRoot } = job;
+  await assertAddressIsSmartContract(contractAddress, signer);
   if (!payload.ownership) throw new Error("Ownership data is not provided");
   const { beneficiaryAddress, holderAddress } = payload.ownership;
-  const titleEscrowCreatorContract = await getConnectedTokenRegistryContract(signer);
-  const escrowDeploymentReceipt: ContractTransaction = await titleEscrowCreatorContract.mintTitle(
+  const tokenRegistryContract = await getConnectedTokenRegistry(signer, contractAddress);
+  const mintingReceipt = await tokenRegistryContract.mintTitle(
     beneficiaryAddress,
     holderAddress,
     `0x${merkleRoot}`
   );
-
-  const mintingTx = await escrowDeploymentReceipt.wait();
+  const mintingTx = await mintingReceipt.wait();
   if (!mintingTx.transactionHash) throw new Error(`Tx hash not available: ${JSON.stringify(mintingTx)}`);
   return mintingTx.transactionHash;
 };

@@ -1,19 +1,23 @@
+import { ERC165 } from "@govtechsg/token-registry/dist/types/contracts";
 import { Contract } from "ethers";
 import { getLogger } from "../../../utils/logger";
 
 const { error } = getLogger("services:supportsinterface");
 
-interface Erc165Contract extends Contract {
-  supportsInterface: (interfaceId: string) => Promise<boolean>;
-}
-
 export const supportsInterface = async (
-  contractInstance: Erc165Contract,
-  interfaceId: string
+  contractInstance: ERC165,
+  interfaceId: string,
+  staticCall: boolean = true
 ): Promise<boolean | undefined> => {
   let isSameInterfaceType;
   try {
-    isSameInterfaceType = await contractInstance.supportsInterface(interfaceId);
+    
+    if(staticCall){
+      isSameInterfaceType = await contractInstance.callStatic.supportsInterface(interfaceId);
+    }else{
+      isSameInterfaceType = await contractInstance.supportsInterface(interfaceId);
+    }
+    
     return isSameInterfaceType;
   } catch (supportsInterfaceErrorMessage) {
     if (

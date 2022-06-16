@@ -1,22 +1,29 @@
-import { DocumentStoreFactory } from "@govtechsg/document-store";
+import { DocumentStoreFactory, GsnCapableDocumentStoreFactory } from "@govtechsg/document-store";
 import { getDefaultProvider, Wallet } from "ethers";
 import { TradeTrustERC721Factory } from "@govtechsg/token-registry";
-import { getConnectedTokenRegistryContract, publishTransferableRecordJob, publishVerifiableDocumentJob } from "./index";
+import { publishTransferableRecordJob, publishVerifiableDocumentJob } from "./index";
 import { supportsInterface } from "../common/utils";
+import { getConnectedTokenRegistry } from "../common";
 
 jest.mock("@govtechsg/token-registry");
 jest.mock("@govtechsg/document-store");
-jest.mock("../common/utils");
 
 const mockDocumentStoreFactoryConnect = DocumentStoreFactory.connect as jest.Mock;
 const mockTokenRegistryConnect = TradeTrustERC721Factory.connect as jest.Mock;
+const mockGsnCapableDocumentStoreConnect = GsnCapableDocumentStoreFactory.connect as jest.Mock;
 const mockDocumentStoreIssue = jest.fn();
 const mockTxWait = jest.fn();
-const mockSupportsInterface = supportsInterface as jest.Mock;
 
 const mockTokenRegistryMintTitle = jest.fn();
+const mockTokenRegistrySupportInterface = jest.fn();
+const mockDocumentStoreSupportInterface = jest.fn();
+
 
 const mockDocumentStore = {
+  supportsInterface: mockDocumentStoreSupportInterface,
+  callStatic: {
+    supportsInterface: mockDocumentStoreSupportInterface
+  },
   issue: mockDocumentStoreIssue,
 };
 
@@ -24,25 +31,35 @@ const mockTransactionReceipt = {
   wait: mockTxWait,
 };
 
+const mockDocumentStoreConnectFn = mockDocumentStore;
+
 const whenDocumentStoreExist = (): void => {
   mockTxWait.mockResolvedValue({
     transactionHash: "TX_HASH",
   });
+  mockDocumentStoreSupportInterface.mockResolvedValue(false);
   mockDocumentStoreIssue.mockResolvedValue(mockTransactionReceipt);
-  mockDocumentStoreFactoryConnect.mockReturnValue(mockDocumentStore);
+  mockDocumentStoreFactoryConnect.mockReturnValue(mockDocumentStoreConnectFn);
+  mockGsnCapableDocumentStoreConnect.mockReturnValue(mockDocumentStoreConnectFn);
 };
 
 const mockTokenRegistry = {
+  supportsInterface: mockTokenRegistrySupportInterface,
+  callStatic: {
+    supportsInterface: mockTokenRegistrySupportInterface
+  },
   mintTitle: mockTokenRegistryMintTitle,
 };
 
 const mockTokenRegistryConnectFn = mockTokenRegistry;
+const tokenRegistryV2 = false;
 
 const whenTokenRegistryExist = (): void => {
   mockTxWait.mockResolvedValue({
     transactionHash: "TX_HASH",
     events: [{ event: "TitleEscrowDeployed", args: ["0x7777"] }],
   });
+  mockTokenRegistrySupportInterface.mockResolvedValue(tokenRegistryV2);
   mockTokenRegistryMintTitle.mockResolvedValue(mockTransactionReceipt);
   mockTokenRegistryConnect.mockReturnValue(mockTokenRegistryConnectFn);
 };
@@ -55,25 +72,23 @@ const randomWallet = (network = "ropsten"): Wallet => Wallet.createRandom().conn
 
 describe("publishing", () => {
   beforeEach(() => {
-    resetMocks([mockTokenRegistryConnect, mockDocumentStoreFactoryConnect, mockDocumentStoreIssue, mockTxWait]);
+    resetMocks([mockTokenRegistryConnect, mockDocumentStoreFactoryConnect, mockGsnCapableDocumentStoreConnect, mockDocumentStoreIssue, mockTxWait]);
   });
 
   describe("getConnectedTokenRegistryContract", () => {
-    it("should return instance of TitleEscrowCreator for a network with deployed creator contract", async () => {
-      mockTokenRegistryConnect.mockResolvedValue("MOCK_TITLE_ESCROW_FACTORY");
+    it("should return instance of Token Registry V3 contract", async () => {
+      whenTokenRegistryExist();
       const wallet = randomWallet();
-      const connectedRegistryInstance = await getConnectedTokenRegistryContract(wallet);
+      const connectedRegistryInstance = await getConnectedTokenRegistry(wallet, "0x154fcc3c953057c9527eb180cad321b906412b5d");
 
-      expect(mockTokenRegistryConnect).toHaveBeenCalledWith("0xB0dE5E22bAc12820b6dbF6f63287B1ec44026c83", wallet);
-      expect(connectedRegistryInstance).toBe("MOCK_TITLE_ESCROW_FACTORY");
+      expect(mockTokenRegistryConnect).toHaveBeenCalledWith("0x154fcc3c953057c9527eb180cad321b906412b5d", wallet);
     });
-
-    it("should throw on network without creator contract", async () => {
-      mockTokenRegistryConnect.mockResolvedValue("MOCK_TITLE_ESCROW_FACTORY");
-      const wallet = randomWallet("kovan");
-      await expect(getConnectedTokenRegistryContract(wallet)).rejects.toThrow(
-        /Title escrow contract creator is not declared for kovan network/
-      );
+    it("should return instance of Token Registry V2 contract", async () => {
+      whenTokenRegistryExist();
+      mockTokenRegistrySupportInterface.mockResolvedValue(!tokenRegistryV2);
+      const wallet = randomWallet();
+      await expect(getConnectedTokenRegistry(wallet, "0x154fcc3c953057c9527eb180cad321b906412b5d")).rejects.toThrow(/Token Registry V2 is no longer supported./);;
+      expect(mockTokenRegistryConnect).toHaveBeenCalledWith("0x154fcc3c953057c9527eb180cad321b906412b5d", wallet);
     });
   });
 
@@ -81,7 +96,7 @@ describe("publishing", () => {
     it("should return transaction hash when publishing succeed", async () => {
       whenDocumentStoreExist();
       const wallet = mockWallet();
-      mockSupportsInterface.mockResolvedValueOnce(false);
+      mockDocumentStoreSupportInterface.mockResolvedValueOnce(false);
       const hash = await publishVerifiableDocumentJob(
         {
           nonce: 1234,
@@ -120,7 +135,7 @@ describe("publishing", () => {
 
     it("should throw when transaction fails", async () => {
       whenDocumentStoreExist();
-      mockSupportsInterface.mockResolvedValueOnce(false);
+      mockDocumentStoreSupportInterface.mockResolvedValueOnce(false);
       mockTxWait.mockRejectedValueOnce(new Error("Some error"));
       const wallet = mockWallet();
 

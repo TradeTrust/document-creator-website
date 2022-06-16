@@ -4,6 +4,7 @@ import { DocumentStoreFactory, GsnCapableDocumentStoreFactory } from "@govtechsg
 import { DocumentStore } from "@govtechsg/document-store/src/contracts/DocumentStore";
 import { getGsnRelaySigner } from "../../common/config/decrypt";
 import { supportsInterface } from "./utils";
+import { TradeTrustERC721, TradeTrustERC721Factory } from "@govtechsg/token-registry";
 
 export const checkAddressIsSmartContract = async (
   address: string,
@@ -34,4 +35,16 @@ export const getConnectedDocumentStore = async (
   const gsnRelaySigner = await getGsnRelaySigner(account, paymasterAddress);
   const gsnDocumentStore = GsnCapableDocumentStoreFactory.connect(contractAddress, gsnRelaySigner);
   return gsnDocumentStore;
+};
+
+export const getConnectedTokenRegistry = async (account: Wallet | ConnectedSigner,
+  contractAddress: string): Promise<TradeTrustERC721> => {
+    const ERC721Contract = TradeTrustERC721Factory.connect(contractAddress, account);
+    const isV2 = await supportsInterface(ERC721Contract, "0x9f9e69f3");
+    if(isV2 === undefined){
+      throw new Error("Invalid Contract");
+    }else if(isV2){
+      throw new Error("Token Registry V2 is no longer supported.")
+    }
+  return TradeTrustERC721Factory.connect(contractAddress, account);
 };
