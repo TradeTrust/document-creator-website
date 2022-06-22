@@ -41,17 +41,16 @@ export const publishDnsDidVerifiableDocumentJob = async (
   return signedDocumentsList;
 };
 
-export const publishTransferableRecordJob = async (job: PublishingJob, signer: Wallet | ConnectedSigner): Promise<string> => {
+export const publishTransferableRecordJob = async (
+  job: PublishingJob,
+  signer: Wallet | ConnectedSigner
+): Promise<string> => {
   const { payload, contractAddress, merkleRoot } = job;
   await assertAddressIsSmartContract(contractAddress, signer);
   if (!payload.ownership) throw new Error("Ownership data is not provided");
   const { beneficiaryAddress, holderAddress } = payload.ownership;
   const tokenRegistryContract = await getConnectedTokenRegistry(signer, contractAddress);
-  const mintingReceipt = await tokenRegistryContract.mintTitle(
-    beneficiaryAddress,
-    holderAddress,
-    `0x${merkleRoot}`
-  );
+  const mintingReceipt = await tokenRegistryContract.mintTitle(beneficiaryAddress, holderAddress, `0x${merkleRoot}`);
   const mintingTx = await mintingReceipt.wait();
   if (!mintingTx.transactionHash) throw new Error(`Tx hash not available: ${JSON.stringify(mintingTx)}`);
   return mintingTx.transactionHash;

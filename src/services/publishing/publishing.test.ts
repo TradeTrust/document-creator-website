@@ -2,7 +2,6 @@ import { DocumentStoreFactory, GsnCapableDocumentStoreFactory } from "@govtechsg
 import { getDefaultProvider, Wallet } from "ethers";
 import { TradeTrustERC721Factory } from "@govtechsg/token-registry";
 import { publishTransferableRecordJob, publishVerifiableDocumentJob } from "./index";
-import { supportsInterface } from "../common/utils";
 import { getConnectedTokenRegistry } from "../common";
 
 jest.mock("@govtechsg/token-registry");
@@ -18,11 +17,10 @@ const mockTokenRegistryMintTitle = jest.fn();
 const mockTokenRegistrySupportInterface = jest.fn();
 const mockDocumentStoreSupportInterface = jest.fn();
 
-
 const mockDocumentStore = {
   supportsInterface: mockDocumentStoreSupportInterface,
   callStatic: {
-    supportsInterface: mockDocumentStoreSupportInterface
+    supportsInterface: mockDocumentStoreSupportInterface,
   },
   issue: mockDocumentStoreIssue,
 };
@@ -46,7 +44,7 @@ const whenDocumentStoreExist = (): void => {
 const mockTokenRegistry = {
   supportsInterface: mockTokenRegistrySupportInterface,
   callStatic: {
-    supportsInterface: mockTokenRegistrySupportInterface
+    supportsInterface: mockTokenRegistrySupportInterface,
   },
   mintTitle: mockTokenRegistryMintTitle,
 };
@@ -72,14 +70,20 @@ const randomWallet = (network = "ropsten"): Wallet => Wallet.createRandom().conn
 
 describe("publishing", () => {
   beforeEach(() => {
-    resetMocks([mockTokenRegistryConnect, mockDocumentStoreFactoryConnect, mockGsnCapableDocumentStoreConnect, mockDocumentStoreIssue, mockTxWait]);
+    resetMocks([
+      mockTokenRegistryConnect,
+      mockDocumentStoreFactoryConnect,
+      mockGsnCapableDocumentStoreConnect,
+      mockDocumentStoreIssue,
+      mockTxWait,
+    ]);
   });
 
   describe("getConnectedTokenRegistryContract", () => {
     it("should return instance of Token Registry V3 contract", async () => {
       whenTokenRegistryExist();
       const wallet = randomWallet();
-      const connectedRegistryInstance = await getConnectedTokenRegistry(wallet, "0x154fcc3c953057c9527eb180cad321b906412b5d");
+      await getConnectedTokenRegistry(wallet, "0x154fcc3c953057c9527eb180cad321b906412b5d");
 
       expect(mockTokenRegistryConnect).toHaveBeenCalledWith("0x154fcc3c953057c9527eb180cad321b906412b5d", wallet);
     });
@@ -87,7 +91,9 @@ describe("publishing", () => {
       whenTokenRegistryExist();
       mockTokenRegistrySupportInterface.mockResolvedValue(!tokenRegistryV2);
       const wallet = randomWallet();
-      await expect(getConnectedTokenRegistry(wallet, "0x154fcc3c953057c9527eb180cad321b906412b5d")).rejects.toThrow(/Token Registry V2 is no longer supported./);;
+      await expect(getConnectedTokenRegistry(wallet, "0x154fcc3c953057c9527eb180cad321b906412b5d")).rejects.toThrow(
+        /Token Registry V2 is no longer supported./
+      );
       expect(mockTokenRegistryConnect).toHaveBeenCalledWith("0x154fcc3c953057c9527eb180cad321b906412b5d", wallet);
     });
   });

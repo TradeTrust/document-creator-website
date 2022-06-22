@@ -1,5 +1,4 @@
 import { ERC165 } from "@govtechsg/token-registry/dist/types/contracts";
-import { Contract } from "ethers";
 import { getLogger } from "../../../utils/logger";
 
 const { error } = getLogger("services:supportsinterface");
@@ -7,17 +6,16 @@ const { error } = getLogger("services:supportsinterface");
 export const supportsInterface = async (
   contractInstance: ERC165,
   interfaceId: string,
-  staticCall: boolean = true
+  staticCall = true
 ): Promise<boolean | undefined> => {
   let isSameInterfaceType;
   try {
-    
-    if(staticCall){
+    if (staticCall) {
       isSameInterfaceType = await contractInstance.callStatic.supportsInterface(interfaceId);
-    }else{
+    } else {
       isSameInterfaceType = await contractInstance.supportsInterface(interfaceId);
     }
-    
+
     return isSameInterfaceType;
   } catch (supportsInterfaceErrorMessage) {
     if (

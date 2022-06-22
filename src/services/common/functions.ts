@@ -37,14 +37,16 @@ export const getConnectedDocumentStore = async (
   return gsnDocumentStore;
 };
 
-export const getConnectedTokenRegistry = async (account: Wallet | ConnectedSigner,
-  contractAddress: string): Promise<TradeTrustERC721> => {
-    const ERC721Contract = TradeTrustERC721Factory.connect(contractAddress, account);
-    const isV2 = await supportsInterface(ERC721Contract, "0x9f9e69f3");
-    if(isV2 === undefined){
-      throw new Error("Invalid Contract");
-    }else if(isV2){
-      throw new Error("Token Registry V2 is no longer supported.")
-    }
+export const getConnectedTokenRegistry = async (
+  account: Wallet | ConnectedSigner,
+  contractAddress: string
+): Promise<TradeTrustERC721> => {
+  const ERC721Contract = TradeTrustERC721Factory.connect(contractAddress, account);
+  const isV2 = await supportsInterface(ERC721Contract, "0x9f9e69f3");
+  if (isV2 === undefined) {
+    throw new Error("Invalid Contract");
+  } else if (isV2) {
+    throw new Error("Token Registry V2 is no longer supported.");
+  }
   return TradeTrustERC721Factory.connect(contractAddress, account);
 };
