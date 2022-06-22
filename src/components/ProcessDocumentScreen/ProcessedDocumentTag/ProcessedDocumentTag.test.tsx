@@ -10,7 +10,7 @@ import sampleConfig from "../../../test/fixtures/config/v2/sample-config-ropsten
 jest.mock("file-saver");
 jest.mock("../../../common/context/config");
 
-const mockSaveAs = saveAs as jest.Mock;
+const mockSaveAs = saveAs as unknown as jest.Mock;
 const mockUseConfigContext = useConfigContext as jest.Mock;
 
 const withConfigFile = (): void => {

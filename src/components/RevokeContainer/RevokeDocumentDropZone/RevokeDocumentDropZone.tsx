@@ -8,6 +8,7 @@ import { DocumentUploadState } from "../../../constants/DocumentUploadState";
 import { StyledDropZone } from "../../UI/StyledDropZone";
 import { ContentFrame } from "../../UI/ContentFrame";
 import { Card } from "../../UI/Card";
+import { primary } from "../../../constants/styles";
 
 const { stack } = getLogger("RevokeDocumentDropZone");
 
@@ -88,19 +89,19 @@ export const RevokeDocumentDropZone: FunctionComponent<RevokeDocumentDropZone> =
           >
             {documentUploadState !== DocumentUploadState.LOADING && (
               <>
-                <div className="font-bold text-lg text-cloud-900" data-testid="dropzone-description">
+                <h4 className="text-cloud-800" data-testid="dropzone-description">
                   Drop your TradeTrust document to revoke it
-                </div>
+                </h4>
                 <div className="mt-4">or</div>
               </>
             )}
             {documentUploadState !== DocumentUploadState.LOADING && (
-              <Button className="bg-cerulean text-white hover:bg-cerulean-500 mt-4">Select Document</Button>
+              <Button className="bg-cerulean-500 text-white hover:bg-cerulean-800 mt-4">Select Document</Button>
             )}
             {documentUploadState === DocumentUploadState.LOADING && (
               <div className="py-8 h-72 flex flex-col items-center justify-center" data-testid="dropzone-loader">
-                <LoaderSpinner primary="#3B8CC5" width="40px" />
-                <h4 className="mt-8 text-cerulean">Verifying Document</h4>
+                <LoaderSpinner primary={primary} width="40px" />
+                <h4 className="mt-8 text-cerulean-500">Verifying Document</h4>
               </div>
             )}
           </StyledDropZone>

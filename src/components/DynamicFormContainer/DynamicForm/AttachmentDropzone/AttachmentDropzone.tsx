@@ -54,12 +54,12 @@ export const AttachmentDropzone: FunctionComponent<AttachmentDropzone> = ({
     accept: acceptedFormat,
   };
   const defaultStyle = "bg-white";
-  const activeStyle = "bg-gray-300";
+  const activeStyle = "bg-cloud-200";
 
   return (
     <div className="flex flex-col m-auto" key="AttachmentDropzone" data-testid="attachment-dropzone">
       <legend>Attachments</legend>
-      <div className="text-gray-800">
+      <div className="text-cloud-800">
         Max. total file size: {FileUpload.ATTACHMENT_TOTAL_FILES_MAX_SIZE / FileUpload.BYTE_TO_MB_CONVERSION_RATE}MB
       </div>
       <StyledDropZone
@@ -70,9 +70,9 @@ export const AttachmentDropzone: FunctionComponent<AttachmentDropzone> = ({
         dropzoneIcon="/upload-icon-dark.png"
         dataTestId="attachment-file-dropzone"
       >
-        <div className="font-bold text-lg text-gray-800">Drag and drop your file(s) here</div>
+        <div className="font-gilroy-bold text-lg text-cloud-800">Drag and drop your file(s) here</div>
         <div className="mt-4">or</div>
-        <Button className="bg-cerulean text-white hover:bg-cerulean-500 mt-4">Browse File</Button>
+        <Button className="bg-cerulean-500 text-white hover:bg-cerulean-800 mt-4">Browse File</Button>
       </StyledDropZone>
       <FilesInfo filesInfo={uploadedFiles} removeFile={removeFile} />
     </div>

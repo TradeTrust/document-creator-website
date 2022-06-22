@@ -12,16 +12,20 @@ export default {
 
 export const Default: FunctionComponent = () => (
   <MemoryRouter>
-    <NavigationBar />
+    <div className="border border-solid border-cloud-300">
+      <NavigationBar />
+    </div>
   </MemoryRouter>
 );
 
 export const WithLogout: FunctionComponent = () => (
   <MemoryRouter>
-    <NavigationBar
-      logout={() => {
-        alert("logging out");
-      }}
-    />
+    <div className="border border-solid border-cloud-300">
+      <NavigationBar
+        logout={() => {
+          alert("logging out");
+        }}
+      />
+    </div>
   </MemoryRouter>
 );

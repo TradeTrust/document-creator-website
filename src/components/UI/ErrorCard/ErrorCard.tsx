@@ -10,7 +10,7 @@ export const ErrorCard: React.FunctionComponent<ErrorCardProps> = ({ title, desc
   return (
     <div className="bg-red-100 px-8 py-6 rounded-xl">
       <div className="mb-8">
-        <div className="text-rose font-bold mb-8" data-testid="error-title">
+        <div className="text-scarlet-500 font-gilroy-bold mb-8" data-testid="error-title">
           {title}
         </div>
         <div>{description}</div>

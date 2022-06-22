@@ -14,12 +14,12 @@ export const Default: FunctionComponent = () => (
   <StyledDropZone
     dropzoneOptions={{}}
     defaultStyle="bg-white"
-    activeStyle="bg-gray-300"
+    activeStyle="bg-cloud-200"
     dropzoneIcon="/upload-icon-dark.png"
   >
-    <div className="font-bold text-lg text-gray-800">Drag and drop your file(s) here</div>
+    <div className="font-gilroy-bold text-lg text-cloud-800">Drag and drop your file(s) here</div>
     <div className="mt-4">or</div>
-    <Button className="bg-cerulean text-white hover:bg-cerulean-500 mt-4">Browse File</Button>
+    <Button className="bg-cerulean-500 text-white hover:bg-cerulean-800 mt-4">Browse File</Button>
   </StyledDropZone>
 );
 
@@ -30,9 +30,9 @@ export const DifferentBackgroundColor: FunctionComponent = () => (
     activeStyle="bg-yellow-100"
     dropzoneIcon="/upload-icon-dark.png"
   >
-    <div className="font-bold text-lg text-gray-800">Drag and drop your file(s) here</div>
+    <div className="font-gilroy-bold text-lg text-cloud-800">Drag and drop your file(s) here</div>
     <div className="mt-4">or</div>
-    <button className="bg-cerulean text-white hover:bg-cerulean-500 mt-4">Browse File</button>
+    <button className="bg-cerulean-500 text-white hover:bg-cerulean-800 mt-4">Browse File</button>
   </StyledDropZone>
 );
 
@@ -40,12 +40,12 @@ export const DifferentIcons: FunctionComponent = () => (
   <StyledDropZone
     dropzoneOptions={{}}
     defaultStyle="bg-white"
-    activeStyle="bg-gray-300"
+    activeStyle="bg-cloud-200"
     dropzoneIcon="/dropzone-graphic.png"
   >
-    <div className="font-bold text-lg text-gray-800">Drag and drop your file(s) here</div>
+    <div className="font-gilroy-bold text-lg text-cloud-800">Drag and drop your file(s) here</div>
     <div className="mt-4">or</div>
-    <button className="bg-cerulean text-white hover:bg-cerulean-500 mt-4">Browse File</button>
+    <button className="bg-cerulean-500 text-white hover:bg-cerulean-800 mt-4">Browse File</button>
   </StyledDropZone>
 );
 
@@ -53,12 +53,12 @@ export const withErrors: FunctionComponent = () => (
   <StyledDropZone
     dropzoneOptions={{}}
     defaultStyle="bg-white"
-    activeStyle="bg-gray-300"
+    activeStyle="bg-cloud-200"
     dropzoneIcon="/upload-icon-dark.png"
     fileErrors={[new Error("Invalid file error")]}
   >
-    <div className="font-bold text-lg text-gray-800">Drag and drop your file(s) here</div>
+    <div className="font-gilroy-bold text-lg text-cloud-800">Drag and drop your file(s) here</div>
     <div className="mt-4">or</div>
-    <button className="bg-cerulean text-white hover:bg-cerulean-500 mt-4">Browse File</button>
+    <button className="bg-cerulean-500 text-white hover:bg-cerulean-800 mt-4">Browse File</button>
   </StyledDropZone>
 );

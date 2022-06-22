@@ -42,7 +42,7 @@ export const getExtension = (mimeType: string | undefined): React.ReactNode => {
     default:
       return (
         <div
-          className="rounded-full bg-gray-300 h-12 w-12 flex items-center justify-center mr-2"
+          className="rounded-full bg-cloud-200 h-12 w-12 flex items-center justify-center mr-2"
           data-testid={`attachment-icon-paperclip`}
         >
           <Paperclip />
@@ -64,12 +64,12 @@ export const FilesInfo: FunctionComponent<FilesInfoType> = ({ filesInfo, removeF
           <li
             key={key}
             data-testid={`upload-file-${key}`}
-            className="border border-gray-300 border-solid rounded my-1 h-16 flex items-center px-4"
+            className="border border-cloud-200 border-solid rounded my-1 h-16 flex items-center px-4"
           >
             {getExtension(type)}
-            <p className="font-bold text-cloud-900 flex-grow break-all">
+            <p className="font-gilroy-bold text-cloud-800 flex-grow break-all">
               {filename}
-              <span className="text-gray text-xs font-regular"> ({size})</span>
+              <span className="text-cloud-500 text-xs font-regular"> ({size})</span>
             </p>
 
             <div
@@ -79,7 +79,7 @@ export const FilesInfo: FunctionComponent<FilesInfoType> = ({ filesInfo, removeF
                 removeFile(key);
               }}
             >
-              <Trash2 className="text-cerulean-200" />
+              <Trash2 className="text-cerulean-300" />
             </div>
           </li>
         );

@@ -52,7 +52,7 @@ export const ProcessDocumentContent: FunctionComponent<ProcessDocumentContentPro
 
   const ErrorLogButton = () => {
     return (
-      <Button className="bg-rose flex mx-auto border-rose hover:bg-rose-400">
+      <Button className="bg-scarlet-500 flex mx-auto border-scarlet-500 hover:bg-red-600">
         <a className="text-white hover:text-white" download={downloadErrorName} href={downloadErrorLink}>
           Download Error Log
         </a>
@@ -63,13 +63,13 @@ export const ProcessDocumentContent: FunctionComponent<ProcessDocumentContentPro
   const DownloadAllButton = () => {
     return (
       <Button
-        className="bg-white text-cerulean hover:bg-cloud-100"
+        className="bg-white text-cerulean-500 hover:bg-cloud-100"
         data-testid="download-all-button"
         onClick={downloadAllFn}
       >
         <div className="flex">
           <Download />
-          <div className="text-cerulean ml-2">Download all</div>
+          <div className="text-cerulean-500 ml-2">Download all</div>
         </div>
       </Button>
     );
@@ -141,7 +141,7 @@ export const ProcessDocumentContent: FunctionComponent<ProcessDocumentContentPro
         <div className="flex items-center justify-center mt-12">
           {isIssuingFlow && <DownloadAllButton />}
           <Button
-            className="bg-cerulean text-white hover:bg-cerulean-400 ml-5"
+            className="bg-cerulean-500 text-white hover:bg-cerulean-800 ml-5"
             data-testid="process-another-document-button"
             onClick={processAnotherDocumentFn}
           >

@@ -30,7 +30,7 @@ export const TransferableRecordForm: FunctionComponent<TransferableRecordForm> =
   };
 
   return (
-    <div data-testid="transferable-record-form" className="border-b border-solid border-gray-300 pb-8 mb-8">
+    <div data-testid="transferable-record-form" className="border-b border-solid border-cloud-200 pb-8 mb-8">
       <h4 className="pb-4">Transferable Record Owner</h4>
       <div className="mb-3">
         <div>Owner</div>
@@ -43,7 +43,7 @@ export const TransferableRecordForm: FunctionComponent<TransferableRecordForm> =
             onChange={(e) => setBeneficiaryAddress(e.target.value)}
           />
           <ButtonIcon
-            className="bg-white text-cerulean-200 hover:bg-cloud-100"
+            className="bg-white text-cerulean-300 hover:bg-cloud-100"
             onClick={() => onOverlayHandler(setBeneficiaryAddress)}
           >
             <Book />
@@ -61,7 +61,7 @@ export const TransferableRecordForm: FunctionComponent<TransferableRecordForm> =
             onChange={(e) => setHolderAddress(e.target.value)}
           />
           <ButtonIcon
-            className="bg-white text-cerulean-200 hover:bg-cloud-100"
+            className="bg-white text-cerulean-300 hover:bg-cloud-100"
             onClick={() => onOverlayHandler(setHolderAddress)}
           >
             <Book />

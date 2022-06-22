@@ -29,7 +29,7 @@ export const NavigationBar: FunctionComponent<NavigationBarProps> = ({ logout })
 
   const DropDownLink: FunctionComponent<NavBarLink> = ({ path, label, testid }) => {
     return (
-      <a data-testid={testid} className="block w-full px-4 py-3" href={`${networkPath}${path}`}>
+      <a data-testid={testid} className="block w-full px-4 py-3 text-cloud-500" href={`${networkPath}${path}`}>
         {label}
       </a>
     );
@@ -37,7 +37,7 @@ export const NavigationBar: FunctionComponent<NavigationBarProps> = ({ logout })
 
   const NavBarLink: FunctionComponent<NavBarLink> = ({ path, label, testid }) => {
     return (
-      <a data-testid={testid} className="block w-full" href={`${networkPath}${path}`}>
+      <a data-testid={testid} className="block w-full text-cloud-500" href={`${networkPath}${path}`}>
         {label}
       </a>
     );
@@ -110,7 +110,7 @@ export const NavigationBar: FunctionComponent<NavigationBarProps> = ({ logout })
       icon: Settings,
       customLink: (
         <NavLink to={"/settings"} data-testid="navbar-settings">
-          <Settings data-testid="settings-icon" className="stroke-current" />
+          <Settings data-testid="settings-icon" className="stroke-current text-cloud-500 hover:text-cerulean-500" />
         </NavLink>
       ),
     },
@@ -123,7 +123,7 @@ export const NavigationBar: FunctionComponent<NavigationBarProps> = ({ logout })
         <NavLink to={"/"}>
           <Button
             data-testid="navbar-create-doc"
-            className="bg-white text-cerulean hover:bg-gray-50"
+            className="bg-white text-cerulean-500 hover:bg-cloud-100"
             size={ButtonSize.SM}
           >
             Create Doc
@@ -140,7 +140,7 @@ export const NavigationBar: FunctionComponent<NavigationBarProps> = ({ logout })
         <NavBarLink
           path={"/verify"}
           label={
-            <Button className="bg-cerulean text-white hover:bg-cerulean-500" size={ButtonSize.SM}>
+            <Button className="bg-cerulean-500 text-white hover:bg-cerulean-800" size={ButtonSize.SM}>
               Verify Doc
             </Button>
           }
@@ -163,21 +163,19 @@ export const NavigationBar: FunctionComponent<NavigationBarProps> = ({ logout })
   const NavLogo = () => {
     return (
       <NavLink to={"/"} data-testid="nav-logo-home">
-        <h4 className="text-cloud-900 font-bold">TradeTrust</h4>
+        <img src="/tradetrust_logo.svg" />
       </NavLink>
     );
   };
 
   return (
-    <div>
-      <NavBar
-        logo={<NavLogo />}
-        menuLeft={leftNavItems}
-        menuRight={rightNavItems}
-        menuMobile={leftNavItems.concat(rightNavItems)}
-        setToggleNavBar={setToggleNavBar}
-        toggleNavBar={toggleNavBar}
-      />
-    </div>
+    <NavBar
+      logo={<NavLogo />}
+      menuLeft={leftNavItems}
+      menuRight={rightNavItems}
+      menuMobile={leftNavItems.concat(rightNavItems)}
+      setToggleNavBar={setToggleNavBar}
+      toggleNavBar={toggleNavBar}
+    />
   );
 };

@@ -32,7 +32,7 @@ export const DocumentSelector: FunctionComponent<DocumentSelectorProps> = ({
             selectDocument(parseInt(e.target.value));
           }}
           type="text"
-          className="flex rounded border border-solid border-gray-300 h-10 w-10 text-center"
+          className="flex rounded border border-solid border-cloud-200 h-10 w-10 text-center"
         />
         <div>&nbsp;of {forms.length} document(s)</div>
       </div>

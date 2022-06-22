@@ -6,6 +6,7 @@ import { checkContractOwnership, checkDID } from "../../../services/prechecks";
 import { validateDns } from "../../../services/prechecks";
 import { FormTemplate } from "../../../types";
 import { getIssuerAddress } from "../../../utils";
+import { primary } from "../../../constants/styles";
 
 interface FormSelectProps {
   id: string;
@@ -134,18 +135,18 @@ export const FormSelect: FunctionComponent<FormSelectProps> = ({ id, form, onAdd
           className={`bg-white w-11/12 h-full p-4 leading-5 ${
             formStatus === FormStatus.PENDING || formStatus === FormStatus.ERROR
               ? "text-cloud-300 bg-cloud-100"
-              : "text-cerulean hover:bg-cloud-100"
+              : "text-cerulean-500 hover:text-cerulean-800 hover:bg-cloud-100"
           }`}
           onClick={() => handleForm()}
           {...props}
         >
           {formStatus === FormStatus.PENDING ? (
             <div className="flex flex-col flex-wrap">
-              <div>{form.name}</div>
-              <LoaderSpinner className="content-center self-center mt-1" />
+              <h5>{form.name}</h5>
+              <LoaderSpinner className="content-center self-center mt-1" primary={primary} />
             </div>
           ) : (
-            form.name
+            <h5>{form.name}</h5>
           )}
         </Button>
       </div>

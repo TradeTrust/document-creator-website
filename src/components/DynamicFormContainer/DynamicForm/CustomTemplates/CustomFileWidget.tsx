@@ -78,16 +78,16 @@ export const CustomFileWidget: FunctionComponent<WidgetProps> = ({
 
   return (
     <label>
-      <div className="cursor-pointer w-max px-4 py-2 border border-gray-300 rounded-lg mt-3 hover:bg-cloud-100">
-        <Upload className="inline mr-4 text-cerulean" />
-        <p className="inline text-cerulean font-medium">{options.text ?? "Upload Button"}</p>
+      <div className="cursor-pointer w-max px-4 py-2 border border-cloud-200 rounded-lg mt-3 hover:bg-cloud-100">
+        <Upload className="inline mr-4 text-cerulean-500" />
+        <p className="inline text-cerulean-500 font-medium">{options.text ?? "Upload Button"}</p>
       </div>
       <FilesInfo />
       <input
         id={id}
         className="hidden"
         type="file"
-        onChange={_onChange}
+        onChange={() => _onChange}
         disabled={readonly || disabled}
         defaultValue=""
         autoFocus={autofocus}
