@@ -92,7 +92,7 @@ describe("publishing", () => {
       mockTokenRegistrySupportInterface.mockResolvedValue(!tokenRegistryV2);
       const wallet = randomWallet();
       await getConnectedTokenRegistry(wallet, "0x154fcc3c953057c9527eb180cad321b906412b5d");
-      
+
       expect(mockTokenRegistryConnect).toHaveBeenCalledWith("0x154fcc3c953057c9527eb180cad321b906412b5d", wallet);
     });
   });
