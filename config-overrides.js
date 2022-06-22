@@ -1,9 +1,15 @@
-const path = require("path");
+const nodejsPolyfillWebpack = require("./nodejs-polyfill-webpack.js");
 
 module.exports = function override(config) {
-  config.resolve.alias.react = path.resolve("./node_modules/react");
-  if (process.env.NODE_ENV === "production") {
-    config.devtool = false; // https://webpack.js.org/configuration/devtool/#devtool
-  }
-  return config;
+  const configOverrides = {
+    ...config,
+    resolve: {
+      ...config.resolve,
+      extensions: [...config.resolve.extensions, ".ts", ".tsx", ".js"],
+      fallback: nodejsPolyfillWebpack.fallback(config),
+    },
+    plugins: nodejsPolyfillWebpack.plugins(config),
+    devtool: !process.env.NODE_ENV === "production",
+  };
+  return configOverrides;
 };
