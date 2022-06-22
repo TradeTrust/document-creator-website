@@ -5,6 +5,8 @@ import { DocumentStore } from "@govtechsg/document-store/src/contracts/DocumentS
 import { getGsnRelaySigner } from "../../common/config/decrypt";
 import { supportsInterface } from "./utils";
 import { TradeTrustERC721, TradeTrustERC721Factory } from "@govtechsg/token-registry";
+import { TradeTrustErc721Factory } from "@govtechsg/token-registry-v2";
+import { TradeTrustERC721 as V2TradeTrustERC721 } from "@govtechsg/token-registry-v2/dist/ts/contracts";
 
 export const checkAddressIsSmartContract = async (
   address: string,
@@ -41,16 +43,30 @@ export const getConnectedDocumentStore = async (
   return gsnDocumentStore;
 };
 
+export const enum TradeTrustVersion {
+  "V2",
+  "V3",
+}
+
 export const getConnectedTokenRegistry = async (
   account: Wallet | ConnectedSigner,
   contractAddress: string
-): Promise<TradeTrustERC721> => {
+): Promise<{
+  tokenRegistryInstance: TradeTrustERC721 | V2TradeTrustERC721;
+  tokenRegistryVersion: TradeTrustVersion;
+}> => {
   const ERC721Contract = TradeTrustERC721Factory.connect(contractAddress, account);
   const isV2 = await supportsInterface(ERC721Contract, "0x9f9e69f3");
   if (isV2 === undefined) {
     throw new Error("Invalid Contract");
   } else if (isV2) {
-    throw new Error("Token Registry V2 is no longer supported.");
+    return {
+      tokenRegistryInstance: TradeTrustErc721Factory.connect(contractAddress, account),
+      tokenRegistryVersion: TradeTrustVersion.V2,
+    };
   }
-  return TradeTrustERC721Factory.connect(contractAddress, account);
+  return {
+    tokenRegistryInstance: TradeTrustERC721Factory.connect(contractAddress, account),
+    tokenRegistryVersion: TradeTrustVersion.V3,
+  };
 };

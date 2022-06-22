@@ -91,9 +91,8 @@ describe("publishing", () => {
       whenTokenRegistryExist();
       mockTokenRegistrySupportInterface.mockResolvedValue(!tokenRegistryV2);
       const wallet = randomWallet();
-      await expect(getConnectedTokenRegistry(wallet, "0x154fcc3c953057c9527eb180cad321b906412b5d")).rejects.toThrow(
-        /Token Registry V2 is no longer supported./
-      );
+      await getConnectedTokenRegistry(wallet, "0x154fcc3c953057c9527eb180cad321b906412b5d");
+      
       expect(mockTokenRegistryConnect).toHaveBeenCalledWith("0x154fcc3c953057c9527eb180cad321b906412b5d", wallet);
     });
   });
