@@ -1,9 +1,10 @@
 import { LoaderSpinner, ToggleSwitch } from "@govtechsg/tradetrust-ui-components";
 import Ajv, { ErrorObject } from "ajv";
-import { defaultsDeep } from "lodash";
+import { defaultsDeep, pick, keys } from "lodash";
 import React, { FunctionComponent, useState } from "react";
 import { Trash2 } from "react-feather";
 import { Redirect } from "react-router";
+import { Draft04 as Core } from "json-schema-library";
 import { useConfigContext } from "../../common/context/config";
 import { useFormsContext } from "../../common/context/forms";
 import { OnCloseGuard } from "../OnCloseGuard/OnCloseGuard";
@@ -51,8 +52,12 @@ export const DynamicFormLayout: FunctionComponent = () => {
 
   const validateCurrentForm = (): boolean => {
     const ajv = new Ajv();
+    const core = new Core();
 
-    const validForm = ajv.validate(currentForm.data.schema, currentForm.data.formData);
+    const baseData = core.getTemplate({}, currentForm.data.schema);
+    const dataToValidate = pick(currentForm.data.formData, keys(baseData));
+    const validForm = ajv.validate(currentForm.data.schema, dataToValidate);
+
     setFormError(ajv.errors);
     return validForm as boolean;
   };
