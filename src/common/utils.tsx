@@ -113,7 +113,7 @@ export const validateData = (
   schema: JSONSchema,
   data: unknown
 ): { isValid: boolean; ajvErrors: ErrorObject[] | null | undefined } => {
-  const ajv = new Ajv();
+  const ajv = new Ajv({ allErrors: true });
   const isValid = ajv.validate(schema, data);
 
   return { isValid, ajvErrors: ajv.errors };

@@ -19,13 +19,18 @@ import { DynamicFormHeader } from "./DynamicFormHeader";
 import { FormErrorBanner } from "./FormErrorBanner";
 import { validateData } from "./../../common/utils";
 
+/*
+ * getDataToValidate
+ * @param {string} data - currentForm.data.formData
+ * Returns back data in correct shape for ajv to validate
+ */
 const getDataToValidate = (data: unknown) => {
   if (utils.isRawV2Document(data)) {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const { issuers, $template, ...rest } = data; // omit these fields as they are interfering with ajv validation rule `additionalProperties`
+    const { issuers, $template, ...rest } = data; // omit these fields, as they are interfering with ajv validation rule of `additionalProperties`
     return rest;
   } else if (utils.isRawV3Document(data)) {
-    return data.credentialSubject;
+    return data.credentialSubject; // v3 is straight forward, all data is found in `credentialSubject`
   } else {
     throw new Error("Invalid raw document.");
   }
