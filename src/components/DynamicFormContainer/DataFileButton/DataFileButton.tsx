@@ -1,5 +1,4 @@
 import { Button } from "@govtechsg/tradetrust-ui-components";
-import Ajv from "ajv";
 import React, { FunctionComponent, useState } from "react";
 import { readFileAsCsv, readFileAsJson, downloadCsvDataFile, downloadJsonDataFile } from "../../../common/utils";
 import { getLogger } from "../../../utils/logger";
@@ -7,6 +6,7 @@ import { FormError, FormErrorBanner } from "./../FormErrorBanner";
 import { Draft04 as Core, JSONSchema } from "json-schema-library";
 import { ToolTip } from "../../UI/ToolTip";
 import { StyledDropZone } from "../../UI/StyledDropZone";
+import { validateData } from "./../../../common/utils";
 
 const { stack } = getLogger("DataFileButton");
 
@@ -34,11 +34,6 @@ interface DataFileButton {
   schema: JSONSchema;
 }
 
-interface ValidateDataFile {
-  isValidated: boolean;
-  errors: FormError;
-}
-
 interface GetDataFileBasedOnExtension {
   dataFile: DataFileUpload;
   dataToValidate: unknown;
@@ -61,22 +56,15 @@ export const DataFileButton: FunctionComponent<DataFileButton> = ({ onDataFile, 
     return { dataFile, dataToValidate };
   };
 
-  // eslint-disable-next-line @typescript-eslint/no-shadow
-  const validateDataFile = (schema: JSONSchema, data: unknown): ValidateDataFile => {
-    const ajv = new Ajv({ allErrors: true });
-    const isValidated = ajv.validate(schema, data) as boolean;
-    return { isValidated, errors: ajv.errors };
-  };
-
   const onDropAccepted = async (files: File[]): Promise<void> => {
     try {
       const file = files[0];
       const { dataFile, dataToValidate } = await getDataFileBasedOnExtension(file);
-      const { isValidated, errors } = validateDataFile(schema, dataToValidate);
+      const { isValid, ajvErrors } = validateData(schema, dataToValidate);
 
-      if (!isValidated) {
+      if (!isValid) {
         setError(true);
-        setFileErrors(errors);
+        setFileErrors(ajvErrors);
         return;
       }
 

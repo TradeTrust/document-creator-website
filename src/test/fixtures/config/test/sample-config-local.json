@@ -27,6 +27,7 @@
       },
       "schema": {
         "type": "object",
+        "additionalProperties": false,
         "required": ["blNumber", "scac"],
         "properties": {
           "blNumber": {
@@ -149,6 +150,7 @@
       },
       "schema": {
         "type": "object",
+        "additionalProperties": false,
         "properties": {
           "iD": {
             "type": "string",
@@ -576,6 +578,7 @@
       },
       "schema": {
         "type": "object",
+        "additionalProperties": false,
         "required": ["documentName"],
         "properties": {
           "documentName": {
@@ -759,6 +762,7 @@
       },
       "schema": {
         "type": "object",
+        "additionalProperties": false,
         "properties": {
           "logo": {
             "type": "string",
@@ -843,6 +847,7 @@
       },
       "schema": {
         "type": "object",
+        "additionalProperties": false,
         "properties": {
           "id": {
             "type": "string",
@@ -998,6 +1003,7 @@
       },
       "schema": {
         "type": "object",
+        "additionalProperties": false,
         "properties": {
           "logo": {
             "type": "string",
@@ -1082,6 +1088,7 @@
       },
       "schema": {
         "type": "object",
+        "additionalProperties": false,
         "properties": {
           "logo": {
             "type": "string",
@@ -1150,6 +1157,7 @@
       },
       "schema": {
         "type": "object",
+        "additionalProperties": false,
         "required": ["blNumber", "scac"],
         "properties": {
           "blNumber": {
@@ -1281,6 +1289,7 @@
       },
       "schema": {
         "type": "object",
+        "additionalProperties": false,
         "properties": {
           "iD": {
             "type": "string",
@@ -1729,6 +1738,7 @@
       },
       "schema": {
         "type": "object",
+        "additionalProperties": false,
         "properties": {
           "id": {
             "type": "string",

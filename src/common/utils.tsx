@@ -1,6 +1,8 @@
 import { csv2jsonAsync } from "json-2-csv";
 import converter from "json-2-csv";
 import { saveAs } from "file-saver";
+import { JSONSchema } from "json-schema-library";
+import Ajv, { ErrorObject } from "ajv";
 import { WalletOptions, Network, NetworkObject } from "../types";
 import { ChainId, ChainInfo, ChainInfoObject } from "../constants/chainInfo";
 
@@ -105,4 +107,14 @@ export const getDocumentNetwork = (network: Network): NetworkObject => {
       chainId: chainInfo?.chainId.toString(),
     },
   };
+};
+
+export const validateData = (
+  schema: JSONSchema,
+  data: unknown
+): { isValid: boolean; ajvErrors: ErrorObject[] | null | undefined } => {
+  const ajv = new Ajv();
+  const isValid = ajv.validate(schema, data);
+
+  return { isValid, ajvErrors: ajv.errors };
 };

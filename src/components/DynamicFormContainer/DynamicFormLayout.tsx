@@ -1,10 +1,10 @@
 import { LoaderSpinner, ToggleSwitch } from "@govtechsg/tradetrust-ui-components";
-import Ajv, { ErrorObject } from "ajv";
-import { defaultsDeep, pick, keys } from "lodash";
+import { utils } from "@govtechsg/open-attestation";
+import { ErrorObject } from "ajv";
+import { defaultsDeep } from "lodash";
 import React, { FunctionComponent, useState } from "react";
 import { Trash2 } from "react-feather";
 import { Redirect } from "react-router";
-import { Draft04 as Core } from "json-schema-library";
 import { useConfigContext } from "../../common/context/config";
 import { useFormsContext } from "../../common/context/forms";
 import { OnCloseGuard } from "../OnCloseGuard/OnCloseGuard";
@@ -17,6 +17,19 @@ import { DocumentPreview } from "./DocumentPreview";
 import { DynamicForm } from "./DynamicForm";
 import { DynamicFormHeader } from "./DynamicFormHeader";
 import { FormErrorBanner } from "./FormErrorBanner";
+import { validateData } from "./../../common/utils";
+
+const getDataToValidate = (data: unknown) => {
+  if (utils.isRawV2Document(data)) {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const { issuers, $template, ...rest } = data; // omit these fields as they are interfering with ajv validation rule `additionalProperties`
+    return rest;
+  } else if (utils.isRawV3Document(data)) {
+    return data.credentialSubject;
+  } else {
+    throw new Error("Invalid raw document.");
+  }
+};
 
 export const DynamicFormLayout: FunctionComponent = () => {
   const [showDeleteModal, setDeleteModal] = useState(false);
@@ -51,15 +64,10 @@ export const DynamicFormLayout: FunctionComponent = () => {
   const attachmentAcceptedFormat = currentFormTemplate.attachments?.accept;
 
   const validateCurrentForm = (): boolean => {
-    const ajv = new Ajv();
-    const core = new Core();
-
-    const baseData = core.getTemplate({}, currentForm.data.schema);
-    const dataToValidate = pick(currentForm.data.formData, keys(baseData));
-    const validForm = ajv.validate(currentForm.data.schema, dataToValidate);
-
-    setFormError(ajv.errors);
-    return validForm as boolean;
+    const dataToValidate = getDataToValidate(currentForm.data.formData);
+    const { isValid, ajvErrors } = validateData(currentForm.data.schema, dataToValidate);
+    setFormError(ajvErrors);
+    return isValid;
   };
 
   const removeCurrentForm = (): void => {
