@@ -6,7 +6,7 @@ import { FormError, FormErrorBanner } from "./../FormErrorBanner";
 import { Draft04 as Core, JSONSchema } from "json-schema-library";
 import { ToolTip } from "../../UI/ToolTip";
 import { StyledDropZone } from "../../UI/StyledDropZone";
-import { validateData } from "./../../../common/utils";
+import { validateData, getDataToValidate } from "./../../../common/utils";
 
 const { stack } = getLogger("DataFileButton");
 
@@ -39,22 +39,29 @@ interface GetDataFileBasedOnExtension {
   dataToValidate: unknown;
 }
 
+const getDataFileBasedOnExtension = async (file: File): Promise<GetDataFileBasedOnExtension> => {
+  let dataFile;
+  let dataToValidate;
+
+  switch (file.type) {
+    case "application/json":
+      dataFile = await readFileAsJson<DataFileDefault>(file);
+      dataToValidate = getDataToValidate(dataFile.data);
+      break;
+    case "text/csv":
+      dataFile = await readFileAsCsv(file);
+      dataToValidate = getDataToValidate(dataFile[0]); // use 1 item for fields validation
+      break;
+    default:
+      throw Error("Data file type not supported.");
+  }
+
+  return { dataFile, dataToValidate };
+};
+
 export const DataFileButton: FunctionComponent<DataFileButton> = ({ onDataFile, schema }) => {
   const [error, setError] = useState(false);
   const [fileErrors, setFileErrors] = useState<FormError>(null);
-
-  const getDataFileBasedOnExtension = async (file: File): Promise<GetDataFileBasedOnExtension> => {
-    let dataFile;
-    let dataToValidate;
-    if (file.name.indexOf(".csv") > 0) {
-      dataFile = await readFileAsCsv(file);
-      dataToValidate = dataFile[0]; // use 1 item for fields validation
-    } else {
-      dataFile = await readFileAsJson<DataFileDefault>(file);
-      dataToValidate = dataFile.data;
-    }
-    return { dataFile, dataToValidate };
-  };
 
   const onDropAccepted = async (files: File[]): Promise<void> => {
     try {

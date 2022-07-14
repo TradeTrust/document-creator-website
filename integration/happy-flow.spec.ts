@@ -80,11 +80,15 @@ test("should issue the documents on local blockchain correctly", async (t) => {
   // Validate the content is overwritten by the data file
   await t.expect(EblFileNameField.value).eql("bill-<blNumber 1>");
   await t.expect(EblDocumentNameSelect.innerText).eql("bill-<blNumber 1>");
+  await t.expect(EblBeneficiaryField.value).eql("<beneficiary address 1>");
+  await t.expect(EblHolderField.value).eql("<holder address 1>");
   await t.expect(EblNumberField.value).eql("<blNumber 1>");
 
   await t.typeText(EblDocumentNumberInput, "3", { replace: true });
   await t.expect(EblFileNameField.value).eql("bill-<blNumber 2>");
   await t.expect(EblDocumentNameSelect.innerText).eql("bill-<blNumber 2>");
+  await t.expect(EblBeneficiaryField.value).eql("<beneficiary address 2>");
+  await t.expect(EblHolderField.value).eql("<holder address 2>");
   await t.expect(EblNumberField.value).eql("<blNumber 2>");
 
   // Submit

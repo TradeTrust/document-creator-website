@@ -1,5 +1,4 @@
 import { LoaderSpinner, ToggleSwitch } from "@govtechsg/tradetrust-ui-components";
-import { utils } from "@govtechsg/open-attestation";
 import { ErrorObject } from "ajv";
 import { defaultsDeep } from "lodash";
 import React, { FunctionComponent, useState } from "react";
@@ -17,28 +16,7 @@ import { DocumentPreview } from "./DocumentPreview";
 import { DynamicForm } from "./DynamicForm";
 import { DynamicFormHeader } from "./DynamicFormHeader";
 import { FormErrorBanner } from "./FormErrorBanner";
-import { validateData } from "./../../common/utils";
-
-/*
- * getDataToValidate
- * @param {string} data - `currentForm.data.formData`.
- * Omit fields that are interfering with ajv validation rule of `additionalProperties`, returning back data in correct shape.
- * This function is a hotfix to enable proper ajv validation, while not breaking existing flows of:
- * 1. data file upload flow - single document, data populated by json file.
- * 2. data file upload flow - multiple documents, data populated by csv file.
- * 3. user input flow - single document, data manually filled by user.
- */
-const getDataToValidate = (data: any) => {
-  if (utils.isRawV2Document(data)) {
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const { issuers, $template, ...rest } = data; // omit these fields
-    return rest;
-  } else if (utils.isRawV3Document(data)) {
-    return data.credentialSubject; // v3 is straight forward, all data is found in `credentialSubject`
-  } else {
-    return data; // catering to data file upload flow
-  }
-};
+import { validateData, getDataToValidate } from "./../../common/utils";
 
 export const DynamicFormLayout: FunctionComponent = () => {
   const [showDeleteModal, setDeleteModal] = useState(false);

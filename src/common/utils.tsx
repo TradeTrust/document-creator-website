@@ -109,6 +109,25 @@ export const getDocumentNetwork = (network: Network): NetworkObject => {
   };
 };
 
+/*
+ * getDataToValidate
+ * @param {string} data - `currentForm.data.formData`.
+ * Omit fields that are interfering with ajv validation rule of `additionalProperties`, returning back data in correct shape.
+ * This function is a hotfix to enable proper ajv validation, while not breaking existing flows of:
+ * 1. data file upload flow - single document, data populated by json file.
+ * 2. data file upload flow - multiple documents, data populated by csv file.
+ * 3. user input flow - single document, data manually filled by user.
+ */
+export const getDataToValidate: any = (data: any) => {
+  if ("credentialSubject" in data) {
+    return data.credentialSubject; // v3 data is straight forward, all data is to be found in `credentialSubject`
+  } else {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const { issuers, $template, ownership, ...rest } = data; // omit these fields
+    return rest;
+  }
+};
+
 export const validateData = (
   schema: JSONSchema,
   data: unknown

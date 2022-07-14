@@ -139,3 +139,23 @@ test("should upload populate data fields correctly for version 3 document", asyn
   await t.expect(COOiDField.value).eql("SampleId-2");
   await t.expect(COOIssueDateTimeField.value).eql("2015-01-02T00:00");
 });
+
+test("should show error on v2 document when data file with additional properties is used", async (t) => {
+  await loadConfigFile(configLocal);
+  await enterPassword("password");
+
+  await t.click(Button.withText("TradeTrust Invoice v2"));
+  await t.setFilesToUpload(DataFileDropZoneInput, [dataFileCsvCoo]);
+
+  await t.expect(Selector("li").withText(/must NOT have additional properties/i).exists).ok();
+});
+
+test("should show error on v3 document when data file with additional properties is used", async (t) => {
+  await loadConfigFile(configLocal);
+  await enterPassword("password");
+
+  await t.click(Button.withText("TradeTrust Invoice v3"));
+  await t.setFilesToUpload(DataFileDropZoneInput, [dataFileCsvCoo]);
+
+  await t.expect(Selector("li").withText(/must NOT have additional properties/i).exists).ok();
+});
