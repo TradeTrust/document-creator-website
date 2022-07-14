@@ -21,18 +21,23 @@ import { validateData } from "./../../common/utils";
 
 /*
  * getDataToValidate
- * @param {string} data - currentForm.data.formData
- * Returns back data in correct shape for ajv to validate
+ * @param {string} data - `currentForm.data.formData`.
+ * Omit fields that are interfering with ajv validation rule of `additionalProperties`, returning back data in correct shape.
+ * This function is a hotfix to enable proper ajv validation, while not breaking existing flows of:
+ * 1. data file upload flow - single document, data populated by json file.
+ * 2. data file upload flow - multiple documents, data populated by csv file.
+ * 3. user input flow - single document, data manually filled by user.
  */
-const getDataToValidate = (data: unknown) => {
+const getDataToValidate = (data: any) => {
+  console.log(data, "getDataToValidate");
   if (utils.isRawV2Document(data)) {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const { issuers, $template, ...rest } = data; // omit these fields, as they are interfering with ajv validation rule of `additionalProperties`
+    const { issuers, $template, ...rest } = data; // omit these fields
     return rest;
   } else if (utils.isRawV3Document(data)) {
     return data.credentialSubject; // v3 is straight forward, all data is found in `credentialSubject`
   } else {
-    throw new Error("Invalid raw document.");
+    return data; // catering to data file upload flow
   }
 };
 
