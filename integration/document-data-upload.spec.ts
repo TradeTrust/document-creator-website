@@ -1,5 +1,5 @@
 import { Selector } from "testcafe";
-import { enterPassword, loadConfigFile, configLocal, dataFileCsvCoo, dataFileCsvCooV3 } from "./helper";
+import { enterPassword, loadConfigFile, configLocal, dataFileCsvCoo } from "./helper";
 import { join } from "path";
 import { homedir } from "os";
 import { existsSync, readFileSync, unlinkSync } from "fs";
@@ -21,10 +21,8 @@ const downloadJsonDataFileButton = Selector("[data-testid='download-json-data-sc
 const fileNameField = Selector("[data-testid='file-name-input']");
 
 // Form fields component selector
-const V2COOiDField = Selector("#root_iD");
-const V2COOIssueDateTimeField = Selector("#root_issueDateTime");
-const V3COOiDField = Selector("#root_credentialSubject_iD");
-const V3COOIssueDateTimeField = Selector("#root_credentialSubject_issueDateTime");
+const COOiDField = Selector("#root_iD");
+const COOIssueDateTimeField = Selector("#root_issueDateTime");
 const DataFileDropZoneInput = Selector("[data-testid='data-file-dropzone'] input");
 
 function getFileDownloadPath(fileName: string): string {
@@ -83,15 +81,15 @@ test("should upload populate data fields correctly for version 2 document", asyn
   // Validated the content is overwritten by the data file
   await t.expect(documentNameSelect.innerText).eql("TradeTrust-ChAFTA-Certificate-of-Origin-v2-2");
   await t.expect(fileNameField.value).eql("TradeTrust-ChAFTA-Certificate-of-Origin-v2-2");
-  await t.expect(V2COOiDField.value).eql("SampleId-1");
-  await t.expect(V2COOIssueDateTimeField.value).eql("2015-01-01T00:00:00.000");
+  await t.expect(COOiDField.value).eql("SampleId-1");
+  await t.expect(COOIssueDateTimeField.value).eql("2015-01-01T00:00");
 
   // Check next document
   await t.typeText(documentNumberInput, "3", { replace: true });
   await t.expect(documentNameSelect.innerText).eql("TradeTrust-ChAFTA-Certificate-of-Origin-v2-3");
   await t.expect(fileNameField.value).eql("TradeTrust-ChAFTA-Certificate-of-Origin-v2-3");
-  await t.expect(V2COOiDField.value).eql("SampleId-2");
-  await t.expect(V2COOIssueDateTimeField.value).eql("2015-01-02T00:00:00.000");
+  await t.expect(COOiDField.value).eql("SampleId-2");
+  await t.expect(COOIssueDateTimeField.value).eql("2015-01-02T00:00");
 });
 
 test("should upload populate data fields correctly for version 3 document", async (t) => {
@@ -114,7 +112,7 @@ test("should upload populate data fields correctly for version 3 document", asyn
   const csvFilePath = getFileDownloadPath("sample-data.csv");
   await t.expect(await waitForFileDownload(t, csvFilePath)).eql(true);
   const csvFileContent = readFileSync(csvFilePath, "utf8");
-  await t.expect(csvFileContent).contains("credentialSubject.iD,credentialSubject.issueDateTime");
+  await t.expect(csvFileContent).contains("iD,issueDateTime");
   await deleteDownloadFile(csvFilePath);
 
   //download json data sample file
@@ -122,22 +120,22 @@ test("should upload populate data fields correctly for version 3 document", asyn
   const jsonFilePath = getFileDownloadPath("sample-data.json");
   await t.expect(await waitForFileDownload(t, jsonFilePath)).eql(true);
   const jsonFileContent = JSON.parse(readFileSync(jsonFilePath, "utf8"));
-  await t.expect(jsonFileContent.data.credentialSubject).contains({ iD: "", issueDateTime: "" });
+  await t.expect(jsonFileContent.data).contains({ iD: "", issueDateTime: "" });
   await deleteDownloadFile(jsonFilePath);
 
   // Upload data file
-  await t.setFilesToUpload(DataFileDropZoneInput, [dataFileCsvCooV3]);
+  await t.setFilesToUpload(DataFileDropZoneInput, [dataFileCsvCoo]);
 
   // Validated the content is overwritten by the data file
   await t.expect(documentNameSelect.innerText).eql("TradeTrust-ChAFTA-Certificate-of-Origin-v3-2");
   await t.expect(fileNameField.value).eql("TradeTrust-ChAFTA-Certificate-of-Origin-v3-2");
-  await t.expect(V3COOiDField.value).eql("SampleId-1");
-  await t.expect(V3COOIssueDateTimeField.value).eql("2021-01-01T00:00:00.000");
+  await t.expect(COOiDField.value).eql("SampleId-1");
+  await t.expect(COOIssueDateTimeField.value).eql("2015-01-01T00:00");
 
   // Check next document
   await t.typeText(documentNumberInput, "3", { replace: true });
   await t.expect(documentNameSelect.innerText).eql("TradeTrust-ChAFTA-Certificate-of-Origin-v3-3");
   await t.expect(fileNameField.value).eql("TradeTrust-ChAFTA-Certificate-of-Origin-v3-3");
-  await t.expect(V3COOiDField.value).eql("SampleId-2");
-  await t.expect(V3COOIssueDateTimeField.value).eql("2021-02-01T00:00:00.000");
+  await t.expect(COOiDField.value).eql("SampleId-2");
+  await t.expect(COOIssueDateTimeField.value).eql("2015-01-02T00:00");
 });
