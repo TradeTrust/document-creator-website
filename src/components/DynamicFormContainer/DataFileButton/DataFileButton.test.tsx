@@ -37,7 +37,7 @@ describe("dataFileButton", () => {
     render(<DataFileButton onDataFile={onDataFile} schema={{}} />);
 
     const dropzone = screen.getByTestId("data-file-dropzone");
-    const file = new File([JSON.stringify({ foo: "bar" })], "sample.json", {
+    const file = new File([JSON.stringify({ data: { foo: "bar" } })], "sample.json", {
       type: "application/json",
     });
     const data = mockData([file]);
@@ -46,7 +46,7 @@ describe("dataFileButton", () => {
 
     await act(async () => {
       fireEvent(dropzone, event);
-      await waitFor(() => expect(onDataFile).toHaveBeenCalledWith({ foo: "bar" }));
+      await waitFor(() => expect(onDataFile).toHaveBeenCalledWith({ data: { foo: "bar" } }));
     });
   });
 
