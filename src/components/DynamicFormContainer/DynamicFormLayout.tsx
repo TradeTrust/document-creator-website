@@ -29,7 +29,6 @@ import { validateData } from "./../../common/utils";
  * 3. user input flow - single document, data manually filled by user.
  */
 const getDataToValidate = (data: any) => {
-  console.log(data, "getDataToValidate");
   if (utils.isRawV2Document(data)) {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { issuers, $template, ...rest } = data; // omit these fields
