@@ -1,5 +1,5 @@
 import { LoaderSpinner, ToggleSwitch } from "@govtechsg/tradetrust-ui-components";
-import Ajv, { ErrorObject } from "ajv";
+import { ErrorObject } from "ajv";
 import { defaultsDeep } from "lodash";
 import React, { FunctionComponent, useState } from "react";
 import { Trash2 } from "react-feather";
@@ -16,6 +16,7 @@ import { DocumentPreview } from "./DocumentPreview";
 import { DynamicForm } from "./DynamicForm";
 import { DynamicFormHeader } from "./DynamicFormHeader";
 import { FormErrorBanner } from "./FormErrorBanner";
+import { validateData, getDataToValidate } from "./../../common/utils";
 
 export const DynamicFormLayout: FunctionComponent = () => {
   const [showDeleteModal, setDeleteModal] = useState(false);
@@ -50,11 +51,10 @@ export const DynamicFormLayout: FunctionComponent = () => {
   const attachmentAcceptedFormat = currentFormTemplate.attachments?.accept;
 
   const validateCurrentForm = (): boolean => {
-    const ajv = new Ajv();
-
-    const validForm = ajv.validate(currentForm.data.schema, currentForm.data.formData);
-    setFormError(ajv.errors);
-    return validForm as boolean;
+    const dataToValidate = getDataToValidate(currentForm.data.formData);
+    const { isValid, ajvErrors } = validateData(currentForm.data.schema, dataToValidate);
+    setFormError(ajvErrors);
+    return isValid;
   };
 
   const removeCurrentForm = (): void => {

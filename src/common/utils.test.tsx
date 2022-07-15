@@ -1,4 +1,4 @@
-import { decodeQrCode, encodeQrCode, getDocumentNetwork } from "./utils";
+import { decodeQrCode, encodeQrCode, getDocumentNetwork, validateData } from "./utils";
 
 describe("encodeQrCode", () => {
   it("should encode the url into the correct format", () => {
@@ -47,5 +47,55 @@ describe("getDocumentNetwork", () => {
   it("should throw an error when the network is not in the list", () => {
     // @ts-expect-error: Test if the error will throw when its not one of the type in the Network enum.
     expect(() => getDocumentNetwork("abc")).toThrow("Unsupported network abc");
+  });
+});
+
+describe("validateData", () => {
+  const schema = {
+    type: "object",
+    additionalProperties: false,
+    properties: {
+      logo: {
+        type: "string",
+        title: "Document Title",
+      },
+      title: {
+        type: "string",
+        title: "Document Title",
+      },
+      remarks: {
+        type: "string",
+        title: "Remarks",
+      },
+      backgroundColor: {
+        type: "string",
+        title: "Background Color",
+      },
+      titleColor: {
+        type: "string",
+        title: "Title Color",
+      },
+      remarksColor: {
+        type: "string",
+        title: "Remarks Color",
+      },
+    },
+  };
+
+  it("should validate correctly when all data is provided", async () => {
+    const { isValid } = await validateData(schema, {
+      logo: "",
+      title: "Some title 123",
+      remarks: "",
+      backgroundColor: "",
+      titleColor: "",
+      remarksColor: "",
+    });
+    expect(isValid).toBe(true);
+  });
+
+  it("should not validate if additional field is provided", async () => {
+    const { isValid } = await validateData(schema, { foo: "" });
+    expect(isValid).toBe(false);
   });
 });

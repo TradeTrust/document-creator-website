@@ -1,6 +1,8 @@
 import { csv2jsonAsync } from "json-2-csv";
 import converter from "json-2-csv";
 import { saveAs } from "file-saver";
+import { JSONSchema } from "json-schema-library";
+import Ajv, { ErrorObject } from "ajv";
 import { WalletOptions, Network, NetworkObject } from "../types";
 import { ChainId, ChainInfo, ChainInfoObject } from "../constants/chainInfo";
 
@@ -105,4 +107,33 @@ export const getDocumentNetwork = (network: Network): NetworkObject => {
       chainId: chainInfo?.chainId.toString(),
     },
   };
+};
+
+/*
+ * getDataToValidate
+ * @param {string} data - `currentForm.data.formData`.
+ * Omit fields that are interfering with ajv validation rule of `additionalProperties`, returning back data in correct shape.
+ * This function is a hotfix to enable proper ajv validation, while not breaking existing flows of:
+ * 1. data file upload flow - single document, data populated by json file.
+ * 2. data file upload flow - multiple documents, data populated by csv file.
+ * 3. user input flow - single document, data manually filled by user.
+ */
+export const getDataToValidate: any = (data: any) => {
+  if ("credentialSubject" in data) {
+    return data.credentialSubject; // v3 data is straight forward, all data is to be found in `credentialSubject`
+  } else {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const { issuers, $template, ownership, ...rest } = data; // omit these fields
+    return rest;
+  }
+};
+
+export const validateData = (
+  schema: JSONSchema,
+  data: unknown
+): { isValid: boolean; ajvErrors: ErrorObject[] | null | undefined } => {
+  const ajv = new Ajv({ allErrors: true });
+  const isValid = ajv.validate(schema, data);
+
+  return { isValid, ajvErrors: ajv.errors };
 };
