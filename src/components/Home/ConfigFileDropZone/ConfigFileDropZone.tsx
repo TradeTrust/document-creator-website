@@ -13,14 +13,14 @@ interface ConfigFileDropZone {
 }
 
 export const ConfigFileDropZone: FunctionComponent<ConfigFileDropZone> = ({ onConfigFile, errorMessage }) => {
-  const [fileErrors, setFileErrors] = useState<Error[]>();
+  const [fileErrors, setFileErrors] = useState<Error[]>([]);
 
   useEffect(() => {
     if (errorMessage) {
       const malformedError = new Error(errorMessage);
       setFileErrors([malformedError]);
     } else {
-      setFileErrors(undefined);
+      setFileErrors([]);
     }
   }, [errorMessage]);
 
@@ -28,7 +28,7 @@ export const ConfigFileDropZone: FunctionComponent<ConfigFileDropZone> = ({ onCo
     try {
       const file = files[0];
       const config = await readFileAsJson<ConfigFile>(file);
-      setFileErrors(undefined);
+      setFileErrors([]);
       onConfigFile(config);
     } catch (e) {
       if (e instanceof Error) {

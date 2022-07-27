@@ -2,11 +2,12 @@ import { Button } from "@govtechsg/tradetrust-ui-components";
 import React, { FunctionComponent, useState } from "react";
 import { readFileAsCsv, readFileAsJson, downloadCsvDataFile, downloadJsonDataFile } from "../../../common/utils";
 import { getLogger } from "../../../utils/logger";
-import { FormError, FormErrorBanner } from "./../FormErrorBanner";
+import { FormErrorBanner } from "./../FormErrorBanner";
 import { Draft04 as Core, JSONSchema } from "json-schema-library";
 import { ToolTip } from "../../UI/ToolTip";
 import { StyledDropZone } from "../../UI/StyledDropZone";
 import { validateData, getDataToValidate } from "./../../../common/utils";
+import { FormErrors } from "./../../../types";
 
 const { stack } = getLogger("DataFileButton");
 
@@ -60,40 +61,27 @@ const getDataFileBasedOnExtension = async (file: File): Promise<GetDataFileBased
 };
 
 export const DataFileButton: FunctionComponent<DataFileButton> = ({ onDataFile, schema }) => {
-  const [error, setError] = useState(false);
-  const [fileErrors, setFileErrors] = useState<FormError>(null);
+  const [fileErrors, setFileErrors] = useState<Error[]>([]);
+  const [formErrors, setFormErrors] = useState<FormErrors>();
 
   const onDropAccepted = async (files: File[]): Promise<void> => {
+    console.log(files[0], "???");
     try {
       const file = files[0];
       const { dataFile, dataToValidate } = await getDataFileBasedOnExtension(file);
       const { isValid, ajvErrors } = validateData(schema, dataToValidate);
 
       if (!isValid) {
-        setError(true);
-        setFileErrors(ajvErrors);
+        setFormErrors(ajvErrors);
         return;
       }
 
-      setError(false);
-      setFileErrors(null);
-
+      setFormErrors(null);
       onDataFile(dataFile);
     } catch (e) {
       if (e instanceof Error) {
         stack(e);
-
-        setError(true);
-        setFileErrors([
-          // ajv set error manually, printing out error message on UI
-          {
-            instancePath: "",
-            keyword: "type",
-            message: e.message,
-            params: {},
-            schemaPath: "#/type",
-          },
-        ]);
+        setFileErrors([...fileErrors, e]);
       }
     }
   };
@@ -107,9 +95,9 @@ export const DataFileButton: FunctionComponent<DataFileButton> = ({ onDataFile, 
   // TODO: when change to Tailwindcss v2 for ui Update please update the background color, or use a color that is closes to this color.
   return (
     <>
-      {error && (
-        <div className="my-2" data-testid="file-read-error">
-          <FormErrorBanner formErrorTitle="Uploaded data file format has errors." formError={fileErrors} />
+      {formErrors && (
+        <div className="my-2" data-testid="file-schema-error">
+          <FormErrorBanner formErrorTitle="Uploaded data file format has errors." formErrors={formErrors} />
         </div>
       )}
       <StyledDropZone

@@ -63,7 +63,7 @@ describe("dataFileButton", () => {
 
     await act(async () => {
       fireEvent(dropzone, event);
-      await waitFor(() => expect(screen.getByTestId("file-read-error")).not.toBeUndefined());
+      await waitFor(() => expect(screen.getByTestId("file-error")).not.toBeUndefined());
     });
   });
 
@@ -99,7 +99,7 @@ describe("dataFileButton", () => {
 
     await act(async () => {
       fireEvent(dropzone, event);
-      await waitFor(() => expect(screen.getByTestId("file-read-error")).not.toBeUndefined());
+      await waitFor(() => expect(screen.getByTestId("file-schema-error")).not.toBeUndefined());
     });
   });
 

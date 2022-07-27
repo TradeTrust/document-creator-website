@@ -1,11 +1,8 @@
-import { ErrorObject } from "ajv";
 import { trim } from "lodash";
 import { FunctionComponent, useMemo, useState } from "react";
 import { DropzoneOptions, FileRejection, useDropzone } from "react-dropzone";
 import { FileUpload } from "../../../constants/FileUpload";
 import { ErrorMessage } from "./ErrorMessage";
-
-type DropZoneFileErrors = ErrorObject[] | Error[] | null | undefined;
 
 interface DropZoneProps {
   defaultStyle: string;
@@ -14,7 +11,7 @@ interface DropZoneProps {
   rejectStyle?: string;
   children: React.ReactNode;
   dropzoneOptions: DropzoneOptions;
-  fileErrors?: DropZoneFileErrors;
+  fileErrors: Error[];
   dropzoneIcon?: string;
   dataTestId?: string;
 }
@@ -66,7 +63,7 @@ export const StyledDropZone: FunctionComponent<DropZoneProps> = ({
 
   const { getInputProps, getRootProps, isDragActive, isDragAccept, isDragReject } = useDropzone(dropzoneOptions);
 
-  const error = fileTypeError || fileSizeError || tooManyFilesError || !!fileErrors;
+  const error = fileTypeError || fileSizeError || tooManyFilesError || fileErrors.length > 0;
   const currentStyle = error ? errorStyle : defaultStyle;
   const dragStyle = useMemo(() => {
     return trim(`
@@ -80,7 +77,6 @@ export const StyledDropZone: FunctionComponent<DropZoneProps> = ({
     <div className={`${baseStyle} ${dragStyle || currentStyle} `} data-testid={dataTestId} {...getRootProps()}>
       <input {...getInputProps()} />
       {dropzoneIcon && <img className="mx-auto mb-8" src={dropzoneIcon} />}
-
       {error && <p className="max-w-lg text-scarlet-500 text-lg leading-none font-gilroy-bold mb-2">Error</p>}
       {fileTypeError && (
         <ErrorMessage
@@ -102,16 +98,9 @@ export const StyledDropZone: FunctionComponent<DropZoneProps> = ({
           message={`Upload too many documents at once, please upload a total of ${dropzoneOptions.maxFiles} document at a time.`}
         />
       )}
-      {fileErrors &&
-        fileErrors.length > 0 &&
-        fileErrors.map((formError, index: number) => {
-          return (
-            <ErrorMessage
-              key={`file-errors-${index}`}
-              id="file-error"
-              message={`${formError instanceof Error ? "" : formError.instancePath} ${formError.message}`}
-            />
-          );
+      {fileErrors.length > 0 &&
+        fileErrors.map((fileError, index: number) => {
+          return <ErrorMessage key={`file-errors-${index}`} id="file-error" message={fileError.message} />;
         })}
 
       <div className={error ? "mt-10" : ""}>{children}</div>

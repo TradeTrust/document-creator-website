@@ -2,8 +2,8 @@ import { csv2jsonAsync } from "json-2-csv";
 import converter from "json-2-csv";
 import { saveAs } from "file-saver";
 import { JSONSchema } from "json-schema-library";
-import Ajv, { ErrorObject } from "ajv";
-import { WalletOptions, Network, NetworkObject } from "../types";
+import Ajv from "ajv";
+import { WalletOptions, Network, NetworkObject, FormErrors } from "../types";
 import { ChainId, ChainInfo, ChainInfoObject } from "../constants/chainInfo";
 
 export function readFileAsJson<T>(file: File): Promise<T> {
@@ -128,10 +128,7 @@ export const getDataToValidate: any = (data: any) => {
   }
 };
 
-export const validateData = (
-  schema: JSONSchema,
-  data: unknown
-): { isValid: boolean; ajvErrors: ErrorObject[] | null | undefined } => {
+export const validateData = (schema: JSONSchema, data: unknown): { isValid: boolean; ajvErrors: FormErrors } => {
   const ajv = new Ajv({ allErrors: true });
   const isValid = ajv.validate(schema, data);
 
