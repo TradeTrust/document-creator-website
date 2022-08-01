@@ -65,7 +65,6 @@ export const DataFileButton: FunctionComponent<DataFileButton> = ({ onDataFile, 
   const [formErrors, setFormErrors] = useState<FormErrors>();
 
   const onDropAccepted = async (files: File[]): Promise<void> => {
-    console.log(files[0], "???");
     try {
       const file = files[0];
       const { dataFile, dataToValidate } = await getDataFileBasedOnExtension(file);
