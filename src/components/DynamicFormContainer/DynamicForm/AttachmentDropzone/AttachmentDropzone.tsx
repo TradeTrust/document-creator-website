@@ -18,7 +18,7 @@ export const AttachmentDropzone: FunctionComponent<AttachmentDropzone> = ({
   onRemove,
   uploadedFiles,
 }) => {
-  const [fileErrors, setFileErrors] = useState<Error[]>();
+  const [fileErrors, setFileErrors] = useState<Error[]>([]);
 
   const onDropAccepted = useCallback(
     async (files: File[]) => {
@@ -36,7 +36,7 @@ export const AttachmentDropzone: FunctionComponent<AttachmentDropzone> = ({
         );
         return setFileErrors([totalFileSizeError]);
       } else {
-        setFileErrors(undefined);
+        setFileErrors([]);
       }
 
       const processedFiles = await Promise.all(files.map(processFiles));

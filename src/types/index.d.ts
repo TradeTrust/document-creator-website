@@ -1,6 +1,7 @@
 import { Wallet, Signer } from "ethers";
 import { Provider } from "@ethersproject/abstract-provider";
 import { OpenAttestationDocument } from "@govtechsg/open-attestation";
+import { ErrorObject } from "ajv";
 
 export type Network = "homestead" | "ropsten" | "rinkeby" | "local";
 type FormType = "TRANSFERABLE_RECORD" | "VERIFIABLE_DOCUMENT";
@@ -149,3 +150,5 @@ export interface NetworkObject {
     chainId: string;
   };
 }
+
+export type FormErrors = ErrorObject[] | null | undefined;

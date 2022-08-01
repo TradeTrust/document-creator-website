@@ -9,8 +9,8 @@ const FormSelectionTitle = Selector("[data-testid='form-selection-title']");
 const ProgressBar = Selector("[data-testid='progress-bar']");
 
 const Button = Selector("button");
-const ErrorItem1 = Selector("[data-testid='form-error-banner'] li").nth(0);
-const ErrorItem2 = Selector("[data-testid='form-error-banner'] li").nth(1);
+const ErrorItem1 = Selector("[data-testid='form-error-banner'] li h6").nth(0);
+const ErrorItem2 = Selector("[data-testid='form-error-banner'] li h6").nth(1);
 const DataFileDropZoneInput = Selector("[data-testid='data-file-dropzone'] input");
 
 test("should show validation error messages correctly", async (t) => {
@@ -32,6 +32,6 @@ test("should show validation error messages correctly", async (t) => {
   await t.setFilesToUpload(DataFileDropZoneInput, [dataFileJsonEblMissingFields]);
 
   // Assert validation error messages
-  await t.expect(ErrorItem1.textContent).contains("must have required property 'blNumber'");
-  await t.expect(ErrorItem2.textContent).contains("must have required property 'scac'");
+  await t.expect(ErrorItem1.textContent).contains("missingProperty: blNumber");
+  await t.expect(ErrorItem2.textContent).contains("missingProperty: scac");
 });

@@ -1,5 +1,4 @@
 import { LoaderSpinner, ToggleSwitch } from "@govtechsg/tradetrust-ui-components";
-import { ErrorObject } from "ajv";
 import { defaultsDeep } from "lodash";
 import React, { FunctionComponent, useState } from "react";
 import { Trash2 } from "react-feather";
@@ -17,6 +16,7 @@ import { DynamicForm } from "./DynamicForm";
 import { DynamicFormHeader } from "./DynamicFormHeader";
 import { FormErrorBanner } from "./FormErrorBanner";
 import { validateData, getDataToValidate } from "./../../common/utils";
+import { FormErrors } from "./../../types";
 
 export const DynamicFormLayout: FunctionComponent = () => {
   const [showDeleteModal, setDeleteModal] = useState(false);
@@ -39,7 +39,7 @@ export const DynamicFormLayout: FunctionComponent = () => {
   } = useFormsContext();
   const { config } = useConfigContext();
   const [isSubmitted, setIsSubmitted] = useState(false);
-  const [formError, setFormError] = useState<ErrorObject[] | null | undefined>(null);
+  const [formErrors, setFormErrors] = useState<FormErrors>(null);
 
   // if (!config) return <Redirect to="/" />;
   if (!currentForm) return <Redirect to="/forms-selection" />;
@@ -53,7 +53,7 @@ export const DynamicFormLayout: FunctionComponent = () => {
   const validateCurrentForm = (): boolean => {
     const dataToValidate = getDataToValidate(currentForm.data.formData);
     const { isValid, ajvErrors } = validateData(currentForm.data.schema, dataToValidate);
-    setFormError(ajvErrors);
+    setFormErrors(ajvErrors);
     return isValid;
   };
 
@@ -89,7 +89,7 @@ export const DynamicFormLayout: FunctionComponent = () => {
   const deleteForm = (): void => {
     removeCurrentForm();
     closeDeleteModal();
-    setFormError(null);
+    setFormErrors(null);
   };
 
   const closeBackModal = (): void => {
@@ -156,7 +156,7 @@ export const DynamicFormLayout: FunctionComponent = () => {
               <>
                 <FormErrorBanner
                   formErrorTitle="This form has errors. Please fix the errors to proceed."
-                  formError={formError}
+                  formErrors={formErrors}
                 />
                 {isPreviewMode ? (
                   <div className="max-w-screen-xl mx-auto mt-6">

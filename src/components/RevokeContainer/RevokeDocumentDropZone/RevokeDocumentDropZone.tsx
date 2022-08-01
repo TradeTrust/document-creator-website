@@ -29,7 +29,7 @@ export const RevokeDocumentDropZone: FunctionComponent<RevokeDocumentDropZone> =
   documentUploadState,
   setDocumentUploadState,
 }) => {
-  const [fileErrors, setFileErrors] = useState<Error[]>();
+  const [fileErrors, setFileErrors] = useState<Error[]>([]);
 
   useEffect(() => {
     if (documentUploadState === DocumentUploadState.ERROR) {
@@ -39,7 +39,7 @@ export const RevokeDocumentDropZone: FunctionComponent<RevokeDocumentDropZone> =
           : [new Error("Document cannot be read. Please check that you have a valid document")];
       setFileErrors(readFileError);
     } else {
-      setFileErrors(undefined);
+      setFileErrors([]);
     }
   }, [documentUploadState, errorMessages]);
 

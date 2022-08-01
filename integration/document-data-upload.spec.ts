@@ -147,7 +147,7 @@ test("should show error on v2 document when data file with additional properties
   await t.click(Button.withText("TradeTrust Invoice v2"));
   await t.setFilesToUpload(DataFileDropZoneInput, [dataFileCsvCoo]);
 
-  await t.expect(Selector("li").withText(/must NOT have additional properties/i).exists).ok();
+  await t.expect(Selector("li h6").textContent).contains("additionalProperty: iD");
 });
 
 test("should show error on v3 document when data file with additional properties is used", async (t) => {
@@ -157,5 +157,5 @@ test("should show error on v3 document when data file with additional properties
   await t.click(Button.withText("TradeTrust Invoice v3"));
   await t.setFilesToUpload(DataFileDropZoneInput, [dataFileCsvCoo]);
 
-  await t.expect(Selector("li").withText(/must NOT have additional properties/i).exists).ok();
+  await t.expect(Selector("li h6").textContent).contains("additionalProperty: iD");
 });
