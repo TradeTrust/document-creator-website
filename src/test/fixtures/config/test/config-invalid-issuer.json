@@ -27,10 +27,7 @@
       },
       "schema": {
         "type": "object",
-        "required": [
-          "blNumber",
-          "scac"
-        ],
+        "required": ["blNumber", "scac"],
         "properties": {
           "blNumber": {
             "type": "string",
@@ -579,9 +576,7 @@
       },
       "schema": {
         "type": "object",
-        "required": [
-          "documentName"
-        ],
+        "required": ["documentName"],
         "properties": {
           "documentName": {
             "type": "string",
@@ -758,7 +753,7 @@
               "location": "ErrorIdentityProof"
             },
             "name": "DEMO DOCUMENT STORE",
-            "documentStore": "0x63a223e025256790e88778a01f480eba77731d04"
+            "documentStore": "0x9Eb613a88534E2939518f4ffBFE65F5969b491FF"
           }
         ]
       },
@@ -1128,10 +1123,7 @@
           "https://schemata.openattestation.com/com/openattestation/1.0/OpenAttestation.v3.json",
           "https://schemata.openattestation.com/io/tradetrust/bill-of-lading/1.0/bill-of-lading-context.json"
         ],
-        "type": [
-          "VerifiableCredential",
-          "OpenAttestationCredential"
-        ],
+        "type": ["VerifiableCredential", "OpenAttestationCredential"],
         "issuanceDate": "2010-01-01T19:23:24Z",
         "openAttestationMetadata": {
           "template": {
@@ -1161,10 +1153,7 @@
         "properties": {
           "credentialSubject": {
             "type": "object",
-            "required": [
-              "blNumber",
-              "scac"
-            ],
+            "required": ["blNumber", "scac"],
             "properties": {
               "blNumber": {
                 "type": "string",
@@ -1270,10 +1259,7 @@
           "https://schemata.openattestation.com/io/tradetrust/certificate-of-origin/1.0/certificate-of-origin-context.json",
           "https://schemata.openattestation.com/com/openattestation/1.0/OpenAttestation.v3.json"
         ],
-        "type": [
-          "VerifiableCredential",
-          "OpenAttestationCredential"
-        ],
+        "type": ["VerifiableCredential", "OpenAttestationCredential"],
         "issuanceDate": "2010-01-01T19:23:24Z",
         "openAttestationMetadata": {
           "template": {
@@ -1728,10 +1714,7 @@
           "https://schemata.openattestation.com/io/tradetrust/Invoice/1.0/invoice-context.json",
           "https://schemata.openattestation.com/com/openattestation/1.0/OpenAttestation.v3.json"
         ],
-        "type": [
-          "VerifiableCredential",
-          "OpenAttestationCredential"
-        ],
+        "type": ["VerifiableCredential", "OpenAttestationCredential"],
         "issuanceDate": "2010-01-01T19:23:24Z",
         "openAttestationMetadata": {
           "template": {

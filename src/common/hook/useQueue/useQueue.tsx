@@ -6,8 +6,8 @@ import { revokeDocumentJob } from "../../../services/revoking";
 import { Config, FailedJobErrors, FormEntry, PublishingJob, RevokingJob, WrappedDocument } from "../../../types";
 import { getLogger } from "../../../utils/logger";
 import { uploadToStorage } from "../../API/storageAPI";
-import { getRevokingJobs } from "./utils/revoke";
 import { getPublishingJobs } from "./utils/publish";
+import { getRevokingJobs } from "./utils/revoke";
 
 const { stack } = getLogger("useQueue");
 
@@ -82,7 +82,7 @@ export const useQueue = ({
             }
             // upload all the docs to document storage
             const uploadDocuments = job.documents.map(async (doc) => {
-              if (config.documentStorage === undefined) return;
+              if (config.documentStorage === undefined || config.network === "local") return;
               await uploadToStorage(doc, config.documentStorage);
             });
             await Promise.all(uploadDocuments);
