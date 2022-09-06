@@ -1,19 +1,17 @@
 import { DocumentStoreFactory } from "@govtechsg/document-store";
-import { TitleEscrowCreatorFactory, TradeTrustErc721Factory } from "@govtechsg/token-registry";
-import { getDefaultProvider, Wallet } from "ethers";
-import { getTitleEscrowCreator, publishTransferableRecordJob, publishVerifiableDocumentJob } from "./index";
+import { TradeTrustERC721__factory } from "@govtechsg/token-registry/contracts";
+import { Wallet } from "ethers";
+import { publishTransferableRecordJob, publishVerifiableDocumentJob } from "./index";
 import { supportsInterface } from "../common/utils";
 
-jest.mock("@govtechsg/token-registry");
+jest.mock("@govtechsg/token-registry/contracts");
 jest.mock("@govtechsg/document-store");
 jest.mock("../common/utils");
 
-const mockTitleEscrowCreatorFactoryConnect = TitleEscrowCreatorFactory.connect as jest.Mock;
 const mockDocumentStoreFactoryConnect = DocumentStoreFactory.connect as jest.Mock;
-const mockTradeTrustErc721FactoryConnect = TradeTrustErc721Factory.connect as jest.Mock;
+const mockTradeTrustErc721FactoryConnect = TradeTrustERC721__factory.connect as jest.Mock;
 const mockDocumentStoreIssue = jest.fn();
-const mockTokenRegistrySafeMint = jest.fn();
-const mockTitleEscrowDeployNewTitleEscrow = jest.fn();
+const mockTokenRegistryMint = jest.fn();
 const mockTxWait = jest.fn();
 const mockSupportsInterface = supportsInterface as jest.Mock;
 
@@ -22,10 +20,7 @@ const mockDocumentStore = {
 };
 
 const mockTokenRegistry = {
-  "safeMint(address,uint256)": mockTokenRegistrySafeMint,
-};
-const mockTitleEscrowCreator = {
-  deployNewTitleEscrow: mockTitleEscrowDeployNewTitleEscrow,
+  mint: mockTokenRegistryMint,
 };
 
 const mockTransactionReceipt = {
@@ -45,9 +40,7 @@ const whenTokenRegistryExist = (): void => {
     transactionHash: "TX_HASH",
     events: [{ event: "TitleEscrowDeployed", args: ["0x7777"] }],
   });
-  mockTokenRegistrySafeMint.mockResolvedValue(mockTransactionReceipt);
-  mockTitleEscrowDeployNewTitleEscrow.mockResolvedValue(mockTransactionReceipt);
-  mockTitleEscrowCreatorFactoryConnect.mockReturnValue(mockTitleEscrowCreator);
+  mockTokenRegistryMint.mockResolvedValue(mockTransactionReceipt);
   mockTradeTrustErc721FactoryConnect.mockReturnValue(mockTokenRegistry);
 };
 
@@ -55,38 +48,10 @@ const resetMocks = (mocks: jest.Mock[]): void => mocks.forEach((mock) => mock.mo
 
 const mockWallet = ({ code = "0x1234" } = {}): Wallet =>
   ({ provider: { getCode: () => code, getNetwork: () => ({ name: "ropsten" }) } } as any);
-const randomWallet = (network = "ropsten"): Wallet => Wallet.createRandom().connect(getDefaultProvider(network));
 
 describe("publishing", () => {
   beforeEach(() => {
-    resetMocks([
-      mockTitleEscrowCreatorFactoryConnect,
-      mockDocumentStoreFactoryConnect,
-      mockDocumentStoreIssue,
-      mockTxWait,
-    ]);
-  });
-
-  describe("getTitleEscrowCreator", () => {
-    it("should return instance of TitleEscrowCreator for a network with deployed creator contract", async () => {
-      mockTitleEscrowCreatorFactoryConnect.mockResolvedValue("MOCK_TITLE_ESCROW_FACTORY");
-      const wallet = randomWallet();
-      const titleEscrowCreator = await getTitleEscrowCreator(wallet);
-
-      expect(mockTitleEscrowCreatorFactoryConnect).toHaveBeenCalledWith(
-        "0xB0dE5E22bAc12820b6dbF6f63287B1ec44026c83",
-        wallet
-      );
-      expect(titleEscrowCreator).toBe("MOCK_TITLE_ESCROW_FACTORY");
-    });
-
-    it("should throw on network without creator contract", async () => {
-      mockTitleEscrowCreatorFactoryConnect.mockResolvedValue("MOCK_TITLE_ESCROW_FACTORY");
-      const wallet = randomWallet("kovan");
-      await expect(getTitleEscrowCreator(wallet)).rejects.toThrow(
-        /Title escrow contract creator is not declared for kovan network/
-      );
-    });
+    resetMocks([mockDocumentStoreFactoryConnect, mockDocumentStoreIssue, mockTxWait]);
   });
 
   describe("publishVerifiableDocumentJob", () => {
@@ -175,21 +140,13 @@ describe("publishing", () => {
       );
 
       expect(hash).toBe("TX_HASH");
-      expect(mockTxWait).toHaveBeenCalledTimes(2);
-      expect(mockTitleEscrowDeployNewTitleEscrow).toHaveBeenCalledWith(
-        "0x154fcc3c953057c9527eb180cad321b906412b5d",
-        "0x1111",
-        "0x2222",
-        {
-          nonce: 1234,
-        }
-      );
-      expect(mockTokenRegistrySafeMint).toHaveBeenCalledWith("0x7777", "0x9999", { nonce: 1235 });
+      expect(mockTxWait).toHaveBeenCalledTimes(1);
+      expect(mockTokenRegistryMint).toHaveBeenCalledWith("0x1111", "0x2222", "0x9999");
     });
 
     it("should throw when deployment transaction fails", async () => {
       whenTokenRegistryExist();
-      mockTitleEscrowDeployNewTitleEscrow.mockRejectedValueOnce(new Error("Deployment fail"));
+      mockTokenRegistryMint.mockRejectedValueOnce(new Error("Deployment fail"));
       const wallet = mockWallet();
       await expect(
         publishTransferableRecordJob(
@@ -212,7 +169,7 @@ describe("publishing", () => {
     });
     it("should throw when minting transaction fails", async () => {
       whenTokenRegistryExist();
-      mockTokenRegistrySafeMint.mockRejectedValueOnce(new Error("Minting fail"));
+      mockTokenRegistryMint.mockRejectedValueOnce(new Error("Minting fail"));
       const wallet = mockWallet();
       await expect(
         publishTransferableRecordJob(
