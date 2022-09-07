@@ -7,7 +7,7 @@ import { defaultsDeep, groupBy } from "lodash";
 import { IdentityProofType } from "../../../../constants";
 import { ActionsUrlObject, Config, DocumentStorage, FormEntry, PublishingJob, RawDocument } from "../../../../types";
 import { getQueueNumber } from "../../../API/storageAPI";
-import { encodeQrCode, getDocumentNetwork } from "../../../utils";
+import { encodeQrCode, getDocumentNetwork, getDataV3 } from "../../../utils";
 import { Signer } from "ethers";
 import { publishDnsDidVerifiableDocumentJob } from "../../../../services/publishing";
 
@@ -79,9 +79,8 @@ export const getRawDocuments = async (forms: FormEntry[], config: Config): Promi
       let formData;
       if (utils.isRawV3Document(data.formData)) {
         formData = {
-          ...data.formData,
-          ...documentNetwork,
-          credentialSubject: { ...data.formData.credentialSubject, ...qrUrl },
+          ...documentNetwork, // TODO: this should be in credentialSubject too?
+          credentialSubject: { ...getDataV3(data.formData), ...qrUrl }, // horrendous fix. need to look into the root of cause -> all the various data merging
         };
       } else {
         formData = { ...data.formData, ...qrUrl, ...documentNetwork };
