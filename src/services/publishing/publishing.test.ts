@@ -144,29 +144,6 @@ describe("publishing", () => {
       expect(mockTokenRegistryMint).toHaveBeenCalledWith("0x1111", "0x2222", "0x9999");
     });
 
-    it("should throw when deployment transaction fails", async () => {
-      whenTokenRegistryExist();
-      mockTokenRegistryMint.mockRejectedValueOnce(new Error("Deployment fail"));
-      const wallet = mockWallet();
-      await expect(
-        publishTransferableRecordJob(
-          {
-            nonce: 1234,
-            type: "TRANSFERABLE_RECORD",
-            contractAddress: "0x154fcc3c953057c9527eb180cad321b906412b5d",
-            documents: [],
-            merkleRoot: "9999",
-            payload: {
-              ownership: {
-                beneficiaryAddress: "0x1111",
-                holderAddress: "0x2222",
-              },
-            },
-          },
-          wallet
-        )
-      ).rejects.toThrow(/Deployment fail/);
-    });
     it("should throw when minting transaction fails", async () => {
       whenTokenRegistryExist();
       mockTokenRegistryMint.mockRejectedValueOnce(new Error("Minting fail"));
