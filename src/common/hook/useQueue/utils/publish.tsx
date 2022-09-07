@@ -79,8 +79,8 @@ export const getRawDocuments = async (forms: FormEntry[], config: Config): Promi
       let formData;
       if (utils.isRawV3Document(data.formData)) {
         formData = {
-          ...documentNetwork, // TODO: this should be in credentialSubject too?
-          credentialSubject: { ...getDataV3(data.formData), ...qrUrl }, // horrendous fix. need to look into the root of cause -> all the various data merging
+          ...documentNetwork,
+          credentialSubject: { ...getDataV3(data.formData), ...qrUrl }, // https://github.com/TradeTrust/document-creator-website/issues/256, using `getDataV3` here so not to break existing flows
         };
       } else {
         formData = { ...data.formData, ...qrUrl, ...documentNetwork };

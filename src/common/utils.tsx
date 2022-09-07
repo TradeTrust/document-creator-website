@@ -1,3 +1,4 @@
+import { utils } from "@govtechsg/open-attestation";
 import { csv2jsonAsync } from "json-2-csv";
 import converter from "json-2-csv";
 import { saveAs } from "file-saver";
@@ -109,10 +110,26 @@ export const getDocumentNetwork = (network: Network): NetworkObject => {
   };
 };
 
+/*
+ * getDataV3
+ * @param {string} data
+ * Omit fields that are VC + OA related, we are only interested in document data.
+ */
 export const getDataV3: any = (data: any) => {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const { version, type, issuanceDate, openAttestationMetadata, issuer, credentialSubject, ...rest } = data; // omit these fields
   delete rest["@context"]; // omit these fields
+  return rest;
+};
+
+/*
+ * getDataV2
+ * @param {string} data
+ * Omit fields that are OA related, we are only interested in document data.
+ */
+export const getDataV2: any = (data: any) => {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const { issuers, $template, ownership, ...rest } = data; // omit these fields
   return rest;
 };
 
@@ -126,12 +143,10 @@ export const getDataV3: any = (data: any) => {
  * 3. user input flow - single document, data manually filled by user.
  */
 export const getDataToValidate: any = (data: any) => {
-  if ("credentialSubject" in data) {
+  if (utils.isRawV3Document(data)) {
     return getDataV3(data);
   } else {
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const { issuers, $template, ownership, ...rest } = data; // omit these fields
-    return rest;
+    return getDataV2(data);
   }
 };
 
