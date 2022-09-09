@@ -7,7 +7,7 @@ import { defaultsDeep, groupBy } from "lodash";
 import { IdentityProofType } from "../../../../constants";
 import { ActionsUrlObject, Config, DocumentStorage, FormEntry, PublishingJob, RawDocument } from "../../../../types";
 import { getQueueNumber } from "../../../API/storageAPI";
-import { encodeQrCode, getDocumentNetwork } from "../../../utils";
+import { encodeQrCode, getDocumentNetwork, getDataV3 } from "../../../utils";
 import { Signer } from "ethers";
 import { publishDnsDidVerifiableDocumentJob } from "../../../../services/publishing";
 
@@ -79,9 +79,8 @@ export const getRawDocuments = async (forms: FormEntry[], config: Config): Promi
       let formData;
       if (utils.isRawV3Document(data.formData)) {
         formData = {
-          ...data.formData,
           ...documentNetwork,
-          credentialSubject: { ...data.formData.credentialSubject, ...qrUrl },
+          credentialSubject: { ...getDataV3(data.formData), ...qrUrl }, // https://github.com/TradeTrust/document-creator-website/issues/256, using `getDataV3` here so not to break existing flows
         };
       } else {
         formData = { ...data.formData, ...qrUrl, ...documentNetwork };
