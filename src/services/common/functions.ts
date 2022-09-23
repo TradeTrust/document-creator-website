@@ -4,6 +4,7 @@ import { DocumentStoreFactory, GsnCapableDocumentStoreFactory } from "@govtechsg
 import { DocumentStore } from "@govtechsg/document-store/src/contracts/DocumentStore";
 import { getGsnRelaySigner } from "../../common/config/decrypt";
 import { supportsInterface } from "./utils";
+import { TradeTrustERC721, TradeTrustERC721__factory } from "@govtechsg/token-registry/contracts";
 
 export const checkAddressIsSmartContract = async (
   address: string,
@@ -38,4 +39,12 @@ export const getConnectedDocumentStore = async (
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   // @ts-ignore
   return gsnDocumentStore;
+};
+
+export const getConnectedTokenRegistry = async (
+  account: Wallet | ConnectedSigner,
+  contractAddress: string
+): Promise<TradeTrustERC721> => {
+  const connectedRegistry = TradeTrustERC721__factory.connect(contractAddress, account);
+  return connectedRegistry;
 };

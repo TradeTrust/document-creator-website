@@ -1,9 +1,8 @@
 import { OpenAttestationDocument, utils } from "@govtechsg/open-attestation";
-import { Signer, Wallet } from "ethers";
-import { getNetworkDetails } from "../../common/utils";
-import { ConnectedSigner, Network } from "../../types";
-import { getConnectedDocumentStore, checkAddressIsSmartContract } from "../common";
-import { checkCreationAddress } from "./utils";
+import { TradeTrustERC721 } from "@govtechsg/token-registry/dist/contracts";
+import { Wallet } from "ethers";
+import { ConnectedSigner } from "../../types";
+import { getConnectedDocumentStore, checkAddressIsSmartContract, getConnectedTokenRegistry } from "../common";
 
 export const checkVerifiableDocumentOwnership = async (
   contractAddress: string,
@@ -16,20 +15,25 @@ export const checkVerifiableDocumentOwnership = async (
   return (await documentStore.owner()) === (await account.getAddress());
 };
 
-export const checkTransferableRecordOwnership = async (contractAddress: string, signer: Signer): Promise<boolean> => {
-  const userWalletAddress = await signer.getAddress();
-  const network = await signer.provider?.getNetwork();
-  if (network === undefined) {
-    throw new Error("Wallet owner's Network not found.");
-  } else {
-    const networkDetails = getNetworkDetails(network.name as Network);
-    return await checkCreationAddress({
-      contractAddress: contractAddress,
-      network: networkDetails,
-      userAddress: userWalletAddress,
-      strict: false,
-    });
+export const checkTransferableRecordOwnership = async (
+  contractAddress: string,
+  wallet: Wallet | ConnectedSigner
+): Promise<boolean> => {
+  if (!(await checkAddressIsSmartContract(contractAddress, wallet))) {
+    return false;
   }
+  const connectedRegistry: TradeTrustERC721 = await getConnectedTokenRegistry(wallet, contractAddress);
+  return await transferableRecordsRolesCheck(connectedRegistry, wallet);
+};
+
+export const transferableRecordsRolesCheck = async (
+  connectedRegistry: TradeTrustERC721,
+  account: Wallet | ConnectedSigner
+): Promise<boolean> => {
+  const minterRole = await connectedRegistry.MINTER_ROLE();
+  const signerAddress = await account.getAddress();
+  const isMinter = await connectedRegistry.hasRole(minterRole, signerAddress);
+  return isMinter;
 };
 
 export const checkContractOwnership = async (

@@ -1,12 +1,8 @@
 import { v3 } from "@govtechsg/open-attestation";
 import sampleV3DID from "../../test/fixtures/sample-files/v3/did/sample-v3-did-wrapped.json";
-import { checkCreationAddress } from "./utils";
 import { checkDID, checkTransferableRecordOwnership, checkVerifiableDocumentOwnership } from "./ownership-checks";
-import { getConnectedDocumentStore, checkAddressIsSmartContract } from "../common";
+import { getConnectedDocumentStore, checkAddressIsSmartContract, getConnectedTokenRegistry } from "../common";
 import { Wallet } from "ethers";
-import { Network } from "../../types";
-import { ChainInfoObject } from "../../constants/chainInfo";
-import { getNetworkDetails } from "../../common/utils";
 
 jest.mock("../common", () => {
   const originalModule = jest.requireActual("../common");
@@ -16,22 +12,13 @@ jest.mock("../common", () => {
     ...originalModule,
     getConnectedDocumentStore: jest.fn(),
     checkAddressIsSmartContract: jest.fn(),
-  };
-});
-
-jest.mock("./utils", () => {
-  const originalModule = jest.requireActual("./utils");
-
-  return {
-    __esModule: true,
-    ...originalModule,
-    checkCreationAddress: jest.fn(),
+    getConnectedTokenRegistry: jest.fn(),
   };
 });
 
 const mockCheckAddressIsSmartContract = checkAddressIsSmartContract as jest.Mock;
 const mockGetConnectedDocumentStore = getConnectedDocumentStore as jest.Mock;
-const mockCheckCreationAddress = checkCreationAddress as jest.Mock;
+const mockGetConnectedTokenRegistry = getConnectedTokenRegistry as jest.Mock;
 
 const resetMocks = (mocks: jest.Mock[]): void => mocks.forEach((mock) => mock.mockReset());
 
@@ -57,9 +44,23 @@ const mockDocumentStoreResponse = ({ dsOwner = "0x1234", error = false }) => {
   });
 };
 
+const mockTokenRegistryResponse = ({ trMinter = "0x1234", error = false }) => {
+  mockCheckAddressIsSmartContract.mockImplementation(() => {
+    return !error;
+  });
+  mockGetConnectedTokenRegistry.mockResolvedValue({
+    MINTER_ROLE: () => {
+      "0x0";
+    },
+    hasRole: (role: string, address: string) => {
+      return Promise.resolve(address === trMinter);
+    },
+  });
+};
+
 describe("ownershipChecks", () => {
   beforeEach(() => {
-    resetMocks([mockGetConnectedDocumentStore, mockCheckAddressIsSmartContract, mockCheckCreationAddress]);
+    resetMocks([mockGetConnectedDocumentStore, mockCheckAddressIsSmartContract, mockGetConnectedTokenRegistry]);
   });
 
   describe("checkVerifiableDocumentOwnership", () => {
@@ -94,37 +95,17 @@ describe("ownershipChecks", () => {
   describe("checkTransferableRecordOwnership", () => {
     it("should return true for valid record ownership", async () => {
       const wallet = mockWallet();
-      mockDocumentStoreResponse({});
-      mockCheckCreationAddress.mockResolvedValue(true);
+      mockTokenRegistryResponse({});
       const contractAddress = "0x154fcc3c953057c9527eb180cad321b906412b5d";
       const status = await checkTransferableRecordOwnership(contractAddress, wallet);
-      expect(mockCheckCreationAddress).toBeCalledTimes(1);
-      const network = await wallet.provider.getNetwork();
-      const chainInfo: ChainInfoObject = getNetworkDetails(network.name as Network);
-      expect(mockCheckCreationAddress).toHaveBeenCalledWith({
-        contractAddress: contractAddress,
-        network: chainInfo,
-        userAddress: wallet.getAddress(),
-        strict: false,
-      });
       expect(status).toBe(true);
     });
 
     it("should return fail for invalid record ownership", async () => {
       const wallet = mockWallet();
-      mockDocumentStoreResponse({});
-      mockCheckCreationAddress.mockResolvedValue(false);
+      mockTokenRegistryResponse({ trMinter: "0x10101010" });
       const contractAddress = "0x154fcc3c953057c9527eb180cad321b906412b5d";
       const status = await checkTransferableRecordOwnership(contractAddress, wallet);
-      expect(mockCheckCreationAddress).toBeCalledTimes(1);
-      const network = await wallet.provider.getNetwork();
-      const chainInfo: ChainInfoObject = getNetworkDetails(network.name as Network);
-      expect(mockCheckCreationAddress).toHaveBeenCalledWith({
-        contractAddress: contractAddress,
-        network: chainInfo,
-        userAddress: wallet.getAddress(),
-        strict: false,
-      });
       expect(status).toBe(false);
     });
   });
