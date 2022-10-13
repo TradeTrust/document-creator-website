@@ -1,5 +1,5 @@
 import { Selector } from "testcafe";
-import { enterPassword, loadConfigFile, configRopsten } from "./helper";
+import { configLocal, enterPassword, loadConfigFile } from "./helper";
 
 fixture("Custom array ordering").page`http://localhost:3000`;
 
@@ -12,7 +12,7 @@ const MoveUp2 = Selector(`[data-testid="custom-array-field-2"] [data-testid="mov
 const Remove0 = Selector(`[data-testid="custom-array-field-0"] [data-testid="remove"]`);
 
 test("should add, order, remove correctly", async (t) => {
-  await loadConfigFile(configRopsten);
+  await loadConfigFile(configLocal);
   await enterPassword("password");
   await t.click(Selector("button").withText("TradeTrust Invoice v2"));
 
