@@ -1,11 +1,12 @@
-import { Wallet, providers } from "ethers";
-import { AwsKmwSignerOption, ConfigFile, ConnectedSigner } from "../../types";
+import { ProviderDetails, utils } from "@govtechsg/oa-verify";
 import { RelayProvider } from "@opengsn/gsn";
-import { getGSNRelayConfig, getHttpProviderUri } from "../../config";
-import Web3HttpProvider from "web3-providers-http";
-import { isWalletOption } from "../utils";
+import { providers, Wallet } from "ethers";
 import { AwsKmsSigner } from "ethers-aws-kms-signer";
-import { utils } from "@govtechsg/oa-verify";
+import Web3HttpProvider from "web3-providers-http";
+import { getGSNRelayConfig, getHttpProviderUri } from "../../config";
+import { ChainInfo } from "../../constants/chainInfo";
+import { AwsKmwSignerOption, ConfigFile, ConnectedSigner } from "../../types";
+import { getChainInfoFromNetworkName, isWalletOption } from "../utils";
 
 export const getGsnRelaySigner = async (
   account: Wallet | ConnectedSigner,
@@ -64,8 +65,16 @@ export const decryptWalletOrSigner = async (
   password: string,
   progressCallback: (progress: number) => void
 ): Promise<Wallet | ConnectedSigner> => {
-  const provider =
-    config.network === "local" ? new providers.JsonRpcProvider() : utils.generateProvider({ network: config.network });
+  const chainId = getChainInfoFromNetworkName(config.network).chainId;
+  const rpcUrl = ChainInfo[chainId].rpcUrl;
+  const opts: ProviderDetails = rpcUrl
+    ? { url: rpcUrl }
+    : {
+        network: config.network,
+        providerType: "infura",
+      };
+
+  const provider = config.network === "local" ? new providers.JsonRpcProvider() : utils.generateProvider(opts);
   if (isWalletOption(config.wallet)) {
     // For backward compatibility when the wallet is still string
     return decryptEncryptedJson(config.wallet, password, progressCallback, provider);

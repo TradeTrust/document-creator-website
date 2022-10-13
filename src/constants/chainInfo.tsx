@@ -66,6 +66,7 @@ export const ChainInfo: ChainInfo = {
     networkName: "rinkeby",
     explorerUrl: "https://rinkeby.etherscan.io",
     explorerApiUrl: "https://api-rinkeby.etherscan.io",
+    rpcUrl: "https://eth-rinkeby-rpc.gateway.pokt.network",
   },
   [ChainId.Goerli]: {
     label: "Goerli",

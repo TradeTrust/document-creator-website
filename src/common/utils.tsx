@@ -1,11 +1,10 @@
 import { utils } from "@govtechsg/open-attestation";
-import { csv2jsonAsync } from "json-2-csv";
-import converter from "json-2-csv";
-import { saveAs } from "file-saver";
-import { JSONSchema } from "json-schema-library";
 import Ajv from "ajv";
-import { WalletOptions, Network, NetworkObject, FormErrors } from "../types";
+import { saveAs } from "file-saver";
+import converter, { csv2jsonAsync } from "json-2-csv";
+import { JSONSchema } from "json-schema-library";
 import { ChainId, ChainInfo, ChainInfoObject } from "../constants/chainInfo";
+import { FormErrors, Network, NetworkObject, WalletOptions } from "../types";
 
 export function readFileAsJson<T>(file: File): Promise<T> {
   return new Promise((resolve, reject) => {
@@ -156,3 +155,22 @@ export const validateData = (schema: JSONSchema, data: unknown): { isValid: bool
 
   return { isValid, ajvErrors: ajv.errors };
 };
+
+/**
+ * Helper function to get chain info from network name.
+ * @param networkName Network name used by ethers standard providers and in OA
+ */
+export const getChainInfoFromNetworkName = (networkName: string): ChainInfoObject => {
+  const res = Object.keys(ChainInfo)
+    .map((chainId) => ChainInfo[Number(chainId) as ChainId])
+    .find((chainInfo) => chainInfo.networkName === networkName);
+  if (!res) throw new UnsupportedNetworkError(networkName);
+  return res;
+};
+
+class UnsupportedNetworkError extends Error {
+  constructor(chainIdOrName?: number | string) {
+    super(`Unsupported network chain ID or name${chainIdOrName ? ` (${chainIdOrName})` : ""}`);
+    this.name = "UnsupportedNetworkError";
+  }
+}
