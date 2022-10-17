@@ -1,12 +1,12 @@
 import { v3 } from "@govtechsg/open-attestation";
-import sampleV3DID from "../../test/fixtures/sample-files/v3/did/sample-v3-did-wrapped.json";
-import { checkCreationAddress } from "./utils";
-import { checkDID, checkTransferableRecordOwnership, checkVerifiableDocumentOwnership } from "./ownership-checks";
-import { getConnectedDocumentStore, checkAddressIsSmartContract } from "../common";
 import { Wallet } from "ethers";
-import { Network } from "../../types";
-import { ChainInfoObject } from "../../constants/chainInfo";
 import { getNetworkDetails } from "../../common/utils";
+import { ChainInfoObject } from "../../constants/chainInfo";
+import sampleV3DID from "../../test/fixtures/sample-files/v3/did/sample-v3-did-wrapped.json";
+import { Network } from "../../types";
+import { checkAddressIsSmartContract, getConnectedDocumentStore } from "../common";
+import { checkDID, checkTransferableRecordOwnership, checkVerifiableDocumentOwnership } from "./ownership-checks";
+import { checkCreationAddress } from "./utils";
 
 jest.mock("../common", () => {
   const originalModule = jest.requireActual("../common");
@@ -39,7 +39,7 @@ const mockWallet = (code = "0x1234", owner = "0x1234"): Wallet =>
   ({
     provider: {
       getCode: () => code,
-      getNetwork: () => ({ name: "ropsten", chainId: 3 }),
+      getNetwork: () => ({ name: "goerli", chainId: 5 }),
     },
     getAddress: () => {
       return owner;

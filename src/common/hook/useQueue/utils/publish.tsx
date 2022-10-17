@@ -1,32 +1,31 @@
 import {
+  utils,
   wrapDocuments as wrapDocumentsV2,
   __unsafe__use__it__at__your__own__risks__wrapDocuments as wrapDocumentsV3,
-  utils,
 } from "@govtechsg/open-attestation";
+import { Signer } from "ethers";
 import { defaultsDeep, groupBy } from "lodash";
 import { IdentityProofType } from "../../../../constants";
-import { ActionsUrlObject, Config, DocumentStorage, FormEntry, PublishingJob, RawDocument } from "../../../../types";
-import { getQueueNumber } from "../../../API/storageAPI";
-import { encodeQrCode, getDocumentNetwork, getDataV3 } from "../../../utils";
-import { Signer } from "ethers";
 import { publishDnsDidVerifiableDocumentJob } from "../../../../services/publishing";
+import {
+  ActionsUrlObject,
+  Config,
+  DocumentStorage,
+  FormEntry,
+  Network,
+  PublishingJob,
+  RawDocument,
+} from "../../../../types";
+import { getQueueNumber } from "../../../API/storageAPI";
+import { encodeQrCode, getDataV3, getDocumentNetwork } from "../../../utils";
 
-interface NetworkUrl {
-  homestead: string;
-  ropsten: string;
-  rinkeby: string;
-}
+const redirectUrl = (network: Network) => {
+  if (network === "homestead" || network === "matic") return "https://tradetrust.io/";
+  return "https://dev.tradetrust.io/";
+};
 
-const getReservedStorageUrl = async (
-  documentStorage: DocumentStorage,
-  network: "homestead" | "ropsten" | "rinkeby"
-): Promise<ActionsUrlObject> => {
+const getReservedStorageUrl = async (documentStorage: DocumentStorage, network: Network): Promise<ActionsUrlObject> => {
   const queueNumber = await getQueueNumber(documentStorage);
-  const networkUrl = {
-    homestead: "https://tradetrust.io/",
-    ropsten: "https://dev.tradetrust.io/",
-    rinkeby: "https://rinkeby.tradetrust.io/",
-  } as NetworkUrl;
 
   const qrUrlObj = {
     type: "DOCUMENT",
@@ -34,7 +33,7 @@ const getReservedStorageUrl = async (
       uri: `${documentStorage.url}/${queueNumber.data.id}`,
       key: queueNumber.data.key,
       permittedActions: ["STORE"],
-      redirect: networkUrl[network],
+      redirect: redirectUrl(network),
     },
   };
 

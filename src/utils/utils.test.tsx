@@ -1,16 +1,16 @@
 import { v2, v3 } from "@govtechsg/open-attestation";
-import { generateFileName, getIssuerLocation, getIdentityProofType, getIssuerAddress } from "./utils";
 import { FormTemplate } from "../types";
+import { generateFileName, getIdentityProofType, getIssuerAddress, getIssuerLocation } from "./utils";
 
 describe("generateFileName", () => {
   it("should generate the file name correctly with the given config and file name", async () => {
     const fileName = generateFileName({
-      network: "ropsten",
+      network: "goerli",
       fileName: "document-1",
       extension: "tt",
     });
 
-    expect(fileName).toStrictEqual("document-1-ropsten.tt");
+    expect(fileName).toStrictEqual("document-1-goerli.tt");
   });
 
   it("should generate the file name correctly when config.network is 'homestead'", async () => {
@@ -46,13 +46,13 @@ describe("generateErrorLogFileName", () => {
     };
 
     const fileName = generateFileName({
-      network: "ropsten",
+      network: "goerli",
       fileName: "error-log",
       extension: "tt",
       hasTimestamp: true,
     });
 
-    expect(fileName).toStrictEqual("error-log-ropsten-2019-10-30T00:00:00.000Z.tt");
+    expect(fileName).toStrictEqual("error-log-goerli-2019-10-30T00:00:00.000Z.tt");
 
     global.Date = RealDate;
   });
