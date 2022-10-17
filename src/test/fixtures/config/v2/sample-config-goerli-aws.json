@@ -981,6 +981,6 @@
   ],
   "documentStorage": {
     "apiKey": "randomKey",
-    "url": "https://api-goerli.tradetrust.io/storage"
+    "url": "https://api.example.com/storage"
   }
 }

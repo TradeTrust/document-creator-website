@@ -28,7 +28,7 @@
           "remarks": "a51a59bc-8c4a-47e9-8f13-27eaa2d0b799:string:Some very important documents in here for some submission",
           "links": {
             "self": {
-              "href": "3980155d-2e06-4680-8332-8e9268e7c5d3:string:https://action.openattestation.com?q=%7B%22type%22%3A%22DOCUMENT%22%2C%22payload%22%3A%7B%22uri%22%3A%22https%3A%2F%2Fapi-goerli.tradetrust.io%2Fstorage%2F6c093b87-e1ae-479c-828c-c14b6b10b6e0%22%2C%22key%22%3A%22a4f72213dbb3208ca3f09a4bae73efe890dbc5149e87f25ffb89223cf67e523b%22%2C%22permittedActions%22%3A%5B%22STORE%22%5D%2C%22redirect%22%3A%22https%3A%2F%2Fdev.tradetrust.io%2F%22%7D%7D"
+              "href": "3980155d-2e06-4680-8332-8e9268e7c5d3:string:https://action.openattestation.com?q=%7B%22type%22%3A%22DOCUMENT%22%2C%22payload%22%3A%7B%22uri%22%3A%22https%3A%2F%2Fapi.example.com%2Fstorage%2F6c093b87-e1ae-479c-828c-c14b6b10b6e0%22%2C%22key%22%3A%22a4f72213dbb3208ca3f09a4bae73efe890dbc5149e87f25ffb89223cf67e523b%22%2C%22permittedActions%22%3A%5B%22STORE%22%5D%2C%22redirect%22%3A%22https%3A%2F%2Fdev.tradetrust.io%2F%22%7D%7D"
             }
           }
         },
