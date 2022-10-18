@@ -18,6 +18,7 @@ import {
 } from "../../../../types";
 import { getQueueNumber } from "../../../API/storageAPI";
 import { encodeQrCode, getDataV3, getDocumentNetwork } from "../../../utils";
+import { ChainInfo } from "../../../../constants/chainInfo";
 
 const redirectUrl = (network: Network) => {
   if (network === "homestead" || network === "matic") return "https://tradetrust.io/";
@@ -26,6 +27,7 @@ const redirectUrl = (network: Network) => {
 
 const getReservedStorageUrl = async (documentStorage: DocumentStorage, network: Network): Promise<ActionsUrlObject> => {
   const queueNumber = await getQueueNumber(documentStorage);
+  const chainObject = Object.values(ChainInfo).find((item) => item.networkName === network);
 
   const qrUrlObj = {
     type: "DOCUMENT",
@@ -34,6 +36,7 @@ const getReservedStorageUrl = async (documentStorage: DocumentStorage, network: 
       key: queueNumber.data.key,
       permittedActions: ["STORE"],
       redirect: redirectUrl(network),
+      chainId: `${chainObject?.chainId}`,
     },
   };
 
