@@ -1,11 +1,10 @@
-import { Network, WrappedDocument } from "../types";
+import { getDnsDidRecords, getDocumentStoreRecords } from "@govtechsg/dnsprove";
+import { OpenAttestationDocument, utils } from "@govtechsg/open-attestation";
+import { utils as ethersUtils } from "ethers";
 import { saveAs } from "file-saver";
 import JSZip from "jszip";
-import { utils, OpenAttestationDocument } from "@govtechsg/open-attestation";
-import { getDocumentStoreRecords, getDnsDidRecords } from "@govtechsg/dnsprove";
-import { FormTemplate } from "../types";
 import { IdentityProofType } from "../constants";
-import { utils as ethersUtils } from "ethers";
+import { FormTemplate, Network, WrappedDocument } from "../types";
 interface GenerateFileName {
   network?: string;
   fileName: string;
@@ -71,19 +70,10 @@ export const createFileTransferEvent = (files: File[]) => {
 };
 
 export const getNetworkPath = (network?: Network): string => {
-  const homesteadUrlPath = "https://tradetrust.io";
-
-  if (!network) {
-    return homesteadUrlPath;
+  if (!network || network === "homestead" || network === "local") {
+    return "https://tradetrust.io";
   }
-
-  if (network === "ropsten") {
-    return "https://dev.tradetrust.io";
-  } else if (network === "homestead" || network === "local") {
-    return homesteadUrlPath;
-  } else {
-    return `https://${network}.tradetrust.io`;
-  }
+  return "https://dev.tradetrust.io";
 };
 
 export const getIssuerLocation = (rawDocument: OpenAttestationDocument): string | undefined => {

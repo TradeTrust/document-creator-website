@@ -1,9 +1,9 @@
-import { Wallet, Signer } from "ethers";
 import { Provider } from "@ethersproject/abstract-provider";
 import { OpenAttestationDocument } from "@govtechsg/open-attestation";
 import { ErrorObject } from "ajv";
+import { Signer, Wallet } from "ethers";
 
-export type Network = "homestead" | "ropsten" | "rinkeby" | "local";
+export type Network = "homestead" | "ropsten" | "rinkeby" | "goerli" | "local" | "sepolia" | "matic" | "maticmum";
 type FormType = "TRANSFERABLE_RECORD" | "VERIFIABLE_DOCUMENT";
 
 // FormTemplate is defined in configuration file

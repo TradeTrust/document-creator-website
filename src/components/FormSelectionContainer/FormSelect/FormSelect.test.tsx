@@ -1,11 +1,11 @@
-import { v2 } from "@govtechsg/open-attestation";
 import { getDocumentStoreRecords } from "@govtechsg/dnsprove";
-import React, { fireEvent, render, screen, waitFor } from "@testing-library/react";
-import { FormSelect } from "./FormSelect";
-import { FormTemplate } from "../../../types";
-import { checkContractOwnership } from "../../../services/prechecks";
+import { v2 } from "@govtechsg/open-attestation";
+import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { useConfigContext } from "../../../common/context/config";
-import sampleConfig from "../../../test/fixtures/config/v2/sample-config-ropsten.json";
+import { checkContractOwnership } from "../../../services/prechecks";
+import sampleConfig from "../../../test/fixtures/config/v2/sample-config-goerli.json";
+import { FormTemplate } from "../../../types";
+import { FormSelect } from "./FormSelect";
 
 jest.mock("@govtechsg/dnsprove", () => ({
   getDnsDidRecords: jest.fn(),

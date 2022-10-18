@@ -3,10 +3,10 @@ import { MemoryRouter } from "react-router";
 import { useConfigContext } from "../../common/context/config";
 import { useFormsContext } from "../../common/context/forms";
 import { useQueue } from "../../common/hook/useQueue";
-import { PublishContainer } from "./PublishContainer";
 import { QueueState } from "./../../constants/QueueState";
+import { PublishContainer } from "./PublishContainer";
 
-import sampleConfig from "../../test/fixtures/config/v2/sample-config-ropsten.json";
+import sampleConfig from "../../test/fixtures/config/v2/sample-config-goerli.json";
 
 jest.mock("../../common/context/forms");
 jest.mock("../../common/context/config");

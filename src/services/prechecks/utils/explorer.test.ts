@@ -1,7 +1,7 @@
-import { getCreationAddress, getCreationAddressRequest } from "./explorer";
 import axios from "axios";
-import { Network } from "../../../types";
 import { getNetworkDetails } from "../../../common/utils";
+import { Network } from "../../../types";
+import { getCreationAddress, getCreationAddressRequest } from "./explorer";
 
 jest.mock("axios", () => jest.fn());
 const mockAxios = axios as any as jest.Mock;
@@ -42,13 +42,13 @@ describe("explorer", () => {
     it("should call axios with valid parameters", async () => {
       mockAxios.mockReturnValue(true);
       const contractAddress = "0xC0NTRACTADDRESS";
-      const networkDetails = getNetworkDetails("ropsten" as Network);
+      const networkDetails = getNetworkDetails("goerli" as Network);
       const apiKey = "APIKEY-FOR-TEST";
       const response = await getCreationAddressRequest(contractAddress, networkDetails, apiKey);
       expect(response).toBe(true);
       expect(mockAxios).toHaveBeenCalledWith({
         method: "get",
-        url: `https://api-ropsten.etherscan.io/api`,
+        url: `https://api-goerli.etherscan.io/api`,
         headers: { "Content-Type": "application/json" },
         params: {
           action: "txlist",
@@ -69,7 +69,7 @@ describe("explorer", () => {
     it("should return undefined on a bad case", async () => {
       mockAxios.mockReturnValue(mockEtherscanFailResponse);
       const contractAddress = "0xC0NTRACTADDRESS";
-      const networkDetails = getNetworkDetails("ropsten" as Network);
+      const networkDetails = getNetworkDetails("goerli" as Network);
       const apiKey = "APIKEY-FOR-TEST";
       const response = await getCreationAddress(contractAddress, networkDetails, apiKey);
       expect(response).toBe(undefined);
@@ -78,7 +78,7 @@ describe("explorer", () => {
     it("should return owner address on a good case", async () => {
       mockAxios.mockReturnValue(mockEtherscanSuccessResponse);
       const contractAddress = "0xC0NTRACTADDRESS";
-      const networkDetails = getNetworkDetails("ropsten" as Network);
+      const networkDetails = getNetworkDetails("goerli" as Network);
       const apiKey = "APIKEY-FOR-TEST";
       const response = await getCreationAddress(contractAddress, networkDetails, apiKey);
       expect(response).toBe("0x1245e5b64d785b25057f7438f715f4aa5d965733");

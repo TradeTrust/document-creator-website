@@ -1,8 +1,9 @@
+import { Network } from "../types";
 export interface ChainInfoObject {
   label: string;
   chain: string;
   chainId: ChainId;
-  networkName: string; // network name that aligns with existing NETWORK_NAME
+  networkName: Network; // network name that aligns with existing NETWORK_NAME
   explorerUrl: string;
   explorerApiUrl?: string;
   rpcUrl?: string;
