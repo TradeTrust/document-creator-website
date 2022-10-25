@@ -1,6 +1,6 @@
+import { getDefaultProvider, Wallet } from "ethers";
 import { IdentityProofType } from "../../../../constants";
 import { Config, RawDocument } from "../../../../types";
-import { getDefaultProvider, Wallet } from "ethers";
 import { getQueueNumber } from "../../../API/storageAPI";
 import { getRawDocuments, groupDocumentsIntoJobs } from "./publish";
 import sampleConfigFile from "./sample-config.json";
@@ -20,7 +20,7 @@ const configWithoutDocumentStorage = {
   wallet: "FAKE_WALLET" as any,
 } as Config;
 
-const wallet = Wallet.createRandom().connect(getDefaultProvider("ropsten"));
+const wallet = Wallet.createRandom().connect(getDefaultProvider("goerli"));
 
 jest.mock("../../../API/storageAPI");
 const mockGetQueueNumber = getQueueNumber as jest.Mock;

@@ -1,13 +1,13 @@
-import { ProcessDocumentScreen } from "./ProcessDocumentScreen";
+import { act, fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { getDefaultProvider, Wallet } from "ethers";
-import { Config, FormEntry } from "../../types";
-import { useQueue } from "../../common/hook/useQueue";
-import { QueueState, QueueType } from "../../constants/QueueState";
-import { render, screen, act, fireEvent, waitFor } from "@testing-library/react";
 import FileSaver from "file-saver";
 import { MemoryRouter } from "react-router";
+import { useQueue } from "../../common/hook/useQueue";
+import { QueueState, QueueType } from "../../constants/QueueState";
+import { Config, FormEntry } from "../../types";
+import { ProcessDocumentScreen } from "./ProcessDocumentScreen";
 
-import sampleConfig from "../../test/fixtures/config/v2/sample-config-ropsten.json";
+import sampleConfig from "../../test/fixtures/config/v2/sample-config-goerli.json";
 import sampleWrappedDocument from "../../test/fixtures/sample-files/v2/wrapped/sample-wrapped-document.json";
 
 jest.mock("../../common/hook/useQueue");
@@ -18,7 +18,7 @@ const mockProcessDocuments = jest.fn();
 
 const config = {
   ...sampleConfig,
-  wallet: Wallet.createRandom().connect(getDefaultProvider("ropsten")),
+  wallet: Wallet.createRandom().connect(getDefaultProvider("goerli")),
 } as Config;
 
 const formEntries: FormEntry[] = [

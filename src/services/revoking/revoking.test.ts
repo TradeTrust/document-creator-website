@@ -1,7 +1,7 @@
 import { DocumentStoreFactory } from "@govtechsg/document-store";
 import { Wallet } from "ethers";
-import { revokeDocumentJob } from "./index";
 import { supportsInterface } from "../common/utils";
+import { revokeDocumentJob } from "./index";
 
 jest.mock("@govtechsg/document-store");
 jest.mock("../common/utils");
@@ -30,7 +30,7 @@ const whenDocumentStoreExist = (): void => {
 const resetMocks = (mocks: jest.Mock[]): void => mocks.forEach((mock) => mock.mockReset());
 
 const mockWallet = ({ code = "0x1234" } = {}): Wallet =>
-  ({ provider: { getCode: () => code, getNetwork: () => ({ name: "ropsten" }) } } as any);
+  ({ provider: { getCode: () => code, getNetwork: () => ({ name: "goerli" }) } } as any);
 
 describe("revokeDocumentJob", () => {
   beforeEach(() => {

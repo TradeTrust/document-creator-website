@@ -1,8 +1,8 @@
 import { DocumentStoreFactory } from "@govtechsg/document-store";
 import { TradeTrustERC721__factory } from "@govtechsg/token-registry/contracts";
 import { Wallet } from "ethers";
-import { publishTransferableRecordJob, publishVerifiableDocumentJob } from "./index";
 import { supportsInterface } from "../common/utils";
+import { publishTransferableRecordJob, publishVerifiableDocumentJob } from "./index";
 
 jest.mock("@govtechsg/token-registry/contracts");
 jest.mock("@govtechsg/document-store");

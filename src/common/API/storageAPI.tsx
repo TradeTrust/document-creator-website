@@ -13,9 +13,12 @@ const getHeaders = (documentStorage: DocumentStorage): Headers => {
     "Content-Type": "application/json",
   } as Headers;
 
-  const apiKey = "x-api-key";
+  const xApiKey = "x-api-key";
 
-  if (documentStorage.apiKey) headers[apiKey] = documentStorage.apiKey;
+  if (documentStorage.apiKey)
+    headers[xApiKey] = process.env.REACT_APP_API_KEY_DOCUMENT_STORAGE
+      ? process.env.REACT_APP_API_KEY_DOCUMENT_STORAGE
+      : documentStorage.apiKey;
 
   return headers;
 };

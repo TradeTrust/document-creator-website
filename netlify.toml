@@ -5,3 +5,9 @@
 
 [build]
   ignore = "git log -1 --pretty=%B | grep dependabot"
+
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Content-Type-Options = "nosniff"
+    X-XSS-Protection = "1; mode=block"

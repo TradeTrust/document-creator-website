@@ -26,7 +26,7 @@ const mockWallet = (code = "0x1234", owner = "0x1234"): Wallet =>
   ({
     provider: {
       getCode: () => code,
-      getNetwork: () => ({ name: "ropsten", chainId: 3 }),
+      getNetwork: () => ({ name: "goerli", chainId: 5 }),
     },
     getAddress: () => {
       return owner;

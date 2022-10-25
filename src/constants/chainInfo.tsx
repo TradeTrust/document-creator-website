@@ -1,10 +1,17 @@
+import { Network } from "../types";
 export interface ChainInfoObject {
   label: string;
   chain: string;
   chainId: ChainId;
-  networkName: string; // network name that aligns with existing NETWORK_NAME
+  networkName: Network; // network name that aligns with existing NETWORK_NAME
   explorerUrl: string;
-  explorerApiUrl: string;
+  explorerApiUrl?: string;
+  rpcUrl?: string;
+  nativeCurrency?: {
+    name: string;
+    symbol: string;
+    decimals: number;
+  };
 }
 
 type ChainInfo = Record<ChainId, ChainInfoObject>;
@@ -20,7 +27,7 @@ export enum ChainId {
   Ropsten = 3,
   Rinkeby = 4,
   Goerli = 5,
-  Kovan = 42,
+  Sepolia = 11155111,
 
   // Polygon
   Polygon = 137,
@@ -60,6 +67,7 @@ export const ChainInfo: ChainInfo = {
     networkName: "rinkeby",
     explorerUrl: "https://rinkeby.etherscan.io",
     explorerApiUrl: "https://api-rinkeby.etherscan.io",
+    rpcUrl: "https://eth-rinkeby-rpc.gateway.pokt.network",
   },
   [ChainId.Goerli]: {
     label: "Goerli",
@@ -69,13 +77,18 @@ export const ChainInfo: ChainInfo = {
     explorerUrl: "https://goerli.etherscan.io",
     explorerApiUrl: "https://api-goerli.etherscan.io",
   },
-  [ChainId.Kovan]: {
-    label: "Kovan",
+  [ChainId.Sepolia]: {
+    label: "Sepolia",
     chain: "ETH",
-    chainId: ChainId.Kovan,
-    networkName: "kovan",
-    explorerUrl: "https://kovan.etherscan.io",
-    explorerApiUrl: "https://api-kovan.etherscan.io",
+    chainId: ChainId.Sepolia,
+    networkName: "sepolia",
+    explorerUrl: "https://sepolia.etherscan.io",
+    rpcUrl: "https://rpc.sepolia.org",
+    nativeCurrency: {
+      name: "ETH",
+      symbol: "sepETH",
+      decimals: 18,
+    },
   },
   [ChainId.Polygon]: {
     label: "Polygon (Beta)",
@@ -84,6 +97,12 @@ export const ChainInfo: ChainInfo = {
     networkName: "matic",
     explorerUrl: "https://polygonscan.com",
     explorerApiUrl: "https://api.polygonscan.com",
+    rpcUrl: "https://polygon-rpc.com",
+    nativeCurrency: {
+      name: "MATIC",
+      symbol: "MATIC",
+      decimals: 18,
+    },
   },
   [ChainId.PolygonMumbai]: {
     label: "Polygon Mumbai",
@@ -92,5 +111,11 @@ export const ChainInfo: ChainInfo = {
     networkName: "maticmum",
     explorerUrl: "https://mumbai.polygonscan.com",
     explorerApiUrl: "https://api-testnet.polygonscan.com",
+    rpcUrl: "https://rpc-mumbai.matic.today",
+    nativeCurrency: {
+      name: "MATIC",
+      symbol: "mMATIC",
+      decimals: 18,
+    },
   },
 };
