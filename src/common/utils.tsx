@@ -116,7 +116,8 @@ export const getDocumentNetwork = (network: Network): NetworkObject => {
  */
 export const getDataV3: any = (data: any) => {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const { version, type, issuanceDate, openAttestationMetadata, issuer, credentialSubject, ...rest } = data; // omit these fields
+  const { version, type, issuanceDate, openAttestationMetadata, issuer, credentialSubject, attachments, ...rest } =
+    data; // omit these fields
   delete rest["@context"]; // omit these fields
   return rest;
 };
@@ -128,7 +129,7 @@ export const getDataV3: any = (data: any) => {
  */
 export const getDataV2: any = (data: any) => {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const { issuers, $template, ownership, ...rest } = data; // omit these fields
+  const { issuers, $template, ownership, attachments, ...rest } = data; // omit these fields
   return rest;
 };
 
