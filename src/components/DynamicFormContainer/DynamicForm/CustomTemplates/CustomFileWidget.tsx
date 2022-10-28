@@ -66,13 +66,15 @@ export const CustomFileWidget: FunctionComponent<WidgetProps> = ({
 
   const _onChange = async (event: ChangeEvent<HTMLInputElement>) => {
     if (event.target.files) {
-      const filesInfo = await processFiles(event.target.files);
-      setFilesMetadata(filesInfo);
-      if (multiple) {
-        return onChange(filesInfo.map((fileInfo) => fileInfo.dataURL));
-      } else {
-        return onChange(filesInfo[0].dataURL);
-      }
+      try {
+        const filesInfo = await processFiles(event.target.files);
+        setFilesMetadata(filesInfo);
+        if (multiple) {
+          return onChange(filesInfo.map((fileInfo) => fileInfo.dataURL));
+        } else {
+          return onChange(filesInfo[0].dataURL);
+        }
+      } catch (error) {}
     }
   };
 
