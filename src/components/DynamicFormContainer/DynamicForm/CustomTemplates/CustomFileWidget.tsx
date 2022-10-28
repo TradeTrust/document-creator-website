@@ -66,15 +66,13 @@ export const CustomFileWidget: FunctionComponent<WidgetProps> = ({
 
   const _onChange = async (event: ChangeEvent<HTMLInputElement>) => {
     if (event.target.files) {
-      try {
-        const filesInfo = await processFiles(event.target.files);
-        setFilesMetadata(filesInfo);
-        if (multiple) {
-          return onChange(filesInfo.map((fileInfo) => fileInfo.dataURL));
-        } else {
-          return onChange(filesInfo[0].dataURL);
-        }
-      } catch (error) {}
+      const filesInfo = await processFiles(event.target.files);
+      setFilesMetadata(filesInfo);
+      if (multiple) {
+        return onChange(filesInfo.map((fileInfo) => fileInfo.dataURL));
+      } else {
+        return onChange(filesInfo[0].dataURL);
+      }
     }
   };
 
@@ -89,7 +87,7 @@ export const CustomFileWidget: FunctionComponent<WidgetProps> = ({
         id={id}
         className="hidden"
         type="file"
-        onChange={_onChange}
+        onChange={() => _onChange}
         disabled={readonly || disabled}
         defaultValue=""
         autoFocus={autofocus}
