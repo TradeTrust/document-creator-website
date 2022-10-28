@@ -134,7 +134,7 @@ describe("useQueue", () => {
       await result.current.processDocuments(QueueType.REVOKE);
     });
     expect(result.current.failedProcessedDocuments).toHaveLength(1);
-  });
+  }, 30000);
 
   it("should have an error if getRevokeJobs throw error", async () => {
     mockGetRevokeJobs.mockRejectedValue(new Error("Some error"));
