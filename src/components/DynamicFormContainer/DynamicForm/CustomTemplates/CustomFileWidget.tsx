@@ -1,4 +1,4 @@
-import React, { ChangeEvent, FunctionComponent, useState } from "react";
+import React, { ChangeEvent, FunctionComponent, useState, useRef, useEffect } from "react";
 import { WidgetProps } from "@rjsf/core";
 import { Upload } from "react-feather";
 
@@ -18,6 +18,7 @@ export const CustomFileWidget: FunctionComponent<WidgetProps> = ({
     type: string;
   }
 
+  const isMounted = useRef(true);
   const [filesMetadata, setFilesMetadata] = useState<any[]>([]);
 
   function processFile(file: File): Promise<fileData | DOMException> {
@@ -67,6 +68,7 @@ export const CustomFileWidget: FunctionComponent<WidgetProps> = ({
   const _onChange = async (event: ChangeEvent<HTMLInputElement>) => {
     if (event.target.files) {
       const filesInfo = await processFiles(event.target.files);
+      if (!isMounted.current) return null;
       setFilesMetadata(filesInfo);
       if (multiple) {
         return onChange(filesInfo.map((fileInfo) => fileInfo.dataURL));
@@ -75,6 +77,12 @@ export const CustomFileWidget: FunctionComponent<WidgetProps> = ({
       }
     }
   };
+
+  useEffect(() => {
+    return () => {
+      isMounted.current = false;
+    };
+  }, []);
 
   return (
     <label>
