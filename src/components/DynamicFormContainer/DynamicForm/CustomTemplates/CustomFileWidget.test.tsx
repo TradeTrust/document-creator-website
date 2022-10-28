@@ -5,6 +5,7 @@ import { CustomFileWidget } from "./CustomFileWidget";
 
 const propsToPassIntoWidget = (): any => {
   return {
+    onChange: () => {},
     options: {
       text: "Upload Cover Letter Logo",
       accept: ".png, .jpeg, .jpg",
