@@ -2,10 +2,7 @@ import Joi from "@hapi/joi";
 import { ConfigFile } from "../../types";
 
 const configFileSchema = Joi.object({
-  network: Joi.string()
-    .allow("homestead", "ropsten", "rinkeby", "local", "goerli", "sepolia", "matic", "maticmum")
-    .only()
-    .required(),
+  network: Joi.string().allow("homestead", "local", "goerli", "sepolia", "matic", "maticmum").only().required(),
   wallet: Joi.alternatives(
     Joi.string().required(),
     Joi.object().keys({

@@ -19,10 +19,10 @@ interface EtherscanNetworkApiDetails {
   hostname: string;
 }
 
-const ropstenGsnRelayConfig = {
-  relayHub: "0x29e41C2b329fF4921d8AC654CEc909a0B575df20",
-  stakeManager: "0x762A4D5F51d8b2F9bA1B0412B45687cE0EfFD92B",
-  forwarder: "0x25CEd1955423BA34332Ec1B60154967750a0297D",
+const goerliGsnRelayConfig = {
+  relayHub: "0x1F3d1C33977957EA41bEdFDcBf7fF64Fd3A3985e",
+  stakeManager: "0xd494924348e91433218506bc0ed02b3a2d83ef0e",
+  forwarder: "0xd9c1a99e9263B98F3f633a9f1A201FA0AFC2A1c2",
   gasPrice: 20000000000, // 20 Gwei
 };
 
@@ -34,7 +34,7 @@ const homesteadGsnRelayConfig = {
 };
 
 export const getGSNRelayConfig = (networkId?: string): GsnRelayConfig => {
-  if (networkId === "ropsten") return ropstenGsnRelayConfig;
+  if (networkId === "goerli") return goerliGsnRelayConfig;
   return homesteadGsnRelayConfig;
 };
 
