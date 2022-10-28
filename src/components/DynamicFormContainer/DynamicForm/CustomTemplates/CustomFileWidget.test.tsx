@@ -13,13 +13,13 @@ const propsToPassIntoWidget = (): any => {
   };
 };
 
-describe("CustomFileWidget", () => {
-  it("should display file name after upload", () => {
+describe("CustomFileWidget",  () => {
+  it("should display file name after upload",async () => {
     const mockFile = new File(["(⌐□_□)"], "mockFile.png", { type: "image/png" });
-    render(<CustomFileWidget {...propsToPassIntoWidget()} />);
+    const {findByText } = render(<CustomFileWidget {...propsToPassIntoWidget()} />);
     const fileWidget = screen.getByTestId("custom-file-widget") as HTMLInputElement;
     userEvent.upload(fileWidget, mockFile);
-    expect(fileWidget.files?.[0].name).toBe("mockFile.png");
+    findByText("mockFile.png");
     expect(fileWidget.files?.length).toBe(1);
   });
 });
