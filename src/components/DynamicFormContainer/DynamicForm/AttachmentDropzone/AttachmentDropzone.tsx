@@ -98,8 +98,8 @@ const processFiles = (file: File): Promise<FileUploadType> => {
       const { data, type } = fileInfo(event?.target?.result as string);
       resolve({
         data,
-        filename: name,
-        type,
+        fileName: name,
+        mimeType: type,
       });
     };
     reader.readAsDataURL(file);

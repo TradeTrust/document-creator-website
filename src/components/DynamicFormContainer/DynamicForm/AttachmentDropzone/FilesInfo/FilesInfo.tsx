@@ -57,7 +57,7 @@ export const FilesInfo: FunctionComponent<FilesInfoType> = ({ filesInfo, removeF
   }
   return (
     <ul className="file-info mt-4">
-      {filesInfo.map(({ filename, data, type }: FileUploadType, key: number) => {
+      {filesInfo.map(({ fileName, data, mimeType }: FileUploadType, key: number) => {
         const decodedData = atob(data);
         const size = prettyBytes(decodedData.length);
         return (
@@ -66,9 +66,9 @@ export const FilesInfo: FunctionComponent<FilesInfoType> = ({ filesInfo, removeF
             data-testid={`upload-file-${key}`}
             className="border border-cloud-200 border-solid rounded my-1 h-16 flex items-center px-4"
           >
-            {getExtension(type)}
+            {getExtension(mimeType)}
             <p className="font-gilroy-bold text-cloud-800 flex-grow break-all">
-              {filename}
+              {fileName}
               <span className="text-cloud-500 text-xs font-regular"> ({size})</span>
             </p>
 

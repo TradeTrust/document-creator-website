@@ -65,10 +65,11 @@ interface Attachments {
   accept?: string;
 }
 
+// FileUploadType to match Attachment -> https://github.com/Open-Attestation/open-attestation/blob/a0478a5b789787ad603f6291f01691b29e319955/src/3.0/schema/schema.json#L211-L222
 export interface FileUploadType {
   data: string;
-  filename: string;
-  type: string;
+  fileName: string;
+  mimeType: string;
 }
 
 // FormData is used by json-schema-forms internally to track state of a single form
