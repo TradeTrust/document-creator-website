@@ -1,7 +1,7 @@
 import prettyBytes from "pretty-bytes";
 import React, { FunctionComponent } from "react";
 import { Paperclip, Trash2 } from "react-feather";
-import { FileUploadType } from "../../../../../types";
+import { ProcessedFiles } from "../../../../../types";
 import csv from "./csv.svg";
 import doc from "./doc.svg";
 import jpg from "./jpg.svg";
@@ -10,7 +10,7 @@ import png from "./png.svg";
 import txt from "./txt.svg";
 
 interface FilesInfoType {
-  filesInfo: FileUploadType[];
+  filesInfo: ProcessedFiles[];
   removeFile: (index: number) => void;
 }
 
@@ -57,7 +57,11 @@ export const FilesInfo: FunctionComponent<FilesInfoType> = ({ filesInfo, removeF
   }
   return (
     <ul className="file-info mt-4">
-      {filesInfo.map(({ fileName, data, mimeType }: FileUploadType, key: number) => {
+      {filesInfo.map((file: any, key: number) => {
+        const data = file.data;
+        const name = file.filename || file.fileName; // v2 or v3 attachment
+        const type = file.type || file.mimeType; // v2 or v3 attachment
+
         const decodedData = atob(data);
         const size = prettyBytes(decodedData.length);
         return (
@@ -66,9 +70,9 @@ export const FilesInfo: FunctionComponent<FilesInfoType> = ({ filesInfo, removeF
             data-testid={`upload-file-${key}`}
             className="border border-cloud-200 border-solid rounded my-1 h-16 flex items-center px-4"
           >
-            {getExtension(mimeType)}
+            {getExtension(type)}
             <p className="font-gilroy-bold text-cloud-800 flex-grow break-all">
-              {fileName}
+              {name}
               <span className="text-cloud-500 text-xs font-regular"> ({size})</span>
             </p>
 

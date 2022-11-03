@@ -109,6 +109,11 @@ export const getDocumentNetwork = (network: Network): NetworkObject => {
   };
 };
 
+// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
+export const hasVcContext = (document: any) => {
+  return !!document["@context"];
+};
+
 /*
  * getDataV3
  * @param {string} data
@@ -143,10 +148,13 @@ export const getDataV2: any = (data: any) => {
  * 3. user input flow - single document, data manually filled by user.
  */
 export const getDataToValidate: any = (data: any) => {
+  console.log(data, "!!!");
   if (utils.isRawV3Document(data)) {
     return getDataV3(data);
-  } else {
+  } else if (utils.isRawV2Document(data)) {
     return getDataV2(data);
+  } else {
+    throw new Error("data is not of OA v2 / v3 format");
   }
 };
 

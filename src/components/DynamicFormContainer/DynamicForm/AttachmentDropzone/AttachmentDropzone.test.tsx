@@ -35,9 +35,9 @@ describe("attachmentDropzone", () => {
         onRemove={() => {}}
         uploadedFiles={[
           {
-            fileName: "asdfdfs.pdf",
+            filename: "asdfdfs.pdf",
             data: "asdfasdf",
-            mimeType: "application/pdf",
+            type: "application/pdf",
           },
         ]}
       />
@@ -99,9 +99,9 @@ describe("attachmentDropzone", () => {
         onRemove={() => {}}
         uploadedFiles={[
           {
-            fileName: "asdfdfs.pdf",
+            filename: "asdfdfs.pdf",
             data: "asdfasdfasdf",
-            mimeType: "application/pdf",
+            type: "application/pdf",
           },
         ]}
       />

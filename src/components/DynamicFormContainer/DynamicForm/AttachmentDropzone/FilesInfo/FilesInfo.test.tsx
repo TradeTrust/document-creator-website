@@ -8,9 +8,9 @@ describe("filesInfo", () => {
       <FilesInfo
         filesInfo={[
           {
-            fileName: "asdfdfs.pdf",
+            filename: "asdfdfs.pdf",
             data: "asdfasdf",
-            mimeType: "application/pdf",
+            type: "application/pdf",
           },
         ]}
         removeFile={() => {}}
@@ -28,54 +28,54 @@ describe("filesInfo", () => {
         <FilesInfo
           filesInfo={[
             {
-              fileName: "asdfdfs.pdf",
+              filename: "asdfdfs.pdf",
               data: "asdfasdf",
-              mimeType: "application/pdf",
+              type: "application/pdf",
             },
             {
-              fileName: "asdfdfs.txt",
+              filename: "asdfdfs.txt",
               data: "asdfasdf",
-              mimeType: "text/plain",
+              type: "text/plain",
             },
             {
-              fileName: "asdfdfs.png",
+              filename: "asdfdfs.png",
               data: "asdfasdf",
-              mimeType: "image/png",
+              type: "image/png",
             },
             {
-              fileName: "asdfdfs.csv",
+              filename: "asdfdfs.csv",
               data: "asdfasdf",
-              mimeType: "text/csv",
+              type: "text/csv",
             },
             {
-              fileName: "asdfdfs.xls",
+              filename: "asdfdfs.xls",
               data: "asdfasdf",
-              mimeType: "application/vnd.ms-excel",
+              type: "application/vnd.ms-excel",
             },
             {
-              fileName: "asdfdfs.xlsx",
+              filename: "asdfdfs.xlsx",
               data: "asdfasdf",
-              mimeType: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+              type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
             },
             {
-              fileName: "asdfdfs.docx",
+              filename: "asdfdfs.docx",
               data: "asdfasdf",
-              mimeType: "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+              type: "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
             },
             {
-              fileName: "asdfdfs.doc",
+              filename: "asdfdfs.doc",
               data: "asdfasdf",
-              mimeType: "application/msword",
+              type: "application/msword",
             },
             {
-              fileName: "asdfdfs.jpeg",
+              filename: "asdfdfs.jpeg",
               data: "asdfasdf",
-              mimeType: "image/jpeg",
+              type: "image/jpeg",
             },
             {
-              fileName: "asdfdfs.json",
+              filename: "asdfdfs.json",
               data: "asdfasdf",
-              mimeType: "application/json",
+              type: "application/json",
             },
           ]}
           removeFile={() => {}}
@@ -98,9 +98,9 @@ describe("filesInfo", () => {
       <FilesInfo
         filesInfo={[
           {
-            fileName: "asdfdfs.pdf",
+            filename: "asdfdfs.pdf",
             data: "asdfasdf",
-            mimeType: "application/pdf",
+            type: "application/pdf",
           },
         ]}
         removeFile={mockRemoveFileFn}

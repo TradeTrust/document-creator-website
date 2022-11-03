@@ -1,15 +1,17 @@
 import { Button } from "@govtechsg/tradetrust-ui-components";
 import React, { FunctionComponent, useCallback, useState } from "react";
 import { FileUpload } from "../../../../constants/FileUpload";
-import { FileUploadType } from "../../../../types";
+import { ProcessedFiles } from "../../../../types";
 import { StyledDropZone } from "../../../UI/StyledDropZone";
 import { FilesInfo } from "./FilesInfo";
+import { hasVcContext } from "../../../../common/utils";
+import { useFormsContext } from "../../../../common/context/forms";
 
 interface AttachmentDropzone {
   acceptedFormat: string;
-  onUpload: (processedFiles: FileUploadType[]) => void;
+  onUpload: (processedFiles: ProcessedFiles[]) => void;
   onRemove: (fileIndex: number) => void;
-  uploadedFiles: FileUploadType[];
+  uploadedFiles: ProcessedFiles[];
 }
 
 export const AttachmentDropzone: FunctionComponent<AttachmentDropzone> = ({
@@ -18,12 +20,15 @@ export const AttachmentDropzone: FunctionComponent<AttachmentDropzone> = ({
   onRemove,
   uploadedFiles,
 }) => {
+  const { currentFormData } = useFormsContext();
   const [fileErrors, setFileErrors] = useState<Error[]>([]);
+  const isOaV3 = hasVcContext(currentFormData?.formData);
+  console.log(currentFormData);
 
   const onDropAccepted = useCallback(
     async (files: File[]) => {
       let totalSize = uploadedFiles
-        ? uploadedFiles.reduce((acc: number, current: FileUploadType) => acc + atob(current.data).length, 0)
+        ? uploadedFiles.reduce((acc: number, current: any) => acc + atob(current.data).length, 0)
         : 0;
 
       files.forEach((file) => (totalSize += file.size));
@@ -39,10 +44,10 @@ export const AttachmentDropzone: FunctionComponent<AttachmentDropzone> = ({
         setFileErrors([]);
       }
 
-      const processedFiles = await Promise.all(files.map(processFiles));
+      const processedFiles = await Promise.all(files.map((file) => processFiles(file, isOaV3)));
       onUpload(processedFiles);
     },
-    [onUpload, uploadedFiles]
+    [isOaV3, onUpload, uploadedFiles]
   );
 
   const removeFile = (fileIndex: number): void => {
@@ -89,18 +94,27 @@ export const fileInfo = (dataUrl: string): { type: string; data: string } => {
   };
 };
 
-const processFiles = (file: File): Promise<FileUploadType> => {
+const processFiles = (file: File, isOaV3: boolean): Promise<ProcessedFiles> => {
   const { name } = file;
   return new Promise((resolve, reject) => {
     const reader = new window.FileReader();
     reader.onerror = reject;
     reader.onload = (event) => {
       const { data, type } = fileInfo(event?.target?.result as string);
-      resolve({
-        data,
-        fileName: name,
-        mimeType: type,
-      });
+      console.log("isOaV3", isOaV3);
+      if (isOaV3) {
+        resolve({
+          data,
+          fileName: name,
+          mimeType: type,
+        });
+      } else {
+        resolve({
+          data,
+          filename: name,
+          type: type,
+        });
+      }
     };
     reader.readAsDataURL(file);
   });
