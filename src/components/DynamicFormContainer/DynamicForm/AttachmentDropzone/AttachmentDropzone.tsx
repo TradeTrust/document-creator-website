@@ -23,7 +23,6 @@ export const AttachmentDropzone: FunctionComponent<AttachmentDropzone> = ({
   const { currentFormData } = useFormsContext();
   const [fileErrors, setFileErrors] = useState<Error[]>([]);
   const isOaV3 = hasVcContext(currentFormData?.formData);
-  console.log(currentFormData);
 
   const onDropAccepted = useCallback(
     async (files: File[]) => {
@@ -101,7 +100,7 @@ const processFiles = (file: File, isOaV3: boolean): Promise<ProcessedFiles> => {
     reader.onerror = reject;
     reader.onload = (event) => {
       const { data, type } = fileInfo(event?.target?.result as string);
-      console.log("isOaV3", isOaV3);
+
       if (isOaV3) {
         resolve({
           data,

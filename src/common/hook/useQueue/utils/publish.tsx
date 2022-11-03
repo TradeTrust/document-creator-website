@@ -80,7 +80,6 @@ export const getRawDocuments = async (forms: FormEntry[], config: Config): Promi
       const documentNetwork = getDocumentNetwork(config.network);
       let formData;
       if (utils.isRawV3Document(data.formData)) {
-        console.log(data.formData, "get attaqchments");
         formData = {
           ...documentNetwork,
           credentialSubject: { ...getDataV3(data.formData), ...qrUrl }, // https://github.com/TradeTrust/document-creator-website/issues/256, using `getDataV3` here so not to break existing flows

@@ -148,7 +148,6 @@ export const getDataV2: any = (data: any) => {
  * 3. user input flow - single document, data manually filled by user.
  */
 export const getDataToValidate: any = (data: any) => {
-  console.log(data, "!!!");
   if (utils.isRawV3Document(data)) {
     return getDataV3(data);
   } else if (utils.isRawV2Document(data)) {
