@@ -22,7 +22,7 @@ export const AttachmentDropzone: FunctionComponent<AttachmentDropzone> = ({
 }) => {
   const { currentFormData } = useFormsContext();
   const [fileErrors, setFileErrors] = useState<Error[]>([]);
-  const isOaV3 = hasVcContext(currentFormData?.formData);
+  const isOaV3 = hasVcContext(currentFormData?.formData || {});
 
   const onDropAccepted = useCallback(
     async (files: File[]) => {
