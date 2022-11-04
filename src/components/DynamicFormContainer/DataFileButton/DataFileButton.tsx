@@ -6,7 +6,7 @@ import { FormErrorBanner } from "./../FormErrorBanner";
 import { Draft04 as Core, JSONSchema } from "json-schema-library";
 import { ToolTip } from "../../UI/ToolTip";
 import { StyledDropZone } from "../../UI/StyledDropZone";
-import { validateData, getDataToValidate } from "./../../../common/utils";
+import { validateData } from "./../../../common/utils";
 import { FormErrors } from "./../../../types";
 
 const { stack } = getLogger("DataFileButton");
@@ -47,11 +47,11 @@ const getDataFileBasedOnExtension = async (file: File): Promise<GetDataFileBased
   switch (file.type) {
     case "application/json":
       dataFile = await readFileAsJson<DataFileDefault>(file);
-      dataToValidate = getDataToValidate(dataFile.data);
+      dataToValidate = dataFile.data;
       break;
     case "text/csv":
       dataFile = await readFileAsCsv(file);
-      dataToValidate = getDataToValidate(dataFile[0]); // use 1 item for fields validation
+      dataToValidate = dataFile[0]; // use 1 item for fields validation
       break;
     default:
       throw Error("Data file type not supported.");
