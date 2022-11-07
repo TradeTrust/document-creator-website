@@ -65,11 +65,19 @@ interface Attachments {
   accept?: string;
 }
 
-export interface FileUploadType {
+type ProcessedFilesV2 = {
   data: string;
   filename: string;
   type: string;
-}
+};
+
+type ProcessedFilesV3 = {
+  data: string;
+  fileName: string;
+  mimeType: string;
+};
+
+export type ProcessedFiles = ProcessedFilesV3 | ProcessedFilesV2;
 
 // FormData is used by json-schema-forms internally to track state of a single form
 export interface FormData {
