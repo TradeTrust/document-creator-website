@@ -30,6 +30,10 @@ export const transferableRecordsRolesCheck = async (
   connectedRegistry: TradeTrustERC721,
   account: Wallet | ConnectedSigner
 ): Promise<boolean> => {
+  const isTokenRegistry = await connectedRegistry.supportsInterface("0x8a198f04");
+  if (!isTokenRegistry) {
+    return false;
+  }
   const minterRole = await connectedRegistry.MINTER_ROLE();
   const signerAddress = await account.getAddress();
   const isMinter = await connectedRegistry.hasRole(minterRole, signerAddress);

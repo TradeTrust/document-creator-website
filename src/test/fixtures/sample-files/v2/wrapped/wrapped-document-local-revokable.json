@@ -9,7 +9,7 @@
     "issuers": [
       {
         "name": "b9608f61-1679-4bb8-9185-56397348f5cf:string:Demo Issuer",
-        "documentStore": "37071848-f76b-466c-b135-581c2abff561:string:0x63a223e025256790e88778a01f480eba77731d04",
+        "documentStore": "37071848-f76b-466c-b135-581c2abff561:string:0x4Bf7E4777a8D1b6EdD5F2d9b8582e2817F0B0953",
         "identityProof": {
           "type": "fa736af8-38b2-4a06-87ae-157f4fe77799:string:DNS-TXT",
           "location": "60fc494a-b3e9-433a-af36-8eb72d3b694d:string:demo-tradetrust.openattestation.com"
