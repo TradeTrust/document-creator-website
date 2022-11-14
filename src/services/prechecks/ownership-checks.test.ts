@@ -49,8 +49,8 @@ const mockTokenRegistryResponse = ({ trMinter = "0x1234", contractError = false,
     return !contractError;
   });
   mockGetConnectedTokenRegistry.mockResolvedValue({
-    supportsInterface: () => { 
-      return !interfaceError; 
+    supportsInterface: () => {
+      return !interfaceError;
     },
     MINTER_ROLE: () => {
       "0x0";
