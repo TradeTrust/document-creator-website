@@ -20,10 +20,11 @@ export const checkTransferableRecordOwnership = async (
   contractAddress: string,
   wallet: Wallet | ConnectedSigner
 ): Promise<boolean> => {
-  if (!(await checkAddressIsSmartContract(contractAddress, wallet))) {
-    return false;
-  }
+  const isSmartContract = await checkAddressIsSmartContract(contractAddress, wallet);
+  if (!isSmartContract) return false;
   const connectedRegistry: TradeTrustERC721 = await getConnectedTokenRegistry(wallet, contractAddress);
+  const isTokenRegistry = await supportsInterface(connectedRegistry, "0x8a198f04");
+  if (!isTokenRegistry) return false;
   return await transferableRecordsRolesCheck(connectedRegistry, wallet);
 };
 
@@ -31,10 +32,6 @@ export const transferableRecordsRolesCheck = async (
   connectedRegistry: TradeTrustERC721,
   account: Wallet | ConnectedSigner
 ): Promise<boolean> => {
-  const isTokenRegistry = await supportsInterface(connectedRegistry, "0x8a198f04");
-  if (!isTokenRegistry) {
-    return false;
-  }
   const minterRole = await connectedRegistry.MINTER_ROLE();
   const signerAddress = await account.getAddress();
   const isMinter = await connectedRegistry.hasRole(minterRole, signerAddress);
