@@ -3,6 +3,7 @@ import { TradeTrustERC721 } from "@govtechsg/token-registry/dist/contracts";
 import { Wallet } from "ethers";
 import { ConnectedSigner } from "../../types";
 import { getConnectedDocumentStore, checkAddressIsSmartContract, getConnectedTokenRegistry } from "../common";
+import { supportsInterface } from "../common/utils";
 
 export const checkVerifiableDocumentOwnership = async (
   contractAddress: string,
@@ -30,7 +31,7 @@ export const transferableRecordsRolesCheck = async (
   connectedRegistry: TradeTrustERC721,
   account: Wallet | ConnectedSigner
 ): Promise<boolean> => {
-  const isTokenRegistry = await connectedRegistry.supportsInterface("0x8a198f04");
+  const isTokenRegistry = await supportsInterface(connectedRegistry, "0x8a198f04");
   if (!isTokenRegistry) {
     return false;
   }

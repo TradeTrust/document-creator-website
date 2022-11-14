@@ -44,11 +44,14 @@ const mockDocumentStoreResponse = ({ dsOwner = "0x1234", error = false }) => {
   });
 };
 
-const mockTokenRegistryResponse = ({ trMinter = "0x1234", error = false }) => {
+const mockTokenRegistryResponse = ({ trMinter = "0x1234", contractError = false, interfaceError = false }) => {
   mockCheckAddressIsSmartContract.mockImplementation(() => {
-    return !error;
+    return !contractError;
   });
   mockGetConnectedTokenRegistry.mockResolvedValue({
+    supportsInterface: () => { 
+      return !interfaceError; 
+    },
     MINTER_ROLE: () => {
       "0x0";
     },
