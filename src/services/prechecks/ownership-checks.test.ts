@@ -67,13 +67,13 @@ describe("ownershipChecks", () => {
   });
 
   describe("checkVerifiableDocumentOwnership", () => {
-    it("should return true for valid document ownership", async () => {
+    it("should return VALID for valid document ownership", async () => {
       const wallet = mockWallet();
       mockDocumentStoreResponse({});
       const contractAddress = "0x154fcc3c953057c9527eb180cad321b906412b5d";
       const status = await checkVerifiableDocumentOwnership(contractAddress, wallet);
 
-      expect(status).toBe(true);
+      expect(status).toBe("VALID");
     });
 
     it("should return false for invalid document store", async () => {
@@ -82,7 +82,7 @@ describe("ownershipChecks", () => {
       const contractAddress = "0x154fcc3c953057c9527eb180cad321b906412b5d";
       const status = await checkVerifiableDocumentOwnership(contractAddress, wallet);
 
-      expect(status).toBe(false);
+      expect(status).toStrictEqual({ type: "ownership", message: "Invalid or Unsupported smart contract" });
     });
 
     it("should return false for unowned document store", async () => {
@@ -91,7 +91,7 @@ describe("ownershipChecks", () => {
       const contractAddress = "0x154fcc3c953057c9527eb180cad321b906412b5d";
       const status = await checkVerifiableDocumentOwnership(contractAddress, wallet);
 
-      expect(status).toBe(false);
+      expect(status).toStrictEqual({ type: "ownership", message: "Document Store is not owned by wallet" });
     });
   });
 
@@ -101,7 +101,7 @@ describe("ownershipChecks", () => {
       mockTokenRegistryResponse({});
       const contractAddress = "0x154fcc3c953057c9527eb180cad321b906412b5d";
       const status = await checkTransferableRecordOwnership(contractAddress, wallet);
-      expect(status).toBe(true);
+      expect(status).toBe("VALID");
     });
 
     it("should return fail for invalid record ownership", async () => {
@@ -109,7 +109,10 @@ describe("ownershipChecks", () => {
       mockTokenRegistryResponse({ trMinter: "0x10101010" });
       const contractAddress = "0x154fcc3c953057c9527eb180cad321b906412b5d";
       const status = await checkTransferableRecordOwnership(contractAddress, wallet);
-      expect(status).toBe(false);
+      expect(status).toStrictEqual({
+        type: "ownership",
+        message: "Wallet do not have permission to mint on Token Registry",
+      });
     });
   });
 

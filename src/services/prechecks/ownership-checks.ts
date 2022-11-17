@@ -4,28 +4,50 @@ import { Wallet } from "ethers";
 import { ConnectedSigner } from "../../types";
 import { getConnectedDocumentStore, checkAddressIsSmartContract, getConnectedTokenRegistry } from "../common";
 import { supportsInterface } from "../common/utils";
+import { PreCheckError, PreCheckStatus } from "./types";
+
+const defaultError: PreCheckError = {
+  type: "ownership",
+  message: "",
+};
+
+const invalidSmartContract = "Invalid or Unsupported smart contract";
+const unownedDocumentStore = "Document Store is not owned by wallet";
+const unownedTokenRegistry = "Wallet do not have permission to mint on Token Registry";
+const invalidConfigType = "Unsupported Job Type";
+
+const createPreCheckError = (message: string): PreCheckError => {
+  return { ...defaultError, message };
+};
 
 export const checkVerifiableDocumentOwnership = async (
   contractAddress: string,
   account: Wallet | ConnectedSigner
-): Promise<boolean> => {
+): Promise<PreCheckStatus> => {
   if (!(await checkAddressIsSmartContract(contractAddress, account))) {
-    return false;
+    return createPreCheckError(invalidSmartContract);
   }
   const documentStore = await getConnectedDocumentStore(account, contractAddress);
-  return (await documentStore.owner()) === (await account.getAddress());
+  const validOwnership = (await documentStore.owner()) === (await account.getAddress());
+  if (validOwnership) {
+    return "VALID";
+  } else {
+    return createPreCheckError(unownedDocumentStore);
+  }
 };
 
 export const checkTransferableRecordOwnership = async (
   contractAddress: string,
   wallet: Wallet | ConnectedSigner
-): Promise<boolean> => {
+): Promise<PreCheckStatus> => {
   const isSmartContract = await checkAddressIsSmartContract(contractAddress, wallet);
-  if (!isSmartContract) return false;
+  if (!isSmartContract) return createPreCheckError(invalidSmartContract);
   const connectedRegistry: TradeTrustERC721 = await getConnectedTokenRegistry(wallet, contractAddress);
   const isTokenRegistry = await supportsInterface(connectedRegistry, "0x8a198f04");
-  if (!isTokenRegistry) return false;
-  return await transferableRecordsRolesCheck(connectedRegistry, wallet);
+  if (!isTokenRegistry) return createPreCheckError(invalidSmartContract);
+  const validOwnership = await transferableRecordsRolesCheck(connectedRegistry, wallet);
+  if (validOwnership) return "VALID";
+  else return createPreCheckError(unownedTokenRegistry);
 };
 
 export const transferableRecordsRolesCheck = async (
@@ -42,10 +64,10 @@ export const checkContractOwnership = async (
   type: string,
   contractAddress: string,
   wallet: Wallet | ConnectedSigner
-): Promise<boolean> => {
+): Promise<PreCheckStatus> => {
   if (type === "VERIFIABLE_DOCUMENT") return checkVerifiableDocumentOwnership(contractAddress, wallet);
   if (type === "TRANSFERABLE_RECORD") return checkTransferableRecordOwnership(contractAddress, wallet);
-  throw new Error("Job type is not supported");
+  return { type: "config", message: invalidConfigType };
 };
 
 export const checkDID = (rawDocument: OpenAttestationDocument): boolean => {

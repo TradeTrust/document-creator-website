@@ -87,7 +87,7 @@ describe("formSelect", () => {
   });
 
   it("should show file name", async () => {
-    mockCheckContractOwnership.mockResolvedValue(true);
+    mockCheckContractOwnership.mockResolvedValue("VALID");
     await waitFor(() => {
       render(<FormSelect id={`abc`} form={mockFormInvoiceV2FailDnsLocation} onAddForm={() => {}} />);
     });
@@ -95,7 +95,7 @@ describe("formSelect", () => {
   });
 
   it("should show tooltip with dns error message", async () => {
-    mockCheckContractOwnership.mockResolvedValue(true);
+    mockCheckContractOwnership.mockResolvedValue("VALID");
 
     render(<FormSelect id={`abc`} form={mockFormInvoiceV2FailDnsLocation} onAddForm={() => {}} />);
 
@@ -110,7 +110,10 @@ describe("formSelect", () => {
   });
 
   it("should show tooltip with dns and ownership error message", async () => {
-    mockCheckContractOwnership.mockResolvedValue(false);
+    mockCheckContractOwnership.mockResolvedValue({
+      type: "ownership",
+      message: "The contract does not belong to the wallet.",
+    });
 
     render(<FormSelect id={`abc`} form={mockFormInvoiceV2FailDnsLocation} onAddForm={() => {}} />);
 
@@ -129,7 +132,7 @@ describe("formSelect", () => {
   });
 
   it("should have a success case", async () => {
-    mockCheckContractOwnership.mockResolvedValue(true);
+    mockCheckContractOwnership.mockResolvedValue("VALID");
 
     const mockValidRecordsDnsTxt = [
       {
