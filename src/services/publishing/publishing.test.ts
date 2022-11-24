@@ -1,8 +1,8 @@
 import { DocumentStoreFactory } from "@govtechsg/document-store";
 import { TitleEscrowCreatorFactory, TradeTrustErc721Factory } from "@govtechsg/token-registry";
 import { getDefaultProvider, Wallet } from "ethers";
-import { getTitleEscrowCreator, publishTransferableRecordJob, publishVerifiableDocumentJob } from "./index";
 import { supportsInterface } from "../common/utils";
+import { getTitleEscrowCreator, publishTransferableRecordJob, publishVerifiableDocumentJob } from "./index";
 
 jest.mock("@govtechsg/token-registry");
 jest.mock("@govtechsg/document-store");
@@ -54,8 +54,8 @@ const whenTokenRegistryExist = (): void => {
 const resetMocks = (mocks: jest.Mock[]): void => mocks.forEach((mock) => mock.mockReset());
 
 const mockWallet = ({ code = "0x1234" } = {}): Wallet =>
-  ({ provider: { getCode: () => code, getNetwork: () => ({ name: "ropsten" }) } } as any);
-const randomWallet = (network = "ropsten"): Wallet => Wallet.createRandom().connect(getDefaultProvider(network));
+  ({ provider: { getCode: () => code, getNetwork: () => ({ name: "goerli" }) } } as any);
+const randomWallet = (network = "goerli"): Wallet => Wallet.createRandom().connect(getDefaultProvider(network));
 
 describe("publishing", () => {
   beforeEach(() => {
@@ -74,7 +74,7 @@ describe("publishing", () => {
       const titleEscrowCreator = await getTitleEscrowCreator(wallet);
 
       expect(mockTitleEscrowCreatorFactoryConnect).toHaveBeenCalledWith(
-        "0xB0dE5E22bAc12820b6dbF6f63287B1ec44026c83",
+        "0x3906daFc722089A8eb3D07D833CDE3C84629FF52",
         wallet
       );
       expect(titleEscrowCreator).toBe("MOCK_TITLE_ESCROW_FACTORY");

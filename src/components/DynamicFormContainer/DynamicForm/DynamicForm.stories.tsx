@@ -1,7 +1,7 @@
 import { FunctionComponent } from "react";
 import { DynamicForm } from "./DynamicForm";
 
-import sample from "../../../test/fixtures/config/v2/sample-config-ropsten.json";
+import sample from "../../../test/fixtures/config/v2/sample-config-goerli.json";
 
 export default {
   title: "DynamicForm/DynamicForm",

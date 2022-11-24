@@ -1875,7 +1875,7 @@
     }
   ],
   "documentStorage": {
-    "apiKey": "randonKey",
-    "url": "https://api-ropsten.tradetrust.io/storage"
+    "apiKey": "randomKey",
+    "url": "https://api.example.com/storage"
   }
 }

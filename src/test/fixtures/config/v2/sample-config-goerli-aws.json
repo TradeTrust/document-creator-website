@@ -1,5 +1,5 @@
 {
-  "network": "ropsten",
+  "network": "goerli",
   "wallet": {
     "type": "AWS_KMS",
     "accessKeyId": "<ACCESS_KEY_ID>",
@@ -29,10 +29,7 @@
       },
       "schema": {
         "type": "object",
-        "required": [
-          "blNumber",
-          "scac"
-        ],
+        "required": ["blNumber", "scac"],
         "properties": {
           "blNumber": {
             "type": "string",
@@ -581,9 +578,7 @@
       },
       "schema": {
         "type": "object",
-        "required": [
-          "documentName"
-        ],
+        "required": ["documentName"],
         "properties": {
           "documentName": {
             "type": "string",
@@ -986,6 +981,6 @@
   ],
   "documentStorage": {
     "apiKey": "randomKey",
-    "url": "https://api-ropsten.tradetrust.io/storage"
+    "url": "https://api.example.com/storage"
   }
 }

@@ -1,8 +1,9 @@
+import { Network } from "../types";
 export interface ChainInfoObject {
   label: string;
   chain: string;
   chainId: ChainId;
-  networkName: string; // network name that aligns with existing NETWORK_NAME
+  networkName: Network; // network name that aligns with existing NETWORK_NAME
   explorerUrl: string;
   explorerApiUrl?: string;
   rpcUrl?: string;
@@ -23,8 +24,6 @@ export enum ChainId {
   Ethereum = 1,
 
   // Ethereum Testnet
-  Ropsten = 3,
-  Rinkeby = 4,
   Goerli = 5,
   Sepolia = 11155111,
 
@@ -50,22 +49,6 @@ export const ChainInfo: ChainInfo = {
     networkName: "homestead",
     explorerUrl: "https://etherscan.io",
     explorerApiUrl: "https://api.etherscan.io",
-  },
-  [ChainId.Ropsten]: {
-    label: "Ropsten",
-    chain: "ETH",
-    chainId: ChainId.Ropsten,
-    networkName: "ropsten",
-    explorerUrl: "https://ropsten.etherscan.io",
-    explorerApiUrl: "https://api-ropsten.etherscan.io",
-  },
-  [ChainId.Rinkeby]: {
-    label: "Rinkeby",
-    chain: "ETH",
-    chainId: ChainId.Rinkeby,
-    networkName: "rinkeby",
-    explorerUrl: "https://rinkeby.etherscan.io",
-    explorerApiUrl: "https://api-rinkeby.etherscan.io",
   },
   [ChainId.Goerli]: {
     label: "Goerli",

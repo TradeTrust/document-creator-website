@@ -1,13 +1,15 @@
 import { render, screen } from "@testing-library/react";
-import React from "react";
 import { BrowserRouter, Route } from "react-router-dom";
 import { NavigationBar } from "./NavigationBar";
 
-import configRinkeby from "../../test/fixtures/config/v2/sample-config-rinkeby.json";
-import configRopsten from "../../test/fixtures/config/v2/sample-config-ropsten.json";
+import config from "../../test/fixtures/config/v2/sample-config-goerli.json";
 
 const mockMainnetConfig = {
   network: "homestead",
+};
+
+const mockLocalConfig = {
+  network: "local",
 };
 
 describe("navigationBar", () => {
@@ -49,23 +51,8 @@ describe("navigationBar", () => {
     expect(screen.getAllByTestId("navbar-verify-doc")[0].getAttribute("href")).toBe(`https://tradetrust.io/verify`);
   });
 
-  it("should render href to rinkeby verify documents page with rinkeby config", () => {
-    window.localStorage.setItem("CONFIG_FILE", JSON.stringify(configRinkeby));
-    render(
-      <BrowserRouter>
-        <Route path="/">
-          <NavigationBar logout={() => {}} />
-        </Route>
-      </BrowserRouter>
-    );
-    expect(screen.getAllByTestId("navbar-verify-doc")[0]).not.toBeNull();
-    expect(screen.getAllByTestId("navbar-verify-doc")[0].getAttribute("href")).toBe(
-      `https://rinkeby.tradetrust.io/verify`
-    );
-  });
-
-  it("should render href to ropsten verify documents page with ropsten config", () => {
-    window.localStorage.setItem("CONFIG_FILE", JSON.stringify(configRopsten));
+  it("should render href to verify documents page with a config", () => {
+    window.localStorage.setItem("CONFIG_FILE", JSON.stringify(config));
     render(
       <BrowserRouter>
         <Route path="/">
@@ -79,6 +66,19 @@ describe("navigationBar", () => {
 
   it("should render href to mainnet verify documents page with homestead config", () => {
     window.localStorage.setItem("CONFIG_FILE", JSON.stringify(mockMainnetConfig));
+    render(
+      <BrowserRouter>
+        <Route path="/">
+          <NavigationBar logout={() => {}} />
+        </Route>
+      </BrowserRouter>
+    );
+    expect(screen.getAllByTestId("navbar-verify-doc")[0]).not.toBeNull();
+    expect(screen.getAllByTestId("navbar-verify-doc")[0].getAttribute("href")).toBe(`https://tradetrust.io/verify`);
+  });
+
+  it("should render href to mainnet verify documents page with local config", () => {
+    window.localStorage.setItem("CONFIG_FILE", JSON.stringify(mockLocalConfig));
     render(
       <BrowserRouter>
         <Route path="/">

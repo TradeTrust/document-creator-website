@@ -1,9 +1,9 @@
-import { Wallet, Signer } from "ethers";
 import { Provider } from "@ethersproject/abstract-provider";
 import { OpenAttestationDocument } from "@govtechsg/open-attestation";
 import { ErrorObject } from "ajv";
+import { Signer, Wallet } from "ethers";
 
-export type Network = "homestead" | "ropsten" | "rinkeby" | "local";
+export type Network = "homestead" | "goerli" | "local" | "sepolia" | "matic" | "maticmum";
 type FormType = "TRANSFERABLE_RECORD" | "VERIFIABLE_DOCUMENT";
 
 // FormTemplate is defined in configuration file
@@ -65,11 +65,19 @@ interface Attachments {
   accept?: string;
 }
 
-export interface FileUploadType {
+type ProcessedFilesV2 = {
   data: string;
   filename: string;
   type: string;
-}
+};
+
+type ProcessedFilesV3 = {
+  data: string;
+  fileName: string;
+  mimeType: string;
+};
+
+export type ProcessedFiles = ProcessedFilesV3 | ProcessedFilesV2;
 
 // FormData is used by json-schema-forms internally to track state of a single form
 export interface FormData {

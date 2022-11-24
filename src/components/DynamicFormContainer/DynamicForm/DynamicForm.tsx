@@ -2,7 +2,7 @@ import { cloneDeep, debounce } from "lodash";
 import React, { FunctionComponent, useCallback, useEffect, useMemo, useRef, useState } from "react";
 import Form from "@rjsf/core";
 import { useFormsContext } from "../../../common/context/forms";
-import { FileUploadType, FormEntry, FormTemplate, FormType, Ownership, SetFormParams } from "../../../types";
+import { FormEntry, FormTemplate, FormType, Ownership, SetFormParams, ProcessedFiles } from "../../../types";
 import { DataFileButton } from "../DataFileButton";
 import { DocumentNameInput } from "../DocumentNameInput";
 import { TransferableRecordForm } from "../TransferableRecordForm";
@@ -100,7 +100,7 @@ export const DynamicForm: FunctionComponent<DynamicFormProps> = ({
     });
   };
 
-  const handleUpload = (processedFiles: FileUploadType[]): void => {
+  const handleUpload = (processedFiles: ProcessedFiles[]): void => {
     const attachedFile = data.formData.attachments || [];
     const nextAttachment = [...attachedFile, ...processedFiles];
 
@@ -109,7 +109,7 @@ export const DynamicForm: FunctionComponent<DynamicFormProps> = ({
 
   const handleRemoveUpload = (fileIndex: number): void => {
     const nextAttachment = data.formData.attachments.filter(
-      (_file: FileUploadType, index: number) => index !== fileIndex
+      (_file: ProcessedFiles, index: number) => index !== fileIndex
     );
 
     setAttachments(nextAttachment);

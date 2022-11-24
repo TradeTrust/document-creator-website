@@ -1,11 +1,9 @@
-import { utils } from "@govtechsg/open-attestation";
-import { csv2jsonAsync } from "json-2-csv";
-import converter from "json-2-csv";
-import { saveAs } from "file-saver";
-import { JSONSchema } from "json-schema-library";
 import Ajv from "ajv";
-import { WalletOptions, Network, NetworkObject, FormErrors } from "../types";
+import { saveAs } from "file-saver";
+import converter, { csv2jsonAsync } from "json-2-csv";
+import { JSONSchema } from "json-schema-library";
 import { ChainId, ChainInfo, ChainInfoObject } from "../constants/chainInfo";
+import { FormErrors, Network, NetworkObject, WalletOptions } from "../types";
 
 export function readFileAsJson<T>(file: File): Promise<T> {
   return new Promise((resolve, reject) => {
@@ -112,30 +110,47 @@ export const getDocumentNetwork = (network: Network): NetworkObject => {
 
 /*
  * getDataV3
- * @param {string} data
- * Omit fields that are VC + OA related, we are only interested in document data.
+ * Omit fields that are VC + OA V3 related, we are only interested in document data.
  */
 export const getDataV3: any = (data: any) => {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const { version, type, issuanceDate, openAttestationMetadata, issuer, credentialSubject, ...rest } = data; // omit these fields
+  const { version, type, issuanceDate, openAttestationMetadata, issuer, credentialSubject, attachments, ...rest } =
+    data; // omit these fields
   delete rest["@context"]; // omit these fields
   return rest;
 };
 
 /*
  * getDataV2
- * @param {string} data
- * Omit fields that are OA related, we are only interested in document data.
+ * Omit fields that are OA V2 related, we are only interested in document data.
  */
-export const getDataV2: any = (data: any) => {
+const getDataV2: any = (data: any) => {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const { issuers, $template, ownership, ...rest } = data; // omit these fields
+  const { issuers, $template, ownership, attachments, ...rest } = data; // omit these fields
   return rest;
 };
 
 /*
+ * getData
+ * Omit fields that are EBL related, we are only interested in document data.
+ */
+const getData: any = (data: any) => {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const { ownership, ...rest } = data; // omit these fields
+  return rest;
+};
+
+// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
+export const hasVcContext = (document: any) => {
+  return !!document["@context"]; // Unable to use utils.isRawV3Document, due how document data is handled throughout the application
+};
+
+const hasTemplate = (document: any) => {
+  return !!document["$template"]; // Unable to use utils.isRawV2Document, due how document data is handled throughout the application
+};
+
+/*
  * getDataToValidate
- * @param {string} data - `currentForm.data.formData`.
  * Omit fields that are interfering with ajv validation rule of `additionalProperties`, returning back data in correct shape.
  * This function is a hotfix to enable proper ajv validation, while not breaking existing flows of:
  * 1. data file upload flow - single document, data populated by json file.
@@ -143,10 +158,12 @@ export const getDataV2: any = (data: any) => {
  * 3. user input flow - single document, data manually filled by user.
  */
 export const getDataToValidate: any = (data: any) => {
-  if (utils.isRawV3Document(data)) {
+  if (hasVcContext(data)) {
     return getDataV3(data);
-  } else {
+  } else if (hasTemplate(data)) {
     return getDataV2(data);
+  } else {
+    return getData(data);
   }
 };
 
@@ -156,3 +173,22 @@ export const validateData = (schema: JSONSchema, data: unknown): { isValid: bool
 
   return { isValid, ajvErrors: ajv.errors };
 };
+
+/**
+ * Helper function to get chain info from network name.
+ * @param networkName Network name used by ethers standard providers and in OA
+ */
+export const getChainInfoFromNetworkName = (networkName: string): ChainInfoObject => {
+  const res = Object.keys(ChainInfo)
+    .map((chainId) => ChainInfo[Number(chainId) as ChainId])
+    .find((chainInfo) => chainInfo.networkName === networkName);
+  if (!res) throw new UnsupportedNetworkError(networkName);
+  return res;
+};
+
+class UnsupportedNetworkError extends Error {
+  constructor(chainIdOrName?: number | string) {
+    super(`Unsupported network chain ID or name${chainIdOrName ? ` (${chainIdOrName})` : ""}`);
+    this.name = "UnsupportedNetworkError";
+  }
+}

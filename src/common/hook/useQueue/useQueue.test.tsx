@@ -9,9 +9,9 @@ import { useQueue } from "./useQueue";
 import { getPublishingJobs } from "./utils/publish";
 import { getRevokingJobs } from "./utils/revoke";
 
+import sampleConfigGoerli from "../../../test/fixtures/config/v2/sample-config-goerli.json";
 import samplePublishJobs from "../../../test/fixtures/jobs-publish.json";
 import sampleRevokeJobs from "../../../test/fixtures/jobs-revoke.json";
-import sampleConfigRopsten from "../../../test/fixtures/config/v2/sample-config-ropsten.json";
 import sampleWrappedDocument from "../../../test/fixtures/sample-files/v2/wrapped/sample-wrapped-document.json";
 
 jest.mock("../../../services/publishing");
@@ -27,8 +27,8 @@ const mockRevokeJob = revokeDocumentJob as jest.Mock;
 const mockGetRevokeJobs = getRevokingJobs as jest.Mock;
 
 const config = {
-  ...sampleConfigRopsten,
-  wallet: Wallet.createRandom().connect(getDefaultProvider("ropsten")),
+  ...sampleConfigGoerli,
+  wallet: Wallet.createRandom().connect(getDefaultProvider("goerli")),
 } as Config;
 
 const formEntries: FormEntry[] = [
@@ -134,7 +134,7 @@ describe("useQueue", () => {
       await result.current.processDocuments(QueueType.REVOKE);
     });
     expect(result.current.failedProcessedDocuments).toHaveLength(1);
-  });
+  }, 30000);
 
   it("should have an error if getRevokeJobs throw error", async () => {
     mockGetRevokeJobs.mockRejectedValue(new Error("Some error"));
