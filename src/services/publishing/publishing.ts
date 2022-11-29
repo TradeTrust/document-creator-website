@@ -5,7 +5,7 @@ import {
   SUPPORTED_SIGNING_ALGORITHM,
   v2,
 } from "@govtechsg/open-attestation";
-import { TradeTrustERC721__factory } from "@govtechsg/token-registry/contracts";
+import { TradeTrustToken__factory } from "@govtechsg/token-registry/contracts";
 import { Signer, Wallet } from "ethers";
 import { ConnectedSigner, PublishingJob } from "../../types";
 import { assertAddressIsSmartContract, getConnectedDocumentStore } from "../common";
@@ -46,7 +46,7 @@ export const publishTransferableRecordJob = async (job: PublishingJob, signer: S
   const { payload, contractAddress, merkleRoot } = job;
   if (!payload.ownership) throw new Error("Ownership data is not provided");
   const { beneficiaryAddress, holderAddress } = payload.ownership;
-  const tokenRegistryContract = TradeTrustERC721__factory.connect(contractAddress, signer);
+  const tokenRegistryContract = TradeTrustToken__factory.connect(contractAddress, signer);
   const mintingReceipt = await tokenRegistryContract.mint(beneficiaryAddress, holderAddress, `0x${merkleRoot}`);
   const mintingTx = await mintingReceipt.wait();
   if (!mintingTx.transactionHash) throw new Error(`Tx hash not available: ${JSON.stringify(mintingTx)}`);

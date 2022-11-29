@@ -1,5 +1,5 @@
 import { DocumentStoreFactory } from "@govtechsg/document-store";
-import { TradeTrustERC721__factory } from "@govtechsg/token-registry/contracts";
+import { TradeTrustToken__factory } from "@govtechsg/token-registry/contracts";
 import { Wallet } from "ethers";
 import { supportsInterface } from "../common/utils";
 import { publishTransferableRecordJob, publishVerifiableDocumentJob } from "./index";
@@ -9,7 +9,7 @@ jest.mock("@govtechsg/document-store");
 jest.mock("../common/utils");
 
 const mockDocumentStoreFactoryConnect = DocumentStoreFactory.connect as jest.Mock;
-const mockTradeTrustErc721FactoryConnect = TradeTrustERC721__factory.connect as jest.Mock;
+const mockTradeTrustTokenFactoryConnect = TradeTrustToken__factory.connect as jest.Mock;
 const mockDocumentStoreIssue = jest.fn();
 const mockTokenRegistryMint = jest.fn();
 const mockTxWait = jest.fn();
@@ -41,7 +41,7 @@ const whenTokenRegistryExist = (): void => {
     events: [{ event: "TitleEscrowDeployed", args: ["0x7777"] }],
   });
   mockTokenRegistryMint.mockResolvedValue(mockTransactionReceipt);
-  mockTradeTrustErc721FactoryConnect.mockReturnValue(mockTokenRegistry);
+  mockTradeTrustTokenFactoryConnect.mockReturnValue(mockTokenRegistry);
 };
 
 const resetMocks = (mocks: jest.Mock[]): void => mocks.forEach((mock) => mock.mockReset());

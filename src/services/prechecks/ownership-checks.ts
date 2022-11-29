@@ -1,5 +1,5 @@
 import { OpenAttestationDocument, utils } from "@govtechsg/open-attestation";
-import { TradeTrustERC721 } from "@govtechsg/token-registry/dist/contracts";
+import { TradeTrustToken } from "@govtechsg/token-registry/dist/contracts";
 import { Wallet } from "ethers";
 import { ConnectedSigner } from "../../types";
 import { getConnectedDocumentStore, checkAddressIsSmartContract, getConnectedTokenRegistry } from "../common";
@@ -42,7 +42,7 @@ export const checkTransferableRecordOwnership = async (
 ): Promise<PreCheckStatus> => {
   const isSmartContract = await checkAddressIsSmartContract(contractAddress, wallet);
   if (!isSmartContract) return createPreCheckError(invalidSmartContract);
-  const connectedRegistry: TradeTrustERC721 = await getConnectedTokenRegistry(wallet, contractAddress);
+  const connectedRegistry: TradeTrustToken = await getConnectedTokenRegistry(wallet, contractAddress);
   const isTokenRegistry = await supportsInterface(connectedRegistry, "0x8a198f04");
   if (!isTokenRegistry) return createPreCheckError(invalidSmartContract);
   const validOwnership = await transferableRecordsRolesCheck(connectedRegistry, wallet);
@@ -51,7 +51,7 @@ export const checkTransferableRecordOwnership = async (
 };
 
 export const transferableRecordsRolesCheck = async (
-  connectedRegistry: TradeTrustERC721,
+  connectedRegistry: TradeTrustToken,
   account: Wallet | ConnectedSigner
 ): Promise<boolean> => {
   const minterRole = await connectedRegistry.MINTER_ROLE();
