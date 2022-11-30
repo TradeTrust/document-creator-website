@@ -92,7 +92,7 @@ export const ChainInfo: ChainInfo = {
     networkName: "maticmum",
     explorerUrl: "https://mumbai.polygonscan.com",
     explorerApiUrl: "https://api-testnet.polygonscan.com",
-    rpcUrl: "https://rpc-mumbai.matic.today",
+    rpcUrl: "https://rpc-mumbai.maticvigil.com/",
     nativeCurrency: {
       name: "MATIC",
       symbol: "mMATIC",
