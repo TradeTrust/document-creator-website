@@ -50,6 +50,8 @@ interface CreatorContract {
 const CREATOR_CONTRACTS: CreatorContract = {
   homestead: "0x907A4D491A09D59Bcb5dC38eeb9d121ac47237F1",
   goerli: "0x3906daFc722089A8eb3D07D833CDE3C84629FF52",
+  sepolia: "0xebcFFcDDf84BA6C66C83aE377E41611A43b30c34",
+  maticmum: "0xc60E5d2f8ca962f7803B28487fa7cB507daDefE9",
   // unknown is used for local test net, see integration test
   unknown: "0x4Bf7E4777a8D1b6EdD5F2d9b8582e2817F0B0953",
 };
