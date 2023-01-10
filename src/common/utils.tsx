@@ -126,7 +126,7 @@ export const getDataV3: any = (data: any) => {
  */
 const getDataV2: any = (data: any) => {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const { issuers, $template, ownership, attachments, ...rest } = data; // omit these fields
+  const { issuers, $template, ownership, attachments, network, ...rest } = data; // omit these fields
   return rest;
 };
 
@@ -136,7 +136,7 @@ const getDataV2: any = (data: any) => {
  */
 const getData: any = (data: any) => {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const { ownership, ...rest } = data; // omit these fields
+  const { ownership, network, ...rest } = data; // omit these fields
   return rest;
 };
 
