@@ -113,9 +113,20 @@ export const getDocumentNetwork = (network: Network): NetworkObject => {
  * Omit fields that are VC + OA V3 related, we are only interested in document data.
  */
 export const getDataV3: any = (data: any) => {
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const { version, type, issuanceDate, openAttestationMetadata, issuer, credentialSubject, attachments, ...rest } =
-    data; // omit these fields
+  /* eslint-disable @typescript-eslint/no-unused-vars */
+  const {
+    version,
+    type,
+    issuanceDate,
+    openAttestationMetadata,
+    issuer,
+    credentialSubject,
+    attachments,
+    network,
+    ...rest
+  } = data; // omit these fields
+  /* eslint-enable @typescript-eslint/no-unused-vars */
+
   delete rest["@context"]; // omit these fields
   return rest;
 };
@@ -126,7 +137,7 @@ export const getDataV3: any = (data: any) => {
  */
 const getDataV2: any = (data: any) => {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const { issuers, $template, ownership, attachments, ...rest } = data; // omit these fields
+  const { issuers, $template, ownership, attachments, network, ...rest } = data; // omit these fields
   return rest;
 };
 

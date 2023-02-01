@@ -31,6 +31,7 @@ const configFileSchema = Joi.object({
         uiSchema: Joi.object(),
         extension: Joi.string(),
         fileName: Joi.string(),
+        network: Joi.object(),
       })
     )
     .required(),
