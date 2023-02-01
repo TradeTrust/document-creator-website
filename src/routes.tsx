@@ -7,6 +7,7 @@ import { HomeContainer } from "./components/Home";
 import { PublishContainer } from "./components/PublishContainer";
 import { RevokeContainer } from "./components/RevokeContainer";
 import { SettingsContainer } from "./components/SettingsContainer";
+import { PageLogout } from "./pages/pageLogout";
 import { PageNotFound } from "./pages/pageNotFound";
 
 export interface RouteInterface {
@@ -27,6 +28,7 @@ export const routes: RouteInterface[] = [
   { path: "/settings/address-resolver", component: AddressResolverContainer },
   { path: "/settings", component: SettingsContainer },
   { path: "/revoke", component: RevokeContainer },
+  { path: "/logout", component: PageLogout },
   { path: "*", component: PageNotFound },
 ];
 
