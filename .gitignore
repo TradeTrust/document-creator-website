@@ -7,7 +7,6 @@
 
 # testing
 /coverage
-src/test/fixtures/data-file/ganache-db
 
 # production
 /build

@@ -23,7 +23,7 @@
     "blockchain": "run-p blockchain:start blockchain:setup",
     "blockchain:contracts": "node ./scripts/setup-contracts.js",
     "blockchain:setup": "run-s wait:blockchain blockchain:contracts",
-    "blockchain:start": "rm -Rf src/test/fixtures/data-file/ganache-db/ && unzip src/test/fixtures/data-file/ganache-db.zip -d src/test/fixtures/data-file/ && ganache --wallet.mnemonic \"indicate swing place chair flight used hammer soon photo region volume shuffle\" -i 1337 --database.dbPath \"src/test/fixtures/data-file/ganache-db\"",
+    "blockchain:start": "ganache --wallet.mnemonic \"indicate swing place chair flight used hammer soon photo region volume shuffle\" -i 1337 --fork.network goerli --fork.blockNumber 8506655 --logging.quiet=true",
     "integration": "testcafe chrome --app \"npm run dev\" integration/**/*.spec.ts",
     "integration:ci": "concurrently -k -s first \"npm:blockchain\" \"npm:integration:headless\"",
     "integration:headless": "testcafe -c 3 chrome:headless integration/**/*.spec.ts --app \"npm run serve-static\"",
