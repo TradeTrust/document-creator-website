@@ -87,7 +87,7 @@
     "@commitlint/cli": "^12.1.4",
     "@commitlint/config-conventional": "^12.1.4",
     "@commitlint/prompt": "^17.1.2",
-    "@govtechsg/open-attestation-cli": "^1.49.0",
+    "@puayhiang/open-attestation-cli": "^1.58.2",
     "@storybook/addon-essentials": "^6.3.7",
     "@storybook/builder-webpack5": "^6.5.9",
     "@storybook/manager-webpack5": "^6.5.9",
