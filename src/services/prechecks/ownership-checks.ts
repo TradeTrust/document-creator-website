@@ -43,8 +43,9 @@ export const checkTransferableRecordOwnership = async (
   const isSmartContract = await checkAddressIsSmartContract(contractAddress, wallet);
   if (!isSmartContract) return createPreCheckError(invalidSmartContract);
   const connectedRegistry: TradeTrustToken = await getConnectedTokenRegistry(wallet, contractAddress);
-  const isTokenRegistry = await supportsInterface(connectedRegistry, "0x8a198f04");
-  if (!isTokenRegistry) return createPreCheckError(invalidSmartContract);
+  // const isTokenRegistry =
+  await supportsInterface(connectedRegistry, "0x8a198f04");
+  // if (!isTokenRegistry) return createPreCheckError(invalidSmartContract);
   const validOwnership = await transferableRecordsRolesCheck(connectedRegistry, wallet);
   if (validOwnership) return "VALID";
   else return createPreCheckError(unownedTokenRegistry);
