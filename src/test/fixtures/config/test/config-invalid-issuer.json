@@ -21,7 +21,7 @@
               "location": "ErrorIdentityProof"
             },
             "name": "DEMO TOKEN REGISTRY",
-            "tokenRegistry": "0x9Eb613a88534E2939518f4ffBFE65F5969b491FF"
+            "tokenRegistry": "0xf18CD26780B6D3589371fb0b3fE8E2a513D6Fdc6"
           }
         ]
       },
@@ -753,7 +753,7 @@
               "location": "ErrorIdentityProof"
             },
             "name": "DEMO DOCUMENT STORE",
-            "documentStore": "0x9Eb613a88534E2939518f4ffBFE65F5969b491FF"
+            "documentStore": "0xf18CD26780B6D3589371fb0b3fE8E2a513D6Fdc6"
           }
         ]
       },
@@ -1134,7 +1134,7 @@
           "proof": {
             "type": "OpenAttestationProofMethod",
             "method": "TOKEN_REGISTRY",
-            "value": "0x9Eb613a88534E2939518f4ffBFE65F5969b491FF"
+            "value": "0xf18CD26780B6D3589371fb0b3fE8E2a513D6Fdc6"
           },
           "identityProof": {
             "type": "DNS-TXT",
