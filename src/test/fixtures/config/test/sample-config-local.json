@@ -21,7 +21,7 @@
               "location": "demo-tradetrust.openattestation.com"
             },
             "name": "DEMO TOKEN REGISTRY",
-            "tokenRegistry": "0x9Eb613a88534E2939518f4ffBFE65F5969b491FF"
+            "tokenRegistry": "0xf18CD26780B6D3589371fb0b3fE8E2a513D6Fdc6"
           }
         ]
       },
@@ -144,7 +144,7 @@
               "location": "demo-tradetrust.openattestation.com"
             },
             "name": "DEMO DOCUMENT STORE",
-            "documentStore": "0x63a223e025256790e88778a01f480eba77731d04"
+            "documentStore": "0x4Bf7E4777a8D1b6EdD5F2d9b8582e2817F0B0953"
           }
         ]
       },
@@ -572,7 +572,7 @@
               "location": "demo-tradetrust.openattestation.com"
             },
             "name": "DEMO DOCUMENT STORE",
-            "documentStore": "0x63a223e025256790e88778a01f480eba77731d04"
+            "documentStore": "0x4Bf7E4777a8D1b6EdD5F2d9b8582e2817F0B0953"
           }
         ]
       },
@@ -756,7 +756,7 @@
               "location": "demo-tradetrust.openattestation.com"
             },
             "name": "DEMO DOCUMENT STORE",
-            "documentStore": "0x63a223e025256790e88778a01f480eba77731d04"
+            "documentStore": "0x4Bf7E4777a8D1b6EdD5F2d9b8582e2817F0B0953"
           }
         ]
       },
@@ -841,7 +841,7 @@
               "location": "demo-tradetrust.openattestation.com"
             },
             "name": "DEMO DOCUMENT STORE",
-            "documentStore": "0x63a223e025256790e88778a01f480eba77731d04"
+            "documentStore": "0x4Bf7E4777a8D1b6EdD5F2d9b8582e2817F0B0953"
           }
         ]
       },
@@ -997,7 +997,7 @@
               "location": "demo-tradetrust.openattestation.com"
             },
             "name": "DEMO DOCUMENT STORE",
-            "documentStore": "0x63a223e025256790e88778a01f480eba77731d04"
+            "documentStore": "0x4Bf7E4777a8D1b6EdD5F2d9b8582e2817F0B0953"
           }
         ]
       },
@@ -1082,7 +1082,7 @@
               "location": "demo-tradetrust.openattestation.com"
             },
             "name": "DEMO DOCUMENT STORE",
-            "documentStore": "0x63a223e025256790e88778a01f480eba77731d04"
+            "documentStore": "0x4Bf7E4777a8D1b6EdD5F2d9b8582e2817F0B0953"
           }
         ]
       },
@@ -1141,7 +1141,7 @@
           "proof": {
             "type": "OpenAttestationProofMethod",
             "method": "TOKEN_REGISTRY",
-            "value": "0x9Eb613a88534E2939518f4ffBFE65F5969b491FF"
+            "value": "0xf18CD26780B6D3589371fb0b3fE8E2a513D6Fdc6"
           },
           "identityProof": {
             "type": "DNS-TXT",
@@ -1273,7 +1273,7 @@
           "proof": {
             "type": "OpenAttestationProofMethod",
             "method": "DOCUMENT_STORE",
-            "value": "0x63a223e025256790e88778a01f480eba77731d04"
+            "value": "0x4Bf7E4777a8D1b6EdD5F2d9b8582e2817F0B0953"
           },
           "identityProof": {
             "type": "DNS-TXT",
@@ -1722,7 +1722,7 @@
           "proof": {
             "type": "OpenAttestationProofMethod",
             "method": "DOCUMENT_STORE",
-            "value": "0x63a223e025256790e88778a01f480eba77731d04"
+            "value": "0x4Bf7E4777a8D1b6EdD5F2d9b8582e2817F0B0953"
           },
           "identityProof": {
             "type": "DNS-TXT",

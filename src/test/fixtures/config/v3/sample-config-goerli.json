@@ -26,7 +26,7 @@
           "proof": {
             "type": "OpenAttestationProofMethod",
             "method": "TOKEN_REGISTRY",
-            "value": "0x72d9a82203Ef9177239A5E3cB7A8FB9a78D04f17"
+            "value": "0x492161E1397d074958D1340BAd0a18bD6007aF55"
           },
           "identityProof": {
             "type": "DNS-TXT",

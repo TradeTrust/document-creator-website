@@ -2,7 +2,7 @@ import { Button, LoaderSpinner } from "@govtechsg/tradetrust-ui-components";
 import React, { FunctionComponent, useState, useRef, useEffect } from "react";
 import ReactTooltip from "react-tooltip";
 import { useConfigContext } from "../../../common/context/config";
-import { checkContractOwnership, checkDID } from "../../../services/prechecks";
+import { checkContractOwnership, checkDID, PreCheckStatus, PreCheckError } from "../../../services/prechecks";
 import { validateDns } from "../../../services/prechecks";
 import { FormTemplate } from "../../../types";
 import { getIssuerAddress } from "../../../utils";
@@ -15,7 +15,6 @@ interface FormSelectProps {
 }
 
 const errorMsgDnsTxt = "The contract could not be found on it's DNS TXT records.";
-const errorMsgOwnership = "The contract does not belong to the wallet.";
 
 enum FormStatus {
   "INITIAL",
@@ -24,82 +23,58 @@ enum FormStatus {
   "SUCCESS",
 }
 
-interface FormErrors {
-  type: "dns" | "ownership";
-  message: string;
-}
-
 export const FormSelect: FunctionComponent<FormSelectProps> = ({ id, form, onAddForm, ...props }) => {
   const { config } = useConfigContext();
 
-  const [formErrors, setFormErrors] = useState<FormErrors[]>([]);
+  const [formErrors, setFormErrors] = useState<PreCheckError[]>([]);
   const [formStatus, setFormStatus] = useState<FormStatus>(FormStatus.INITIAL);
   const refButton = useRef<HTMLDivElement>(null);
 
-  const checkDns = async (): Promise<boolean> => {
+  const checkDns = async (): Promise<PreCheckStatus> => {
     if (config?.network === "local") {
-      return true; // for local e2e to pass, skip dns validate + set valid
+      return "VALID"; // for local e2e to pass, skip dns validate + set valid
     } else {
       const isDnsValidated = await validateDns(form);
-      return isDnsValidated;
+      if (isDnsValidated) {
+        return "VALID";
+      } else {
+        return { type: "dns", message: errorMsgDnsTxt };
+      }
     }
   };
 
-  const checkOwnership = async (): Promise<boolean> => {
+  const checkOwnership = async (): Promise<PreCheckStatus> => {
     const isDID = checkDID(form.defaults);
     if (config?.network === "local") {
-      return true; // for local e2e to pass, skip ownership validate + set valid
+      return "VALID"; // for local e2e to pass, skip ownership validate + set valid
     } else if (isDID) {
-      return true; // Assume DIDs are valid
+      return "VALID"; // Assume DIDs are valid
     }
     const wallet = config?.wallet;
     const contractAddress = getIssuerAddress(form.defaults);
 
     if (contractAddress !== undefined && wallet !== undefined) {
       const contractType = form?.type;
-      const valid = await checkContractOwnership(contractType, contractAddress, wallet);
-      return valid;
+      return await checkContractOwnership(contractType, contractAddress, wallet);
     }
-    return false;
+    return { type: "config", message: "Contract Address or Wallet unspecified in Config" };
   };
 
   const checkValidity = async () => {
     setFormStatus(FormStatus.PENDING);
     const isValidDns = await checkDns();
     const isValidOwner = await checkOwnership();
+    const preCheckErrors: PreCheckError[] = [];
 
-    if (!isValidDns || !isValidOwner) {
-      if (!isValidDns && !isValidOwner) {
-        setFormErrors([
-          {
-            type: "dns",
-            message: errorMsgDnsTxt,
-          },
-          {
-            type: "ownership",
-            message: errorMsgOwnership,
-          },
-        ]);
-      } else if (!isValidDns) {
-        setFormErrors([
-          {
-            type: "dns",
-            message: errorMsgDnsTxt,
-          },
-        ]);
-      } else if (!isValidOwner) {
-        setFormErrors([
-          {
-            type: "ownership",
-            message: errorMsgOwnership,
-          },
-        ]);
-      }
-      setFormStatus(FormStatus.ERROR);
-    } else {
-      setFormErrors([]);
-      setFormStatus(FormStatus.SUCCESS);
+    if (isValidDns !== "VALID") {
+      preCheckErrors.push(isValidDns);
     }
+    if (isValidOwner !== "VALID") {
+      preCheckErrors.push(isValidOwner as PreCheckError);
+    }
+    const formState = preCheckErrors.length === 0 ? FormStatus.SUCCESS : FormStatus.ERROR;
+    setFormStatus(formState);
+    setFormErrors(preCheckErrors);
   };
 
   useEffect(() => {

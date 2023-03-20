@@ -1,45 +1,73 @@
 import { OpenAttestationDocument, utils } from "@govtechsg/open-attestation";
-import { Signer, Wallet } from "ethers";
-import { getNetworkDetails } from "../../common/utils";
-import { ConnectedSigner, Network } from "../../types";
-import { getConnectedDocumentStore, checkAddressIsSmartContract } from "../common";
-import { checkCreationAddress } from "./utils";
+import { TradeTrustToken } from "@govtechsg/token-registry/dist/contracts";
+import { Wallet } from "ethers";
+import { ConnectedSigner } from "../../types";
+import { getConnectedDocumentStore, checkAddressIsSmartContract, getConnectedTokenRegistry } from "../common";
+import { supportsInterface } from "../common/utils";
+import { PreCheckError, PreCheckStatus } from "./types";
+
+const defaultError: PreCheckError = {
+  type: "ownership",
+  message: "",
+};
+
+const invalidSmartContract = "Invalid or Unsupported smart contract";
+const unownedDocumentStore = "Document Store is not owned by wallet";
+const unownedTokenRegistry = "Wallet do not have permission to mint on Token Registry";
+const invalidConfigType = "Unsupported Job Type";
+
+const createPreCheckError = (message: string): PreCheckError => {
+  return { ...defaultError, message };
+};
 
 export const checkVerifiableDocumentOwnership = async (
   contractAddress: string,
   account: Wallet | ConnectedSigner
-): Promise<boolean> => {
+): Promise<PreCheckStatus> => {
   if (!(await checkAddressIsSmartContract(contractAddress, account))) {
-    return false;
+    return createPreCheckError(invalidSmartContract);
   }
   const documentStore = await getConnectedDocumentStore(account, contractAddress);
-  return (await documentStore.owner()) === (await account.getAddress());
+  const validOwnership = (await documentStore.owner()) === (await account.getAddress());
+  if (validOwnership) {
+    return "VALID";
+  } else {
+    return createPreCheckError(unownedDocumentStore);
+  }
 };
 
-export const checkTransferableRecordOwnership = async (contractAddress: string, signer: Signer): Promise<boolean> => {
-  const userWalletAddress = await signer.getAddress();
-  const network = await signer.provider?.getNetwork();
-  if (network === undefined) {
-    throw new Error("Wallet owner's Network not found.");
-  } else {
-    const networkDetails = getNetworkDetails(network.name as Network);
-    return await checkCreationAddress({
-      contractAddress: contractAddress,
-      network: networkDetails,
-      userAddress: userWalletAddress,
-      strict: false,
-    });
-  }
+export const checkTransferableRecordOwnership = async (
+  contractAddress: string,
+  wallet: Wallet | ConnectedSigner
+): Promise<PreCheckStatus> => {
+  const isSmartContract = await checkAddressIsSmartContract(contractAddress, wallet);
+  if (!isSmartContract) return createPreCheckError(invalidSmartContract);
+  const connectedRegistry: TradeTrustToken = await getConnectedTokenRegistry(wallet, contractAddress);
+  const isTokenRegistry = await supportsInterface(connectedRegistry, "0x95a63a27");
+  if (!isTokenRegistry) return createPreCheckError(invalidSmartContract);
+  const validOwnership = await transferableRecordsRolesCheck(connectedRegistry, wallet);
+  if (validOwnership) return "VALID";
+  else return createPreCheckError(unownedTokenRegistry);
+};
+
+export const transferableRecordsRolesCheck = async (
+  connectedRegistry: TradeTrustToken,
+  account: Wallet | ConnectedSigner
+): Promise<boolean> => {
+  const minterRole = await connectedRegistry.MINTER_ROLE();
+  const signerAddress = await account.getAddress();
+  const isMinter = await connectedRegistry.hasRole(minterRole, signerAddress);
+  return isMinter;
 };
 
 export const checkContractOwnership = async (
   type: string,
   contractAddress: string,
   wallet: Wallet | ConnectedSigner
-): Promise<boolean> => {
+): Promise<PreCheckStatus> => {
   if (type === "VERIFIABLE_DOCUMENT") return checkVerifiableDocumentOwnership(contractAddress, wallet);
   if (type === "TRANSFERABLE_RECORD") return checkTransferableRecordOwnership(contractAddress, wallet);
-  throw new Error("Job type is not supported");
+  return { type: "config", message: invalidConfigType };
 };
 
 export const checkDID = (rawDocument: OpenAttestationDocument): boolean => {
