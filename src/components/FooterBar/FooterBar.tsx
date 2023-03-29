@@ -84,18 +84,27 @@ const getData = (configFile?: ConfigFile) => {
   return data;
 };
 
+const bottomRender = ({ label, to }: FooterColumnItemProps): React.ReactElement => (
+  <a href={to} className="text-cloud-500 text-sm px-4 border-r">
+    {label}
+  </a>
+);
+
 export const FooterBar: FunctionComponent = () => {
   const { configFile } = usePersistedConfigFile();
   const data = getData(configFile);
+  const networkPath = getNetworkPath(configFile?.network);
+  const legalData = {
+    copyright: "Copyright \u00A9 2021 TradeTrust",
+    items: [
+      { label: "Privacy Policy", to: `${networkPath}/privacy-policy`, render: bottomRender },
+      { label: "Terms of use", to: `${networkPath}/terms-of-use`, render: bottomRender },
+    ],
+  };
 
   return (
     <div className="bg-cerulean-50 pt-8">
-      <Footer
-        className="bg-white py-8 px-6"
-        logoUrl={"/tradetrust_logo.svg"}
-        copyright={"Copyright \u00A9 2021 TradeTrust"}
-        data={data}
-      />
+      <Footer className="bg-white py-8 px-6" logoUrl={"/tradetrust_logo.svg"} legalData={legalData} data={data} />
     </div>
   );
 };
