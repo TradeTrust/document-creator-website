@@ -1,4 +1,4 @@
-import { DocumentStoreFactory } from "@govtechsg/document-store";
+import { connect } from "@govtechsg/document-store";
 import { Wallet } from "ethers";
 import { supportsInterface } from "../common/utils";
 import { revokeDocumentJob } from "./index";
@@ -6,7 +6,7 @@ import { revokeDocumentJob } from "./index";
 jest.mock("@govtechsg/document-store");
 jest.mock("../common/utils");
 
-const mockDocumentStoreFactoryConnect = DocumentStoreFactory.connect as jest.Mock;
+const mockDocumentStoreConnect = connect as jest.Mock;
 const mockDocumentStoreRevoke = jest.fn();
 const mockTxWait = jest.fn();
 const mockSupportsInterface = supportsInterface as jest.Mock;
@@ -24,7 +24,7 @@ const whenDocumentStoreExist = (): void => {
     transactionHash: "TX_HASH",
   });
   mockDocumentStoreRevoke.mockResolvedValue(mockTransactionReceipt);
-  mockDocumentStoreFactoryConnect.mockReturnValue(mockDocumentStore);
+  mockDocumentStoreConnect.mockReturnValue(mockDocumentStore);
 };
 
 const resetMocks = (mocks: jest.Mock[]): void => mocks.forEach((mock) => mock.mockReset());
@@ -34,7 +34,7 @@ const mockWallet = ({ code = "0x1234" } = {}): Wallet =>
 
 describe("revokeDocumentJob", () => {
   beforeEach(() => {
-    resetMocks([mockDocumentStoreFactoryConnect, mockDocumentStoreRevoke, mockTxWait]);
+    resetMocks([mockDocumentStoreConnect, mockDocumentStoreRevoke, mockTxWait]);
   });
 
   it("should return transaction hash when revoke succeed", async () => {

@@ -7,42 +7,10 @@ export const ETHERSCAN_API_KEY = {
   MATIC: process.env.REACT_APP_API_KEY_MATIC,
 };
 
-// Addresses retrieved from https://docs.opengsn.org/gsn-provider/networks.html
-interface GsnRelayConfig {
-  relayHub: string;
-  stakeManager: string;
-  forwarder: string;
-  gasPrice: number;
-}
 interface EtherscanNetworkApiDetails {
   apiKey: string;
   hostname: string;
 }
-
-const goerliGsnRelayConfig = {
-  relayHub: "0x1F3d1C33977957EA41bEdFDcBf7fF64Fd3A3985e",
-  stakeManager: "0xd494924348e91433218506bc0ed02b3a2d83ef0e",
-  forwarder: "0xd9c1a99e9263B98F3f633a9f1A201FA0AFC2A1c2",
-  gasPrice: 20000000000, // 20 Gwei
-};
-
-const homesteadGsnRelayConfig = {
-  relayHub: "0xB1E47968aD4909b9eb693c212feA22D0419D2D56",
-  stakeManager: "0xcAA46E3a5D2c3c07A0C4F7723c7977c3e643C2B1",
-  forwarder: "0xa530F85085C6FE2f866E7FdB716849714a89f4CD",
-  gasPrice: 20000000000, // 20 Gwei
-};
-
-export const getGSNRelayConfig = (networkId?: string): GsnRelayConfig => {
-  if (networkId === "goerli") return goerliGsnRelayConfig;
-  return homesteadGsnRelayConfig;
-};
-
-export const getHttpProviderUri = (networkId: string): string => {
-  if (networkId === "local") return `http://localhost:8545`;
-  if (networkId === "homestead") return `https://mainnet.infura.io/v3/${INFURA_PROJECT_ID}`;
-  return `https://${networkId}.infura.io/v3/${INFURA_PROJECT_ID}`;
-};
 
 export const getEtherscanNetworkApiDetails = (chainInfo: ChainInfoObject): EtherscanNetworkApiDetails => {
   const apiKey = (ETHERSCAN_API_KEY as any)[chainInfo.chain];

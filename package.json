@@ -51,7 +51,7 @@
     "@emotion/styled": "^11.3.0",
     "@govtechsg/address-identity-resolver": "^1.4.1",
     "@govtechsg/decentralized-renderer-react-components": "^3.6.2",
-    "@govtechsg/document-store": "^2.2.1",
+    "@govtechsg/document-store": "^2.6.1",
     "@govtechsg/ethers-contract-hook": "^2.2.0",
     "@govtechsg/oa-verify": "^7.7.0",
     "@govtechsg/open-attestation": "^6.3.0",
@@ -59,7 +59,6 @@
     "@govtechsg/tradetrust-ui-components": "^2.18.12",
     "@govtechsg/tradetrust-utils": "^1.0.1",
     "@hapi/joi": "^17.1.1",
-    "@opengsn/gsn": "^2.1.0",
     "@rjsf/core": "^3.1.0",
     "ajv": "^8.6.0",
     "axios": "^0.21.2",
@@ -80,8 +79,7 @@
     "react-idle-timer": "^5.5.2",
     "react-router-dom": "^5.2.0",
     "react-tooltip": "^4.2.21",
-    "use-persisted-state": "^0.3.0",
-    "web3-providers-http": "^1.3.6"
+    "use-persisted-state": "^0.3.0"
   },
   "devDependencies": {
     "@commitlint/cli": "^12.1.4",

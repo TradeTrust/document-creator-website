@@ -33,13 +33,13 @@ const mockWallet = (code = "0x1234", owner = "0x1234"): Wallet =>
     },
   } as any);
 
-const mockDocumentStoreResponse = ({ dsOwner = "0x1234", error = false }) => {
+const mockDocumentStoreResponse = ({ hasRole = true, error = false }) => {
   mockCheckAddressIsSmartContract.mockImplementation(() => {
     return !error;
   });
   mockGetConnectedDocumentStore.mockResolvedValue({
-    owner: () => {
-      return dsOwner;
+    hasRole: () => {
+      return hasRole;
     },
   });
 };
@@ -85,9 +85,9 @@ describe("ownershipChecks", () => {
       expect(status).toStrictEqual({ type: "ownership", message: "Invalid or Unsupported smart contract" });
     });
 
-    it("should return false for unowned document store", async () => {
+    it("should return false for unowned or not issuer on document store", async () => {
       const wallet = mockWallet();
-      mockDocumentStoreResponse({ dsOwner: "0x10101010" });
+      mockDocumentStoreResponse({ hasRole: false });
       const contractAddress = "0x154fcc3c953057c9527eb180cad321b906412b5d";
       const status = await checkVerifiableDocumentOwnership(contractAddress, wallet);
 

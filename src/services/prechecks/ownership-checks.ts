@@ -1,6 +1,6 @@
 import { OpenAttestationDocument, utils } from "@govtechsg/open-attestation";
 import { TradeTrustToken } from "@govtechsg/token-registry/dist/contracts";
-import { Wallet } from "ethers";
+import { Wallet, ethers } from "ethers";
 import { ConnectedSigner } from "../../types";
 import { getConnectedDocumentStore, checkAddressIsSmartContract, getConnectedTokenRegistry } from "../common";
 import { supportsInterface } from "../common/utils";
@@ -28,8 +28,11 @@ export const checkVerifiableDocumentOwnership = async (
     return createPreCheckError(invalidSmartContract);
   }
   const documentStore = await getConnectedDocumentStore(account, contractAddress);
-  const validOwnership = (await documentStore.owner()) === (await account.getAddress());
-  if (validOwnership) {
+  const walletAddress = await account.getAddress();
+  const issuerRole = ethers.utils.id("ISSUER_ROLE");
+  const validIssuer = await documentStore.hasRole(issuerRole, walletAddress);
+
+  if (validIssuer) {
     return "VALID";
   } else {
     return createPreCheckError(unownedDocumentStore);

@@ -1,4 +1,4 @@
-import { DocumentStoreFactory } from "@govtechsg/document-store";
+import { connect } from "@govtechsg/document-store";
 import { TradeTrustToken__factory } from "@govtechsg/token-registry/contracts";
 import { Wallet } from "ethers";
 import { supportsInterface } from "../common/utils";
@@ -8,7 +8,7 @@ jest.mock("@govtechsg/token-registry/contracts");
 jest.mock("@govtechsg/document-store");
 jest.mock("../common/utils");
 
-const mockDocumentStoreFactoryConnect = DocumentStoreFactory.connect as jest.Mock;
+const mockDocumentStoreConnect = connect as jest.Mock;
 const mockTradeTrustTokenFactoryConnect = TradeTrustToken__factory.connect as jest.Mock;
 const mockDocumentStoreIssue = jest.fn();
 const mockTokenRegistryMint = jest.fn();
@@ -32,7 +32,7 @@ const whenDocumentStoreExist = (): void => {
     transactionHash: "TX_HASH",
   });
   mockDocumentStoreIssue.mockResolvedValue(mockTransactionReceipt);
-  mockDocumentStoreFactoryConnect.mockReturnValue(mockDocumentStore);
+  mockDocumentStoreConnect.mockResolvedValue(mockDocumentStore);
 };
 
 const whenTokenRegistryExist = (): void => {
@@ -51,7 +51,7 @@ const mockWallet = ({ code = "0x1234" } = {}): Wallet =>
 
 describe("publishing", () => {
   beforeEach(() => {
-    resetMocks([mockDocumentStoreFactoryConnect, mockDocumentStoreIssue, mockTxWait]);
+    resetMocks([mockDocumentStoreConnect, mockDocumentStoreIssue, mockTxWait]);
   });
 
   describe("publishVerifiableDocumentJob", () => {
@@ -73,7 +73,7 @@ describe("publishing", () => {
 
       expect(hash).toBe("TX_HASH");
       expect(mockTxWait).toHaveBeenCalledTimes(1);
-      expect(mockDocumentStoreIssue).toHaveBeenCalledWith("0x9999", { nonce: 1234 });
+      expect(mockDocumentStoreIssue).toHaveBeenCalledWith("0x9999");
     });
 
     it("should throw when document store address is not a smart contract", async () => {
