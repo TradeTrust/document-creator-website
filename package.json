@@ -27,7 +27,7 @@
     "integration": "testcafe chrome --app \"npm run dev\" integration/**/*.spec.ts",
     "integration:ci": "concurrently -k -s first \"npm:blockchain\" \"npm:integration:headless\"",
     "integration:headless": "testcafe -c 3 chrome:headless integration/**/*.spec.ts --app \"npm run serve-static\"",
-    "integration:single": "testcafe chrome -L --app \"npm run serve-static\"",
+    "integration:single": "testcafe chrome -L --app \"npm run dev\"",
     "lint": "eslint . --ext .ts,.tsx --max-warnings 0",
     "lint:type": "npx --no-install tsc --noEmit --sourceMap false",
     "lint:fix": "npm run lint -- --fix",

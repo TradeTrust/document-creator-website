@@ -32,9 +32,6 @@ const resetMocks = (mocks: jest.Mock[]): void => mocks.forEach((mock) => mock.mo
 const mockWallet = ({ code = "0x1234" } = {}): Wallet =>
   ({
     provider: { getCode: () => code, getNetwork: () => ({ name: "goerli" }) },
-    getAddress: () => {
-      return "0x1234";
-    },
   } as any);
 
 describe("revokeDocumentJob", () => {
