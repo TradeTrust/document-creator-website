@@ -11,26 +11,36 @@ const mockDocumentStoreRevoke = jest.fn();
 const mockTxWait = jest.fn();
 const mockSupportsInterface = supportsInterface as jest.Mock;
 
-const mockDocumentStore = {
-  revoke: mockDocumentStoreRevoke,
+const mockDocumentStore = ({ hasRole = true }) => {
+  return {
+    revoke: mockDocumentStoreRevoke,
+    hasRole: () => {
+      return hasRole;
+    },
+  };
 };
 
 const mockTransactionReceipt = {
   wait: mockTxWait,
 };
 
-const whenDocumentStoreExist = (): void => {
+const whenDocumentStoreExist = (documentStore: any): void => {
   mockTxWait.mockResolvedValue({
     transactionHash: "TX_HASH",
   });
   mockDocumentStoreRevoke.mockResolvedValue(mockTransactionReceipt);
-  mockDocumentStoreConnect.mockReturnValue(mockDocumentStore);
+  mockDocumentStoreConnect.mockResolvedValue(mockDocumentStore(documentStore));
 };
 
 const resetMocks = (mocks: jest.Mock[]): void => mocks.forEach((mock) => mock.mockReset());
 
 const mockWallet = ({ code = "0x1234" } = {}): Wallet =>
-  ({ provider: { getCode: () => code, getNetwork: () => ({ name: "goerli" }) } } as any);
+  ({
+    provider: { getCode: () => code, getNetwork: () => ({ name: "goerli" }) },
+    getAddress: () => {
+      return "0x1234";
+    },
+  } as any);
 
 describe("revokeDocumentJob", () => {
   beforeEach(() => {
@@ -38,7 +48,7 @@ describe("revokeDocumentJob", () => {
   });
 
   it("should return transaction hash when revoke succeed", async () => {
-    whenDocumentStoreExist();
+    whenDocumentStoreExist({});
     const wallet = mockWallet();
     mockSupportsInterface.mockResolvedValueOnce(false);
     const hash = await revokeDocumentJob(
@@ -56,7 +66,7 @@ describe("revokeDocumentJob", () => {
   });
 
   it("should throw an Error when document store address is not a smart contract", async () => {
-    whenDocumentStoreExist();
+    whenDocumentStoreExist({});
     const wallet = mockWallet({ code: "0x" });
 
     await expect(
@@ -71,8 +81,24 @@ describe("revokeDocumentJob", () => {
     ).rejects.toThrow(/Address is not a smart contract/);
   });
 
+  it("should throw an Error when it does not have the revoker role in document store", async () => {
+    whenDocumentStoreExist({ hasRole: false });
+    const wallet = mockWallet();
+    mockSupportsInterface.mockResolvedValueOnce(false);
+    await expect(
+      revokeDocumentJob(
+        {
+          contractAddress: "0x154fcc3c953057c9527eb180cad321b906412b5d",
+          documents: [],
+          targetHash: "9999",
+        },
+        wallet
+      )
+    ).rejects.toThrow(/Invalid revoker role, please get the admin to revoke this document./);
+  });
+
   it("should throw an Error when transaction fails", async () => {
-    whenDocumentStoreExist();
+    whenDocumentStoreExist({});
     mockSupportsInterface.mockResolvedValueOnce(false);
     mockTxWait.mockRejectedValueOnce(new Error("Some error"));
     const wallet = mockWallet();
