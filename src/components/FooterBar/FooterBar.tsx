@@ -1,15 +1,18 @@
 import { Footer, FooterColumnItemProps } from "@govtechsg/tradetrust-ui-components";
-import { FunctionComponent } from "react";
+import { FunctionComponent, useCallback, useState } from "react";
 import { ExternalLink } from "react-feather";
 import { NavLink } from "react-router-dom";
 import { usePersistedConfigFile } from "../../common/hook/usePersistedConfigFile";
 import { URLS } from "../../constants/Urls";
-import { ConfigFile } from "../../types";
 import { getNetworkPath } from "../../utils";
 
 const sharedStyles = `text-sm text-cloud-500 hover:text-cerulean-500`;
 
-const renderNavLink = ({ label, to }: FooterColumnItemProps) => {
+interface NavLinkInterface {
+  (props: FooterColumnItemProps): JSX.Element;
+}
+
+const renderNavLink: NavLinkInterface = ({ label, to }) => {
   return (
     <NavLink className={sharedStyles} to={to}>
       {label}
@@ -26,7 +29,7 @@ const renderNavLink = ({ label, to }: FooterColumnItemProps) => {
 //   );
 // };
 
-const renderExternalLink = ({ label, to }: FooterColumnItemProps) => {
+const renderExternalLink: NavLinkInterface = ({ label, to }) => {
   return (
     <a className="flex items-center" href={to} target={"_blank"} rel="noopener noreferrer">
       <p className={`${sharedStyles} mr-1`}>{label}</p>
@@ -37,10 +40,23 @@ const renderExternalLink = ({ label, to }: FooterColumnItemProps) => {
   );
 };
 
-const getData = (configFile?: ConfigFile) => {
-  const networkPath = getNetworkPath(configFile?.network);
+interface footerData {
+  category: string;
+  items: footerDataItems[];
+}
 
-  const data = [
+interface footerDataItems {
+  label: string;
+  to: string;
+  render: NavLinkInterface;
+}
+
+interface GetDataInterface {
+  (networkPath: string): footerData[];
+}
+
+const getData: GetDataInterface = (networkPath: string) => {
+  return [
     {
       category: "Utilities",
       items: [
@@ -80,8 +96,6 @@ const getData = (configFile?: ConfigFile) => {
       ],
     },
   ];
-
-  return data;
 };
 
 const bottomRender = ({ label, to }: FooterColumnItemProps): React.ReactElement => (
@@ -90,21 +104,35 @@ const bottomRender = ({ label, to }: FooterColumnItemProps): React.ReactElement 
   </a>
 );
 
-export const FooterBar: FunctionComponent = () => {
-  const { configFile } = usePersistedConfigFile();
-  const data = getData(configFile);
-  const networkPath = getNetworkPath(configFile?.network);
-  const legalData = {
+const legalData = (networkPath: string) => {
+  return {
     copyright: "Copyright \u00A9 2021 TradeTrust",
     items: [
       { label: "Privacy Policy", to: `${networkPath}/privacy-policy`, render: bottomRender },
       { label: "Terms of use", to: `${networkPath}/terms-of-use`, render: bottomRender },
     ],
   };
+};
+
+export const FooterBar: FunctionComponent = () => {
+  const { configFile } = usePersistedConfigFile();
+  const [data, setData] = useState<footerData[]>();
+  const [networkPath, setNetworkPath] = useState<string>("https://tradetrust.io");
+
+  useCallback(() => {
+    const networkP = getNetworkPath(configFile?.network);
+    setData(getData(networkP));
+    setNetworkPath(networkP);
+  }, [configFile]);
 
   return (
     <div className="bg-cerulean-50 pt-8">
-      <Footer className="bg-white py-8 px-6" logoUrl={"/tradetrust_logo.svg"} legalData={legalData} data={data} />
+      <Footer
+        className="bg-white py-8 px-6"
+        logoUrl={"/tradetrust_logo.svg"}
+        legalData={legalData(networkPath)}
+        data={data}
+      />
     </div>
   );
 };
