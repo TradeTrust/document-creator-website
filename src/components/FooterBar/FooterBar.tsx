@@ -1,5 +1,5 @@
 import { Footer, FooterColumnItemProps } from "@govtechsg/tradetrust-ui-components";
-import { FunctionComponent, useEffect, useState } from "react";
+import { FunctionComponent } from "react";
 import { ExternalLink } from "react-feather";
 import { NavLink } from "react-router-dom";
 import { usePersistedConfigFile } from "../../common/hook/usePersistedConfigFile";
@@ -116,14 +116,8 @@ const legalData = (networkPath: string) => {
 
 export const FooterBar: FunctionComponent = () => {
   const { configFile } = usePersistedConfigFile();
-  const [data, setData] = useState<footerData[]>();
-  const [networkPath, setNetworkPath] = useState<string>("https://tradetrust.io");
-
-  useEffect(() => {
-    const networkP = getNetworkPath(configFile?.network);
-    setData(getData(networkP));
-    setNetworkPath(networkP);
-  }, [configFile]);
+  const networkPath = getNetworkPath(configFile?.network) || "https://tradetrust.io";
+  const data = getData(networkPath);
 
   return (
     <div className="bg-cerulean-50 pt-8">
