@@ -1,5 +1,5 @@
 import { Footer, FooterColumnItemProps } from "@govtechsg/tradetrust-ui-components";
-import { FunctionComponent, useCallback, useState } from "react";
+import { FunctionComponent, useEffect, useState } from "react";
 import { ExternalLink } from "react-feather";
 import { NavLink } from "react-router-dom";
 import { usePersistedConfigFile } from "../../common/hook/usePersistedConfigFile";
@@ -119,7 +119,7 @@ export const FooterBar: FunctionComponent = () => {
   const [data, setData] = useState<footerData[]>();
   const [networkPath, setNetworkPath] = useState<string>("https://tradetrust.io");
 
-  useCallback(() => {
+  useEffect(() => {
     const networkP = getNetworkPath(configFile?.network);
     setData(getData(networkP));
     setNetworkPath(networkP);
