@@ -14,10 +14,10 @@ export const publishVerifiableDocumentJob = async (
   job: PublishingJob,
   account: Wallet | ConnectedSigner
 ): Promise<string> => {
-  const { contractAddress, merkleRoot, nonce } = job;
+  const { contractAddress, merkleRoot } = job;
   await assertAddressIsSmartContract(contractAddress, account);
   const documentStore = await getConnectedDocumentStore(account, contractAddress);
-  const receipt = await documentStore.issue(`0x${merkleRoot}`, { nonce });
+  const receipt = await documentStore.issue(`0x${merkleRoot}`);
   const tx = await receipt.wait();
   if (!tx.transactionHash) throw new Error(`Tx hash not available: ${JSON.stringify(tx)}`);
   return tx.transactionHash;

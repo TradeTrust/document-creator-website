@@ -1,11 +1,9 @@
-import { getGSNRelayConfig } from "../../config";
 import { ConfigFile } from "../../types";
-import { decryptWalletOrSigner, getGsnRelaySigner } from "./decrypt";
+import { decryptWalletOrSigner } from "./decrypt";
 
 import sample from "../../test/fixtures/config/v2/sample-config-goerli.json";
 
 const configFile = sample as ConfigFile;
-const gsnConfig = getGSNRelayConfig("goerli");
 
 describe("decryptWalletOrSigner", () => {
   it("should return wallet when decryption is successful", async () => {
@@ -17,17 +15,4 @@ describe("decryptWalletOrSigner", () => {
   it("should throw when decryption fails", async () => {
     await expect(decryptWalletOrSigner(configFile, "wrongPassword", () => {})).rejects.toThrow(/invalid password/);
   });
-});
-
-describe("getGsnRelayProvider", () => {
-  it("should return gsn provider when using wallet Config", async () => {
-    const DEFAULT_PAYMASTER = "0x50d2b611CC85308CeEecd7a43D00168b97B71F9A";
-    const wallet = await decryptWalletOrSigner(configFile, "password", () => {});
-    const gsnProvider = await getGsnRelaySigner(wallet, DEFAULT_PAYMASTER);
-    expect(gsnProvider).toHaveProperty("_address", "0x1245e5B64D785b25057f7438F715f4aA5D965733");
-    expect(gsnProvider).toHaveProperty("provider.provider.relayClient.config.chainId", 5);
-    expect(gsnProvider).toHaveProperty("provider.provider.relayClient.config.forwarderAddress", gsnConfig.forwarder);
-    expect(gsnProvider).toHaveProperty("provider.provider.relayClient.config.paymasterAddress", DEFAULT_PAYMASTER);
-    expect(gsnProvider).toHaveProperty("provider.provider.relayClient.config.relayHubAddress", gsnConfig.relayHub);
-  }, 20000); // long timeout because getGsnRelaySigner takes awhile due to contract init
 });
