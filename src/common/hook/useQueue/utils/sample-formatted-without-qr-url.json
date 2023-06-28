@@ -22,7 +22,7 @@
       "name": "CHAFTA Certificate of Origin",
       "network": {
         "chain": "ETH",
-        "chainId": "5"
+        "chainId": "11155111"
       }
     },
     "fileName": "Document-1.tt",
@@ -52,7 +52,7 @@
       "name": "Maersk Bill of Lading",
       "network": {
         "chain": "ETH",
-        "chainId": "5"
+        "chainId": "11155111"
       }
     },
     "fileName": "Document-2.tt",
@@ -87,7 +87,7 @@
       "name": "CHAFTA Certificate of Origin",
       "network": {
         "chain": "ETH",
-        "chainId": "5"
+        "chainId": "11155111"
       }
     },
     "fileName": "Document-3.tt",
@@ -117,7 +117,7 @@
       "name": "Maersk Bill of Lading",
       "network": {
         "chain": "ETH",
-        "chainId": "5"
+        "chainId": "11155111"
       }
     },
     "fileName": "Document-4.tt",

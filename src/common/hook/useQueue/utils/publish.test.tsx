@@ -20,7 +20,7 @@ const configWithoutDocumentStorage = {
   wallet: "FAKE_WALLET" as any,
 } as Config;
 
-const wallet = Wallet.createRandom().connect(getDefaultProvider("goerli"));
+const wallet = Wallet.createRandom().connect(getDefaultProvider("sepolia"));
 
 jest.mock("../../../API/storageAPI");
 const mockGetQueueNumber = getQueueNumber as jest.Mock;

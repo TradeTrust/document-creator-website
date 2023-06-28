@@ -1,10 +1,8 @@
 {
-  "network": "goerli",
+  "network": "maticmum",
   "wallet": {
-    "type": "AWS_KMS",
-    "accessKeyId": "<ACCESS_KEY_ID>",
-    "region": "<REGION>",
-    "kmsKeyId": "<KMS_KEY_ID>"
+    "type": "ENCRYPTED_JSON",
+    "encryptedJson": "{\"address\":\"ca93690bb57eeab273c796a9309246bc0fb93649\",\"id\":\"712120d0-23ab-4725-9824-74fce4a8fdb5\",\"version\":3,\"crypto\":{\"cipher\":\"aes-128-ctr\",\"cipherparams\":{\"iv\":\"bcafe203a881775bfd9c1e377ec36b6d\"},\"ciphertext\":\"29c3a1e3ba52ffee4bfb03b21e5ec8530b0ce4d72c678507cdbc5948b721a946\",\"kdf\":\"scrypt\",\"kdfparams\":{\"salt\":\"98e5ae869e66f32acac0a0ec92aa4f27a51f721d251274e45657e73eb6cb659b\",\"n\":131072,\"dklen\":32,\"p\":1,\"r\":8},\"mac\":\"6467b42caddfb6430aea5bf0a439282856b090202b213642727edb351a923458\"},\"x-ethers\":{\"client\":\"ethers.js\",\"gethFilename\":\"UTC--2023-05-30T06-12-39.0Z--ca93690bb57eeab273c796a9309246bc0fb93649\",\"mnemonicCounter\":\"95712e42ed2478f6ccad165ebc7777d5\",\"mnemonicCiphertext\":\"3ed74121b8bcdb3d3004169f759176ef\",\"path\":\"m/44'/60'/0'/0/0\",\"locale\":\"en\",\"version\":\"0.1\"}}"
   },
   "forms": [
     {
@@ -20,10 +18,10 @@
           {
             "identityProof": {
               "type": "DNS-TXT",
-              "location": "<IDENTITY_PROOF>"
+              "location": "example.tradetrust.io"
             },
             "name": "DEMO TOKEN REGISTRY",
-            "tokenRegistry": "<TOKEN_REGISTRY>"
+            "tokenRegistry": "0x072FB36B73a7f52A23ea53162583f78ba3Bc6DEa"
           }
         ]
       },
@@ -142,10 +140,10 @@
           {
             "identityProof": {
               "type": "DNS-TXT",
-              "location": "<IDENTITY_PROOF>"
+              "location": "example.tradetrust.io"
             },
             "name": "DEMO DOCUMENT STORE",
-            "documentStore": "<DOCUMENT_STORE>"
+            "documentStore": "0x93092C2B449712281008112870063fF439367C00"
           }
         ]
       },
@@ -569,10 +567,10 @@
           {
             "identityProof": {
               "type": "DNS-TXT",
-              "location": "<IDENTITY_PROOF>"
+              "location": "example.tradetrust.io"
             },
             "name": "DEMO DOCUMENT STORE",
-            "documentStore": "<DOCUMENT_STORE>"
+            "documentStore": "0x93092C2B449712281008112870063fF439367C00"
           }
         ]
       },
@@ -752,10 +750,10 @@
           {
             "identityProof": {
               "type": "DNS-TXT",
-              "location": "<IDENTITY_PROOF>"
+              "location": "example.tradetrust.io"
             },
             "name": "DEMO DOCUMENT STORE",
-            "documentStore": "<DOCUMENT_STORE>"
+            "documentStore": "0x93092C2B449712281008112870063fF439367C00"
           }
         ]
       },
@@ -836,10 +834,10 @@
           {
             "identityProof": {
               "type": "DNS-TXT",
-              "location": "<IDENTITY_PROOF>"
+              "location": "example.tradetrust.io"
             },
             "name": "DEMO DOCUMENT STORE",
-            "documentStore": "<DOCUMENT_STORE>"
+            "documentStore": "0x93092C2B449712281008112870063fF439367C00"
           }
         ]
       },

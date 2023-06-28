@@ -8,8 +8,8 @@ describe("getRevokingJobs", () => {
     const revokingJobs = await getRevokingJobs([sampleWrappedDocument]);
 
     expect(revokingJobs).toHaveLength(1);
-    expect(revokingJobs[0].contractAddress).toBe("0x49b2969bF0E4aa822023a9eA2293b24E4518C1DD");
-    expect(revokingJobs[0].targetHash).toBe("b8e437deeb17060a67d6879789283687078080045b189a0f49c9f632534be04c");
+    expect(revokingJobs[0].contractAddress).toBe("0x4Bf7E4777a8D1b6EdD5F2d9b8582e2817F0B0953");
+    expect(revokingJobs[0].targetHash).toBe("234b7ce4c0da62206b2fc728c4b2aa8a45640df9deb51463189a9fbe4be4f52a");
     expect(revokingJobs[0].documents).toStrictEqual([sampleWrappedDocument]);
   });
 });
@@ -17,7 +17,7 @@ describe("getRevokingJobs", () => {
 describe("getRevokeAddress", () => {
   it("should get the document store for dns-txt verifiable document", () => {
     const revokeAddress = getRevokeAddress(sampleWrappedDocument);
-    expect(revokeAddress).toBe("0x49b2969bF0E4aa822023a9eA2293b24E4518C1DD");
+    expect(revokeAddress).toBe("0x4Bf7E4777a8D1b6EdD5F2d9b8582e2817F0B0953");
   });
 
   it("should get the revocation store address for v2 dns-did verifiable document", () => {

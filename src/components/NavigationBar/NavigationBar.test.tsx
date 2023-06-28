@@ -2,7 +2,7 @@ import { render, screen } from "@testing-library/react";
 import { BrowserRouter, Route } from "react-router-dom";
 import { NavigationBar } from "./NavigationBar";
 
-import config from "../../test/fixtures/config/v2/sample-config-goerli.json";
+import config from "../../test/fixtures/config/v3/sample-config-mumbai.json";
 
 const mockMainnetConfig = {
   network: "homestead",

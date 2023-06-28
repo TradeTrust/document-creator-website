@@ -6,7 +6,7 @@ import { useQueue } from "../../common/hook/useQueue";
 import { QueueState } from "./../../constants/QueueState";
 import { PublishContainer } from "./PublishContainer";
 
-import sampleConfig from "../../test/fixtures/config/v2/sample-config-goerli.json";
+import sampleConfig from "../../test/fixtures/config/v3/sample-config-local.json";
 
 jest.mock("../../common/context/forms");
 jest.mock("../../common/context/config");
