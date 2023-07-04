@@ -2,32 +2,32 @@
   "version": "https://schema.openattestation.com/2.0/schema.json",
   "data": {
     "$template": {
-      "type": "49ec75ef-5c3d-4d78-8317-118e9207ced5:string:EMBEDDED_RENDERER",
-      "name": "7fc47bfe-bf63-42a6-8c38-1c999ba37999:string:COVERING_LETTER",
-      "url": "7438b73a-df89-42b6-9734-1cd46f3e80a7:string:https://generic-templates.tradetrust.io"
+      "type": "b8b0a407-6551-426b-b082-6425d4a4e15f:string:EMBEDDED_RENDERER",
+      "name": "9a4b8b91-afe8-4103-bac9-b8be6cea1147:string:COVERING_LETTER",
+      "url": "470f1aab-37c1-4f9c-98dc-1900bbf6eba2:string:https://generic-templates.tradetrust.io"
     },
     "issuers": [
       {
-        "name": "b9608f61-1679-4bb8-9185-56397348f5cf:string:Demo Issuer",
-        "documentStore": "37071848-f76b-466c-b135-581c2abff561:string:0x4Bf7E4777a8D1b6EdD5F2d9b8582e2817F0B0953",
+        "name": "cc335dfe-9a5f-4669-ba17-a392fbdf0c16:string:Demo Issuer",
+        "documentStore": "a379386c-8588-4208-8d11-98efe1a3d11b:string:0x4Bf7E4777a8D1b6EdD5F2d9b8582e2817F0B0953",
         "identityProof": {
-          "type": "fa736af8-38b2-4a06-87ae-157f4fe77799:string:DNS-TXT",
-          "location": "60fc494a-b3e9-433a-af36-8eb72d3b694d:string:demo-tradetrust.openattestation.com"
+          "type": "f2755f16-5eb1-4031-abdb-c891ce4ab93d:string:DNS-TXT",
+          "location": "91f44ab9-6a8c-4bce-93a6-fd112eadebfd:string:example.tradetrust.io"
         }
       }
     ],
-    "name": "fd6021c8-d787-47c4-9bb3-193925891fe4:string:Covering Letter",
-    "logo": "b35d4680-9ac8-49f3-bdc6-cb1b396434d2:string:https://pluspng.com/img-png/logo-dbs-png-file-dbs-bank-logo-svg-1280.png",
-    "backgroundColor": "f5d429e7-d1fd-433c-bac5-fe69698e5069:string:black",
-    "titleColor": "86d2d2a7-d6b5-47b8-a88a-b835d6a7d3b9:string:white",
-    "remarksColor": "43cc544e-b35e-4377-96be-43425a31b5b3:string:white",
-    "title": "afef0028-457d-4340-b76e-657ab1de57a0:string:Documents Bundle",
-    "remarks": "32368947-da6c-4277-bf1c-fc9cf54054c8:string:Some very important documents in here for some submission"
+    "name": "496de007-84eb-4456-bd6a-263eefb3e0a8:string:Covering Letter",
+    "logo": "d59ddb8b-c313-459a-b0e9-d8cce5c5c030:string:https://pluspng.com/img-png/logo-dbs-png-file-dbs-bank-logo-svg-1280.png",
+    "backgroundColor": "50630358-e941-48ac-970d-0f58e12fa73b:string:black",
+    "titleColor": "f7941f29-7c24-4076-8e64-473fc1d641af:string:white",
+    "remarksColor": "159f5f7c-5c22-40e0-a474-d161c8daca68:string:white",
+    "title": "a413b5cd-5a87-4217-a4f1-ca3dce66b4eb:string:Documents Bundle",
+    "remarks": "eaca047f-cefd-48c6-8dd4-594d2f8cbf50:string:Some very important documents in here for some submission"
   },
   "signature": {
     "type": "SHA3MerkleProof",
-    "targetHash": "c9ea7d07be304e393e21f3b67f9e9f96b6bd829aab287af473b1d4f0924cbb81",
+    "targetHash": "bc4f35f03982a760505785d62565e29b88377db1243b273bd598e4763bacb83c",
     "proof": [],
-    "merkleRoot": "c9ea7d07be304e393e21f3b67f9e9f96b6bd829aab287af473b1d4f0924cbb81"
+    "merkleRoot": "bc4f35f03982a760505785d62565e29b88377db1243b273bd598e4763bacb83c"
   }
 }

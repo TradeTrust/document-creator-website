@@ -5,7 +5,7 @@ import { QueueType } from "../../../constants/QueueState";
 import { WrappedDocument } from "../../../types";
 import { ProcessedDocumentTag } from "./ProcessedDocumentTag";
 
-import sampleConfig from "../../../test/fixtures/config/v2/sample-config-goerli.json";
+import sampleConfig from "../../../test/fixtures/config/v3/sample-config-local.json";
 
 jest.mock("file-saver");
 jest.mock("../../../common/context/config");
@@ -32,7 +32,7 @@ describe("processedDocumentTag", () => {
     withConfigFile();
     render(<ProcessedDocumentTag doc={mockDoc} isPending={false} type={QueueType.ISSUE} />);
 
-    expect(screen.getAllByText("test-goerli.tt")).toHaveLength(1);
+    expect(screen.getAllByText("test-local.tt")).toHaveLength(1);
     expect(screen.getAllByText("(24 B)")).toHaveLength(1);
     expect(screen.queryAllByTestId("publish-loader")).toHaveLength(0);
   });

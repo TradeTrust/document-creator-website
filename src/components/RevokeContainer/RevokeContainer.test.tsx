@@ -3,7 +3,7 @@ import { BrowserRouter } from "react-router-dom";
 import { useConfigContext } from "../../common/context/config";
 import { RevokeContainer } from "./RevokeContainer";
 
-import sampleConfig from "../../test/fixtures/config/v2/sample-config-goerli.json";
+import sampleConfig from "../../test/fixtures/config/v3/sample-config-local.json";
 
 jest.mock("../../common/context/config");
 jest.mock("react-router-dom", () => ({

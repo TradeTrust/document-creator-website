@@ -1,6 +1,6 @@
 import { assertConfigFile } from "./validate";
 
-import sample from "../../test/fixtures/config/v2/sample-config-goerli.json";
+import sample from "../../test/fixtures/config/v3/sample-config-local.json";
 
 describe("configFileSchema", () => {
   it("validates against sample wallet file", () => {

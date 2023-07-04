@@ -41,7 +41,7 @@ describe("decodeQrCode", () => {
 
 describe("getDocumentNetwork", () => {
   it("should get the network details based on the network given", () => {
-    expect(getDocumentNetwork("goerli")).toStrictEqual({ network: { chain: "ETH", chainId: "5" } });
+    expect(getDocumentNetwork("sepolia")).toStrictEqual({ network: { chain: "ETH", chainId: "11155111" } });
   });
 
   it("should throw an error when the network is not in the list", () => {

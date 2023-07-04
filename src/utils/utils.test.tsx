@@ -5,12 +5,12 @@ import { generateFileName, getIdentityProofType, getIssuerAddress, getIssuerLoca
 describe("generateFileName", () => {
   it("should generate the file name correctly with the given config and file name", async () => {
     const fileName = generateFileName({
-      network: "goerli",
+      network: "sepolia",
       fileName: "document-1",
       extension: "tt",
     });
 
-    expect(fileName).toStrictEqual("document-1-goerli.tt");
+    expect(fileName).toStrictEqual("document-1-sepolia.tt");
   });
 
   it("should generate the file name correctly when config.network is 'homestead'", async () => {
@@ -46,13 +46,13 @@ describe("generateErrorLogFileName", () => {
     };
 
     const fileName = generateFileName({
-      network: "goerli",
+      network: "sepolia",
       fileName: "error-log",
       extension: "tt",
       hasTimestamp: true,
     });
 
-    expect(fileName).toStrictEqual("error-log-goerli-2019-10-30T00:00:00.000Z.tt");
+    expect(fileName).toStrictEqual("error-log-sepolia-2019-10-30T00:00:00.000Z.tt");
 
     global.Date = RealDate;
   });
