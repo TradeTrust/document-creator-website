@@ -9,10 +9,10 @@ import { useQueue } from "./useQueue";
 import { getPublishingJobs } from "./utils/publish";
 import { getRevokingJobs } from "./utils/revoke";
 
-import sampleConfigGoerli from "../../../test/fixtures/config/v2/sample-config-goerli.json";
+import sampleConfig from "../../../test/fixtures/config/v3/sample-config-local.json";
 import samplePublishJobs from "../../../test/fixtures/jobs-publish.json";
 import sampleRevokeJobs from "../../../test/fixtures/jobs-revoke.json";
-import sampleWrappedDocument from "../../../test/fixtures/sample-files/v2/wrapped/sample-wrapped-document.json";
+import sampleWrappedDocument from "../../../test/fixtures/sample-files/v3/did/sample-v3-did-wrapped.json";
 
 jest.mock("../../../services/publishing");
 jest.mock("./utils/publish");
@@ -27,8 +27,8 @@ const mockRevokeJob = revokeDocumentJob as jest.Mock;
 const mockGetRevokeJobs = getRevokingJobs as jest.Mock;
 
 const config = {
-  ...sampleConfigGoerli,
-  wallet: Wallet.createRandom().connect(getDefaultProvider("goerli")),
+  ...sampleConfig,
+  wallet: Wallet.createRandom().connect(getDefaultProvider("sepolia")),
 } as Config;
 
 const formEntries: FormEntry[] = [

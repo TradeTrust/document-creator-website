@@ -7,7 +7,7 @@ import { QueueState, QueueType } from "../../constants/QueueState";
 import { Config, FormEntry } from "../../types";
 import { ProcessDocumentScreen } from "./ProcessDocumentScreen";
 
-import sampleConfig from "../../test/fixtures/config/v2/sample-config-goerli.json";
+import sampleConfig from "../../test/fixtures/config/v3/sample-config-local.json";
 import sampleWrappedDocument from "../../test/fixtures/sample-files/v2/wrapped/sample-wrapped-document.json";
 
 jest.mock("../../common/hook/useQueue");
@@ -18,7 +18,7 @@ const mockProcessDocuments = jest.fn();
 
 const config = {
   ...sampleConfig,
-  wallet: Wallet.createRandom().connect(getDefaultProvider("goerli")),
+  wallet: Wallet.createRandom().connect(getDefaultProvider("sepolia")),
 } as Config;
 
 const formEntries: FormEntry[] = [

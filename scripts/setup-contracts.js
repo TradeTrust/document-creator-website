@@ -1,14 +1,31 @@
 const shell = require("shelljs");
 
 const ACCOUNT_KEY = "0xe82294532bcfcd8e0763ee5cef194f36f00396be59b94fb418f5f8d83140d9a7";
+const DOCUMENT_STORE_ADDRESS = "0x4Bf7E4777a8D1b6EdD5F2d9b8582e2817F0B0953";
 
-// Deploy document store at 0x547Ca63C8fB3Ccb856DEb7040D327dBfe4e7d20F on Goerli
-// shell.exec(`oa deploy document-store "My Document Store" -n local -k ${ACCOUNT_KEY}`);
+const oaCLI_PATH = "open-attestation";
 
-// Deployed token registry at 0xf18CD26780B6D3589371fb0b3fE8E2a513D6Fdc6 on Goerli
-// shell.exec(`oa deploy token-registry "My Token Registry" MTR -n local -k ${ACCOUNT_KEY}`);
+const TITLE_ESCROW_FACTORY_ADDRESS = "0x63A223E025256790E88778a01f480eBA77731D04";
+
+// Need to deploy as it will use the 1st contract address: 0x63a223e025256790e88778a01f480eba77731d04
+shell.exec(`${oaCLI_PATH} deploy title-escrow-factory -n local -k ${ACCOUNT_KEY}`);
+
+// Need to deploy as it will use the 2nd contract address: 0x9Eb613a88534E2939518f4ffBFE65F5969b491FF
+shell.exec(
+  `${oaCLI_PATH} deploy token-registry "DEMO TOKEN REGISTRY" DTR -n local -k ${ACCOUNT_KEY} --factory-address ${TITLE_ESCROW_FACTORY_ADDRESS} --standalone`
+);
+
+// Need to deploy as it will use the 3rd contract address: 0x4Bf7E4777a8D1b6EdD5F2d9b8582e2817F0B0953 (This align with the DNS-TXT and Document)
+shell.exec(`${oaCLI_PATH} deploy document-store "My Document Store" -n local -k ${ACCOUNT_KEY}`);
+
+const merkleRootToIssue = [
+  // wrapped-document-local-revokable.json
+  "0xbc4f35f03982a760505785d62565e29b88377db1243b273bd598e4763bacb83c",
+];
 
 // Issue a verifiable document for revoke flow
-shell.exec(
-  `open-attestation document-store issue --address 0x547Ca63C8fB3Ccb856DEb7040D327dBfe4e7d20F --hash 0xc9ea7d07be304e393e21f3b67f9e9f96b6bd829aab287af473b1d4f0924cbb81  -n local -k ${ACCOUNT_KEY}`
-);
+merkleRootToIssue.forEach((hash) => {
+  shell.exec(
+    `${oaCLI_PATH} document-store issue --address ${DOCUMENT_STORE_ADDRESS} --hash ${hash} -n local -k ${ACCOUNT_KEY}`
+  );
+});

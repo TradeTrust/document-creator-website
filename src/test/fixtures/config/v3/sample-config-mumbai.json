@@ -1,8 +1,8 @@
 {
-  "network": "goerli",
+  "network": "maticmum",
   "wallet": {
     "type": "ENCRYPTED_JSON",
-    "encryptedJson": "{\"address\":\"1245e5b64d785b25057f7438f715f4aa5d965733\",\"id\":\"bf069d1b-4e88-487c-b695-f2e03ed7c1ff\",\"version\":3,\"Crypto\":{\"cipher\":\"aes-128-ctr\",\"cipherparams\":{\"iv\":\"1f34e7bfdaee4b0778ecea4c8d12a543\"},\"ciphertext\":\"4f6cee88b4776f4f6f8eedf3da11c6a13542aa4bb65d46a5c1bc44c100a96f54\",\"kdf\":\"scrypt\",\"kdfparams\":{\"salt\":\"d931e0ea13032fd70060e40054c5a76c0571f4d840ec91eeda1bf68bdcad84db\",\"n\":1,\"dklen\":32,\"p\":1,\"r\":8},\"mac\":\"06c7897e3ff04245bf4f0765d8b6a8482c1c9981cb46ae88f636f9c83cd0b891\"},\"x-ethers\":{\"client\":\"ethers.js\",\"gethFilename\":\"UTC--2020-05-15T09-03-13.0Z--1245e5b64d785b25057f7438f715f4aa5d965733\",\"mnemonicCounter\":\"99b7f5b6897dcfe22fc7aa00d8e3cf5e\",\"mnemonicCiphertext\":\"6e7c1d38f162e54050b125f1f51b43ca\",\"path\":\"m/44'/60'/0'/0/0\",\"version\":\"0.1\"}}"
+    "encryptedJson": "{\"address\":\"ca93690bb57eeab273c796a9309246bc0fb93649\",\"id\":\"712120d0-23ab-4725-9824-74fce4a8fdb5\",\"version\":3,\"crypto\":{\"cipher\":\"aes-128-ctr\",\"cipherparams\":{\"iv\":\"bcafe203a881775bfd9c1e377ec36b6d\"},\"ciphertext\":\"29c3a1e3ba52ffee4bfb03b21e5ec8530b0ce4d72c678507cdbc5948b721a946\",\"kdf\":\"scrypt\",\"kdfparams\":{\"salt\":\"98e5ae869e66f32acac0a0ec92aa4f27a51f721d251274e45657e73eb6cb659b\",\"n\":131072,\"dklen\":32,\"p\":1,\"r\":8},\"mac\":\"6467b42caddfb6430aea5bf0a439282856b090202b213642727edb351a923458\"},\"x-ethers\":{\"client\":\"ethers.js\",\"gethFilename\":\"UTC--2023-05-30T06-12-39.0Z--ca93690bb57eeab273c796a9309246bc0fb93649\",\"mnemonicCounter\":\"95712e42ed2478f6ccad165ebc7777d5\",\"mnemonicCiphertext\":\"3ed74121b8bcdb3d3004169f759176ef\",\"path\":\"m/44'/60'/0'/0/0\",\"locale\":\"en\",\"version\":\"0.1\"}}"
   },
   "forms": [
     {
@@ -26,11 +26,11 @@
           "proof": {
             "type": "OpenAttestationProofMethod",
             "method": "TOKEN_REGISTRY",
-            "value": "0x492161E1397d074958D1340BAd0a18bD6007aF55"
+            "value": "0x072FB36B73a7f52A23ea53162583f78ba3Bc6DEa"
           },
           "identityProof": {
             "type": "DNS-TXT",
-            "identifier": "demo-tradetrust.openattestation.com"
+            "identifier": "example.tradetrust.io"
           }
         },
         "credentialSubject": {},
@@ -162,11 +162,11 @@
           "proof": {
             "type": "OpenAttestationProofMethod",
             "method": "DOCUMENT_STORE",
-            "value": "0x8bA63EAB43342AAc3AdBB4B827b68Cf4aAE5Caca"
+            "value": "0x93092C2B449712281008112870063fF439367C00"
           },
           "identityProof": {
             "type": "DNS-TXT",
-            "identifier": "demo-tradetrust.openattestation.com"
+            "identifier": "example.tradetrust.io"
           }
         },
         "credentialSubject": {},
@@ -617,11 +617,11 @@
           "proof": {
             "type": "OpenAttestationProofMethod",
             "method": "DOCUMENT_STORE",
-            "value": "0x8bA63EAB43342AAc3AdBB4B827b68Cf4aAE5Caca"
+            "value": "0x93092C2B449712281008112870063fF439367C00"
           },
           "identityProof": {
             "type": "DNS-TXT",
-            "identifier": "demo-tradetrust.openattestation.com"
+            "identifier": "example.tradetrust.io"
           }
         },
         "credentialSubject": {},

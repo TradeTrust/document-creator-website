@@ -3,7 +3,7 @@ import { v2 } from "@govtechsg/open-attestation";
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { useConfigContext } from "../../../common/context/config";
 import { checkContractOwnership } from "../../../services/prechecks";
-import sampleConfig from "../../../test/fixtures/config/v2/sample-config-goerli.json";
+import sampleConfig from "../../../test/fixtures/config/v3/sample-config-mumbai.json";
 import { FormTemplate } from "../../../types";
 import { FormSelect } from "./FormSelect";
 
