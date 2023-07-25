@@ -30,6 +30,10 @@ export enum ChainId {
   // Polygon
   Polygon = 137,
   PolygonMumbai = 80001,
+
+  // XDC Network
+  XDC = 50,
+  XDCApothem = 51,
 }
 
 export const ChainInfo: ChainInfo = {
@@ -96,6 +100,34 @@ export const ChainInfo: ChainInfo = {
     nativeCurrency: {
       name: "MATIC",
       symbol: "mMATIC",
+      decimals: 18,
+    },
+  },
+  [ChainId.XDC]: {
+    label: "XDC Network Mainnet",
+    chain: "XDC",
+    chainId: ChainId.XDC,
+    networkName: "xdc",
+    explorerUrl: "https://xdc.blocksscan.io",
+    explorerApiUrl: "https://xdc.blocksscan.io",
+    rpcUrl: "https://erpc.xinfin.network",
+    nativeCurrency: {
+      name: "XDC",
+      symbol: "XDC",
+      decimals: 18,
+    },
+  },
+  [ChainId.XDCApothem]: {
+    label: "XDC Testnet Apothem",
+    chain: "XDC",
+    chainId: ChainId.XDCApothem,
+    networkName: "xdcapothem",
+    explorerUrl: "https://apothem.blocksscan.io",
+    explorerApiUrl: "https://apothem.blocksscan.io",
+    rpcUrl: "https://erpc.apothem.network",
+    nativeCurrency: {
+      name: "XDCt",
+      symbol: "XDCt",
       decimals: 18,
     },
   },
