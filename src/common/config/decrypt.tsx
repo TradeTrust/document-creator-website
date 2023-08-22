@@ -1,6 +1,6 @@
 import { ProviderDetails, utils } from "@govtechsg/oa-verify";
 import { providers, Wallet } from "ethers";
-import { AwsKmsSigner } from "ethers-aws-kms-signer";
+import { AwsKmsSigner } from "@govtechsg/ethers-aws-kms-signer";
 import { ChainInfo } from "../../constants/chainInfo";
 import { AwsKmwSignerOption, ConfigFile, ConnectedSigner } from "../../types";
 import { getChainInfoFromNetworkName, isWalletOption } from "../utils";

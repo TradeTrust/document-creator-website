@@ -23,6 +23,10 @@ jobs:
           git config --global url."https://".insteadOf git+https://
           git config --global url."https://".insteadOf ssh://git
           npm ci
+      - name: Check Snyk
+        uses: snyk/actions/node@master
+        env:
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
       - name: Check Lint
         run: npm run lint
       - name: Check Type
