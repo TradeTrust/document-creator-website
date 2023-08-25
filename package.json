@@ -47,7 +47,7 @@
   },
   "dependencies": {
     "@emotion/react": "^11.4.0",
-    "@emotion/styled": "^11.3.0",
+    "@emotion/styled": "^11.11.0",
     "@govtechsg/decentralized-renderer-react-components": "^3.6.2",
     "@govtechsg/document-store": "^2.6.1",
     "@govtechsg/ethers-contract-hook": "^2.2.0",
