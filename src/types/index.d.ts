@@ -77,6 +77,14 @@ type ProcessedFilesV3 = {
   mimeType: string;
 };
 
+export interface NetworkGasInformation {
+  speed: string;
+  price: string;
+  duration?: number;
+  network: string;
+  maxPriorityFeePerGas: BigNumber;
+}
+
 export type ProcessedFiles = ProcessedFilesV3 | ProcessedFilesV2;
 
 // FormData is used by json-schema-forms internally to track state of a single form
@@ -130,6 +138,7 @@ export interface PublishingJob {
   documents: WrappedDocument[];
   merkleRoot: string;
   payload: { ownership?: Ownership };
+  overrides?: Overrides;
 }
 
 export interface RevokingJob {

@@ -5,6 +5,7 @@ import "./index.css";
 import { App } from "./App";
 import { ConfigContextProvider } from "./common/context/config";
 import { FormsContextProvider } from "./common/context/forms";
+import { GasSelectorProvider } from "./common/context/network";
 import { ErrorBoundary } from "./components/ErrorBoundary";
 import { OverlayContextProvider } from "@govtechsg/tradetrust-ui-components";
 
@@ -13,9 +14,11 @@ ReactDOM.render(
     <ErrorBoundary>
       <ConfigContextProvider>
         <FormsContextProvider>
-          <OverlayContextProvider>
-            <App />
-          </OverlayContextProvider>
+          <GasSelectorProvider>
+            <OverlayContextProvider>
+              <App />
+            </OverlayContextProvider>
+          </GasSelectorProvider>
         </FormsContextProvider>
       </ConfigContextProvider>
     </ErrorBoundary>

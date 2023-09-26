@@ -1,7 +1,7 @@
 import { ProgressBar } from "@govtechsg/tradetrust-ui-components";
 import { Wrapper } from "../UI/Wrapper";
 import { FunctionComponent, useEffect } from "react";
-import { Config, FormEntry } from "../../types";
+import { Config, FormEntry, NetworkGasInformation } from "../../types";
 import { QueueType } from "../../constants/QueueState";
 import { useQueue } from "../../common/hook/useQueue";
 import { generateFileName, generateZipFile } from "../../utils";
@@ -11,26 +11,30 @@ import { ContentFrame } from "../UI/ContentFrame";
 import { ProcessDocumentContent } from "./ProcessDocumentContent";
 import { IssueOrRevokeSelector } from "../UI/IssueOrRevokeSelector";
 
-interface ProcessDocumentScreen {
+interface ProcessDocumentScreenProps {
   config: Config;
   processAnotherDocument: () => void;
   forms?: FormEntry[];
   revokeDocuments?: any[];
   fileName?: string;
   type: QueueType;
+  gasPrice?: NetworkGasInformation;
 }
 
-export const ProcessDocumentScreen: FunctionComponent<ProcessDocumentScreen> = ({
+export const ProcessDocumentScreen: FunctionComponent<ProcessDocumentScreenProps> = ({
   config,
   processAnotherDocument,
   forms,
   revokeDocuments,
   fileName,
   type,
+  gasPrice,
 }) => {
   const isIssuingFlow = type === QueueType.ISSUE;
 
-  const useQueueParameters = isIssuingFlow ? { config, formEntries: forms } : { config, documents: revokeDocuments };
+  const useQueueParameters = isIssuingFlow
+    ? { config, formEntries: forms, gasPrice }
+    : { config, documents: revokeDocuments };
 
   const {
     processDocuments,

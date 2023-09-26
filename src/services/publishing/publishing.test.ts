@@ -67,6 +67,7 @@ describe("publishing", () => {
           documents: [],
           merkleRoot: "9999",
           payload: {},
+          overrides: {},
         },
         wallet
       );
@@ -89,6 +90,7 @@ describe("publishing", () => {
             documents: [],
             merkleRoot: "9999",
             payload: {},
+            overrides: {},
           },
           wallet
         )
@@ -110,6 +112,7 @@ describe("publishing", () => {
             documents: [],
             merkleRoot: "9999",
             payload: {},
+            overrides: {},
           },
           wallet
         )
@@ -135,6 +138,7 @@ describe("publishing", () => {
               holderAddress: "0x2222",
             },
           },
+          overrides: {},
         },
         wallet
       );
@@ -162,6 +166,7 @@ describe("publishing", () => {
                 holderAddress: "0x2222",
               },
             },
+            overrides: {},
           },
           wallet
         )

@@ -1,9 +1,12 @@
-import { Button, ProgressBar } from "@govtechsg/tradetrust-ui-components";
-import React, { FunctionComponent } from "react";
+import { Button, OverlayContext, ProgressBar, Textual } from "@govtechsg/tradetrust-ui-components";
+import React, { FunctionComponent, useContext } from "react";
 import { Card } from "../../UI/Card";
 import { IssueOrRevokeSelector } from "../../UI/IssueOrRevokeSelector";
 import { Wrapper } from "../../UI/Wrapper";
 import { DocumentSelector } from "../DocumentSelector";
+import { GasEstimation } from "./GasEstimation";
+import { useGasSelectorContext } from "../../../common/context/network";
+import { formatUnits } from "ethers/lib/utils";
 
 interface DynamicFormHeaderProps {
   onBackToFormSelection: () => void;
@@ -13,6 +16,15 @@ interface DynamicFormHeaderProps {
   closePreviewMode: () => void;
 }
 
+// const GasSelectionGuide: FunctionComponent<{ GasValue: string }> = (GasValue: string) => {
+//   // TODO: use Confirmation Content
+//   return (
+//     <Textual title={"Gas Estimation"}>
+//       <div>{`Final Priority Gas Value: ${GasValue}`}</div>
+//     </Textual>
+//   );
+// };
+
 export const DynamicFormHeader: FunctionComponent<DynamicFormHeaderProps> = ({
   onBackToFormSelection,
   onNewForm,
@@ -20,6 +32,44 @@ export const DynamicFormHeader: FunctionComponent<DynamicFormHeaderProps> = ({
   validateCurrentForm,
   closePreviewMode,
 }) => {
+  const { gasSpeed, networkGasInformation } = useGasSelectorContext();
+  const { showOverlay, closeOverlay } = useContext(OverlayContext);
+  const onFormSubmission = () => {
+    let gasPriceString = "";
+    if (!networkGasInformation) onFormSubmit();
+    if (networkGasInformation) {
+      for (let i = 0; i < networkGasInformation.length; i++) {
+        if (gasSpeed === networkGasInformation[i].speed) {
+          const gasPrice = networkGasInformation[i].maxPriorityFeePerGas;
+          gasPriceString = formatUnits(gasPrice, "gwei");
+        }
+      }
+
+      const openModal = () => {
+        showOverlay(
+          <Textual title={"Gas Estimation"}>
+            <div>{`Current Priority Gas Value: ${gasPriceString}`}</div>
+
+            <Button
+              className="bg-white text-cerulean-500 hover:bg-cloud-100 mr-4"
+              onClick={closeOverlay}
+              data-testid="close-overlay"
+            >
+              Cancel
+            </Button>
+            <Button
+              className="bg-cerulean-500 text-white hover:bg-cerulean-800"
+              onClick={onFormSubmit}
+              data-testid="form-submit-button"
+            >
+              Confirm
+            </Button>
+          </Textual>
+        );
+      };
+      openModal();
+    }
+  };
   return (
     <Wrapper className="mb-8">
       <Card
@@ -37,6 +87,9 @@ export const DynamicFormHeader: FunctionComponent<DynamicFormHeaderProps> = ({
         }
       >
         <ProgressBar step={2} totalSteps={3} />
+        <div>
+          <GasEstimation />
+        </div>
         <h3 data-testid="fill-form-title" className="my-8">
           Fill and Preview Form
         </h3>
@@ -54,7 +107,7 @@ export const DynamicFormHeader: FunctionComponent<DynamicFormHeaderProps> = ({
             </Button>
             <Button
               className="bg-cerulean-500 text-white hover:bg-cerulean-800"
-              onClick={onFormSubmit}
+              onClick={onFormSubmission}
               data-testid="form-submit-button"
             >
               Issue Document(s)

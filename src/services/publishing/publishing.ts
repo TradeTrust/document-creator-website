@@ -14,9 +14,19 @@ export const publishVerifiableDocumentJob = async (
   job: PublishingJob,
   account: Wallet | ConnectedSigner
 ): Promise<string> => {
+  // const { gasSpeed, networkGasInformation } = useGasSelectorContext();
+  // if (!networkGasInformation) throw new Error("Network gas information is not available");
+
   const { contractAddress, merkleRoot } = job;
   await assertAddressIsSmartContract(contractAddress, account);
   const documentStore = await getConnectedDocumentStore(account, contractAddress);
+  // let overrides = {};
+
+  // for (const gasInfo of networkGasInformation) {
+  //   if (gasInfo.speed === gasSpeed) {
+  //     overrides = { maxFeePerGas: gasInfo.maxFeePerGas, maxPriorityFeePerGas: gasInfo.maxPriorityFeePerGas };
+  //   }
+  // }
   const receipt = await documentStore.issue(`0x${merkleRoot}`);
   const tx = await receipt.wait();
   if (!tx.transactionHash) throw new Error(`Tx hash not available: ${JSON.stringify(tx)}`);

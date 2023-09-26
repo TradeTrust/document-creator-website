@@ -3,7 +3,15 @@ import { IdentityProofType } from "../../../constants";
 import { QueueState, QueueType } from "../../../constants/QueueState";
 import { publishJob } from "../../../services/publishing";
 import { revokeDocumentJob } from "../../../services/revoking";
-import { Config, FailedJobErrors, FormEntry, PublishingJob, RevokingJob, WrappedDocument } from "../../../types";
+import {
+  Config,
+  FailedJobErrors,
+  FormEntry,
+  NetworkGasInformation,
+  PublishingJob,
+  RevokingJob,
+  WrappedDocument,
+} from "../../../types";
 import { getLogger } from "../../../utils/logger";
 import { uploadToStorage } from "../../API/storageAPI";
 import { getPublishingJobs } from "./utils/publish";
@@ -15,17 +23,19 @@ interface FailedJob {
   index: number;
   error: Error;
 }
-interface UseQueue {
+interface UseQueueProps {
   config: Config;
   formEntries?: FormEntry[];
   documents?: any[];
+  gasPrice?: NetworkGasInformation;
 }
 
 export const useQueue = ({
   config,
   formEntries,
   documents,
-}: UseQueue): {
+  gasPrice,
+}: UseQueueProps): {
   error?: Error;
   queueState: QueueState;
   processDocuments: (queueType: QueueType) => void;
@@ -78,6 +88,11 @@ export const useQueue = ({
           if (queueType === QueueType.ISSUE) {
             if (job.contractAddress !== IdentityProofType.DNSDid) {
               // publish verifiable documents and transferable records with doc store and token registry
+              const publishingJob = job as PublishingJob;
+              if (gasPrice) {
+                const { maxPriorityFeePerGas } = gasPrice;
+                publishingJob.overrides = { maxPriorityFeePerGas };
+              }
               await publishJob(job as PublishingJob, wallet);
             }
             // upload all the docs to document storage
