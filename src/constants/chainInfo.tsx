@@ -34,6 +34,11 @@ export enum ChainId {
   // XDC Network
   XDC = 50,
   XDCApothem = 51,
+
+  //Hedera Network
+  HederaMainnet=295,
+  HederaTestnet =296
+
 }
 
 export const ChainInfo: ChainInfo = {
@@ -127,6 +132,34 @@ export const ChainInfo: ChainInfo = {
     nativeCurrency: {
       name: "XDCt",
       symbol: "XDCt",
+      decimals: 18,
+    },
+  },
+  [ChainId.HederaMainnet]: {
+    label: "Hedera Network Mainnet",
+    chain: "Hedera",
+    chainId: ChainId.HederaMainnet,
+    networkName: "hederamainnet",
+    explorerUrl: "https://hashscan.io/mainnet",
+    explorerApiUrl: "https://hashscan.io/mainnet",
+    rpcUrl: "https://mainnet.hashio.io/api",
+    nativeCurrency: {
+      name: "HBAR",
+      symbol: "HBAR",
+      decimals: 18,
+    },
+  },
+  [ChainId.HederaTestnet]: {
+    label: "Hedera Network TestNet",
+    chain: "Hedera",
+    chainId: ChainId.HederaTestnet,
+    networkName: "hederatestnet",
+    explorerUrl: "https://hashscan.io/testnet",
+    explorerApiUrl: "https://hashscan.io/testnet",
+    rpcUrl: "https://testnet.hashio.io/api",
+    nativeCurrency: {
+      name: "HBAR",
+      symbol: "HBAR",
       decimals: 18,
     },
   },
