@@ -36,9 +36,8 @@ export enum ChainId {
   XDCApothem = 51,
 
   //Hedera Network
-  HederaMainnet=295,
-  HederaTestnet =296
-
+  HederaMainnet = 295,
+  HederaTestnet = 296,
 }
 
 export const ChainInfo: ChainInfo = {
