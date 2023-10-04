@@ -24,7 +24,6 @@ export enum ChainId {
   Ethereum = 1,
 
   // Ethereum Testnet
-  Goerli = 5,
   Sepolia = 11155111,
 
   // Polygon
@@ -53,14 +52,6 @@ export const ChainInfo: ChainInfo = {
     networkName: "homestead",
     explorerUrl: "https://etherscan.io",
     explorerApiUrl: "https://api.etherscan.io",
-  },
-  [ChainId.Goerli]: {
-    label: "Goerli",
-    chain: "ETH",
-    chainId: ChainId.Goerli,
-    networkName: "goerli",
-    explorerUrl: "https://goerli.etherscan.io",
-    explorerApiUrl: "https://api-goerli.etherscan.io",
   },
   [ChainId.Sepolia]: {
     label: "Sepolia",
