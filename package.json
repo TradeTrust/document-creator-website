@@ -52,7 +52,7 @@
     "@govtechsg/document-store": "^2.6.1",
     "@govtechsg/ethers-aws-kms-signer": "^2.1.0",
     "@govtechsg/ethers-contract-hook": "^2.2.0",
-    "@govtechsg/oa-verify": "^8.2.0",
+    "@govtechsg/oa-verify": "^8.2.2",
     "@govtechsg/open-attestation": "^6.3.0",
     "@govtechsg/token-registry": "^4.1.7",
     "@govtechsg/tradetrust-ui-components": "^2.21.1",
