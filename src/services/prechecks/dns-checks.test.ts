@@ -1,4 +1,4 @@
-import { v2 } from "@govtechsg/open-attestation";
+import { v2 } from "@tradetrust-tt/tradetrust";
 import { getDnsDidRecords, getDocumentStoreRecords } from "@govtechsg/dnsprove";
 import { validateDnsTxtRecords } from "./dns-checks";
 

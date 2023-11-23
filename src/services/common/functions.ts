@@ -1,8 +1,8 @@
 import { Wallet } from "ethers";
 import { ConnectedSigner } from "../../types";
-import { connect } from "@govtechsg/document-store";
-import { DocumentStore } from "@govtechsg/document-store/src/contracts/DocumentStore";
-import { TradeTrustToken, TradeTrustToken__factory } from "@govtechsg/token-registry/contracts";
+import { connect } from "@tradetrust-tt/document-store";
+import { DocumentStore } from "@tradetrust-tt/document-store/src/contracts/DocumentStore";
+import { TradeTrustToken, TradeTrustToken__factory } from "@tradetrust-tt/token-registry/contracts";
 
 export const checkAddressIsSmartContract = async (
   address: string,

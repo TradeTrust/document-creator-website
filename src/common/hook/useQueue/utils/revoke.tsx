@@ -1,5 +1,5 @@
 import { RevokingJob } from "../../../../types";
-import { utils } from "@govtechsg/open-attestation";
+import { utils } from "@tradetrust-tt/tradetrust";
 
 export const getRevokingJobs = async (documents: any[]): Promise<RevokingJob[]> => {
   return Promise.all(

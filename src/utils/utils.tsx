@@ -1,5 +1,5 @@
 import { getDnsDidRecords, getDocumentStoreRecords } from "@govtechsg/dnsprove";
-import { OpenAttestationDocument, utils } from "@govtechsg/open-attestation";
+import { OpenAttestationDocument, utils } from "@tradetrust-tt/tradetrust";
 import { utils as ethersUtils } from "ethers";
 import { saveAs } from "file-saver";
 import JSZip from "jszip";

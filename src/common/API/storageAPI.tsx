@@ -1,4 +1,4 @@
-import { utils } from "@govtechsg/open-attestation";
+import { utils } from "@tradetrust-tt/tradetrust";
 import axios, { AxiosResponse } from "axios";
 import { DocumentStorage, WrappedDocument } from "../../types";
 import { decodeQrCode } from "../utils";
