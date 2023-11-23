@@ -1,4 +1,4 @@
-import { ProviderDetails, utils } from "@govtechsg/oa-verify";
+import { ProviderDetails, utils } from "@tradetrust-tt/tt-verify";
 import { providers, Wallet } from "ethers";
 import { AwsKmsSigner } from "@govtechsg/ethers-aws-kms-signer";
 import { ChainInfo } from "../../constants/chainInfo";

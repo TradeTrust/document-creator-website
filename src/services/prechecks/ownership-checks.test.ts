@@ -1,4 +1,4 @@
-import { v3 } from "@govtechsg/open-attestation";
+import { v3 } from "@tradetrust-tt/tradetrust";
 import sampleV3DID from "../../test/fixtures/sample-files/v3/did/sample-v3-did-wrapped.json";
 import { checkDID, checkTransferableRecordOwnership, checkVerifiableDocumentOwnership } from "./ownership-checks";
 import { getConnectedDocumentStore, checkAddressIsSmartContract, getConnectedTokenRegistry } from "../common";

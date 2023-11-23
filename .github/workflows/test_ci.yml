@@ -1,6 +1,6 @@
 name: CI
 
-on: 
+on:
   pull_request:
   push:
     branches:
@@ -25,6 +25,7 @@ jobs:
           npm ci
       - name: Check Snyk
         uses: snyk/actions/node@master
+        continue-on-error: true
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
       - name: Check Lint

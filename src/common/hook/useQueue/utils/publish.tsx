@@ -2,7 +2,7 @@ import {
   utils,
   wrapDocuments as wrapDocumentsV2,
   __unsafe__use__it__at__your__own__risks__wrapDocuments as wrapDocumentsV3,
-} from "@govtechsg/open-attestation";
+} from "@tradetrust-tt/tradetrust";
 import { Signer } from "ethers";
 import { defaultsDeep, groupBy } from "lodash";
 import { IdentityProofType } from "../../../../constants";

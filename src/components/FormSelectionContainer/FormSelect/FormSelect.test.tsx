@@ -1,5 +1,5 @@
 import { getDocumentStoreRecords } from "@govtechsg/dnsprove";
-import { v2 } from "@govtechsg/open-attestation";
+import { v2 } from "@tradetrust-tt/tradetrust";
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { useConfigContext } from "../../../common/context/config";
 import { checkContractOwnership } from "../../../services/prechecks";
