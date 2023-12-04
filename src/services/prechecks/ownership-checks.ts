@@ -1,5 +1,5 @@
-import { OpenAttestationDocument, utils } from "@govtechsg/open-attestation";
-import { TradeTrustToken } from "@govtechsg/token-registry/dist/contracts";
+import { OpenAttestationDocument, utils } from "@tradetrust-tt/tradetrust";
+import { TradeTrustToken } from "@tradetrust-tt/token-registry/dist/contracts";
 import { Wallet, ethers } from "ethers";
 import { ConnectedSigner } from "../../types";
 import { getConnectedDocumentStore, checkAddressIsSmartContract, getConnectedTokenRegistry } from "../common";

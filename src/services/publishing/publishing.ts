@@ -4,8 +4,8 @@ import {
   SignedWrappedDocument,
   SUPPORTED_SIGNING_ALGORITHM,
   v2,
-} from "@govtechsg/open-attestation";
-import { TradeTrustToken__factory } from "@govtechsg/token-registry/contracts";
+} from "@tradetrust-tt/tradetrust";
+import { TradeTrustToken__factory } from "@tradetrust-tt/token-registry/contracts";
 import { Signer, Wallet } from "ethers";
 import { ConnectedSigner, PublishingJob } from "../../types";
 import { assertAddressIsSmartContract, getConnectedDocumentStore } from "../common";

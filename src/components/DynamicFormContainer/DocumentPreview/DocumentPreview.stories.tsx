@@ -1,4 +1,4 @@
-import { v2 } from "@govtechsg/open-attestation";
+import { v2 } from "@tradetrust-tt/tradetrust";
 import React, { FunctionComponent } from "react";
 import { DocumentPreview } from "./DocumentPreview";
 

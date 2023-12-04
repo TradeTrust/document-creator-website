@@ -1,11 +1,11 @@
-import { connect } from "@govtechsg/document-store";
-import { TradeTrustToken__factory } from "@govtechsg/token-registry/contracts";
+import { connect } from "@tradetrust-tt/document-store";
+import { TradeTrustToken__factory } from "@tradetrust-tt/token-registry/contracts";
 import { Wallet } from "ethers";
 import { supportsInterface } from "../common/utils";
 import { publishTransferableRecordJob, publishVerifiableDocumentJob } from "./index";
 
-jest.mock("@govtechsg/token-registry/contracts");
-jest.mock("@govtechsg/document-store");
+jest.mock("@tradetrust-tt/token-registry/contracts");
+jest.mock("@tradetrust-tt/document-store");
 jest.mock("../common/utils");
 
 const mockDocumentStoreConnect = connect as jest.Mock;

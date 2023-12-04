@@ -1,9 +1,9 @@
-import { connect } from "@govtechsg/document-store";
+import { connect } from "@tradetrust-tt/document-store";
 import { Wallet } from "ethers";
 import { supportsInterface } from "../common/utils";
 import { revokeDocumentJob } from "./index";
 
-jest.mock("@govtechsg/document-store");
+jest.mock("@tradetrust-tt/document-store");
 jest.mock("../common/utils");
 
 const mockDocumentStoreConnect = connect as jest.Mock;

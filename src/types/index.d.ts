@@ -1,5 +1,5 @@
 import { Provider } from "@ethersproject/abstract-provider";
-import { OpenAttestationDocument } from "@govtechsg/open-attestation";
+import { OpenAttestationDocument } from "@tradetrust-tt/tradetrust";
 import { ErrorObject } from "ajv";
 import { Signer, Wallet } from "ethers";
 
