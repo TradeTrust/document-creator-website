@@ -3,7 +3,7 @@ import { OpenAttestationDocument } from "@govtechsg/open-attestation";
 import { ErrorObject } from "ajv";
 import { Signer, Wallet } from "ethers";
 
-export type Network = "homestead" | "local" | "sepolia" | "matic" | "maticmum" | "xdc" | "xdcapothem";
+export type Network = "homestead" | "local" | "sepolia" | "matic" | "maticmum" | "xdc" | "xdcapothem" | "hederamainnet" | "hederatestnet";
 type FormType = "TRANSFERABLE_RECORD" | "VERIFIABLE_DOCUMENT";
 
 // FormTemplate is defined in configuration file
