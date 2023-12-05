@@ -9,7 +9,7 @@ import { verificationBuilder, openAttestationVerifiers } from "@tradetrust-tt/tt
 import { DocumentUploadState } from "../../constants/DocumentUploadState";
 import { ProcessDocumentScreen } from "../ProcessDocumentScreen";
 import { QueueType } from "../../constants/QueueState";
-import { errorMessageHandling, CONSTANTS } from "@govtechsg/tradetrust-utils";
+import { errorMessageHandling, CONSTANTS } from "@tradetrust-tt/tradetrust-utils";
 
 export const RevokeContainer: FunctionComponent = () => {
   const { config } = useConfigContext();

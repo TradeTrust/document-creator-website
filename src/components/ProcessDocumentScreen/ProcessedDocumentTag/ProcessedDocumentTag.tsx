@@ -1,4 +1,4 @@
-import { LoaderSpinner } from "@govtechsg/tradetrust-ui-components";
+import { LoaderSpinner } from "@tradetrust-tt/tradetrust-ui-components";
 import { saveAs } from "file-saver";
 import prettyBytes from "pretty-bytes";
 import { FunctionComponent } from "react";

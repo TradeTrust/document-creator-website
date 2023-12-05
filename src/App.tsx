@@ -1,4 +1,4 @@
-import { NetworkBar, Overlay } from "@govtechsg/tradetrust-ui-components";
+import { NetworkBar, Overlay } from "@tradetrust-tt/tradetrust-ui-components";
 import { Router } from "react-router-dom";
 import { useConfigContext } from "./common/context/config";
 import { useFormsContext } from "./common/context/forms";

@@ -1,4 +1,4 @@
-import { Button, ButtonSize } from "@govtechsg/tradetrust-ui-components";
+import { Button, ButtonSize } from "@tradetrust-tt/tradetrust-ui-components";
 import { FunctionComponent, useState } from "react";
 import { ConfirmModal } from "../../ConfirmModal";
 

@@ -1,6 +1,6 @@
 import React, { FunctionComponent } from "react";
 import { Trash2, ChevronUp, ChevronDown } from "react-feather";
-import { Button, IconAddFile } from "@govtechsg/tradetrust-ui-components";
+import { Button, IconAddFile } from "@tradetrust-tt/tradetrust-ui-components";
 import { ArrayFieldTemplateProps } from "@rjsf/core";
 import { CustomTitle } from "./CustomObjectField";
 

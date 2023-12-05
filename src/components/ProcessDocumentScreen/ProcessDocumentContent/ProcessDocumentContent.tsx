@@ -1,4 +1,4 @@
-import { Button } from "@govtechsg/tradetrust-ui-components";
+import { Button } from "@tradetrust-tt/tradetrust-ui-components";
 import { FunctionComponent, MouseEventHandler } from "react";
 import { Download } from "react-feather";
 import { QueueState, QueueType } from "../../../constants/QueueState";

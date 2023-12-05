@@ -1,4 +1,4 @@
-import { AddressBook, BackArrow } from "@govtechsg/tradetrust-ui-components";
+import { AddressBook, BackArrow } from "@tradetrust-tt/tradetrust-ui-components";
 import { usePersistedConfigFile } from "./../../common/hook/usePersistedConfigFile";
 import { Link } from "react-router-dom";
 import React, { FunctionComponent } from "react";

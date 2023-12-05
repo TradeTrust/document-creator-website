@@ -1,4 +1,4 @@
-import { ButtonIcon, OverlayAddressBook, useOverlayContext } from "@govtechsg/tradetrust-ui-components";
+import { ButtonIcon, OverlayAddressBook, useOverlayContext } from "@tradetrust-tt/tradetrust-ui-components";
 import React, { FunctionComponent } from "react";
 import { Book } from "react-feather";
 import { usePersistedConfigFile } from "../../../common/hook/usePersistedConfigFile";

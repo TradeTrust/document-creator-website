@@ -1,4 +1,4 @@
-import { Button, LoaderSpinner } from "@govtechsg/tradetrust-ui-components";
+import { Button, LoaderSpinner } from "@tradetrust-tt/tradetrust-ui-components";
 import React, { FunctionComponent, useState, useRef, useEffect } from "react";
 import ReactTooltip from "react-tooltip";
 import { useConfigContext } from "../../../common/context/config";

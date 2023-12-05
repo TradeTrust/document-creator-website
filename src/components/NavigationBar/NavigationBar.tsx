@@ -8,7 +8,7 @@ import {
   NavigationBar as NavBar,
   NavigationItem,
   NAVIGATION_ITEM_TYPE,
-} from "@govtechsg/tradetrust-ui-components";
+} from "@tradetrust-tt/tradetrust-ui-components";
 import { getNetworkPath } from "../../utils";
 import { LogoutButton } from "./LogoutButton";
 
