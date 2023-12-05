@@ -1,4 +1,4 @@
-import { TileInfo, TileInfoProps, IconAddressBook, IconResolverAddress } from "@govtechsg/tradetrust-ui-components";
+import { TileInfo, TileInfoProps, IconAddressBook, IconResolverAddress } from "@tradetrust-tt/tradetrust-ui-components";
 import { Link } from "react-router-dom";
 import React, { FunctionComponent } from "react";
 interface SettingsOptions extends TileInfoProps {

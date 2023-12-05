@@ -1,5 +1,5 @@
 import React, { useState, FunctionComponent } from "react";
-import { Dropdown, DropdownItem } from "@govtechsg/tradetrust-ui-components";
+import { Dropdown, DropdownItem } from "@tradetrust-tt/tradetrust-ui-components";
 import { WidgetProps } from "@rjsf/core";
 
 interface Option {

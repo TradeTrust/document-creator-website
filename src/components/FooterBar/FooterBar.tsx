@@ -1,4 +1,4 @@
-import { Footer } from "@govtechsg/tradetrust-ui-components";
+import { Footer } from "@tradetrust-tt/tradetrust-ui-components";
 import { FunctionComponent } from "react";
 import { usePersistedConfigFile } from "../../common/hook/usePersistedConfigFile";
 import { URLS } from "../../constants/Urls";

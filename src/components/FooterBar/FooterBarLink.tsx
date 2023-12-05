@@ -1,6 +1,6 @@
 import { ExternalLink } from "react-feather";
 import { NavLink } from "react-router-dom";
-import { FooterColumnItemProps } from "@govtechsg/tradetrust-ui-components";
+import { FooterColumnItemProps } from "@tradetrust-tt/tradetrust-ui-components";
 
 const sharedStyles = `text-sm text-cloud-500 hover:text-cerulean-500`;
 
