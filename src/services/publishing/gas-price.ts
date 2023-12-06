@@ -7,8 +7,7 @@ import { getSupportedNetworkNameFromId } from "../../constants/chainInfo";
 
 export interface SuggestedGasPrice {
   maxPriorityFeePerGas: BigNumber;
-  maxFeePerGas?: BigNumber;
-  baseFee: BigNumber;
+  maxFeePerGas: BigNumber;
 }
 
 export const fetchGasPriceSuggestions = async (
@@ -21,14 +20,13 @@ export const fetchGasPriceSuggestions = async (
   const isPolygon = ["maticmum", "matic"].includes(network);
   const isMainnet = ["homestead"].includes(network);
   if (!isMainnet && !isPolygon) return { ...additionalOverrides };
-  const { baseFee, maxPriorityFeePerGas: priorityFee } = await (isPolygon
+  const { maxPriorityFeePerGas, maxFeePerGas } = await (isPolygon
     ? fetchPolygonGasStationSuggestedPrice(network)
     : fetchEtherscanSuggestedPrice(etherscanDetails));
 
-  const marketMaxFee = baseFee.add(priorityFee);
   return {
-    maxPriorityFeePerGas: priorityFee,
-    maxFeePerGas: marketMaxFee,
+    maxPriorityFeePerGas,
+    maxFeePerGas,
     ...additionalOverrides,
   };
 };
@@ -41,7 +39,7 @@ const fetchPolygonGasStationSuggestedPrice = async (network: Network): Promise<S
   const suggestedPriceObject = await suggestedPriceResponse.json();
   return {
     maxPriorityFeePerGas: safeParseUnits(suggestedPriceObject.standard.maxPriorityFee, 9),
-    baseFee: safeParseUnits(suggestedPriceObject.estimatedBaseFee, 9),
+    maxFeePerGas: safeParseUnits(suggestedPriceObject.standard.maxFee, 9),
   };
 };
 
@@ -52,9 +50,12 @@ const fetchEtherscanSuggestedPrice = async (
     etherscanDetails.hostname + "/api?module=gastracker&action=gasoracle&apikey=" + etherscanDetails.apiKey
   );
   const suggestedPriceObject = await suggestedPriceResponse.json();
+  const maxPriorityFeePerGas = safeParseUnits(suggestedPriceObject.result.ProposeGasPrice, 9);
+  const baseFee = safeParseUnits(suggestedPriceObject.result.suggestBaseFee, 9);
+  const maxFeePerGas = baseFee.add(maxPriorityFeePerGas);
   return {
-    maxPriorityFeePerGas: safeParseUnits(suggestedPriceObject.result.ProposeGasPrice, 9),
-    baseFee: safeParseUnits(suggestedPriceObject.result.suggestBaseFee, 9),
+    maxPriorityFeePerGas,
+    maxFeePerGas,
   };
 };
 
