@@ -1,4 +1,4 @@
-import { LoaderSpinner, ToggleSwitch } from "@govtechsg/tradetrust-ui-components";
+import { LoaderSpinner, ToggleSwitch } from "@tradetrust-tt/tradetrust-ui-components";
 import { defaultsDeep } from "lodash";
 import React, { FunctionComponent, useState } from "react";
 import { Trash2 } from "react-feather";

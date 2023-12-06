@@ -1,4 +1,4 @@
-import { Button, LoaderSpinner, ProgressBar } from "@govtechsg/tradetrust-ui-components";
+import { Button, LoaderSpinner, ProgressBar } from "@tradetrust-tt/tradetrust-ui-components";
 import { FunctionComponent, useEffect, useState } from "react";
 import { readFileAsJson } from "../../../common/utils";
 import { getLogger } from "../../../utils/logger";

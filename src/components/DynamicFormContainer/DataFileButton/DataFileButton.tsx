@@ -1,4 +1,4 @@
-import { Button } from "@govtechsg/tradetrust-ui-components";
+import { Button } from "@tradetrust-tt/tradetrust-ui-components";
 import React, { FunctionComponent, useState } from "react";
 import { readFileAsCsv, readFileAsJson, downloadCsvDataFile, downloadJsonDataFile } from "../../../common/utils";
 import { getLogger } from "../../../utils/logger";

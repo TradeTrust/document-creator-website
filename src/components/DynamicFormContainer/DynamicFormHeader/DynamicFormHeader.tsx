@@ -1,4 +1,4 @@
-import { Button, ProgressBar } from "@govtechsg/tradetrust-ui-components";
+import { Button, ProgressBar } from "@tradetrust-tt/tradetrust-ui-components";
 import React, { FunctionComponent } from "react";
 import { Card } from "../../UI/Card";
 import { IssueOrRevokeSelector } from "../../UI/IssueOrRevokeSelector";

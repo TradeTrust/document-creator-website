@@ -1,5 +1,5 @@
 import { FunctionComponent } from "react";
-import { ErrorPage } from "@govtechsg/tradetrust-ui-components";
+import { ErrorPage } from "@tradetrust-tt/tradetrust-ui-components";
 import { Link } from "react-router-dom";
 
 export const ErrorBoundaryContent: FunctionComponent<{

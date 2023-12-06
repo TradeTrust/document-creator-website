@@ -1,4 +1,4 @@
-import { Button } from "@govtechsg/tradetrust-ui-components";
+import { Button } from "@tradetrust-tt/tradetrust-ui-components";
 import React, { FunctionComponent, useState, useCallback, useEffect } from "react";
 import { useIdleTimer } from "react-idle-timer";
 import { history } from "./../../history";

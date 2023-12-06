@@ -1,4 +1,4 @@
-import { Button } from "@govtechsg/tradetrust-ui-components";
+import { Button } from "@tradetrust-tt/tradetrust-ui-components";
 import { FunctionComponent } from "react";
 import { FormTemplate } from "../../../types";
 import { ModalDialog } from "../../ModalDialog";

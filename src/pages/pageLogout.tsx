@@ -1,6 +1,6 @@
 import { FunctionComponent } from "react";
 import { Link } from "react-router-dom";
-import { Button } from "@govtechsg/tradetrust-ui-components";
+import { Button } from "@tradetrust-tt/tradetrust-ui-components";
 import { Wrapper } from "../components/UI/Wrapper";
 import { ContentFrame } from "../components/UI/ContentFrame";
 

@@ -6,7 +6,7 @@ import { App } from "./App";
 import { ConfigContextProvider } from "./common/context/config";
 import { FormsContextProvider } from "./common/context/forms";
 import { ErrorBoundary } from "./components/ErrorBoundary";
-import { OverlayContextProvider } from "@govtechsg/tradetrust-ui-components";
+import { OverlayContextProvider } from "@tradetrust-tt/tradetrust-ui-components";
 
 ReactDOM.render(
   <React.StrictMode>
