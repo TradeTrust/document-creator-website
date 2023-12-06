@@ -32,43 +32,41 @@ export const DynamicFormHeader: FunctionComponent<DynamicFormHeaderProps> = ({
   validateCurrentForm,
   closePreviewMode,
 }) => {
-  const { gasSpeed, networkGasInformation } = useGasSelectorContext();
+  // const { gasSpeed, networkGasInformation } = useGasSelectorContext();
   const { showOverlay, closeOverlay } = useContext(OverlayContext);
   const onFormSubmission = () => {
-    let gasPriceString = "";
-    if (!networkGasInformation) onFormSubmit();
-    if (networkGasInformation) {
-      for (let i = 0; i < networkGasInformation.length; i++) {
-        if (gasSpeed === networkGasInformation[i].speed) {
-          const gasPrice = networkGasInformation[i].maxPriorityFeePerGas;
-          gasPriceString = formatUnits(gasPrice, "gwei");
-        }
-      }
-
-      const openModal = () => {
-        showOverlay(
-          <Textual title={"Gas Estimation"}>
-            <div>{`Current Priority Gas Value: ${gasPriceString}`}</div>
-
-            <Button
-              className="bg-white text-cerulean-500 hover:bg-cloud-100 mr-4"
-              onClick={closeOverlay}
-              data-testid="close-overlay"
-            >
-              Cancel
-            </Button>
-            <Button
-              className="bg-cerulean-500 text-white hover:bg-cerulean-800"
-              onClick={onFormSubmit}
-              data-testid="form-submit-button"
-            >
-              Confirm
-            </Button>
-          </Textual>
-        );
-      };
-      openModal();
-    }
+    // let gasPriceString = "";
+    // if (!networkGasInformation) onFormSubmit();
+    // if (networkGasInformation) {
+    //   for (let i = 0; i < networkGasInformation.length; i++) {
+    //     if (gasSpeed === networkGasInformation[i].speed) {
+    //       const gasPrice = networkGasInformation[i].maxPriorityFeePerGas;
+    //       gasPriceString = formatUnits(gasPrice, "gwei");
+    //     }
+    //   }
+    //   const openModal = () => {
+    //     showOverlay(
+    //       <Textual title={"Gas Estimation"}>
+    //         <div>{`Current Priority Gas Value: ${gasPriceString}`}</div>
+    //         <Button
+    //           className="bg-white text-cerulean-500 hover:bg-cloud-100 mr-4"
+    //           onClick={closeOverlay}
+    //           data-testid="close-overlay"
+    //         >
+    //           Cancel
+    //         </Button>
+    //         <Button
+    //           className="bg-cerulean-500 text-white hover:bg-cerulean-800"
+    //           onClick={onFormSubmit}
+    //           data-testid="form-submit-button"
+    //         >
+    //           Confirm
+    //         </Button>
+    //       </Textual>
+    //     );
+    //   };
+    //   openModal();
+    // }
   };
   return (
     <Wrapper className="mb-8">

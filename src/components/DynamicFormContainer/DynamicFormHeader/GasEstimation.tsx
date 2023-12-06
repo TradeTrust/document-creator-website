@@ -1,17 +1,22 @@
 import { ButtonIcon, OverlayContext, Textual } from "@govtechsg/tradetrust-ui-components";
 import { ChangeEvent, FunctionComponent, useContext, useEffect, useState } from "react";
-import { GasSelectorContext, useGasSelectorContext } from "../../../common/context/network";
+import {
+  GasSelectorContext,
+  SuggestedGasFee,
+  SuggestedGasFeeList,
+  useGasSelectorContext,
+} from "../../../common/context/network";
 import { usePersistedConfigFile } from "../../../common/hook/usePersistedConfigFile";
 import { useConfigContext } from "../../../common/context/config";
-import { ChainInfo } from "../../../constants/chainInfo";
+import { ChainInfo, ChainInfoObject } from "../../../constants/chainInfo";
 import { getNetworkDetails } from "../../../common/utils";
 import { request } from "http";
-import { getEtherscanNetworkApiDetails } from "../../../config";
-import { chain } from "lodash";
+import { EtherscanNetworkApiDetails, getEtherscanNetworkApiDetails } from "../../../config";
 import { BigNumber, Wallet } from "ethers";
 import { formatUnits, parseUnits } from "ethers/lib/utils";
-import { ConnectedSigner } from "../../../types";
+import { ConnectedSigner, Network, NetworkGasInformation, NetworkGasOption } from "../../../types";
 import { Info } from "react-feather";
+import { useTime, useTimer } from "react-timer-hook";
 
 interface DynamicFormHeaderProps {
   test?: string;
@@ -134,6 +139,98 @@ const RatesSelector: FunctionComponent<{ speed: string; price: string; duration?
   );
 };
 
+const fetchPriorityWaitTime = async (chainInfo: ChainInfoObject, gasPrice: BigNumber): Promise<number> => {
+  const etherscanDetails = getEtherscanNetworkApiDetails(chainInfo);
+  const suggestedPriceDurationResponse = await fetch(
+    etherscanDetails.hostname +
+      `/api?module=gastracker&action=gasestimate&gasprice=${formatUnits(gasPrice, 0)}&apikey=` +
+      etherscanDetails.apiKey
+  );
+  const suggestedPriceDuration = await suggestedPriceDurationResponse.json();
+  return Number(suggestedPriceDuration.result);
+};
+
+const fetchGasPriceSuggestions = async (network: Network): Promise<SuggestedGasFeeList> => {
+  const chainInfo = getNetworkDetails(network);
+  const etherscanDetails = getEtherscanNetworkApiDetails(chainInfo);
+  const isPolygon = ["maticmum", "matic"].includes(network);
+  const isMainnet = ["matic", "homestead"];
+  const suggestedPrice = await (isPolygon
+    ? fetchPolygonGasStationSuggestedPrice(network)
+    : fetchEtherscanSuggestedPrice(etherscanDetails));
+  console.log(JSON.stringify(suggestedPrice));
+  const lowPriorityFee = parseUnits(suggestedPrice.priorityFee.low.toFixed(9).toString(), "gwei");
+  const marketPriorityFee = parseUnits(suggestedPrice.priorityFee.market.toFixed(9).toString(), "gwei");
+  const agressivePriorityFee = parseUnits(suggestedPrice.priorityFee.agressive.toFixed(9).toString(), "gwei");
+  const baseFee = parseUnits(suggestedPrice.baseFee.toFixed(9).toString(), "gwei");
+  const lowMaxFee = baseFee.add(lowPriorityFee);
+  const marketMaxFee = baseFee.add(marketPriorityFee);
+  const agressiveMaxFee = baseFee.add(agressivePriorityFee);
+  const gasPriceOptions: SuggestedGasFeeList = {
+    priorityFee: {
+      low: {
+        priorityFee: lowPriorityFee,
+        maxFee: lowMaxFee,
+      },
+      market: {
+        priorityFee: marketPriorityFee,
+        maxFee: marketMaxFee,
+      },
+      agressive: {
+        priorityFee: agressivePriorityFee,
+        maxFee: agressiveMaxFee,
+      },
+    },
+    baseFee: baseFee,
+  };
+
+  if (!isPolygon && isMainnet) {
+    gasPriceOptions.priorityFee.low.duration = await fetchPriorityWaitTime(chainInfo, lowMaxFee);
+    gasPriceOptions.priorityFee.market.duration = await fetchPriorityWaitTime(chainInfo, marketMaxFee);
+    gasPriceOptions.priorityFee.agressive.duration = await fetchPriorityWaitTime(chainInfo, agressiveMaxFee);
+  }
+
+  console.log(JSON.stringify(gasPriceOptions));
+  return gasPriceOptions;
+};
+
+const fetchPolygonGasStationSuggestedPrice = async (network: Network): Promise<SuggestedGasFee> => {
+  const testnetURL = network === "maticmum" ? "-testnet" : "";
+  const apiUrl = "https://gasstation" + testnetURL + ".polygon.technology/v2";
+
+  const suggestedPriceResponse = await fetch(apiUrl);
+  const suggestedPriceObject = await suggestedPriceResponse.json();
+  return {
+    priorityFee: {
+      low: suggestedPriceObject.safeLow.maxPriorityFee,
+      market: suggestedPriceObject.standard.maxPriorityFee,
+      agressive: suggestedPriceObject.fast.maxPriorityFee,
+    },
+    baseFee: suggestedPriceObject.estimatedBaseFee,
+  };
+};
+
+const fetchEtherscanSuggestedPrice = async (etherscanDetails: EtherscanNetworkApiDetails): Promise<SuggestedGasFee> => {
+  const suggestedPriceResponse = await fetch(
+    etherscanDetails.hostname + "/api?module=gastracker&action=gasoracle&apikey=" + etherscanDetails.apiKey
+  );
+  const suggestedPriceObject = await suggestedPriceResponse.json();
+  const {
+    SafeGasPrice: lowPriorityFee,
+    ProposeGasPrice: marketPriorityFee,
+    FastGasPrice: agressivePriorityFee,
+    suggestBaseFee: baseFee,
+  } = suggestedPriceObject.result;
+  return {
+    priorityFee: {
+      low: Number(lowPriorityFee),
+      market: Number(marketPriorityFee),
+      agressive: Number(agressivePriorityFee),
+    },
+    baseFee: Number(baseFee),
+  };
+};
+
 export const GasEstimation: FunctionComponent<DynamicFormHeaderProps> = (
   {
     // test,
@@ -144,7 +241,7 @@ export const GasEstimation: FunctionComponent<DynamicFormHeaderProps> = (
     //   closePreviewMode,
   }
 ) => {
-  // const { gasSpeed, setGasSpeed } = useGasSelectorContext();
+  const { gasSpeed } = useGasSelectorContext();
   const { showOverlay } = useContext(OverlayContext);
   const openModal = () => {
     showOverlay(GasSelectionGuide);
@@ -153,128 +250,27 @@ export const GasEstimation: FunctionComponent<DynamicFormHeaderProps> = (
   const { networkGasInformation, setNetworkGasInformation } = useGasSelectorContext();
   const { config } = useConfigContext();
   const wallet = config?.wallet;
-  const network = config?.network;
+
+  // const network = config?.network;
+  const network = "maticmum";
+
+  const supportedNetwork = ["homestead", "matic", "maticmum"];
 
   if (!wallet) throw new Error("No wallet found in config");
   if (!network) throw new Error("No network found in config");
-  const chainInfo = getNetworkDetails(network);
-  const etherscanDetails = getEtherscanNetworkApiDetails(chainInfo);
-  const noApiProvider = !etherscanDetails.apiKey || !etherscanDetails.hostname;
 
   useEffect(() => {
-    const noProvider = (): void => {
-      const twoGwei = BigNumber.from(2000000000);
-      const networkGasStatus = [
-        {
-          speed: "market",
-          price: formatUnits(twoGwei, "gwei"),
-          network: chainInfo.networkName,
-          maxPriorityFeePerGas: twoGwei,
-        },
-      ];
-      setNetworkGasInformation(networkGasStatus);
+    const updateGasFeeOptions = async () => {
+      const gasFeeOptions = await fetchGasPriceSuggestions(network);
+      console.log(gasFeeOptions);
+      setNetworkGasInformation(gasFeeOptions);
     };
-    const getProviderNetworkPriority = async () => {
-      //(wallet?: Wallet | ConnectedSigner) => {
-      const scaleBigNumber = (wei: BigNumber | null | undefined, multiplier: number, precision = 2): BigNumber => {
-        if (wei === null || typeof wei === "undefined") {
-          throw new Error("Wei not specified");
-        }
-        const padding = Math.pow(10, precision);
-        const newMultiplier = Math.round(padding * multiplier);
-
-        const newWei = wei.mul(newMultiplier).div(padding);
-        return newWei;
-      };
-
-      if (!wallet) return noProvider();
-      const feeData = await wallet.getFeeData();
-      const priorityFee = feeData.maxPriorityFeePerGas;
-      if (!priorityFee) return noProvider();
-
-      const SafeGasPrice = scaleBigNumber(priorityFee, 0.9);
-      const ProposeGasPrice = priorityFee;
-      const FastGasPrice = scaleBigNumber(priorityFee, 1.2);
-
-      const networkGasStatus = [
-        {
-          speed: "low",
-          price: formatUnits(SafeGasPrice, "gwei"),
-          network: chainInfo.networkName,
-          maxPriorityFeePerGas: SafeGasPrice,
-        },
-        {
-          speed: "market",
-          price: formatUnits(ProposeGasPrice, "gwei"),
-          network: chainInfo.networkName,
-          maxPriorityFeePerGas: ProposeGasPrice,
-        },
-        {
-          speed: "agressive",
-          price: formatUnits(FastGasPrice, "gwei"),
-          network: chainInfo.networkName,
-          maxPriorityFeePerGas: FastGasPrice,
-        },
-      ];
-      setNetworkGasInformation(networkGasStatus);
-    };
-    const callGasTrackerAPI = async () => {
-      const callGasDurationAPI = async (gasPrice: BigNumber) => {
-        // const suggestedPriceDResponse = async() => {
-        const suggestedPriceDResponse = await fetch(
-          etherscanDetails.hostname +
-            `/api?module=gastracker&action=gasestimate&gasprice=${formatUnits(gasPrice, 0)}&apikey=` +
-            etherscanDetails.apiKey
-        );
-        const suggestedPriceDuration = await suggestedPriceDResponse.json();
-        return suggestedPriceDuration.result;
-        // }
-      };
-      const suggestedPriceResponse = await fetch(
-        etherscanDetails.hostname + "/api?module=gastracker&action=gasoracle&apikey=" + etherscanDetails.apiKey
-      );
-      const suggestedPriceObject = await suggestedPriceResponse.json();
-
-      const {
-        SafeGasPrice: SafeGasPriceNumber,
-        ProposeGasPrice: ProposeGasPriceNumber,
-        FastGasPrice: FastGasPriceNumber,
-      } = suggestedPriceObject.result;
-      const oneGwei = BigNumber.from("1000000000");
-
-      const SafeGasPrice = BigNumber.from(SafeGasPriceNumber).mul(oneGwei);
-      const ProposeGasPrice = BigNumber.from(ProposeGasPriceNumber).mul(oneGwei);
-      const FastGasPrice = BigNumber.from(FastGasPriceNumber).mul(oneGwei);
-      const networkGasStatus = [
-        {
-          speed: "low",
-          price: formatUnits(SafeGasPrice, "gwei"),
-          duration: await callGasDurationAPI(SafeGasPrice),
-          network: chainInfo.networkName,
-          maxPriorityFeePerGas: SafeGasPrice,
-        },
-        {
-          speed: "market",
-          price: formatUnits(ProposeGasPrice, "gwei"),
-          duration: await callGasDurationAPI(ProposeGasPrice),
-          network: chainInfo.networkName,
-          maxPriorityFeePerGas: ProposeGasPrice,
-        },
-        {
-          speed: "agressive",
-          price: formatUnits(FastGasPrice, "gwei"),
-          duration: await callGasDurationAPI(FastGasPrice),
-          network: chainInfo.networkName,
-          maxPriorityFeePerGas: FastGasPrice,
-        },
-      ];
-      setNetworkGasInformation(networkGasStatus);
-    };
-
-    if (noApiProvider) {
-      getProviderNetworkPriority();
-    } else {
-      callGasTrackerAPI();
+    if (supportedNetwork.includes(network)) {
+      setInterval(() => {
+        console.log(new Date());
+        updateGasFeeOptions();
+        console.log(gasSpeed);
+      }, 10000);
     }
   }, [network]); // eslint-disable-line react-hooks/exhaustive-deps
 
@@ -282,10 +278,25 @@ export const GasEstimation: FunctionComponent<DynamicFormHeaderProps> = (
     <div>
       <h3 data-testid="set-gas-amount" className="my-8">
         Select Gas Estimation <Info size="0.6em" color="blue" onClick={openModal} />
+        <RatesSelector
+          key={"low"}
+          speed={"low"}
+          price={formatUnits(networkGasInformation?.priorityFee.low.maxFee || 0, "gwei")}
+          duration={networkGasInformation?.priorityFee.low.duration}
+        />
+        <RatesSelector
+          key={"market"}
+          speed={"market"}
+          price={formatUnits(networkGasInformation?.priorityFee.market.maxFee || 0, "gwei")}
+          duration={networkGasInformation?.priorityFee.market.duration}
+        />
+        <RatesSelector
+          key={"agressive"}
+          speed={"agressive"}
+          price={formatUnits(networkGasInformation?.priorityFee.agressive.maxFee || 0, "gwei")}
+          duration={networkGasInformation?.priorityFee.agressive.duration}
+        />
       </h3>
-      {networkGasInformation?.map((gasInfo) => (
-        <RatesSelector key={gasInfo.speed} speed={gasInfo.speed} price={gasInfo.price} duration={gasInfo.duration} />
-      ))}
     </div>
   );
 };

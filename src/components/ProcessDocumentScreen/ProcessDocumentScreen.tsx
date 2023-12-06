@@ -10,6 +10,7 @@ import { Card } from "../UI/Card";
 import { ContentFrame } from "../UI/ContentFrame";
 import { ProcessDocumentContent } from "./ProcessDocumentContent";
 import { IssueOrRevokeSelector } from "../UI/IssueOrRevokeSelector";
+import { SelectedFee } from "../../common/context/network";
 
 interface ProcessDocumentScreenProps {
   config: Config;
@@ -18,7 +19,7 @@ interface ProcessDocumentScreenProps {
   revokeDocuments?: any[];
   fileName?: string;
   type: QueueType;
-  gasPrice?: NetworkGasInformation;
+  gasPrice?: SelectedFee;
 }
 
 export const ProcessDocumentScreen: FunctionComponent<ProcessDocumentScreenProps> = ({

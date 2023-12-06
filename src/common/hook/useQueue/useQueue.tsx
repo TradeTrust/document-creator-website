@@ -16,6 +16,7 @@ import { getLogger } from "../../../utils/logger";
 import { uploadToStorage } from "../../API/storageAPI";
 import { getPublishingJobs } from "./utils/publish";
 import { getRevokingJobs } from "./utils/revoke";
+import { SelectedFee } from "../../context/network";
 
 const { stack } = getLogger("useQueue");
 
@@ -27,7 +28,7 @@ interface UseQueueProps {
   config: Config;
   formEntries?: FormEntry[];
   documents?: any[];
-  gasPrice?: NetworkGasInformation;
+  gasPrice?: SelectedFee;
 }
 
 export const useQueue = ({
@@ -90,8 +91,8 @@ export const useQueue = ({
               // publish verifiable documents and transferable records with doc store and token registry
               const publishingJob = job as PublishingJob;
               if (gasPrice) {
-                const { maxPriorityFeePerGas } = gasPrice;
-                publishingJob.overrides = { maxPriorityFeePerGas };
+                const { priorityFee, baseFee, maxFee } = gasPrice;
+                publishingJob.overrides = { maxPriorityFeePerGas: priorityFee, baseFee };
               }
               await publishJob(job as PublishingJob, wallet);
             }

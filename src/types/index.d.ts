@@ -77,11 +77,14 @@ type ProcessedFilesV3 = {
   mimeType: string;
 };
 
+export interface NetworkGasOption {
+  low: Partial<NetworkGasInformation>;
+  market: Partial<NetworkGasInformation>;
+  agressive: Partial<NetworkGasInformation>;
+}
 export interface NetworkGasInformation {
-  speed: string;
   price: string;
   duration?: number;
-  network: string;
   maxPriorityFeePerGas: BigNumber;
 }
 

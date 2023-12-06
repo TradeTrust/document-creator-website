@@ -4,7 +4,7 @@ import { useConfigContext } from "../../common/context/config";
 import { useFormsContext } from "../../common/context/forms";
 import { ProcessDocumentScreen } from "../ProcessDocumentScreen";
 import { QueueType } from "../../constants/QueueState";
-import { useGasSelectorContext } from "../../common/context/network";
+import { PriorityFeeContext, SelectedFee, useGasSelectorContext } from "../../common/context/network";
 import { NetworkGasInformation } from "../../types";
 
 export const PublishContainer: FunctionComponent = () => {
@@ -20,12 +20,26 @@ export const PublishContainer: FunctionComponent = () => {
     setActiveFormIndex(undefined);
   };
 
-  let gasPrice: NetworkGasInformation;
-  if (networkGasInformation) {
-    for (let i = 0; i < networkGasInformation.length; i++) {
-      if (gasSpeed === networkGasInformation[i].speed) {
-        gasPrice = networkGasInformation[i];
-      }
+  let gasPrice: SelectedFee = {};
+
+  if (networkGasInformation && gasSpeed) {
+    const { low, market, agressive } = networkGasInformation.priorityFee;
+    gasPrice.baseFee = networkGasInformation.baseFee;
+    switch (gasSpeed) {
+      case "low":
+        gasPrice.maxFee = low.maxFee;
+        gasPrice.priorityFee = low.priorityFee;
+        break;
+      case "market":
+        gasPrice.maxFee = market.maxFee;
+        gasPrice.priorityFee = market.priorityFee;
+        break;
+      case "agressive":
+        gasPrice.maxFee = agressive.maxFee;
+        gasPrice.priorityFee = agressive.priorityFee;
+        break;
+      default:
+        break;
     }
   }
 
@@ -35,7 +49,7 @@ export const PublishContainer: FunctionComponent = () => {
       forms={forms}
       processAnotherDocument={onCreateAnotherDocument}
       type={QueueType.ISSUE}
-      // gasPrice={gasPrice}
+      gasPrice={gasPrice}
     />
   );
 };
