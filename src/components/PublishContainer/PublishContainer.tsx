@@ -20,7 +20,7 @@ export const PublishContainer: FunctionComponent = () => {
     setActiveFormIndex(undefined);
   };
 
-  let gasPrice: SelectedFee = {};
+  const gasPrice: SelectedFee = {};
 
   if (networkGasInformation && gasSpeed) {
     const { low, market, agressive } = networkGasInformation.priorityFee;
