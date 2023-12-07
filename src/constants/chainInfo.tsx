@@ -7,6 +7,7 @@ export interface ChainInfoObject {
   explorerUrl: string;
   explorerApiUrl?: string;
   rpcUrl?: string;
+  gasStationUrl?: string;
   nativeCurrency?: {
     name: string;
     symbol: string;
@@ -121,4 +122,12 @@ export const ChainInfo: ChainInfo = {
       decimals: 18,
     },
   },
+};
+
+export const getSupportedNetworkNameFromId = (networkId: number): Network => {
+  const chainIndo = Object.values(ChainInfo).find((network) => network.chainId === networkId);
+  if (!chainIndo) {
+    throw new Error(`Unsupported chain id ${networkId}`);
+  }
+  return chainIndo.networkName;
 };

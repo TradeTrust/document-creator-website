@@ -9,6 +9,7 @@ import { TradeTrustToken__factory } from "@tradetrust-tt/token-registry/contract
 import { Signer, Wallet } from "ethers";
 import { ConnectedSigner, PublishingJob } from "../../types";
 import { assertAddressIsSmartContract, getConnectedDocumentStore } from "../common";
+import { fetchGasPriceSuggestions } from "./gas-price";
 
 export const publishVerifiableDocumentJob = async (
   job: PublishingJob,
@@ -17,7 +18,10 @@ export const publishVerifiableDocumentJob = async (
   const { contractAddress, merkleRoot } = job;
   await assertAddressIsSmartContract(contractAddress, account);
   const documentStore = await getConnectedDocumentStore(account, contractAddress);
-  const receipt = await documentStore.issue(`0x${merkleRoot}`);
+  const suggestedGasPrice = await fetchGasPriceSuggestions(await account.getChainId());
+  const receipt = await documentStore.issue(`0x${merkleRoot}`, {
+    ...suggestedGasPrice,
+  });
   const tx = await receipt.wait();
   if (!tx.transactionHash) throw new Error(`Tx hash not available: ${JSON.stringify(tx)}`);
   return tx.transactionHash;
@@ -47,7 +51,10 @@ export const publishTransferableRecordJob = async (job: PublishingJob, signer: S
   if (!payload.ownership) throw new Error("Ownership data is not provided");
   const { beneficiaryAddress, holderAddress } = payload.ownership;
   const tokenRegistryContract = TradeTrustToken__factory.connect(contractAddress, signer);
-  const mintingReceipt = await tokenRegistryContract.mint(beneficiaryAddress, holderAddress, `0x${merkleRoot}`);
+  const suggestedGasPrice = await fetchGasPriceSuggestions(await signer.getChainId());
+  const mintingReceipt = await tokenRegistryContract.mint(beneficiaryAddress, holderAddress, `0x${merkleRoot}`, {
+    ...suggestedGasPrice,
+  });
   const mintingTx = await mintingReceipt.wait();
   if (!mintingTx.transactionHash) throw new Error(`Tx hash not available: ${JSON.stringify(mintingTx)}`);
   return mintingTx.transactionHash;
