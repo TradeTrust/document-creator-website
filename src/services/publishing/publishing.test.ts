@@ -2,11 +2,13 @@ import { connect } from "@tradetrust-tt/document-store";
 import { TradeTrustToken__factory } from "@tradetrust-tt/token-registry/contracts";
 import { Wallet } from "ethers";
 import { supportsInterface } from "../common/utils";
+import { fetchGasPriceSuggestions } from "../publishing/gas-price";
 import { publishTransferableRecordJob, publishVerifiableDocumentJob } from "./index";
 
 jest.mock("@tradetrust-tt/token-registry/contracts");
 jest.mock("@tradetrust-tt/document-store");
 jest.mock("../common/utils");
+jest.mock("../publishing/gas-price");
 
 const mockDocumentStoreConnect = connect as jest.Mock;
 const mockTradeTrustTokenFactoryConnect = TradeTrustToken__factory.connect as jest.Mock;
@@ -14,6 +16,7 @@ const mockDocumentStoreIssue = jest.fn();
 const mockTokenRegistryMint = jest.fn();
 const mockTxWait = jest.fn();
 const mockSupportsInterface = supportsInterface as jest.Mock;
+const mockFetchGasPriceSuggestions = fetchGasPriceSuggestions as jest.Mock;
 
 const mockDocumentStore = {
   issue: mockDocumentStoreIssue,
@@ -47,7 +50,12 @@ const whenTokenRegistryExist = (): void => {
 const resetMocks = (mocks: jest.Mock[]): void => mocks.forEach((mock) => mock.mockReset());
 
 const mockWallet = ({ code = "0x1234" } = {}): Wallet =>
-  ({ provider: { getCode: () => code, getNetwork: () => ({ name: "ropsten" }) } } as any);
+  ({
+    provider: { getCode: () => code, getNetwork: () => ({ name: "ropsten" }) },
+    getChainId: () => {
+      return 1;
+    },
+  } as any);
 
 describe("publishing", () => {
   beforeEach(() => {
@@ -59,6 +67,8 @@ describe("publishing", () => {
       whenDocumentStoreExist();
       const wallet = mockWallet();
       mockSupportsInterface.mockResolvedValueOnce(false);
+      mockFetchGasPriceSuggestions.mockResolvedValue({});
+
       const hash = await publishVerifiableDocumentJob(
         {
           nonce: 1234,
@@ -73,7 +83,7 @@ describe("publishing", () => {
 
       expect(hash).toBe("TX_HASH");
       expect(mockTxWait).toHaveBeenCalledTimes(1);
-      expect(mockDocumentStoreIssue).toHaveBeenCalledWith("0x9999");
+      expect(mockDocumentStoreIssue).toHaveBeenCalledWith("0x9999", {});
     });
 
     it("should throw when document store address is not a smart contract", async () => {
@@ -98,6 +108,7 @@ describe("publishing", () => {
     it("should throw when transaction fails", async () => {
       whenDocumentStoreExist();
       mockSupportsInterface.mockResolvedValueOnce(false);
+      mockFetchGasPriceSuggestions.mockResolvedValue({});
       mockTxWait.mockRejectedValueOnce(new Error("Some error"));
       const wallet = mockWallet();
 
@@ -141,7 +152,7 @@ describe("publishing", () => {
 
       expect(hash).toBe("TX_HASH");
       expect(mockTxWait).toHaveBeenCalledTimes(1);
-      expect(mockTokenRegistryMint).toHaveBeenCalledWith("0x1111", "0x2222", "0x9999");
+      expect(mockTokenRegistryMint).toHaveBeenCalledWith("0x1111", "0x2222", "0x9999", {});
     });
 
     it("should throw when minting transaction fails", async () => {

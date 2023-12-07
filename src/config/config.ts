@@ -7,7 +7,7 @@ export const ETHERSCAN_API_KEY = {
   MATIC: process.env.REACT_APP_API_KEY_MATIC,
 };
 
-interface EtherscanNetworkApiDetails {
+export interface EtherscanNetworkApiDetails {
   apiKey: string;
   hostname: string;
 }
