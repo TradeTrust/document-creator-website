@@ -12,7 +12,9 @@ export type Network =
   | "xdc"
   | "xdcapothem"
   | "hederamainnet"
-  | "hederatestnet";
+  | "hederatestnet"
+  | "stabilitytestnet";
+
 type FormType = "TRANSFERABLE_RECORD" | "VERIFIABLE_DOCUMENT";
 
 // FormTemplate is defined in configuration file

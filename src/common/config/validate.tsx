@@ -3,7 +3,7 @@ import { ConfigFile } from "../../types";
 
 const configFileSchema = Joi.object({
   network: Joi.string()
-    .allow("homestead", "local", "sepolia", "matic", "maticmum", "xdc", "xdcapothem", "hederamainnet", "hederatestnet")
+    .allow("homestead", "local", "sepolia", "matic", "maticmum", "xdc", "xdcapothem", "hederamainnet", "hederatestnet", "stabilitytestnet")
     .only()
     .required(),
   wallet: Joi.alternatives(
