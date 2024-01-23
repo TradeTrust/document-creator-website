@@ -11,5 +11,3 @@
   [headers.values]
     X-Content-Type-Options = "nosniff"
     X-XSS-Protection = "1; mode=block"
-    access-control-allow-origin: *
-    
