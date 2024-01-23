@@ -1,3 +1,5 @@
+[![Netlify Status](https://api.netlify.com/api/v1/badges/7d13a57a-2586-4220-bbc8-7e85e9f3abd0/deploy-status)](https://app.netlify.com/sites/tradetrust-creator/deploys)
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
