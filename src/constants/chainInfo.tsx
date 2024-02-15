@@ -40,7 +40,7 @@ export enum ChainId {
   HederaTestnet = 296,
 
   // Stability Network
-  StabilityTestnet = 20180427
+  StabilityTestnet = 20180427,
 }
 
 export const ChainInfo: ChainInfo = {
@@ -163,7 +163,7 @@ export const ChainInfo: ChainInfo = {
     chainId: ChainId.StabilityTestnet,
     networkName: "stabilitytestnet",
     explorerUrl: "https://stability-testnet.blockscout.com",
-    explorerApiUrl: "https://stability-testnet.blockscout.com",
+    explorerApiUrl: "https://stability-testnet.blockscout.com/api",
     rpcUrl: "https://free.testnet.stabilityprotocol.com",
     nativeCurrency: {
       name: "FREE",
