@@ -4,6 +4,8 @@ import { assertAddressIsSmartContract, getConnectedDocumentStore } from "../comm
 
 export const revokeDocumentJob = async (job: RevokingJob, account: Wallet | ConnectedSigner): Promise<string> => {
   const { contractAddress, targetHash } = job;
+  console.log(contractAddress);
+  console.log(targetHash);
   await assertAddressIsSmartContract(contractAddress, account);
   const documentStore = await getConnectedDocumentStore(account, contractAddress);
   const receipt = await documentStore.revoke(`0x${targetHash}`);

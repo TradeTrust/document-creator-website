@@ -18,6 +18,8 @@ export const WalletDecryptionContainer: FunctionComponent = () => {
   };
 
   const onDecryptConfigFile = async (password: string): Promise<void> => {
+    console.log(JSON.stringify(configFile));
+    console.log(JSON.stringify(configFile?.network));
     if (!configFile) return;
     try {
       setIsIncorrectPassword(false);
