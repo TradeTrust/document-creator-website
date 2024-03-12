@@ -1,3 +1,4 @@
+import { STABILITY_API_KEY } from "../config";
 import { Network } from "../types";
 export interface ChainInfoObject {
   label: string;
@@ -41,6 +42,7 @@ export enum ChainId {
 
   // Stability Network
   StabilityTestnet = 20180427,
+  Stability = 101010,
 }
 
 export const ChainInfo: ChainInfo = {
@@ -165,6 +167,20 @@ export const ChainInfo: ChainInfo = {
     explorerUrl: "https://stability-testnet.blockscout.com",
     explorerApiUrl: "https://stability-testnet.blockscout.com/api",
     rpcUrl: "https://free.testnet.stabilityprotocol.com",
+    nativeCurrency: {
+      name: "FREE",
+      symbol: "FREE",
+      decimals: 18,
+    },
+  },
+  [ChainId.Stability]: {
+    label: "Stability (Beta)",
+    chain: "Stability",
+    chainId: ChainId.Stability,
+    networkName: "stability",
+    explorerUrl: "https://stability.blockscout.com",
+    explorerApiUrl: "https://stability.blockscout.com/api",
+    rpcUrl: `https://gtn.stabilityprotocol.com/zgt/${STABILITY_API_KEY}`,
     nativeCurrency: {
       name: "FREE",
       symbol: "FREE",
