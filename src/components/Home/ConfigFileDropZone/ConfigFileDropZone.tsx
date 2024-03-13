@@ -70,7 +70,7 @@ export const ConfigFileDropZone: FunctionComponent<ConfigFileDropZone> = ({ onCo
           <a
             onClick={(e) => e.stopPropagation()}
             className="text-cerulean-300 mt-8 hover:text-cerulean-500"
-            href="https://docs.tradetrust.io/docs/document-creator/config-file/config-generator"
+            href="https://docs.tradetrust.io/docs/reference/document-creator/config-file"
             target="_blank"
             rel="noopener noreferrer"
             data-testid="no-config-file-button"
