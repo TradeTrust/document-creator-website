@@ -6,8 +6,7 @@ describe("ConfigFileDropZoneContainer", () => {
     render(<ConfigFileDropZoneContainer />);
     const docLink = screen.getByTestId("no-config-file-button");
     expect(docLink.getAttribute("target")).toBe("_blank");
-    expect(docLink.getAttribute("href")).toBe(
-      "https://docs.tradetrust.io/docs/reference/document-creator/config-file"
+    expect(docLink.getAttribute("href")).toBe("https://docs.tradetrust.io/docs/reference/document-creator/config-file"
     );
   });
 });
