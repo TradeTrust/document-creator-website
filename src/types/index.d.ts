@@ -13,7 +13,8 @@ export type Network =
   | "xdcapothem"
   | "hederamainnet"
   | "hederatestnet"
-  | "stabilitytestnet";
+  | "stabilitytestnet"
+  | "stability";
 
 type FormType = "TRANSFERABLE_RECORD" | "VERIFIABLE_DOCUMENT";
 

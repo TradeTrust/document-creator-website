@@ -13,7 +13,8 @@ const configFileSchema = Joi.object({
       "xdcapothem",
       "hederamainnet",
       "hederatestnet",
-      "stabilitytestnet"
+      "stabilitytestnet",
+      "stability"
     )
     .only()
     .required(),
