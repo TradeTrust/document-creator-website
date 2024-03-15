@@ -1,4 +1,4 @@
-import { getDocumentStoreRecords, getDnsDidRecords } from "@govtechsg/dnsprove";
+import { getDocumentStoreRecords, getDnsDidRecords } from "@tradetrust-tt/dnsprove";
 import { IdentityProofType } from "../../constants";
 import { FormTemplate } from "../../types";
 import { getIdentityProofType, getIssuerAddress, getIssuerLocation } from "../../utils";

@@ -1,4 +1,4 @@
-import { getDocumentStoreRecords } from "@govtechsg/dnsprove";
+import { getDocumentStoreRecords } from "@tradetrust-tt/dnsprove";
 import { v2 } from "@tradetrust-tt/tradetrust";
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { useConfigContext } from "../../../common/context/config";
@@ -7,7 +7,7 @@ import sampleConfig from "../../../test/fixtures/config/v3/sample-config-mumbai.
 import { FormTemplate } from "../../../types";
 import { FormSelect } from "./FormSelect";
 
-jest.mock("@govtechsg/dnsprove", () => ({
+jest.mock("@tradetrust-tt/dnsprove", () => ({
   getDnsDidRecords: jest.fn(),
   getDocumentStoreRecords: jest.fn(),
 }));
