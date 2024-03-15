@@ -9,6 +9,7 @@ export type Network =
   | "sepolia"
   | "matic"
   | "maticmum"
+  | "amoy"
   | "xdc"
   | "xdcapothem"
   | "hederamainnet"

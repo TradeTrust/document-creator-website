@@ -1,4 +1,4 @@
-import { STABILITY_API_KEY } from "../config";
+import { STABILITY_API_KEY, INFURA_API_KEY } from "../config";
 import { Network } from "../types";
 export interface ChainInfoObject {
   label: string;
@@ -22,21 +22,20 @@ export enum ChainId {
   // Localhost
   Local = 1337,
 
-  // Ethereum Mainnet
+  // Ethereum
   Ethereum = 1,
-
-  // Ethereum Testnet
   Sepolia = 11155111,
 
   // Polygon
   Polygon = 137,
   PolygonMumbai = 80001,
+  Amoy = 80002,
 
   // XDC Network
   XDC = 50,
   XDCApothem = 51,
 
-  //Hedera Network
+  // Hedera Network
   HederaMainnet = 295,
   HederaTestnet = 296,
 
@@ -100,6 +99,19 @@ export const ChainInfo: ChainInfo = {
     nativeCurrency: {
       name: "MATIC",
       symbol: "mMATIC",
+      decimals: 18,
+    },
+  },
+  [ChainId.Amoy]: {
+    label: "Amoy",
+    chain: "MATIC",
+    chainId: ChainId.Amoy,
+    networkName: "amoy",
+    explorerUrl: "https://www.oklink.com/amoy",
+    rpcUrl: `https://polygon-amoy.infura.io/v3/${INFURA_API_KEY}`,
+    nativeCurrency: {
+      name: "MATIC",
+      symbol: "aMATIC",
       decimals: 18,
     },
   },
