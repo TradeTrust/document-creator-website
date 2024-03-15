@@ -1,4 +1,4 @@
-import { getDnsDidRecords, getDocumentStoreRecords } from "@govtechsg/dnsprove";
+import { getDnsDidRecords, getDocumentStoreRecords } from "@tradetrust-tt/dnsprove";
 import { OpenAttestationDocument, utils } from "@tradetrust-tt/tradetrust";
 import { utils as ethersUtils } from "ethers";
 import { saveAs } from "file-saver";

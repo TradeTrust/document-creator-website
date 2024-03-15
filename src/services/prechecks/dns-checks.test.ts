@@ -1,8 +1,8 @@
 import { v2 } from "@tradetrust-tt/tradetrust";
-import { getDnsDidRecords, getDocumentStoreRecords } from "@govtechsg/dnsprove";
+import { getDnsDidRecords, getDocumentStoreRecords } from "@tradetrust-tt/dnsprove";
 import { validateDnsTxtRecords } from "./dns-checks";
 
-jest.mock("@govtechsg/dnsprove", () => ({
+jest.mock("@tradetrust-tt/dnsprove", () => ({
   getDnsDidRecords: jest.fn(),
   getDocumentStoreRecords: jest.fn(),
 }));
