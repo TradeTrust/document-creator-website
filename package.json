@@ -62,7 +62,7 @@
     "@tradetrust-tt/tradetrust-utils": "^1.13.2",
     "@tradetrust-tt/tt-verify": "^8.8.5",
     "ajv": "^8.6.0",
-    "axios": "^0.21.4",
+    "axios": "^0.28.0",
     "cross-env": "^7.0.3",
     "debug": "^4.3.1",
     "ethers": "^5.4.0",
