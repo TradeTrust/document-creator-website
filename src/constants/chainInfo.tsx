@@ -173,7 +173,7 @@ export const ChainInfo: ChainInfo = {
   },
   [ChainId.StabilityTestnet]: {
     label: "Stability Network TestNet",
-    chain: "Stability",
+    chain: "FREE",
     chainId: ChainId.StabilityTestnet,
     networkName: "stabilitytestnet",
     explorerUrl: "https://stability-testnet.blockscout.com",
@@ -187,7 +187,7 @@ export const ChainInfo: ChainInfo = {
   },
   [ChainId.Stability]: {
     label: "Stability (Beta)",
-    chain: "Stability",
+    chain: "FREE",
     chainId: ChainId.Stability,
     networkName: "stability",
     explorerUrl: "https://stability.blockscout.com",
