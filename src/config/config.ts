@@ -7,8 +7,8 @@ export const ETHERSCAN_API_KEY = {
   MATIC: process.env.REACT_APP_API_KEY_MATIC,
 };
 
-export const STABILITY_API_KEY = process.env.STABILITY_API_KEY;
-export const INFURA_API_KEY = process.env.INFURA_API_KEY;
+export const STABILITY_API_KEY = process.env.REACT_APP_STABILITY_API_KEY;
+export const INFURA_API_KEY = process.env.REACT_APP_INFURA_API_KEY;
 
 export interface EtherscanNetworkApiDetails {
   apiKey: string;
