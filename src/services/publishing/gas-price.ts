@@ -19,15 +19,46 @@ export const fetchGasPriceSuggestions = async (
   const etherscanDetails = getEtherscanNetworkApiDetails(chainInfo);
   const isPolygon = ["maticmum", "matic", "amoy"].includes(network);
   const isMainnet = ["homestead"].includes(network);
-  if (!isMainnet && !isPolygon) return { ...additionalOverrides };
-  const { maxPriorityFeePerGas, maxFeePerGas } = await (isPolygon
-    ? fetchPolygonGasStationSuggestedPrice(network)
-    : fetchEtherscanSuggestedPrice(etherscanDetails));
+  const isStability = ["stability", "stabilitytestnet"].includes(network);
+  if (!isMainnet && !isPolygon && !isStability) return { ...additionalOverrides };
+  let maxPriorityFeePerGas;
+  let maxFeePerGas;
+  if (isPolygon) {
+    ({ maxPriorityFeePerGas, maxFeePerGas } = await fetchPolygonGasStationSuggestedPrice(network));
+  } else if (isStability) {
+    ({ maxPriorityFeePerGas, maxFeePerGas } = await fetchStabilityNetworkSuggestedPrice(network));
+  } else {
+    ({ maxPriorityFeePerGas, maxFeePerGas } = await fetchEtherscanSuggestedPrice(etherscanDetails));
+  }
 
   return {
     maxPriorityFeePerGas,
     maxFeePerGas,
     ...additionalOverrides,
+  };
+};
+
+export const fetchStabilityNetworkSuggestedPrice = async (network: Network): Promise<SuggestedGasPrice> => {
+  let apiUrl: string;
+  switch (network) {
+    case "stability":
+      apiUrl = "https://gtn.stabilityprotocol.com/gas-station";
+      break;
+    case "stabilitytestnet":
+      apiUrl = "https://free.testnet.stabilityprotocol.com/gas-station";
+      break;
+    default:
+      throw new Error("Unsupported network for stability gas station");
+  }
+
+  const suggestedPriceResponse = await fetch(apiUrl);
+  const suggestedPriceObject = await suggestedPriceResponse.json();
+
+  const maxPriorityFeePerGas = safeParseUnits(suggestedPriceObject.standard.maxPriorityFee, 9);
+  const maxFeePerGas = safeParseUnits(suggestedPriceObject.standard.maxFee, 9);
+  return {
+    maxPriorityFeePerGas,
+    maxFeePerGas,
   };
 };
 
