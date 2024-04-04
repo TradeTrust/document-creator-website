@@ -48,15 +48,20 @@ interface QrCode {
 }
 
 export const encodeQrCode = (payload: QrCode): string =>
-  `https://action.openattestation.com?q=${encodeURIComponent(JSON.stringify(payload))}`;
+  `https://actions.tradetrust.io?q=${encodeURIComponent(JSON.stringify(payload))}`;
 
 export const decodeQrCode = (qrCode: string): QrCode => {
-  const ttRegex = /https:\/\/action.openattestation.com\/?\?q=(.*)/;
-  if (!ttRegex.test(qrCode)) throw new Error("QR Code is not formatted to TradeTrust specifications");
-  const matchedArray = ttRegex.exec(qrCode) as RegExpExecArray;
-  const encodedPayload = matchedArray[1];
-  const decodedPayload = JSON.parse(decodeURIComponent(encodedPayload));
-  return decodedPayload;
+  const oaRegex = /https:\/\/action.openattestation.com\/?\?q=(.*)/;
+  const ttRegex = /https:\/\/actions.tradetrust.io\/?\?q=(.*)/;
+
+  if (oaRegex.test(qrCode) || ttRegex.test(qrCode)) {
+    const matchedArray = (oaRegex.exec(qrCode) as RegExpExecArray) || (ttRegex.exec(qrCode) as RegExpExecArray);
+    const encodedPayload = matchedArray[1];
+    const decodedPayload = JSON.parse(decodeURIComponent(encodedPayload));
+    return decodedPayload;
+  }
+
+  throw new Error("QR Code is not formatted to TradeTrust specifications");
 };
 
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
