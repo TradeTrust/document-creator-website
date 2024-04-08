@@ -201,6 +201,23 @@ export const ChainInfo: ChainInfo = {
   },
 };
 
+export const supportedMainnet = [
+  ChainInfo[ChainId.Ethereum].networkName,
+  ChainInfo[ChainId.Polygon].networkName,
+  ChainInfo[ChainId.XDC].networkName,
+  ChainInfo[ChainId.HederaMainnet].networkName,
+  ChainInfo[ChainId.Stability].networkName,
+];
+
+export const supportedTestnet = [
+  ChainInfo[ChainId.Sepolia].networkName,
+  ChainInfo[ChainId.PolygonMumbai].networkName,
+  ChainInfo[ChainId.Amoy].networkName,
+  ChainInfo[ChainId.XDCApothem].networkName,
+  ChainInfo[ChainId.HederaTestnet].networkName,
+  ChainInfo[ChainId.StabilityTestnet].networkName,
+];
+
 export const getSupportedNetworkNameFromId = (networkId: number): Network => {
   const chainIndo = Object.values(ChainInfo).find((network) => network.chainId === networkId);
   if (!chainIndo) {
