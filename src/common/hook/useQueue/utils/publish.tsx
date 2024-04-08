@@ -18,10 +18,10 @@ import {
 } from "../../../../types";
 import { getQueueNumber } from "../../../API/storageAPI";
 import { encodeQrCode, getDataV3, getDocumentNetwork } from "../../../utils";
-import { ChainInfo } from "../../../../constants/chainInfo";
+import { ChainInfo, supportedMainnet } from "../../../../constants/chainInfo";
 
 const redirectUrl = (network: Network) => {
-  if (network === "homestead" || network === "matic") return "https://tradetrust.io/";
+  if (supportedMainnet.includes(network)) return "https://tradetrust.io/";
   return "https://dev.tradetrust.io/";
 };
 
