@@ -4,6 +4,7 @@ module.exports = {
   fallback: (config) => {
     return {
       ...config.resolve.fallback,
+      vm: require.resolve("vm-browserify"),
       stream: require.resolve("stream-browserify"),
       buffer: require.resolve("buffer"),
       stream: require.resolve("stream-browserify"),

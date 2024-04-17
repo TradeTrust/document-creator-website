@@ -8,7 +8,6 @@ export type Network =
   | "local"
   | "sepolia"
   | "matic"
-  | "maticmum"
   | "amoy"
   | "xdc"
   | "xdcapothem"

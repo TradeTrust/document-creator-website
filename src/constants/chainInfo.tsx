@@ -28,7 +28,6 @@ export enum ChainId {
 
   // Polygon
   Polygon = 137,
-  PolygonMumbai = 80001,
   Amoy = 80002,
 
   // XDC Network
@@ -85,20 +84,6 @@ export const ChainInfo: ChainInfo = {
     nativeCurrency: {
       name: "MATIC",
       symbol: "MATIC",
-      decimals: 18,
-    },
-  },
-  [ChainId.PolygonMumbai]: {
-    label: "Polygon Mumbai",
-    chain: "MATIC",
-    chainId: ChainId.PolygonMumbai,
-    networkName: "maticmum",
-    explorerUrl: "https://mumbai.polygonscan.com",
-    explorerApiUrl: "https://api-testnet.polygonscan.com",
-    rpcUrl: "https://rpc-mumbai.maticvigil.com/",
-    nativeCurrency: {
-      name: "MATIC",
-      symbol: "mMATIC",
       decimals: 18,
     },
   },
@@ -211,7 +196,6 @@ export const supportedMainnet = [
 
 export const supportedTestnet = [
   ChainInfo[ChainId.Sepolia].networkName,
-  ChainInfo[ChainId.PolygonMumbai].networkName,
   ChainInfo[ChainId.Amoy].networkName,
   ChainInfo[ChainId.XDCApothem].networkName,
   ChainInfo[ChainId.HederaTestnet].networkName,

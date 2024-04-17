@@ -17,7 +17,7 @@ export const fetchGasPriceSuggestions = async (
   const network = getSupportedNetworkNameFromId(chainId);
   const chainInfo = getNetworkDetails(network);
   const etherscanDetails = getEtherscanNetworkApiDetails(chainInfo);
-  const isPolygon = ["maticmum", "matic", "amoy"].includes(network);
+  const isPolygon = ["matic", "amoy"].includes(network);
   const isMainnet = ["homestead"].includes(network);
   const isStability = ["stability", "stabilitytestnet"].includes(network);
   if (!isMainnet && !isPolygon && !isStability) return { ...additionalOverrides };
@@ -63,7 +63,7 @@ export const fetchStabilityNetworkSuggestedPrice = async (network: Network): Pro
 };
 
 const fetchPolygonGasStationSuggestedPrice = async (network: Network): Promise<SuggestedGasPrice> => {
-  const testnetURL = network === ("maticmum" || "amoy") ? "-testnet" : "";
+  const testnetURL = network === "amoy" ? "-testnet" : "";
   const apiUrl = "https://gasstation" + testnetURL + ".polygon.technology/v2";
 
   const suggestedPriceResponse = await fetch(apiUrl);
