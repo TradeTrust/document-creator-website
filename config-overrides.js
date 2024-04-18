@@ -11,5 +11,11 @@ module.exports = function override(config) {
     plugins: nodejsPolyfillWebpack.plugins(config),
     devtool: !process.env.NODE_ENV === "production",
   };
+  configOverrides.module.rules.push({
+    test: /\.m?js/,
+    resolve: {
+      fullySpecified: false,
+    },
+  });
   return configOverrides;
 };
