@@ -976,9 +976,5 @@
       },
       "extension": "tt"
     }
-  ],
-  "documentStorage": {
-    "apiKey": "randomKey",
-    "url": "https://api.example.com/storage"
-  }
+  ]
 }

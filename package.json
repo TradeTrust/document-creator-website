@@ -46,7 +46,7 @@
     "prepare": "husky install"
   },
   "dependencies": {
-    "@emotion/react": "^11.4.0",
+    "@emotion/react": "^11.11.4",
     "@emotion/styled": "^11.3.0",
     "@govtechsg/ethers-aws-kms-signer": "^2.1.0",
     "@govtechsg/ethers-contract-hook": "^2.2.0",
