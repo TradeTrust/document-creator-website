@@ -8,7 +8,6 @@ const configFileSchema = Joi.object({
       "local",
       "sepolia",
       "matic",
-      "maticmum",
       "amoy",
       "xdc",
       "xdcapothem",
