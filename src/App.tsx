@@ -22,9 +22,6 @@ export const App: React.FunctionComponent = () => {
 
   return (
     <>
-      <NetworkBar network="token-registry-v4">
-        Token Registry V2 has been deprecated, update your config files with Token Registry V4 address
-      </NetworkBar>
       <NetworkBar network={configFile?.network}>
         You are currently on <span className="capitalize">{configFile?.network}</span> network. To change it, please
         upload a new config file.
