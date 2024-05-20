@@ -156,6 +156,6 @@
     "node": "18.x"
   },
   "optionalDependencies": {
-    "fsevent": "*"
+    "fsevents": "*"
   }
 }
