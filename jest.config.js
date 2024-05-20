@@ -1,4 +1,5 @@
 module.exports = {
+  testEnvironment: "jsdom",
   collectCoverage: false,
   collectCoverageFrom: [
     "src/**/*.{ts,tsx,js,jsx}",
@@ -13,9 +14,28 @@ module.exports = {
       "<rootDir>/_mocks_/fileMock.js",
     "\\.(css|sass|scss)$": "identity-obj-proxy",
   },
-  testEnvironment: "jest-environment-jsdom",
-  setupFiles: ["<rootDir>/jest.setup.ts"],
-  setupFilesAfterEnv: ["<rootDir>/jest.dom.setup.ts"],
   testMatch: ["**/__tests__/**/*.[jt]s?(x)", "**/?(*.)test.[jt]s?(x)"],
   testPathIgnorePatterns: ["<rootDir>/node_modules/"],
+  setupFilesAfterEnv: ["<rootDir>/jest.setup.ts"],
+  transform: {
+    "^.+\\.ts?$": [
+      "ts-jest",
+      {
+        useESM: true,
+      },
+    ],
+    "^.+\\.tsx?$": [
+      "ts-jest",
+      {
+        useESM: true,
+      },
+    ],
+    "^.+\\.js?$": "babel-jest",
+    "^.+\\.jsx?$": "babel-jest",
+    "\\.(d\\.ts|[jt]sx?)$": "ts-jest",
+  },
+  transformIgnorePatterns: [
+    "node_modules/(?!(nanoid|uuid|@tradetrust-tt/tradetrust|@tradetrust-tt/token-registry)/)",
+    "node_modules/(?!axios)/",
+  ],
 };
