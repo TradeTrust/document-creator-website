@@ -28,6 +28,10 @@ const mockSchema = {
 };
 
 describe("dataFileButton", () => {
+  afterEach(() => {
+    jest.clearAllMocks();
+  });
+
   it("should render correctly", () => {
     render(<DataFileButton onDataFile={() => {}} schema={{}} />);
     expect(screen.getByTestId("data-upload-button")).toHaveTextContent("Upload Data File");
