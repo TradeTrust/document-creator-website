@@ -19,12 +19,19 @@ export const getRevokeAddress = (document: any) => {
     const unwrappedDocument = utils.getData(document);
     const issuer = unwrappedDocument.issuers[0];
     revokeAddress = issuer.revocation?.location || "";
+    console.log(`1revokeAddress, ${revokeAddress}`);
   } else if (utils.isWrappedV3Document(document)) {
+    console.log(`document2, ${JSON.stringify(document)}`);
     revokeAddress = document.openAttestationMetadata.proof.revocation?.location || "";
+    revokeAddress = document.openAttestationMetadata.proof.revocation?.location || "";
+    console.log(`2revokeAddress, ${revokeAddress}`);
   }
   // for dns-txt document with document store
   if (!revokeAddress) {
     revokeAddress = utils.getIssuerAddress(document)[0];
+
+    revokeAddress = revokeAddress || document.openAttestationMetadata.proof.value || "";
+    console.log(`3revokeAddress, ${revokeAddress}`);
   }
 
   return revokeAddress;

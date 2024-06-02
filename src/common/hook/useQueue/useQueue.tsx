@@ -62,7 +62,9 @@ export const useQueue = ({
     const completedJobsIndexes: number[] = [];
     const failedJobs: FailedJob[] = [];
     setQueueState(QueueState.INITIALIZED);
+
     const wallet = config.wallet;
+    console.log(wallet);
     try {
       const nonce = await config.wallet.getTransactionCount();
       const processingJobs =
@@ -89,6 +91,7 @@ export const useQueue = ({
             completedJobsIndexes.push(index);
             setCompletedJobIndex(completedJobsIndexes);
           } else if (queueType === QueueType.REVOKE) {
+            console.log(job);
             await revokeDocumentJob(job as RevokingJob, wallet);
             completedJobsIndexes.push(index);
             setCompletedJobIndex(completedJobsIndexes);
