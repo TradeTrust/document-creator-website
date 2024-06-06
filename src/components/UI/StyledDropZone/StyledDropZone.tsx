@@ -74,7 +74,7 @@ export const StyledDropZone: FunctionComponent<DropZoneProps> = ({
   }, [isDragActive, activeStyle, isDragAccept, acceptStyle, isDragReject, rejectStyle]);
 
   return (
-    <div className={`${baseStyle} ${dragStyle || currentStyle} `} data-testid={dataTestId} {...getRootProps()}>
+    <div className={` ${baseStyle} ${dragStyle || currentStyle} `} data-testid={dataTestId} {...getRootProps()}>
       <input {...getInputProps()} />
       {dropzoneIcon && <img className="mx-auto mb-8" src={dropzoneIcon} />}
       {error && <p className="max-w-lg text-scarlet-500 text-lg leading-none font-gilroy-bold mb-2">Error</p>}
@@ -102,7 +102,6 @@ export const StyledDropZone: FunctionComponent<DropZoneProps> = ({
         fileErrors.map((fileError, index: number) => {
           return <ErrorMessage key={`file-errors-${index}`} id="file-error" message={fileError.message} />;
         })}
-
       <div className={error ? "mt-10" : ""}>{children}</div>
     </div>
   );

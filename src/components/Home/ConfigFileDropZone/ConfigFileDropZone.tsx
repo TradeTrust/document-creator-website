@@ -5,7 +5,8 @@ import { ConfigFile } from "../../../types";
 import { getLogger } from "../../../utils/logger";
 import { ContentFrame } from "../../UI/ContentFrame";
 import { StyledDropZone } from "../../UI/StyledDropZone";
-
+import { DEMO_CONFIG } from "../../../constants/demo-config";
+import { useConfigContext } from "../../../common/context/config";
 const { stack } = getLogger("ConfigFileDropZone");
 interface ConfigFileDropZone {
   errorMessage?: string;
@@ -14,7 +15,7 @@ interface ConfigFileDropZone {
 
 export const ConfigFileDropZone: FunctionComponent<ConfigFileDropZone> = ({ onConfigFile, errorMessage }) => {
   const [fileErrors, setFileErrors] = useState<Error[]>([]);
-
+  const { setIsDemo } = useConfigContext();
   useEffect(() => {
     if (errorMessage) {
       const malformedError = new Error(errorMessage);
@@ -62,21 +63,40 @@ export const ConfigFileDropZone: FunctionComponent<ConfigFileDropZone> = ({ onCo
           dropzoneIcon={"/dropzone-graphic.png"}
           dataTestId="config-file-dropzone"
         >
-          <h4 data-testid="home-description">Drag and drop your configuration file here</h4>
-          <p className="my-4">or</p>
-          <Button className="bg-cerulean-500 text-white hover:bg-cerulean-800 border-cloud-800 block mx-auto mb-5">
-            Select Document
-          </Button>
-          <a
-            onClick={(e) => e.stopPropagation()}
-            className="text-cerulean-300 mt-8 hover:text-cerulean-500"
-            href="https://docs.tradetrust.io/docs/reference/document-creator/config-file"
-            target="_blank"
-            rel="noopener noreferrer"
-            data-testid="no-config-file-button"
-          >
-            <h5>Don’t have a config file? Learn how to create one</h5>
-          </a>
+          <>
+            <h4 data-testid="home-description">Drag and drop your configuration file here</h4>
+            <p className="my-4">or</p>
+            <Button className="bg-cerulean-500 text-white hover:bg-cerulean-800 border-cloud-800 block mx-auto mb-12">
+              Select Document
+            </Button>
+            <h5>{`Don't have config file?`}</h5>
+            <div className="inline-flex sm:flex justify-between flex-col sm:flex-row mt-8">
+              <div className="flex items-center flex-col sm:flex-row">
+                <a
+                  onClick={(e) => e.stopPropagation()}
+                  className="text-cerulean-300 hover:text-cerulean-500"
+                  href="https://docs.tradetrust.io/docs/reference/document-creator/config-file"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  data-testid="no-config-file-button"
+                >
+                  <h5>Learn how to create one</h5>
+                </a>
+              </div>
+              <div className="border-2 border-gray-200 border-dashed h-10 hidden sm:block" />
+              <Button
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setFileErrors([]);
+                  setIsDemo(true);
+                  onConfigFile(DEMO_CONFIG as ConfigFile);
+                }}
+                className="bg-white text-cerulean-500 hover:bg-cloud-100 rounded-xl sm:mt-0 mt-4"
+              >
+                Load Demo Config
+              </Button>
+            </div>
+          </>
         </StyledDropZone>
       </ContentFrame>
     </>
