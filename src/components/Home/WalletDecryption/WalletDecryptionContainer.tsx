@@ -4,7 +4,7 @@ import { useConfigContext } from "../../../common/context/config";
 import { usePersistedConfigFile } from "../../../common/hook/usePersistedConfigFile";
 import { WalletDecryption } from "./WalletDecryption";
 import { getLogger } from "../../../utils/logger";
-import { DEMO_PASSWD } from "../../../constants/demo-config";
+import { loadDemoWallet } from "./loadDemoWallet";
 
 const { stack } = getLogger("Wallet Decryption Container");
 
@@ -41,17 +41,34 @@ export const WalletDecryptionContainer: FunctionComponent = () => {
     },
     [configFile, setConfig, setDecryptProgress, setIsIncorrectPassword]
   );
+
+  const loadDemo = useCallback(async (): Promise<void> => {
+    // use demo wallet and config
+    if (configFile) {
+      const walletOrSigner = await loadDemoWallet(configFile);
+      setConfig({
+        network: configFile.network,
+        wallet: walletOrSigner,
+        forms: configFile.forms,
+        documentStorage: configFile.documentStorage,
+      });
+    }
+  }, [configFile, setConfig]);
+
   useEffect(() => {
     if (isDemo && configFile) {
-      onDecryptConfigFile(DEMO_PASSWD);
+      loadDemo();
     }
-  }, [isDemo, configFile, onDecryptConfigFile]);
+  }, [loadDemo, isDemo, configFile]);
   return (
-    <WalletDecryption
-      decryptProgress={decryptProgress}
-      isIncorrectPassword={isIncorrectPassword}
-      onDecryptConfigFile={onDecryptConfigFile}
-      onResetConfigFile={onResetConfigFile}
-    />
+    <>
+      <b>{decryptProgress}</b>
+      <WalletDecryption
+        decryptProgress={decryptProgress}
+        isIncorrectPassword={isIncorrectPassword}
+        onDecryptConfigFile={onDecryptConfigFile}
+        onResetConfigFile={onResetConfigFile}
+      />
+    </>
   );
 };

@@ -3,7 +3,7 @@ export const DEMO_CONFIG = {
   wallet: {
     type: "ENCRYPTED_JSON",
     encryptedJson:
-      '{"address":"f11e3850f0bb8c72925c329ec446a2026cd4bb94","id":"d3993295-32ed-40e1-8e44-3ca8bd84fbeb","version":3,"crypto":{"cipher":"aes-128-ctr","cipherparams":{"iv":"91325d439195204264b16f5a8ea33e80"},"ciphertext":"6608eace3ffbf32e898919ac00babe014aab140ffd6eebd4c5b0e71577378e51","kdf":"scrypt","kdfparams":{"salt":"6f3ea4ca2f20b5e3a851738e719f576107462d0f48fd02efffe20e15bab3dbfa","n":131072,"dklen":32,"p":1,"r":8},"mac":"c7418015ab04f60c9cf58d9670799da0e8ea00bb893e61ca73fa4ca25756aecc"},"x-ethers":{"client":"ethers.js","gethFilename":"UTC--2024-06-06T07-32-36.0Z--f11e3850f0bb8c72925c329ec446a2026cd4bb94","mnemonicCounter":"690521b75992f909b116f7b75258bbe2","mnemonicCiphertext":"681a05475978f5498bc63add4a2f79a9","path":"m/44\'/60\'/0\'/0/0","locale":"en","version":"0.1"}}',
+      '{"address":"f11e3850f0bb8c72925c329ec446a2026cd4bb94","id":"d3993295-32ed-40e1-8e44-3ca8bd84fbeb","version":3,"crypto":{"cipher":"aes-128-ctr","cipherparams":{"iv":"91325d439195204264b16f5a8ea33e80"},"ciphertext":"6608eace3ffbf32e898919ac00babe014aab140ffd6eebd4c5b0e71577378e51","kdf":"scrypt","kdfparams":{"salt":"6f3ea4ca2f20b5e3a851738e719f576107462d0f48fd02efffe20e15bab3dbfa","n":131072,"dklen":32,"p":1,"r":8},"mac":"c7418015ab04f60c9cf58d9670799da0e8ea00bb893e61ca73fa4ca25756aecc"}}',
   },
   forms: [
     {
@@ -849,4 +849,4 @@ export const DEMO_CONFIG = {
   ],
 };
 
-export const DEMO_PASSWD = "tradetrust-tt/tradetrust";
+export const DEMO_PRIVATE_KEY = "2094fe88ad9d99fd3691af27adcf2fce39789e19f3d04119f1f8c258b5c678c3";

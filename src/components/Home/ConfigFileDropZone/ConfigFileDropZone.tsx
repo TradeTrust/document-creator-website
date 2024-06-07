@@ -85,6 +85,7 @@ export const ConfigFileDropZone: FunctionComponent<ConfigFileDropZone> = ({ onCo
               </div>
               <div className="border-2 border-gray-200 border-dashed h-10 hidden sm:block" />
               <Button
+                data-testid="load-demo-config-button"
                 onClick={(e) => {
                   e.stopPropagation();
                   setFileErrors([]);
