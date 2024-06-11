@@ -1,10 +1,17 @@
 /* eslint-disable @typescript-eslint/no-explicit-any, @typescript-eslint/no-empty-function */
 import { act, fireEvent, render, screen, waitFor } from "@testing-library/react";
-import React from "react";
 import { ConfigFileDropZone } from "./ConfigFileDropZone";
 import { createFileTransferEvent } from "../../../utils/utils";
+import { useConfigContext } from "../../../common/context/config";
+import { DEMO_CONFIG } from "../../../constants/demo-config";
+jest.mock("../../../common/context/config");
 
 describe("configFileDropZone", () => {
+  beforeEach(() => {
+    const setIsDemo = jest.fn();
+    const useConfigContextMock = useConfigContext as jest.Mock;
+    useConfigContextMock.mockResolvedValue({ setIsDemo });
+  });
   it("should have the right text", () => {
     render(<ConfigFileDropZone onConfigFile={() => {}} />);
     expect(screen.queryByText(/Create and Revoke Document/)).not.toBeNull();
@@ -25,5 +32,27 @@ describe("configFileDropZone", () => {
       fireEvent(screen.getByTestId("config-file-dropzone"), event);
       await waitFor(() => expect(onConfigFile).toHaveBeenCalledWith(configContent));
     });
+  });
+
+  it("should call onConfigFile method with DEMO_CONFIG and load config file button is clicked", async () => {
+    const setIsDemo = jest.fn();
+    const onConfigFile = jest.fn().mockResolvedValue(true);
+    const useConfigContextMock = useConfigContext as jest.Mock;
+    useConfigContextMock.mockResolvedValue({ setIsDemo });
+    // Mock the context to return the setIsDemo function
+    (useConfigContext as jest.Mock).mockReturnValue({
+      setIsDemo,
+    });
+
+    render(<ConfigFileDropZone onConfigFile={onConfigFile} errorMessage="" />);
+
+    // Find the load-demo-config-button
+    const loadDemoConfigButton = screen.getByTestId("load-demo-config-button");
+
+    // Click the load-demo-config-button
+    fireEvent.click(loadDemoConfigButton);
+
+    expect(setIsDemo).toHaveBeenCalledWith(true);
+    expect(onConfigFile).toHaveBeenCalledWith(DEMO_CONFIG);
   });
 });

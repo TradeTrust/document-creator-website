@@ -11,13 +11,17 @@ import { history } from "./history";
 
 export const App: React.FunctionComponent = () => {
   const { configFile } = usePersistedConfigFile();
-  const { setConfig, config } = useConfigContext();
+  const { setConfig, config, setIsDemo, isDemo } = useConfigContext();
   const { setForms, setActiveFormIndex } = useFormsContext();
-
+  const { setConfigFile } = usePersistedConfigFile();
   const logout = (): void => {
     setForms([]);
     setActiveFormIndex(undefined);
     setConfig(undefined);
+    if (isDemo) {
+      setIsDemo(false);
+      setConfigFile(undefined);
+    }
   };
 
   return (
