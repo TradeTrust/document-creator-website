@@ -1,6 +1,6 @@
 {
   "appCommand": "npm run serve-static",
-  "src": ["integration/**/**.spec.ts"],
+  "src": ["integration/**/*.spec.ts"],
   "cache": true,
   "compilerOptions": {
     "typescript": {

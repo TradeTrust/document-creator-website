@@ -20,7 +20,6 @@ export const decryptWalletOrSigner = async (
       };
 
   const provider = config.network === "local" ? new providers.JsonRpcProvider() : utils.generateProvider(opts);
-
   if (isWalletOption(config.wallet)) {
     // For backward compatibility when the wallet is still string
     return decryptEncryptedJson(config.wallet, password, progressCallback, provider);

@@ -1,7 +1,7 @@
 import { Selector, t } from "testcafe";
 
 const PasswordField = Selector("[data-testid='password-field']");
-export const ButtonLogin = Selector("[data-testid='login-button']");
+const ButtonLogin = Selector("[data-testid='login-button']");
 const ConfigFileDropZoneInput = Selector("[data-testid='config-file-dropzone'] input");
 // fixtures
 
