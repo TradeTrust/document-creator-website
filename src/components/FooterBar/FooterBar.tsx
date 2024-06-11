@@ -25,23 +25,8 @@ const getData: GetDataInterface = (networkPath: string) => {
     {
       category: "Utilities",
       items: [
-        { label: "Verify Documents", to: `${networkPath}/verify`, render: RenderExternalLink },
+        { label: "Verify Documents", to: `http://ref.tradetrust.io`, render: RenderExternalLink },
         { label: "Create Documents", to: "/", render: RenderNavLink },
-      ],
-    },
-    {
-      category: "Resources",
-      items: [
-        { label: "Learn", to: `${networkPath}/learn`, render: RenderExternalLink },
-        { label: "FAQ", to: `${networkPath}/faq`, render: RenderExternalLink },
-        { label: "ETA", to: `${networkPath}/eta`, render: RenderExternalLink },
-      ],
-    },
-    {
-      category: "News & Event",
-      items: [
-        { label: "News", to: `${networkPath}/news`, render: RenderExternalLink },
-        { label: "Events", to: `${networkPath}/events`, render: RenderExternalLink },
       ],
     },
     {
@@ -50,7 +35,6 @@ const getData: GetDataInterface = (networkPath: string) => {
         { label: "Github", to: URLS.GITHUB, render: RenderExternalLink },
         { label: "Documentation", to: URLS.DOCS, render: RenderExternalLink },
         { label: "Contact", to: `${networkPath}/contact`, render: RenderExternalLink },
-        { label: "FAQ", to: `${networkPath}/faq`, render: RenderExternalLink },
       ],
     },
     {
