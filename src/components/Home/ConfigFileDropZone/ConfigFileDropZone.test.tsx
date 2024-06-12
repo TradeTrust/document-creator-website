@@ -3,7 +3,7 @@ import { act, fireEvent, render, screen, waitFor } from "@testing-library/react"
 import { ConfigFileDropZone } from "./ConfigFileDropZone";
 import { createFileTransferEvent } from "../../../utils/utils";
 import { useConfigContext } from "../../../common/context/config";
-import { DEMO_CONFIG } from "../../../constants/demo-config";
+import { DEMO_CONFIG_BETA } from "../../../constants/demo-config";
 jest.mock("../../../common/context/config");
 
 describe("configFileDropZone", () => {
@@ -34,7 +34,7 @@ describe("configFileDropZone", () => {
     });
   });
 
-  it("should call onConfigFile method with DEMO_CONFIG and load config file button is clicked", async () => {
+  it("should call onConfigFile method with DEMO_CONFIG_BETA and load config file button is clicked", async () => {
     const setIsDemo = jest.fn();
     const onConfigFile = jest.fn().mockResolvedValue(true);
     const useConfigContextMock = useConfigContext as jest.Mock;
@@ -53,6 +53,6 @@ describe("configFileDropZone", () => {
     fireEvent.click(loadDemoConfigButton);
 
     expect(setIsDemo).toHaveBeenCalledWith(true);
-    expect(onConfigFile).toHaveBeenCalledWith(DEMO_CONFIG);
+    expect(onConfigFile).toHaveBeenCalledWith(DEMO_CONFIG_BETA);
   });
 });
