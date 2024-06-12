@@ -14,7 +14,7 @@ export const validateDnsTxtRecords = async ({
   issuerLocation,
   issuerAddress,
 }: ValidateDnsTxtRecords): Promise<boolean> => {
-  if (identityProofType === IdentityProofType.DNSDid || identityProofType === IdentityProofType.Idvc) {
+  if (identityProofType === IdentityProofType.DNSDid) {
     const txtRecords = await getDnsDidRecords(issuerLocation);
     return txtRecords.some((record) => record.publicKey.toLowerCase().includes(issuerAddress.toLowerCase()));
   } else if (identityProofType === IdentityProofType.DNSTxt) {

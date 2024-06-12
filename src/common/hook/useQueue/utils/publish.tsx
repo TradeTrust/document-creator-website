@@ -254,7 +254,6 @@ export const groupDocumentsIntoJobs = async (
 
   // Process all verifiable document with IDVC next
   if (verifiableDocumentsWithIdvc.length > 0) {
-    console.log("sdasddsxas");
     const didRawDocuments = verifiableDocumentsWithIdvc.map((doc) => doc.rawDocument);
     const wrappedIdvcDocuments = await wrapDocuments(didRawDocuments);
     // Sign IDVC document here as we preparing the jobs

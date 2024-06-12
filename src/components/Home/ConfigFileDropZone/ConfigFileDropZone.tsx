@@ -5,7 +5,7 @@ import { ConfigFile } from "../../../types";
 import { getLogger } from "../../../utils/logger";
 import { ContentFrame } from "../../UI/ContentFrame";
 import { StyledDropZone } from "../../UI/StyledDropZone";
-import { DEMO_CONFIG } from "../../../constants/demo-config";
+import { DEMO_CONFIG_BETA } from "../../../constants/demo-config";
 import { useConfigContext } from "../../../common/context/config";
 const { stack } = getLogger("ConfigFileDropZone");
 interface ConfigFileDropZone {
@@ -90,7 +90,7 @@ export const ConfigFileDropZone: FunctionComponent<ConfigFileDropZone> = ({ onCo
                   e.stopPropagation();
                   setFileErrors([]);
                   setIsDemo(true);
-                  onConfigFile(DEMO_CONFIG as ConfigFile);
+                  onConfigFile(DEMO_CONFIG_BETA as ConfigFile);
                 }}
                 className="bg-white text-cerulean-500 hover:bg-cloud-100 rounded-xl sm:mt-0 mt-4"
               >

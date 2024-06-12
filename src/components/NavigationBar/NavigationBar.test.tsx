@@ -48,7 +48,7 @@ describe("navigationBar", () => {
       </BrowserRouter>
     );
     expect(screen.getAllByTestId("navbar-verify-doc")[0]).not.toBeNull();
-    expect(screen.getAllByTestId("navbar-verify-doc")[0].getAttribute("href")).toBe(`https://tradetrust.io/verify`);
+    expect(screen.getAllByTestId("navbar-verify-doc")[0].getAttribute("href")).toBe(`https://beta.tradetrust.io`);
   });
 
   it("should render href to verify documents page with a config", () => {
@@ -61,7 +61,7 @@ describe("navigationBar", () => {
       </BrowserRouter>
     );
     expect(screen.getAllByTestId("navbar-verify-doc")[0]).not.toBeNull();
-    expect(screen.getAllByTestId("navbar-verify-doc")[0].getAttribute("href")).toBe(`https://dev.tradetrust.io/verify`);
+    expect(screen.getAllByTestId("navbar-verify-doc")[0].getAttribute("href")).toBe(`https://beta.tradetrust.io`);
   });
 
   it("should render href to mainnet verify documents page with homestead config", () => {
@@ -74,7 +74,7 @@ describe("navigationBar", () => {
       </BrowserRouter>
     );
     expect(screen.getAllByTestId("navbar-verify-doc")[0]).not.toBeNull();
-    expect(screen.getAllByTestId("navbar-verify-doc")[0].getAttribute("href")).toBe(`https://tradetrust.io/verify`);
+    expect(screen.getAllByTestId("navbar-verify-doc")[0].getAttribute("href")).toBe(`https://beta.tradetrust.io`);
   });
 
   it("should render href to mainnet verify documents page with local config", () => {
@@ -87,6 +87,6 @@ describe("navigationBar", () => {
       </BrowserRouter>
     );
     expect(screen.getAllByTestId("navbar-verify-doc")[0]).not.toBeNull();
-    expect(screen.getAllByTestId("navbar-verify-doc")[0].getAttribute("href")).toBe(`https://tradetrust.io/verify`);
+    expect(screen.getAllByTestId("navbar-verify-doc")[0].getAttribute("href")).toBe(`https://beta.tradetrust.io`);
   });
 });
