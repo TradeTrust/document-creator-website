@@ -114,6 +114,20 @@ export const getDocumentNetwork = (network: Network): NetworkObject => {
 };
 
 /*
+ * getDataTTV4
+ * Omit fields that are VC + TT V4 related, we are only interested in document data.
+ */
+export const getDataTTV4: any = (data: any) => {
+  /* eslint-disable @typescript-eslint/no-unused-vars */
+  const { type, validFrom, issuer, credentialSubject, credentialStatus, renderMethod, attachments, network, ...rest } =
+    data; // omit these fields
+  /* eslint-enable @typescript-eslint/no-unused-vars */
+
+  delete rest["@context"]; // omit these fields
+  return rest;
+};
+
+/*
  * getDataV3
  * Omit fields that are VC + OA V3 related, we are only interested in document data.
  */
@@ -161,6 +175,11 @@ export const hasVcContext = (document: any) => {
   return !!document["@context"]; // Unable to use utils.isRawV3Document, due how document data is handled throughout the application
 };
 
+// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
+export const hasCredentialStatus = (document: any) => {
+  return !!document["credentialStatus"]; // Unable to use utils.isRawTTV4Document, due how document data is handled throughout the application
+};
+
 const hasTemplate = (document: any) => {
   return !!document["$template"]; // Unable to use utils.isRawV2Document, due how document data is handled throughout the application
 };
@@ -174,7 +193,9 @@ const hasTemplate = (document: any) => {
  * 3. user input flow - single document, data manually filled by user.
  */
 export const getDataToValidate: any = (data: any) => {
-  if (hasVcContext(data)) {
+  if (hasCredentialStatus(data)) {
+    return getDataTTV4(data);
+  } else if (hasVcContext(data)) {
     return getDataV3(data);
   } else if (hasTemplate(data)) {
     return getDataV2(data);

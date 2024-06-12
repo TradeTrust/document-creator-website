@@ -2,11 +2,16 @@ import {
   utils,
   wrapDocuments as wrapDocumentsV2,
   __unsafe__use__it__at__your__own__risks__wrapDocuments as wrapDocumentsV3,
+  _unsafe_use_it_at_your_own_risk_v4_alpha_tt_wrapDocuments as wrapDocumentsTTV4,
+  TTv4,
+  signDocument,
+  SignedWrappedDocument,
+  SUPPORTED_SIGNING_ALGORITHM,
 } from "@tradetrust-tt/tradetrust";
 import { Signer } from "ethers";
 import { defaultsDeep, groupBy } from "lodash";
 import { IdentityProofType } from "../../../../constants";
-import { publishDnsDidVerifiableDocumentJob } from "../../../../services/publishing";
+import { publishDnsDidVerifiableDocumentJob, publishIdvcVerifiableDocumentJob } from "../../../../services/publishing";
 import {
   ActionsUrlObject,
   Config,
@@ -17,7 +22,7 @@ import {
   RawDocument,
 } from "../../../../types";
 import { getQueueNumber } from "../../../API/storageAPI";
-import { encodeQrCode, getDataV3, getDocumentNetwork } from "../../../utils";
+import { encodeQrCode, getDataV3, getDataTTV4, getDocumentNetwork } from "../../../utils";
 import { ChainInfo, supportedMainnet } from "../../../../constants/chainInfo";
 
 const redirectUrl = (network: Network) => {
@@ -52,7 +57,16 @@ const getReservedStorageUrl = async (documentStorage: DocumentStorage, network: 
 };
 
 const getContractAddressFromRawDoc = (document: any) => {
-  if (utils.isRawV3Document(document)) {
+  if (utils.isRawTTV4Document(document)) {
+    if (document.issuer.identityProof.identityProofType.toString() === IdentityProofType.DNSDid)
+      return IdentityProofType.DNSDid;
+    if (
+      document.issuer.identityProof.identityProofType.toString() === IdentityProofType.Idvc &&
+      document.credentialStatus.credentialStatusType !== TTv4.CredentialStatusType.TokenRegistry
+    )
+      return IdentityProofType.Idvc;
+    return document.credentialStatus.location;
+  } else if (utils.isRawV3Document(document)) {
     return document.openAttestationMetadata.identityProof.type.toString() === IdentityProofType.DNSDid
       ? IdentityProofType.DNSDid
       : document.openAttestationMetadata.proof.value;
@@ -79,7 +93,13 @@ export const getRawDocuments = async (forms: FormEntry[], config: Config): Promi
       const formDefaults = formConfig.defaults;
       const documentNetwork = getDocumentNetwork(config.network);
       let formData;
-      if (utils.isRawV3Document(data.formData)) {
+      if (utils.isRawTTV4Document(data.formData)) {
+        formData = {
+          ...documentNetwork,
+          credentialSubject: { ...getDataTTV4(data.formData), ...qrUrl },
+          ...(data.formData.attachments && { attachments: data.formData.attachments }),
+        };
+      } else if (utils.isRawV3Document(data.formData)) {
         formData = {
           ...documentNetwork,
           credentialSubject: { ...getDataV3(data.formData), ...qrUrl }, // https://github.com/TradeTrust/document-creator-website/issues/256, using `getDataV3` here so not to break existing flows
@@ -105,7 +125,29 @@ export const getRawDocuments = async (forms: FormEntry[], config: Config): Promi
 };
 
 const wrapDocuments = async (rawDocuments: any[]) => {
-  return utils.isRawV3Document(rawDocuments[0]) ? await wrapDocumentsV3(rawDocuments) : wrapDocumentsV2(rawDocuments);
+  return utils.isRawTTV4Document(rawDocuments[0])
+    ? await wrapDocumentsTTV4(rawDocuments)
+    : utils.isRawV3Document(rawDocuments[0])
+    ? await wrapDocumentsV3(rawDocuments)
+    : wrapDocumentsV2(rawDocuments);
+};
+
+const signTTV4WrappedDocuments = async (
+  wrappedDocuments: TTv4.WrappedDocument[],
+  signers: Signer
+): Promise<TTv4.WrappedDocument[]> => {
+  const signedDocumentsList: SignedWrappedDocument<TTv4.TradeTrustDocument>[] = [];
+  const signingDocuments = wrappedDocuments.map(async (doc) => {
+    try {
+      const signedDocument = await signDocument(doc, SUPPORTED_SIGNING_ALGORITHM.Secp256k1VerificationKey2018, signers);
+      signedDocumentsList.push(signedDocument);
+    } catch (e) {
+      throw new Error(`Error signing document: ${doc.issuer.id}`);
+    }
+  });
+
+  await Promise.allSettled(signingDocuments);
+  return signedDocumentsList;
 };
 
 const processVerifiableDocuments = async (
@@ -145,9 +187,14 @@ export const groupDocumentsIntoJobs = async (
   const groupedVerifiableDocuments = groupBy(verifiableDocuments, "contractAddress");
   const verifiableDocumentsWithDocumentStore = { ...groupedVerifiableDocuments };
   delete verifiableDocumentsWithDocumentStore[IdentityProofType.DNSDid];
+  delete verifiableDocumentsWithDocumentStore[IdentityProofType.Idvc];
   const verifiableDocumentsWithDnsDid =
     Object.keys(groupedVerifiableDocuments).indexOf(IdentityProofType.DNSDid) >= 0
       ? [...groupedVerifiableDocuments[IdentityProofType.DNSDid]]
+      : [];
+  const verifiableDocumentsWithIdvc =
+    Object.keys(groupedVerifiableDocuments).indexOf(IdentityProofType.Idvc) >= 0
+      ? [...groupedVerifiableDocuments[IdentityProofType.Idvc]]
       : [];
   const documentStoreAddresses = Object.keys(verifiableDocumentsWithDocumentStore);
 
@@ -162,6 +209,9 @@ export const groupDocumentsIntoJobs = async (
     const verifiableDocumentsV3 = verifiableDocumentsWithDocumentStore[contractAddress].filter((docs) => {
       return utils.isRawV3Document(docs.rawDocument);
     });
+    const verifiableDocumentsTTV4 = verifiableDocumentsWithDocumentStore[contractAddress].filter((docs) => {
+      return utils.isRawTTV4Document(docs.rawDocument);
+    });
 
     if (verifiableDocumentsV2.length > 0) {
       const verifiableDocumentV2Job = await processVerifiableDocuments(nonce, contractAddress, verifiableDocumentsV2);
@@ -172,6 +222,12 @@ export const groupDocumentsIntoJobs = async (
     if (verifiableDocumentsV3.length > 0) {
       const verifiableDocumentV3Job = await processVerifiableDocuments(nonce, contractAddress, verifiableDocumentsV3);
       jobs.push(verifiableDocumentV3Job);
+      nonce += TX_NEEDED_FOR_VERIFIABLE_DOCUMENTS;
+    }
+
+    if (verifiableDocumentsTTV4.length > 0) {
+      const verifiableDocumentV4Job = await processVerifiableDocuments(nonce, contractAddress, verifiableDocumentsTTV4);
+      jobs.push(verifiableDocumentV4Job);
       nonce += TX_NEEDED_FOR_VERIFIABLE_DOCUMENTS;
     }
   }
@@ -196,20 +252,53 @@ export const groupDocumentsIntoJobs = async (
     nonce += TX_NEEDED_FOR_VERIFIABLE_DOCUMENTS;
   }
 
+  // Process all verifiable document with IDVC next
+  if (verifiableDocumentsWithIdvc.length > 0) {
+    console.log("sdasddsxas");
+    const didRawDocuments = verifiableDocumentsWithIdvc.map((doc) => doc.rawDocument);
+    const wrappedIdvcDocuments = await wrapDocuments(didRawDocuments);
+    // Sign IDVC document here as we preparing the jobs
+    const signedIdvcDocument = await publishIdvcVerifiableDocumentJob(wrappedIdvcDocuments, signer);
+    jobs.push({
+      type: verifiableDocumentsWithIdvc[0].type,
+      nonce,
+      contractAddress: IdentityProofType.Idvc,
+      documents: verifiableDocumentsWithIdvc.map((doc, index) => ({
+        ...doc,
+        wrappedDocument: signedIdvcDocument[index],
+      })),
+      merkleRoot: wrappedIdvcDocuments[0].signature?.merkleRoot,
+      payload: {},
+    });
+    nonce += TX_NEEDED_FOR_VERIFIABLE_DOCUMENTS;
+  }
+
   // Process all transferable records next
   for (const transferableRecord of transferableRecords) {
     const { type, contractAddress, rawDocument, payload } = transferableRecord;
     const transferableDocuments = await wrapDocuments([rawDocument]);
     const merkleRoot = utils.getMerkleRoot(transferableDocuments[0]);
 
-    jobs.push({
-      type,
-      nonce,
-      contractAddress,
-      documents: [{ ...transferableRecord, wrappedDocument: transferableDocuments[0] }],
-      merkleRoot: merkleRoot,
-      payload,
-    });
+    if (utils.isWrappedTTV4Document(transferableDocuments[0])) {
+      const signedDocuments = await signTTV4WrappedDocuments(transferableDocuments, signer);
+      jobs.push({
+        type,
+        nonce,
+        contractAddress,
+        documents: [{ ...transferableRecord, wrappedDocument: signedDocuments[0] }],
+        merkleRoot: merkleRoot,
+        payload,
+      });
+    } else {
+      jobs.push({
+        type,
+        nonce,
+        contractAddress,
+        documents: [{ ...transferableRecord, wrappedDocument: transferableDocuments[0] }],
+        merkleRoot: merkleRoot,
+        payload,
+      });
+    }
     nonce += TX_NEEDED_FOR_TRANSFERABLE_RECORDS;
   }
 

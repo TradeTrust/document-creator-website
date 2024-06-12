@@ -80,6 +80,8 @@ export const checkDID = (rawDocument: OpenAttestationDocument): boolean => {
     return isDID === undefined ? false : isDID;
   } else if (utils.isRawV3Document(rawDocument)) {
     return rawDocument.openAttestationMetadata.proof.value.includes("did:ethr:");
+  } else if (utils.isRawTTV4Document(rawDocument)) {
+    return rawDocument.issuer.id.includes("did:ethr:");
   }
   throw new Error(
     "Unsupported document type: Only can retrieve issuer address from OpenAttestation v2 & v3 documents."

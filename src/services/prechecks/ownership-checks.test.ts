@@ -1,5 +1,6 @@
-import { v3 } from "@tradetrust-tt/tradetrust";
+import { TTv4, v3 } from "@tradetrust-tt/tradetrust";
 import sampleV3DID from "../../test/fixtures/sample-files/v3/did/sample-v3-did-wrapped.json";
+import sampleV4DID from "../../test/fixtures/sample-files/v4/did/sample-v4-did-signed.json";
 import { checkDID, checkTransferableRecordOwnership, checkVerifiableDocumentOwnership } from "./ownership-checks";
 import { getConnectedDocumentStore, checkAddressIsSmartContract, getConnectedTokenRegistry } from "../common";
 import { Wallet } from "ethers";
@@ -119,6 +120,11 @@ describe("ownershipChecks", () => {
   describe("checkDID", () => {
     it("should return true for v3 DID OA Document", async () => {
       const results = checkDID(sampleV3DID as v3.OpenAttestationDocument);
+      expect(results).toBe(true);
+    });
+
+    it("should return true for TTv4 DID Document", async () => {
+      const results = checkDID(sampleV4DID as TTv4.TradeTrustDocument);
       expect(results).toBe(true);
     });
   });

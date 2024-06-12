@@ -1,4 +1,4 @@
-import { v2, v3 } from "@tradetrust-tt/tradetrust";
+import { v2, v3, TTv4 } from "@tradetrust-tt/tradetrust";
 import { FormTemplate } from "../types";
 import { generateFileName, getIdentityProofType, getIssuerAddress, getIssuerLocation } from "./utils";
 
@@ -199,6 +199,36 @@ const mockInvoiceV3DnsDid: FormTemplate = {
   schema: {},
 };
 
+const mockInvoiceTTv4: FormTemplate = {
+  name: "TradeTrust Invoice TTv4 ",
+  type: "VERIFIABLE_DOCUMENT",
+  defaults: {
+    "@context": [
+      "https://www.w3.org/2018/credentials/v1",
+      "https://schemata.tradetrust.io/io/tradetrust/4.0/alpha-context.json",
+    ],
+    type: ["VerifiableCredential", "TradeTrustCredential"],
+    issuer: {
+      id: "did:ethr:0x1245e5b64d785b25057f7438f715f4aa5d965733",
+      identityProof: {
+        identityProofType: TTv4.IdentityProofType.Idvc,
+        identifier: "demo-tradetrust.openattestation.com",
+      },
+    },
+    credentialSubject: {},
+    credentialStatus: {
+      type: "TradeTrustCredentialStatus",
+      credentialStatusType: TTv4.CredentialStatusType.RevocationStore,
+    },
+    network: {
+      chain: "ETH",
+      chainId: "11155111",
+    },
+  },
+  schema: {},
+  uiSchema: {},
+};
+
 describe("getIssuerLocation", () => {
   it("should return dns location from raw document v2", () => {
     const location = getIssuerLocation(mockInvoiceV2.defaults);
@@ -207,6 +237,11 @@ describe("getIssuerLocation", () => {
 
   it("should return dns location from raw document v3", () => {
     const location = getIssuerLocation(mockInvoiceV3.defaults);
+    expect(location).toBe("demo-tradetrust.openattestation.com");
+  });
+
+  it("should return dns location from raw document TTv4", () => {
+    const location = getIssuerLocation(mockInvoiceTTv4.defaults);
     expect(location).toBe("demo-tradetrust.openattestation.com");
   });
 });
@@ -220,6 +255,11 @@ describe("getIdentityProofType", () => {
   it("should return identity proof type from raw document v3", () => {
     const method = getIdentityProofType(mockInvoiceV3.defaults);
     expect(method).toBe("DNS-TXT");
+  });
+
+  it("should return identity proof type from raw document TTv4", () => {
+    const method = getIdentityProofType(mockInvoiceTTv4.defaults);
+    expect(method).toBe("IDVC");
   });
 });
 
@@ -241,6 +281,11 @@ describe("getIssuerAddress", () => {
 
   it("should return issuer address from raw document v3 (dns-did)", () => {
     const address = getIssuerAddress(mockInvoiceV3DnsDid.defaults);
+    expect(address).toBe("0x1245e5b64d785b25057f7438f715f4aa5d965733");
+  });
+
+  it("should return issuer address from raw document TTv4", () => {
+    const address = getIssuerAddress(mockInvoiceTTv4.defaults);
     expect(address).toBe("0x1245e5b64d785b25057f7438f715f4aa5d965733");
   });
 });
