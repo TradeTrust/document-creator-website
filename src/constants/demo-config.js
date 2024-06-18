@@ -1097,8 +1097,7 @@ export const DEMO_CONFIG_BETA = {
         credentialSubject: {},
         credentialStatus: {
           type: "TradeTrustCredentialStatus",
-          credentialStatusType: "REVOCATION_STORE",
-          location: "0x70f83193bE363348Ec769c8752690eB915E640A4",
+          credentialStatusType: "NONE",
         },
         renderMethod: {
           type: "TradeTrustRenderMethod",

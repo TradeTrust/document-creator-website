@@ -25,6 +25,7 @@ module.exports = {
         process: "process/browser",
         Buffer: ["buffer", "Buffer"],
       }),
+      new webpack.ContextReplacementPlugin(/@mattrglobal/),
     ];
   },
 };

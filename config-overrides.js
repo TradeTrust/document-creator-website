@@ -1,6 +1,7 @@
 const nodejsPolyfillWebpack = require("./nodejs-polyfill-webpack.js");
 
 module.exports = function override(config) {
+  config.ignoreWarnings = [/Failed to parse source map/];
   const configOverrides = {
     ...config,
     resolve: {

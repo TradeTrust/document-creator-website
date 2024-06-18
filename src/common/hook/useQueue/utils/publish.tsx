@@ -62,7 +62,8 @@ const getContractAddressFromRawDoc = (document: any) => {
       return IdentityProofType.DNSDid;
     if (
       document.issuer.identityProof.identityProofType.toString() === IdentityProofType.Idvc &&
-      document.credentialStatus.credentialStatusType !== TTv4.CredentialStatusType.TokenRegistry
+      document.credentialStatus.credentialStatusType !== TTv4.CredentialStatusType.TokenRegistry &&
+      document.credentialStatus.credentialStatusType !== TTv4.CredentialStatusType.RevocationStore
     )
       return IdentityProofType.Idvc;
     return document.credentialStatus.location;
@@ -261,7 +262,7 @@ export const groupDocumentsIntoJobs = async (
     jobs.push({
       type: verifiableDocumentsWithIdvc[0].type,
       nonce,
-      contractAddress: IdentityProofType.Idvc,
+      contractAddress: verifiableDocumentsWithIdvc[0].contractAddress,
       documents: verifiableDocumentsWithIdvc.map((doc, index) => ({
         ...doc,
         wrappedDocument: signedIdvcDocument[index],
