@@ -154,24 +154,44 @@ const signTTV4WrappedDocuments = async (
 const processVerifiableDocuments = async (
   nonce: number,
   contractAddress: string,
-  verifiableDocuments: RawDocument[]
+  verifiableDocuments: RawDocument[],
+  signer: Signer
 ): Promise<PublishingJob> => {
   const rawOpenAttestationDocuments = verifiableDocuments.map((doc) => doc.rawDocument);
   const wrappedDocuments = await wrapDocuments(rawOpenAttestationDocuments);
   const firstWrappedDocument = wrappedDocuments[0];
   const merkleRoot = utils.getMerkleRoot(firstWrappedDocument);
   const firstRawDocument = verifiableDocuments[0];
-  return {
-    type: firstRawDocument.type,
-    nonce,
-    contractAddress,
-    documents: verifiableDocuments.map((doc, index) => ({
-      ...doc,
-      wrappedDocument: wrappedDocuments[index],
-    })),
-    merkleRoot: merkleRoot,
-    payload: {},
-  };
+
+  if (
+    utils.isWrappedTTV4Document(firstWrappedDocument) &&
+    rawOpenAttestationDocuments[0].issuer.identityProof.identityProofType.toString() === IdentityProofType.Idvc
+  ) {
+    const signedDocuments = await signTTV4WrappedDocuments(wrappedDocuments, signer);
+    return {
+      type: firstRawDocument.type,
+      nonce,
+      contractAddress,
+      documents: verifiableDocuments.map((doc, index) => ({
+        ...doc,
+        wrappedDocument: signedDocuments[index],
+      })),
+      merkleRoot: merkleRoot,
+      payload: {},
+    };
+  } else {
+    return {
+      type: firstRawDocument.type,
+      nonce,
+      contractAddress,
+      documents: verifiableDocuments.map((doc, index) => ({
+        ...doc,
+        wrappedDocument: wrappedDocuments[index],
+      })),
+      merkleRoot: merkleRoot,
+      payload: {},
+    };
+  }
 };
 
 const TX_NEEDED_FOR_VERIFIABLE_DOCUMENTS = 1;
@@ -215,19 +235,34 @@ export const groupDocumentsIntoJobs = async (
     });
 
     if (verifiableDocumentsV2.length > 0) {
-      const verifiableDocumentV2Job = await processVerifiableDocuments(nonce, contractAddress, verifiableDocumentsV2);
+      const verifiableDocumentV2Job = await processVerifiableDocuments(
+        nonce,
+        contractAddress,
+        verifiableDocumentsV2,
+        signer
+      );
       jobs.push(verifiableDocumentV2Job);
       nonce += TX_NEEDED_FOR_VERIFIABLE_DOCUMENTS;
     }
 
     if (verifiableDocumentsV3.length > 0) {
-      const verifiableDocumentV3Job = await processVerifiableDocuments(nonce, contractAddress, verifiableDocumentsV3);
+      const verifiableDocumentV3Job = await processVerifiableDocuments(
+        nonce,
+        contractAddress,
+        verifiableDocumentsV3,
+        signer
+      );
       jobs.push(verifiableDocumentV3Job);
       nonce += TX_NEEDED_FOR_VERIFIABLE_DOCUMENTS;
     }
 
     if (verifiableDocumentsTTV4.length > 0) {
-      const verifiableDocumentV4Job = await processVerifiableDocuments(nonce, contractAddress, verifiableDocumentsTTV4);
+      const verifiableDocumentV4Job = await processVerifiableDocuments(
+        nonce,
+        contractAddress,
+        verifiableDocumentsTTV4,
+        signer
+      );
       jobs.push(verifiableDocumentV4Job);
       nonce += TX_NEEDED_FOR_VERIFIABLE_DOCUMENTS;
     }
