@@ -7,8 +7,6 @@ module.exports = {
       vm: require.resolve("vm-browserify"),
       stream: require.resolve("stream-browserify"),
       buffer: require.resolve("buffer"),
-      stream: require.resolve("stream-browserify"),
-      buffer: require.resolve("buffer"),
       crypto: require.resolve("crypto-browserify"),
       https: require.resolve("https-browserify"),
       http: require.resolve("stream-http"),
