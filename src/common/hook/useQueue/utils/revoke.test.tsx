@@ -1,6 +1,7 @@
 import sampleV2DidDocument from "../../../../test/fixtures/sample-files/v2/did/sample-v2-did-wrapped.json";
 import sampleWrappedDocument from "../../../../test/fixtures/sample-files/v2/wrapped/sample-wrapped-document.json";
 import sampleV3DidDocument from "../../../../test/fixtures/sample-files/v3/did/sample-v3-did-wrapped.json";
+import sampleV4DidDocument from "../../../../test/fixtures/sample-files/v4/did/sample-v4-did-signed.json";
 import { getRevokeAddress, getRevokingJobs } from "./revoke";
 
 describe("getRevokingJobs", () => {
@@ -28,5 +29,10 @@ describe("getRevokeAddress", () => {
   it("should get the revocation store address for v3 dns-did verifiable document", () => {
     const revokeAddress = getRevokeAddress(sampleV3DidDocument);
     expect(revokeAddress).toBe("0x8bA63EAB43342AAc3AdBB4B827b68Cf4aAE5Caca");
+  });
+
+  it("should get the revocation store address for TTv4 DID verifiable document", () => {
+    const revokeAddress = getRevokeAddress(sampleV4DidDocument);
+    expect(revokeAddress).toBe("0xA594f6e10564e87888425c7CC3910FE1c800aB0B");
   });
 });

@@ -21,6 +21,8 @@ export const getRevokeAddress = (document: any) => {
     revokeAddress = issuer.revocation?.location || "";
   } else if (utils.isWrappedV3Document(document)) {
     revokeAddress = document.openAttestationMetadata.proof.revocation?.location || "";
+  } else if (utils.isWrappedTTV4Document(document)) {
+    revokeAddress = document.credentialStatus.location || "";
   }
   // for dns-txt document with document store
   if (!revokeAddress) {

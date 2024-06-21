@@ -1,7 +1,6 @@
-import { FunctionComponent, ReactElement, useState } from "react";
+import { FunctionComponent, useState } from "react";
 import { Settings } from "react-feather";
 import { NavLink } from "react-router-dom";
-import { usePersistedConfigFile } from "../../common/hook/usePersistedConfigFile";
 import {
   Button,
   ButtonSize,
@@ -9,97 +8,14 @@ import {
   NavigationItem,
   NAVIGATION_ITEM_TYPE,
 } from "@tradetrust-tt/tradetrust-ui-components";
-import { getNetworkPath } from "../../utils";
 import { LogoutButton } from "./LogoutButton";
 
 export interface NavigationBarProps {
   logout?: () => void;
 }
 
-interface NavBarLink {
-  path: string;
-  label: string | ReactElement;
-  testid: string;
-}
-
 export const NavigationBar: FunctionComponent<NavigationBarProps> = ({ logout }) => {
-  const { configFile } = usePersistedConfigFile();
-
-  const networkPath = getNetworkPath(configFile?.network);
-
-  const DropDownLink: FunctionComponent<NavBarLink> = ({ path, label, testid }) => {
-    return (
-      <a data-testid={testid} className="block w-full px-4 py-3 text-cloud-500" href={`${networkPath}${path}`}>
-        {label}
-      </a>
-    );
-  };
-
-  const NavBarLink: FunctionComponent<NavBarLink> = ({ path, label, testid }) => {
-    return (
-      <a data-testid={testid} className="block w-full text-cloud-500" href={`${networkPath}${path}`}>
-        {label}
-      </a>
-    );
-  };
-
   const [toggleNavBar, setToggleNavBar] = useState(false);
-
-  const leftNavItems: NavigationItem[] = [
-    {
-      schema: NAVIGATION_ITEM_TYPE.NavigationDropDownList,
-      id: "resources",
-      label: "Resources",
-      path: "",
-      dropdownItems: [
-        {
-          id: "learn",
-          label: "Learn",
-          path: "/learn",
-          customLink: <DropDownLink path={"/learn"} label={"Learn"} testid={"navbar-learn"} />,
-        },
-        {
-          id: "faq",
-          label: "FAQ",
-          path: "/faq",
-          customLink: <DropDownLink path={"/faq"} label={"FAQ"} testid={"navbar-faq"} />,
-        },
-        {
-          id: "eta",
-          label: "ETA",
-          path: "/eta",
-          customLink: <DropDownLink path={"/eta"} label={"ETA"} testid={"navbar-eta"} />,
-        },
-      ],
-    },
-    {
-      schema: NAVIGATION_ITEM_TYPE.NavigationDropDownList,
-      id: "news-events",
-      label: "News & Events",
-      path: "",
-      dropdownItems: [
-        {
-          id: "news",
-          label: "News",
-          path: "/news",
-          customLink: <DropDownLink path={"/news"} label={"News"} testid={"navbar-news"} />,
-        },
-        {
-          id: "event",
-          label: "Event",
-          path: "/event",
-          customLink: <DropDownLink path={"/event"} label={"Event"} testid={"navbar-event"} />,
-        },
-      ],
-    },
-    {
-      schema: NAVIGATION_ITEM_TYPE.NavigationLink,
-      id: "contact",
-      label: "Contact",
-      path: "/contact",
-      customLink: <NavBarLink path={"/contact"} label="Contact" testid="navbar-contact" />,
-    },
-  ];
 
   const rightNavItems: NavigationItem[] = [
     {
@@ -137,15 +53,11 @@ export const NavigationBar: FunctionComponent<NavigationBarProps> = ({ logout })
       label: "Verify Doc",
       path: "/verify",
       customLink: (
-        <NavBarLink
-          path={"/verify"}
-          label={
-            <Button className="bg-cerulean-500 text-white hover:bg-cerulean-800" size={ButtonSize.SM}>
-              Verify Doc
-            </Button>
-          }
-          testid="navbar-verify-doc"
-        />
+        <a href={"https://beta.tradetrust.io"} data-testid="navbar-verify-doc">
+          <Button className="bg-cerulean-500 text-white hover:bg-cerulean-800" size={ButtonSize.SM}>
+            Verify Doc
+          </Button>
+        </a>
       ),
     },
   ];
@@ -171,9 +83,9 @@ export const NavigationBar: FunctionComponent<NavigationBarProps> = ({ logout })
   return (
     <NavBar
       logo={<NavLogo />}
-      menuLeft={leftNavItems}
+      menuLeft={[]}
       menuRight={rightNavItems}
-      menuMobile={leftNavItems.concat(rightNavItems)}
+      menuMobile={[]}
       setToggleNavBar={setToggleNavBar}
       toggleNavBar={toggleNavBar}
     />

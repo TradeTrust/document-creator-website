@@ -7,6 +7,9 @@ import { validateDns } from "../../../services/prechecks";
 import { FormTemplate } from "../../../types";
 import { getIssuerAddress } from "../../../utils";
 import { primary } from "../../../constants/styles";
+import { utils } from "@tradetrust-tt/tradetrust";
+import { verifyIDVC } from "@tradetrust-tt/tt-verify";
+import { IdentityProofType } from "../../../constants";
 
 interface FormSelectProps {
   id: string;
@@ -31,14 +34,21 @@ export const FormSelect: FunctionComponent<FormSelectProps> = ({ id, form, onAdd
   const refButton = useRef<HTMLDivElement>(null);
 
   const checkDns = async (): Promise<PreCheckStatus> => {
-    if (config?.network === "local") {
-      return "VALID"; // for local e2e to pass, skip dns validate + set valid
+    if (
+      utils.isRawTTV4Document(form.defaults) &&
+      form.defaults.issuer.identityProof.identityProofType.toString() === IdentityProofType.Idvc
+    ) {
+      return "VALID";
     } else {
-      const isDnsValidated = await validateDns(form);
-      if (isDnsValidated) {
-        return "VALID";
+      if (config?.network === "local") {
+        return "VALID"; // for local e2e to pass, skip dns validate + set valid
       } else {
-        return { type: "dns", message: errorMsgDnsTxt };
+        const isDnsValidated = await validateDns(form);
+        if (isDnsValidated) {
+          return "VALID";
+        } else {
+          return { type: "dns", message: errorMsgDnsTxt };
+        }
       }
     }
   };
@@ -60,12 +70,47 @@ export const FormSelect: FunctionComponent<FormSelectProps> = ({ id, form, onAdd
     return { type: "config", message: "Contract Address or Wallet unspecified in Config" };
   };
 
+  const checkIdvc = async (): Promise<PreCheckStatus> => {
+    if (
+      utils.isRawTTV4Document(form.defaults) &&
+      form.defaults.issuer.identityProof.identityProofType.toString() === IdentityProofType.Idvc
+    ) {
+      try {
+        const address = await config?.wallet.getAddress();
+        if (
+          form.defaults.issuer.id.toLowerCase() ===
+            form.defaults.issuer.identityProof.identityVC?.data.credentialSubject.id?.toLowerCase() &&
+          form.defaults.issuer.id.replace(/did:ethr:/g, "").toLowerCase() === address?.toLowerCase()
+        ) {
+          if (form.defaults.issuer.identityProof.identityVC?.data) {
+            const [revokedStatus, verificationResult] = await verifyIDVC(
+              form.defaults.issuer.identityProof.identityVC?.data
+            );
+            if (verificationResult && !revokedStatus) {
+              return "VALID";
+            }
+            return { type: "config", message: "The Identity VC in the Config is invalid" };
+          }
+          return { type: "config", message: "The Identity VC in the Config is missing" };
+        }
+        return { type: "config", message: "The Identity VC issuer in the Config is invalid" };
+      } catch (e) {
+        return { type: "config", message: "The Identity VC in the Config is invalid" };
+      }
+    }
+    return "VALID";
+  };
+
   const checkValidity = async () => {
     setFormStatus(FormStatus.PENDING);
+    const isValidIdvc = await checkIdvc();
     const isValidDns = await checkDns();
     const isValidOwner = await checkOwnership();
     const preCheckErrors: PreCheckError[] = [];
 
+    if (isValidIdvc !== "VALID") {
+      preCheckErrors.push(isValidIdvc);
+    }
     if (isValidDns !== "VALID") {
       preCheckErrors.push(isValidDns);
     }

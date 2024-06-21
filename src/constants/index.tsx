@@ -2,4 +2,5 @@
 export enum IdentityProofType {
   DNSDid = "DNS-DID",
   DNSTxt = "DNS-TXT",
+  Idvc = "IDVC",
 }

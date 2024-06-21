@@ -3,6 +3,7 @@ import {
   signDocument,
   SignedWrappedDocument,
   SUPPORTED_SIGNING_ALGORITHM,
+  TTv4,
   v2,
 } from "@tradetrust-tt/tradetrust";
 import { TradeTrustToken__factory } from "@tradetrust-tt/token-registry/contracts";
@@ -39,6 +40,24 @@ export const publishDnsDidVerifiableDocumentJob = async (
       signedDocumentsList.push(signedDocument);
     } catch (e) {
       throw new Error(`Error signing document: ${rawDocumentData.issuers[0].id}`);
+    }
+  });
+
+  await Promise.allSettled(signingDocuments);
+  return signedDocumentsList;
+};
+
+export const publishIdvcVerifiableDocumentJob = async (
+  wrappedDocuments: TTv4.WrappedDocument[],
+  signers: Signer
+): Promise<TTv4.WrappedDocument[]> => {
+  const signedDocumentsList: SignedWrappedDocument<TTv4.TradeTrustDocument>[] = [];
+  const signingDocuments = wrappedDocuments.map(async (doc) => {
+    try {
+      const signedDocument = await signDocument(doc, SUPPORTED_SIGNING_ALGORITHM.Secp256k1VerificationKey2018, signers);
+      signedDocumentsList.push(signedDocument);
+    } catch (e) {
+      throw new Error(`Error signing document: ${doc.issuer.id}`);
     }
   });
 

@@ -15,8 +15,9 @@ import { DocumentPreview } from "./DocumentPreview";
 import { DynamicForm } from "./DynamicForm";
 import { DynamicFormHeader } from "./DynamicFormHeader";
 import { FormErrorBanner } from "./FormErrorBanner";
-import { validateData, getDataToValidate } from "./../../common/utils";
+import { validateData, getDataToValidate, getDataV3, getDataTTV4 } from "./../../common/utils";
 import { FormErrors } from "./../../types";
+import { utils } from "@tradetrust-tt/tradetrust";
 
 export const DynamicFormLayout: FunctionComponent = () => {
   const [showDeleteModal, setDeleteModal] = useState(false);
@@ -113,7 +114,12 @@ export const DynamicFormLayout: FunctionComponent = () => {
     }, timeout);
   };
 
-  const currentUnwrappedData = defaultsDeep({}, currentForm.data.formData, currentFormTemplate.defaults);
+  const unwrappedData = defaultsDeep({}, currentForm.data.formData, currentFormTemplate.defaults);
+  const currentUnwrappedData = utils.isRawTTV4Document(unwrappedData)
+    ? { ...unwrappedData, credentialSubject: { ...getDataTTV4(unwrappedData) } }
+    : utils.isRawV3Document(unwrappedData)
+    ? { ...unwrappedData, credentialSubject: { ...getDataV3(unwrappedData) } }
+    : unwrappedData;
 
   return (
     <OnCloseGuard active={activeFormIndex !== undefined}>

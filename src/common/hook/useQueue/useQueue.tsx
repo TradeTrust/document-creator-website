@@ -76,9 +76,14 @@ export const useQueue = ({
       const allJobs = processingJobs.map(async (job, index) => {
         try {
           if (queueType === QueueType.ISSUE) {
-            if (job.contractAddress !== IdentityProofType.DNSDid) {
-              // publish verifiable documents and transferable records with doc store and token registry
-              await publishJob(job as PublishingJob, wallet);
+            if (
+              (job as PublishingJob).type !== "VERIFIABLE_DOCUMENT" ||
+              job.contractAddress !== IdentityProofType.Idvc
+            ) {
+              if (job.contractAddress !== IdentityProofType.DNSDid) {
+                // publish verifiable documents and transferable records with doc store and token registry
+                await publishJob(job as PublishingJob, wallet);
+              }
             }
             // upload all the docs to document storage
             const uploadDocuments = job.documents.map(async (doc) => {

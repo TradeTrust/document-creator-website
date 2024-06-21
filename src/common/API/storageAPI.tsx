@@ -37,7 +37,13 @@ export const uploadToStorage = async (
   doc: WrappedDocument,
   documentStorage: DocumentStorage
 ): Promise<AxiosResponse> => {
-  const { links } = utils.isRawV3Document(doc.rawDocument) ? doc.rawDocument.credentialSubject : doc.rawDocument;
+  const { links } = (
+    utils.isRawTTV4Document(doc.rawDocument)
+      ? doc.rawDocument.credentialSubject
+      : utils.isRawV3Document(doc.rawDocument)
+      ? doc.rawDocument.credentialSubject
+      : doc.rawDocument
+  ) as any;
   const qrCodeObj = decodeQrCode(links.self.href);
   const uri = qrCodeObj.payload.uri;
 

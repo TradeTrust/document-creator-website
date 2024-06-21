@@ -82,6 +82,8 @@ export const getIssuerLocation = (rawDocument: OpenAttestationDocument): string 
     return issuers[0].identityProof?.location; // let's assume only 1 issuer, so far no multiple issuer cases
   } else if (utils.isRawV3Document(rawDocument)) {
     return rawDocument.openAttestationMetadata.identityProof.identifier;
+  } else if (utils.isRawTTV4Document(rawDocument)) {
+    return rawDocument.issuer.identityProof.identifier;
   }
   throw new Error(
     "Unsupported document type: Only can retrieve issuer location from OpenAttestation v2 & v3 documents."
@@ -94,6 +96,8 @@ export const getIdentityProofType = (rawDocument: OpenAttestationDocument): stri
     return issuers[0].identityProof?.type; // let's assume only 1 issuer, so far no multiple issuer cases
   } else if (utils.isRawV3Document(rawDocument)) {
     return rawDocument.openAttestationMetadata.identityProof.type;
+  } else if (utils.isRawTTV4Document(rawDocument)) {
+    return rawDocument.issuer.identityProof.identityProofType;
   }
   throw new Error(
     "Unsupported document type: Only can retrieve IdentityProof type from OpenAttestation v2 & v3 documents."
@@ -123,6 +127,16 @@ export const getIssuerAddress = (rawDocument: OpenAttestationDocument): string |
     return issuerAddress;
   } else if (utils.isRawV3Document(rawDocument)) {
     const issuerAddress = rawDocument.openAttestationMetadata.proof.value.replace(/did:ethr:/g, "");
+
+    const isEtheruemAddress = ethersUtils.isAddress(issuerAddress);
+    if (!isEtheruemAddress) {
+      console.error("issuerAddress not an etheruem address");
+      return;
+    }
+
+    return issuerAddress;
+  } else if (utils.isRawTTV4Document(rawDocument)) {
+    const issuerAddress = rawDocument.issuer.id.replace(/did:ethr:/g, "");
 
     const isEtheruemAddress = ethersUtils.isAddress(issuerAddress);
     if (!isEtheruemAddress) {
