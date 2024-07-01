@@ -11,6 +11,7 @@
 # production
 /build
 /src/index.css
+/src/stories/
 /storybook-static
 
 # misc
@@ -28,3 +29,4 @@ yarn-debug.log*
 yarn-error.log*
 
 key
+*storybook.log
