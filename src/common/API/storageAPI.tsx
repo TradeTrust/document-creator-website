@@ -1,24 +1,21 @@
 import { utils } from "@tradetrust-tt/tradetrust";
-import axios, { AxiosResponse } from "axios";
+import axios, { AxiosResponse, AxiosHeaders } from "axios";
 import { DocumentStorage, WrappedDocument } from "../../types";
 import { decodeQrCode } from "../utils";
 
-interface Headers {
-  "Content-Type": string;
-  "x-api-key": string;
-}
-
-const getHeaders = (documentStorage: DocumentStorage): Headers => {
-  const headers = {
+const getHeaders = (documentStorage: DocumentStorage): AxiosHeaders => {
+  const headers = new AxiosHeaders({
     "Content-Type": "application/json",
-  } as Headers;
+  });
 
   const xApiKey = "x-api-key";
 
-  if (documentStorage.apiKey)
-    headers[xApiKey] = process.env.REACT_APP_API_KEY_DOCUMENT_STORAGE
+  if (documentStorage.apiKey) {
+    const apiKey = process.env.REACT_APP_API_KEY_DOCUMENT_STORAGE
       ? process.env.REACT_APP_API_KEY_DOCUMENT_STORAGE
       : documentStorage.apiKey;
+    headers.set(xApiKey, apiKey);
+  }
 
   return headers;
 };
