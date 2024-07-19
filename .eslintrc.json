@@ -3,7 +3,12 @@
   "env": {
     "browser": true
   },
-  "extends": ["plugin:react/recommended", "plugin:testcafe/recommended", "plugin:prettier/recommended"],
+  "extends": [
+    "plugin:react/recommended",
+    "plugin:testcafe/recommended",
+    "plugin:prettier/recommended",
+    "plugin:storybook/recommended"
+  ],
   "plugins": ["react-hooks", "testcafe"],
   "parserOptions": {
     "ecmaVersion": 2018,
@@ -44,7 +49,8 @@
       "rules": {
         "@typescript-eslint/explicit-module-boundary-types": "off",
         "@typescript-eslint/ban-types": "off",
-        "@typescript-eslint/no-empty-function": "off"
+        "@typescript-eslint/no-empty-function": "off",
+        "storybook/prefer-pascal-case": "off"
       }
     },
     {
