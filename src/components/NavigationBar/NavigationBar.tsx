@@ -9,6 +9,7 @@ import {
   NAVIGATION_ITEM_TYPE,
 } from "@tradetrust-tt/tradetrust-ui-components";
 import { LogoutButton } from "./LogoutButton";
+import { URLS } from "../../constants/Urls";
 
 export interface NavigationBarProps {
   logout?: () => void;
@@ -74,9 +75,9 @@ export const NavigationBar: FunctionComponent<NavigationBarProps> = ({ logout })
 
   const NavLogo = () => {
     return (
-      <NavLink to={"/"} data-testid="nav-logo-home">
+      <a href={`${URLS.INFO}`} data-testid="nav-logo-home">
         <img src="/tradetrust_logo.svg" />
-      </NavLink>
+      </a>
     );
   };
 
