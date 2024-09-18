@@ -16,6 +16,7 @@
     "IE >= 11"
   ],
   "scripts": {
+    "build:prepare": "node update-netlify-config.js",
     "build": "cross-env NODE_OPTIONS='--max-old-space-size=4096' CI=false npm-run-all -s build:*",
     "build:css": "cross-env NODE_ENV=production postcss src/tailwind.css -o src/index.css",
     "build:js": "cross-env NODE_ENV=production react-app-rewired build",
