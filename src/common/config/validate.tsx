@@ -14,7 +14,8 @@ const configFileSchema = Joi.object({
       "hederamainnet",
       "hederatestnet",
       "stabilitytestnet",
-      "stability"
+      "stability",
+      "astron"
     )
     .only()
     .required(),
