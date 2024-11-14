@@ -41,6 +41,9 @@ export enum ChainId {
   // Stability Network
   StabilityTestnet = 20180427,
   Stability = 101010,
+
+  // Astron Network
+  Astron = 1338,
 }
 
 export const ChainInfo: ChainInfo = {
@@ -184,6 +187,20 @@ export const ChainInfo: ChainInfo = {
       decimals: 18,
     },
   },
+  [ChainId.Astron]: {
+    label: "Astron",
+    chain: "Astron",
+    chainId: ChainId.Astron,
+    networkName: "astron",
+    explorerUrl: "https://astronscanl2.bitfactory.cn",
+    explorerApiUrl: "https://astronscanl2.bitfactory.cn/api",
+    rpcUrl: `https://astronlayer2.bitfactory.cn/rpc/`,
+    nativeCurrency: {
+      name: "ASTRON",
+      symbol: "ASTRON",
+      decimals: 18,
+    },
+  },
 };
 
 export const supportedMainnet = [
@@ -192,6 +209,7 @@ export const supportedMainnet = [
   ChainInfo[ChainId.XDC].networkName,
   ChainInfo[ChainId.HederaMainnet].networkName,
   ChainInfo[ChainId.Stability].networkName,
+  ChainInfo[ChainId.Astron].networkName,
 ];
 
 export const supportedTestnet = [

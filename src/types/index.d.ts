@@ -14,7 +14,8 @@ export type Network =
   | "hederamainnet"
   | "hederatestnet"
   | "stabilitytestnet"
-  | "stability";
+  | "stability"
+  | "astron";
 
 type FormType = "TRANSFERABLE_RECORD" | "VERIFIABLE_DOCUMENT";
 

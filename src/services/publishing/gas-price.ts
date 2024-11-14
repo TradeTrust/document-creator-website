@@ -20,6 +20,7 @@ export const fetchGasPriceSuggestions = async (
   const isPolygon = ["matic", "amoy"].includes(network);
   const isMainnet = ["homestead"].includes(network);
   const isStability = ["stability", "stabilitytestnet"].includes(network);
+  const isAstron = ["astron"].includes(network);
   if (!isMainnet && !isPolygon && !isStability) return { ...additionalOverrides };
   let maxPriorityFeePerGas;
   let maxFeePerGas;
@@ -27,6 +28,8 @@ export const fetchGasPriceSuggestions = async (
     ({ maxPriorityFeePerGas, maxFeePerGas } = await fetchPolygonGasStationSuggestedPrice(network));
   } else if (isStability) {
     ({ maxPriorityFeePerGas, maxFeePerGas } = await fetchStabilityNetworkSuggestedPrice(network));
+  } else if (isAstron) {
+    ({ maxPriorityFeePerGas, maxFeePerGas } = await fetchAstronNetworkSuggestedPrice(network));
   } else {
     ({ maxPriorityFeePerGas, maxFeePerGas } = await fetchEtherscanSuggestedPrice(etherscanDetails));
   }
@@ -49,6 +52,27 @@ export const fetchStabilityNetworkSuggestedPrice = async (network: Network): Pro
       break;
     default:
       throw new Error("Unsupported network for stability gas station");
+  }
+
+  const suggestedPriceResponse = await fetch(apiUrl);
+  const suggestedPriceObject = await suggestedPriceResponse.json();
+
+  const maxPriorityFeePerGas = safeParseUnits(suggestedPriceObject.standard.maxPriorityFee, 9);
+  const maxFeePerGas = safeParseUnits(suggestedPriceObject.standard.maxFee, 9);
+  return {
+    maxPriorityFeePerGas,
+    maxFeePerGas,
+  };
+};
+
+export const fetchAstronNetworkSuggestedPrice = async (network: Network): Promise<SuggestedGasPrice> => {
+  let apiUrl: string;
+  switch (network) {
+    case "astron":
+      apiUrl = "https://astronscanl2.bitfactory.cn/gas-station";
+      break;
+    default:
+      throw new Error("Unsupported network for astron gas station");
   }
 
   const suggestedPriceResponse = await fetch(apiUrl);
