@@ -58,7 +58,7 @@ export const ChainInfo: ChainInfo = {
   },
   [ChainId.Ethereum]: {
     label: "Ethereum",
-    chain: "ETH",
+    chain: "ETH", // Must be the same as nativeCurrency.name
     chainId: ChainId.Ethereum,
     networkName: "homestead",
     explorerUrl: "https://etherscan.io",
@@ -66,7 +66,7 @@ export const ChainInfo: ChainInfo = {
   },
   [ChainId.Sepolia]: {
     label: "Sepolia",
-    chain: "ETH",
+    chain: "ETH", // Must be the same as nativeCurrency.name
     chainId: ChainId.Sepolia,
     networkName: "sepolia",
     explorerUrl: "https://sepolia.etherscan.io",
@@ -78,7 +78,7 @@ export const ChainInfo: ChainInfo = {
   },
   [ChainId.Polygon]: {
     label: "Polygon (Beta)",
-    chain: "MATIC",
+    chain: "MATIC", // Must be the same as nativeCurrency.name
     chainId: ChainId.Polygon,
     networkName: "matic",
     explorerUrl: "https://polygonscan.com",
@@ -92,7 +92,7 @@ export const ChainInfo: ChainInfo = {
   },
   [ChainId.Amoy]: {
     label: "Amoy",
-    chain: "MATIC",
+    chain: "MATIC", // Must be the same as nativeCurrency.name
     chainId: ChainId.Amoy,
     networkName: "amoy",
     explorerUrl: "https://www.oklink.com/amoy",
@@ -189,7 +189,7 @@ export const ChainInfo: ChainInfo = {
   },
   [ChainId.Astron]: {
     label: "Astron",
-    chain: "Astron",
+    chain: "ASTRON",
     chainId: ChainId.Astron,
     networkName: "astron",
     explorerUrl: "https://astronscanl2.bitfactory.cn",
