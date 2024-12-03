@@ -24,6 +24,7 @@ const mockDocumentStore = {
 
 const mockTokenRegistry = {
   mint: mockTokenRegistryMint,
+  supportsInterface: jest.fn().mockResolvedValue(true),
 };
 
 const mockTransactionReceipt = {
