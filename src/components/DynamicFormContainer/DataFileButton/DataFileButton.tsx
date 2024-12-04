@@ -85,8 +85,8 @@ export const DataFileButton: FunctionComponent<DataFileButton> = ({ onDataFile, 
     }
   };
 
-  const core = new Core();
-  const jsonTemplate = core.getTemplate({}, schema);
+  const core = new Core(schema);
+  const jsonTemplate = core.getTemplate(undefined, undefined, { addOptionalProps: true });
 
   const defaultStyle = "bg-yellow-50";
   const activeStyle = "bg-yellow-100";
