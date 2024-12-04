@@ -11,6 +11,9 @@ module.exports = function override(config) {
     ...config,
     resolve: {
       ...config.resolve,
+      alias: {
+        process: "process/browser",
+      },
       extensions: [...config.resolve.extensions, ".ts", ".tsx", ".js"],
       fallback: nodejsPolyfillWebpack.fallback(config),
     },

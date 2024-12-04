@@ -6,7 +6,8 @@ import {
   v2,
 } from "@tradetrust-tt/tradetrust";
 import { TradeTrustToken__factory } from "@tradetrust-tt/token-registry/contracts";
-import { Signer, Wallet } from "ethers";
+import { constants } from "@tradetrust-tt/token-registry";
+import { ethers, Signer, Wallet } from "ethers";
 import { ConnectedSigner, PublishingJob } from "../../types";
 import { assertAddressIsSmartContract, getConnectedDocumentStore } from "../common";
 import { fetchGasPriceSuggestions } from "./gas-price";
@@ -52,9 +53,25 @@ export const publishTransferableRecordJob = async (job: PublishingJob, signer: S
   const { beneficiaryAddress, holderAddress } = payload.ownership;
   const tokenRegistryContract = TradeTrustToken__factory.connect(contractAddress, signer);
   const suggestedGasPrice = await fetchGasPriceSuggestions(await signer.getChainId());
-  const mintingReceipt = await tokenRegistryContract.mint(beneficiaryAddress, holderAddress, `0x${merkleRoot}`, {
-    ...suggestedGasPrice,
-  });
+
+  const mintableSupportInterfaceId = constants.contractInterfaceId.TradeTrustTokenMintable;
+  const isV4TT = await tokenRegistryContract.supportsInterface(mintableSupportInterfaceId);
+
+  let mintingReceipt;
+  if (isV4TT) {
+    mintingReceipt = await tokenRegistryContract.mint(beneficiaryAddress, holderAddress, `0x${merkleRoot}`, {
+      ...suggestedGasPrice,
+    });
+  } else {
+    const tokenRegistryV5Contract = new ethers.Contract(
+      contractAddress,
+      '[{"inputs":[{"internalType":"address","name":"beneficiary","type":"address"},{"internalType":"address","name":"holder","type":"address"},{"internalType":"uint256","name":"tokenId","type":"uint256"},{"internalType":"bytes","name":"_remark","type":"bytes"}],"name":"mint","outputs":[{"internalType":"address","name":"","type":"address"}],"stateMutability":"nonpayable","type":"function"}]',
+      signer
+    );
+    mintingReceipt = await tokenRegistryV5Contract.mint(beneficiaryAddress, holderAddress, `0x${merkleRoot}`, "0x", {
+      ...suggestedGasPrice,
+    });
+  }
   const mintingTx = await mintingReceipt.wait();
   if (!mintingTx.transactionHash) throw new Error(`Tx hash not available: ${JSON.stringify(mintingTx)}`);
   return mintingTx.transactionHash;

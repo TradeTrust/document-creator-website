@@ -3,7 +3,7 @@ import React, { FunctionComponent, useState } from "react";
 import { readFileAsCsv, readFileAsJson, downloadCsvDataFile, downloadJsonDataFile } from "../../../common/utils";
 import { getLogger } from "../../../utils/logger";
 import { FormErrorBanner } from "./../FormErrorBanner";
-import { Draft04 as Core, JSONSchema } from "json-schema-library";
+import { Draft04 as Core, JsonSchema } from "json-schema-library";
 import { ToolTip } from "../../UI/ToolTip";
 import { StyledDropZone } from "../../UI/StyledDropZone";
 import { validateData, getDataToValidate } from "./../../../common/utils";
@@ -32,7 +32,7 @@ type DataFileUpload = DataFileDefault | DataFileCsv;
 
 interface DataFileButton {
   onDataFile: (dataFile: unknown) => void;
-  schema: JSONSchema;
+  schema: JsonSchema;
 }
 
 interface GetDataFileBasedOnExtension {
@@ -85,8 +85,8 @@ export const DataFileButton: FunctionComponent<DataFileButton> = ({ onDataFile, 
     }
   };
 
-  const core = new Core();
-  const jsonTemplate = core.getTemplate({}, schema);
+  const core = new Core(schema);
+  const jsonTemplate = core.getTemplate(undefined, undefined, { addOptionalProps: true });
 
   const defaultStyle = "bg-yellow-50";
   const activeStyle = "bg-yellow-100";

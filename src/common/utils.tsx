@@ -1,7 +1,7 @@
 import Ajv from "ajv";
 import { saveAs } from "file-saver";
 import converter, { csv2jsonAsync } from "json-2-csv";
-import { JSONSchema } from "json-schema-library";
+import { JsonSchema } from "json-schema-library";
 import { ChainId, ChainInfo, ChainInfoObject } from "../constants/chainInfo";
 import { FormErrors, Network, NetworkObject, WalletOptions } from "../types";
 
@@ -183,7 +183,7 @@ export const getDataToValidate: any = (data: any) => {
   }
 };
 
-export const validateData = (schema: JSONSchema, data: unknown): { isValid: boolean; ajvErrors: FormErrors } => {
+export const validateData = (schema: JsonSchema, data: unknown): { isValid: boolean; ajvErrors: FormErrors } => {
   const ajv = new Ajv({ allErrors: true });
   const isValid = ajv.validate(schema, data);
 
