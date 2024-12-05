@@ -12,15 +12,7 @@ describe("generateFileName", () => {
 
     expect(fileName).toStrictEqual("document-1-sepolia.tt");
   });
-  it("should generate the file name correctly with the given config and file name for hederatestnet", async () => {
-    const fileName = generateFileName({
-      network: "hederatestnet",
-      fileName: "document-1",
-      extension: "tt",
-    });
 
-    expect(fileName).toStrictEqual("document-1-hederatestnet.tt");
-  });
   it("should generate the file name correctly when config.network is 'homestead'", async () => {
     const fileName = generateFileName({
       network: "homestead",

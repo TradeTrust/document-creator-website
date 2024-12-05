@@ -34,10 +34,6 @@ export enum ChainId {
   XDC = 50,
   XDCApothem = 51,
 
-  // Hedera Network
-  HederaMainnet = 295,
-  HederaTestnet = 296,
-
   // Stability Network
   StabilityTestnet = 20180427,
   Stability = 101010,
@@ -131,34 +127,6 @@ export const ChainInfo: ChainInfo = {
       decimals: 18,
     },
   },
-  [ChainId.HederaMainnet]: {
-    label: "Hedera Network Mainnet",
-    chain: "Hedera",
-    chainId: ChainId.HederaMainnet,
-    networkName: "hederamainnet",
-    explorerUrl: "https://hashscan.io/mainnet",
-    explorerApiUrl: "https://hashscan.io/mainnet",
-    rpcUrl: "https://mainnet.hashio.io/api",
-    nativeCurrency: {
-      name: "HBAR",
-      symbol: "HBAR",
-      decimals: 18,
-    },
-  },
-  [ChainId.HederaTestnet]: {
-    label: "Hedera Network TestNet",
-    chain: "Hedera",
-    chainId: ChainId.HederaTestnet,
-    networkName: "hederatestnet",
-    explorerUrl: "https://hashscan.io/testnet",
-    explorerApiUrl: "https://hashscan.io/testnet",
-    rpcUrl: "https://testnet.hashio.io/api",
-    nativeCurrency: {
-      name: "HBAR",
-      symbol: "HBAR",
-      decimals: 18,
-    },
-  },
   [ChainId.StabilityTestnet]: {
     label: "Stability Network TestNet",
     chain: "FREE",
@@ -207,7 +175,6 @@ export const supportedMainnet = [
   ChainInfo[ChainId.Ethereum].networkName,
   ChainInfo[ChainId.Polygon].networkName,
   ChainInfo[ChainId.XDC].networkName,
-  ChainInfo[ChainId.HederaMainnet].networkName,
   ChainInfo[ChainId.Stability].networkName,
   ChainInfo[ChainId.Astron].networkName,
 ];
@@ -216,7 +183,6 @@ export const supportedTestnet = [
   ChainInfo[ChainId.Sepolia].networkName,
   ChainInfo[ChainId.Amoy].networkName,
   ChainInfo[ChainId.XDCApothem].networkName,
-  ChainInfo[ChainId.HederaTestnet].networkName,
   ChainInfo[ChainId.StabilityTestnet].networkName,
 ];
 
