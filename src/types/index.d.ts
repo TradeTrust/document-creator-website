@@ -11,8 +11,6 @@ export type Network =
   | "amoy"
   | "xdc"
   | "xdcapothem"
-  | "hederamainnet"
-  | "hederatestnet"
   | "stabilitytestnet"
   | "stability"
   | "astron";

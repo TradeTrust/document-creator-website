@@ -11,8 +11,6 @@ const configFileSchema = Joi.object({
       "amoy",
       "xdc",
       "xdcapothem",
-      "hederamainnet",
-      "hederatestnet",
       "stabilitytestnet",
       "stability",
       "astron"
