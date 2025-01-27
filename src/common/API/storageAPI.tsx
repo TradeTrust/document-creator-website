@@ -4,11 +4,17 @@ import { DocumentStorage, WrappedDocument } from "../../types";
 import { decodeQrCode } from "../utils";
 
 // Function to get the CSRF token from /csrf-token route
-const fetchCsrfToken = async (): Promise<string> => {
+const fetchCsrfToken = async (documentStorage: DocumentStorage): Promise<string> => {
   try {
-    const response = await axios.get("/csrf-token"); // Send GET request to get CSRF token
+    const url = `${documentStorage.url}/csrf-token`;
+
+    const response = await axios({
+      method: "get",
+      url: url,
+    });
+
     console.log("response", response);
-    const csrfToken = response.data.body.csrfToken; // Assuming the server sends the CSRF token in the response body
+    const csrfToken = response.data.csrfToken; // Assuming the server sends the CSRF token in the response body
     if (!csrfToken) {
       throw new Error("CSRF token not found in response");
     }
@@ -58,7 +64,7 @@ export const uploadToStorage = async (
   const qrCodeObj = decodeQrCode(links.self.href);
   const uri = qrCodeObj.payload.uri;
 
-  const csrfToken = await fetchCsrfToken(); // Fetch the CSRF token
+  const csrfToken = await fetchCsrfToken(documentStorage); // Fetch the CSRF token
   return axios({
     method: "post",
     url: uri,
