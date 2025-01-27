@@ -7,7 +7,7 @@ import { decodeQrCode } from "../utils";
 const fetchCsrfToken = async (): Promise<string> => {
   try {
     const response = await axios.get("/csrf-token"); // Send GET request to get CSRF token
-    console.log('response', response);
+    console.log("response", response);
     const csrfToken = response.data.body.csrfToken; // Assuming the server sends the CSRF token in the response body
     if (!csrfToken) {
       throw new Error("CSRF token not found in response");
