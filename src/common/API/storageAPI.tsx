@@ -66,8 +66,6 @@ export const uploadToStorage = async (
 
   const csrfToken = await fetchCsrfToken(documentStorage); // Fetch the CSRF token
 
-  console.log("Cookies before request:", document.cookie);
-
   return axios({
     method: "post",
     url: uri,
