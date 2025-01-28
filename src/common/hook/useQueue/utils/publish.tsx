@@ -21,7 +21,7 @@ import { encodeQrCode, getDataV3, getDocumentNetwork } from "../../../utils";
 import { ChainInfo, supportedMainnet } from "../../../../constants/chainInfo";
 
 const redirectUrl = (network: Network) => {
-  if (supportedMainnet.includes(network)) return "https://tradetrust.io/";
+  if (supportedMainnet.includes(network)) return "https://ref.tradetrust.io/";
   return "https://dev.tradetrust.io/";
 };
 

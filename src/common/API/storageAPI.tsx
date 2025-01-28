@@ -3,7 +3,29 @@ import axios, { AxiosResponse, AxiosHeaders } from "axios";
 import { DocumentStorage, WrappedDocument } from "../../types";
 import { decodeQrCode } from "../utils";
 
-const getHeaders = (documentStorage: DocumentStorage): AxiosHeaders => {
+// Function to get the CSRF token from /csrf-token route
+const fetchCsrfToken = async (documentStorage: DocumentStorage): Promise<string> => {
+  try {
+    const url = `${documentStorage.url}/csrf-token`;
+
+    const response = await axios({
+      method: "get",
+      url: url,
+      withCredentials: true,
+    });
+
+    const csrfToken = response.data.csrfToken;
+    if (!csrfToken) {
+      throw new Error("CSRF token not found in response");
+    }
+    return csrfToken;
+  } catch (error) {
+    console.error("Error fetching CSRF token", error);
+    throw error; // Rethrow or handle as needed
+  }
+};
+
+const getHeaders = (documentStorage: DocumentStorage, csrfToken?: string): AxiosHeaders => {
   const headers = new AxiosHeaders({
     "Content-Type": "application/json",
   });
@@ -15,6 +37,10 @@ const getHeaders = (documentStorage: DocumentStorage): AxiosHeaders => {
       ? process.env.REACT_APP_API_KEY_DOCUMENT_STORAGE
       : documentStorage.apiKey;
     headers.set(xApiKey, apiKey);
+  }
+
+  if (csrfToken) {
+    headers.set("X-CSRF-Token", csrfToken); // Set CSRF token if passed
   }
 
   return headers;
@@ -38,12 +64,15 @@ export const uploadToStorage = async (
   const qrCodeObj = decodeQrCode(links.self.href);
   const uri = qrCodeObj.payload.uri;
 
+  const csrfToken = await fetchCsrfToken(documentStorage); // Fetch the CSRF token
+
   return axios({
     method: "post",
     url: uri,
-    headers: getHeaders(documentStorage),
+    headers: getHeaders(documentStorage, csrfToken), // Add CSRF token to headers
     data: {
       document: doc.wrappedDocument,
     },
+    withCredentials: true,
   });
 };
