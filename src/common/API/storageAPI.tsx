@@ -13,8 +13,7 @@ const fetchCsrfToken = async (documentStorage: DocumentStorage): Promise<string>
       url: url,
     });
 
-    console.log("response", response);
-    const csrfToken = response.data.csrfToken; // Assuming the server sends the CSRF token in the response body
+    const csrfToken = response.data.csrfToken;
     if (!csrfToken) {
       throw new Error("CSRF token not found in response");
     }
@@ -65,6 +64,9 @@ export const uploadToStorage = async (
   const uri = qrCodeObj.payload.uri;
 
   const csrfToken = await fetchCsrfToken(documentStorage); // Fetch the CSRF token
+
+  console.log("Cookies before request:", document.cookie);
+
   return axios({
     method: "post",
     url: uri,
@@ -72,5 +74,6 @@ export const uploadToStorage = async (
     data: {
       document: doc.wrappedDocument,
     },
+    withCredentials: true,
   });
 };
