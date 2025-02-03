@@ -42,26 +42,13 @@ export const fetchGasPriceSuggestions = async (
 };
 
 export const fetchStabilityNetworkSuggestedPrice = async (network: Network): Promise<SuggestedGasPrice> => {
-  let apiUrl: string;
-  switch (network) {
-    case "stability":
-      apiUrl = "https://gtn.stabilityprotocol.com/gas-station";
-      break;
-    case "stabilitytestnet":
-      apiUrl = "https://free.testnet.stabilityprotocol.com/gas-station";
-      break;
-    default:
-      throw new Error("Unsupported network for stability gas station");
+  if (!["stability", "stabilitytestnet"].includes(network)) {
+    throw new Error("Unsupported network for stability gas station");
   }
 
-  const suggestedPriceResponse = await fetch(apiUrl);
-  const suggestedPriceObject = await suggestedPriceResponse.json();
-
-  const maxPriorityFeePerGas = safeParseUnits(suggestedPriceObject.standard.maxPriorityFee, 9);
-  const maxFeePerGas = safeParseUnits(suggestedPriceObject.standard.maxFee, 9);
   return {
-    maxPriorityFeePerGas,
-    maxFeePerGas,
+    maxPriorityFeePerGas: BigNumber.from(0),
+    maxFeePerGas: BigNumber.from(0),
   };
 };
 
@@ -87,8 +74,17 @@ export const fetchAstronNetworkSuggestedPrice = async (network: Network): Promis
 };
 
 const fetchPolygonGasStationSuggestedPrice = async (network: Network): Promise<SuggestedGasPrice> => {
-  const testnetURL = network === "amoy" ? "-testnet" : "";
-  const apiUrl = "https://gasstation" + testnetURL + ".polygon.technology/v2";
+  let apiUrl: string;
+  switch (network) {
+    case "matic":
+      apiUrl = "https://gasstation.polygon.technology/v2";
+      break;
+    case "amoy":
+      apiUrl = "https://gasstation-testnet.polygon.technology/amoy";
+      break;
+    default:
+      throw new Error("Unsupported network for polygon gas station");
+  }
 
   const suggestedPriceResponse = await fetch(apiUrl);
   const suggestedPriceObject = await suggestedPriceResponse.json();
