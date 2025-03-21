@@ -20,7 +20,7 @@ const mockFormData = {
 };
 
 export const Ebl: FunctionComponent = () => {
-  const sampleForm = sample.forms[1];
+  const sampleForm = sample.forms[0];
   const formEbl = { ...sampleForm };
 
   return (
@@ -38,7 +38,7 @@ export const Ebl: FunctionComponent = () => {
 };
 
 export const Invoice: FunctionComponent = () => {
-  const sampleForm = sample.forms[4];
+  const sampleForm = sample.forms[2];
   const formInvoice = { ...sampleForm };
 
   return (
@@ -56,31 +56,13 @@ export const Invoice: FunctionComponent = () => {
 };
 
 export const Coo: FunctionComponent = () => {
-  const sampleForm = sample.forms[0];
+  const sampleForm = sample.forms[1];
   const formCoo = { ...sampleForm };
 
   return (
     <DynamicForm
       schema={formCoo.schema}
       uiSchema={formCoo.uiSchema}
-      form={mockFormData}
-      setFormData={() => {}}
-      setOwnership={() => {}}
-      setCurrentForm={() => {}}
-      attachmentAccepted={true}
-      type={sampleForm.type as any}
-    />
-  );
-};
-
-export const CoverLetter: FunctionComponent = () => {
-  const sampleForm = sample.forms[2];
-  const formCoverLetter = { ...sampleForm };
-
-  return (
-    <DynamicForm
-      schema={formCoverLetter.schema}
-      uiSchema={formCoverLetter.uiSchema}
       form={mockFormData}
       setFormData={() => {}}
       setOwnership={() => {}}
