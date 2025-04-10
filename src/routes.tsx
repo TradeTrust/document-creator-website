@@ -2,13 +2,14 @@ import { Route, Switch } from "react-router-dom";
 import { AddressBookContainer } from "./components/AddressBookContainer";
 import { AddressResolverContainer } from "./components/AddressResolverContainer";
 import { DynamicFormContainer } from "./components/DynamicFormContainer";
-// import { FormSelectionContainer } from "./components/FormSelectionContainer";
-import { FormSelectionContainer } from "./components/Landing";
+import { FormSelectionContainer } from "./components/FormSelectionContainer";
+// import { FormSelectionContainer } from "./components/Landing";
 import { PublishContainer } from "./components/PublishContainer";
 import { RevokeContainer } from "./components/RevokeContainer";
 import { SettingsContainer } from "./components/SettingsContainer";
 import { PageLogout } from "./pages/pageLogout";
 import { PageNotFound } from "./pages/pageNotFound";
+import { HomeContainer } from "./components/Home";
 
 export interface RouteInterface {
   path: string;
@@ -20,7 +21,7 @@ interface RouteProps {
 }
 
 export const routes: RouteInterface[] = [
-  { path: "/", exact: true, component: FormSelectionContainer },
+  { path: "/", exact: true, component: HomeContainer },
   { path: "/forms-selection", component: FormSelectionContainer },
   { path: "/form", component: DynamicFormContainer },
   { path: "/publish", component: PublishContainer },
