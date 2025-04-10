@@ -28,6 +28,7 @@ export interface FormTemplate {
   uiSchema?: any; // eslint-disable-line @typescript-eslint/no-explicit-any
   extension?: string;
   fileName?: string;
+  img?: string;
 }
 
 export interface DocumentStorage {

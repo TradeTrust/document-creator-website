@@ -234,6 +234,460 @@ export const DEMO_CONFIG = {
       fileName: "bill-<%= blNumber %>",
     },
     {
+      name: "TradeTrust Bill of Lading v2 (Carrier)",
+      type: "TRANSFERABLE_RECORD",
+      defaults: {
+        $template: {
+          type: "EMBEDDED_RENDERER",
+          name: "BILL_OF_LADING_CARRIER",
+          url: "https://generic-templates.tradetrust.io",
+        },
+        issuers: [
+          {
+            name: "DEMO TOKEN REGISTRY",
+            tokenRegistry: "0x7d7C1C8B4eB6edD23BCA43F4d032EBb21c9258F9",
+            identityProof: {
+              type: "DNS-TXT",
+              location: "sandbox.tradetrust.io",
+            },
+            revocation: {
+              type: "NONE",
+            },
+          },
+        ],
+        network: {
+          chain: "FREE",
+          chainId: "101010",
+        },
+      },
+      schema: {
+        type: "object",
+        additionalProperties: false,
+        required: ["blNumber", "scac"],
+        properties: {
+          blNumber: {
+            type: "string",
+            title: "BL Number",
+          },
+          scac: {
+            type: "string",
+            title: "Standard Carrier Alpha Code (SCAC)",
+          },
+          carrierName: {
+            title: "Signed for the Carrier",
+            type: "string",
+          },
+          logo: {
+            type: "string",
+            title: "Company Logo",
+          },
+          shipper: {
+            type: "object",
+            properties: {
+              name: {
+                type: "string",
+              },
+              address: {
+                type: "object",
+                properties: {
+                  street: {
+                    type: "string",
+                  },
+                  country: {
+                    type: "string",
+                  },
+                },
+              },
+            },
+          },
+          onwardInlandRouting: {
+            type: "string",
+            title: "Onward Inland Routing",
+          },
+          consignee: {
+            type: "object",
+            properties: {
+              toOrderOfText: {
+                title: "is consigned to (e.g. TO ORDER OF, TO ORDER, etc..)",
+                type: "string",
+              },
+              name: {
+                type: "string",
+              },
+            },
+          },
+          notifyParty: {
+            title: "Notify Party",
+            type: "object",
+            properties: {
+              name: {
+                type: "string",
+              },
+            },
+          },
+          vessel: {
+            type: "string",
+          },
+          voyageNo: {
+            title: "Voyage No.",
+            type: "string",
+          },
+          portOfLoading: {
+            title: "Port of Loading",
+            type: "string",
+          },
+          portOfDischarge: {
+            title: "Port of Discharge",
+            type: "string",
+          },
+          placeOfReceipt: {
+            title: "Place of Receipt",
+            type: "string",
+          },
+          placeOfDelivery: {
+            title: "Place of Delivery",
+            type: "string",
+          },
+          packages: {
+            type: "array",
+            title: "Packages",
+            items: {
+              type: "object",
+              properties: {
+                description: {
+                  type: "string",
+                },
+                measurement: {
+                  type: "string",
+                },
+                weight: {
+                  type: "string",
+                },
+              },
+            },
+          },
+          carrierReceipt: {
+            title: "Carrier's Receipt",
+            type: "string",
+          },
+          placeOfIssueBL: {
+            title: "Place of Issue of B/L",
+            type: "string",
+          },
+          numberOfOriginalBL: {
+            title: "Number of original B/L",
+            type: "string",
+          },
+          dateOfIssueBL: {
+            title: "Date of Issue of B/L",
+            type: "string",
+          },
+          shippedOnBoardDate: {
+            title: "Shipped on Board Date",
+            type: "string",
+          },
+          signForTermsAndCondition: {
+            title: "Signed for Terms and Conditions",
+            type: "string",
+          },
+          signedForCarrierText: {
+            title: "Text for signed for carrier",
+            type: "string",
+          },
+          carrierSignature: {
+            type: "string",
+            title: "Carrier Signature",
+          },
+          termsOfCarriage: {
+            type: "string",
+            title: "Terms Of Carriage",
+          },
+        },
+      },
+      uiSchema: {
+        logo: {
+          "ui:widget": "file",
+          "ui:options": {
+            text: "Upload Company Logo",
+            accept: ".png, .jpeg, .jpg",
+          },
+        },
+        notifyParty: {
+          name: {
+            "ui:widget": "textarea",
+          },
+        },
+        packages: {
+          items: {
+            description: {
+              "ui:widget": "textarea",
+            },
+          },
+        },
+        carrierReceipt: {
+          "ui:widget": "textarea",
+        },
+        placeOfIssueBL: {
+          "ui:widget": "textarea",
+        },
+        numberOfOriginalBL: {
+          "ui:widget": "textarea",
+        },
+        dateOfIssueBL: {
+          "ui:widget": "date",
+        },
+        shippedOnBoardDate: {
+          "ui:widget": "date",
+        },
+        signForTermsAndCondition: {
+          "ui:widget": "textarea",
+        },
+        carrierSignature: {
+          "ui:widget": "file",
+          "ui:options": {
+            text: "Upload Carrier Signature",
+            accept: ".png, .jpeg, .jpg",
+          },
+        },
+        termsOfCarriage: {
+          "ui:widget": "textarea",
+        },
+      },
+      attachments: {
+        allow: true,
+        accept: ".pdf, .json",
+      },
+      extension: "tt",
+      fileName: "bill-<%= blNumber %>",
+    },
+    {
+      name: "TradeTrust Bill of Lading v2 (Carrier)",
+      type: "TRANSFERABLE_RECORD",
+      defaults: {
+        $template: {
+          type: "EMBEDDED_RENDERER",
+          name: "BILL_OF_LADING_CARRIER",
+          url: "https://generic-templates.tradetrust.io",
+        },
+        issuers: [
+          {
+            name: "DEMO TOKEN REGISTRY",
+            tokenRegistry: "0x7d7C1C8B4eB6edD23BCA43F4d032EBb21c9258F9",
+            identityProof: {
+              type: "DNS-TXT",
+              location: "sandbox.tradetrust.io",
+            },
+            revocation: {
+              type: "NONE",
+            },
+          },
+        ],
+        network: {
+          chain: "FREE",
+          chainId: "101010",
+        },
+      },
+      schema: {
+        type: "object",
+        additionalProperties: false,
+        required: ["blNumber", "scac"],
+        properties: {
+          blNumber: {
+            type: "string",
+            title: "BL Number",
+          },
+          scac: {
+            type: "string",
+            title: "Standard Carrier Alpha Code (SCAC)",
+          },
+          carrierName: {
+            title: "Signed for the Carrier",
+            type: "string",
+          },
+          logo: {
+            type: "string",
+            title: "Company Logo",
+          },
+          shipper: {
+            type: "object",
+            properties: {
+              name: {
+                type: "string",
+              },
+              address: {
+                type: "object",
+                properties: {
+                  street: {
+                    type: "string",
+                  },
+                  country: {
+                    type: "string",
+                  },
+                },
+              },
+            },
+          },
+          onwardInlandRouting: {
+            type: "string",
+            title: "Onward Inland Routing",
+          },
+          consignee: {
+            type: "object",
+            properties: {
+              toOrderOfText: {
+                title: "is consigned to (e.g. TO ORDER OF, TO ORDER, etc..)",
+                type: "string",
+              },
+              name: {
+                type: "string",
+              },
+            },
+          },
+          notifyParty: {
+            title: "Notify Party",
+            type: "object",
+            properties: {
+              name: {
+                type: "string",
+              },
+            },
+          },
+          vessel: {
+            type: "string",
+          },
+          voyageNo: {
+            title: "Voyage No.",
+            type: "string",
+          },
+          portOfLoading: {
+            title: "Port of Loading",
+            type: "string",
+          },
+          portOfDischarge: {
+            title: "Port of Discharge",
+            type: "string",
+          },
+          placeOfReceipt: {
+            title: "Place of Receipt",
+            type: "string",
+          },
+          placeOfDelivery: {
+            title: "Place of Delivery",
+            type: "string",
+          },
+          packages: {
+            type: "array",
+            title: "Packages",
+            items: {
+              type: "object",
+              properties: {
+                description: {
+                  type: "string",
+                },
+                measurement: {
+                  type: "string",
+                },
+                weight: {
+                  type: "string",
+                },
+              },
+            },
+          },
+          carrierReceipt: {
+            title: "Carrier's Receipt",
+            type: "string",
+          },
+          placeOfIssueBL: {
+            title: "Place of Issue of B/L",
+            type: "string",
+          },
+          numberOfOriginalBL: {
+            title: "Number of original B/L",
+            type: "string",
+          },
+          dateOfIssueBL: {
+            title: "Date of Issue of B/L",
+            type: "string",
+          },
+          shippedOnBoardDate: {
+            title: "Shipped on Board Date",
+            type: "string",
+          },
+          signForTermsAndCondition: {
+            title: "Signed for Terms and Conditions",
+            type: "string",
+          },
+          signedForCarrierText: {
+            title: "Text for signed for carrier",
+            type: "string",
+          },
+          carrierSignature: {
+            type: "string",
+            title: "Carrier Signature",
+          },
+          termsOfCarriage: {
+            type: "string",
+            title: "Terms Of Carriage",
+          },
+        },
+      },
+      uiSchema: {
+        logo: {
+          "ui:widget": "file",
+          "ui:options": {
+            text: "Upload Company Logo",
+            accept: ".png, .jpeg, .jpg",
+          },
+        },
+        notifyParty: {
+          name: {
+            "ui:widget": "textarea",
+          },
+        },
+        packages: {
+          items: {
+            description: {
+              "ui:widget": "textarea",
+            },
+          },
+        },
+        carrierReceipt: {
+          "ui:widget": "textarea",
+        },
+        placeOfIssueBL: {
+          "ui:widget": "textarea",
+        },
+        numberOfOriginalBL: {
+          "ui:widget": "textarea",
+        },
+        dateOfIssueBL: {
+          "ui:widget": "date",
+        },
+        shippedOnBoardDate: {
+          "ui:widget": "date",
+        },
+        signForTermsAndCondition: {
+          "ui:widget": "textarea",
+        },
+        carrierSignature: {
+          "ui:widget": "file",
+          "ui:options": {
+            text: "Upload Carrier Signature",
+            accept: ".png, .jpeg, .jpg",
+          },
+        },
+        termsOfCarriage: {
+          "ui:widget": "textarea",
+        },
+      },
+      attachments: {
+        allow: true,
+        accept: ".pdf, .json",
+      },
+      extension: "tt",
+      fileName: "bill-<%= blNumber %>",
+    },
+    {
       name: "TradeTrust ChAFTA Certificate of Origin v2",
       type: "VERIFIABLE_DOCUMENT",
       defaults: {
