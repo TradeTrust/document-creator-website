@@ -13,7 +13,8 @@ const configFileSchema = Joi.object({
       "xdcapothem",
       "stabilitytestnet",
       "stability",
-      "astron"
+      "astron",
+      "astrontestnet"
     )
     .only()
     .required(),
