@@ -13,7 +13,8 @@ export type Network =
   | "xdcapothem"
   | "stabilitytestnet"
   | "stability"
-  | "astron";
+  | "astron"
+  | "astrontestnet";
 
 type FormType = "TRANSFERABLE_RECORD" | "VERIFIABLE_DOCUMENT";
 

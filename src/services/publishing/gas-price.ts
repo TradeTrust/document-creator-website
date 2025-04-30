@@ -20,7 +20,7 @@ export const fetchGasPriceSuggestions = async (
   const isPolygon = ["matic", "amoy"].includes(network);
   const isMainnet = ["homestead"].includes(network);
   const isStability = ["stability", "stabilitytestnet"].includes(network);
-  const isAstron = ["astron"].includes(network);
+  const isAstron = ["astron", "astrontestnet"].includes(network);
   if (!isMainnet && !isPolygon && !isStability) return { ...additionalOverrides };
   let maxPriorityFeePerGas;
   let maxFeePerGas;
@@ -57,6 +57,9 @@ export const fetchAstronNetworkSuggestedPrice = async (network: Network): Promis
   switch (network) {
     case "astron":
       apiUrl = "https://astronscanl2.bitfactory.cn/gas-station";
+      break;
+    case "astrontestnet":
+      apiUrl = "https://dev-astronscanl2.bitfactory.cn/gas-station";
       break;
     default:
       throw new Error("Unsupported network for astron gas station");

@@ -1,4 +1,4 @@
-import { STABILITY_API_KEY, STABILITY_TESTNET_API_KEY, INFURA_API_KEY } from "../config";
+import { STABILITY_API_KEY, STABILITY_TESTNET_API_KEY, INFURA_API_KEY, ASTRON_TESTNET_API_KEY } from "../config";
 import { Network } from "../types";
 export interface ChainInfoObject {
   label: string;
@@ -40,6 +40,7 @@ export enum ChainId {
 
   // Astron Network
   Astron = 1338,
+  AstronTestnet = 21002,
 }
 
 export const ChainInfo: ChainInfo = {
@@ -169,6 +170,20 @@ export const ChainInfo: ChainInfo = {
       decimals: 18,
     },
   },
+  [ChainId.AstronTestnet]: {
+    label: "Astron",
+    chain: "ASTRON",
+    chainId: ChainId.AstronTestnet,
+    networkName: "astrontestnet",
+    explorerUrl: "https://dev-astronscanl2.bitfactory.cn",
+    explorerApiUrl: "https://dev-astronscanl2.bitfactory.cn/api",
+    rpcUrl: `https://dev-astronlayer2.bitfactory.cn/auth/${ASTRON_TESTNET_API_KEY}`,
+    nativeCurrency: {
+      name: "ASTRON",
+      symbol: "ASTRON",
+      decimals: 18,
+    },
+  },
 };
 
 export const supportedMainnet = [
@@ -184,6 +199,7 @@ export const supportedTestnet = [
   ChainInfo[ChainId.Amoy].networkName,
   ChainInfo[ChainId.XDCApothem].networkName,
   ChainInfo[ChainId.StabilityTestnet].networkName,
+  ChainInfo[ChainId.AstronTestnet].networkName,
 ];
 
 export const getSupportedNetworkNameFromId = (networkId: number): Network => {
