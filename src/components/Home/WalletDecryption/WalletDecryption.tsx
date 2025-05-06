@@ -35,7 +35,7 @@ export const WalletDecryption: FunctionComponent<WalletDecryption> = ({
         Create and Revoke Document
       </h2>
       <ContentFrame>
-        {isDecrypting && <BarTrack progress={decryptProgress} className="mb-4" />}
+        {isDecrypting && <BarTrack progress={decryptProgress} />}
         <Card>
           <form className="relative flex flex-col rounded">
             <h3 className="mb-4" data-testid="login-title">
