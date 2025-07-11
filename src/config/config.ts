@@ -11,6 +11,7 @@ export const STABILITY_API_KEY = process.env.REACT_APP_STABILITY_API_KEY;
 export const STABILITY_TESTNET_API_KEY = process.env.REACT_APP_STABILITY_TESTNET_API_KEY;
 export const INFURA_API_KEY = process.env.REACT_APP_INFURA_API_KEY;
 export const ASTRON_TESTNET_API_KEY = process.env.REACT_APP_ASTRON_TESTNET_API_KEY;
+export const ASTRON_API_KEY = process.env.REACT_APP_ASTRON_API_KEY;
 
 export interface EtherscanNetworkApiDetails {
   apiKey: string;
