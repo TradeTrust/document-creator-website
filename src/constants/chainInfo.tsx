@@ -1,4 +1,10 @@
-import { STABILITY_API_KEY, STABILITY_TESTNET_API_KEY, INFURA_API_KEY, ASTRON_TESTNET_API_KEY } from "../config";
+import {
+  STABILITY_API_KEY,
+  STABILITY_TESTNET_API_KEY,
+  INFURA_API_KEY,
+  ASTRON_API_KEY,
+  ASTRON_TESTNET_API_KEY,
+} from "../config";
 import { Network } from "../types";
 export interface ChainInfoObject {
   label: string;
@@ -163,7 +169,7 @@ export const ChainInfo: ChainInfo = {
     networkName: "astron",
     explorerUrl: "https://astronscanl2.bitfactory.cn",
     explorerApiUrl: "https://astronscanl2.bitfactory.cn/api",
-    rpcUrl: `https://astronlayer2.bitfactory.cn/rpc/`,
+    rpcUrl: `https://astronlayer2.bitfactory.cn/auth/${ASTRON_API_KEY}`,
     nativeCurrency: {
       name: "ASTRON",
       symbol: "ASTRON",
