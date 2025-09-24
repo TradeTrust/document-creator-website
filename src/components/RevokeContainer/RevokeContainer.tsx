@@ -35,8 +35,7 @@ export const RevokeContainer: FunctionComponent = () => {
         }
 
         if (errors.length > 0) {
-          const messagesMap = CONSTANTS.MESSAGES as Record<string, { failureMessage: string }>;
-          setErrorMessages(errors.map((error) => messagesMap[error]?.failureMessage ?? error));
+          setErrorMessages(errors.map((error) => CONSTANTS.MESSAGES[error].failureMessage));
           setRevokeDocuments([]);
           setDocumentUploadState(DocumentUploadState.ERROR);
         } else {
