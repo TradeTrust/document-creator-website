@@ -83,7 +83,7 @@ const fetchPolygonGasStationSuggestedPrice = async (network: Network): Promise<S
       apiUrl = "https://gasstation.polygon.technology/v2";
       break;
     case "amoy":
-      apiUrl = "https://gasstation-testnet.polygon.technology/amoy";
+      apiUrl = "https://gasstation.polygon.technology/amoy";
       break;
     default:
       throw new Error("Unsupported network for polygon gas station");
