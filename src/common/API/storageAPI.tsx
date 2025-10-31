@@ -26,19 +26,18 @@ const fetchCsrfToken = async (documentStorage: DocumentStorage): Promise<string>
   }
 };
 
-const getHeaders = (documentStorage: DocumentStorage, csrfToken?: string): AxiosHeaders => {
+const getHeaders = (csrfToken?: string): AxiosHeaders => {
   const headers = new AxiosHeaders({
     "Content-Type": "application/json",
   });
 
   const xApiKey = "x-api-key";
 
-  if (documentStorage.apiKey) {
-    const apiKey = process.env.REACT_APP_API_KEY_DOCUMENT_STORAGE
-      ? process.env.REACT_APP_API_KEY_DOCUMENT_STORAGE
-      : documentStorage.apiKey;
-    headers.set(xApiKey, apiKey);
-  }
+  const apiKey = process.env.REACT_APP_API_KEY_DOCUMENT_STORAGE;
+
+  if (!apiKey) throw new Error("API key not found");
+  
+  headers.set(xApiKey, apiKey);
 
   if (csrfToken) {
     headers.set("X-CSRF-Token", csrfToken); // Set CSRF token if passed
