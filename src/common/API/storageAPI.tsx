@@ -36,7 +36,7 @@ const getHeaders = (csrfToken?: string): AxiosHeaders => {
   const apiKey = process.env.REACT_APP_API_KEY_DOCUMENT_STORAGE;
 
   if (!apiKey) throw new Error("API key not found");
-  
+
   headers.set(xApiKey, apiKey);
 
   if (csrfToken) {
