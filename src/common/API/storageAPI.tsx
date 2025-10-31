@@ -12,6 +12,7 @@ const fetchCsrfToken = async (documentStorage: DocumentStorage): Promise<string>
       method: "get",
       url: url,
       withCredentials: true,
+      headers: getHeaders(),
     });
 
     const csrfToken = response.data.csrfToken;
@@ -52,7 +53,7 @@ export const getQueueNumber = async (documentStorage: DocumentStorage): Promise<
   return axios({
     method: "get",
     url: url,
-    headers: getHeaders(documentStorage),
+    headers: getHeaders(),
   });
 };
 
@@ -69,7 +70,7 @@ export const uploadToStorage = async (
   return axios({
     method: "post",
     url: uri,
-    headers: getHeaders(documentStorage, csrfToken), // Add CSRF token to headers
+    headers: getHeaders(csrfToken), // Add CSRF token to headers
     data: {
       document: doc.wrappedDocument,
     },
