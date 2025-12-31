@@ -15,7 +15,7 @@ import { DocumentPreview } from "./DocumentPreview";
 import { DynamicForm } from "./DynamicForm";
 import { DynamicFormHeader } from "./DynamicFormHeader";
 import { FormErrorBanner } from "./FormErrorBanner";
-import { validateData, getDataToValidate } from "./../../common/utils";
+import { validateData, getDataToValidate, hasVcContext, getDataV3 } from "./../../common/utils";
 import { FormErrors } from "./../../types";
 
 export const DynamicFormLayout: FunctionComponent = () => {
@@ -113,7 +113,16 @@ export const DynamicFormLayout: FunctionComponent = () => {
     }, timeout);
   };
 
-  const currentUnwrappedData = defaultsDeep({}, currentForm.data.formData, currentFormTemplate.defaults);
+  const currentUnwrappedData = hasVcContext(currentForm.data.formData)
+    ? defaultsDeep(
+        {},
+        {
+          ...currentForm.data.formData,
+          credentialSubject: getDataV3(currentForm.data.formData),
+        },
+        currentFormTemplate.defaults
+      )
+    : defaultsDeep({}, currentForm.data.formData, currentFormTemplate.defaults);
 
   return (
     <OnCloseGuard active={activeFormIndex !== undefined}>
