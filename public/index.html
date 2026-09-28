@@ -34,28 +34,18 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;700&display=swap" rel="stylesheet">
     <title>TradeTrust Creator</title>
-    <!-- Global site tag (gtag.js) - Google Analytics -->
-    <script
-      async
-      src="https://www.googletagmanager.com/gtag/js?id=<%= process.env.REACT_APP_GA_MEASUREMENT_ID %>"
-      nonce="<%= process.env.REACT_APP_NONCE_VALUE %>"
-      ></script>
-    <script nonce="<%= process.env.REACT_APP_NONCE_VALUE %>">
-      var option = {
-          allow_google_signals: false,
-          allow_ad_personalization_signals: false,
-          debug_mode: false,
-        };
-
-      window.dataLayer = window.dataLayer || [];
-      function gtag() {
-        dataLayer.push(arguments);
-      }
-      gtag("js", new Date());
-      gtag("config", "<%= process.env.REACT_APP_GA_MEASUREMENT_ID %>", option);
-    </script>
   </head>
   <body class="font-body">
+    <!-- Google Tag Manager (noscript) -->
+    <noscript
+      ><iframe
+        src="https://www.googletagmanager.com/ns.html?id=<%= process.env.REACT_APP_GTM_CONTAINER_ID %>"
+        height="0"
+        width="0"
+        style="display: none; visibility: hidden"
+      ></iframe
+    ></noscript>
+    <!-- End Google Tag Manager (noscript) -->
     <noscript>You need to enable JavaScript to run this app.</noscript>
     <div id="root"></div>
     <!--

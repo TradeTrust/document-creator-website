@@ -3,6 +3,7 @@ import React, { FunctionComponent, useEffect, useState } from "react";
 import { readFileAsJson } from "../../../common/utils";
 import { ConfigFile } from "../../../types";
 import { getLogger } from "../../../utils/logger";
+import { trackConfigFileDropped } from "../../../utils/analytics";
 import { ContentFrame } from "../../UI/ContentFrame";
 import { StyledDropZone } from "../../UI/StyledDropZone";
 import { DEMO_CONFIG } from "../../../constants/demo-config";
@@ -30,6 +31,7 @@ export const ConfigFileDropZone: FunctionComponent<ConfigFileDropZone> = ({ onCo
       const file = files[0];
       const config = await readFileAsJson<ConfigFile>(file);
       setFileErrors([]);
+      trackConfigFileDropped(file.name, "drop");
       onConfigFile(config);
     } catch (e) {
       if (e instanceof Error) {
@@ -90,6 +92,7 @@ export const ConfigFileDropZone: FunctionComponent<ConfigFileDropZone> = ({ onCo
                   e.stopPropagation();
                   setFileErrors([]);
                   setIsDemo(true);
+                  trackConfigFileDropped("demo-config", "demo");
                   onConfigFile(DEMO_CONFIG as ConfigFile);
                 }}
                 className="bg-white text-cerulean-500 hover:bg-cloud-100 rounded-xl sm:mt-0 mt-4"

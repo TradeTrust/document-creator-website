@@ -3,6 +3,7 @@ import React, { FunctionComponent } from "react";
 import { Redirect } from "react-router-dom";
 import { useFormsContext } from "../../../common/context/forms";
 import { Config, FormTemplate } from "../../../types";
+import { trackFormStarted } from "../../../utils/analytics";
 import { Wrapper } from "../../UI/Wrapper";
 import { IssueOrRevokeSelector } from "../../UI/IssueOrRevokeSelector";
 import { Card } from "../../UI/Card";
@@ -17,6 +18,8 @@ export const FormSelection: FunctionComponent<FormSelection> = ({ config }) => {
   const { activeFormIndex, newForm } = useFormsContext();
 
   const onAddForm = (formIndex: number) => {
+    const form = config.forms[formIndex];
+    trackFormStarted(form?.name ?? `form-${formIndex}`);
     newForm(formIndex);
   };
 

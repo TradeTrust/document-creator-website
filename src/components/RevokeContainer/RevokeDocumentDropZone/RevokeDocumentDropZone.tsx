@@ -2,6 +2,7 @@ import { Button, LoaderSpinner, ProgressBar } from "@tradetrust-tt/tradetrust-ui
 import { FunctionComponent, useEffect, useState } from "react";
 import { readFileAsJson } from "../../../common/utils";
 import { getLogger } from "../../../utils/logger";
+import { trackRevokeDocumentDropped } from "../../../utils/analytics";
 import { Wrapper } from "../../UI/Wrapper";
 import { IssueOrRevokeSelector } from "../../UI/IssueOrRevokeSelector";
 import { DocumentUploadState } from "../../../constants/DocumentUploadState";
@@ -49,6 +50,7 @@ export const RevokeDocumentDropZone: FunctionComponent<RevokeDocumentDropZone> =
       setDocumentUploadState(DocumentUploadState.LOADING);
       setFileName(file.name);
       const revokeDocument = await readFileAsJson<any>(file);
+      trackRevokeDocumentDropped(file.name, "drop");
       setRevokeDocuments([revokeDocument]);
     } catch (e) {
       if (e instanceof Error) {

@@ -7,8 +7,11 @@ import { NavigationBar } from "./components/NavigationBar";
 import { FooterBar } from "./components/FooterBar";
 import { SessionTimeout } from "./components/SessionTimeout";
 import { Disclaimer } from "./components/Disclaimer";
+import { GoogleTagManager } from "./components/GoogleTagManager";
 import { routes, Routes } from "./routes";
 import { history } from "./history";
+
+const GTM_CONTAINER_ID = process.env.REACT_APP_GTM_CONTAINER_ID as string | undefined;
 
 export const App: React.FunctionComponent = () => {
   const { configFile } = usePersistedConfigFile();
@@ -27,6 +30,7 @@ export const App: React.FunctionComponent = () => {
 
   return (
     <>
+      <GoogleTagManager gtmContainerId={GTM_CONTAINER_ID} />
       <Disclaimer />
       <NetworkBar network={configFile?.network}>
         You are currently on <span className="capitalize">{configFile?.network}</span> network. To change it, please
