@@ -2,7 +2,6 @@
   "appCommand": "npm run serve-static",
   "src": ["integration/**/*.spec.ts"],
   "cache": true,
-  "nativeAutomation": true,
   "compilerOptions": {
     "typescript": {
       "configPath": "./tsconfig.json",
