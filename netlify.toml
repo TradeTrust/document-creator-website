@@ -11,4 +11,4 @@
   [headers.values]
     X-Content-Type-Options = "nosniff"
     Strict-Transport-Security = "max-age=31536000; includeSubDomains"
-    Content-Security-Policy = "default-src 'self'; img-src 'self'; style-src 'self' https://fonts.googleapis.com https://use.fontawesome.com 'unsafe-inline'; script-src 'self' https://identity.netlify.com https://www.googletagmanager.com 'nonce-' 'unsafe-eval'; font-src 'self' data: https://fonts.gstatic.com https://use.fontawesome.com https://ui.tradetrust.io; connect-src *; frame-src * https://app.netlify.com; frame-ancestors 'self'; object-src 'none';"
+    Content-Security-Policy = "default-src 'self'; img-src 'self'; style-src 'self' https://fonts.googleapis.com https://use.fontawesome.com 'unsafe-inline'; script-src 'self' https://identity.netlify.com https://www.googletagmanager.com 'nonce-{nonce}' 'unsafe-eval'; font-src 'self' data: https://fonts.gstatic.com https://use.fontawesome.com https://ui.tradetrust.io; connect-src *; frame-src * https://app.netlify.com; frame-ancestors 'self'; object-src 'none';"
