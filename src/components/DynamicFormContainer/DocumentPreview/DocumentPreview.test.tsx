@@ -42,9 +42,7 @@ describe("DocumentPreview", () => {
     render(<DocumentPreview document={sampleDocument as never} />);
 
     expect(screen.getByTestId("document-preview").getAttribute("data-document-id")).toBe(sampleDocument.iD);
-    expect(screen.getByTestId("document-preview").getAttribute("data-renderer-url")).toBe(
-      sampleDocument.$template.url
-    );
+    expect(screen.getByTestId("document-preview").getAttribute("data-renderer-url")).toBe(sampleDocument.$template.url);
     expect(screen.getByTitle("Decentralised Rendered Certificate").getAttribute("src")).toBe(
       sampleDocument.$template.url
     );
