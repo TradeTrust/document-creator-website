@@ -1,5 +1,6 @@
 import { Button } from "@tradetrust-tt/tradetrust-ui-components";
 import React, { FunctionComponent, useEffect, useState } from "react";
+import { DropEvent } from "react-dropzone";
 import { readFileAsJson } from "../../../common/utils";
 import { ConfigFile } from "../../../types";
 import { getLogger } from "../../../utils/logger";
@@ -26,7 +27,7 @@ export const ConfigFileDropZone: FunctionComponent<ConfigFileDropZone> = ({ onCo
     }
   }, [errorMessage]);
 
-  const onDropAccepted = async (files: File[], event?: Event): Promise<void> => {
+  const onDropAccepted = async <T extends File>(files: T[], event: DropEvent): Promise<void> => {
     try {
       const file = files[0];
       trackConfigFileDropped(resolveDropZoneSource(event));

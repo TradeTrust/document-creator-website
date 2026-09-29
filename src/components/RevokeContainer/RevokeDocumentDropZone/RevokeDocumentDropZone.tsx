@@ -1,5 +1,6 @@
 import { Button, LoaderSpinner, ProgressBar } from "@tradetrust-tt/tradetrust-ui-components";
 import { FunctionComponent, useEffect, useState } from "react";
+import { DropEvent } from "react-dropzone";
 import { readFileAsJson } from "../../../common/utils";
 import { getLogger } from "../../../utils/logger";
 import { resolveDropZoneSource, trackRevokeDocumentDropped } from "../../../utils/analytics";
@@ -44,7 +45,7 @@ export const RevokeDocumentDropZone: FunctionComponent<RevokeDocumentDropZone> =
     }
   }, [documentUploadState, errorMessages]);
 
-  const onDropAccepted = async (files: File[], event?: Event): Promise<void> => {
+  const onDropAccepted = async <T extends File>(files: T[], event: DropEvent): Promise<void> => {
     try {
       const file = files[0];
       setDocumentUploadState(DocumentUploadState.LOADING);

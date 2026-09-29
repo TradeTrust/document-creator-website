@@ -1,3 +1,4 @@
+import { DropEvent } from "react-dropzone";
 import { ANALYTICS_EVENTS } from "../constants/analyticsEvents";
 
 export interface GTMEvent {
@@ -119,5 +120,5 @@ export const trackDocumentRevokeFailed = (successCount: number, failureCount: nu
 };
 
 /** Resolve drop-zone interaction source from the react-dropzone event. */
-export const resolveDropZoneSource = (event?: Event): "drop" | "file_picker" =>
+export const resolveDropZoneSource = (event?: DropEvent): "drop" | "file_picker" =>
   event?.type === "drop" ? "drop" : "file_picker";
