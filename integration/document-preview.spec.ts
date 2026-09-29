@@ -33,10 +33,11 @@ test("should be able to preview form with data", async (t) => {
 
   // Set preview mode to true
   await t.click(Selector("[data-testid='toggle-switch-label']"));
+  await t.expect(Iframe.exists).ok({ timeout: 15000 });
   await t.switchToIframe(Iframe);
 
-  // Check that entered data is shown
-  await t.expect(IframeRoot.textContent).contains("WBC208897");
+  // Check that entered data is shown (renderer fills #root asynchronously)
+  await t.expect(IframeRoot.textContent).contains("WBC208897", { timeout: 15000 });
 
   // Check that text from template (not in data) is shown
   await t.expect(IframeRoot.textContent).contains("Place, date and signature of authorised person");

@@ -7,8 +7,7 @@ interface GoogleTagManagerProps {
 
 /**
  * Bootstraps GTM on mount by injecting the gtm.js script into <head>.
- * Renders nothing. The GTM noscript fallback lives in index.html so it works
- * before JavaScript runs.
+ * Renders nothing. (No noscript iframe — this SPA already requires JavaScript.)
  */
 export const GoogleTagManager = ({ gtmContainerId }: GoogleTagManagerProps): null => {
   useEffect(() => {
