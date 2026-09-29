@@ -29,9 +29,9 @@ export const ConfigFileDropZone: FunctionComponent<ConfigFileDropZone> = ({ onCo
   const onDropAccepted = async (files: File[], event?: Event): Promise<void> => {
     try {
       const file = files[0];
+      trackConfigFileDropped(resolveDropZoneSource(event));
       const config = await readFileAsJson<ConfigFile>(file);
       setFileErrors([]);
-      trackConfigFileDropped(resolveDropZoneSource(event));
       onConfigFile(config);
     } catch (e) {
       if (e instanceof Error) {

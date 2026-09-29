@@ -18,8 +18,7 @@ export const FormSelection: FunctionComponent<FormSelection> = ({ config }) => {
   const { activeFormIndex, newForm } = useFormsContext();
 
   const onAddForm = (formIndex: number) => {
-    const form = config.forms[formIndex];
-    trackFormStarted(form?.name ?? `form-${formIndex}`);
+    trackFormStarted(`form-${formIndex}`);
     newForm(formIndex);
   };
 

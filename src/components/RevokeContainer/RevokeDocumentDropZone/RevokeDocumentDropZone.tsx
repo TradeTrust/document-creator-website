@@ -49,8 +49,8 @@ export const RevokeDocumentDropZone: FunctionComponent<RevokeDocumentDropZone> =
       const file = files[0];
       setDocumentUploadState(DocumentUploadState.LOADING);
       setFileName(file.name);
-      const revokeDocument = await readFileAsJson<any>(file);
       trackRevokeDocumentDropped(resolveDropZoneSource(event));
+      const revokeDocument = await readFileAsJson<any>(file);
       setRevokeDocuments([revokeDocument]);
     } catch (e) {
       if (e instanceof Error) {
