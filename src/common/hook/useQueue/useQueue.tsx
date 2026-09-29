@@ -147,9 +147,9 @@ export const useQueue = ({
         setError(e);
         setQueueState(QueueState.ERROR);
         if (queueType === QueueType.ISSUE) {
-          trackDocumentIssueFailed(0, 0, e.message);
+          trackDocumentIssueFailed(0, 0);
         } else if (queueType === QueueType.REVOKE) {
-          trackDocumentRevokeFailed(0, 0, e.message);
+          trackDocumentRevokeFailed(0, 0);
         }
       }
     }

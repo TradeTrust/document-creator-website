@@ -1,0 +1,449 @@
+{
+  "exportFormatVersion": 2,
+  "exportTime": "2026-09-29 09:30:00",
+  "containerVersion": {
+    "path": "accounts/__GTM_ACCOUNT_ID__/containers/__GTM_CONTAINER_NUMERIC_ID__/versions/0",
+    "accountId": "__GTM_ACCOUNT_ID__",
+    "containerId": "__GTM_CONTAINER_NUMERIC_ID__",
+    "containerVersionId": "0",
+    "container": {
+      "path": "accounts/__GTM_ACCOUNT_ID__/containers/__GTM_CONTAINER_NUMERIC_ID__",
+      "accountId": "__GTM_ACCOUNT_ID__",
+      "containerId": "__GTM_CONTAINER_NUMERIC_ID__",
+      "name": "creator.tradetrust.io",
+      "publicId": "GTM-XXXXXXX",
+      "usageContext": ["WEB"]
+    },
+    "tag": [
+      {
+        "accountId": "__GTM_ACCOUNT_ID__",
+        "containerId": "__GTM_CONTAINER_NUMERIC_ID__",
+        "tagId": "1",
+        "name": "Google Tag - Creator GA4",
+        "type": "googtag",
+        "parameter": [
+          {
+            "type": "TEMPLATE",
+            "key": "tagId",
+            "value": "G-XXXXXXXX"
+          },
+          {
+            "type": "LIST",
+            "key": "configSettingsTable",
+            "list": [
+              {
+                "type": "MAP",
+                "map": [
+                  { "type": "TEMPLATE", "key": "parameter", "value": "allow_google_signals" },
+                  { "type": "TEMPLATE", "key": "parameterValue", "value": "false" }
+                ]
+              },
+              {
+                "type": "MAP",
+                "map": [
+                  { "type": "TEMPLATE", "key": "parameter", "value": "allow_ad_personalization_signals" },
+                  { "type": "TEMPLATE", "key": "parameterValue", "value": "false" }
+                ]
+              }
+            ]
+          }
+        ],
+        "firingTriggerId": ["2147479553"],
+        "tagFiringOption": "ONCE_PER_EVENT"
+      },
+      {
+        "accountId": "__GTM_ACCOUNT_ID__",
+        "containerId": "__GTM_CONTAINER_NUMERIC_ID__",
+        "tagId": "2",
+        "name": "GA4 Event - Creator Drop Events",
+        "type": "gaawe",
+        "parameter": [
+          {
+            "type": "BOOLEAN",
+            "key": "sendEcommerceData",
+            "value": "false"
+          },
+          {
+            "type": "TEMPLATE",
+            "key": "eventName",
+            "value": "{{Event}}"
+          },
+          {
+            "type": "TEMPLATE",
+            "key": "measurementIdOverride",
+            "value": "G-XXXXXXXX"
+          },
+          {
+            "type": "LIST",
+            "key": "eventSettingsTable",
+            "list": [
+              {
+                "type": "MAP",
+                "map": [
+                  { "type": "TEMPLATE", "key": "parameter", "value": "environment" },
+                  { "type": "TEMPLATE", "key": "parameterValue", "value": "{{dlv - environment}}" }
+                ]
+              },
+              {
+                "type": "MAP",
+                "map": [
+                  { "type": "TEMPLATE", "key": "parameter", "value": "source" },
+                  { "type": "TEMPLATE", "key": "parameterValue", "value": "{{dlv - source}}" }
+                ]
+              }
+            ]
+          }
+        ],
+        "firingTriggerId": ["3"],
+        "tagFiringOption": "ONCE_PER_EVENT"
+      },
+      {
+        "accountId": "__GTM_ACCOUNT_ID__",
+        "containerId": "__GTM_CONTAINER_NUMERIC_ID__",
+        "tagId": "3",
+        "name": "GA4 Event - Creator Form Started",
+        "type": "gaawe",
+        "parameter": [
+          {
+            "type": "BOOLEAN",
+            "key": "sendEcommerceData",
+            "value": "false"
+          },
+          {
+            "type": "TEMPLATE",
+            "key": "eventName",
+            "value": "{{Event}}"
+          },
+          {
+            "type": "TEMPLATE",
+            "key": "measurementIdOverride",
+            "value": "G-XXXXXXXX"
+          },
+          {
+            "type": "LIST",
+            "key": "eventSettingsTable",
+            "list": [
+              {
+                "type": "MAP",
+                "map": [
+                  { "type": "TEMPLATE", "key": "parameter", "value": "environment" },
+                  { "type": "TEMPLATE", "key": "parameterValue", "value": "{{dlv - environment}}" }
+                ]
+              },
+              {
+                "type": "MAP",
+                "map": [
+                  { "type": "TEMPLATE", "key": "parameter", "value": "form_name" },
+                  { "type": "TEMPLATE", "key": "parameterValue", "value": "{{dlv - form_name}}" }
+                ]
+              }
+            ]
+          }
+        ],
+        "firingTriggerId": ["4"],
+        "tagFiringOption": "ONCE_PER_EVENT"
+      },
+      {
+        "accountId": "__GTM_ACCOUNT_ID__",
+        "containerId": "__GTM_CONTAINER_NUMERIC_ID__",
+        "tagId": "4",
+        "name": "GA4 Event - Creator Document Success",
+        "type": "gaawe",
+        "parameter": [
+          {
+            "type": "BOOLEAN",
+            "key": "sendEcommerceData",
+            "value": "false"
+          },
+          {
+            "type": "TEMPLATE",
+            "key": "eventName",
+            "value": "{{Event}}"
+          },
+          {
+            "type": "TEMPLATE",
+            "key": "measurementIdOverride",
+            "value": "G-XXXXXXXX"
+          },
+          {
+            "type": "LIST",
+            "key": "eventSettingsTable",
+            "list": [
+              {
+                "type": "MAP",
+                "map": [
+                  { "type": "TEMPLATE", "key": "parameter", "value": "environment" },
+                  { "type": "TEMPLATE", "key": "parameterValue", "value": "{{dlv - environment}}" }
+                ]
+              },
+              {
+                "type": "MAP",
+                "map": [
+                  { "type": "TEMPLATE", "key": "parameter", "value": "success_count" },
+                  { "type": "TEMPLATE", "key": "parameterValue", "value": "{{dlv - success_count}}" }
+                ]
+              },
+              {
+                "type": "MAP",
+                "map": [
+                  { "type": "TEMPLATE", "key": "parameter", "value": "failure_count" },
+                  { "type": "TEMPLATE", "key": "parameterValue", "value": "{{dlv - failure_count}}" }
+                ]
+              },
+              {
+                "type": "MAP",
+                "map": [
+                  { "type": "TEMPLATE", "key": "parameter", "value": "document_count" },
+                  { "type": "TEMPLATE", "key": "parameterValue", "value": "{{dlv - document_count}}" }
+                ]
+              }
+            ]
+          }
+        ],
+        "firingTriggerId": ["5"],
+        "tagFiringOption": "ONCE_PER_EVENT"
+      },
+      {
+        "accountId": "__GTM_ACCOUNT_ID__",
+        "containerId": "__GTM_CONTAINER_NUMERIC_ID__",
+        "tagId": "5",
+        "name": "GA4 Event - Creator Document Failed",
+        "type": "gaawe",
+        "parameter": [
+          {
+            "type": "BOOLEAN",
+            "key": "sendEcommerceData",
+            "value": "false"
+          },
+          {
+            "type": "TEMPLATE",
+            "key": "eventName",
+            "value": "{{Event}}"
+          },
+          {
+            "type": "TEMPLATE",
+            "key": "measurementIdOverride",
+            "value": "G-XXXXXXXX"
+          },
+          {
+            "type": "LIST",
+            "key": "eventSettingsTable",
+            "list": [
+              {
+                "type": "MAP",
+                "map": [
+                  { "type": "TEMPLATE", "key": "parameter", "value": "environment" },
+                  { "type": "TEMPLATE", "key": "parameterValue", "value": "{{dlv - environment}}" }
+                ]
+              },
+              {
+                "type": "MAP",
+                "map": [
+                  { "type": "TEMPLATE", "key": "parameter", "value": "success_count" },
+                  { "type": "TEMPLATE", "key": "parameterValue", "value": "{{dlv - success_count}}" }
+                ]
+              },
+              {
+                "type": "MAP",
+                "map": [
+                  { "type": "TEMPLATE", "key": "parameter", "value": "failure_count" },
+                  { "type": "TEMPLATE", "key": "parameterValue", "value": "{{dlv - failure_count}}" }
+                ]
+              },
+              {
+                "type": "MAP",
+                "map": [
+                  { "type": "TEMPLATE", "key": "parameter", "value": "document_count" },
+                  { "type": "TEMPLATE", "key": "parameterValue", "value": "{{dlv - document_count}}" }
+                ]
+              },
+              {
+                "type": "MAP",
+                "map": [
+                  { "type": "TEMPLATE", "key": "parameter", "value": "error_category" },
+                  { "type": "TEMPLATE", "key": "parameterValue", "value": "{{dlv - error_category}}" }
+                ]
+              }
+            ]
+          }
+        ],
+        "firingTriggerId": ["6"],
+        "tagFiringOption": "ONCE_PER_EVENT"
+      }
+    ],
+    "trigger": [
+      {
+        "accountId": "__GTM_ACCOUNT_ID__",
+        "containerId": "__GTM_CONTAINER_NUMERIC_ID__",
+        "triggerId": "3",
+        "name": "CE - Creator Drop Events",
+        "type": "CUSTOM_EVENT",
+        "customEventFilter": [
+          {
+            "type": "MATCH_REGEX",
+            "parameter": [
+              { "type": "TEMPLATE", "key": "arg0", "value": "{{_event}}" },
+              {
+                "type": "TEMPLATE",
+                "key": "arg1",
+                "value": "^(CONFIG_FILE_DROPPED|REVOKE_DOCUMENT_DROPPED)$"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "accountId": "__GTM_ACCOUNT_ID__",
+        "containerId": "__GTM_CONTAINER_NUMERIC_ID__",
+        "triggerId": "4",
+        "name": "CE - Creator Form Started",
+        "type": "CUSTOM_EVENT",
+        "customEventFilter": [
+          {
+            "type": "MATCH_REGEX",
+            "parameter": [
+              { "type": "TEMPLATE", "key": "arg0", "value": "{{_event}}" },
+              {
+                "type": "TEMPLATE",
+                "key": "arg1",
+                "value": "^FORM_STARTED$"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "accountId": "__GTM_ACCOUNT_ID__",
+        "containerId": "__GTM_CONTAINER_NUMERIC_ID__",
+        "triggerId": "5",
+        "name": "CE - Creator Document Success",
+        "type": "CUSTOM_EVENT",
+        "customEventFilter": [
+          {
+            "type": "MATCH_REGEX",
+            "parameter": [
+              { "type": "TEMPLATE", "key": "arg0", "value": "{{_event}}" },
+              {
+                "type": "TEMPLATE",
+                "key": "arg1",
+                "value": "^(DOCUMENT_ISSUED|DOCUMENT_REVOKED)$"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "accountId": "__GTM_ACCOUNT_ID__",
+        "containerId": "__GTM_CONTAINER_NUMERIC_ID__",
+        "triggerId": "6",
+        "name": "CE - Creator Document Failed",
+        "type": "CUSTOM_EVENT",
+        "customEventFilter": [
+          {
+            "type": "MATCH_REGEX",
+            "parameter": [
+              { "type": "TEMPLATE", "key": "arg0", "value": "{{_event}}" },
+              {
+                "type": "TEMPLATE",
+                "key": "arg1",
+                "value": "^(DOCUMENT_ISSUE_FAILED|DOCUMENT_REVOKE_FAILED)$"
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "variable": [
+      {
+        "accountId": "__GTM_ACCOUNT_ID__",
+        "containerId": "__GTM_CONTAINER_NUMERIC_ID__",
+        "variableId": "1",
+        "name": "dlv - environment",
+        "type": "v",
+        "parameter": [
+          { "type": "INTEGER", "key": "dataLayerVersion", "value": "2" },
+          { "type": "BOOLEAN", "key": "setDefaultValue", "value": "false" },
+          { "type": "TEMPLATE", "key": "name", "value": "environment" }
+        ]
+      },
+      {
+        "accountId": "__GTM_ACCOUNT_ID__",
+        "containerId": "__GTM_CONTAINER_NUMERIC_ID__",
+        "variableId": "2",
+        "name": "dlv - source",
+        "type": "v",
+        "parameter": [
+          { "type": "INTEGER", "key": "dataLayerVersion", "value": "2" },
+          { "type": "BOOLEAN", "key": "setDefaultValue", "value": "false" },
+          { "type": "TEMPLATE", "key": "name", "value": "source" }
+        ]
+      },
+      {
+        "accountId": "__GTM_ACCOUNT_ID__",
+        "containerId": "__GTM_CONTAINER_NUMERIC_ID__",
+        "variableId": "3",
+        "name": "dlv - form_name",
+        "type": "v",
+        "parameter": [
+          { "type": "INTEGER", "key": "dataLayerVersion", "value": "2" },
+          { "type": "BOOLEAN", "key": "setDefaultValue", "value": "false" },
+          { "type": "TEMPLATE", "key": "name", "value": "form_name" }
+        ]
+      },
+      {
+        "accountId": "__GTM_ACCOUNT_ID__",
+        "containerId": "__GTM_CONTAINER_NUMERIC_ID__",
+        "variableId": "4",
+        "name": "dlv - success_count",
+        "type": "v",
+        "parameter": [
+          { "type": "INTEGER", "key": "dataLayerVersion", "value": "2" },
+          { "type": "BOOLEAN", "key": "setDefaultValue", "value": "false" },
+          { "type": "TEMPLATE", "key": "name", "value": "success_count" }
+        ]
+      },
+      {
+        "accountId": "__GTM_ACCOUNT_ID__",
+        "containerId": "__GTM_CONTAINER_NUMERIC_ID__",
+        "variableId": "5",
+        "name": "dlv - failure_count",
+        "type": "v",
+        "parameter": [
+          { "type": "INTEGER", "key": "dataLayerVersion", "value": "2" },
+          { "type": "BOOLEAN", "key": "setDefaultValue", "value": "false" },
+          { "type": "TEMPLATE", "key": "name", "value": "failure_count" }
+        ]
+      },
+      {
+        "accountId": "__GTM_ACCOUNT_ID__",
+        "containerId": "__GTM_CONTAINER_NUMERIC_ID__",
+        "variableId": "6",
+        "name": "dlv - document_count",
+        "type": "v",
+        "parameter": [
+          { "type": "INTEGER", "key": "dataLayerVersion", "value": "2" },
+          { "type": "BOOLEAN", "key": "setDefaultValue", "value": "false" },
+          { "type": "TEMPLATE", "key": "name", "value": "document_count" }
+        ]
+      },
+      {
+        "accountId": "__GTM_ACCOUNT_ID__",
+        "containerId": "__GTM_CONTAINER_NUMERIC_ID__",
+        "variableId": "7",
+        "name": "dlv - error_category",
+        "type": "v",
+        "parameter": [
+          { "type": "INTEGER", "key": "dataLayerVersion", "value": "2" },
+          { "type": "BOOLEAN", "key": "setDefaultValue", "value": "false" },
+          { "type": "TEMPLATE", "key": "name", "value": "error_category" }
+        ]
+      }
+    ],
+    "builtInVariable": [
+      { "accountId": "__GTM_ACCOUNT_ID__", "containerId": "__GTM_CONTAINER_NUMERIC_ID__", "type": "EVENT", "name": "Event" },
+      { "accountId": "__GTM_ACCOUNT_ID__", "containerId": "__GTM_CONTAINER_NUMERIC_ID__", "type": "PAGE_URL", "name": "Page URL" },
+      { "accountId": "__GTM_ACCOUNT_ID__", "containerId": "__GTM_CONTAINER_NUMERIC_ID__", "type": "PAGE_HOSTNAME", "name": "Page Hostname" },
+      { "accountId": "__GTM_ACCOUNT_ID__", "containerId": "__GTM_CONTAINER_NUMERIC_ID__", "type": "PAGE_PATH", "name": "Page Path" }
+    ]
+  }
+}

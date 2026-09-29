@@ -15,6 +15,17 @@ export type ConfigFileDroppedSource = "drop" | "file_picker" | "demo";
 
 export type RevokeDocumentDroppedSource = "drop" | "file_picker";
 
+/** Known custom params — cleared before each push so stale values do not carry into later events. */
+const ANALYTICS_PARAM_KEYS = [
+  "environment",
+  "source",
+  "form_name",
+  "success_count",
+  "failure_count",
+  "document_count",
+  "error_category",
+] as const;
+
 /**
  * Pushes an event to window.dataLayer only — no external calls are made here.
  * GTM (if loaded) reads from dataLayer and forwards events per its own config.
@@ -34,26 +45,25 @@ export const pushGTMEvent = (eventData: GTMEvent): void => {
 const ENVIRONMENT = (process.env.REACT_APP_PLATFORM as string | undefined) ?? "local";
 
 const trackEvent = (payload: GTMEvent): void => {
-  pushGTMEvent(payload);
+  const cleared: GTMEvent = { event: payload.event };
+  for (const key of ANALYTICS_PARAM_KEYS) {
+    cleared[key] = undefined;
+  }
+  pushGTMEvent({ ...cleared, ...payload });
 };
 
-export const trackConfigFileDropped = (fileName: string, source: ConfigFileDroppedSource = "file_picker"): void => {
+export const trackConfigFileDropped = (source: ConfigFileDroppedSource = "file_picker"): void => {
   trackEvent({
     event: ANALYTICS_EVENTS.CONFIG_FILE_DROPPED,
     environment: ENVIRONMENT,
-    file_name: fileName,
     source,
   });
 };
 
-export const trackRevokeDocumentDropped = (
-  fileName: string,
-  source: RevokeDocumentDroppedSource = "file_picker"
-): void => {
+export const trackRevokeDocumentDropped = (source: RevokeDocumentDroppedSource = "file_picker"): void => {
   trackEvent({
     event: ANALYTICS_EVENTS.REVOKE_DOCUMENT_DROPPED,
     environment: ENVIRONMENT,
-    file_name: fileName,
     source,
   });
 };
@@ -76,14 +86,14 @@ export const trackDocumentIssued = (successCount: number, failureCount: number):
   });
 };
 
-export const trackDocumentIssueFailed = (successCount: number, failureCount: number, errorMessage?: string): void => {
+export const trackDocumentIssueFailed = (successCount: number, failureCount: number): void => {
   trackEvent({
     event: ANALYTICS_EVENTS.DOCUMENT_ISSUE_FAILED,
     environment: ENVIRONMENT,
     success_count: successCount,
     failure_count: failureCount,
     document_count: successCount + failureCount,
-    error_message: errorMessage,
+    error_category: "issue_failed",
   });
 };
 
@@ -97,13 +107,17 @@ export const trackDocumentRevoked = (successCount: number, failureCount: number)
   });
 };
 
-export const trackDocumentRevokeFailed = (successCount: number, failureCount: number, errorMessage?: string): void => {
+export const trackDocumentRevokeFailed = (successCount: number, failureCount: number): void => {
   trackEvent({
     event: ANALYTICS_EVENTS.DOCUMENT_REVOKE_FAILED,
     environment: ENVIRONMENT,
     success_count: successCount,
     failure_count: failureCount,
     document_count: successCount + failureCount,
-    error_message: errorMessage,
+    error_category: "revoke_failed",
   });
 };
+
+/** Resolve drop-zone interaction source from the react-dropzone event. */
+export const resolveDropZoneSource = (event?: Event): "drop" | "file_picker" =>
+  event?.type === "drop" ? "drop" : "file_picker";

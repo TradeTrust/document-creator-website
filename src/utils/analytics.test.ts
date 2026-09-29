@@ -7,6 +7,7 @@ import {
   trackDocumentIssueFailed,
   trackDocumentRevoked,
   trackDocumentRevokeFailed,
+  resolveDropZoneSource,
 } from "./analytics";
 import { ANALYTICS_EVENTS } from "../constants/analyticsEvents";
 
@@ -30,26 +31,26 @@ describe("pushGTMEvent", () => {
 });
 
 describe("trackConfigFileDropped", () => {
-  it("pushes CONFIG_FILE_DROPPED with file name and source", () => {
-    trackConfigFileDropped("config.json", "drop");
+  it("pushes CONFIG_FILE_DROPPED with source only", () => {
+    trackConfigFileDropped("drop");
     expect(window.dataLayer).toHaveLength(1);
     expect(window.dataLayer[0]).toMatchObject({
       event: ANALYTICS_EVENTS.CONFIG_FILE_DROPPED,
-      file_name: "config.json",
       source: "drop",
       environment: expect.any(String),
     });
+    expect(window.dataLayer[0]).not.toHaveProperty("file_name");
   });
 });
 
 describe("trackRevokeDocumentDropped", () => {
   it("pushes REVOKE_DOCUMENT_DROPPED", () => {
-    trackRevokeDocumentDropped("doc.tt", "file_picker");
+    trackRevokeDocumentDropped("file_picker");
     expect(window.dataLayer[0]).toMatchObject({
       event: ANALYTICS_EVENTS.REVOKE_DOCUMENT_DROPPED,
-      file_name: "doc.tt",
       source: "file_picker",
     });
+    expect(window.dataLayer[0]).not.toHaveProperty("file_name");
   });
 });
 
@@ -60,6 +61,14 @@ describe("trackFormStarted", () => {
       event: ANALYTICS_EVENTS.FORM_STARTED,
       form_name: "Bill of Lading",
     });
+  });
+
+  it("clears params from a prior event so they do not carry over", () => {
+    trackConfigFileDropped("drop");
+    trackFormStarted("Invoice");
+    const last = window.dataLayer[window.dataLayer.length - 1];
+    expect(last.source).toBeUndefined();
+    expect(last.form_name).toBe("Invoice");
   });
 });
 
@@ -76,14 +85,15 @@ describe("trackDocumentIssued", () => {
 });
 
 describe("trackDocumentIssueFailed", () => {
-  it("pushes DOCUMENT_ISSUE_FAILED with optional error message", () => {
-    trackDocumentIssueFailed(0, 1, "network error");
+  it("pushes DOCUMENT_ISSUE_FAILED with a fixed error category", () => {
+    trackDocumentIssueFailed(0, 1);
     expect(window.dataLayer[0]).toMatchObject({
       event: ANALYTICS_EVENTS.DOCUMENT_ISSUE_FAILED,
       success_count: 0,
       failure_count: 1,
-      error_message: "network error",
+      error_category: "issue_failed",
     });
+    expect(window.dataLayer[0]).not.toHaveProperty("error_message");
   });
 });
 
@@ -100,13 +110,25 @@ describe("trackDocumentRevoked", () => {
 });
 
 describe("trackDocumentRevokeFailed", () => {
-  it("pushes DOCUMENT_REVOKE_FAILED", () => {
-    trackDocumentRevokeFailed(0, 2, "tx failed");
+  it("pushes DOCUMENT_REVOKE_FAILED with a fixed error category", () => {
+    trackDocumentRevokeFailed(0, 2);
     expect(window.dataLayer[0]).toMatchObject({
       event: ANALYTICS_EVENTS.DOCUMENT_REVOKE_FAILED,
       success_count: 0,
       failure_count: 2,
-      error_message: "tx failed",
+      error_category: "revoke_failed",
     });
+    expect(window.dataLayer[0]).not.toHaveProperty("error_message");
+  });
+});
+
+describe("resolveDropZoneSource", () => {
+  it("returns drop for drop events", () => {
+    expect(resolveDropZoneSource({ type: "drop" } as Event)).toBe("drop");
+  });
+
+  it("returns file_picker for file dialog / other events", () => {
+    expect(resolveDropZoneSource({ type: "change" } as Event)).toBe("file_picker");
+    expect(resolveDropZoneSource(undefined)).toBe("file_picker");
   });
 });
