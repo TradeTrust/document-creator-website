@@ -16,6 +16,7 @@ interface DocumentPreview {
 export const DocumentPreview: FunctionComponent<DocumentPreview> = ({ document }) => {
   const toFrame = useRef<Dispatch>();
   const [height, setHeight] = useState(0);
+  const [frameConnected, setFrameConnected] = useState(false);
   const rendererUrl = utils.getTemplateURL(document);
   // Parent-observable id for integration tests (iframe contents are not reliable under TestCafe).
   const documentRecord = document as unknown as { iD?: unknown };
@@ -27,6 +28,7 @@ export const DocumentPreview: FunctionComponent<DocumentPreview> = ({ document }
       if (toFrame.current) {
         toFrame.current(renderDocument({ document }));
       }
+      setFrameConnected(true);
     },
     [document]
   );
@@ -40,7 +42,11 @@ export const DocumentPreview: FunctionComponent<DocumentPreview> = ({ document }
   };
 
   return rendererUrl ? (
-    <div data-testid="document-preview" data-document-id={documentId}>
+    <div
+      data-testid="document-preview"
+      data-document-id={documentId}
+      data-frame-connected={frameConnected ? "true" : "false"}
+    >
       <FrameConnector
         source={rendererUrl}
         dispatch={handleDispatch}

@@ -38,14 +38,17 @@ test("should be able to preview form with data", async (t) => {
   await t.expect(FormIdField.value).eql(uploadedDocumentId, { timeout: 15000 });
 
   // Preview mode mounts DocumentPreview with the uploaded document and the renderer iframe.
-  // Do not assert iframe inner text: TestCafe's proxy + Chrome 153+ breaks
-  // penpal to cross-origin generic-templates (connection timeout / empty #root).
+  // Do not assert iframe inner text: TestCafe's proxy + Chrome 153+ can leave
+  // cross-origin generic-templates #root empty even after penpal connects.
   await t.click(PreviewToggle);
   await t.expect(FormIdField.exists).notOk({ timeout: 5000 });
   // Uploaded document reached DocumentPreview (parent-observable, not iframe contents)
   await t.expect(DocumentPreview.getAttribute("data-document-id")).eql(uploadedDocumentId, { timeout: 5000 });
   await t.expect(Iframe.exists).ok({ timeout: 15000 });
   await t.expect(Iframe.getAttribute("src")).contains("https://generic-templates.tradetrust.io");
+  // Positive connection result: FrameConnector onConnected (penpal deadline is 30s).
+  // Only then is an absent ConnectionTimeout meaningful.
+  await t.expect(DocumentPreview.getAttribute("data-frame-connected")).eql("true", { timeout: 45000 });
   await t.expect(ConnectionTimeout.exists).notOk();
 
   // Round-trip: leave preview and confirm the uploaded document is still bound to the form
