@@ -40,7 +40,7 @@ export const DocumentPreview: FunctionComponent<DocumentPreview> = ({ document }
   };
 
   return rendererUrl ? (
-    <div data-testid="document-preview" data-document-id={documentId}>
+    <div data-testid="document-preview" data-document-id={documentId} data-renderer-url={rendererUrl}>
       <FrameConnector
         source={rendererUrl}
         dispatch={handleDispatch}
