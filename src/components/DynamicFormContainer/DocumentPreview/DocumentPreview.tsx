@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useRef, FunctionComponent } from "react";
+import React, { useState, useCallback, useEffect, useRef, FunctionComponent } from "react";
 import {
   FrameConnector,
   HostActions,
@@ -15,18 +15,34 @@ interface DocumentPreview {
 
 export const DocumentPreview: FunctionComponent<DocumentPreview> = ({ document }) => {
   const toFrame = useRef<Dispatch>();
+  const lastRenderedDocument = useRef<string>();
   const [height, setHeight] = useState(0);
   const rendererUrl = utils.getTemplateURL(document);
 
+  const sendRender = useCallback((frame: Dispatch, doc: OpenAttestationDocument) => {
+    const serialized = JSON.stringify(doc);
+    if (serialized === lastRenderedDocument.current) return;
+    lastRenderedDocument.current = serialized;
+    frame(renderDocument({ document: doc }));
+  }, []);
+
   const onConnected = useCallback(
-    (frame) => {
+    (frame: Dispatch) => {
       toFrame.current = frame;
-      if (toFrame.current) {
-        toFrame.current(renderDocument({ document }));
-      }
+      // Reset so the connected frame always receives the latest document
+      lastRenderedDocument.current = undefined;
+      sendRender(frame, document);
     },
-    [document]
+    [document, sendRender]
   );
+
+  // Re-render when form data changes after the frame is already connected
+  useEffect(() => {
+    if (toFrame.current) {
+      sendRender(toFrame.current, document);
+    }
+  }, [document, sendRender]);
+
   const handleDispatch = (action: FrameActions): void => {
     if (action.type === "UPDATE_HEIGHT") {
       setHeight(action.payload);
