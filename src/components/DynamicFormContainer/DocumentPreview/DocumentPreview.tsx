@@ -17,6 +17,9 @@ export const DocumentPreview: FunctionComponent<DocumentPreview> = ({ document }
   const toFrame = useRef<Dispatch>();
   const [height, setHeight] = useState(0);
   const rendererUrl = utils.getTemplateURL(document);
+  // Parent-observable id for integration tests (iframe contents are not reliable under TestCafe).
+  const documentRecord = document as unknown as { iD?: unknown };
+  const documentId = typeof documentRecord.iD === "string" ? documentRecord.iD : "";
 
   const onConnected = useCallback(
     (frame) => {
@@ -37,12 +40,14 @@ export const DocumentPreview: FunctionComponent<DocumentPreview> = ({ document }
   };
 
   return rendererUrl ? (
-    <FrameConnector
-      source={rendererUrl}
-      dispatch={handleDispatch}
-      onConnected={onConnected}
-      style={{ height }}
-      className="block m-auto w-full"
-    />
+    <div data-testid="document-preview" data-document-id={documentId} data-renderer-url={rendererUrl}>
+      <FrameConnector
+        source={rendererUrl}
+        dispatch={handleDispatch}
+        onConnected={onConnected}
+        style={{ height }}
+        className="block m-auto w-full"
+      />
+    </div>
   ) : null;
 };

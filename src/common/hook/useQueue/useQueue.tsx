@@ -4,6 +4,12 @@ import { QueueState, QueueType } from "../../../constants/QueueState";
 import { publishJob } from "../../../services/publishing";
 import { revokeDocumentJob } from "../../../services/revoking";
 import { Config, FailedJobErrors, FormEntry, PublishingJob, RevokingJob, WrappedDocument } from "../../../types";
+import {
+  trackDocumentIssueFailed,
+  trackDocumentIssued,
+  trackDocumentRevokeFailed,
+  trackDocumentRevoked,
+} from "../../../utils/analytics";
 import { getLogger } from "../../../utils/logger";
 import { uploadToStorage } from "../../API/storageAPI";
 import { getPublishingJobs } from "./utils/publish";
@@ -112,11 +118,39 @@ export const useQueue = ({
       setCompletedJobIndex(completedJobsIndexes);
       setFailedJob(failedJobs);
       setQueueState(QueueState.CONFIRMED);
+
+      const successCount = completedJobsIndexes.reduce(
+        (acc, curr) => acc + (processingJobs[curr]?.documents?.length ?? 0),
+        0
+      );
+      const failureCount = failedJobs.reduce(
+        (acc, job) => acc + (processingJobs[job.index]?.documents?.length ?? 0),
+        0
+      );
+
+      if (queueType === QueueType.ISSUE) {
+        if (successCount > 0) {
+          trackDocumentIssued(successCount, failureCount);
+        } else {
+          trackDocumentIssueFailed(successCount, failureCount);
+        }
+      } else if (queueType === QueueType.REVOKE) {
+        if (successCount > 0) {
+          trackDocumentRevoked(successCount, failureCount);
+        } else {
+          trackDocumentRevokeFailed(successCount, failureCount);
+        }
+      }
     } catch (e) {
       if (e instanceof Error) {
         stack(e);
         setError(e);
         setQueueState(QueueState.ERROR);
+        if (queueType === QueueType.ISSUE) {
+          trackDocumentIssueFailed(0, 0);
+        } else if (queueType === QueueType.REVOKE) {
+          trackDocumentRevokeFailed(0, 0);
+        }
       }
     }
   };

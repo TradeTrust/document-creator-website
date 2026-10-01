@@ -1,8 +1,10 @@
 import { Button } from "@tradetrust-tt/tradetrust-ui-components";
 import React, { FunctionComponent, useEffect, useState } from "react";
+import { DropEvent } from "react-dropzone";
 import { readFileAsJson } from "../../../common/utils";
 import { ConfigFile } from "../../../types";
 import { getLogger } from "../../../utils/logger";
+import { resolveDropZoneSource, trackConfigFileDropped } from "../../../utils/analytics";
 import { ContentFrame } from "../../UI/ContentFrame";
 import { StyledDropZone } from "../../UI/StyledDropZone";
 import { DEMO_CONFIG } from "../../../constants/demo-config";
@@ -25,9 +27,10 @@ export const ConfigFileDropZone: FunctionComponent<ConfigFileDropZone> = ({ onCo
     }
   }, [errorMessage]);
 
-  const onDropAccepted = async (files: File[]): Promise<void> => {
+  const onDropAccepted = async <T extends File>(files: T[], event: DropEvent): Promise<void> => {
     try {
       const file = files[0];
+      trackConfigFileDropped(resolveDropZoneSource(event));
       const config = await readFileAsJson<ConfigFile>(file);
       setFileErrors([]);
       onConfigFile(config);
@@ -90,6 +93,7 @@ export const ConfigFileDropZone: FunctionComponent<ConfigFileDropZone> = ({ onCo
                   e.stopPropagation();
                   setFileErrors([]);
                   setIsDemo(true);
+                  trackConfigFileDropped("demo");
                   onConfigFile(DEMO_CONFIG as ConfigFile);
                 }}
                 className="bg-white text-cerulean-500 hover:bg-cloud-100 rounded-xl sm:mt-0 mt-4"
